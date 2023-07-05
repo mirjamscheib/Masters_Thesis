@@ -2,7 +2,205 @@
 title: "Clean_Data"
 format: html
 ---
+# Clean Environment
+```{r}
+#clear R environment -------------------------------------------
+rm(list = ls())
+```
+
 
 # Libraries 
+```{r}
 
+# Load the required packages
+library("dplyr")
+library("readr")
+library("tidyr")
+```
+
+# Load Data
+```{r}
+# abiotic data
+abiotic <- read_delim("Data/Abiotic_2022_2023_FINAL.csv")
+
+# coordinate data from every location 
+# Glenner 
+gl1 <- read_delim("Data/GPS_Punkte/GL1.csv", col_names = FALSE)
+gl2 <- read_delim("Data/GPS_Punkte/GL2.csv", col_names = FALSE)
+gl3 <- read_delim("Data/GPS_Punkte/GL3.csv", col_names = FALSE)
+gl4 <- read_delim("Data/GPS_Punkte/GL4.csv", col_names = FALSE)
+gl5 <- read_delim("Data/GPS_Punkte/GL5.csv", col_names = FALSE)
+
+# Landquart
+l1 <- read_delim("Data/GPS_Punkte/L1.csv", col_names = FALSE)
+l2 <- read_delim("Data/GPS_Punkte/L2.csv", col_names = FALSE)
+l3 <- read_delim("Data/GPS_Punkte/L3.csv", col_names = FALSE)
+l4 <- read_delim("Data/GPS_Punkte/L4.csv", col_names = FALSE)
+lr <- read_delim("Data/GPS_Punkte/LR.csv", col_names = FALSE)
+
+# Moesa 
+m1 <- read_delim("Data/GPS_Punkte/M1.csv", col_names = FALSE)
+m2 <- read_delim("Data/GPS_Punkte/M2.csv", col_names = FALSE)
+m3 <- read_delim("Data/GPS_Punkte/M3.csv", col_names = FALSE)
+m4 <- read_delim("Data/GPS_Punkte/M4.csv", col_names = FALSE)
+m5 <- read_delim("Data/GPS_Punkte/M5.csv", col_names = FALSE)
+m6 <- read_delim("Data/GPS_Punkte/M6.csv", col_names = FALSE)
+m7 <- read_delim("Data/GPS_Punkte/M7.csv", col_names = FALSE)
+mr <- read_delim("Data/GPS_Punkte/MR.csv", col_names = FALSE)
+
+# Plessur
+p1 <- read_delim("Data/GPS_Punkte/P1.csv", col_names = FALSE)
+p2 <- read_delim("Data/GPS_Punkte/P2.csv", col_names = FALSE)
+p3 <- read_delim("Data/GPS_Punkte/P3.csv", col_names = FALSE)
+pr <- read_delim("Data/GPS_Punkte/PR.csv", col_names = FALSE)
+
+# Sitter
+s1 <- read_delim("Data/GPS_Punkte/S1.csv", col_names = FALSE)
+s2 <- read_delim("Data/GPS_Punkte/S2.csv", col_names = FALSE)
+s3 <- read_delim("Data/GPS_Punkte/S3.csv", col_names = FALSE)
+s4 <- read_delim("Data/GPS_Punkte/S4.csv", col_names = FALSE)
+s5 <- read_delim("Data/GPS_Punkte/S5.csv", col_names = FALSE)
+s6 <- read_delim("Data/GPS_Punkte/S6.csv", col_names = FALSE)
+
+# Saane 
+sa1 <- read_delim("Data/GPS_Punkte/SA1.csv", col_names = FALSE)
+sa2 <- read_delim("Data/GPS_Punkte/SA2.csv", col_names = FALSE)
+sa3 <- read_delim("Data/GPS_Punkte/SA3.csv", col_names = FALSE)
+sa4 <- read_delim("Data/GPS_Punkte/SA4.csv", col_names = FALSE)
+sa5 <- read_delim("Data/GPS_Punkte/SA5.csv", col_names = FALSE)
+sa6 <- read_delim("Data/GPS_Punkte/SA6.csv", col_names = FALSE)
+sa7 <- read_delim("Data/GPS_Punkte/SA7.csv", col_names = FALSE)
+sar <- read_delim("Data/GPS_Punkte/SAR.csv", col_names = FALSE)
+
+# Sense/Singine 
+se1 <- read_delim("Data/GPS_Punkte/SE1.csv", col_names = FALSE)
+se2 <- read_delim("Data/GPS_Punkte/SE2-new.csv", col_names = FALSE)
+se3 <- read_delim("Data/GPS_Punkte/SE3-NEW.csv", col_names = FALSE)
+se4 <- read_delim("Data/GPS_Punkte/SE4.csv", col_names = FALSE)
+sr <- read_delim("Data/GPS_Punkte/SR.csv", col_names = FALSE)
+
+# Ticino 
+t1 <- read_delim("Data/GPS_Punkte/T1.csv", col_names = FALSE)
+t2 <- read_delim("Data/GPS_Punkte/T2.csv", col_names = FALSE)
+t3 <- read_delim("Data/GPS_Punkte/T3.csv", col_names = FALSE)
+
+# Thur 
+th1 <- read_delim("Data/GPS_Punkte/th1.csv", col_names = FALSE)
+th2 <- read_delim("Data/GPS_Punkte/th2.csv", col_names = FALSE)
+th3 <- read_delim("Data/GPS_Punkte/TH3-NEW.csv", col_names = FALSE)
+th4 <- read_delim("Data/GPS_Punkte/TH4-NEW.csv", col_names = FALSE)
+th5 <- read_delim("Data/GPS_Punkte/th5.csv", col_names = FALSE)
+
+# Verzasca
+ve2 <- read_delim("Data/GPS_Punkte/VE2.csv", col_names = FALSE)
+ve3 <- read_delim("Data/GPS_Punkte/VE3.csv", col_names = FALSE)
+ve4 <- read_delim("Data/GPS_Punkte/VE4b.csv", col_names = FALSE)
+
+# Vorderrhein 
+vr1 <- read_delim("Data/GPS_Punkte/VR1.csv", col_names = FALSE)
+vr2 <- read_delim("Data/GPS_Punkte/VR2.csv", col_names = FALSE)
+vr3 <- read_delim("Data/GPS_Punkte/VR3.csv", col_names = FALSE)
+vr4 <- read_delim("Data/GPS_Punkte/VR4.csv", col_names = FALSE)
+vr5 <- read_delim("Data/GPS_Punkte/VR5.csv", col_names = FALSE)
+vr6 <- read_delim("Data/GPS_Punkte/VR6.csv", col_names = FALSE)
+```
+
+# Create Join Key
+```{r}
+# abiotic data: create join key with "river-transect-sampling_point"
+abiotic$join_key <- paste(abiotic$`Reach (Untersuchungsstelle)...4`, abiotic$Transect, abiotic$`Sampling point`, sep = "-")
+
+# coordinates: create the same join key "river-transect-sampling_point"
+# write function to create a join key
+join_key <- function(data){
+data |>
+  mutate(river = toupper(substr(X1, 1, 3)),
+         transect = c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4),
+         sampling_point = rep(c(3, 2, 1), times = 4),
+         join_key = paste(river, transect, sampling_point, sep = "-")) |>
+  select(-c(X2, river, transect, sampling_point))
+}
+
+
+# create join key for coordinates
+# Glenner 
+gl1 <- join_key(gl1)
+gl2 <- join_key(gl2)
+gl3 <- join_key(gl3)
+gl4 <- join_key(gl4)
+gl5 <- join_key(gl5)
+
+# Landquart
+l1 <- join_key(l1)
+l2 <- join_key(l2)
+l3 <- join_key(l3)
+l4 <- join_key(l4)
+lr <- join_key(lr)
+
+# Moesa 
+m1 <- join_key(m1)
+m2 <- join_key(m2)
+m3 <- join_key(m3)
+m4 <- join_key(m4)
+m5 <- join_key(m5)
+m6 <- join_key(m6)
+m7 <- join_key(m7)
+mr <- join_key(mr)
+
+# Plessur
+p1 <- join_key(p1)
+p2 <- join_key(p2)
+p3 <- join_key(p3)
+pr <- join_key(pr)
+
+# Sitter
+s1 <- join_key(s1)
+s2 <- read_delim("Data/GPS_Punkte/S2.csv", col_names = FALSE)
+s3 <- read_delim("Data/GPS_Punkte/S3.csv", col_names = FALSE)
+s4 <- read_delim("Data/GPS_Punkte/S4.csv", col_names = FALSE)
+s5 <- read_delim("Data/GPS_Punkte/S5.csv", col_names = FALSE)
+s6 <- read_delim("Data/GPS_Punkte/S6.csv", col_names = FALSE)
+
+# Saane 
+sa1 <- read_delim("Data/GPS_Punkte/SA1.csv", col_names = FALSE)
+sa2 <- read_delim("Data/GPS_Punkte/SA2.csv", col_names = FALSE)
+sa3 <- read_delim("Data/GPS_Punkte/SA3.csv", col_names = FALSE)
+sa4 <- read_delim("Data/GPS_Punkte/SA4.csv", col_names = FALSE)
+sa5 <- read_delim("Data/GPS_Punkte/SA5.csv", col_names = FALSE)
+sa6 <- read_delim("Data/GPS_Punkte/SA6.csv", col_names = FALSE)
+sa7 <- read_delim("Data/GPS_Punkte/SA7.csv", col_names = FALSE)
+sar <- read_delim("Data/GPS_Punkte/SAR.csv", col_names = FALSE)
+
+# Sense/Singine 
+se1 <- read_delim("Data/GPS_Punkte/SE1.csv", col_names = FALSE)
+se2 <- read_delim("Data/GPS_Punkte/SE2-new.csv", col_names = FALSE)
+se3 <- read_delim("Data/GPS_Punkte/SE3-NEW.csv", col_names = FALSE)
+se4 <- read_delim("Data/GPS_Punkte/SE4.csv", col_names = FALSE)
+sr <- read_delim("Data/GPS_Punkte/SR.csv", col_names = FALSE)
+
+# Ticino 
+t1 <- read_delim("Data/GPS_Punkte/T1.csv", col_names = FALSE)
+t2 <- read_delim("Data/GPS_Punkte/T2.csv", col_names = FALSE)
+t3 <- read_delim("Data/GPS_Punkte/T3.csv", col_names = FALSE)
+
+# Thur 
+th1 <- read_delim("Data/GPS_Punkte/th1.csv", col_names = FALSE)
+th2 <- read_delim("Data/GPS_Punkte/th2.csv", col_names = FALSE)
+th3 <- read_delim("Data/GPS_Punkte/TH3-NEW.csv", col_names = FALSE)
+th4 <- read_delim("Data/GPS_Punkte/TH4-NEW.csv", col_names = FALSE)
+th5 <- read_delim("Data/GPS_Punkte/th5.csv", col_names = FALSE)
+
+# Verzasca
+ve2 <- read_delim("Data/GPS_Punkte/VE2.csv", col_names = FALSE)
+ve3 <- read_delim("Data/GPS_Punkte/VE3.csv", col_names = FALSE)
+ve4 <- read_delim("Data/GPS_Punkte/VE4b.csv", col_names = FALSE)
+
+# Vorderrhein 
+vr1 <- read_delim("Data/GPS_Punkte/VR1.csv", col_names = FALSE)
+vr2 <- read_delim("Data/GPS_Punkte/VR2.csv", col_names = FALSE)
+vr3 <- read_delim("Data/GPS_Punkte/VR3.csv", col_names = FALSE)
+vr4 <- read_delim("Data/GPS_Punkte/VR4.csv", col_names = FALSE)
+vr5 <- read_delim("Data/GPS_Punkte/VR5.csv", col_names = FALSE)
+vr6 <- read_delim("Data/GPS_Punkte/VR6.csv", col_names = FALSE)
+```
 
