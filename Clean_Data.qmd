@@ -25,7 +25,6 @@ library("stringr")
 # abiotic data
 abiotic <- read_delim("Data/Abiotic_2022_2023_FINAL.csv")
 
-
 # MI data field 
 field <- read_delim("Data/MZB_Feldscreening.csv", col_names = FALSE)
 
@@ -114,8 +113,21 @@ vr6 <- read_delim("Data/GPS_Punkte/VR6.csv", col_names = FALSE)
 # Create Join Key
 ## Abiotic Data
 ```{r}
+# cut abiotic data into two datasets to join them together with the join_key
+abiotic1 <- abiotic[ ,c(1:23)]
+abiotic2 <- abiotic[ ,c(25:39)]
+
 # abiotic data: create join key with "river-transect-sampling_point"
-abiotic$join_key <- paste(abiotic$`Reach (Untersuchungsstelle)...4`, abiotic$Transect, abiotic$`Sampling point`, sep = "-")
+abiotic1 <- abiotic1 |>
+  mutate(join_key = paste(`Reach (Untersuchungsstelle)...4`, Transect, `Sampling point`, sep = "-")) |>
+  rename(Reach_Untersuchungsstelle = `Reach (Untersuchungsstelle)...4`)
+
+abiotic2 <- abiotic2 |>
+  rename(Reach_Untersuchungsstelle = `Reach (Untersuchungsstelle)...26`) |>
+  
+
+# join abiotic1 and abiotic2 together
+abiotic_join <- full_join(abiotic1, abiotic2, by = "Reach_Untersuchungsstelle")
 ```
 
 ## MI Data
@@ -195,8 +207,7 @@ data |>
   mutate(river = section,
          transect = head(rep(1:nrow(data), each = 3), nrow(data)),
          sampling_point = rep(c(3, 2, 1), length.out = nrow(data)),
-         join_key = paste(river, transect, sampling_point, sep = "-")) |>
-  select(-c(X2, river, transect, sampling_point))
+         join_key = paste(river, transect, sampling_point, sep = "-")) 
 }
 
 
@@ -254,14 +265,11 @@ se1 <- join_key(se1, "SE1")
 se2 <- join_key(se2, "SE2")
 se3 <- join_key(se3, "SE3")
 se4 <- join_key(se4, "SE4")
-sr <- join_key(sr, "SER")
+sr <- join_key(sr, "SR")
 
 # Ticino 
 t1 <- join_key(t1, "T1")
-# t2 <- t2 |>
- # join_key("T2") |>
- # select(-X6)
-
+t2 <- join_key(t2, "T2")
 t3 <- join_key(t3, "T3")
 
 # Thur 
@@ -287,17 +295,24 @@ vr6 <- join_key(vr6, "VR6")
 
 # Bind Coordinate DFs together
 ```{r}
-# ohne t2 
-coordinates <- rbind(gl1, gl2, gl3, gl4, gl5, l1, l2, l3, l4, lr, m1, m2, m3, m4, m5, m6, m7, mr, p1, p2, p3, pr, s1, s2, s3, s4, s5, s6, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sar, se1, se2, se3, se4, sr, t1, t3, th1, th2, th3, th4, th5, ve2, ve3, ve4, vr1, vr2, vr3, vr4, vr5, vr6)
+# bind all coordinate dfs together  
+coordinates <- rbind(gl1, gl2, gl3, gl4, gl5, l1, l2, l3, l4, lr, m1, m2, m3, m4, m5, m6, m7, mr, p1, p2, p3, pr, s1, s2, s3, s4, s5, s6, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sar, se1, se2, se3, se4, sr, t1, t2, t3, th1, th2, th3, th4, th5, ve2, ve3, ve4, vr1, vr2, vr3, vr4, vr5, vr6)
+
+# discard columns which are not needed & rename columns 
+coordinates <- coordinates |>
+  select(-X1, -X2, -river, -transect, -sampling_point) |>
+  rename(x = X3, y = X4, z = X5)
 ```
 
 # Join Dataframes 
 ```{r}
 # anordnung noch ändern und column names geben 
 # X3 = x, X4 = y, X5 = z
-abiotic_full <- abiotic |>
+abiotic_full <- abiotic_join |>
   full_join(coordinates, by = "join_key") |>
-  select(-X1)
+  subset(join_key != "NA-NA-NA")
+
+write.csv(abiotic_full, "Data/abiotic_full.csv")
 ```
 
-
+  rename(River = c(River...1, River...25), Reach_Untersuchungsstelle = c(`Reach (Untersuchungsstelle)...4`, `Reach (Untersuchungsstelle)...26`), Abiotic_measured_by = c(`Abiotic measured by...5`, `Abiotic measured by...27`), Date_of_survey = c(`Date of survey...6`, `Date of survey...28`), Time_of_survey = c(`Time of survey...9`, `Time of survey...29`), pH = pH, Conductivity_μs_s = `Conductivity [μs/s]`, Oxygen_content_mg_l = `Oxygen content [mg/l]`, Oxygen_saturation_perc = `Oxygen saturation [%]`, Turbidity_FNU = `Turbidity [FNU]`, Temperature_C = `Temperature [°C]`, Discharge_m3_s = `Discharge [m3/s]`, Water_gauge_MueM = `Water gauge [MüM]`, Gauging_station = `Gauging station`, Varia = c(Varia...23, Varia...39), Sampling_point = `Sampling point`, Distance_Wasseranschlaglinie_m = `Distance "Wasseranschlaglinie" [m]`)
