@@ -16,12 +16,18 @@ rm(list = ls())
 library("dplyr")
 library("readr")
 library("tidyr")
+library("tidyverse")
+library("stringr")
 ```
 
 # Load Data
 ```{r}
 # abiotic data
 abiotic <- read_delim("Data/Abiotic_2022_2023_FINAL.csv")
+
+
+# MI data field 
+field <- read_delim("Data/MZB_Feldscreening.csv", col_names = FALSE)
 
 # coordinate data from every location 
 # Glenner 
@@ -106,17 +112,89 @@ vr6 <- read_delim("Data/GPS_Punkte/VR6.csv", col_names = FALSE)
 ```
 
 # Create Join Key
+## Abiotic Data
 ```{r}
 # abiotic data: create join key with "river-transect-sampling_point"
 abiotic$join_key <- paste(abiotic$`Reach (Untersuchungsstelle)...4`, abiotic$Transect, abiotic$`Sampling point`, sep = "-")
+```
 
+## MI Data
+### Field Data
+```{r}
+# combine the first two rows together because we have two rows of headers
+combined_row <- paste(field[1, ], field[2, ])
+
+# remove the first two rows 
+field <- field[-c(1:2), ]
+
+# bind the combined rows to the field data
+field <- rbind(combined_row, field)
+
+# remove NA from first row 
+row_index <- 1
+
+# Remove single letters from the specified row
+field[row_index, ] <- lapply(field[row_index, ], function(x) gsub("NA", " ", x))
+
+
+# Assign the first row as the column names
+colnames(field) <- field[1, ]
+
+# remove first row 
+field <- field[-1, ]
+
+# field MI data: create join key with "river-transect-sampling_point"
+field$join_key <- paste(field$` Sampling_site`, field$` Transect`, field$` Flow_range_location`, sep = "-")
+```
+
+### Lab Data
+```{r}
+# load MI data lab 
+lab <- read_delim("Data/MZB_SBI_Labor.csv", col_names = FALSE)
+
+# remove first two rows & third column
+lab <- lab[-c(1:2), -3]
+
+# Fill missing values and combine two rows  
+lab <- lab |>
+  fill(X1) |>
+  mutate(X1 = paste(X1, X2, sep = " "))
+
+# transpose dataframe 
+t_lab <- as.data.frame(t(lab))
+
+
+# Remove single letters from the specified row
+row_index <- 1
+t_lab[row_index, ] <- lapply(t_lab[row_index, ], function(x) gsub("NA", " ", x))
+
+# make first row as header 
+colnames(t_lab) <- t_lab[1, ]
+
+# remove first and second row 
+t_lab <- t_lab[-c(1:2), ]
+
+# write .csv file 
+write.csv(t_lab, "Data/MZB_Labor_intermediate.csv")
+
+t_lab <- read_delim("Data/MZB_Labor_intermediate.csv")
+
+# Fill missing values and combine two rows  
+t_lab <- t_lab |>
+  fill(`  Sampling_site`) |>
+  select(-...1) |>
+  function(x) gsub(`  Transekt - Kick`, "T", "", x)
+```
+
+## Coordinate Data 
+```{r}
 # coordinates: create the same join key "river-transect-sampling_point"
-# write function to create a join key
-join_key <- function(data){
+# function for column without characters in first column
+join_key <- function(data, section){
 data |>
-  mutate(river = toupper(substr(X1, 1, 3)),
-         transect = c(1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4),
-         sampling_point = rep(c(3, 2, 1), times = 4),
+  mutate(river = section,
+         transect = head(rep(1:nrow(data), each = 3), nrow(data)),
+         sampling_point = rep(c(3, 2, 1), length.out = nrow(data)),
          join_key = paste(river, transect, sampling_point, sep = "-")) |>
   select(-c(X2, river, transect, sampling_point))
 }
@@ -124,83 +202,102 @@ data |>
 
 # create join key for coordinates
 # Glenner 
-gl1 <- join_key(gl1)
-gl2 <- join_key(gl2)
-gl3 <- join_key(gl3)
-gl4 <- join_key(gl4)
-gl5 <- join_key(gl5)
+gl1 <- join_key(gl1, "GL1")
+gl2 <- join_key(gl2, "GL2")
+gl3 <- join_key(gl3, "GL3")
+gl4 <- join_key(gl4, "GL4")
+gl5 <- join_key(gl5, "GL5")
 
 # Landquart
-l1 <- join_key(l1)
-l2 <- join_key(l2)
-l3 <- join_key(l3)
-l4 <- join_key(l4)
-lr <- join_key(lr)
+l1 <- join_key(l1, "L1")
+l2 <- join_key(l2, "L2")
+l3 <- join_key(l3, "L3")
+l4 <- join_key(l4, "L4")
+lr <- join_key(lr, "LR")
 
 # Moesa 
-m1 <- join_key(m1)
-m2 <- join_key(m2)
-m3 <- join_key(m3)
-m4 <- join_key(m4)
-m5 <- join_key(m5)
-m6 <- join_key(m6)
-m7 <- join_key(m7)
-mr <- join_key(mr)
+m1 <- join_key(m1, "M1")
+m2 <- join_key(m2, "M2")
+m3 <- join_key(m3, "M3")
+m4 <- join_key(m4, "M4")
+m5 <- join_key(m5, "M5")
+m6 <- join_key(m6, "M6")
+m7 <- join_key(m7, "M7")
+mr <- join_key(mr, "MR")
 
-# Plessur
-p1 <- join_key(p1)
-p2 <- join_key(p2)
-p3 <- join_key(p3)
-pr <- join_key(pr)
+# Plessur 
+p1 <- join_key(p1, "P1")
+p2 <- join_key(p2, "P2")
+p3 <- join_key(p3, "P3")
+pr <- join_key(pr, "PR")
 
 # Sitter
-s1 <- join_key(s1)
-s2 <- read_delim("Data/GPS_Punkte/S2.csv", col_names = FALSE)
-s3 <- read_delim("Data/GPS_Punkte/S3.csv", col_names = FALSE)
-s4 <- read_delim("Data/GPS_Punkte/S4.csv", col_names = FALSE)
-s5 <- read_delim("Data/GPS_Punkte/S5.csv", col_names = FALSE)
-s6 <- read_delim("Data/GPS_Punkte/S6.csv", col_names = FALSE)
+s1 <- join_key(s1, "S1")
+s2 <- join_key(s2, "S2")
+s3 <- join_key(s3, "S3")
+s4 <- join_key(s4, "S4")
+s5 <- join_key(s5, "S5")
+s6 <- join_key(s6, "S6")
 
 # Saane 
-sa1 <- read_delim("Data/GPS_Punkte/SA1.csv", col_names = FALSE)
-sa2 <- read_delim("Data/GPS_Punkte/SA2.csv", col_names = FALSE)
-sa3 <- read_delim("Data/GPS_Punkte/SA3.csv", col_names = FALSE)
-sa4 <- read_delim("Data/GPS_Punkte/SA4.csv", col_names = FALSE)
-sa5 <- read_delim("Data/GPS_Punkte/SA5.csv", col_names = FALSE)
-sa6 <- read_delim("Data/GPS_Punkte/SA6.csv", col_names = FALSE)
-sa7 <- read_delim("Data/GPS_Punkte/SA7.csv", col_names = FALSE)
-sar <- read_delim("Data/GPS_Punkte/SAR.csv", col_names = FALSE)
+sa1 <- join_key(sa1, "SA1")
+sa2 <- join_key(sa2, "SA2")
+sa3 <- join_key(sa3, "SA3")
+sa4 <- join_key(sa4, "SA4")
+sa5 <- join_key(sa5, "SA5")
+sa6 <- join_key(sa6, "SA6")
+sa7 <- join_key(sa7, "SA7")
+sar <- join_key(sar, "SAR")
 
 # Sense/Singine 
-se1 <- read_delim("Data/GPS_Punkte/SE1.csv", col_names = FALSE)
-se2 <- read_delim("Data/GPS_Punkte/SE2-new.csv", col_names = FALSE)
-se3 <- read_delim("Data/GPS_Punkte/SE3-NEW.csv", col_names = FALSE)
-se4 <- read_delim("Data/GPS_Punkte/SE4.csv", col_names = FALSE)
-sr <- read_delim("Data/GPS_Punkte/SR.csv", col_names = FALSE)
+se1 <- join_key(se1, "SE1")
+se2 <- join_key(se2, "SE2")
+se3 <- join_key(se3, "SE3")
+se4 <- join_key(se4, "SE4")
+sr <- join_key(sr, "SER")
 
 # Ticino 
-t1 <- read_delim("Data/GPS_Punkte/T1.csv", col_names = FALSE)
-t2 <- read_delim("Data/GPS_Punkte/T2.csv", col_names = FALSE)
-t3 <- read_delim("Data/GPS_Punkte/T3.csv", col_names = FALSE)
+t1 <- join_key(t1, "T1")
+# t2 <- t2 |>
+ # join_key("T2") |>
+ # select(-X6)
+
+t3 <- join_key(t3, "T3")
 
 # Thur 
-th1 <- read_delim("Data/GPS_Punkte/th1.csv", col_names = FALSE)
-th2 <- read_delim("Data/GPS_Punkte/th2.csv", col_names = FALSE)
-th3 <- read_delim("Data/GPS_Punkte/TH3-NEW.csv", col_names = FALSE)
-th4 <- read_delim("Data/GPS_Punkte/TH4-NEW.csv", col_names = FALSE)
-th5 <- read_delim("Data/GPS_Punkte/th5.csv", col_names = FALSE)
+th1 <- join_key(th1, "TH1")
+th2 <- join_key(th2, "TH2")
+th3 <- join_key(th3, "TH3")
+th4 <- join_key(th4, "TH4")
+th5 <- join_key(th5, "TH5")
 
 # Verzasca
-ve2 <- read_delim("Data/GPS_Punkte/VE2.csv", col_names = FALSE)
-ve3 <- read_delim("Data/GPS_Punkte/VE3.csv", col_names = FALSE)
-ve4 <- read_delim("Data/GPS_Punkte/VE4b.csv", col_names = FALSE)
+ve2 <- join_key(ve2, "VE2")
+ve3 <- join_key(ve3, "VE3")
+ve4 <- join_key(ve4, "VE4")
 
-# Vorderrhein 
-vr1 <- read_delim("Data/GPS_Punkte/VR1.csv", col_names = FALSE)
-vr2 <- read_delim("Data/GPS_Punkte/VR2.csv", col_names = FALSE)
-vr3 <- read_delim("Data/GPS_Punkte/VR3.csv", col_names = FALSE)
-vr4 <- read_delim("Data/GPS_Punkte/VR4.csv", col_names = FALSE)
-vr5 <- read_delim("Data/GPS_Punkte/VR5.csv", col_names = FALSE)
-vr6 <- read_delim("Data/GPS_Punkte/VR6.csv", col_names = FALSE)
+# Vorderrhein
+vr1 <- join_key(vr1, "VR1")
+vr2 <- join_key(vr2, "VR2")
+vr3 <- join_key(vr3, "VR3")
+vr4 <- join_key(vr4, "VR4") 
+vr5 <- join_key(vr5, "VR5")
+vr6 <- join_key(vr6, "VR6")
 ```
+
+# Bind Coordinate DFs together
+```{r}
+# ohne t2 
+coordinates <- rbind(gl1, gl2, gl3, gl4, gl5, l1, l2, l3, l4, lr, m1, m2, m3, m4, m5, m6, m7, mr, p1, p2, p3, pr, s1, s2, s3, s4, s5, s6, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sar, se1, se2, se3, se4, sr, t1, t3, th1, th2, th3, th4, th5, ve2, ve3, ve4, vr1, vr2, vr3, vr4, vr5, vr6)
+```
+
+# Join Dataframes 
+```{r}
+# anordnung noch ändern und column names geben 
+# X3 = x, X4 = y, X5 = z
+abiotic_full <- abiotic |>
+  full_join(coordinates, by = "join_key") |>
+  select(-X1)
+```
+
 
