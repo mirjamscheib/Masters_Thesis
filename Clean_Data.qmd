@@ -2,14 +2,14 @@
 title: "Clean_Data"
 format: html
 ---
-# Clean Environment
+# OK - Clean Environment
 ```{r}
 #clear R environment -------------------------------------------
 rm(list = ls())
 ```
 
 
-# Libraries 
+# OK - Libraries 
 ```{r}
 
 # Load the required packages
@@ -20,13 +20,16 @@ library("tidyverse")
 library("stringr")
 ```
 
-# Load Data
+# OK - Load Data
 ```{r}
 # abiotic data
 abiotic <- read_delim("Data/Abiotic_2022_2023_FINAL.csv")
 
 # MI data field 
 field <- read_delim("Data/MZB_Feldscreening.csv", col_names = FALSE)
+
+# MI data lab 
+lab <- read_delim("Data/MZB_SBI_Labor.csv", col_names = FALSE)
 
 # coordinate data from every location 
 # Glenner 
@@ -133,35 +136,41 @@ abiotic_join <- full_join(abiotic1, abiotic2, by = "Reach_Untersuchungsstelle")
 ## MI Data
 ### Field Data
 ```{r}
+# Load MI data field 
+field <- read_delim("Data/MZB_Feldscreening.csv", col_names = FALSE)
+
 # combine the first two rows together because we have two rows of headers
 combined_row <- paste(field[1, ], field[2, ])
-
-# remove the first two rows 
-field <- field[-c(1:2), ]
 
 # bind the combined rows to the field data
 field <- rbind(combined_row, field)
 
+# remove the first two rows 
+field <- field[-c(2:3), ]
+
 # remove NA from first row 
 row_index <- 1
 
-# Remove single letters from the specified row
+# Remove single letters from the specified row - i want to remove NA from the headers
 field[row_index, ] <- lapply(field[row_index, ], function(x) gsub("NA", " ", x))
-
 
 # Assign the first row as the column names
 colnames(field) <- field[1, ]
 
-# remove first row 
+# remove the first two rows 
 field <- field[-1, ]
 
 # field MI data: create join key with "river-transect-sampling_point"
-field$join_key <- paste(field$` Sampling_site`, field$` Transect`, field$` Flow_range_location`, sep = "-")
+field <- field |>
+  mutate(join_key = paste(`  Sampling_site`, `  Transect`, `  Flow_range_location`, sep = "-"))
+# geht im moment noch nicht, weil ich noch nicht herausgefunden habe, wie ich die 1. Zeile von links nach rechts so auffülle wie unter # Lab Data wo ich eine column von oben nach unten auffülle. Die 1. Zeile soll dann mit der 2. Zeile verbunden werden damit wird nur noch eine Zeile mit Header Info haben. Also z.B. Allogamus_count, Allogamus_projection, Allogamus_total (weil im Excel Allogamus als Einzelüberschrift für count, projection und total gilt wird es im R nur einmal eingefüllt.)
+
+# Im Notfall kann ich das auch im Excel machen, geht aber ziemlich lange
 ```
 
 ### Lab Data
 ```{r}
-# load MI data lab 
+# MI data lab 
 lab <- read_delim("Data/MZB_SBI_Labor.csv", col_names = FALSE)
 
 # remove first two rows & third column
@@ -195,10 +204,11 @@ t_lab <- read_delim("Data/MZB_Labor_intermediate.csv")
 t_lab <- t_lab |>
   fill(`  Sampling_site`) |>
   select(-...1) |>
-  function(x) gsub(`  Transekt - Kick`, "T", "", x)
+  function(x) gsub(`  Transekt - Kick`, "T", "", x) # wieso geht das nicht, dass ich in der Spalte Transekt-kick das T aus dem character jeweils entfernen kann? 
+# Nur wenn das T aus der Zahlenkombination draussen ist, kann ich den Join_key erstellen aus "river-transect-sampling_point"
 ```
 
-## Coordinate Data 
+## OK - Coordinate Data 
 ```{r}
 # coordinates: create the same join key "river-transect-sampling_point"
 # function for column without characters in first column
@@ -293,7 +303,7 @@ vr5 <- join_key(vr5, "VR5")
 vr6 <- join_key(vr6, "VR6")
 ```
 
-# Bind Coordinate DFs together
+# OK - Bind Coordinate DFs together
 ```{r}
 # bind all coordinate dfs together  
 coordinates <- rbind(gl1, gl2, gl3, gl4, gl5, l1, l2, l3, l4, lr, m1, m2, m3, m4, m5, m6, m7, mr, p1, p2, p3, pr, s1, s2, s3, s4, s5, s6, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sar, se1, se2, se3, se4, sr, t1, t2, t3, th1, th2, th3, th4, th5, ve2, ve3, ve4, vr1, vr2, vr3, vr4, vr5, vr6)
@@ -305,14 +315,21 @@ coordinates <- coordinates |>
 ```
 
 # Join Dataframes 
+Evt. hier dann noch columns R tauglich anschreiben 
 ```{r}
 # anordnung noch ändern und column names geben 
-# X3 = x, X4 = y, X5 = z
 abiotic_full <- abiotic_join |>
   full_join(coordinates, by = "join_key") |>
-  subset(join_key != "NA-NA-NA")
+  subset(join_key != "NA-NA-NA") # ist das wohl ein Flussabschnitt??? 
 
 write.csv(abiotic_full, "Data/abiotic_full.csv")
 ```
+  
+# Create DF for Models 
+```{r}
+data <- read_delim("Data/abiotic_full.csv") 
 
-  rename(River = c(River...1, River...25), Reach_Untersuchungsstelle = c(`Reach (Untersuchungsstelle)...4`, `Reach (Untersuchungsstelle)...26`), Abiotic_measured_by = c(`Abiotic measured by...5`, `Abiotic measured by...27`), Date_of_survey = c(`Date of survey...6`, `Date of survey...28`), Time_of_survey = c(`Time of survey...9`, `Time of survey...29`), pH = pH, Conductivity_μs_s = `Conductivity [μs/s]`, Oxygen_content_mg_l = `Oxygen content [mg/l]`, Oxygen_saturation_perc = `Oxygen saturation [%]`, Turbidity_FNU = `Turbidity [FNU]`, Temperature_C = `Temperature [°C]`, Discharge_m3_s = `Discharge [m3/s]`, Water_gauge_MueM = `Water gauge [MüM]`, Gauging_station = `Gauging station`, Varia = c(Varia...23, Varia...39), Sampling_point = `Sampling point`, Distance_Wasseranschlaglinie_m = `Distance "Wasseranschlaglinie" [m]`)
+data_clean <- data |>
+  select(join_key, x, y, z, `Water depth [cm]`, `Flow velocity [v60, cm/s]`, `Substrate type`)
+```
+
