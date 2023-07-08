@@ -118,95 +118,119 @@ vr6 <- read_delim("Data/GPS_Punkte/VR6.csv", col_names = FALSE)
 ```{r}
 # cut abiotic data into two datasets to join them together with the join_key
 abiotic1 <- abiotic[ ,c(1:23)]
-abiotic2 <- abiotic[ ,c(25:39)]
 
-# abiotic data: create join key with "river-transect-sampling_point"
+# muss noch geklärt werden was es alles heisst
+# abiotic2 <- abiotic[ ,c(25:39)]
+
+# label header into R friendly characters &  create join key with "river-transect-sampling_point"
+colnames(abiotic1) <- c("River", "Hydropeaking_river_type", "Hydrokeaking_residual_flow_natural_near_natural", "Reach_Untersuchungsstelle", "Abiotic_measured_by", "Date_of_survey", "Transect", "Sampling_point", "Time_of_survey", "DIstance_Wasseranschlaglinie_m", "Flow_velocity_v60_cm/s", "Category_Flow_velocity_5_Bewohnbarkeits-klasse", "Water_depth_cm", "Category_Water_depth", "Clogging_6_Klassen", "Clogging_3_Klassen", "Substrate_type", "Algae_cover_Bewuchsdichte_5_Kategorien_1-5", "Moos_cover_Deckungsgrad_6_Kategorien_0-5", "CPOM_cover_Deckungsgrad_5_Kategorien_1-5", "RTK-GPS_Nr", "MZB_kick-net_taken_by", "Varia")
+
 abiotic1 <- abiotic1 |>
-  mutate(join_key = paste(`Reach (Untersuchungsstelle)...4`, Transect, `Sampling point`, sep = "-")) |>
-  rename(Reach_Untersuchungsstelle = `Reach (Untersuchungsstelle)...4`)
+  mutate(join_key = paste(Reach_Untersuchungsstelle, Transect, Sampling_point, sep = "-")) 
 
-abiotic2 <- abiotic2 |>
-  rename(Reach_Untersuchungsstelle = `Reach (Untersuchungsstelle)...26`) |>
-  
 
 # join abiotic1 and abiotic2 together
-abiotic_join <- full_join(abiotic1, abiotic2, by = "Reach_Untersuchungsstelle")
+#abiotic_join <- full_join(abiotic1, abiotic2, by = #"Reach_Untersuchungsstelle")
 ```
 
 ## MI Data
-### Field Data
+### - Field Data
 ```{r}
 # Load MI data field 
 field <- read_delim("Data/MZB_Feldscreening.csv", col_names = FALSE)
 
-# combine the first two rows together because we have two rows of headers
-combined_row <- paste(field[1, ], field[2, ])
+# extract first row to repeat always 3 times 
+field_row1 <- field[1, ]
 
-# bind the combined rows to the field data
-field <- rbind(combined_row, field)
+# remove NA values 
+field_without_NA <- field_row1[!is.na(field_row1)]
 
-# remove the first two rows 
-field <- field[-c(2:3), ]
+# repeat characters 3 times 
+rep_field_row1 <- rep(field_without_NA, each = 3)
 
-# remove NA from first row 
-row_index <- 1
+# fill blank spaces with "_" to make is R reader friendly 
+row_filled <- gsub(" ", "_", rep_field_row1)
 
-# Remove single letters from the specified row - i want to remove NA from the headers
-field[row_index, ] <- lapply(field[row_index, ], function(x) gsub("NA", " ", x))
+# extract second row to combine with first row
+field_row2 <- field[2, -c(1:8)]
 
-# Assign the first row as the column names
-colnames(field) <- field[1, ]
+# combine the first two rows 
+combined_vec <- paste(row_filled, field_row2, sep = "_")
 
-# remove the first two rows 
-field <- field[-1, ]
+# remove the first row and first 8 columns to attach vector to count, projecton factor etc. 
+field_attach <- field[-c(1:2), -c(1:8)]
 
-# field MI data: create join key with "river-transect-sampling_point"
-field <- field |>
-  mutate(join_key = paste(`  Sampling_site`, `  Transect`, `  Flow_range_location`, sep = "-"))
-# geht im moment noch nicht, weil ich noch nicht herausgefunden habe, wie ich die 1. Zeile von links nach rechts so auffülle wie unter # Lab Data wo ich eine column von oben nach unten auffülle. Die 1. Zeile soll dann mit der 2. Zeile verbunden werden damit wird nur noch eine Zeile mit Header Info haben. Also z.B. Allogamus_count, Allogamus_projection, Allogamus_total (weil im Excel Allogamus als Einzelüberschrift für count, projection und total gilt wird es im R nur einmal eingefüllt.)
+# attach created row 
+field_att <- rbind(combined_vec, field_attach)
 
-# Im Notfall kann ich das auch im Excel machen, geht aber ziemlich lange
+# add the first 8 columns to the dataframe 
+field_col <- field[-1 ,c(1:8)]
+
+field1 <- cbind(field_col, field_att)
+
+# tell R, that the first row are the column names 
+colnames(field1) <- as.character(field1[1, ])
+field1 <- field1[-1, ]
+
+# create join_key - "river-transect-sampling_point"
+field1 <- field1 |>
+  mutate(join_key = paste(Sampling_site, Transect, Flow_range_location, sep = "-"))
 ```
+
 
 ### Lab Data
 ```{r}
 # MI data lab 
 lab <- read_delim("Data/MZB_SBI_Labor.csv", col_names = FALSE)
 
-# remove first two rows & third column
+# remove rows and columns that aren't needed 
 lab <- lab[-c(1:2), -3]
 
-# Fill missing values and combine two rows  
-lab <- lab |>
+# remove the first two rows to fill in the MZB columns and combine them 
+lab_mzb <- lab[-c(1:2), ]
+
+# fill in the first column 
+lab_mzb <- lab_mzb |>
   fill(X1) |>
-  mutate(X1 = paste(X1, X2, sep = " "))
+  mutate(X1 = paste(X1, X2, sep = "_"),
+         X1 = gsub(" ", "_", X1),
+         X1 = gsub("_NA", "", X1)) |>
+  select(-X2) 
 
-# transpose dataframe 
-t_lab <- as.data.frame(t(lab))
+# transpose dataframe with MZB 
+lab_mzb <- as.data.frame(t(lab_mzb))
 
+# tell R, that the first row are the column names 
+colnames(lab_mzb) <- as.character(lab_mzb[1, ])
+lab_mzb <- lab_mzb[-1, ]
 
-# Remove single letters from the specified row
-row_index <- 1
-t_lab[row_index, ] <- lapply(t_lab[row_index, ], function(x) gsub("NA", " ", x))
+# combine MZB dataframe with first two columns 
+lab_transects <- as.data.frame(t(lab[c(1:2),-1]))
 
-# make first row as header 
-colnames(t_lab) <- t_lab[1, ]
+# tell R, that the first row are the column names 
+colnames(lab_transects) <- as.character(lab_transects[1, ])
+lab_transects <- lab_transects[-1, ]
 
-# remove first and second row 
-t_lab <- t_lab[-c(1:2), ]
+# fill sampling sites and remove T from trasect-kick
+lab_transects <- lab_transects |>
+  fill(Sampling_site)|> 
+  rename(Transect_Kick = "Transekt - Kick") |>
+  mutate(Transect_Kick = gsub("T", "", Transect_Kick),
+         join_key = paste(Sampling_site, Transect_Kick, sep = "-"))
 
-# write .csv file 
-write.csv(t_lab, "Data/MZB_Labor_intermediate.csv")
+# combine transect and mzb data
+lab_all <- cbind(lab_transects, lab_mzb)
 
-t_lab <- read_delim("Data/MZB_Labor_intermediate.csv")
+# write csv to correct not unique headers 
+write.csv(lab_all, "Data/Lab_intermediate.csv")
 
-# Fill missing values and combine two rows  
-t_lab <- t_lab |>
-  fill(`  Sampling_site`) |>
-  select(-...1) |>
-  function(x) gsub(`  Transekt - Kick`, "T", "", x) # wieso geht das nicht, dass ich in der Spalte Transekt-kick das T aus dem character jeweils entfernen kann? 
-# Nur wenn das T aus der Zahlenkombination draussen ist, kann ich den Join_key erstellen aus "river-transect-sampling_point"
+# load csv data 
+lab_file <- read_delim("Data/Lab_intermediate.csv")
+
+lab_file <- lab_file |>
+  select(-...1, -...8, -...14, -...15, -...21, -...23, -...24, -...43, -...44, -Transect_Kick)
 ```
+
 
 ## OK - Coordinate Data 
 ```{r}
@@ -315,16 +339,31 @@ coordinates <- coordinates |>
 ```
 
 # Join Dataframes 
-Evt. hier dann noch columns R tauglich anschreiben 
+## All + MZB Field 
 ```{r}
 # anordnung noch ändern und column names geben 
-abiotic_full <- abiotic_join |>
+abiotic_field <- abiotic1 |>
   full_join(coordinates, by = "join_key") |>
-  subset(join_key != "NA-NA-NA") # ist das wohl ein Flussabschnitt??? 
+  full_join(field1, by = "join_key")
+  
+#subset(join_key != "NA-NA-NA") # ist das wohl ein Flussabschnitt??? 
 
-write.csv(abiotic_full, "Data/abiotic_full.csv")
+write.csv(abiotic_field, "Data/abiotic_field.csv")
 ```
   
+## All + MZB Lab 
+```{r}
+# anordnung noch ändern und column names geben 
+abiotic_lab <- abiotic1 |>
+  full_join(coordinates, by = "join_key") |>
+  full_join(lab_file, by = "join_key")
+  
+#subset(join_key != "NA-NA-NA") # ist das wohl ein Flussabschnitt??? 
+
+write.csv(abiotic_lab, "Data/abiotic_lab.csv")
+```
+
+
 # Create DF for Models 
 ```{r}
 data <- read_delim("Data/abiotic_full.csv") 
