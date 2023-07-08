@@ -32,10 +32,8 @@ lab <- read_delim("Data/abiotic_lab.csv")
 
 # Prepare Data 
 ```{r}
-lab <- lab[ ,-c(1:11, 13, 15:23)]
-
-lab_index <- lab |>
-  select(-Varia, -join_key, -x, -y, -z, -Sampling_site)
+# remove all response variables
+lab <- lab[ ,-c(1:29)]
 ```
 
 # Calculate EPT Taxa 
@@ -76,33 +74,43 @@ print(lab$EPT_Taxa) # - OK?
 # Calculate Shannon (H) Index 
 ```{r}
 # Create a sample dataframe
-df <- data.frame(
-  SamplingSite = c("Site1", "Site2", "Site3", "Site4"),
-  Species1 = c(10, 20, 5, 0),
-  Species2 = c(0, 5, 15, 10),
-  Species3 = c(15, 10, 0, 5)
-)
+lab_Shannon<- lab |>
+  select(-Count_Plecoptera, -Count_Trichoptera, -Count_Ephemeroptera, EPT_Taxa)
+
+# Convert all columns to numeric format
+lab <- data.frame(sapply(lab, as.numeric))
 
 # Calculate the total number of observations at each sampling site
 # df$total_count <- rowSums(df[, -1])
-lab$total_count <- apply(lab, 1, function(row) {
-  sum(!is.na(row) & row > 0)
-})
+lab$total_count <- rowSums(lab, na.rm = TRUE)
 
 
 # Calculate the proportion of each species within each sampling site
 # proportions <- df[, -c(1, ncol(df))] / df$total_count
-
+ proportions <- lab[, -c(1, ncol(lab))] / lab$total_count
 
 # Calculate the Shannon index for each sampling site
+# shannon <- -rowSums(proportions * log2(proportions), na.rm = TRUE)
 shannon <- -rowSums(proportions * log2(proportions), na.rm = TRUE)
 
 # Compute the average Shannon index across all sampling sites
 average_shannon <- mean(shannon, na.rm = TRUE)
 
 # Display the results
-print(df)
 print(shannon)
 print(average_shannon)
+
+# combine df together EPT results + shannon results 
 ```
 
+# Calculate Abundance 
+```{r}
+
+```
+
+# Calculate Number of Taxa 
+```{r}
+
+```
+
+# Calculate K-Index (Theodoropoulos et al., 2018)
