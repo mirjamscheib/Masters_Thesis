@@ -1,0 +1,41 @@
+---
+title: "Index_Calculation"
+format: html
+---
+
+# Clean Environment
+```{r}
+#clear R environment -------------------------------------------
+rm(list = ls())
+```
+
+
+# Libraries 
+```{r}
+
+# Load the required packages
+library("dplyr")
+library("readr")
+library("tidyr")
+library("tidyverse")
+library("stringr")
+library(gbm)
+library(dismo)
+library(raster)
+```
+
+# Load Data
+## Lab Data
+```{r}
+lab <- read_delim("Data/abiotic_lab.csv")
+```
+
+# Prepare Data 
+```{r}
+lab <- lab[ ,-c(1:11, 13, 15:23)]
+
+lab_model <- lab |>
+  select(-Varia, -join_key, -x, -y, -z, -Sampling_site)
+```
+
+
