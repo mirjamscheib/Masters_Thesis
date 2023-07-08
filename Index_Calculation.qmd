@@ -34,8 +34,75 @@ lab <- read_delim("Data/abiotic_lab.csv")
 ```{r}
 lab <- lab[ ,-c(1:11, 13, 15:23)]
 
-lab_model <- lab |>
+lab_index <- lab |>
   select(-Varia, -join_key, -x, -y, -z, -Sampling_site)
 ```
 
+# Calculate EPT Taxa 
+```{r}
+# Plecoptera, Trichoptera, Ephemeroptera
+# Define the letter combination to search for
+combination_Plecoptera <- "Plecoptera"
+combination_Trichoptera <- "Trichoptera"
+combination_Ephemeroptera <- "Ephemeroptera"
+
+# Identify the column names containing the letter combination
+matching_Plecoptera <- grep(combination_Plecoptera, names(lab), value = TRUE)
+matching_Trichoptera <- grep(combination_Trichoptera, names(lab), value = TRUE)
+matching_Ephemeroptera <- grep(combination_Ephemeroptera, names(lab), value = TRUE)
+
+
+# Iterate through each row and count the cells meeting the conditions
+lab$Count_Plecoptera <- apply(lab, 1, function(row) {
+  sum(!is.na(row[matching_Plecoptera]) & row[matching_Plecoptera] > 0)
+})
+
+lab$Count_Trichoptera <- apply(lab, 1, function(row) {
+  sum(!is.na(row[matching_Trichoptera]) & row[matching_Trichoptera] > 0)
+})
+
+lab$Count_Ephemeroptera <- apply(lab, 1, function(row) {
+  sum(!is.na(row[matching_Ephemeroptera]) & row[matching_Ephemeroptera] > 0)
+})
+
+# Calculate EPT Taxa per Sampling_location 
+lab$EPT_Taxa <- lab$Count_Plecoptera + lab$Count_Trichoptera + lab$Count_Ephemeroptera
+
+# Display the resulting dataframe
+print(lab$Count_Plecoptera) # - OK
+print(lab$EPT_Taxa) # - OK?
+```
+
+# Calculate Shannon (H) Index 
+```{r}
+# Create a sample dataframe
+df <- data.frame(
+  SamplingSite = c("Site1", "Site2", "Site3", "Site4"),
+  Species1 = c(10, 20, 5, 0),
+  Species2 = c(0, 5, 15, 10),
+  Species3 = c(15, 10, 0, 5)
+)
+
+# Calculate the total number of observations at each sampling site
+# df$total_count <- rowSums(df[, -1])
+lab$total_count <- apply(lab, 1, function(row) {
+  sum(!is.na(row) & row > 0)
+})
+
+
+# Calculate the proportion of each species within each sampling site
+# proportions <- df[, -c(1, ncol(df))] / df$total_count
+
+
+# Calculate the Shannon index for each sampling site
+shannon <- -rowSums(proportions * log2(proportions), na.rm = TRUE)
+
+# Compute the average Shannon index across all sampling sites
+average_shannon <- mean(shannon, na.rm = TRUE)
+
+# Display the results
+print(df)
+print(shannon)
+print(average_shannon)
+```
 
