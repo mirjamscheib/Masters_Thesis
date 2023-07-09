@@ -1,0 +1,79 @@
+---
+title: "BRT_Model"
+format: html
+---
+
+
+# Packages
+```{r}
+# Load the required packages
+library(gbm)
+library(dismo)
+library(dplyr)
+library(raster)
+library(readr)
+```
+
+# Load Data
+```{r}
+# Load Data
+data <- read_delim("Data/Lab_k_index.csv")
+
+data <- data[ ,-1]
+
+data <- data |>
+  rename(Landquart_results_depth_9 = Water_depth_cm, Landquart_results_velocity_9 = `Flow_velocity_v60_cm/s`) |>
+  mutate(Landquart_results_depth_9 = Landquart_results_depth_9/100,
+         Landquart_results_velocity_9 = Landquart_results_velocity_9/100)
+
+# change variable type which we want to predict 
+#data$All <- as.factor(data$All)
+```
+
+# BRT 
+```{r}
+# Split the data into training and testing sets
+train_indices <- sample(1:nrow(data), 0.7 * nrow(data))
+train_data <- data[train_indices, ]
+test_data <- data[-train_indices, ]
+
+# Define the boosted regression tree model
+boost_model <- gbm(k_index ~ ., data = train_data, distribution = "gaussian",
+                   n.trees = 10000, interaction.depth = 5, shrinkage = 0.1, n.minobsinnode = 1)
+```
+
+# Model Performance 
+```{r}
+# Make predictions on the test data
+predictions <- predict(boost_model, newdata = test_data, n.trees = 100)
+
+# Evaluate the model
+mse <- mean((test_data$k_index - predictions)^2)
+print(paste("Mean Squared Error:", mse))
+```
+
+# Predict to rasters 
+```{r}
+# predict results with raster
+# raster with depth and velocity data 
+env_data <- stack("Data/L2/env_rasters.grd")
+
+result_raster <- raster::predict(model = boost_model, object = env_data, index = 2) # index 2 because 2 layers of rasters are in the env_data variable 
+
+plot(result_raster)
+```
+
+# 10 fold cross validation 
+```{r}
+install.packages("caret")  # Install the caret package if not already installed
+library(caret)             # Load the caret package
+
+ctrl <- trainControl(method = "cv",  # Cross-validation method
+                     number = 10,    # Number of folds
+                     verboseIter = TRUE)  # Print progress during training
+
+model <- train(k_index ~ Landquart_results_depth_9 + Landquart_results_velocity_9, data = train_data, method = "gbm", trControl = ctrl)
+
+model$results  # Print the results of each fold
+```
+

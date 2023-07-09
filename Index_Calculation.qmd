@@ -33,6 +33,8 @@ lab <- read_delim("Data/abiotic_lab.csv")
 # Prepare Data 
 ```{r}
 # remove all response variables
+lab_response <- lab[ , c(1:29)]
+
 lab <- lab[ ,-c(1:29)]
 ```
 
@@ -71,23 +73,22 @@ print(lab$Count_Plecoptera) # - OK
 print(lab$EPT_Taxa) # - OK?
 ```
 
-# Calculate Shannon (H) Index 
+# Calculate Shannon (H) Index & Abundance
 ```{r}
 # Create a sample dataframe
-lab_Shannon<- lab |>
-  select(-Count_Plecoptera, -Count_Trichoptera, -Count_Ephemeroptera, EPT_Taxa)
+lab_Shannon <- lab[ , -c(193:197)]
 
 # Convert all columns to numeric format
-lab <- data.frame(sapply(lab, as.numeric))
+lab_Shannon <- data.frame(sapply(lab_Shannon, as.numeric))
 
 # Calculate the total number of observations at each sampling site
 # df$total_count <- rowSums(df[, -1])
-lab$total_count <- rowSums(lab, na.rm = TRUE)
+abundance <- rowSums(lab_Shannon, na.rm = TRUE) # = Abundance
 
 
 # Calculate the proportion of each species within each sampling site
 # proportions <- df[, -c(1, ncol(df))] / df$total_count
- proportions <- lab[, -c(1, ncol(lab))] / lab$total_count
+ proportions <- lab_Shannon[, -c(1, ncol(lab_Shannon))] / abundance
 
 # Calculate the Shannon index for each sampling site
 # shannon <- -rowSums(proportions * log2(proportions), na.rm = TRUE)
@@ -99,18 +100,37 @@ average_shannon <- mean(shannon, na.rm = TRUE)
 # Display the results
 print(shannon)
 print(average_shannon)
-
-# combine df together EPT results + shannon results 
-```
-
-# Calculate Abundance 
-```{r}
-
 ```
 
 # Calculate Number of Taxa 
 ```{r}
+# Iterate through each row and count the cells meeting the conditions
+Number_Taxa <- apply(lab_Shannon, 1, function(row) {
+  sum(!is.na(row) & row > 0)
+})
+```
 
+# Combine all Results in one DF
+```{r}
+# combine all results + response variables 
+lab_new <- cbind(lab, shannon, Number_Taxa, abundance, lab_response)
+
+# create clean df which only contains the values needed 
+lab_index <- lab_new |>
+  dplyr::select(EPT_Taxa, shannon, Number_Taxa, abundance, Water_depth_cm, `Flow_velocity_v60_cm/s`)
 ```
 
 # Calculate K-Index (Theodoropoulos et al., 2018)
+```{r}
+lab_index <- lab_index |>
+  mutate(k_index = 0.4*(Number_Taxa/max(Number_Taxa, na.rm = TRUE))
+         + 0.3*(shannon/max(shannon, na.rm = TRUE))
+         + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
+         + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
+  dplyr::select(-EPT_Taxa, -shannon, -Number_Taxa, -abundance)
+
+# export .csv for model 
+write.csv(lab_index, "Data/Lab_k_index.csv")
+```
+
+
