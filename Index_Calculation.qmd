@@ -117,7 +117,7 @@ lab_new <- cbind(lab, shannon, Number_Taxa, abundance, lab_response)
 
 # create clean df which only contains the values needed 
 lab_index <- lab_new |>
-  dplyr::select(EPT_Taxa, shannon, Number_Taxa, abundance, Water_depth_cm, `Flow_velocity_v60_cm/s`)
+  dplyr::select(EPT_Taxa, shannon, Number_Taxa, abundance, Water_depth_cm, `Flow_velocity_v60_cm/s`, x, y, z, Reach_Untersuchungsstelle)
 ```
 
 # Calculate K-Index (Theodoropoulos et al., 2018)
@@ -129,8 +129,27 @@ lab_index <- lab_index |>
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(-EPT_Taxa, -shannon, -Number_Taxa, -abundance)
 
+# Remove rows with NA values using na.omit()
+lab_index_clean <- na.omit(lab_index)
+
 # export .csv for model 
-write.csv(lab_index, "Data/Lab_k_index.csv")
+write.csv(lab_index_clean, "Data/Lab_k_index.csv")
+
+```
+
+```{r}
+# Identify rows with NA values
+na_rows <- apply(is.na(lab_index_clean), 1, any)
+
+# Extract rows with NA values
+na_rows_data <- lab_index_clean[na_rows, ]
+
+# Get row indices of NA values
+na_row_indices <- which(na_rows)
+
+# Print the resulting rows and indices
+print(na_rows_data)
+print(na_row_indices)
 ```
 
 

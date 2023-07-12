@@ -19,15 +19,15 @@ library(readr)
 # Load Data
 data <- read_delim("Data/Lab_k_index.csv")
 
-data <- data[ ,-1]
+data <- data[ ,-c(1)]
 
 data <- data |>
   rename(Landquart_results_depth_9 = Water_depth_cm, Landquart_results_velocity_9 = `Flow_velocity_v60_cm/s`) |>
   mutate(Landquart_results_depth_9 = Landquart_results_depth_9/100,
-         Landquart_results_velocity_9 = Landquart_results_velocity_9/100)
+         Landquart_results_velocity_9 = Landquart_results_velocity_9)
 
 # change variable type which we want to predict 
-#data$All <- as.factor(data$All)
+data$Reach_Untersuchungsstelle <- as.factor(data$Reach_Untersuchungsstelle)
 ```
 
 # BRT 
@@ -39,7 +39,16 @@ test_data <- data[-train_indices, ]
 
 # Define the boosted regression tree model
 boost_model <- gbm(k_index ~ ., data = train_data, distribution = "gaussian",
-                   n.trees = 10000, interaction.depth = 5, shrinkage = 0.1, n.minobsinnode = 1)
+                   n.trees = 100, interaction.depth = 1, shrinkage = 0.1, n.minobsinnode = 1)
+
+# interaction.depth = maximale höhe des Baumes (2 = Baum splitted sich nur 2 mal auf, je höher die Zahl desto feiner werden die Bäume) --> bei nur zwei Variablen im default lassen für die erste male 
+# default: interaction.depth = 1
+
+# n.trees = wie viele sukzesive bäume soll der algorithmus kreien, wie viele versch. Bäume, je grösser die Zahl desto rechenintensiver. Mit 726 Datenpunkten kann man gut mit default anfangen 
+# default: n.trees = 100
+# Theodoro. 2018 hat at least 1000 verwendet
+
+?gbm
 ```
 
 # Model Performance 
@@ -65,15 +74,24 @@ plot(result_raster)
 
 # 10 fold cross validation 
 ```{r}
-install.packages("caret")  # Install the caret package if not already installed
+# install.packages("caret")  # Install the caret package if not already installed
 library(caret)             # Load the caret package
 
 ctrl <- trainControl(method = "cv",  # Cross-validation method
-                     number = 10,    # Number of folds
-                     verboseIter = TRUE)  # Print progress during training
+                     number = 10)    # Number of folds
 
-model <- train(k_index ~ Landquart_results_depth_9 + Landquart_results_velocity_9, data = train_data, method = "gbm", trControl = ctrl)
+
+model <- train(k_index ~. , data = train_data, method = "gbm", trControl = ctrl)
 
 model$results  # Print the results of each fold
+
+ggplot() +
+  geom_point(data = data, aes(x = x, y = y)) 
+
+# trainingsdaten werden in z.B. 5 folds aufgeteilt 
+# testdatensatz lässt man mal aussen vor, und tested man dann erst am schluss 
+
+# mse gibt dann resultat - je kleiner mse desto besser - so kann Parametereinstellung geprüft werden/ auswählen 
+# wenn parameter ausgewählt wurden, dann kann CV auf die Testdaten angewendet werden zum schauen wie gut das Modell ist 
 ```
 
