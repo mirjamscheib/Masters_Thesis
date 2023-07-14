@@ -131,7 +131,7 @@ abiotic1 <- abiotic1 |>
 ### Abiotic2
 ```{r}
 # cut abiotic data into two datasets - the two different tables which are in the original excel file 
-abiotic2 <- abiotic[ ,c(25:39)]
+abiotic2 <- abiotic[c(1:177) ,c(25:39)]
 
 # label header into R friendly characters 
 colnames(abiotic2) <- c("River", "Reach_Untersuchungsstelle", "Abiotic_measured_by", "Date_of_survey", "Time_of_survey", "pH", "Conductivity_ys_s", "Oxygen_content_mg_l", "Oxygen_saturation_%", "Turbidity_FNU", "Temperature_C", "Discharge_m3_s", "Water_gauge_MueM", "Gauging_station", "Varia")
@@ -167,7 +167,7 @@ oxy_content <- na.omit(oxy_content)
 
 oxy_sat <- as.data.frame(matrix(unlist(abiotic2$`Oxygen_saturation_%`, use.names=FALSE),ncol=3, byrow=TRUE))
 colnames(oxy_sat) <- c("Oxygen_saturation_%_before", "Oxygen_saturation_%_during", "Oxygen_saturation_%_after")
-oxy_sat <- oxy_sat[c(1:54), ]
+oxy_sat <- oxy_sat[c(1:59), ]
 
 turbidity <- as.data.frame(matrix(unlist(abiotic2$Turbidity_FNU, use.names=FALSE),ncol=3, byrow=TRUE))
 colnames(turbidity) <- c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after")
@@ -187,10 +187,12 @@ water_gauge <- na.omit(water_gauge)
 
 varia <- as.data.frame(matrix(unlist(abiotic2$Varia, use.names=FALSE),ncol=3, byrow=TRUE))
 colnames(varia) <- c("Varia_before", "Varia_during", "Varia_after")
-varia <- varia[c(1:54), ]
+varia <- varia[c(1:59), ]
 
 # bind dataframes together to one dataframe  
 abiotic2 <- cbind(abiotic2_sum, time, pH, conductivity, oxy_content, oxy_sat, turbidity, temp, discharge, water_gauge, varia)
+
+# time
 
 # bind abiotic1 with abiotic2 together
 abiotic <- abiotic1 |>
