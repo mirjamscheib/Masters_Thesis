@@ -1,0 +1,220 @@
+---
+title: "Habitat_Model_VZH"
+format: html
+---
+
+# Clear R environment 
+```{r}
+#clear R environment ---------------------------------------
+rm(list = ls())
+```
+
+# Install and load packages 
+```{r}
+# check for a package, install and load ---------------------------------------
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+pkgCheck("terra")
+pkgCheck("raster")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
+pkgCheck("scales")
+```
+
+# Load input rasters (velocity only)
+```{r}
+# Read raster-files of velocities ---------------------------------------
+v_path <- "Data/raster_files"
+
+# read raster-files ---------------------------------------
+velocity_2 <- raster(file.path(v_path, "Landquart_results_velocity_2.tif"))
+```
+
+# FUNCTION 
+## Reclassification
+```{r}
+# function for reclassified rasters without persistent habitats
+# x = corresponding raster
+reclass_raster <- function(x, output_file){
+    x[x == 0] <- NA  # Set all 0-cells to NA
+    reclass_table <- c(0, 0.05, 1, 
+                   0.05, 0.25, 3, 
+                   0.25, 0.75, 5,
+                   0.75, 1.50, 4,
+                   1.50, 2.50, 2,
+                   2.50, Inf, NA) # Define reclassification table
+    raster_classify <- reclassify(x, reclass_table,  include.lowest = TRUE)
+    writeRaster(raster_classify, output_file, format = "GTiff", overwrite = TRUE)  # Save the reclassified raster
+  return(raster_classify)
+}
+
+# Test <- reclass_raster(velocity_2, output_file = "Data/results_univariate/raster_classify_2.tif")
+# plot(Test)
+
+# function for reclassified rasters wit persistent habitats
+# x = corresponding raster
+# y = classified raster at base flow
+reclass_raster_pers <- function(x, y, output_file){
+  x[x == 0] <- NA  # Set all 0-cells to NA
+    reclass_table <- c(0, 0.05, 1, 
+                   0.05, 0.25, 3, 
+                   0.25, 0.75, 5,
+                   0.75, 1.50, 4,
+                   1.50, 2.50, 2,
+                   2.50, Inf, NA) # Define reclassification table
+    raster_classify <- reclassify(x, reclass_table,  include.lowest = TRUE)
+    pers_class <- mask(raster_classify, y)
+    writeRaster(raster_classify, output_file, format = "GTiff", overwrite = TRUE)  # Save the reclassified raster
+    return(raster_classify)
+}
+
+# Test_pers <- reclass_raster_pers(velocity_2, Test)
+# plot(Test_pers)
+```
+
+
+
+# Habitat modelling 
+# Read Suitability Curve 
+```{r}
+# Read suitability curve ---------------------------------------
+HSC_path <- "Data/HSC_MI/HSC_MI.csv" 
+HSC <- read.csv(HSC_path, sep=";", dec=".", header = TRUE)
+```
+
+# Univariate Habitat Model (Velocity Class)
+```{r}
+# Read raster-files of velocities ---------------------------------------
+v_path <- "Data/results_univariate"
+
+# read raster-files ---------------------------------------
+v_2 <- raster(file.path(v_path, "raster_classify_2.tif"))
+```
+
+## FUNCTION HM 
+```{r}
+# define function for univariate calculation -----------------------------------
+HM <- function(x, y = HSC$Bewohnbarkeitsklasse, z = HSC$HSI){
+  univariat <- calc(x, fun = approxfun(y, z, rule = 2)) # Univariat habitat model
+  wua <- cellStats(univariat, 'sum') * 4                       # WUA calculation 
+  freq_table <- as.data.frame(freq(univariat, digit=1, useNA= "no"))  # freq_table calculation 
+  sum(wua, freq_table)
+  writeRaster(univariat, filename="Data/results_univariate/VZH_2.tif",
+              format="GTiff", overwrite = TRUE)
+  }
+
+Test_HM <- HM(v_2)
+
+plot(Test_HM)
+
+# calculation for all Q's ---------------------------------------
+VZH_2 <- univariat_v(v_2)
+
+
+# Save the clipped raster-files ---------------------------------------
+writeRaster(VZH_2, filename="QGIS_Project/results_univariate/VZH_2.tif", format="GTiff", overwrite = TRUE)
+```
+
+## Persistent Habitats of Habitat Model 
+```{r}
+# Clip the raster1 with raster2 ---------------------------------------
+persistent_2 <- mask(VZH_2, VZH_2)
+
+
+# Save the clipped raster-files ---------------------------------------
+writeRaster(persistent_2, filename="QGIS_Project/results_univariate/persistent_VZH_2.tif", format="GTiff", overwrite = TRUE)
+```
+
+# Calculate WUA 
+```{r}
+# define function for WUA calculation -----------------------------------
+wua <- function(x){
+  cellStats(x, 'sum') * 4
+}
+
+# calculate WUA for all Q's -----------------------------------
+WUA_VZH_2 <- wua(VZH_2)
+
+
+# calculate WUA für pers. habitats for all Q's ----------------------------------
+WUA_pers_2 <- wua(persistent_2)
+
+```
+
+# Calculate frequency table 
+```{r}
+# define function for feq_table calculation -----------------------------------
+feq_table <- function(x){
+  as.data.frame(freq(x, digit=1, useNA= "no"))
+}
+
+# calculate feq_table for all Q's -----------------------------------
+freq_VZH_2 <- feq_table(VZH_2)
+```
+
+# Calculate WA_tot 
+```{r}
+# define function for WA_tot calculation -----------------------------------
+wa_tot <- function(x, column_name){
+  sum(x[[column_name]]) * 4
+}
+
+# calculate feq_table for all Q's -----------------------------------
+WA_tot_VZH_2 <- wa_tot(freq_VZH_2, column_name = "count")
+```
+
+# Calculate HHS [-] 
+```{r}
+# calculate HHS for all Q's -----------------------------------
+HHS_VZH_2 <- WUA_VZH_2/WA_tot_VZH_2
+
+# calculate HHS persistent for all Q's -----------------------------------
+HHS_pers_2 <- WUA_pers_2/WA_tot_VZH_2
+```
+
+# Create dataframe and .csv of calculated indices 
+```{r}
+# data frame WUA, HHS etc. -----------------------------------
+results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH"), Discharge = c(2.4, 3.9, 4.6, 7, 9, 11.4, 13.3, 15, 18.9, 22, 25, 28, 32.69), 
+                      WUA_normal = c(WUA_VZH_2, WUA_VZH_3, WUA_VZH_4, WUA_VZH_7, WUA_VZH_9, WUA_VZH_11, WUA_VZH_13, WUA_VZH_15, WUA_VZH_18, WUA_VZH_22, WUA_VZH_25, WUA_VZH_28, WUA_VZH_32), 
+                      WUA_pers = c(WUA_pers_2, WUA_pers_3, WUA_pers_4, WUA_pers_7, WUA_pers_9,  WUA_pers_11, WUA_pers_13, WUA_pers_15, WUA_pers_18, WUA_pers_22, WUA_pers_25, WUA_pers_28, WUA_pers_32),
+                      HHS = c(HHS_VZH_2, HHS_VZH_3, HHS_VZH_4, HHS_VZH_7, HHS_VZH_9, HHS_VZH_11, HHS_VZH_13, HHS_VZH_15, HHS_VZH_18, HHS_VZH_22, HHS_VZH_25, HHS_VZH_28, HHS_VZH_32),
+                      HHS_pers = c(HHS_pers_2, HHS_pers_3, HHS_pers_4, HHS_pers_7, HHS_pers_9, HHS_pers_11, HHS_pers_13, HHS_pers_15, HHS_pers_18, HHS_pers_22, HHS_pers_25, HHS_pers_28, HHS_pers_32),
+                      WA_tot = c(WA_tot_VZH_2, WA_tot_VZH_3, WA_tot_VZH_4, WA_tot_VZH_7, WA_tot_VZH_9, WA_tot_VZH_11, WA_tot_VZH_13, WA_tot_VZH_15, WA_tot_VZH_18, WA_tot_VZH_22, WA_tot_VZH_25, WA_tot_VZH_28, WA_tot_VZH_32))
+
+# safe df into .csv file -----------------------------------
+write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
+
+# create dataframe for barchart visualisation 
+freq_VZH_2 <- feq_table(raster_classify_2)
+freq_VZH_9 <- feq_table(raster_classify_9)
+freq_VZH_pers_9 <- feq_table(pers_class_9)
+
+
+# bind together frequency table results for plots
+join <- freq_VZH_2 |>
+  full_join(freq_VZH_9, by = "value") |>
+  full_join(freq_VZH_pers_9, by = "value")
+
+# give colnames for plotting 
+colnames(join) <- c("value", "VZH_2", "VZH_9", "VZH_pers_9")
+
+# write data frame into .csv file
+write.csv(join, file = "results_statistics/VZH.csv", row.names = FALSE)
+```
+
+
+
+
