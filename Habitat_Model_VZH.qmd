@@ -33,7 +33,7 @@ pkgCheck("tidyr")
 pkgCheck("scales")
 ```
 
-# Load input rasters (velocity only)
+# Load input rasters - velocity
 ```{r}
 # Read raster-files of velocities ---------------------------------------
 v_path <- "Data/raster_files"
@@ -57,7 +57,8 @@ reclass_raster <- function(x, output_file){
                    2.50, Inf, NA) # Define reclassification table
     raster_classify <- reclassify(x, reclass_table,  include.lowest = TRUE)
     writeRaster(raster_classify, output_file, format = "GTiff", overwrite = TRUE)  # Save the reclassified raster
-  return(raster_classify)
+    return(raster_classify)
+    HSC <- read_delim("Data/HSC_MI/HSC_MI.csv") # Read suitability curve
 }
 
 # Test <- reclass_raster(velocity_2, output_file = "Data/results_univariate/raster_classify_2.tif")
@@ -110,9 +111,9 @@ HM <- function(x, y = HSC$Bewohnbarkeitsklasse, z = HSC$HSI){
   univariat <- calc(x, fun = approxfun(y, z, rule = 2)) # Univariat habitat model
   wua <- cellStats(univariat, 'sum') * 4                       # WUA calculation 
   freq_table <- as.data.frame(freq(univariat, digit=1, useNA= "no"))  # freq_table calculation 
-  sum(wua, freq_table)
-  writeRaster(univariat, filename="Data/results_univariate/VZH_2.tif",
-              format="GTiff", overwrite = TRUE)
+  return(univariat)
+  return(wua)
+  return(freq_table)
   }
 
 Test_HM <- HM(v_2)
