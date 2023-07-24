@@ -17,9 +17,9 @@ library(readr)
 # Load Data
 ```{r}
 # Load Data
-data <- read_delim("Data/Lab_k_index.csv")
+data <- read_delim("Data/Data_Complete/Lab_k_index.csv")
 
-data <- data[ ,-c(1)]
+data <- data[ ,-c(1,3,4,5, 10, 13, 17, 18:21, 25, 26)]
 
 data <- data |>
   rename(Landquart_results_depth_9 = Water_depth_cm, Landquart_results_velocity_9 = `Flow_velocity_v60_cm/s`) |>
@@ -28,6 +28,8 @@ data <- data |>
 
 # change variable type which we want to predict 
 data$Reach_Untersuchungsstelle <- as.factor(data$Reach_Untersuchungsstelle)
+data$Clogging_6_Klassen <- as.factor(data$Clogging_6_Klassen)
+data$Clogging_3_Klassen <- as.factor(data$Clogging_3_Klassen)
 ```
 
 # BRT 
@@ -65,11 +67,23 @@ print(paste("Mean Squared Error:", mse))
 ```{r}
 # predict results with raster
 # raster with depth and velocity data 
-env_data <- stack("Data/L2/env_rasters.grd")
+env_data <- stack("Data/Rasters/env_rasters.grd")
 
 result_raster <- raster::predict(model = boost_model, object = env_data, index = 2) # index 2 because 2 layers of rasters are in the env_data variable 
 
 plot(result_raster)
+```
+
+# predict only single values from the whole model 
+```{r}
+# read raster 
+landquart <- raster("Data/raster_files/Landquart_results_velocity_9.tif")
+
+# select value to be predicted 
+input_data <- test_data[["Landquart_results_velocity_9"]]
+
+# predict values 
+predictions <- raster::predict(model = boost_model, object = landquart)
 ```
 
 # 10 fold cross validation 

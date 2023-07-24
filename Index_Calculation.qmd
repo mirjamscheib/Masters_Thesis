@@ -27,15 +27,15 @@ library(raster)
 # Load Data
 ## Lab Data
 ```{r}
-lab <- read_delim("Data/abiotic_lab.csv")
+lab <- read_delim("Data/Data_Complete/Abiotic_MI_Lab_Model.csv")
 ```
 
 # Prepare Data 
 ```{r}
 # remove all response variables
-lab_response <- lab[ , c(1:29)]
+lab_exp <- lab[ , c(1:60)]
 
-lab <- lab[ ,-c(1:29)]
+lab <- lab[ ,-c(1:60)]
 ```
 
 # Calculate EPT Taxa 
@@ -113,7 +113,7 @@ Number_Taxa <- apply(lab_Shannon, 1, function(row) {
 # Combine all Results in one DF
 ```{r}
 # combine all results + response variables 
-lab_new <- cbind(lab, shannon, Number_Taxa, abundance, lab_response)
+lab_new <- cbind(lab_exp, shannon, Number_Taxa, abundance, lab$EPT_Taxa)
 
 # create clean df which only contains the values needed 
 lab_index <- lab_new |>
@@ -121,19 +121,39 @@ lab_index <- lab_new |>
 ```
 
 # Calculate K-Index (Theodoropoulos et al., 2018)
-```{r}
 lab_index <- lab_index |>
   mutate(k_index = 0.4*(Number_Taxa/max(Number_Taxa, na.rm = TRUE))
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(-EPT_Taxa, -shannon, -Number_Taxa, -abundance)
+```{r}
+lab_index <- lab_new |>
+  mutate(k_index = 0.4*(Number_Taxa/max(Number_Taxa, na.rm = TRUE))
+         + 0.3*(shannon/max(shannon, na.rm = TRUE))
+         + 0.2*(lab$EPT_Taxa/max(lab$EPT_Taxa, na.rm = TRUE))
+         + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
+  dplyr::select(-lab$EPT_Taxa, -shannon, -Number_Taxa, -abundance, -Varia, -Varia_before,
+                -Varia_during, -Varia_after,
+                -Water_gauge_MueM_during,-Water_gauge_MueM_after,
+                -Discharge_m3_s_before, -Discharge_m3_s_during, -Discharge_m3_s_after,
+                -Water_gauge_MueM_before, -Turbidity_FNU_during, -Turbidity_FNU_after,
+                -Temperature_C_before, -Temperature_C_during, -Temperature_C_after,
+                -Turbidity_FNU_before,
+                -Conductivity_ys_s_after, -Oxygen_content_mg_l_before,
+                -Oxygen_content_mg_l_during, -Oxygen_content_mg_l_after,
+                -Time_of_survey_after, -pH_before, -pH_during, -pH_after,
+                -Conductivity_ys_s_before, -Conductivity_ys_s_during, -join_key,
+                -Abiotic_measured_by.y, -Gauging_station, -Time_of_survey_before,
+                -Time_of_survey_during, -Abiotic_measured_by.x)
+
+lab_index
 
 # Remove rows with NA values using na.omit()
-lab_index_clean <- na.omit(lab_index)
+#lab_index_clean <- na.omit(lab_index)
 
 # export .csv for model 
-write.csv(lab_index_clean, "Data/Lab_k_index.csv")
+write.csv(lab_index, "Data/Data_Complete/Lab_k_index.csv")
 
 ```
 
