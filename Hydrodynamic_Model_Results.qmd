@@ -1,0 +1,233 @@
+---
+title: "Hydrodynamic_Model_Results"
+format: html
+---
+
+# Packages & Working directory
+```{r}
+rm(list = ls())
+
+# load all Packages 
+library(hdf5r)
+library(sp)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(Metrics)
+library(raster)
+library(spatstat.geom)
+library(spatstat.explore)
+library(gstat)
+library(purrr)
+library(tidyr)
+library(terra)
+library(tmap)
+library(rgdal)
+```
+
+# Function 
+```{r}
+hm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_path){
+  # read h5 file 
+  h5 <- h5file(h5_path)
+  
+  # access the different sub-directories ("groups") with "[[]]"
+  results <- h5[["RESULTS"]][["CellsAll"]]
+  
+  # extract velocity and water depth for every cell
+  bottomElevation <- h5[["CellsAll"]][["BottomEl"]][,]
+  waterSurfElev <- results[["HydState"]][["0000003"]][1,]
+  qX <- results[["HydState"]][["0000003"]][2,]
+  qY <- results[["HydState"]][["0000003"]][3,]
+  depth <- waterSurfElev - bottomElevation
+  vX <- qX/depth
+  vY <- qY/depth
+  V_abs <- (vX^2+vY^2)^.5
+  
+  # read mesh as a table
+  Twodm <- read.table(twodm_path, sep=" ", skip=2, header=F, fill=T)
+  
+  #split mesh in nodes and elements
+nd_df <- Twodm[which(Twodm$V1=="ND"),-1]
+colnames(nd_df) <- c( "ID", "X", "Y", "Z")
+nd_df$X <- as.numeric(nd_df$X)
+nd_df$Y <- as.numeric(nd_df$Y)
+
+# elements
+e3t_df <- Twodm[which(Twodm$V1=="E3T"),][,-1]
+colnames(e3t_df) <- c( "ID", "N1", "N2", "N3")
+
+#create table with coordinates of each triangular element (x1,y1,x2,y2,x3,y3)
+triangles <- (cbind(nd_df[e3t_df$N1, c("X","Y")], nd_df[e3t_df$N2, c("X","Y")], nd_df[e3t_df$N3, c("X","Y")], nd_df[e3t_df$N1, c("X","Y")]))
+
+tr_matrix <- matrix(unlist(triangles), ncol=8, byrow = F)
+
+#number of elements
+ID <- e3t_df$ID
+
+# Create SP object
+polys <- SpatialPolygons(mapply(function(poly, id) {
+  xy <- matrix(poly, ncol = 2, byrow = TRUE)
+  Polygons(list(Polygon(xy)), ID=id)
+}, split(tr_matrix, row(tr_matrix)), ID))
+
+# Create SPDF (exportable as shapefile)
+  mesh.sp <- SpatialPolygonsDataFrame(polys, data.frame(id=ID,
+                                                        row.names=ID))
+  
+  # link discharge results with mesh 
+  mesh.sp$waterSurfElev <- as.numeric(round(waterSurfElev,3))
+  mesh.sp$depth <- as.numeric(round(depth,3))
+  mesh.sp$V_abs <- as.numeric(round(V_abs,3))
+  
+  # write new shapefile
+  shape <- shapefile(mesh.sp, shp_path, overwrite = TRUE)
+
+  # Set the raster extent using the bounding box of the shapefile
+  #raster_extent <- extent(shape)
+  
+  # Set the raster resolution in meters
+  raster_resolution <- 0.5
+  
+  # Create an empty raster layer with the specified extent and resolution
+  raster_layer <- raster(ext = extent(shape), res = raster_resolution)
+  
+  # Rasterize the shapefile into the empty raster layer
+  # Water depth
+  raster_depth <- rasterize(shape, raster_layer, shapefile$depth)
+  
+  # velocity
+  raster_velocity <- rasterize(shape, raster_layer, shapefile$V_abs)
+  
+  # Save the raster layer as a GeoTIFF file
+  writeRaster(raster_depth, raster_wd_path, format = "GTiff", overwrite = TRUE)
+  writeRaster(raster_velocity, raster_v_path, format = "GTiff",
+              overwrite = TRUE)
+  
+  return(length(ID))
+
+}
+
+# noch beschriftung pro Q hinzufügen... 
+
+test <- hm_results(h5_path = "Data/hydrodynamic_model_results/results_2.4.h5", twodm_path = "Data/hydrodynamic_model_results/Landquart_comp.2dm", shp_path = "Data/raster_files/L2_test.shp", 
+                   raster_v_path = "Data/raster_files/L2_v_2.tif", raster_wd_path =
+                     "Data/raster_files/L2_wd_2.tif")
+
+```
+
+  
+  
+# Read results 
+```{r}
+#read results --------
+#path to results file
+h5_2  <- h5file("Data/hydrodynamic_model_results/results_2.4.h5")
+
+```
+
+# access sub-directories
+```{r}
+#to access the different sub-directories ("groups") use "[[]]"
+results_2 <- h5_2[["RESULTS"]][["CellsAll"]]
+```
+
+# extract velocity & waterdepth 
+```{r}
+# Results Q2.4
+bottomElevation_2 <- h5_2[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_2 <- results_2[["HydState"]][["0000003"]][1,]
+qX_2 <- results_2[["HydState"]][["0000003"]][2,]
+qY_2 <- results_2[["HydState"]][["0000003"]][3,]
+depth_2 <- waterSurfElev_2 - bottomElevation_2
+vX_2 <- qX_2/depth_2
+vY_2 <- qY_2/depth_2
+V_abs_2 <- (vX_2^2+vY_2^2)^.5
+```
+
+# Read mesh and create shp
+```{r}
+#mesh paths
+Twodm_path <- "Data/hydrodynamic_model_results/Landquart_comp.2dm"
+
+#read mesh as a table
+Twodm <- read.table(Twodm_path, sep="", skip=2, header=F, fill=T)
+
+#split mesh in nodes and elements
+#nodes
+nd_df <- Twodm[which(Twodm$V1=="ND"),-1]
+colnames(nd_df) <- c( "ID", "X", "Y", "Z")
+nd_df$X <- as.numeric(nd_df$X)
+nd_df$Y <- as.numeric(nd_df$Y)
+
+#elements
+e3t_df <- Twodm[which(Twodm$V1=="E3T"),][,-1]
+colnames(e3t_df) <- c( "ID", "N1", "N2", "N3")
+
+
+#create table with coordinates of each triangular element (x1,y1,x2,y2,x3,y3)
+triangles <- (cbind(nd_df[e3t_df$N1, c("X","Y")], nd_df[e3t_df$N2, c("X","Y")], nd_df[e3t_df$N3, c("X","Y")], nd_df[e3t_df$N1, c("X","Y")]))
+
+tr_matrix <- matrix(unlist(triangles), ncol=8, byrow = F)
+
+#number of elements
+ID <- e3t_df$ID
+length(ID) # 38694 triangular cells in the computational mesh
+
+# Create SP object
+polys <- SpatialPolygons(mapply(function(poly, id) {
+  xy <- matrix(poly, ncol=2, byrow=TRUE)
+  Polygons(list(Polygon(xy)), ID=id)
+}, split(tr_matrix, row(tr_matrix)), ID))
+
+
+# Create SPDF (exportable as shapefile)
+mesh.sp <- SpatialPolygonsDataFrame(polys, data.frame(id=ID, row.names=ID))
+
+#link results with mesh 
+## Q2.4
+mesh.sp$waterSurfElev_2 <- as.numeric(round(waterSurfElev_2,3))
+mesh.sp$depth_2 <- as.numeric(round(depth_2,3))
+mesh.sp$V_abs_2 <- as.numeric(round(V_abs_2,3))
+mesh.sp$substrate_all <- as.numeric(7)
+
+
+#write new shapefile
+# overwrite = TRUE
+shape <- shapefile(mesh.sp, "Data/raster_files/L2_test1.shp", overwrite = TRUE)
+```
+
+# Create raster 
+```{r}
+# Read the shapefile
+shapefile <- shapefile("raster_files/Landquart_results.shp")
+
+# Set the raster extent using the bounding box of the shapefile
+raster_extent <- extent(shapefile)
+
+# Set the raster resolution in meters
+raster_resolution <- 0.5
+
+# Create an empty raster layer with the specified extent and resolution
+raster_layer <- raster(ext = extent(shapefile), res = raster_resolution)
+
+# Rasterize the shapefile into the empty raster layer
+##### Only for water depth #####
+## Q2.4
+raster_depth_2 <- rasterize(shapefile, raster_layer, shapefile$depth_2)
+
+##### Only for velocity #####
+## Q2.4
+raster_velocity_2 <- rasterize(shapefile, raster_layer, shapefile$V_abs_2)
+
+# Save the raster layer as a GeoTIFF file
+# water depth
+writeRaster(raster_depth_2, "raster_files/Landquart_results_depth_2.tif", format = "GTiff", overwrite = TRUE)
+
+# velocity
+writeRaster(raster_velocity_2, "raster_files/Landquart_results_velocity_2.tif", format = "GTiff", overwrite = TRUE)
+
+```
+
+
