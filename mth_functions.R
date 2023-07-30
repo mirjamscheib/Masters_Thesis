@@ -97,7 +97,7 @@ foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_pat
   HSC <- read.csv(HSC_path, sep=";", dec=".", header = TRUE)
   
   # calculate univariat habitat model 
-  univariat <- calc(raster_classify, fun = approxfun(HSC$Bewohnbarkeitsklasse, HSC$HSI,
+  univariat <- calc(raster_classify, fun = approxfun(HSC$Bewohnbarkeitsklasse, HSC$HSI, # noch in function nehmen
                                                      rule = 2))
   
   # cut univariat model results with base flow scenario to get persistent habitats

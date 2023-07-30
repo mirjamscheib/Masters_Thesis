@@ -35,7 +35,6 @@ source("mth_functions.R")
 
 # Habitat Model FOEN
 ## Landqaurt: L2
-### Velocity
 ```{r}
 # L2 with Q: 2.4 m3/s
 L2_2 <- foen_hm(raster_path = "raster_files/L2_v_2.tif", 
@@ -155,10 +154,6 @@ L2_18 <- foen_hm(raster_path = "raster_files/L2_v_18.tif",
                 river = "L2", discharge = 18.9)
 ```
 
-### Water depth
-```{r}
-
-```
 
 
 ## Moesa: MR
