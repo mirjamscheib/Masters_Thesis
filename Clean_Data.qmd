@@ -2,15 +2,11 @@
 title: "Clean_Data"
 format: html
 ---
-# Clean Environment
-```{r}
-#clear R environment -------------------------------------------
-rm(list = ls())
-```
-
 
 # Libraries 
 ```{r}
+#clear R environment 
+rm(list = ls())
 
 # Load the required packages
 library("dplyr")

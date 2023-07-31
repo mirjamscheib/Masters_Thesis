@@ -1,6 +1,5 @@
 
 ####  HYDRODYNAMIC MODEL RESULTS ####
-
 # convert hydrodynamic model results into a shapefile, rasters 
 # and return the number of cells of the mesh 
 
@@ -59,8 +58,23 @@ hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_
 }
 
 
-#### FOEN HABITAT MODEL ####
+#### FUNCTION TO STACK RASTERS #### 
+# convert rasters with single attributes (water depth or velocity) into stacked rasters
 
+# meaning of the functions arguments: 
+# v_path = path of a raster containing velocity as attribute 
+# wd_path = path of a raster containing water depth as attribute 
+# stack_path = path and name of the stacked raster containing velocity and water depth per discharge
+
+stack_raster <- function(v_path, wd_path, stack_path){
+  v <- raster(v_path)                                    # read raster containing velocity per discharge
+  wd <- raster(wd_path)                                  # read raster containing water depth per discharge
+  section <- stack(v, wd)                                # combine/stack raster velocity and water depth 
+  writeRaster(section, stack_path, overwrite = TRUE)     # save stacked/combined raster 
+}
+
+
+#### FOEN HABITAT MODEL ####
 # function for reclassified rasters without persistent habitats
 
 # raster_path = path to the raster which contains a certain discharge scenario
@@ -69,30 +83,21 @@ hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_
 # output_path_hm = output path for raster of univariat habitat model
 
 foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_path_reclass, HSC_path, output_path_hm, output_path_hm_persistent, river, discharge){
-  # read raster with discharge scenario
-  scenario <- raster(raster_path) 
-  
-  # Set all 0-cells in the raster to NA
-  scenario[scenario == 0] <- NA  
-  
-  # Define reclassification table according to Schmidlin et al. (2023)
-  reclass_table <- c(0, 0.05, 1, 
+  scenario <- raster(raster_path)                 # read raster with discharge scenario
+  scenario[scenario == 0] <- NA                   # Set all 0-cells in the raster to NA 
+  reclass_table <- c(0, 0.05, 1,                  # Define reclassification table according to Schmidlin et al. (2023)
                      0.05, 0.25, 3, 
                      0.25, 0.75, 5,
                      0.75, 1.50, 4,
                      1.50, 2.50, 2,
                      2.50, Inf, NA)
-  
-  # reclassify raster according to reclass_table 
-  raster_classify <- reclassify(scenario, reclass_table,  include.lowest = TRUE) 
-  
-  # cut reclassified raster with base flow scenario to get persistent habitats
-  pers_class <- mask(raster_classify, raster(base_flow))
-  
-  # save reclassified raster
-  writeRaster(pers_class, output_path_pers_reclass, format = "GTiff", overwrite = TRUE) 
-  # save reclassified raster of persistent habitats
-  writeRaster(raster_classify, output_path_reclass, format = "GTiff", overwrite = TRUE) 
+  raster_classify <- reclassify(scenario, reclass_table,   # reclassify raster according to reclass_table
+                                include.lowest = TRUE) 
+  pers_class <- mask(raster_classify, raster(base_flow))   # cut reclassified raster with base flow scenario to get persistent habitats
+  writeRaster(pers_class, output_path_pers_reclass,        # save reclassified raster
+              format = "GTiff", overwrite = TRUE) 
+  writeRaster(raster_classify, output_path_reclass,        # save reclassified raster of persistent habitats
+              format = "GTiff", overwrite = TRUE) 
   # read HSC 
   HSC <- read.csv(HSC_path, sep=";", dec=".", header = TRUE)
   

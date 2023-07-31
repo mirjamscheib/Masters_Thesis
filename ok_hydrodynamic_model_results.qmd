@@ -119,7 +119,50 @@ L2_18 <- hdm_results(
 
 ### Stacked Rasters 
 ```{r}
+# L2 with Q: 2.4 m3/s
+stack_raster(v_path = "raster_files/L2_v_2.tif",
+             wd_path = "raster_files/L2_wd_2.tif",
+             stack_path = "rasters_stacked/L2_2.grd")
 
+# L2 with Q: 3.9 m3/s
+stack_raster(v_path = "raster_files/L2_v_3.tif",
+             wd_path = "raster_files/L2_wd_3.tif",
+             stack_path = "rasters_stacked/L2_3.grd")
+
+# L2 with Q: 4.6 m3/s
+stack_raster(v_path = "raster_files/L2_v_4.tif",
+             wd_path = "raster_files/L2_wd_4.tif",
+             stack_path = "rasters_stacked/L2_4.grd")
+
+# L2 with Q: 7 m3/s
+stack_raster(v_path = "raster_files/L2_v_7.tif",
+             wd_path = "raster_files/L2_wd_7.tif",
+             stack_path = "rasters_stacked/L2_7.grd")
+
+# L2 with Q: 9.24 m3/s
+stack_raster(v_path = "raster_files/L2_v_9.tif",
+             wd_path = "raster_files/L2_wd_9.tif",
+             stack_path = "rasters_stacked/L2_9.grd")
+
+# L2 with Q: 11.4 m3/s
+stack_raster(v_path = "raster_files/L2_v_11.tif",
+             wd_path = "raster_files/L2_wd_11.tif",
+             stack_path = "rasters_stacked/L2_11.grd")
+
+# L2 with Q: 13.3 m3/s
+stack_raster(v_path = "raster_files/L2_v_13.tif",
+             wd_path = "raster_files/L2_wd_13.tif",
+             stack_path = "rasters_stacked/L2_13.grd")
+
+# L2 with Q: 15 m3/s
+stack_raster(v_path = "raster_files/L2_v_15.tif",
+             wd_path = "raster_files/L2_wd_15.tif",
+             stack_path = "rasters_stacked/L2_15.grd")
+
+# L2 with Q: 18.9 m3/s
+stack_raster(v_path = "raster_files/L2_v_18.tif",
+             wd_path = "raster_files/L2_wd_18.tif",
+             stack_path = "rasters_stacked/L2_18.grd")
 ```
 
 

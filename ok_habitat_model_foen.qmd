@@ -165,16 +165,19 @@ L2_18 <- foen_hm(raster_path = "raster_files/L2_v_18.tif",
 # Bind Metric Results 
 ```{r}
 # metrics
-together <- rbind(Test$metrics, Test2$metrics)
+metric_results <- rbind(L2_2$metrics, L2_3$metrics, L2_4$metrics,
+                        L2_7$metrics, L2_9$metrics, L2_11$metrics,
+                        L2_13$metrics,L2_15$metrics, L2_18$metrics)
 
-# safe df into .csv file -----------------------------------
-write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
+# safe df into .csv file
+write.csv(metric_results, file = "results_foen/results_foen_metrics.csv", row.names = FALSE)
 
 # freq_tables
-together1 <- rbind(Test$freq, Test2$freq)
+freq_tables <- rbind(L2_2$freq, L2_3$freq, L2_4$freq, L2_7$freq, L2_9$freq,
+                     L2_11$freq, L2_13$freq, L2_15$freq, L2_18$freq)
 
 # write data frame into .csv file
-write.csv(join, file = "results_statistics/VZH.csv", row.names = FALSE)
+write.csv(freq_tables, file = "results_foen/results_foen_freq_tables.csv", row.names = FALSE)
 ```
 
 
