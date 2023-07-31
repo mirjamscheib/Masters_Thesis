@@ -20,89 +20,89 @@ library("writexl")
 # Load Data
 ```{r}
 # abiotic data
-abiotic <- read_delim("Data/Abiotic_MI_Sampling/Abiotic_2022_2023_FINAL.csv")
+abiotic <- read_delim("abiotic_mi_sampling/Abiotic_2022_2023_FINAL.csv")
 
 # coordinate data from every location 
 # Glenner 
-gl1 <- read_delim("Data/GPS_Punkte/GL1.csv", col_names = FALSE)
-gl2 <- read_delim("Data/GPS_Punkte/GL2.csv", col_names = FALSE)
-gl3 <- read_delim("Data/GPS_Punkte/GL3.csv", col_names = FALSE)
-gl4 <- read_delim("Data/GPS_Punkte/GL4.csv", col_names = FALSE)
-gl5 <- read_delim("Data/GPS_Punkte/GL5.csv", col_names = FALSE)
-gl6 <- read_delim("Data/GPS_Punkte/GL6.csv", col_names = FALSE)
+gl1 <- read_delim("abiotic_mi_sampling/GPS_Points/GL1.csv", col_names = FALSE)
+gl2 <- read_delim("abiotic_mi_sampling/GPS_Points/GL2.csv", col_names = FALSE)
+gl3 <- read_delim("abiotic_mi_sampling/GPS_Points/GL3.csv", col_names = FALSE)
+gl4 <- read_delim("abiotic_mi_sampling/GPS_Points/GL4.csv", col_names = FALSE)
+gl5 <- read_delim("abiotic_mi_sampling/GPS_Points/GL5.csv", col_names = FALSE)
+gl6 <- read_delim("abiotic_mi_sampling/GPS_Points/GL6.csv", col_names = FALSE)
 
 # Landquart
-l1 <- read_delim("Data/GPS_Punkte/L1.csv", col_names = FALSE)
-l2 <- read_delim("Data/GPS_Punkte/L2.csv", col_names = FALSE)
-l3 <- read_delim("Data/GPS_Punkte/L3.csv", col_names = FALSE)
-l4 <- read_delim("Data/GPS_Punkte/L4.csv", col_names = FALSE)
-lr <- read_delim("Data/GPS_Punkte/LR.csv", col_names = FALSE)
+l1 <- read_delim("abiotic_mi_sampling/GPS_Points/L1.csv", col_names = FALSE)
+l2 <- read_delim("abiotic_mi_sampling/GPS_Points/L2.csv", col_names = FALSE)
+l3 <- read_delim("abiotic_mi_sampling/GPS_Points/L3.csv", col_names = FALSE)
+l4 <- read_delim("abiotic_mi_sampling/GPS_Points/L4.csv", col_names = FALSE)
+lr <- read_delim("abiotic_mi_sampling/GPS_Points/LR.csv", col_names = FALSE)
 
 # Moesa 
-m1 <- read_delim("Data/GPS_Punkte/M1.csv", col_names = FALSE)
-m2 <- read_delim("Data/GPS_Punkte/M2.csv", col_names = FALSE)
-m3 <- read_delim("Data/GPS_Punkte/M3.csv", col_names = FALSE)
-m4 <- read_delim("Data/GPS_Punkte/M4.csv", col_names = FALSE)
-m5 <- read_delim("Data/GPS_Punkte/M5.csv", col_names = FALSE)
-m6 <- read_delim("Data/GPS_Punkte/M6.csv", col_names = FALSE)
-m7 <- read_delim("Data/GPS_Punkte/M7.csv", col_names = FALSE)
-mr <- read_delim("Data/GPS_Punkte/MR.csv", col_names = FALSE)
+m1 <- read_delim("abiotic_mi_sampling/GPS_Points/M1.csv", col_names = FALSE)
+m2 <- read_delim("abiotic_mi_sampling/GPS_Points/M2.csv", col_names = FALSE)
+m3 <- read_delim("abiotic_mi_sampling/GPS_Points/M3.csv", col_names = FALSE)
+m4 <- read_delim("abiotic_mi_sampling/GPS_Points/M4.csv", col_names = FALSE)
+m5 <- read_delim("abiotic_mi_sampling/GPS_Points/M5.csv", col_names = FALSE)
+m6 <- read_delim("abiotic_mi_sampling/GPS_Points/M6.csv", col_names = FALSE)
+m7 <- read_delim("abiotic_mi_sampling/GPS_Points/M7.csv", col_names = FALSE)
+mr <- read_delim("abiotic_mi_sampling/GPS_Points/MR.csv", col_names = FALSE)
 
 # Plessur
-p1 <- read_delim("Data/GPS_Punkte/P1.csv", col_names = FALSE)
-p2 <- read_delim("Data/GPS_Punkte/P2.csv", col_names = FALSE)
-p3 <- read_delim("Data/GPS_Punkte/P3.csv", col_names = FALSE)
-pr <- read_delim("Data/GPS_Punkte/PR.csv", col_names = FALSE)
+p1 <- read_delim("abiotic_mi_sampling/GPS_Points/P1.csv", col_names = FALSE)
+p2 <- read_delim("abiotic_mi_sampling/GPS_Points/P2.csv", col_names = FALSE)
+p3 <- read_delim("abiotic_mi_sampling/GPS_Points/P3.csv", col_names = FALSE)
+pr <- read_delim("abiotic_mi_sampling/GPS_Points/PR.csv", col_names = FALSE)
 
 # Sitter
-s1 <- read_delim("Data/GPS_Punkte/S1.csv", col_names = FALSE)
-s2 <- read_delim("Data/GPS_Punkte/S2.csv", col_names = FALSE)
-s3 <- read_delim("Data/GPS_Punkte/S3.csv", col_names = FALSE)
-s4 <- read_delim("Data/GPS_Punkte/S4.csv", col_names = FALSE)
-s5 <- read_delim("Data/GPS_Punkte/S5.csv", col_names = FALSE)
-s6 <- read_delim("Data/GPS_Punkte/S6.csv", col_names = FALSE)
+s1 <- read_delim("abiotic_mi_sampling/GPS_Points/S1.csv", col_names = FALSE)
+s2 <- read_delim("abiotic_mi_sampling/GPS_Points/S2.csv", col_names = FALSE)
+s3 <- read_delim("abiotic_mi_sampling/GPS_Points/S3.csv", col_names = FALSE)
+s4 <- read_delim("abiotic_mi_sampling/GPS_Points/S4.csv", col_names = FALSE)
+s5 <- read_delim("abiotic_mi_sampling/GPS_Points/S5.csv", col_names = FALSE)
+s6 <- read_delim("abiotic_mi_sampling/GPS_Points/S6.csv", col_names = FALSE)
 
 # Saane 
-sa1 <- read_delim("Data/GPS_Punkte/SA1.csv", col_names = FALSE)
-sa2 <- read_delim("Data/GPS_Punkte/SA2.csv", col_names = FALSE)
-sa3 <- read_delim("Data/GPS_Punkte/SA3.csv", col_names = FALSE)
-sa4 <- read_delim("Data/GPS_Punkte/SA4.csv", col_names = FALSE)
-sa5 <- read_delim("Data/GPS_Punkte/SA5.csv", col_names = FALSE)
-sa6 <- read_delim("Data/GPS_Punkte/SA6.csv", col_names = FALSE)
-sa7 <- read_delim("Data/GPS_Punkte/SA7.csv", col_names = FALSE)
-sar <- read_delim("Data/GPS_Punkte/SAR.csv", col_names = FALSE)
+sa1 <- read_delim("abiotic_mi_sampling/GPS_Points/SA1.csv", col_names = FALSE)
+sa2 <- read_delim("abiotic_mi_sampling/GPS_Points/SA2.csv", col_names = FALSE)
+sa3 <- read_delim("abiotic_mi_sampling/GPS_Points/SA3.csv", col_names = FALSE)
+sa4 <- read_delim("abiotic_mi_sampling/GPS_Points/SA4.csv", col_names = FALSE)
+sa5 <- read_delim("abiotic_mi_sampling/GPS_Points/SA5.csv", col_names = FALSE)
+sa6 <- read_delim("abiotic_mi_sampling/GPS_Points/SA6.csv", col_names = FALSE)
+sa7 <- read_delim("abiotic_mi_sampling/GPS_Points/SA7.csv", col_names = FALSE)
+sar <- read_delim("abiotic_mi_sampling/GPS_Points/SAR.csv", col_names = FALSE)
 
 # Sense/Singine 
-se1 <- read_delim("Data/GPS_Punkte/SE1.csv", col_names = FALSE)
-se2 <- read_delim("Data/GPS_Punkte/SE2-new.csv", col_names = FALSE)
-se3 <- read_delim("Data/GPS_Punkte/SE3-NEW.csv", col_names = FALSE)
-se4 <- read_delim("Data/GPS_Punkte/SE4.csv", col_names = FALSE)
-sr <- read_delim("Data/GPS_Punkte/SR.csv", col_names = FALSE)
+se1 <- read_delim("abiotic_mi_sampling/GPS_Points/SE1.csv", col_names = FALSE)
+se2 <- read_delim("abiotic_mi_sampling/GPS_Points/SE2-new.csv", col_names = FALSE)
+se3 <- read_delim("abiotic_mi_sampling/GPS_Points/SE3-NEW.csv", col_names = FALSE)
+se4 <- read_delim("abiotic_mi_sampling/GPS_Points/SE4.csv", col_names = FALSE)
+sr <- read_delim("abiotic_mi_sampling/GPS_Points/SR.csv", col_names = FALSE)
 
 # Ticino 
-t1 <- read_delim("Data/GPS_Punkte/T1.csv", col_names = FALSE)
-t2 <- read_delim("Data/GPS_Punkte/T2.csv", col_names = FALSE)
-t3 <- read_delim("Data/GPS_Punkte/T3.csv", col_names = FALSE)
+t1 <- read_delim("abiotic_mi_sampling/GPS_Points/T1.csv", col_names = FALSE)
+t2 <- read_delim("abiotic_mi_sampling/GPS_Points/T2.csv", col_names = FALSE)
+t3 <- read_delim("abiotic_mi_sampling/GPS_Points/T3.csv", col_names = FALSE)
 
 # Thur 
-th1 <- read_delim("Data/GPS_Punkte/th1.csv", col_names = FALSE)
-th2 <- read_delim("Data/GPS_Punkte/th2.csv", col_names = FALSE)
-th3 <- read_delim("Data/GPS_Punkte/TH3-NEW.csv", col_names = FALSE)
-th4 <- read_delim("Data/GPS_Punkte/TH4-NEW.csv", col_names = FALSE)
-th5 <- read_delim("Data/GPS_Punkte/th5.csv", col_names = FALSE)
+th1 <- read_delim("abiotic_mi_sampling/GPS_Points/th1.csv", col_names = FALSE)
+th2 <- read_delim("abiotic_mi_sampling/GPS_Points/th2.csv", col_names = FALSE)
+th3 <- read_delim("abiotic_mi_sampling/GPS_Points/TH3-NEW.csv", col_names = FALSE)
+th4 <- read_delim("abiotic_mi_sampling/GPS_Points/TH4-NEW.csv", col_names = FALSE)
+th5 <- read_delim("abiotic_mi_sampling/GPS_Points/th5.csv", col_names = FALSE)
 
 # Verzasca
-ve2 <- read_delim("Data/GPS_Punkte/VE2.csv", col_names = FALSE)
-ve3 <- read_delim("Data/GPS_Punkte/VE3.csv", col_names = FALSE)
-ve4 <- read_delim("Data/GPS_Punkte/VE4b.csv", col_names = FALSE)
+ve2 <- read_delim("abiotic_mi_sampling/GPS_Points/VE2.csv", col_names = FALSE)
+ve3 <- read_delim("abiotic_mi_sampling/GPS_Points/VE3.csv", col_names = FALSE)
+ve4 <- read_delim("abiotic_mi_sampling/GPS_Points/VE4b.csv", col_names = FALSE)
 
 # Vorderrhein 
-vr1 <- read_delim("Data/GPS_Punkte/VR1.csv", col_names = FALSE)
-vr2 <- read_delim("Data/GPS_Punkte/VR2.csv", col_names = FALSE)
-vr3 <- read_delim("Data/GPS_Punkte/VR3.csv", col_names = FALSE)
-vr4 <- read_delim("Data/GPS_Punkte/VR4.csv", col_names = FALSE)
-vr5 <- read_delim("Data/GPS_Punkte/VR5.csv", col_names = FALSE)
-vr6 <- read_delim("Data/GPS_Punkte/VR6.csv", col_names = FALSE)
+vr1 <- read_delim("abiotic_mi_sampling/GPS_Points/VR1.csv", col_names = FALSE)
+vr2 <- read_delim("abiotic_mi_sampling/GPS_Points/VR2.csv", col_names = FALSE)
+vr3 <- read_delim("abiotic_mi_sampling/GPS_Points/VR3.csv", col_names = FALSE)
+vr4 <- read_delim("abiotic_mi_sampling/GPS_Points/VR4.csv", col_names = FALSE)
+vr5 <- read_delim("abiotic_mi_sampling/GPS_Points/VR5.csv", col_names = FALSE)
+vr6 <- read_delim("abiotic_mi_sampling/GPS_Points/VR6.csv", col_names = FALSE)
 ```
 
 # Create Join Key
@@ -200,7 +200,7 @@ abiotic <- abiotic1 |>
 ### Field Data
 ```{r}
 # Load MI data field 
-field <- read_delim("Data/Abiotic_MI_Sampling/MZB_Feldscreening.csv", col_names = FALSE)
+field <- read_delim("abiotic_mi_sampling/MZB_Feldscreening.csv", col_names = FALSE)
 
 # extract first row to repeat always 3 times 
 field_row1 <- field[1, ]
@@ -244,7 +244,7 @@ field1 <- field1 |>
 ### Lab Data
 ```{r}
 # MI data lab 
-lab <- read_delim("Data/Abiotic_MI_Sampling/MZB_SBI_Labor.csv", col_names = FALSE)
+lab <- read_delim("abiotic_mi_sampling/MZB_SBI_Labor.csv", col_names = FALSE)
 
 # remove rows and columns that aren't needed 
 lab <- lab[-c(1:2), -3]
@@ -285,10 +285,10 @@ lab_transects <- lab_transects |>
 lab_all <- cbind(lab_transects, lab_mzb)
 
 # write csv to correct not unique headers 
-write.csv(lab_all, "Data/Lab_intermediate.csv")
+write.csv(lab_all, "abiotic_mi_sampling/Lab_intermediate.csv")
 
 # load csv data 
-lab_file <- read_delim("Data/Lab_intermediate.csv")
+lab_file <- read_delim("abiotic_mi_sampling/Lab_intermediate.csv")
 
 # remove double names 
 lab_file <- lab_file |>
@@ -415,7 +415,7 @@ abiotic_field <- abiotic_field |>
   select(-River.y, -Transect.y, -Flow_range_location, -Date_of_survey.y)
 
 # write excel with field MZB results 
-write_xlsx(abiotic_field,"Data\\Data_Complete\\Abiotic_MI_Field.xlsx")
+write_xlsx(abiotic_field,"abiotic_mi_sampling\\Abiotic_MI_Field.xlsx")
 ```
   
 ## All + MZB Lab 
@@ -430,7 +430,7 @@ abiotic_lab <- abiotic_lab |>
   select(-River.y, -Date_of_survey.y)
  
 # write excel with Lab results 
-write_xlsx(abiotic_lab,"Data\\Data_Complete\\Abiotic_MI_Lab.xlsx")  
+write_xlsx(abiotic_lab,"abiotic_mi_sampling\\Abiotic_MI_Lab.xlsx")  
 ```
 
 ## All + MZB Lab with only Lab results 
@@ -444,7 +444,7 @@ abiotic_lab_model <- abiotic_lab_model |>
   select(-River.y, -Date_of_survey.y)
  
 # write excel with Lab results 
-write_xlsx(abiotic_lab_model,"Data\\Data_Complete\\Abiotic_MI_Lab_Model.xlsx")  
+write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model.xlsx")  
 ```
 
 
