@@ -27,6 +27,10 @@ data <- data |>
   mutate(Landquart_results_depth_9 = Landquart_results_depth_9/100,
          Landquart_results_velocity_9 = Landquart_results_velocity_9)
 
+# Units of raster files: 
+# velocity is in m/s
+# depth is in m
+
 # change variable type which we want to predict 
 # data$Reach_Untersuchungsstelle <- as.factor(data$Reach_Untersuchungsstelle)
 # data$Clogging_6_Klassen <- as.factor(data$Clogging_6_Klassen)

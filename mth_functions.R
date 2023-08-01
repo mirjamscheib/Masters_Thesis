@@ -82,10 +82,11 @@ stack_raster <- function(v_path, wd_path, stack_path){
 # HSC_path = path of HSC 
 # output_path_hm = output path for raster of univariat habitat model
 
-foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_path_reclass, HSC_path, output_path_hm, output_path_hm_persistent, river, discharge){
-  scenario <- raster(raster_path)                 # read raster with discharge scenario
-  scenario[scenario == 0] <- NA                   # Set all 0-cells in the raster to NA 
-  reclass_table <- c(0, 0.05, 1,                  # Define reclassification table according to Schmidlin et al. (2023)
+foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_path_reclass, HSC_path, col1, col2, 
+                    output_path_hm, output_path_hm_persistent, river, discharge){
+  scenario <- raster(raster_path)                          # read raster with discharge scenario
+  scenario[scenario == 0] <- NA                            # Set all 0-cells in the raster to NA 
+  reclass_table <- c(0, 0.05, 1,                           # Define reclassification table according to Schmidlin et al. (2023)
                      0.05, 0.25, 3, 
                      0.25, 0.75, 5,
                      0.75, 1.50, 4,
@@ -98,60 +99,36 @@ foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_pat
               format = "GTiff", overwrite = TRUE) 
   writeRaster(raster_classify, output_path_reclass,        # save reclassified raster of persistent habitats
               format = "GTiff", overwrite = TRUE) 
-  # read HSC 
-  HSC <- read.csv(HSC_path, sep=";", dec=".", header = TRUE)
-  
-  # calculate univariat habitat model 
-  univariat <- calc(raster_classify, fun = approxfun(HSC$Bewohnbarkeitsklasse, HSC$HSI, # noch in function nehmen
-                                                     rule = 2))
-  
-  # cut univariat model results with base flow scenario to get persistent habitats
-  persistent_univariat <- mask(univariat, raster(base_flow)) 
-  
-  # save univariat model results 
-  writeRaster(univariat, output_path_hm, format = "GTiff", overwrite = TRUE)
-  
-  # save univariat model results of persistent habitats 
-  writeRaster(persistent_univariat, output_path_hm_persistent, format = "GTiff",
+  HSC <- read.csv(HSC_path, sep=";", dec=".", header = TRUE)  # read Habitat suitability curve
+  univariat <- calc(raster_classify, fun = approxfun(         # calculate univariat habitat model 
+    HSC[ ,col1], HSC[ ,col2], rule = 2))
+  persistent_univariat <- mask(univariat, raster(base_flow))  # cut univariat model results with base flow scenario to get persistent habitats
+  writeRaster(univariat, output_path_hm, format = "GTiff",    # save univariat model results 
               overwrite = TRUE)
-  
-  # calculate weighted usable area (WUA) 
-  wua <- cellStats(univariat, 'sum') * 4    
-  
-  # calculate WUA of persistent habitats
-  wua_pers <- cellStats(persistent_univariat, 'sum') * 4 
-  
-  # calculate frequency table 
-  freq_table <- as.data.frame(freq(univariat, digit=1, useNA= "no")) 
-  
-  # calculate frequency table of persistent habitats  
-  freq_table_pers <- as.data.frame(freq(persistent_univariat, digit=1, useNA= "no"))
-  
-  # calculate wetted area (WA)
-  wa_tot <- sum(freq_table[["count"]]) * 4
-  
-  # calculate WA of persistent habitats 
-  wa_tot_pers <- sum(freq_table_pers[["count"]]) * 4
-  
-  # calculate hydraulic habitat suitability (HHS)
-  hhs <- wua/wa_tot 
-  
-  # calculate HHS of persistent habitats 
-  hhs_pers <- wua_pers/wa_tot_pers 
-  
-  # combine all relevant metrics into a dataframe 
-  results_metrics <- data.frame(WUA = wua, WUA_pers = wua_pers, WA_tot = wa_tot,
-                                WA_tot_pers = wa_tot_pers, HHS = hhs, HHS_pers =
-                                  hhs_pers, River = river, Discharge = discharge)
-  
-  # combine all frequency table results into a dataframe 
-  results_freq <- full_join(freq_table, freq_table_pers, by = "value")
+  writeRaster(persistent_univariat, output_path_hm_persistent,   # save univariat model results of persistent habitats 
+              format = "GTiff", overwrite = TRUE)
+  wua <- cellStats(univariat, 'sum') * 4                      # calculate weighted usable area (WUA)
+  wua_pers <- cellStats(persistent_univariat, 'sum') * 4      # calculate WUA of persistent habitats
+  freq_table <- as.data.frame(freq(univariat,                 # calculate frequency table 
+                                   digit=1, useNA= "no")) 
+  freq_table_pers <- as.data.frame(freq(persistent_univariat, # calculate frequency table of persistent habitats 
+                                        digit=1, useNA= "no"))
+  wa_tot <- sum(freq_table[["count"]]) * 4                    # calculate wetted area (WA)
+  wa_tot_pers <- sum(freq_table_pers[["count"]]) * 4          # calculate WA of persistent habitats 
+  hhs <- wua/wa_tot                                           # calculate hydraulic habitat suitability (HHS)
+  hhs_pers <- wua_pers/wa_tot_pers                            # calculate HHS of persistent habitats 
+  results_metrics <- data.frame(WUA = wua,                    # combine all relevant metrics into a dataframe 
+                                WUA_pers = wua_pers, 
+                                WA_tot = wa_tot,
+                                WA_tot_pers = wa_tot_pers, 
+                                HHS = hhs, 
+                                HHS_pers = hhs_pers, 
+                                River = river, 
+                                Discharge = discharge)
+  results_freq <- full_join(freq_table, freq_table_pers,      # combine all frequency table results into a dataframe 
+                            by = "value")
   results_freq <- cbind(river, discharge, results_freq)
-  
-  # give frequency table dataframe column names 
-  colnames(results_freq) <- c("River", "Discharge", "value", "normal",
-                              "persistent")
-  
-  # combine the two resulting dataframes into a list object to recall later
-  results <- list(metrics = results_metrics, freq = results_freq)
+  colnames(results_freq) <- c("River", "Discharge",           # give frequency table dataframe column names 
+                              "value", "normal", "persistent")
+  results <- list(metrics = results_metrics, freq = results_freq)   # combine the two resulting dataframes into a list object to recall later
 }

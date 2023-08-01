@@ -1,0 +1,20 @@
+{
+  "SIMULATION": {
+    "OUTPUT": [
+      "bottom_elevation",
+      "spec_discharge",
+      "water_depth",
+      "water_surface",
+      "flow_velocity_abs"
+    ],
+    "TIME": {
+      "end": 7200.0,
+      "out": 300.0,
+      "start": 0.0
+    },
+    "TIMESTEP": {
+      "init": 0.002,
+      "minimum": 0.001
+    }
+  }
+}
