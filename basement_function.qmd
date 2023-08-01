@@ -2,6 +2,22 @@
 title: "basement_function"
 format: html
 ---
+```{r}
+rm(list = ls())
+
+# load all Packages ---
+library(hdf5r)
+library(sp)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(Metrics)
+library(raster)
+library(rgeos)
+library(hydroGOF)
+library(jsonlite)
+```
 
 # function
 ```{r}
@@ -46,7 +62,7 @@ results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.
 # Test-Application of function 
 ```{r}
 basement(model_json = "hdm_basement/model.json", 
-         mesh_path = "hdm_basement/L2_computational_mesh_dsm_mod5.2dm", 
+         mesh_path = "hdm_basement/L2_mesh.2dm", 
          simulation_json = "hdm_basement/simulation.json",
          setup_h5 = "hdm_basement/setup.h5",
          results_h5 = "hdm_basement/results.h5",
