@@ -47,8 +47,7 @@ simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_omp.e
   simulation_param1 = paste("-f ", getwd(), "\\", simulation_json, sep="")
   simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
   simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
-  system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2,
-                                        simulation_param3, "-p", "-n 16"))
+  system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2, simulation_param3, "-p", "-n 16"))
 
   # Results of BASEMENT
 results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.exe"
