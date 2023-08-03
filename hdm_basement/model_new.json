@@ -1,0 +1,72 @@
+{
+  "SETUP": {
+    "DOMAIN": {
+      "BASEPLANE_2D": {
+        "GEOMETRY": {
+          "INTERPOLATION": {
+            "method": "mean"
+          },
+          "REGIONDEF": [
+            {
+              "index": 1,
+              "name": "one"
+            }
+          ],
+          "STRINGDEF": [
+            {
+              "name": "input",
+              "upstream_direction": "left"
+            },
+            {
+              "name": "output",
+              "upstream_direction": "left"
+            }
+          ],
+          "mesh_file": "hdm_basement/Landquart_computational-mesh_dsm_mod4.2dm"
+        },
+        "HYDRAULICS": {
+          "BOUNDARY": {
+            "STANDARD": [
+              {
+                "name": "out",
+                "slope": 0.033,
+                "string_name": "output",
+                "type": "uniform_out"
+              },
+              {
+                "name": "in",
+                "slope": 0.002,
+                "string_name": "input",
+                "type": "uniform_in",
+                "discharge": 13
+              }
+            ]
+          },
+          "FRICTION": {
+            "default_friction": 11,
+            "regions": [
+              {
+                "friction": 30,
+                "region_name": "one"
+              }
+            ],
+            "type": "strickler"
+          },
+          "INITIAL": {
+            "type": "dry"
+          },
+          "PARAMETER": {
+            "CFL": 0.95,
+            "fluid_density": 1000,
+            "max_time_step": 100,
+            "minimum_water_depth": 0.001
+          }
+        }
+      },
+      "PHYSICAL_PROPERTIES": {
+        "gravity": 9.81
+      }
+    },
+    "simulation_name": "landquart_dsm"
+  }
+}
