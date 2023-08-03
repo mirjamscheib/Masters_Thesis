@@ -1,0 +1,701 @@
+---
+title: "Results_Landquart"
+format: html
+---
+
+# Packages & Working directory
+```{r}
+rm(list = ls())
+
+# load all Packages 
+library(hdf5r)
+library(sp)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(Metrics)
+library(raster)
+
+# set working directory 
+setwd("~/MSc_ENR_Studium/1._Semester_HS22/Project_Work_Research_Group_1/Hydronumerische_Modellierung/Results")
+```
+
+# Read results 
+```{r}
+#read results --------
+#path to results file
+h5_s1  <- h5file("results/results_s1.h5")
+h5_k1  <- h5file("results/results_k1.h5")
+h5_k2  <- h5file("results/results_k2.h5")
+h5_k3  <- h5file("results/results_k3.h5")
+h5_k4  <- h5file("results/results_k4.h5")
+h5_k5  <- h5file("results/results_k5.h5")
+h5_k6  <- h5file("results/results_k6.h5")
+h5_k7  <- h5file("results/results_k7.h5")
+h5_q6  <- h5file("results/results_6.h5")
+
+# > h5
+# Class: H5File
+# Filename: D:\Backup_daten\eDNA\basement\luca\mountain_river\results.h5
+# Access type: H5F_ACC_RDWR
+# Listing:
+#   name  obj_type dataset.dims dataset.type_class
+# .config H5I_GROUP         <NA>               <NA>
+#   CellsAll H5I_GROUP         <NA>               <NA>
+#   NodeStrg H5I_GROUP         <NA>               <NA>
+#   NodesAll H5I_GROUP         <NA>               <NA>
+#   Parameters H5I_GROUP         <NA>               <NA>
+#   RESULTS H5I_GROUP         <NA>               <NA>
+```
+
+# access sub-directories
+```{r}
+#to access the different sub-directories ("groups") use "[[]]"
+results_s1 <- h5_s1[["RESULTS"]][["CellsAll"]]
+results_k1 <- h5_k1[["RESULTS"]][["CellsAll"]]
+results_k2 <- h5_k2[["RESULTS"]][["CellsAll"]]
+results_k3 <- h5_k3[["RESULTS"]][["CellsAll"]]
+results_k4 <- h5_k4[["RESULTS"]][["CellsAll"]]
+results_k5 <- h5_k5[["RESULTS"]][["CellsAll"]]
+results_k6 <- h5_k6[["RESULTS"]][["CellsAll"]]
+results_k7 <- h5_k7[["RESULTS"]][["CellsAll"]]
+results_q6 <- h5_q6[["RESULTS"]][["CellsAll"]]
+```
+
+# extract velocity & waterdepth 
+```{r}
+#HydState contains results from the Hydraulic module (water depth, flow velocities), TrcState those from the Tracer Module
+#Extracting the resutls from the last timestep (0000005)
+# mabsl <- as.data.frame(results[["HydState"]][[formatC(0000024, width = 7, flag = 0)]][1,]) # Meter über Meer
+# water_depth <- as.data.frame(results[["HydState"]][[formatC(0000024, width = 7, flag = 0)]][2,]) # Wassertiefe?
+# velocity <- as.data.frame(results[["HydState"]][[formatC(0000024, width = 7, flag = 0)]][3,]) # fliessgeschwindigkeit?
+#tracer4 <- as.data.frame(results[["HydState"]][[formatC(5, width = 7, flag = 0)]][4,])
+#tracer5 <- as.data.frame(results[["HydState"]][[formatC(5, width = 7, flag = 0)]][5,])
+
+# S1
+bottomElevation_s1 <- h5_s1[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_s1 <- results_s1[["HydState"]][["0000024"]][1,]
+qX_s1 <- results_s1[["HydState"]][["0000024"]][2,]
+qY_s1 <- results_s1[["HydState"]][["0000024"]][3,]
+depth_s1 <- waterSurfElev_s1 - bottomElevation_s1
+vX_s1 <- qX_s1/depth_s1
+vY_s1 <- qY_s1/depth_s1
+V_abs_s1 <- (vX_s1^2+vY_s1^2)^.5
+
+# K1
+bottomElevation_k1 <- h5_k1[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_k1 <- results_k1[["HydState"]][["0000024"]][1,]
+qX_k1 <- results_k1[["HydState"]][["0000024"]][2,]
+qY_k1 <- results_k1[["HydState"]][["0000024"]][3,]
+depth_k1 <- waterSurfElev_k1 - bottomElevation_k1
+vX_k1 <- qX_k1/depth_k1
+vY_k1 <- qY_k1/depth_k1
+V_abs_k1 <- (vX_k1^2+vY_k1^2)^.5
+
+# K2
+bottomElevation_k2 <- h5_k2[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_k2 <- results_k2[["HydState"]][["0000024"]][1,]
+qX_k2 <- results_k2[["HydState"]][["0000024"]][2,]
+qY_k2 <- results_k2[["HydState"]][["0000024"]][3,]
+depth_k2 <- waterSurfElev_k2 - bottomElevation_k2
+vX_k2 <- qX_k2/depth_k2
+vY_k2 <- qY_k2/depth_k2
+V_abs_k2 <- (vX_k2^2+vY_k2^2)^.5
+
+# K3
+bottomElevation_k3 <- h5_k3[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_k3 <- results_k3[["HydState"]][["0000024"]][1,]
+qX_k3 <- results_k3[["HydState"]][["0000024"]][2,]
+qY_k3 <- results_k3[["HydState"]][["0000024"]][3,]
+depth_k3 <- waterSurfElev_k3 - bottomElevation_k3
+vX_k3 <- qX_k3/depth_k3
+vY_k3 <- qY_k3/depth_k3
+V_abs_k3 <- (vX_k3^2+vY_k3^2)^.5
+
+# K4
+bottomElevation_k4 <- h5_k4[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_k4 <- results_k4[["HydState"]][["0000024"]][1,]
+qX_k4 <- results_k4[["HydState"]][["0000024"]][2,]
+qY_k4 <- results_k4[["HydState"]][["0000024"]][3,]
+depth_k4 <- waterSurfElev_k4 - bottomElevation_k4
+vX_k4 <- qX_k4/depth_k4
+vY_k4 <- qY_k4/depth_k4
+V_abs_k4 <- (vX_k4^2+vY_k4^2)^.5
+
+# K5
+bottomElevation_k5 <- h5_k5[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_k5 <- results_k5[["HydState"]][["0000024"]][1,]
+qX_k5 <- results_k5[["HydState"]][["0000024"]][2,]
+qY_k5 <- results_k5[["HydState"]][["0000024"]][3,]
+depth_k5 <- waterSurfElev_k5 - bottomElevation_k5
+vX_k5 <- qX_k5/depth_k5
+vY_k5 <- qY_k5/depth_k5
+V_abs_k5 <- (vX_k5^2+vY_k5^2)^.5
+
+# K6
+bottomElevation_k6 <- h5_k6[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_k6 <- results_k6[["HydState"]][["0000024"]][1,]
+qX_k6 <- results_k6[["HydState"]][["0000024"]][2,]
+qY_k6 <- results_k6[["HydState"]][["0000024"]][3,]
+depth_k6 <- waterSurfElev_k6 - bottomElevation_k6
+vX_k6 <- qX_k6/depth_k6
+vY_k6 <- qY_k6/depth_k6
+V_abs_k6 <- (vX_k6^2+vY_k6^2)^.5
+
+# K7
+bottomElevation_k7 <- h5_k7[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_k7 <- results_k7[["HydState"]][["0000024"]][1,]
+qX_k7 <- results_k7[["HydState"]][["0000024"]][2,]
+qY_k7 <- results_k7[["HydState"]][["0000024"]][3,]
+depth_k7 <- waterSurfElev_k7 - bottomElevation_k7
+vX_k7 <- qX_k7/depth_k7
+vY_k7 <- qY_k7/depth_k7
+V_abs_k7 <- (vX_k7^2+vY_k7^2)^.5
+
+# Q 6
+bottomElevation_q6 <- h5_q6[["CellsAll"]][["BottomEl"]][,]
+waterSurfElev_q6 <- results_q6[["HydState"]][["0000024"]][1,]
+qX_q6 <- results_q6[["HydState"]][["0000024"]][2,]
+qY_q6 <- results_q6[["HydState"]][["0000024"]][3,]
+depth_q6 <- waterSurfElev_q6 - bottomElevation_q6
+vX_q6 <- qX_q6/depth_q6
+vY_q6 <- qY_q6/depth_q6
+V_abs_q6 <- (vX_q6^2+vY_q6^2)^.5
+
+#umnennen, damit die nächsten Zeilen passen
+mabsl_s1 <- waterSurfElev_s1
+waterdepth_s1 <- depth_s1
+velocity_s1 <- V_abs_s1
+
+mabsl_k1 <- waterSurfElev_k1
+waterdepth_k1 <- depth_k1
+velocity_k1 <- V_abs_k1
+
+mabsl_k2 <- waterSurfElev_k2
+waterdepth_k2 <- depth_k2
+velocity_k2 <- V_abs_k2
+
+mabsl_k3 <- waterSurfElev_k3
+waterdepth_k3 <- depth_k3
+velocity_k3 <- V_abs_k3
+
+mabsl_k4 <- waterSurfElev_k4
+waterdepth_k4 <- depth_k4
+velocity_k4 <- V_abs_k4
+
+mabsl_k5 <- waterSurfElev_k5
+waterdepth_k5 <- depth_k5
+velocity_k5 <- V_abs_k5
+
+mabsl_k6 <- waterSurfElev_k6
+waterdepth_k6 <- depth_k6
+velocity_k6 <- V_abs_k6
+
+mabsl_k7 <- waterSurfElev_k7
+waterdepth_k7 <- depth_k7
+velocity_k7 <- V_abs_k7
+
+mabsl_q6 <- waterSurfElev_q6
+waterdepth_q6 <- depth_q6
+velocity_q6 <- V_abs_q6
+```
+
+# Read mesh and create shp
+```{r}
+#mesh paths
+Twodm_path <- "Landquart_computational-mesh_dsm_swiss_new.2dm"
+
+#read mesh as a table
+Twodm <- read.table(Twodm_path, sep="", skip=2, header=F, fill=T)
+
+#split mesh in nodes and elements
+#nodes
+nd_df <- Twodm[which(Twodm$V1=="ND"),-1]
+colnames(nd_df) <- c( "ID", "X", "Y", "Z")
+nd_df$X <- as.numeric(nd_df$X)
+nd_df$Y <- as.numeric(nd_df$Y)
+
+#elements
+e3t_df <- Twodm[which(Twodm$V1=="E3T"),][,-1]
+colnames(e3t_df) <- c( "ID", "N1", "N2", "N3")
+
+
+#create table with coordinates of each triangular element (x1,y1,x2,y2,x3,y3)
+triangles <- (cbind(nd_df[e3t_df$N1, c("X","Y")], nd_df[e3t_df$N2, c("X","Y")], nd_df[e3t_df$N3, c("X","Y")], nd_df[e3t_df$N1, c("X","Y")]))
+
+tr_matrix <- matrix(unlist(triangles), ncol=8, byrow = F)
+
+#number of elements
+ID <- e3t_df$ID
+length(ID) # 38694 triangular cells in the computational mesh
+
+# Create SP object
+polys <- SpatialPolygons(mapply(function(poly, id) {
+  xy <- matrix(poly, ncol=2, byrow=TRUE)
+  Polygons(list(Polygon(xy)), ID=id)
+}, split(tr_matrix, row(tr_matrix)), ID))
+
+
+# Create SPDF (exportable as shapefile)
+mesh.sp <- SpatialPolygonsDataFrame(polys, data.frame(id=ID, row.names=ID))
+
+#link results with mesh
+mesh.sp$mabsl_s1 <- as.numeric(round(mabsl_s1,3))
+mesh.sp$waterdepth_s1 <- as.numeric(round(waterdepth_s1,3))
+mesh.sp$velocity_s1 <- as.numeric(round(velocity_s1,3))
+
+mesh.sp$mabsl_k1 <- as.numeric(round(mabsl_k1,3))
+mesh.sp$waterdepth_k1 <- as.numeric(round(waterdepth_k1,3))
+mesh.sp$velocity_k1 <- as.numeric(round(velocity_k1,3))
+
+mesh.sp$mabsl_k2 <- as.numeric(round(mabsl_k2,3))
+mesh.sp$waterdepth_k2 <- as.numeric(round(waterdepth_k2,3))
+mesh.sp$velocity_k2 <- as.numeric(round(velocity_k2,3))
+
+mesh.sp$mabsl_k3 <- as.numeric(round(mabsl_k3,3))
+mesh.sp$waterdepth_k3 <- as.numeric(round(waterdepth_k3,3))
+mesh.sp$velocity_k3 <- as.numeric(round(velocity_k3,3))
+
+mesh.sp$mabsl_k4 <- as.numeric(round(mabsl_k4,3))
+mesh.sp$waterdepth_k4 <- as.numeric(round(waterdepth_k4,3))
+mesh.sp$velocity_k4 <- as.numeric(round(velocity_k4,3))
+
+mesh.sp$mabsl_k5 <- as.numeric(round(mabsl_k5,3))
+mesh.sp$waterdepth_k5 <- as.numeric(round(waterdepth_k5,3))
+mesh.sp$velocity_k5 <- as.numeric(round(velocity_k5,3))
+
+mesh.sp$mabsl_k6 <- as.numeric(round(mabsl_k6,3))
+mesh.sp$waterdepth_k6 <- as.numeric(round(waterdepth_k6,3))
+mesh.sp$velocity_k6 <- as.numeric(round(velocity_k6,3))
+
+mesh.sp$mabsl_k7 <- as.numeric(round(mabsl_k7,3))
+mesh.sp$waterdepth_k7 <- as.numeric(round(waterdepth_k7,3))
+mesh.sp$velocity_k7 <- as.numeric(round(velocity_k7,3))
+
+mesh.sp$mabsl_q6 <- as.numeric(round(mabsl_q6,3))
+mesh.sp$waterdepth_q6 <- as.numeric(round(waterdepth_q6,3))
+mesh.sp$velocity_q6 <- as.numeric(round(velocity_q6,3))
+
+#write new shapefile
+# overwrite = TRUE
+shapefile(mesh.sp, "Landquart_results_results.shp", overwrite = TRUE)
+```
+
+# GPS Results 
+## Set working directory & load data 
+```{r}
+# read GPS-Points 
+gps <- read_sf("GPS_all_align_elevation_mesh.shp")
+
+# convert 3d gps data into 2d data 
+gps_2d <- st_zm(gps, drop=TRUE, what = "ZM")
+
+# read simulation results & set coordinate system (2056)
+simulations <- read_sf("Landquart_results_results.shp") |> st_set_crs(2056)
+```
+
+## prepare data-set
+```{r}
+# Only GPS points measured in the field are of interest 
+# Extract results at GPS locations with st_join 
+gps_join <- gps_2d |>
+  st_join(simulations, join=st_within) 
+
+
+# data-set with water-depth & without NA rows 
+gps_waterdepth <- gps_join[ ,c(1,2,6:7, 11:12,17, 20,23,26,29,32,35,38,41)]
+gps_waterdepth <- na.omit(gps_waterdepth)
+
+# data-set waterdepth only of field data 
+wt_field <-gps_waterdepth[!(gps_waterdepth$code=="w_art" | gps_waterdepth$code=="wl_art"),]
+length(wt_field$code)
+
+# data-set with only velocity & without NA rows + only field data
+gps_velocity <- gps_join[ ,c(13,18,21,24,27,30,33,36,39, 42)]
+gps_velocity <- na.omit(gps_velocity)
+
+# change from cm/s into m/s
+gps_velocity <- (gps_velocity/100)
+length(gps_velocity$velocity_c)
+```
+
+## calculate mean, min, max, sd
+```{r}
+# calculate mean, min, max, std of gps and s1 - for field data 
+# for field measurements 
+gps_results_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_gps = mean((velocity_c/100), na.rm = TRUE),
+            min_v_gps = min((velocity_c/100), na.rm = TRUE),
+            max_v_gps = max((velocity_c/100), na.rm = TRUE),
+            sd_v_gps = sd((velocity_c/100), na.rm = TRUE))
+gps_results_v <- rename(gps_results_v, mean_v = mean_v_gps, min_v = min_v_gps, max_v = max_v_gps, sd_v = sd_v_gps)
+
+
+gps_results_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_gps = mean(wt_m_dsm, na.rm = TRUE),
+            min_wt_gps = min(wt_m_dsm, na.rm = TRUE),
+            max_wt_gps = max(wt_m_dsm, na.rm = TRUE),
+            sd_wt_gps = sd(wt_m_dsm, na.rm = TRUE))
+gps_results_wt <- rename(gps_results_wt, mean_wt = mean_wt_gps, min_wt = min_wt_gps,
+                         max_wt = max_wt_gps, sd_wt = sd_wt_gps)
+
+
+# for simulation S1
+gps_results_s1_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_s1 = mean(velocity_0, na.rm = TRUE),
+            min_v_s1 = min(velocity_0,  na.rm = TRUE),
+            max_v_s1 = max(velocity_0,  na.rm = TRUE),
+            sd_v_s1 = sd(velocity_0,  na.rm = TRUE))
+gps_results_s1_v <- rename(gps_results_s1_v, mean_v = mean_v_s1, min_v = min_v_s1, max_v = max_v_s1, sd_v = sd_v_s1)
+
+gps_results_s1_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_s1 = mean(waterdept0, na.rm = TRUE),
+            min_wt_s1 = min(waterdept0,  na.rm = TRUE),
+            max_wt_s1 = max(waterdept0,  na.rm = TRUE),
+            sd_wt_s1 = sd(waterdept0,  na.rm = TRUE))
+gps_results_s1_wt <- rename(gps_results_s1_wt, mean_wt = mean_wt_s1, min_wt = min_wt_s1, max_wt = max_wt_s1, sd_wt = sd_wt_s1)
+
+# for simulation K1
+gps_results_k1_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_k1 = mean(velocity_1, na.rm = TRUE),
+            min_v_k1 = min(velocity_1,  na.rm = TRUE),
+            max_v_k1 = max(velocity_1,  na.rm = TRUE),
+            sd_v_k1 = sd(velocity_1,  na.rm = TRUE))
+gps_results_k1_v <- rename(gps_results_k1_v, mean_v = mean_v_k1, min_v = min_v_k1, max_v = max_v_k1, sd_v = sd_v_k1)
+       
+gps_results_k1_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_k1 = mean(waterdept1, na.rm = TRUE),
+            min_wt_k1 = min(waterdept1,  na.rm = TRUE),
+            max_wt_k1 = max(waterdept1,  na.rm = TRUE),
+            sd_wt_k1 = sd(waterdept1,  na.rm = TRUE))
+gps_results_k1_wt <- rename(gps_results_k1_wt, mean_wt = mean_wt_k1, min_wt = min_wt_k1,max_wt = max_wt_k1, sd_wt = sd_wt_k1)
+
+# for simulation K2
+gps_results_k2_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_k2 = mean(velocity_2, na.rm = TRUE),
+            min_v_k2 = min(velocity_2,  na.rm = TRUE),
+            max_v_k2 = max(velocity_2,  na.rm = TRUE),
+            sd_v_k2 = sd(velocity_2,  na.rm = TRUE))
+gps_results_k2_v <- rename(gps_results_k2_v,
+                         mean_v = mean_v_k2, min_v = min_v_k2, max_v = max_v_k2, sd_v =
+                           sd_v_k2)
+
+gps_results_k2_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_k2 = mean(waterdept2, na.rm = TRUE),
+            min_wt_k2 = min(waterdept2,  na.rm = TRUE),
+            max_wt_k2 = max(waterdept2,  na.rm = TRUE),
+            sd_wt_k2 = sd(waterdept2,  na.rm = TRUE))  
+gps_results_k2_wt <- rename(gps_results_k2_wt, mean_wt = mean_wt_k2, 
+                               min_wt = min_wt_k2, max_wt = max_wt_k2, sd_wt =
+                              sd_wt_k2)
+
+
+# for simulation K3
+gps_results_k3_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_k3 = mean(velocity_3, na.rm = TRUE),
+            min_v_k3 = min(velocity_3,  na.rm = TRUE),
+            max_v_k3 = max(velocity_3,  na.rm = TRUE),
+            sd_v_k3 = sd(velocity_3,  na.rm = TRUE))
+gps_results_k3_v <- rename(gps_results_k3_v, mean_v = mean_v_k3, min_v = min_v_k3, max_v = max_v_k3, sd_v = sd_v_k3)
+
+gps_results_k3_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_k3 = mean(waterdept3, na.rm = TRUE),
+            min_wt_k3 = min(waterdept3,  na.rm = TRUE),
+            max_wt_k3 = max(waterdept3,  na.rm = TRUE),
+            sd_wt_k3 = sd(waterdept3,  na.rm = TRUE))
+gps_results_k3_wt <- rename(gps_results_k3_wt, mean_wt = mean_wt_k3, min_wt =
+                              min_wt_k3, max_wt = max_wt_k3, sd_wt = sd_wt_k3)
+
+# for simulation K4       
+gps_results_k4_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_k4 = mean(velocity_4, na.rm = TRUE),
+            min_v_k4 = min(velocity_4,  na.rm = TRUE),
+            max_v_k4 = max(velocity_4,  na.rm = TRUE),
+            sd_v_k4 = sd(velocity_4,  na.rm = TRUE))
+gps_results_k4_v <- rename(gps_results_k4_v, mean_v = mean_v_k4, min_v = min_v_k4,
+                           max_v = max_v_k4, sd_v = sd_v_k4)
+
+gps_results_k4_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_k4 = mean(waterdept4, na.rm = TRUE),
+            min_wt_k4 = min(waterdept4,  na.rm = TRUE),
+            max_wt_k4 = max(waterdept4,  na.rm = TRUE),
+            sd_wt_k4 = sd(waterdept4,  na.rm = TRUE))
+gps_results_k4_wt <- rename(gps_results_k4_wt, mean_wt = mean_wt_k4, min_wt =
+                              min_wt_k4, max_wt = max_wt_k4, sd_wt = sd_wt_k4)
+
+# for simulation K5
+gps_results_k5_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_k5 = mean(velocity_5, na.rm = TRUE),
+            min_v_k5 = min(velocity_5,  na.rm = TRUE),
+            max_v_k5 = max(velocity_5,  na.rm = TRUE),
+            sd_v_k5 = sd(velocity_5,  na.rm = TRUE))
+gps_results_k5_v <- rename(gps_results_k5_v, mean_v = mean_v_k5, min_v = min_v_k5,
+                           max_v = max_v_k5, sd_v = sd_v_k5)
+
+gps_results_k5_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_k5 = mean(waterdept5, na.rm = TRUE),
+            min_wt_k5 = min(waterdept5,  na.rm = TRUE),
+            max_wt_k5 = max(waterdept5,  na.rm = TRUE),
+            sd_wt_k5 = sd(waterdept5,  na.rm = TRUE))
+gps_results_k5_wt <- rename(gps_results_k5_wt, mean_wt = mean_wt_k5, min_wt =
+                              min_wt_k5, max_wt = max_wt_k5, sd_wt = sd_wt_k5)
+
+
+# for simulation K6
+gps_results_k6_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_k6 = mean(velocity_6, na.rm = TRUE),
+            min_v_k6 = min(velocity_6,  na.rm = TRUE),
+            max_v_k6 = max(velocity_6,  na.rm = TRUE),
+            sd_v_k6 = sd(velocity_6,  na.rm = TRUE))
+gps_results_k6_v <- rename(gps_results_k6_v, mean_v = mean_v_k6, min_v = min_v_k6,
+                           max_v = max_v_k6, sd_v = sd_v_k6)
+
+gps_results_k6_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_k6 = mean(waterdept6, na.rm = TRUE),
+            min_wt_k6 = min(waterdept6,  na.rm = TRUE),
+            max_wt_k6 = max(waterdept6,  na.rm = TRUE),
+            sd_wt_k6 = sd(waterdept6,  na.rm = TRUE))
+gps_results_k6_wt <- rename(gps_results_k6_wt, mean_wt = mean_wt_k6, 
+                               min_wt = min_wt_k6, max_wt = max_wt_k6, sd_wt =
+                              sd_wt_k6)
+
+# for simulation K7
+gps_results_k7_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_k7 = mean(velocity_7, na.rm = TRUE),
+            min_v_k7 = min(velocity_7,  na.rm = TRUE),
+            max_v_k7 = max(velocity_7,  na.rm = TRUE),
+            sd_v_k7 = sd(velocity_7,  na.rm = TRUE))
+gps_results_k7_v <- rename(gps_results_k7_v, 
+                           mean_v = mean_v_k7, min_v = min_v_k7, max_v = max_v_k7, sd_v
+                           = sd_v_k7)
+
+gps_results_k7_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_k7 = mean(waterdept7, na.rm = TRUE),
+            min_wt_k7 = min(waterdept7,  na.rm = TRUE),
+            max_wt_k7 = max(waterdept7,  na.rm = TRUE),
+            sd_wt_k7 = sd(waterdept7,  na.rm = TRUE))
+gps_results_k7_wt <- rename(gps_results_k7_wt, mean_wt = mean_wt_k7, min_wt =
+                              min_wt_k7, max_wt = max_wt_k7, sd_wt = sd_wt_k7)
+
+# for simulation with Q 6
+gps_results_q6_v <- gps_join |>
+  as.data.frame()|>
+  summarise(mean_v_q6 = mean(velocity_8, na.rm = TRUE),
+            min_v_q6 = min(velocity_8,  na.rm = TRUE),
+            max_v_q6 = max(velocity_8,  na.rm = TRUE),
+            sd_v_q6 = sd(velocity_8,  na.rm = TRUE))
+gps_results_q6_v <- rename(gps_results_q6_v, 
+                           mean_v = mean_v_q6, min_v = min_v_q6, max_v =
+                             max_v_q6, sd_v = sd_v_q6)
+
+gps_results_q6_wt <- wt_field |>
+  as.data.frame()|>
+  summarise(mean_wt_q6 = mean(waterdept8, na.rm = TRUE),
+            min_wt_q6 = min(waterdept8,  na.rm = TRUE),
+            max_wt_q6 = max(waterdept8,  na.rm = TRUE),
+            sd_wt_q6 = sd(waterdept8,  na.rm = TRUE))
+gps_results_q6_wt <- rename(gps_results_q6_wt, mean_wt = mean_wt_q6, min_wt =
+                              min_wt_q6, max_wt = max_wt_q6, sd_wt = sd_wt_q6)
+```
+
+## write data.frame of results 
+```{r}
+# Results Velocity
+gps_results_v <- rbind(gps_results_v, gps_results_s1_v, gps_results_k1_v, 
+                     gps_results_k2_v, gps_results_k3_v, gps_results_k4_v,
+                      gps_results_k5_v, gps_results_k6_v, gps_results_k7_v,
+                     gps_results_q6_v)
+gps_results_v$run <- c("real/gps", "s1", "k1", "k2", "k3", "k4", "k5", "k6", "k7", "q6")
+gps_results_v
+
+
+# RESULTS water depth 
+gps_results_wt <- rbind(gps_results_wt, gps_results_s1_wt, gps_results_k1_wt, 
+                     gps_results_k2_wt, gps_results_k3_wt, gps_results_k4_wt,
+                      gps_results_k5_wt, gps_results_k6_wt, gps_results_k7_wt,
+                     gps_results_q6_wt)
+gps_results_wt$run <- c("real/gps", "s1", "k1", "k2", "k3", "k4", "k5", "k6", "k7", "q6")
+gps_results_wt
+
+# join datarame results 
+gps_results <- full_join(gps_results_v, gps_results_wt, by = "run") |>
+  relocate(run, .before = mean_v)
+```
+
+## calculate rmse and mae 
+```{r}
+# RMSE S1 waterdepth & velocity
+rmse_wt_s1 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept0)
+rmse_v_s1 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_0)
+
+# RMSE K1 waterdepth & velocity
+rmse_wt_k1 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept1)
+rmse_v_k1 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_1)
+
+# RMSE K2 waterdepth & velocity
+rmse_wt_k2 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept2)
+rmse_v_k2 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_2)
+
+# RMSE K3 waterdepth & velocity
+rmse_wt_k3 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept3)
+rmse_v_k3 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_3)
+
+# RMSE K4 waterdepth & velocity
+rmse_wt_k4 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept4)
+rmse_v_k4 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_4)
+
+# RMSE K5 waterdepth & velocity
+rmse_wt_k5 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept5)
+rmse_v_k5 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_5)
+
+# RMSE K6 waterdepth & velocity
+rmse_wt_k6 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept6)
+rmse_v_k6 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_6)
+
+# RMSE K7 waterdepth & velocity
+rmse_wt_k7 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept7)
+rmse_v_k7 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_7)
+
+# RMSE Q6 waterdepth & velocity
+rmse_wt_q6 <- rmse(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept8)
+rmse_v_q6 <- rmse(gps_velocity$velocity_c, gps_velocity$velocity_8)
+
+# MAE S1 waterdepth & velocity
+mae_wt_s1 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept0)
+mae_v_s1 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_0)
+
+# MAE k1 waterdepth & velocity
+mae_wt_k1 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept1)
+mae_v_k1 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_1)
+
+# MAE k2 waterdepth & velocity
+mae_wt_k2 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept2)
+mae_v_k2 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_2)
+
+# MAE k3 waterdepth & velocity
+mae_wt_k3 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept3)
+mae_v_k3 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_3)
+
+# MAE k4 waterdepth & velocity
+mae_wt_k4 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept4)
+mae_v_k4 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_4)
+
+# MAE k5 waterdepth & velocity
+mae_wt_k5 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept5)
+mae_v_k5 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_5)
+
+# MAE k6 waterdepth & velocity
+mae_wt_k6 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept6)
+mae_v_k6 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_6)
+
+# MAE k7 waterdepth & velocity
+mae_wt_k7 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept7)
+mae_v_k7 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_7)
+
+# MAE Q6 waterdepth & velocity
+mae_wt_q6 <- mae(gps_waterdepth$wt_m_dsm, gps_waterdepth$waterdept8)
+mae_v_q6 <- mae(gps_velocity$velocity_c, gps_velocity$velocity_8)
+```
+
+## write data.frame of results & join all results together
+```{r}
+# create df of results RMSE & MAE
+RMSE_MAE <- data.frame(rmse_wt = c(rmse_wt_s1, rmse_wt_k1, rmse_wt_k2,
+                                   rmse_wt_k3, rmse_wt_k4, rmse_wt_k5, 
+                                   rmse_wt_k6, rmse_wt_k7, rmse_wt_q6),
+                       mae_wt = c(mae_wt_s1, mae_wt_k1, mae_wt_k2, mae_wt_k3,
+                                  mae_wt_k4, mae_wt_k5, mae_wt_k6, mae_wt_k7,
+                                  mae_wt_q6),
+                   rmse_v = c(rmse_v_s1, rmse_v_k1, rmse_v_k2, rmse_v_k3,
+                              rmse_v_k4, rmse_v_k5, rmse_v_k6, rmse_v_k7, 
+                              rmse_v_q6),
+                   mae_v = c(mae_v_s1, mae_v_k1, mae_v_k2, mae_v_k3, mae_v_k4,
+                             mae_v_k5, mae_v_k6, mae_v_k7, mae_v_q6),
+                   run = c("s1", "k1", "k2", "k3", "k4", "k5", "k6", "k7", 
+                           "q6"))
+
+# join results of mean, min, max, sd with RMSE_MAE results
+results_all <- full_join(RMSE_MAE, gps_results, by = "run") |>
+  relocate(run, .before = rmse_wt)
+
+# export dataframe to .csv
+write.csv(results_all, "results_r.csv", row.names=FALSE)
+```
+
+## calculate MAE for dsm_wse with measured wse and visualise results
+```{r}
+# set working directory 
+setwd("C:/Users/mirja/Documents/MSc_ENR_Studium/1._Semester_HS22/Project_Work_Research_Group_1/Excel")
+
+# read csv. file 
+wse <- read_delim("L2_r2_corr.csv")
+
+# prepare data set, remove rows with NA 
+wse <- wse[ ,c(1:5,8:9)]
+wse <- na.omit(wse)
+
+# drop outliers in DSM, which reflect vegetation height (e.g. trees etc.)
+wse_smooth <-wse[!(wse$dsm_wse > 798), ]
+
+# calculate MAE & RMSE
+mae(wse_smooth$mabsl_wse, wse_smooth$dsm_wse)
+rmse(wse_smooth$mabsl_wse, wse_smooth$dsm_wse)
+
+# calculate mean of DSM and field GPS
+mean(wse_smooth$mabsl_wse)
+mean(wse_smooth$dsm_wse)
+
+# join tables with information from the field and all simulations
+wse_join <- wse_smooth |>
+left_join(gps_join, by = "x")
+
+
+# plot of simulated water surface level vs. measured water surface level (dsm)
+ggplot(wse_join, aes(dsm_wse, mabsl_s1)) +
+  geom_point(col = "blue") + 
+  labs(x = "water surface elevation (DSM) [m.a.s.l]", y = " water surface elevation S1 [m.a.s.l]")+
+  coord_fixed(1) +
+  geom_smooth(method = lm, se = FALSE, col = "red") + 
+  theme_bw() +
+  geom_abline(intercept = 0, slope = 1, lty = 2)
+
+# plot of simulated water surface level vs. measured water surface level (field)
+ggplot(wse_join, aes(mabsl_wse, mabsl_s1)) +
+  geom_point(col = "blue") + 
+  labs(x = "water surface elevation (field) [m.a.s.l]", y = " water surface elevation S1 [m.a.s.l]")+
+  coord_fixed(1) + 
+  geom_smooth(method = lm, se = FALSE, col = "red") + 
+  theme_bw() +
+  geom_abline(intercept = 0, slope = 1, lty = 2)
+
+
+# plot of DSM surface level vs. measured water surface level (field)
+ggplot(wse_join, aes(mabsl_wse, dsm_wse)) +
+  geom_point(col = "blue") + 
+  labs(x = "water surface elevation (field) [m.a.s.l]", y = " water surface elevation DSM [m.a.s.l]")+
+  coord_fixed(1) +
+  geom_smooth(method = lm, se = FALSE, col = "red") + 
+  theme_bw() +
+  geom_abline(intercept = 0, slope = 1, lty = 2) 
+```
+
+
