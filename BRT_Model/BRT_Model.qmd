@@ -1,0 +1,191 @@
+---
+title: "BRT_Model"
+format: html
+---
+
+
+# Packages
+```{r}
+# Load the required packages
+library(gbm)
+library(dismo)
+library(dplyr)
+library(raster)
+library(readr)
+```
+
+# Load Data
+```{r}
+# Load Data
+data <- read_delim("Data/Data_Complete/Lab_k_index.csv")
+
+data <- data[ ,c(7, 9, 27)]
+# data <- data[ ,-c(1,2,3,4,5, 6, 10, 13, 17, 18:21, 25, 26)]
+
+data <- data |>
+  rename(Landquart_results_depth_9 = Water_depth_cm, Landquart_results_velocity_9 = `Flow_velocity_v60_cm/s`) |>
+  mutate(Landquart_results_depth_9 = Landquart_results_depth_9/100,
+         Landquart_results_velocity_9 = Landquart_results_velocity_9)
+
+# Units of raster files: 
+# velocity is in m/s
+# depth is in m
+
+# change variable type which we want to predict 
+# data$Reach_Untersuchungsstelle <- as.factor(data$Reach_Untersuchungsstelle)
+# data$Clogging_6_Klassen <- as.factor(data$Clogging_6_Klassen)
+# data$Clogging_3_Klassen <- as.factor(data$Clogging_3_Klassen)
+
+data$k_index <- as.factor(data$k_index)
+```
+
+# TPE Hyperparameter Optimization 
+```{r}
+#install.packages("mlr")
+#install.packages("mlrMBO")
+
+library("mlr")
+library("mlrMBO")
+# install.packages("ada")
+library("ada")
+
+# Assuming you have your data loaded into a dataframe called 'data' and the target variable is 'target_column'
+task <- makeClassifTask(data = data, target = "k_index")
+
+# Define the BRT learner
+learner <- makeLearner("classif.ada")
+
+# look which learners are available
+# listLearners()
+
+# Example search space for BRT hyperparameters
+param_space <- list(
+  n.trees = integer(0),          # Number of trees (integer)
+  shrinkage = numeric(0),        # Learning rate (numeric)
+  interaction.depth = integer(0),# Maximum depth of interactions (integer)
+  bag.fraction = numeric(0)      # Proportion of data used for training each tree (numeric)
+  # Add more hyperparameters as needed
+)
+
+# Create a control object for TPE specifying the number of optimization steps and other settings.
+control <- makeMBOControl()
+control$budget <- 50    # Number of optimization steps/budget
+
+# Now, run the TPE optimization using the mlrMBO function, passing the task, learner, search space, and control object.
+result <- mlrMBO(
+  learner = learner,
+  task = task,
+  control = control,
+  design = param_space
+)
+
+?mlrMBO_examples
+# After the optimization is complete, you can access the best hyperparameters and model performance using the getMBOResults function.
+best_params <- getMBOResults(result)$x
+best_performance <- getMBOResults(result)$y
+```
+
+
+# BRT 
+```{r}
+# Split the data into training and testing sets
+train_indices <- sample(1:nrow(data), 0.7 * nrow(data))
+train_data <- data[train_indices, ]
+test_data <- data[-train_indices, ]
+
+# Define the boosted regression tree model
+boost_model <- gbm(k_index ~ ., data = train_data, distribution = "gaussian",
+                   n.trees = 100, interaction.depth = 1, shrinkage = 0.1, n.minobsinnode = 1)
+
+# interaction.depth = maximale höhe des Baumes (2 = Baum splitted sich nur 2 mal auf, je höher die Zahl desto feiner werden die Bäume) --> bei nur zwei Variablen im default lassen für die erste male 
+# default: interaction.depth = 1
+
+# n.trees = wie viele sukzesive bäume soll der algorithmus kreien, wie viele versch. Bäume, je grösser die Zahl desto rechenintensiver. Mit 726 Datenpunkten kann man gut mit default anfangen 
+# default: n.trees = 100
+# Theodoro. 2018 hat at least 1000 verwendet
+
+?gbm
+
+# variable importance
+# Extract variable importance scores
+variable_importance <- summary(boost_model)
+
+# Display the variable importance scores
+print(variable_importance)
+```
+
+# Model Performance 
+```{r}
+# Make predictions on the test data
+predictions <- predict(boost_model, newdata = test_data, n.trees = 100)
+
+# Evaluate the model
+mse <- mean((test_data$k_index - predictions)^2)
+print(paste("Mean Squared Error:", mse))
+```
+
+# Predict to rasters 
+```{r}
+# predict results with raster
+# raster with depth and velocity data 
+env_data <- stack("Data/Rasters/env_rasters.grd")
+
+stack("Data/Rasters/env_rasters.grd")
+
+result_raster <- raster::predict(model = boost_model, object = env_data, index = 2) # index 2 because 2 layers of rasters are in the env_data variable 
+
+plot(result_raster)
+```
+
+# predict only single values from the whole model 
+```{r}
+# read raster 
+landquart <- raster("Data/raster_files/Landquart_results_velocity_9.tif")
+
+plot(landquart)
+
+# select value to be predicted 
+input_data <- test_data[["Landquart_results_velocity_9"]]
+
+# predict values 
+predictions <- raster::predict(model = boost_model, object = landquart)
+```
+
+```{r}
+# Prepare the raster data and extract the "flow velocity" values
+# flow_velocity_raster <- landquart[["flow_velocity"]]  # Replace "flow_velocity" with the actual name of the flow velocity variable in the raster
+
+# Convert raster data to a data frame
+flow_velocity_data <- as.data.frame(landquart, xy = TRUE)
+
+# Make predictions using the explanatory variable "flow velocity"
+predictions <- predict(boost_model, newdata = flow_velocity_data, n.trees = 100, type = "response")
+
+# Create a new raster with the predicted values
+predicted_raster <- raster(landquart)
+values(predicted_raster) <- predictions
+```
+
+# 10 fold cross validation 
+```{r}
+# install.packages("caret")  # Install the caret package if not already installed
+library(caret)             # Load the caret package
+
+ctrl <- trainControl(method = "cv",  # Cross-validation method
+                     number = 10)    # Number of folds
+
+
+model <- train(k_index ~. , data = train_data, method = "gbm", trControl = ctrl)
+
+model$results  # Print the results of each fold
+
+ggplot() +
+  geom_point(data = data, aes(x = x, y = y)) 
+
+# trainingsdaten werden in z.B. 5 folds aufgeteilt 
+# testdatensatz lässt man mal aussen vor, und tested man dann erst am schluss 
+
+# mse gibt dann resultat - je kleiner mse desto besser - so kann Parametereinstellung geprüft werden/ auswählen 
+# wenn parameter ausgewählt wurden, dann kann CV auf die Testdaten angewendet werden zum schauen wie gut das Modell ist 
+```
+
