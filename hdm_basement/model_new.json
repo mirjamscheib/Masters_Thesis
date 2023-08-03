@@ -22,19 +22,19 @@
               "upstream_direction": "left"
             }
           ],
-          "mesh_file": "hdm_basement/Landquart_computational-mesh_dsm_mod4.2dm"
+          "mesh_file": "hdm_basement/Landquart_computational-mesh_dsm_mod5.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
             "STANDARD": [
               {
-                "name": "out",
+                "name": "output",
                 "slope": 0.033,
                 "string_name": "output",
                 "type": "uniform_out"
               },
               {
-                "name": "in",
+                "name": "input",
                 "slope": 0.002,
                 "string_name": "input",
                 "type": "uniform_in",

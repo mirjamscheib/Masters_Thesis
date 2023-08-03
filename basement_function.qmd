@@ -31,6 +31,8 @@ model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[2] <- dis
 model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out"
 model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[2] <- slope
 model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
+model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "output"
+model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] <- "input"
 
 model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE) #export 
 write(model_exp, "hdm_basement/model_new.json")
@@ -66,7 +68,7 @@ results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.
 # Test-Application of function 
 ```{r}
 basement(model_json = "hdm_basement/model.json", 
-         mesh_path = "hdm_basement/Landquart_computational-mesh_dsm_mod4.2dm", 
+         mesh_path = "hdm_basement/Landquart_computational-mesh_dsm_mod5.2dm", 
          simulation_json = "hdm_basement/simulation.json",
          setup_h5 = "hdm_basement/setup.h5",
          results_h5 = "hdm_basement/results.h5",

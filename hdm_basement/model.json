@@ -24,20 +24,20 @@
               "upstream_direction": "left"
             }
           ],
-          "mesh_file": "C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/Masters_Thesis/hdm_basement/L2_computational_mesh_dsm_mod5.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_basement/L2_computational_mesh_dsm_mod5.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
             "STANDARD": [
               {
-                "name": "out",
+                "name": "output",
                 "slope": 0.033,
                 "string_name": "output",
                 "type": "uniform_out"
               },
               {
                 "discharge": 11.0,
-                "name": "in",
+                "name": "input",
                 "slope": 0.002,
                 "string_name": "input",
                 "type": "uniform_in"
