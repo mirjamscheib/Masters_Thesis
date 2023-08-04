@@ -160,6 +160,14 @@ L2_2 <- hdm_results(
   raster_v_path = "raster_files/L2_v_2.40.tif",
   raster_wd_path = "raster_files/L2_wd_2.40.tif")
 
+
+GL1_1 <- hdm_results(
+  h5_path = "hdm_models/GL1/results_GL1_3.28.h5", 
+  twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+  shp_path = "raster_files/GL1_shape.shp", 
+  raster_v_path = "raster_files/GL1_v_3.28.tif",
+  raster_wd_path = "raster_files/GL1_v_3.28.tif")
+
 # L2 with Q: 3.9 m3/s
 L2_3 <- hdm_results(
   h5_path = "hdm_results/results_3.9_L2.h5", 
