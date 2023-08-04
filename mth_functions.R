@@ -54,9 +54,9 @@ hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_
   h5 <- h5file(h5_path)                                                # read h5 file 
   results <- h5[["RESULTS"]][["CellsAll"]]                             # access the different sub-directories ("groups") with "[[]]"
   bottomElevation <- h5[["CellsAll"]][["BottomEl"]][,]                 # extract velocity and water depth for every cell
-  waterSurfElev <- results[["HydState"]][["000024"]][1,]     
-  qX <- results[["HydState"]][["000024"]][2,]                
-  qY <- results[["HydState"]][["000024"]][3,]                
+  waterSurfElev <- results[["HydState"]][["0000024"]][1,]     
+  qX <- results[["HydState"]][["0000024"]][2,]                
+  qY <- results[["HydState"]][["0000024"]][3,]                
   depth <- waterSurfElev - bottomElevation                    
   vX <- qX/depth                                              
   vY <- qY/depth                                              

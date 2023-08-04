@@ -103,6 +103,8 @@ results_h5_values <- c("hdm_models/L2/results_L2_2.40.h5",
                        "hdm_models/L2/results_L2_16.50.h5", 
                        "hdm_models/L2/results_L2_18.90.h5") 
 
+# Create a flag to track if all values are simulated
+all_simulated <- FALSE
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -118,8 +120,20 @@ for (i in seq_along(discharge_values)) {
                        strickler = 11.5, 
                        time_end = 3600,
                        slope = 0.01)
+
+# Check if all values are simulated and exit the loop if true
+    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
+      all_simulated <- TRUE
+      break
+    }
+  }
+  
+  # Check if all values are simulated and exit the loop if true
+  if (all_simulated) {
+    break
   }
 }
+
 ```
 
 
