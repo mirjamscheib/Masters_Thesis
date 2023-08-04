@@ -1,4 +1,44 @@
 
+#### BASEMENT SIMULATIONS ####
+basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h5, results_xdmf, results_json, discharge, strickler, time_end, slope){
+
+  model <- fromJSON(model_json) #read in model json # modify it change mesh
+  model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$INTERPOLATION$REGIONDEF$STRINGDEF$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "output")
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == discharge, model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == NA)
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "output", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type == "uniform_out", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type == "uniform_in")
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope == slope, model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope == 0.033)
+  model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
+  
+  model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE) #export 
+  write(model_exp, "hdm_basement/model_new.json")
+  
+  simulation <- fromJSON(simulation_json) #read in simulation json
+  simulation$SIMULATION$TIME$end <- time_end #modify it
+  simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
+  write(simulation_exp, "hdm_basement/simulation_new.json") #export 
+  
+  # Set up BASEMENT
+  setup_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"
+  setup_param1 = paste("-f ", getwd(), "\\", model_json, sep="")
+  setup_param2 = paste("-o ", getwd(), "\\", setup_h5, sep="")
+  system2(setup_cmd_name, args = c(setup_param1, setup_param2))
+  
+  # Simulation in BASEMENT
+  simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_omp.exe"
+  simulation_param1 = paste("-f ", getwd(), "\\", simulation_json, sep="")
+  simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
+  simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
+  system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2, simulation_param3, "-p", "-n 16"))
+  
+  # Results of BASEMENT
+  results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.exe"
+  results_param1 = paste("-f ", getwd(), "\\", results_json, sep="")
+  results_param2 = paste("-r ", getwd(), "\\", results_h5, sep="")
+  results_param3 = paste("-o ", getwd(), "\\", results_xdmf, sep="")
+  system2(results_cmd_name, args = c(results_param1, results_param2, results_param3))
+}
+
 ####  HYDRODYNAMIC MODEL RESULTS ####
 # convert hydrodynamic model results into a shapefile, rasters 
 # and return the number of cells of the mesh 
@@ -14,9 +54,9 @@ hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_
   h5 <- h5file(h5_path)                                                # read h5 file 
   results <- h5[["RESULTS"]][["CellsAll"]]                             # access the different sub-directories ("groups") with "[[]]"
   bottomElevation <- h5[["CellsAll"]][["BottomEl"]][,]                 # extract velocity and water depth for every cell
-  waterSurfElev <- results[["HydState"]][["0000003"]][1,]     
-  qX <- results[["HydState"]][["0000003"]][2,]                
-  qY <- results[["HydState"]][["0000003"]][3,]                
+  waterSurfElev <- results[["HydState"]][["000024"]][1,]     
+  qX <- results[["HydState"]][["000024"]][2,]                
+  qY <- results[["HydState"]][["000024"]][3,]                
   depth <- waterSurfElev - bottomElevation                    
   vX <- qX/depth                                              
   vY <- qY/depth                                              
