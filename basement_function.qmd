@@ -123,19 +123,35 @@ GL1_args <- list(list(discharge = 3.28, results_h5 = "hdm_models/GL1/results_GL1
          slope = 0.01)
 
 
-basement(model_json = "hdm_basement/model.json", 
-         mesh_path = "hdm_basement/Landquart_computational-mesh_dsm_mod5.2dm", 
-         simulation_json = "hdm_basement/simulation.json",
-         setup_h5 = "hdm_basement/setup.h5",
-         results_h5 = "hdm_basement/results.h5",
-         results_xdmf = "hdm_basement/results", #this can actually remain always the same
-         results_json = "hdm_basement/results.json",
-         discharge = 13, 
-         strickler = 11, 
-         time_end = 3600,
-         slope = 0.002)
-
 # slope in inflow zone niedriger setzen - 0.0002 z.B. (bei Mass balance problem)
 ```
+
+# Define the range of values for discharge and results_h5
+discharge_values <- c(20.00, 30.00, 40.00) # Add more values if needed
+results_h5_values <- c("hdm_models/GL1/results1.h5", "hdm_models/GL1/results2.h5", "hdm_models/GL1/results3.h5") # Add more values if needed
+
+# Create an empty list to store the results
+results_list <- list()
+
+# Loop through the combinations of discharge and results_h5 values
+for (i in seq_along(discharge_values)) {
+  for (j in seq_along(results_h5_values)) {
+    result <- basement(model_json = "hdm_models/GL1/model.json", 
+                       mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
+                       simulation_json = "hdm_models/GL1/simulation.json",
+                       setup_h5 = "hdm_models/GL1/setup.h5",
+                       results_h5 = results_h5_values[j],
+                       results_xdmf = "hdm_models/GL1/results",
+                       results_json = "hdm_models/GL1/results.json",
+                       discharge = discharge_values[i], 
+                       strickler = 38, 
+                       time_end = 3600,
+                       slope = 0.01)
+    results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]] <- result
+  }
+}
+
+# Now, results_list contains the results for each combination of discharge and results_h5 values
+# You can access the results using names like "discharge_20.00_results_h5_1", "discharge_20.00_results_h5_2", etc.
 
 
