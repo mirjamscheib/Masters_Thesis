@@ -43,6 +43,15 @@ source("mth_functions.R")
 # Glenner: GL1
 ## Single Attribute Rasters
 ```{r}
+GL1_test <- hdm_results(
+  h5_path = "hdm_models/GL1/results_GL1_3.28.h5", 
+  twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+  shp_path = "raster_files/GL1_shape.shp", 
+  raster_v_path = "raster_files/GL1_v_3.28.tif",
+  raster_wd_path = "raster_files/GL1_wd_3.28.tif")
+```
+
+```{r}
 # Define the range of values for discharge and results_h5
 h5_path_values <- c("hdm_models/GL1/results_GL1_3.28.h5", 
              "hdm_models/GL1/results_GL1_6.00.h5", 
@@ -87,7 +96,9 @@ for (i in seq_along(h5_path_values)) {
         raster_v_path = raster_v_path_vaLues[j],
         raster_wd_path = raster_wd_path_values[k])
  # Check if all values are simulate, and exit the loop if true
-    if (i == length(h5_path_values))
+    if (i == length(h5_path_values) &
+        j == length(raster_v_path_vaLues) &
+        k == length(raster_wd_path_values))
        break
   }
   }
