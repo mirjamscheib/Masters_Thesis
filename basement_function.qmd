@@ -21,8 +21,8 @@ library(jsonlite)
 source("mth_functions.R")
 ```
 
-# Glenner
-## GL1
+# - Glenner
+## - GL1
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(3.28, 6.00, 9.00, 12.68, 16.00, 19.00, 22.00, 25.00, 28.00, 31.76)
@@ -56,7 +56,7 @@ for (i in seq_along(discharge_values)) {
 }
 ```
 
-## GL2
+## - GL2
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(3.21, 6.00, 9.00, 12.52, 16.00, 19.00, 22.00, 25.00, 28.00, 31.53)
@@ -90,7 +90,7 @@ for (i in seq_along(discharge_values)) {
 }
 ```
 
-# Landquart
+# test Landquart
 ## L2
 ```{r}
 # Define the range of values for discharge and results_h5
@@ -102,6 +102,20 @@ results_h5_values <- c("hdm_models/L2/results_L2_2.40.h5",
                        "hdm_models/L2/results_L2_13.30.h5", 
                        "hdm_models/L2/results_L2_16.50.h5", 
                        "hdm_models/L2/results_L2_18.90.h5") 
+results_xmdf_values <- c("hdm_models/L2/results_L2_2.40.xmdf", 
+                       "hdm_models/L2/results_L2_3.90.xmdf", 
+                       "hdm_models/L2/results_L2_7.00.xmdf", 
+                       "hdm_models/L2/results_L2_9.24.xmdf", 
+                       "hdm_models/L2/results_L2_13.30.xmdf", 
+                       "hdm_models/L2/results_L2_16.50.xmdf", 
+                       "hdm_models/L2/results_L2_18.90.xmdf") 
+results_json_values <- c("hdm_models/L2/results_L2_2.40.json", 
+                       "hdm_models/L2/results_L2_3.90.json", 
+                       "hdm_models/L2/results_L2_7.00.json", 
+                       "hdm_models/L2/results_L2_9.24.json", 
+                       "hdm_models/L2/results_L2_13.30.json", 
+                       "hdm_models/L2/results_L2_16.50.json", 
+                       "hdm_models/L2/results_L2_18.90.json")
 
 # Create a flag to track if all values are simulated
 all_simulated <- FALSE
@@ -109,20 +123,74 @@ all_simulated <- FALSE
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
+     for (k in seq_along(results_xmdf_values)) {
+       for (l in seq_along(results_json_values)) {
     basement(model_json = "hdm_models/L2/model.json", 
                        mesh_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm", 
                        simulation_json = "hdm_models/L2/simulation.json",
                        setup_h5 = "hdm_models/L2/setup.h5",
                        results_h5 = results_h5_values[j],
-                       results_xdmf = "hdm_models/L2/results",
-                       results_json = "hdm_models/L2/results.json",
+                       results_xdmf = results_xmdf_values[k],
+                       results_json = results_json_values[l],
                        discharge = discharge_values[i], 
                        strickler = 11.5, 
                        time_end = 3600,
                        slope = 0.01)
 
 # Check if all values are simulated and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
+    if (length(discharge_values)) {
+      all_simulated <- TRUE
+      break
+    }
+  }
+  
+  # Check if all values are simulated and exit the loop if true
+  if (all_simulated) {
+    break
+  } 
+  }
+  }
+  }
+
+```
+
+# - Moesa
+## - M1
+```{r}
+# Define the range of values for discharge and results_h5
+discharge_values <- c(0.47, 0.60, 4.00, 6.00, 8.00, 10.00, 12.00, 14.00, 16.00, 18.84, 22.84)
+results_h5_values <- c("hdm_models/M1/results_M1_0.47.h5",
+                       "hdm_models/M1/results_M1_0.60.h5",
+                       "hdm_models/M1/results_M1_4.00.h5",
+                       "hdm_models/M1/results_M1_6.00.h5",
+                       "hdm_models/M1/results_M1_8.00.h5",
+                       "hdm_models/M1/results_M1_10.00.h5",
+                       "hdm_models/M1/results_M1_12.00.h5",
+                       "hdm_models/M1/results_M1_14.00.h5",
+                       "hdm_models/M1/results_M1_16.00.h5",
+                       "hdm_models/M1/results_M1_18.84.h5",
+                       "hdm_models/M1/results_M1_22.84.h5") 
+
+# Create a flag to track if all values are simulated
+all_simulated <- FALSE
+
+# Loop through the combinations of discharge and results_h5 values
+for (i in seq_along(discharge_values)) {
+  for (j in seq_along(results_h5_values)) {
+    basement(model_json = "hdm_models/M1/model.json", 
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = results_h5_values[j],
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = discharge_values[i], 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+# Check if all values are simulated and exit the loop if true
+    if (length(discharge_values)) {
       all_simulated <- TRUE
       break
     }
@@ -136,4 +204,50 @@ for (i in seq_along(discharge_values)) {
 
 ```
 
+# - Sitter
+## - S1
+```{r}
+# Define the range of values for discharge and results_h5
+discharge_values <- c(2.00, 3.70, 6.50, 8.50, 10.68, 13.00, 15.00, 18.00, 20.00)
+results_h5_values <- c("hdm_models/S1/results_S1_2.00.h5",
+                       "hdm_models/S1/results_S1_3.70.h5",
+                       "hdm_models/S1/results_S1_6.50.h5",
+                       "hdm_models/S1/results_S1_8.50.h5",
+                       "hdm_models/S1/results_S1_10.68.h5",
+                       "hdm_models/S1/results_S1_13.00.h5",
+                       "hdm_models/S1/results_S1_15.00.h5",
+                       "hdm_models/S1/results_S1_18.00.h5",
+                       "hdm_models/S1/results_S1_20.00.h5",) 
 
+# Create a flag to track if all values are simulated
+all_simulated <- FALSE
+
+# Loop through the combinations of discharge and results_h5 values
+for (i in seq_along(discharge_values)) {
+  for (j in seq_along(results_h5_values)) {
+    basement(model_json = "hdm_models/S1/model.json", 
+                       mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                       simulation_json = "hdm_models/S1/simulation.json",
+                       setup_h5 = "hdm_models/S1/setup.h5",
+                       results_h5 = results_h5_values[j],
+                       results_xdmf = "hdm_models/S1/results",
+                       results_json = "hdm_models/S1/results.json",
+                       discharge = discharge_values[i], 
+                       strickler = 33.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+# Check if all values are simulated and exit the loop if true
+    if (length(discharge_values)) {
+      all_simulated <- TRUE
+      break
+    }
+  }
+  
+  # Check if all values are simulated and exit the loop if true
+  if (all_simulated) {
+    break
+  }
+}
+
+```

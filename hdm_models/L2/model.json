@@ -33,7 +33,7 @@
               "upstream_direction": "left"
             }
           ],
-          "mesh_file": "D:/Backup_daten/mzb/03_neue_modelle/landquart/basement/test_bathy_dtm_drohne_depthcorr/Landquart_computational-mesh_anto_depthcorr.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
