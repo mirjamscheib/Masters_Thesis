@@ -11,12 +11,12 @@ basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
   
   model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE) #export 
-  write(model_exp, "hdm_basement/model_new.json")
+  write(model_exp, "hdm_models/model_new.json")
   
   simulation <- fromJSON(simulation_json) #read in simulation json
   simulation$SIMULATION$TIME$end <- time_end #modify it
   simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
-  write(simulation_exp, "hdm_basement/simulation_new.json") #export 
+  write(simulation_exp, "hdm_models/simulation_new.json") #export 
   
   # Set up BASEMENT
   setup_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"

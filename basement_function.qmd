@@ -21,8 +21,8 @@ library(jsonlite)
 source("mth_functions.R")
 ```
 
-# - Glenner
-## - GL1
+# Glenner
+## GL1
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(3.28, 6.00, 9.00, 12.68, 16.00, 19.00, 22.00, 25.00, 28.00, 31.76)
@@ -37,10 +37,6 @@ results_h5_values <- c("hdm_models/GL1/results_GL1_3.28.h5",
                        "hdm_models/GL1/results_GL1_28.00.h5", 
                        "hdm_models/GL1/results_GL1_31.76.h5") 
 
-results_list <- list()
-
-# Create a flag to track if all values are simulated
-all_simulated <- FALSE
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -57,18 +53,9 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
     
-    results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
 # Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
+    if (i == length(discharge_values)) break
   }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
-  } 
   }
 ```
 
@@ -87,7 +74,6 @@ results_h5_values <- c("hdm_models/GL2/results_GL2_3.21.h5",
                        "hdm_models/GL2/results_GL2_28.00.h5", 
                        "hdm_models/GL2/results_GL2_31.53.h5") 
 
-results_list <- list()
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -103,24 +89,15 @@ for (i in seq_along(discharge_values)) {
                        strickler = 38, 
                        time_end = 3600,
                        slope = 0.01)
-   
- results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
 # Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
+    if (i == length(discharge_values))
+       break
   }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
-  } 
-  }
+}
 ```
 
-# Landquart
-## L2
+# - Landquart
+## - L2
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(2.40, 3.90, 7.00, 9.24, 13.30, 16.50, 18.90)
@@ -132,10 +109,6 @@ results_h5_values <- c("hdm_models/L2/results_L2_2.40.h5",
                        "hdm_models/L2/results_L2_16.50.h5", 
                        "hdm_models/L2/results_L2_18.90.h5") 
 
-results_list <- list()
-
-# Create a flag to track if all values are simulated
-all_simulated <- FALSE
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -152,17 +125,9 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
-results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
 # Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
-  }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
+    if (i == length(discharge_values))
+       break
   } 
   }
 
@@ -185,10 +150,6 @@ results_h5_values <- c("hdm_models/M1/results_M1_0.47.h5",
                        "hdm_models/M1/results_M1_18.84.h5",
                        "hdm_models/M1/results_M1_22.84.h5") 
 
-results_list <- list()
-
-# Create a flag to track if all values are simulated
-all_simulated <- FALSE
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -205,17 +166,9 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
-results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
 # Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
-  }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
+    if (i == length(discharge_values))
+       break
   }
 }
 
@@ -236,11 +189,6 @@ results_h5_values <- c("hdm_models/S1/results_S1_2.00.h5",
                        "hdm_models/S1/results_S1_18.00.h5",
                        "hdm_models/S1/results_S1_20.00.h5") 
 
-results_list <- list()
-
-# Create a flag to track if all values are simulated
-all_simulated <- FALSE
-
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
@@ -256,17 +204,9 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
-    results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
 # Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
-  }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
+    if (i == length(discharge_values))
+       break
   }
 }
 
@@ -286,10 +226,6 @@ results_h5_values <- c("hdm_models/S2/results_S2_2.00.h5",
                        "hdm_models/S2/results_S2_18.00.h5",
                        "hdm_models/S2/results_S2_20.00.h5") 
 
-results_list <- list()
-
-# Create a flag to track if all values are simulated
-all_simulated <- FALSE
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -306,17 +242,9 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
-    results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
-# Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
-  }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
+ # Check if all values are simulate, and exit the loop if true
+    if (i == length(discharge_values))
+       break
   }
 }
 
@@ -337,10 +265,6 @@ results_h5_values <- c("hdm_models/TH4/results_TH4_11.45.h5",
                        "hdm_models/TH4/results_TH4_30.00.h5",
                        "hdm_models/TH4/results_TH4_32.93.h5") 
 
-results_list <- list()
-
-# Create a flag to track if all values are simulated
-all_simulated <- FALSE
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -357,17 +281,9 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
-    results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
-# Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
-  }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
+ # Check if all values are simulate, and exit the loop if true
+    if (i == length(discharge_values))
+       break
   }
 }
 
@@ -397,10 +313,6 @@ results_h5_values <- c("hdm_models/VR3/results_VR3_2.90.h5",
                        "hdm_models/VR3/results_VR3_50.00.h5",
                        "hdm_models/VR3/results_VR3_52.90.h5") 
 
-results_list <- list()
-
-# Create a flag to track if all values are simulated
-all_simulated <- FALSE
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
@@ -417,17 +329,9 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
-    results_list[[paste("discharge", discharge_values[i], "_results_h5", j, sep = "_")]]
 # Check if all values are simulate, and exit the loop if true
-    if (length(results_list) == length(discharge_values) * length(results_h5_values)) {
-      all_simulated <- TRUE
-      break
-    }
-  }
-  
-  # Check if all values are simulated and exit the loop if true
-  if (all_simulated) {
-    break
+    if (i == length(discharge_values))
+       break
   }
 }
 
