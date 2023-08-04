@@ -3,66 +3,38 @@
     "DOMAIN": {
       "BASEPLANE_2D": {
         "GEOMETRY": {
-          "REGIONDEF": [
-            {
-              "index": 1,
-              "name": "riverbed"
-            },
-            {
-              "index": 2,
-              "name": "gravel "
-            },
-            {
-              "index": 3,
-              "name": "forest"
-            }
-          ],
           "STRINGDEF": [
             {
               "name": "input",
-              "upstream_direction": "left"
+              "upstream_direction": "right"
             },
             {
               "name": "output",
-              "upstream_direction": "left"
+              "upstream_direction": "right"
             }
           ],
-          "mesh_file": "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm"
+          "mesh_file": "hdm_models/GL2/Gl2_computational-mesh_mod.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
             "STANDARD": [
               {
-                "discharge": 6,
-                "name": "input",
-                "slope": 0.0033,
+                "discharge": 8,
+                "name": "inflow",
+                "slope": 0.01,
                 "string_name": "input",
                 "type": "uniform_in"
               },
               {
-                "name": "output",
-                "slope": 0.0033,
+                "name": "outflow",
+                "slope": 0.01,
                 "string_name": "output",
                 "type": "uniform_out"
               }
             ]
           },
           "FRICTION": {
-            "default_friction": 11.5,
-            "regions": [
-              {
-                "friction": 11.5,
-                "region_name": "riverbed"
-              },
-              {
-                "friction": 15,
-                "region_name": "gravel "
-              },
-              {
-                "friction": 7,
-                "region_name": "forest"
-              }
-            ],
+            "default_friction": 38,
             "type": "strickler"
           },
           "INITIAL": {
@@ -71,7 +43,7 @@
           "PARAMETER": {
             "CFL": 0.9,
             "fluid_density": 1000,
-            "max_time_step": 100,
+            "max_time_step": 10,
             "minimum_water_depth": 0.01
           }
         }
@@ -80,6 +52,6 @@
         "gravity": 9.81
       }
     },
-    "simulation_name": "landquart_s1"
+    "simulation_name": "sitter_s1"
   }
 }
