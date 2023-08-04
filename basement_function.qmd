@@ -79,7 +79,8 @@ basement(model_json = "hdm_basement/model.json",
          time_end = 3600,
          slope = 0.002)
 
-# slope in inflow zone niedriger setzen - 0.0002 z.B. (bei Mass balance problem)
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"# slope in inflow zone niedriger setzen - 0.0002 z.B. (bei Mass balance problem)
 ```
 
 

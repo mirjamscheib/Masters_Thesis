@@ -1,0 +1,111 @@
+{
+  "SETUP": {
+    "DOMAIN": {
+      "BASEPLANE_2D": {
+        "GEOMETRY": {
+          "REGIONDEF": [
+            {
+              "index": [
+                1
+              ],
+              "name": "flussbett"
+            },
+            {
+              "index": [
+                2
+              ],
+              "name": "fussweg"
+            },
+            {
+              "index": [
+                3
+              ],
+              "name": "vegetation"
+            },
+            {
+              "index": [
+                4
+              ],
+              "name": "wiesen"
+            },
+            {
+              "index": [
+                5
+              ],
+              "name": "stein-etc"
+            }
+          ],
+          "STRINGDEF": [
+            {
+              "name": "inflow",
+              "upstream_direction": "left"
+            },
+            {
+              "name": "outflow",
+              "upstream_direction": "right"
+            }
+          ],
+          "mesh_file": "U:/MZB/03_modelle/2_sitter/S2/3_basement/computational-mesh-7-290323.2dm"
+        },
+        "HYDRAULICS": {
+          "BOUNDARY": {
+            "STANDARD": [
+              {
+                "discharge": 3.3,
+                "name": "inflow",
+                "slope": 0.003376,
+                "string_name": "inflow",
+                "type": "uniform_in"
+              },
+              {
+                "name": "outflow",
+                "slope": 0.000177,
+                "string_name": "outflow",
+                "type": "uniform_out"
+              }
+            ]
+          },
+          "FRICTION": {
+            "default_friction": 30.0,
+            "regions": [
+              {
+                "friction": 36.0,
+                "region_name": "flussbett"
+              },
+              {
+                "friction": 40.0,
+                "region_name": "fussweg"
+              },
+              {
+                "friction": 9.0,
+                "region_name": "vegetation"
+              },
+              {
+                "friction": 20.0,
+                "region_name": "wiesen"
+              },
+              {
+                "friction": 62.0,
+                "region_name": "stein-etc"
+              }
+            ],
+            "type": "strickler"
+          },
+          "INITIAL": {
+            "type": "dry"
+          },
+          "PARAMETER": {
+            "CFL": 0.9,
+            "fluid_density": 1000.0,
+            "max_time_step": 100.0,
+            "minimum_water_depth": 0.01
+          }
+        }
+      },
+      "PHYSICAL_PROPERTIES": {
+        "gravity": 9.81
+      }
+    },
+    "simulation_name": "Sitter_test"
+  }
+}
