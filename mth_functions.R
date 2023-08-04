@@ -49,14 +49,24 @@ basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h
 # shp_path = path and name of the shapefile you want to write and read 
 # raster_wd_path = path and name of the raster reflecting water depth at a specific discharge
 # raster_v_path = path and name of the raster reflecting velocity at a specific discharge
+# Assuming your time steps are stored in a dataset named "time_steps", you can access it using:
+# time_steps <- h5read(h5_file, "time_steps")
+
+# Get the index of the last time step
+# last_time_step_index <- length(time_steps)
+
+# Assuming your data is stored in a dataset named "data", you can access the last time step's data using:
+# last_time_step_data <- h5read(h5_file, "data", index = list(last_time_step_index))
 
 hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_path){
-  h5 <- h5file(h5_path)                                                # read h5 file 
+  #h5 datei öffen
+  h5  <- h5file(h5_path) # read h5 file 
   results <- h5[["RESULTS"]][["CellsAll"]]                             # access the different sub-directories ("groups") with "[[]]"
   bottomElevation <- h5[["CellsAll"]][["BottomEl"]][,]                 # extract velocity and water depth for every cell
-  waterSurfElev <- results[["HydState"]][["0000001"]][1,]     
-  qX <- results[["HydState"]][["0000001"]][2,]                
-  qY <- results[["HydState"]][["0000001"]][3,]                
+  last_tstep <- names(results[["HydState"]])[length(names(results[["HydState"]]))] #letzten zeitschritt suchen
+  waterSurfElev <- results[["HydState"]][[last_tstep]][1,] #Resulate ablesen
+    qX <- results[["HydState"]][[last_tstep]][2,]                
+  qY <- results[["HydState"]][[last_tstep]][3,]                
   depth <- waterSurfElev - bottomElevation                    
   vX <- qX/depth                                              
   vY <- qY/depth                                              
