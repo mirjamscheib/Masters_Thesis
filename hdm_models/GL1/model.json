@@ -13,7 +13,7 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "U:/MZB/03_modelle/7_glenner/GL1/3_basement/GL1_mesh_computational-mesh_3.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {

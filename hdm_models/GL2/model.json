@@ -13,7 +13,7 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "U:/MZB/03_modelle/7_glenner/GL2/5_basement_zcorr/Gl2_computational-mesh_mod.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/GL2/Gl2_computational-mesh_mod.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {

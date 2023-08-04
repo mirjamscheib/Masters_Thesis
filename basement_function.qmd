@@ -27,12 +27,11 @@ basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h
 # Lösung mit ifelse befehl 
 model <- fromJSON(model_json) #read in model json # modify it change mesh
 model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
-model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[2] <- discharge  #change discharge
-model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out"
-model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[2] <- slope
+ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$INTERPOLATION$REGIONDEF$STRINGDEF$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "output")
+ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == discharge, model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == NA)
+ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "output", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type == "uniform_out", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type == "uniform_in")
+ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope == slope, model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope == 0.033)
 model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
-model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "output"
-model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] <- "input"
 
 model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE) #export 
 write(model_exp, "hdm_basement/model_new.json")
@@ -67,6 +66,63 @@ results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.
 
 # Test-Application of function 
 ```{r}
+function(discharge, results_h5){
+  for (discharge in c(3.28, 6.00, 9.00, 12.68, 16.00, 19.00, 22.00, 25.00, 28.00, 31.76)) {
+  for (results_h5 in c("hdm_models/GL1/results_GL1_3.28.h5", "hdm_models/GL1/results_GL1_6.00.h5", "hdm_models/GL1/results_GL1_9.00.h5", "hdm_models/GL1/results_GL1_12.68.h5", "hdm_models/GL1/results_GL1_16.00.h5", "hdm_models/GL1/results_GL1_19.00.h5", "hdm_models/GL1/results_GL1_22.00.h5", "hdm_models/GL1/results_GL1_25.00.h5", "hdm_models/GL1/results_GL1_28.00.h5", "hdm_models/GL1/results_GL1_31.76.h5")) {
+     return(basement(model_json = "hdm_models/GL1/model.json", 
+         mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
+         simulation_json = "hdm_models/GL1/simulation.json",
+         setup_h5 = "hdm_models/GL1/setup.h5",
+         results_h5,
+         results_xdmf = "hdm_models/GL1/results", #this can actually remain always the same
+         results_json = "hdm_models/GL1/results.json",
+         discharge, 
+         strickler = 38, 
+         time_end = 3600,
+         slope = 0.01))
+  } 
+  }
+  }
+
+GL1_args <- list(list(discharge = 3.28, results_h5 = "hdm_models/GL1/results_GL1_3.28.h5"),
+                 list(discharge = 6.00, results_h5 = "hdm_models/GL1/results_GL1_6.00.h5"),
+                 list(discharge = 9.00, results_h5 = "hdm_models/GL1/results_GL1_9.00.h5"),
+                 list(discharge = 12.68, results_h5 = "hdm_models/GL1/results_GL1_12.68.h5"),
+                 list(discharge = 16.00, results_h5 = "hdm_models/GL1/results_GL1_16.00.h5"),
+                 list(discharge = 19.00, results_h5 = "hdm_models/GL1/results_GL1_19.00.h5"),
+                 list(discharge = 22.00, results_h5 = "hdm_models/GL1/results_GL1_22.00.h5"),
+                 list(discharge = 25.00, results_h5 = "hdm_models/GL1/results_GL1_25.00.h5"),
+                 list(discharge = 28.00, results_h5 = "hdm_models/GL1/results_GL1_28.00.h5"),
+                 list(discharge = 31.76, results_h5 = "hdm_models/GL1/results_GL1_31.76.h5"))
+                 
+  for (i in seq_along(GL1_args)) {
+     return(basement(model_json = "hdm_models/GL1/model.json", 
+         mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
+         simulation_json = "hdm_models/GL1/simulation.json",
+         setup_h5 = "hdm_models/GL1/setup.h5",
+         results_h5[i],
+         results_xdmf = "hdm_models/GL1/results", #this can actually remain always the same
+         results_json = "hdm_models/GL1/results.json",
+         discharge[i],
+         strickler = 38, 
+         time_end = 3600,
+         slope = 0.01))
+  } 
+
+
+ basement(model_json = "hdm_models/GL1/model.json", 
+         mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
+         simulation_json = "hdm_models/GL1/simulation.json",
+         setup_h5 = "hdm_models/GL1/setup.h5",
+         results_h5 = "hdm_models/GL1//results.h5",
+         results_xdmf = "hdm_models/GL1/results", #this can actually remain always the same
+         results_json = "hdm_models/GL1/results.json",
+         discharge = 20.00, 
+         strickler = 38, 
+         time_end = 3600,
+         slope = 0.01)
+
+
 basement(model_json = "hdm_basement/model.json", 
          mesh_path = "hdm_basement/Landquart_computational-mesh_dsm_mod5.2dm", 
          simulation_json = "hdm_basement/simulation.json",
@@ -79,8 +135,7 @@ basement(model_json = "hdm_basement/model.json",
          time_end = 3600,
          slope = 0.002)
 
-  git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"# slope in inflow zone niedriger setzen - 0.0002 z.B. (bei Mass balance problem)
+# slope in inflow zone niedriger setzen - 0.0002 z.B. (bei Mass balance problem)
 ```
 
 

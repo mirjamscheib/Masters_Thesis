@@ -3,63 +3,48 @@
     "DOMAIN": {
       "BASEPLANE_2D": {
         "GEOMETRY": {
-          "INTERPOLATION": {
-            "method": "mean"
-          },
-          "REGIONDEF": [
-            {
-              "index": 1,
-              "name": "one"
-            }
-          ],
           "STRINGDEF": [
             {
               "name": "input",
-              "upstream_direction": "left"
+              "upstream_direction": "right"
             },
             {
               "name": "output",
-              "upstream_direction": "left"
+              "upstream_direction": "right"
             }
           ],
-          "mesh_file": "hdm_basement/Landquart_computational-mesh_dsm_mod5.2dm"
+          "mesh_file": "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
             "STANDARD": [
               {
-                "name": "output",
-                "slope": 0.033,
-                "string_name": "output",
-                "type": "uniform_out"
+                "discharge": 9,
+                "name": "inflow",
+                "slope": 0.01,
+                "string_name": "input",
+                "type": "uniform_in"
               },
               {
-                "name": "input",
-                "slope": 0.002,
-                "string_name": "input",
-                "type": "uniform_in",
-                "discharge": 13
+                "name": "outflow",
+                "slope": 0.01,
+                "string_name": "output",
+                "type": "uniform_out"
               }
             ]
           },
           "FRICTION": {
-            "default_friction": 11,
-            "regions": [
-              {
-                "friction": 30,
-                "region_name": "one"
-              }
-            ],
+            "default_friction": 38,
             "type": "strickler"
           },
           "INITIAL": {
             "type": "dry"
           },
           "PARAMETER": {
-            "CFL": 0.95,
+            "CFL": 0.9,
             "fluid_density": 1000,
-            "max_time_step": 100,
-            "minimum_water_depth": 0.001
+            "max_time_step": 10,
+            "minimum_water_depth": 0.01
           }
         }
       },
@@ -67,6 +52,6 @@
         "gravity": 9.81
       }
     },
-    "simulation_name": "landquart_dsm"
+    "simulation_name": "sitter_s1"
   }
 }

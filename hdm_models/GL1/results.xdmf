@@ -4,15 +4,15 @@
     <Domain>
         <Topology TopologyType="Triangle" Name="Topology" NumberOfElements="38873">
             <DataItem ItemType="Uniform" Dimensions="116619" Format="HDF">
-                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:CellsAll/Topology
+                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:CellsAll/Topology
             </DataItem>
         </Topology>
         <Geometry GeometryType="XYZ" Name="Coordinates">
             <DataItem ItemType="Uniform" Dimensions="59112" Format="HDF">
-                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:NodesAll/Coordnts
+                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:NodesAll/Coordnts
             </DataItem>
         </Geometry>
-        <Grid GridType="Collection" Name="E:/Mirjam/Masters_Thesis\hdm_basement/results.h5" CollectionType="Temporal">
+        <Grid GridType="Collection" Name="E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5" CollectionType="Temporal">
             <Grid GridType="Uniform" Name="Timestep">
                 <Time TimeType="Single" Name="time = 0.000000" Value="0.000000">
                 </Time>
@@ -26,7 +26,7 @@
                             0 0 1 1 38873 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38873 1" Format="HDF">
-                            E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:CellsAll/BottomEl
+                            E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:CellsAll/BottomEl
                         </DataItem>
                     </DataItem>
                 </Attribute>
@@ -37,7 +37,7 @@
                                 0 1 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000000
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000000
                             </DataItem>
                         </DataItem>
                         <DataItem ItemType="HyperSlab" Dimensions="38873">
@@ -45,7 +45,7 @@
                                 0 2 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000000
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000000
                             </DataItem>
                         </DataItem>
                     </DataItem>
@@ -57,7 +57,7 @@
                                 0 0 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000000
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000000
                             </DataItem>
                         </DataItem>
                         <DataItem ItemType="HyperSlab" Dimensions="38873">
@@ -65,7 +65,7 @@
                                 0 0 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 1" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:CellsAll/BottomEl
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:CellsAll/BottomEl
                             </DataItem>
                         </DataItem>
                     </DataItem>
@@ -76,7 +76,7 @@
                             0 0 1 1 38873 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                            E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000000
+                            E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000000
                         </DataItem>
                     </DataItem>
                 </Attribute>
@@ -86,7 +86,7 @@
                             0 0 1 1 38873 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38873 1" Format="HDF">
-                            E:/Mirjam/Masters_Thesis\hdm_basement/results_aux.h5:flow_velocity_abs/0
+                            E:/Mirjam/Masters_Thesis\hdm_models/GL1/results_aux.h5:flow_velocity_abs/0
                         </DataItem>
                     </DataItem>
                 </Attribute>
@@ -104,7 +104,7 @@
                             0 0 1 1 38873 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38873 1" Format="HDF">
-                            E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:CellsAll/BottomEl
+                            E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:CellsAll/BottomEl
                         </DataItem>
                     </DataItem>
                 </Attribute>
@@ -115,7 +115,7 @@
                                 0 1 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000001
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000001
                             </DataItem>
                         </DataItem>
                         <DataItem ItemType="HyperSlab" Dimensions="38873">
@@ -123,7 +123,7 @@
                                 0 2 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000001
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000001
                             </DataItem>
                         </DataItem>
                     </DataItem>
@@ -135,7 +135,7 @@
                                 0 0 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000001
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000001
                             </DataItem>
                         </DataItem>
                         <DataItem ItemType="HyperSlab" Dimensions="38873">
@@ -143,7 +143,7 @@
                                 0 0 1 1 38873 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38873 1" Format="HDF">
-                                E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:CellsAll/BottomEl
+                                E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:CellsAll/BottomEl
                             </DataItem>
                         </DataItem>
                     </DataItem>
@@ -154,7 +154,7 @@
                             0 0 1 1 38873 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38873 3" Format="HDF">
-                            E:/Mirjam/Masters_Thesis\hdm_basement/results.h5:/RESULTS/CellsAll/HydState/0000001
+                            E:/Mirjam/Masters_Thesis\hdm_models/GL1//results.h5:/RESULTS/CellsAll/HydState/0000001
                         </DataItem>
                     </DataItem>
                 </Attribute>
@@ -164,7 +164,7 @@
                             0 0 1 1 38873 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38873 1" Format="HDF">
-                            E:/Mirjam/Masters_Thesis\hdm_basement/results_aux.h5:flow_velocity_abs/1
+                            E:/Mirjam/Masters_Thesis\hdm_models/GL1/results_aux.h5:flow_velocity_abs/1
                         </DataItem>
                     </DataItem>
                 </Attribute>
