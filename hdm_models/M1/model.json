@@ -13,7 +13,7 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "U:/MZB/03_modelle/5_moesa/M1/3_basement/moesa_mzb_uebersicht_computational-mesh2.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {

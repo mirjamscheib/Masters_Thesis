@@ -41,9 +41,11 @@ results_h5_values <- c("hdm_models/GL1/results_GL1_3.28.h5",
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
-    result <- basement(model_json = "hdm_models/GL1/model.json", 
+    result <- basement(model_json = "hdm_models/GL1/model.json",
+                       model_new = "hdm_models/GL1/model_new.json",
                        mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
                        simulation_json = "hdm_models/GL1/simulation.json",
+                       simulation_new = "hdm_models/GL1/simulation_new.json",
                        setup_h5 = "hdm_models/GL1/setup.h5",
                        results_h5 = results_h5_values[j],
                        results_xdmf = "hdm_models/GL1/results",
@@ -54,7 +56,7 @@ for (i in seq_along(discharge_values)) {
                        slope = 0.01)
     
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values)) break
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   }
   }
 ```
@@ -79,19 +81,20 @@ results_h5_values <- c("hdm_models/GL2/results_GL2_3.21.h5",
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
     basement(model_json = "hdm_models/GL2/model.json", 
-                       mesh_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm", 
-                       simulation_json = "hdm_models/GL2/simulation.json",
-                       setup_h5 = "hdm_models/GL2/setup.h5",
-                       results_h5 = results_h5_values[j],
-                       results_xdmf = "hdm_models/GL2/results",
-                       results_json = "hdm_models/GL2/results.json",
-                       discharge = discharge_values[i], 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+             model_new = "hdm_models/GL2/model_new.json",
+             mesh_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm", 
+             simulation_json = "hdm_models/GL2/simulation.json",
+             simulation_new = "hdm_models/GL2/simulation_new.json",
+             setup_h5 = "hdm_models/GL2/setup.h5",
+             results_h5 = results_h5_values[j],
+             results_xdmf = "hdm_models/GL2/results",
+             results_json = "hdm_models/GL2/results.json",
+             discharge = discharge_values[i], 
+             strickler = 38, 
+             time_end = 3600,
+             slope = 0.01)
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values))
-       break
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   }
 }
 ```
@@ -114,8 +117,10 @@ results_h5_values <- c("hdm_models/L2/results_L2_2.40.h5",
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
     basement(model_json = "hdm_models/L2/model.json", 
+             model_new = "hdm_models/L2/model_new.json",
                        mesh_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm", 
                        simulation_json = "hdm_models/L2/simulation.json",
+               simulation_new = "hdm_models/L2/simulation_new.json",
                        setup_h5 = "hdm_models/L2/setup.h5",
                        results_h5 = results_h5_values[j],
                       results_xdmf = "hdm_models/L2/results",
@@ -126,8 +131,7 @@ for (i in seq_along(discharge_values)) {
                        slope = 0.01)
 
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values))
-       break
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   } 
   }
 
@@ -155,8 +159,10 @@ results_h5_values <- c("hdm_models/M1/results_M1_0.47.h5",
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
     basement(model_json = "hdm_models/M1/model.json", 
+             model_new = "hdm_models/M1/model_new.json",
                        mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
                        simulation_json = "hdm_models/M1/simulation.json",
+               simulation_new = "hdm_models/M1/simulation_new.json",
                        setup_h5 = "hdm_models/M1/setup.h5",
                        results_h5 = results_h5_values[j],
                        results_xdmf = "hdm_models/M1/results",
@@ -167,8 +173,7 @@ for (i in seq_along(discharge_values)) {
                        slope = 0.01)
 
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values))
-       break
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   }
 }
 
@@ -193,8 +198,10 @@ results_h5_values <- c("hdm_models/S1/results_S1_2.00.h5",
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
     basement(model_json = "hdm_models/S1/model.json", 
+             model_new = "hdm_models/S1/model_new.json",
                        mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
                        simulation_json = "hdm_models/S1/simulation.json",
+               simulation_new = "hdm_models/S1/simulation_new.json",
                        setup_h5 = "hdm_models/S1/setup.h5",
                        results_h5 = results_h5_values[j],
                        results_xdmf = "hdm_models/S1/results",
@@ -205,8 +212,7 @@ for (i in seq_along(discharge_values)) {
                        slope = 0.01)
 
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values))
-       break
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   }
 }
 
@@ -231,8 +237,10 @@ results_h5_values <- c("hdm_models/S2/results_S2_2.00.h5",
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
     basement(model_json = "hdm_models/S2/model.json", 
+             model_new = "hdm_models/S2/model_new.json",
                        mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
                        simulation_json = "hdm_models/S2/simulation.json",
+               simulation_new = "hdm_models/S2/simulation_new.json",
                        setup_h5 = "hdm_models/S2/setup.h5",
                        results_h5 = results_h5_values[j],
                        results_xdmf = "hdm_models/S2/results",
@@ -242,9 +250,8 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
- # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values))
-       break
+# Check if all values are simulate, and exit the loop if true
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   }
 }
 
@@ -269,9 +276,11 @@ results_h5_values <- c("hdm_models/TH4/results_TH4_11.45.h5",
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
-    basement(model_json = "hdm_models/TH4/model.json", 
+    basement(model_json = "hdm_models/TH4/model.json",
+             model_new = "hdm_models/TH4/model_new.json",
                        mesh_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm", 
                        simulation_json = "hdm_models/TH4/simulation.json",
+               simulation_new = "hdm_models/TH4/simulation_new.json",
                        setup_h5 = "hdm_models/TH4/setup.h5",
                        results_h5 = results_h5_values[j],
                        results_xdmf = "hdm_models/TH4/results",
@@ -281,9 +290,8 @@ for (i in seq_along(discharge_values)) {
                        time_end = 3600,
                        slope = 0.01)
 
- # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values))
-       break
+# Check if all values are simulate, and exit the loop if true
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   }
 }
 
@@ -318,8 +326,10 @@ results_h5_values <- c("hdm_models/VR3/results_VR3_2.90.h5",
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
     basement(model_json = "hdm_models/VR3/model.json", 
+             model_new = "hdm_models/VR3/model_new.json",
                        mesh_path = "hdm_models/VR3/VR_computational-mesh_3.2dm", 
                        simulation_json = "hdm_models/VR3/simulation.json",
+               simulation_new = "hdm_models/VR3/simulation_new.json",
                        setup_h5 = "hdm_models/VR3/setup.h5",
                        results_h5 = results_h5_values[j],
                        results_xdmf = "hdm_models/VR3/results",
@@ -330,8 +340,7 @@ for (i in seq_along(discharge_values)) {
                        slope = 0.01)
 
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values))
-       break
+    if (i == length(discharge_values) & j == length(results_h5_values)) break
   }
 }
 

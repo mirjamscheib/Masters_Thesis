@@ -1,6 +1,6 @@
 
 #### BASEMENT SIMULATIONS ####
-basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h5, results_xdmf, results_json, discharge, strickler, time_end, slope){
+basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, results_h5, results_xdmf, results_json, discharge, strickler, time_end, slope){
 
   model <- fromJSON(model_json) #read in model json # modify it change mesh
   model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
@@ -11,12 +11,12 @@ basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
   
   model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE) #export 
-  write(model_exp, "hdm_models/model_new.json")
+  write(model_exp, model_new)
   
   simulation <- fromJSON(simulation_json) #read in simulation json
   simulation$SIMULATION$TIME$end <- time_end #modify it
   simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
-  write(simulation_exp, "hdm_models/simulation_new.json") #export 
+  write(simulation_exp, simulation_new) #export 
   
   # Set up BASEMENT
   setup_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"
@@ -25,11 +25,11 @@ basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h
   system2(setup_cmd_name, args = c(setup_param1, setup_param2))
   
   # Simulation in BASEMENT
-  simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_omp.exe"
+  simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_cudaC.exe"
   simulation_param1 = paste("-f ", getwd(), "\\", simulation_json, sep="")
   simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
   simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
-  system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2, simulation_param3, "-p", "-n 16"))
+  system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2, simulation_param3, "-p"))
   
   # Results of BASEMENT
   results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.exe"
