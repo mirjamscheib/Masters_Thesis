@@ -13,7 +13,7 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "U:/MZB/03_modelle/6_vorderrhein/4_basement/VR_computational-mesh_3.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/VR3/VR_computational-mesh_3.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {

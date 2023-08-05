@@ -40,17 +40,8 @@ pkgCheck("rgdal")
 source("mth_functions.R")
 ```
 
-# Glenner: GL1
+# -- not working Glenner: GL1
 ## Single Attribute Rasters
-```{r}
-GL1_test <- hdm_results(
-  h5_path = "hdm_models/GL1/results_GL1_3.28.h5", 
-  twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
-  shp_path = "raster_files/GL1_shape.shp", 
-  raster_v_path = "raster_files/GL1_v_3.28.tif",
-  raster_wd_path = "raster_files/GL1_wd_3.28.tif")
-```
-
 ```{r}
 # Define the range of values for discharge and results_h5
 h5_path_values <- c("hdm_models/GL1/results_GL1_3.28.h5", 
@@ -162,8 +153,8 @@ for (i in seq_along(h5_path_values)) {
 }
 ```
 
-# Landquart: L2
-## Single Attribute Rasters
+# ok - Landquart: L2
+## ok- Single Attribute Rasters
 ```{r}
 # Define the range of values for discharge and results_h5
 h5_path_values <- c("hdm_models/L2/results_L2_2.40.h5",
@@ -207,88 +198,6 @@ for (i in seq_along(h5_path_values)) {
 }
 ```
 
-
-```{r}
-# L2 with Q: 2.4 m3/s
-L2_2 <- hdm_results(
-  h5_path = "hdm_models/L2/results_L2_2.40.h5", 
-  twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_2.40.tif",
-  raster_wd_path = "raster_files/L2_wd_2.40.tif")
-
-
-GL1_1 <- hdm_results(
-  h5_path = "hdm_models/GL1/results_GL1_3.28.h5", 
-  twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
-  shp_path = "raster_files/GL1_shape.shp", 
-  raster_v_path = "raster_files/GL1_v_3.28.tif",
-  raster_wd_path = "raster_files/GL1_v_3.28.tif")
-
-# L2 with Q: 3.9 m3/s
-L2_3 <- hdm_results(
-  h5_path = "hdm_results/results_3.9_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_3.tif",
-  raster_wd_path = "raster_files/L2_wd_3.tif")
-
-# L2 with Q: 4.6 m3/s
-L2_4 <- hdm_results(
-  h5_path = "hdm_results/results_4.6_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_4.tif",
-  raster_wd_path = "raster_files/L2_wd_4.tif")
-
-# L2 with Q: 7 m3/s
-L2_7 <- hdm_results(
-  h5_path = "hdm_results/results_7_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_7.tif",
-  raster_wd_path = "raster_files/L2_wd_7.tif")
-
-# L2 with Q: 9.24 m3/s
-L2_9 <- hdm_results(
-  h5_path = "hdm_results/results_9.24_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_9.tif",
-  raster_wd_path = "raster_files/L2_wd_9.tif")
-
-# L2 with Q: 11.4 m3/s
-L2_11 <- hdm_results(
-  h5_path = "hdm_results/results_11.4_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_11.tif",
-  raster_wd_path = "raster_files/L2_wd_11.tif")
-
-# L2 with Q: 13.3 m3/s
-L2_13 <- hdm_results(
-  h5_path = "hdm_results/results_13.3_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_13.tif",
-  raster_wd_path = "raster_files/L2_wd_13.tif")
-
-# L2 with Q: 15 m3/s
-L2_15 <- hdm_results(
-  h5_path = "hdm_results/results_15_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_15.tif",
-  raster_wd_path = "raster_files/L2_wd_15.tif")
-
-# L2 with Q: 18.9 m3/s
-L2_18 <- hdm_results(
-  h5_path = "hdm_results/results_18.9_L2.h5", 
-  twodm_path = "hdm_results/L2_mesh.2dm",
-  shp_path = "raster_files/L2_shape.shp", 
-  raster_v_path = "raster_files/L2_v_18.tif",
-  raster_wd_path = "raster_files/L2_wd_18.tif")
-```
 
 ## Stacked Rasters 
 ```{r}
@@ -379,31 +288,43 @@ stack_raster(v_path = "raster_files/L2_v_18.tif",
 ```
 
 
-# ~ Moesa: M1
+# ~ here Moesa: M1
 ## Single Attribute Rasters
 ```{r}
 # Define the range of values for discharge and results_h5
-h5_path_values <- c("hdm_models/L2/results_L2_2.40.h5",
-                    "hdm_models/L2/results_L2_3.90.h5",
-                    "hdm_models/L2/results_L2_7.00.h5",
-                    "hdm_models/L2/results_L2_9.24.h5",
-                    "hdm_models/L2/results_L2_13.30.h5",
-                    "hdm_models/L2/results_L2_16.50.h5",
-                    "hdm_models/L2/results_L2_18.90.h5")
-raster_v_path_vaLues <- c("raster_files/L2_v_2.40.tif",
-                          "raster_files/L2_v_3.90.tif",
-                          "raster_files/L2_v_7.00.tif",
-                          "raster_files/L2_v_9.24.tif",
-                          "raster_files/L2_v_13.30.tif",
-                          "raster_files/L2_v_16.50.tif",
-                          "raster_files/L2_v_18.90.tif")
-raster_wd_path_values <- c("raster_files/L2_wd_2.40.tif",
-                          "raster_files/L2_wd_3.90.tif",
-                          "raster_files/L2_wd_7.00.tif",
-                          "raster_files/L2_wd_9.24.tif",
-                          "raster_files/L2_wd_13.30.tif",
-                          "raster_files/L2_wd_16.50.tif",
-                          "raster_files/L2_wd_18.90.tif")
+h5_path_values <- c("hdm_models/M1/results_M1_0.47.h5",
+                    "hdm_models/M1/results_M1_0.60.h5",
+                    "hdm_models/M1/results_M1_4.00.h5",
+                    "hdm_models/M1/results_M1_6.00.h5",
+                    "hdm_models/M1/results_M1_8.00.h5",
+                    "hdm_models/M1/results_M1_10.00.h5",
+                    "hdm_models/M1/results_M1_12.00.h5",
+                    "hdm_models/M1/results_M1_14.00.h5",
+                    "hdm_models/M1/results_M1_16.00.h5",
+                    "hdm_models/M1/results_M1_18.84.h5",
+                    "hdm_models/M1/results_M1_22.84.h5")
+raster_v_path_vaLues <- c("raster_files/M1_v_0.47.tif",
+                          "raster_files/M1_v_0.60.tif",
+                          "raster_files/M1_v_4.00.tif",
+                          "raster_files/M1_v_6.00.tif",
+                          "raster_files/M1_v_8.00.tif",
+                          "raster_files/M1_v_10.00.tif",
+                          "raster_files/M1_v_12.00.tif",
+                          "raster_files/M1_v_14.00.tif",
+                          "raster_files/M1_v_16.00.tif",
+                          "raster_files/M1_v_18.84.tif",
+                          "raster_files/M1_v_22.84.tif")
+raster_wd_path_values <- c("raster_files/M1_wd_0.47.tif",
+                          "raster_files/M1_wd_0.60.tif",
+                          "raster_files/M1_wd_4.00.tif",
+                          "raster_files/M1_wd_6.00.tif",
+                          "raster_files/M1_wd_8.00.tif",
+                          "raster_files/M1_wd_10.00.tif",
+                          "raster_files/M1_wd_12.00.tif",
+                          "raster_files/M1_wd_14.00.tif",
+                          "raster_files/M1_wd_16.00.tif",
+                          "raster_files/M1_wd_18.84.tif",
+                          "raster_files/M1_wd_22.84.tif")
  
 
 # Loop through the combinations of discharge and results_h5 values
@@ -412,8 +333,8 @@ for (i in seq_along(h5_path_values)) {
     for (k in seq_along(raster_wd_path_values)) {
         hdm_results(
         h5_path = h5_path_values[i], 
-        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
-        shp_path = "raster_files/L2_shape.shp", 
+        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
+        shp_path = "raster_files/M1_shape.shp", 
         raster_v_path = raster_v_path_vaLues[j],
         raster_wd_path = raster_wd_path_values[k])
  # Check if all values are simulate, and exit the loop if true
@@ -425,6 +346,56 @@ for (i in seq_along(h5_path_values)) {
 ```
 
 
+# * Sitter: S2
+## Single Attribute Rasters
+```{r}
+# Define the range of values for discharge and results_h5
+h5_path_values <- c("hdm_models/S2/results_S2_2.00.h5",
+                    "hdm_models/S2/results_S2_3.20.h5",
+                    "hdm_models/S2/results_S2_6.50.h5",
+                    "hdm_models/S2/results_S2_8.50.h5",
+                    "hdm_models/S2/results_S2_10.93.h5",
+                    "hdm_models/S2/results_S2_13.00.h5",
+                    "hdm_models/S2/results_S2_15.00.h5",
+                    "hdm_models/S2/results_S2_18.00.h5",
+                    "hdm_models/S2/results_S2_20.00.h5")
+raster_v_path_vaLues <- c("raster_files/S2_v_2.00.tif",
+                          "raster_files/S2_v_3.20.tif",
+                          "raster_files/S2_v_6.50.tif",
+                          "raster_files/S2_v_8.50.tif",
+                          "raster_files/S2_v_10.93.tif",
+                          "raster_files/S2_v_13.00.tif",
+                          "raster_files/S2_v_15.00.tif",
+                          "raster_files/S2_v_18.00.tif",
+                          "raster_files/S2_v_20.00.tif")
+raster_wd_path_values <- c("raster_files/S2_wd_2.00.tif",
+                          "raster_files/S2_wd_3.20.tif",
+                          "raster_files/S2_wd_6.50.tif",
+                          "raster_files/S2_wd_8.50.tif",
+                          "raster_files/S2_wd_10.93.tif",
+                          "raster_files/S2_wd_13.00.tif",
+                          "raster_files/S2_wd_15.00.tif",
+                          "raster_files/S2_wd_18.00.tif",
+                          "raster_files/S2_wd_20.00.tif")
+ 
+
+# Loop through the combinations of discharge and results_h5 values
+for (i in seq_along(h5_path_values)) {
+  for (j in seq_along(raster_v_path_vaLues)) {
+    for (k in seq_along(raster_wd_path_values)) {
+        hdm_results(
+        h5_path = h5_path_values[i], 
+        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
+        shp_path = "raster_files/S2_shape.shp", 
+        raster_v_path = raster_v_path_vaLues[j],
+        raster_wd_path = raster_wd_path_values[k])
+ # Check if all values are simulate, and exit the loop if true
+    if (i == length(h5_path_values))
+       break
+  }
+  }
+}
+```
 
 
 

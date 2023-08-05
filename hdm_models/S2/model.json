@@ -45,7 +45,7 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "U:/MZB/03_modelle/2_sitter/S2/3_basement/computational-mesh-7-290323.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/S2/computational-mesh-7-290323.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {

@@ -61,7 +61,7 @@ for (i in seq_along(discharge_values)) {
   }
 ```
 
-## not finished - GL2
+## GL2
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(3.21, 6.00, 9.00, 12.52, 16.00, 19.00, 22.00, 25.00, 28.00, 31.53)
@@ -99,8 +99,8 @@ for (i in seq_along(discharge_values)) {
 }
 ```
 
-# here Landquart
-## - L2
+# Landquart
+## L2
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(2.40, 3.90, 7.00, 9.24, 13.30, 16.50, 18.90)
@@ -131,14 +131,14 @@ for (i in seq_along(discharge_values)) {
                        slope = 0.01)
 
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values) & j == length(results_h5_values)) break
+    if (i == 18.90) break
   } 
   }
 
 ```
 
-# - Moesa
-## - M1
+# Moesa
+## M1 
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(0.47, 0.60, 4.00, 6.00, 8.00, 10.00, 12.00, 14.00, 16.00, 18.84, 22.84)
@@ -173,14 +173,15 @@ for (i in seq_along(discharge_values)) {
                        slope = 0.01)
 
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values) & j == length(results_h5_values)) break
+    if (i == 22.84 & j ==  "hdm_models/M1/results_M1_22.84.h5") {
+      break
   }
 }
-
+}
 ```
 
-# - Sitter
-## - S1
+# Sitter
+## S1
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(2.00, 3.70, 6.50, 8.50, 10.68, 13.00, 15.00, 18.00, 20.00)
@@ -197,6 +198,7 @@ results_h5_values <- c("hdm_models/S1/results_S1_2.00.h5",
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
   for (j in seq_along(results_h5_values)) {
+    
     basement(model_json = "hdm_models/S1/model.json", 
              model_new = "hdm_models/S1/model_new.json",
                        mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
@@ -209,16 +211,18 @@ for (i in seq_along(discharge_values)) {
                        discharge = discharge_values[i], 
                        strickler = 33.0, 
                        time_end = 3600,
-                       slope = 0.01)
-
+                       slope = 0.001)
 # Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values) & j == length(results_h5_values)) break
+    if (i == 20.00 & j ==  "hdm_models/M1/results_S1_20.00.h5") {
+      break
+    }
+    print(paste(i, j))
   }
 }
 
 ```
 
-## - S2
+## S2
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(2.00, 3.20, 6.50, 8.50, 10.93, 13.00, 15.00, 18.00, 20.00)
@@ -248,20 +252,20 @@ for (i in seq_along(discharge_values)) {
                        discharge = discharge_values[i], 
                        strickler = 36.0, 
                        time_end = 3600,
-                       slope = 0.01)
-
-# Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values) & j == length(results_h5_values)) break
+                       slope = 0.003376)
+       
   }
-}
+  }
+  
+ 
 
 ```
 
-# - Thur
-## - TH4
+# Thur
+## new stop TH4
 ```{r}
 # Define the range of values for discharge and results_h5
-discharge_values <- c(11.45, 15.00, 18.00, 19.96, 22.50, 25.00, 27.00, 30.00, 32.93)
+discharge_values <- c(11.45, 15.00, 18.00, 19.96, 22.50, 25.00, 27.00, 30.00, 32.93, "stop")
 results_h5_values <- c("hdm_models/TH4/results_TH4_11.45.h5",
                        "hdm_models/TH4/results_TH4_15.00.h5",
                        "hdm_models/TH4/results_TH4_18.00.h5",
@@ -270,12 +274,18 @@ results_h5_values <- c("hdm_models/TH4/results_TH4_11.45.h5",
                        "hdm_models/TH4/results_TH4_25.00.h5",
                        "hdm_models/TH4/results_TH4_27.00.h5",
                        "hdm_models/TH4/results_TH4_30.00.h5",
-                       "hdm_models/TH4/results_TH4_32.93.h5") 
+                       "hdm_models/TH4/results_TH4_32.93.h5", "stop") 
 
 
 # Loop through the combinations of discharge and results_h5 values
 for (i in seq_along(discharge_values)) {
+    if (i == "stop"){
+    break
+  }
   for (j in seq_along(results_h5_values)) {
+      if (j == "stop"){
+    break
+  }
     basement(model_json = "hdm_models/TH4/model.json",
              model_new = "hdm_models/TH4/model_new.json",
                        mesh_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm", 
@@ -288,17 +298,16 @@ for (i in seq_along(discharge_values)) {
                        discharge = discharge_values[i], 
                        strickler = 42.0, 
                        time_end = 3600,
-                       slope = 0.01)
+                       slope = 0.001)
 
-# Check if all values are simulate, and exit the loop if true
-    if (i == length(discharge_values) & j == length(results_h5_values)) break
+    }
   }
-}
+
 
 ```
 
-# - Vorderrhein
-## - VR3
+# Vorderrhein
+## VR3
 ```{r}
 # Define the range of values for discharge and results_h5
 discharge_values <- c(2.90, 6.00, 9.00, 12.00, 15.00, 18.80, 22.00, 25.00, 28.00, 31.00, 34.00, 37.00, 40.10, 43.00, 46.00, 48.00, 50.00, 52.90)
@@ -337,7 +346,7 @@ for (i in seq_along(discharge_values)) {
                        discharge = discharge_values[i], 
                        strickler = 35.0, 
                        time_end = 3600,
-                       slope = 0.01)
+                       slope = 0.001)
 
 # Check if all values are simulate, and exit the loop if true
     if (i == length(discharge_values) & j == length(results_h5_values)) break

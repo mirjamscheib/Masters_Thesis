@@ -13,7 +13,7 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "U:/MZB/03_modelle/3_thur/basement/th4_uebersicht_computational-mesh4.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
