@@ -311,7 +311,7 @@ GL2_31.53 <-  basement(model_json = "hdm_models/GL2/model.json",
              slope = 0.01)
 ```
 
-# - Landquart
+# Test Landquart
 ## L2
 ```{r}
 L2_2.40 <-  basement(model_json = "hdm_models/L2/model.json", 
@@ -321,8 +321,8 @@ L2_2.40 <-  basement(model_json = "hdm_models/L2/model.json",
                      simulation_new = "hdm_models/L2/simulation_new.json",
                      setup_h5 = "hdm_models/L2/setup.h5",
                      results_h5 = "hdm_models/L2/results_L2_2.40.h5",
-                     results_xdmf = "hdm_models/L2/results",
-                     results_json = "hdm_models/L2/results.json",
+                     results_xdmf = "hdm_models/L2/results_L2_2.40",
+                     results_json = "hdm_models/L2/results_L2_2.40.json",
                      discharge = 2.40, 
                      strickler = 11.5, 
                      time_end = 3600,
@@ -413,128 +413,422 @@ L2_18.90 <-  basement(model_json = "hdm_models/L2/model.json",
                      slope = 0.01)
 ```
 
-# noch im for loop Moesa
+# Moesa
 ## M1 
 ```{r}
-# Define the range of values for discharge and results_h5
-discharge_values <- c(0.47, 0.60, 4.00, 6.00, 8.00, 10.00, 12.00, 14.00, 16.00, 18.84, 22.84)
-results_h5_values <- c("hdm_models/M1/results_M1_0.47.h5",
-                       "hdm_models/M1/results_M1_0.60.h5",
-                       "hdm_models/M1/results_M1_4.00.h5",
-                       "hdm_models/M1/results_M1_6.00.h5",
-                       "hdm_models/M1/results_M1_8.00.h5",
-                       "hdm_models/M1/results_M1_10.00.h5",
-                       "hdm_models/M1/results_M1_12.00.h5",
-                       "hdm_models/M1/results_M1_14.00.h5",
-                       "hdm_models/M1/results_M1_16.00.h5",
-                       "hdm_models/M1/results_M1_18.84.h5",
-                       "hdm_models/M1/results_M1_22.84.h5") 
-
-
-# Loop through the combinations of discharge and results_h5 values
-for (i in seq_along(discharge_values)) {
-  for (j in seq_along(results_h5_values)) {
-    basement(model_json = "hdm_models/M1/model.json", 
-             model_new = "hdm_models/M1/model_new.json",
+M1_0.47 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
                        mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
                        simulation_json = "hdm_models/M1/simulation.json",
-               simulation_new = "hdm_models/M1/simulation_new.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
                        setup_h5 = "hdm_models/M1/setup.h5",
-                       results_h5 = results_h5_values[j],
+                       results_h5 = "hdm_models/M1/results_M1_0.47.h5",
                        results_xdmf = "hdm_models/M1/results",
                        results_json = "hdm_models/M1/results.json",
-                       discharge = discharge_values[i], 
+                       discharge = 0.47, 
                        strickler = 35.0, 
                        time_end = 3600,
                        slope = 0.01)
 
-# Check if all values are simulate, and exit the loop if true
-    if (i == 22.84 & j ==  "hdm_models/M1/results_M1_22.84.h5") {
-      break
-  }
-}
-}
+M1_0.60 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_0.60.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 0.60, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_4.00 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_4.00.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 4.00, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_6.00 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_6.00.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 6.00, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+
+M1_8.00 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_8.00.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 8.00, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_10.00 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_10.00.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 10.00, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_12.00 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_12.00.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 12.00, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_14.00 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_14.00.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 14.00, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_16.00 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_16.00.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 16.00, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_18.84 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_18.84.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 18,84, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
+
+M1_22.84 <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_22.84.h5",
+                       results_xdmf = "hdm_models/M1/results",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 22.84, 
+                       strickler = 35.0, 
+                       time_end = 3600,
+                       slope = 0.01)
 ```
 
 # Sitter
 ## S1
 ```{r}
-# Define the range of values for discharge and results_h5
-discharge_values <- c(2.00, 3.70, 6.50, 8.50, 10.68, 13.00, 15.00, 18.00, 20.00)
-results_h5_values <- c("hdm_models/S1/results_S1_2.00.h5",
-                       "hdm_models/S1/results_S1_3.70.h5",
-                       "hdm_models/S1/results_S1_6.50.h5",
-                       "hdm_models/S1/results_S1_8.50.h5",
-                       "hdm_models/S1/results_S1_10.68.h5",
-                       "hdm_models/S1/results_S1_13.00.h5",
-                       "hdm_models/S1/results_S1_15.00.h5",
-                       "hdm_models/S1/results_S1_18.00.h5",
-                       "hdm_models/S1/results_S1_20.00.h5") 
+S1_2.00 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_2.00.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 2.00, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
 
-# Loop through the combinations of discharge and results_h5 values
-for (i in seq_along(discharge_values)) {
-  for (j in seq_along(results_h5_values)) {
-    
-    basement(model_json = "hdm_models/S1/model.json", 
-             model_new = "hdm_models/S1/model_new.json",
-                       mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
-                       simulation_json = "hdm_models/S1/simulation.json",
-               simulation_new = "hdm_models/S1/simulation_new.json",
-                       setup_h5 = "hdm_models/S1/setup.h5",
-                       results_h5 = results_h5_values[j],
-                       results_xdmf = "hdm_models/S1/results",
-                       results_json = "hdm_models/S1/results.json",
-                       discharge = discharge_values[i], 
-                       strickler = 33.0, 
-                       time_end = 3600,
-                       slope = 0.001)
-# Check if all values are simulate, and exit the loop if true
-    if (i == 20.00 & j ==  "hdm_models/M1/results_S1_20.00.h5") {
-      break
-    }
-    print(paste(i, j))
-  }
-}
+S1_3.70 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_3.70.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 3.70, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
 
+S1_6.50 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_6.50.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 6.50, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
+
+S1_8.50 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_8.50.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 8.50, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
+
+S1_10.68 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_10.68.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 10.68, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
+
+S1_13.00 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_13.00.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 13.00, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
+
+S1_15.00 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_15.00.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 15.00, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
+
+S1_18.00 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_18.00.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 18.00, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
+
+S1_20.00 <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_20.00.h5",
+                    results_xdmf = "hdm_models/S1/results", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 20.00, 
+                    strickler = 33.0, 
+                    time_end = 3600,
+                    slope = 0.001)
 ```
 
 ## S2
 ```{r}
-# Define the range of values for discharge and results_h5
-discharge_values <- c(2.00, 3.20, 6.50, 8.50, 10.93, 13.00, 15.00, 18.00, 20.00)
-results_h5_values <- c("hdm_models/S2/results_S2_2.00.h5",
-                       "hdm_models/S2/results_S2_3.20.h5",
-                       "hdm_models/S2/results_S2_6.50.h5",
-                       "hdm_models/S2/results_S2_8.50.h5",
-                       "hdm_models/S2/results_S2_10.93.h5",
-                       "hdm_models/S2/results_S2_13.00.h5",
-                       "hdm_models/S2/results_S2_15.00.h5",
-                       "hdm_models/S2/results_S2_18.00.h5",
-                       "hdm_models/S2/results_S2_20.00.h5") 
+S2_2.00 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_2.00.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 2.00, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
 
+S2_3.20 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_3.20.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 3.20, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
 
-# Loop through the combinations of discharge and results_h5 values
-for (i in seq_along(discharge_values)) {
-  for (j in seq_along(results_h5_values)) {
-    basement(model_json = "hdm_models/S2/model.json", 
-             model_new = "hdm_models/S2/model_new.json",
-                       mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
-                       simulation_json = "hdm_models/S2/simulation.json",
-               simulation_new = "hdm_models/S2/simulation_new.json",
-                       setup_h5 = "hdm_models/S2/setup.h5",
-                       results_h5 = results_h5_values[j],
-                       results_xdmf = "hdm_models/S2/results",
-                       results_json = "hdm_models/S2/results.json",
-                       discharge = discharge_values[i], 
-                       strickler = 36.0, 
-                       time_end = 3600,
-                       slope = 0.003376)
+S2_6.50 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_6.50.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 6.50, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
+
+S2_8.50 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_8.50.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 8.50, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
+
+S2_10.93 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_10.93.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 10.93, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
+
+S2_13.00 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_13.00.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 13.00, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
+
+S2_15.00 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_15.00.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 15.00, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
+
+S2_18.00 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_18.00.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 18.00, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
        
-  }
-  }
-  
- 
-
+S2_20.00 <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_20.00.h5",
+                    results_xdmf = "hdm_models/S2/results",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 10.00, 
+                    strickler = 36.0, 
+                    time_end = 3600,
+                    slope = 0.003376)
 ```
 
 # Thur

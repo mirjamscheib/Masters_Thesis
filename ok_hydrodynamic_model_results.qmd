@@ -126,7 +126,7 @@ test[test == 0] <- NA
 plot(test)
 ```
 
-# ok - Landquart: L2
+# ! - Landquart: L2
 ## velocity fehlt Single Attribute Rasters
 ```{r}
 # Define the range of values for discharge and results_h5
@@ -169,6 +169,13 @@ for (i in seq_along(h5_path_values)) {
   }
   }
 }
+
+test <- raster("raster_files/L2_v_2.40.tif")
+raster::crs(test) <- "EPSG:2056"
+plot(test)
+
+test[test == 0] <- NA
+plot(test)
 ```
 
 
@@ -427,6 +434,13 @@ for (i in seq_along(h5_path_values)) {
   }
   }
 }
+
+test <- raster("raster_files/S2_v_2.00.tif")
+raster::crs(test) <- "EPSG:2056"
+plot(test)
+
+test[test == 0] <- NA
+plot(test)
 ```
 
 
