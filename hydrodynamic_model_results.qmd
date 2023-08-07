@@ -130,27 +130,27 @@ plot(test)
 ## velocity fehlt Single Attribute Rasters
 ```{r}
 # Define the range of values for discharge and results_h5
-h5_path_values <- c("hdm_models/L2/results_L2_2.40.h5",
-                    "hdm_models/L2/results_L2_3.90.h5",
-                    "hdm_models/L2/results_L2_7.00.h5",
-                    "hdm_models/L2/results_L2_9.24.h5",
-                    "hdm_models/L2/results_L2_13.30.h5",
-                    "hdm_models/L2/results_L2_16.50.h5",
-                    "hdm_models/L2/results_L2_18.90.h5")
-raster_v_path_vaLues <- c("raster_files/L2_v_2.40.tif",
-                          "raster_files/L2_v_3.90.tif",
-                          "raster_files/L2_v_7.00.tif",
-                          "raster_files/L2_v_9.24.tif",
-                          "raster_files/L2_v_13.30.tif",
-                          "raster_files/L2_v_16.50.tif",
-                          "raster_files/L2_v_18.90.tif")
-raster_wd_path_values <- c("raster_files/L2_wd_2.40.tif",
-                          "raster_files/L2_wd_3.90.tif",
-                          "raster_files/L2_wd_7.00.tif",
-                          "raster_files/L2_wd_9.24.tif",
-                          "raster_files/L2_wd_13.30.tif",
-                          "raster_files/L2_wd_16.50.tif",
-                          "raster_files/L2_wd_18.90.tif")
+h5_path_values <- c("hdm_models/L2/results_L2_2_40.h5",
+                    "hdm_models/L2/results_L2_3_90.h5",
+                    "hdm_models/L2/results_L2_7_00.h5",
+                    "hdm_models/L2/results_L2_9_24.h5",
+                    "hdm_models/L2/results_L2_13_30.h5",
+                    "hdm_models/L2/results_L2_16_50.h5",
+                    "hdm_models/L2/results_L2_18_90.h5")
+raster_v_path_vaLues <- c("raster_files/L2_v_2_40.tif",
+                          "raster_files/L2_v_3_90.tif",
+                          "raster_files/L2_v_7_00.tif",
+                          "raster_files/L2_v_9_24.tif",
+                          "raster_files/L2_v_13_30.tif",
+                          "raster_files/L2_v_16_50.tif",
+                          "raster_files/L2_v_18_90.tif")
+raster_wd_path_values <- c("raster_files/L2_wd_2_40.tif",
+                          "raster_files/L2_wd_3_90.tif",
+                          "raster_files/L2_wd_7_00.tif",
+                          "raster_files/L2_wd_9_24.tif",
+                          "raster_files/L2_wd_13_30.tif",
+                          "raster_files/L2_wd_16_50.tif",
+                          "raster_files/L2_wd_18_90.tif")
  
 
 # Loop through the combinations of discharge and results_h5 values
@@ -170,7 +170,7 @@ for (i in seq_along(h5_path_values)) {
   }
 }
 
-test <- raster("raster_files/L2_v_2.40.tif")
+test <- raster("raster_files/L2_v_2_40.tif")
 raster::crs(test) <- "EPSG:2056"
 plot(test)
 
