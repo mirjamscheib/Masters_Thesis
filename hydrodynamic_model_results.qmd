@@ -40,90 +40,138 @@ pkgCheck("rgdal")
 source("mth_functions.R")
 ```
 
-# Glenner: GL1
+# here Glenner: GL1
 ## Single Attribute Rasters
 ```{r}
- GL1_3.28 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_3.28.h5", 
+ GL1_3_28 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_3_28.h5", 
                         twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
                         shp_path = "raster_files/GL1_shape.shp", 
-                        raster_v_path = "raster_files/GL1_v_3.28.tif",
-                        raster_wd_path = "raster_files/GL1_wd_3.28.tif")
+                        raster_v_path = "raster_files/GL1_v_3_28.tif",
+                        raster_wd_path = "raster_files/GL1_wd_3_28.tif")
 
-# Define the range of values for discharge and results_h5
-h5_path_values <- c("hdm_models/GL1/results_GL1_3.28.h5", 
-             "hdm_models/GL1/results_GL1_6.00.h5", 
-             "hdm_models/GL1/results_GL1_9.00.h5", 
-             "hdm_models/GL1/results_GL1_12.68.h5", 
-             "hdm_models/GL1/results_GL1_16.00.h5", 
-             "hdm_models/GL1/results_GL1_19.00.h5", 
-             "hdm_models/GL1/results_GL1_22.00.h5", 
-             "hdm_models/GL1/results_GL1_25.00.h5", 
-             "hdm_models/GL1/results_GL1_28.00.h5", 
-             "hdm_models/GL1/results_GL1_31.76.h5")
+ GL1_6_00 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_6_00.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_6_00.tif",
+                        raster_wd_path = "raster_files/GL1_wd_6_00.tif")
+ 
+GL1_9_00 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_9_00.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_9_00.tif",
+                        raster_wd_path = "raster_files/GL1_wd_9_00.tif")
+  
+GL1_12_68 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_12_68.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_12_68.tif",
+                        raster_wd_path = "raster_files/GL1_wd_12_68.tif")
+   
+GL1_16_00 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_16_00.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_16_00.tif",
+                        raster_wd_path = "raster_files/GL1_wd_16_00.tif")
+
+GL1_19_00 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_19_00.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_19_00.tif",
+                        raster_wd_path = "raster_files/GL1_wd_19_00.tif")
+ 
+GL1_22_00 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_22_00.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_22_00.tif",
+                        raster_wd_path = "raster_files/GL1_wd_22_00.tif")
+
+GL1_25_00 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_25_00.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_25_00.tif",
+                        raster_wd_path = "raster_files/GL1_wd_25_00.tif")
+ 
+GL1_28_00 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_28_00.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_28_00.tif",
+                        raster_wd_path = "raster_files/GL1_wd_28_00.tif")
+
+GL1_31_76 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_31_76.h5", 
+                        twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
+                        shp_path = "raster_files/GL1_shape.shp", 
+                        raster_v_path = "raster_files/GL1_v_31_76.tif",
+                        raster_wd_path = "raster_files/GL1_wd_31_76.tif")
 ```
 
-# Glenner: GL2
+# here Glenner: GL2
 ## Single Attribute Rasters
 ```{r}
-# Define the range of values for discharge and results_h5
-h5_path_values <- c("hdm_models/GL2/results_GL2_3.21.h5", 
-             "hdm_models/GL2/results_GL2_6.00.h5", 
-             "hdm_models/GL2/results_GL2_9.00.h5", 
-             "hdm_models/GL2/results_GL2_11.00.h5", 
-             "hdm_models/GL2/results_GL2_12.52.h5", 
-             "hdm_models/GL2/results_GL2_16.00.h5", 
-             "hdm_models/GL2/results_GL2_19.00.h5", 
-             "hdm_models/GL2/results_GL2_22.00.h5", 
-             "hdm_models/GL2/results_GL2_25.00.h5", 
-             "hdm_models/GL2/results_GL2_28.00.h5",
-             "hdm_models/GL2/results_GL2_31.53.h5")
-raster_v_path_vaLues <- c("raster_files/GL2_v_3.21.tif", 
-                   "raster_files/GL2_v_6.00.tif", 
-                   "raster_files/GL2_v_9.00.tif", 
-                   "raster_files/GL2_v_11.00.tif", 
-                   "raster_files/GL2_v_12.52.tif",  
-                   "raster_files/GL2_v_16.00.tif", 
-                   "raster_files/GL2_v_19.00.tif", 
-                   "raster_files/GL2_v_22.00.tif", 
-                   "raster_files/GL2_v_25.00.tif", 
-                   "raster_files/GL2_v_28.00.tif",
-                   "raster_files/GL2_v_31.53.tif")
-raster_wd_path_values <- c("raster_files/GL2_wd_3.21.tif", 
-                   "raster_files/GL2_wd_6.00.tif", 
-                   "raster_files/GL2_wd_9.00.tif", 
-                   "raster_files/GL2_wd_11.00.tif", 
-                   "raster_files/GL2_wd_12.52.tif",  
-                   "raster_files/GL2_wd_16.00.tif", 
-                   "raster_files/GL2_wd_19.00.tif", 
-                   "raster_files/GL2_wd_22.00.tif", 
-                   "raster_files/GL2_wd_25.00.tif", 
-                   "raster_files/GL2_wd_28.00.tif",
-                   "raster_files/GL2_wd_31.53.tif")
- 
+GL2_3_21 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_3_21.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_3_21.tif",
+                        raster_wd_path = "raster_files/GL2_wd_3_21.tif")
 
-# Loop through the combinations of discharge and results_h5 values
-for (i in seq_along(h5_path_values)) {
-  for (j in seq_along(raster_v_path_vaLues)) {
-    for (k in seq_along(raster_wd_path_values)) {
-        hdm_results(
-        h5_path = h5_path_values[i], 
-        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
-        shp_path = "raster_files/GL2_shape.shp", 
-        raster_v_path = raster_v_path_vaLues[j],
-        raster_wd_path = raster_wd_path_values[k])
- # Check if all values are simulate, and exit the loop if true
-    if (i == length(h5_path_values))
-       break
-  }
-  }
-}
+GL2_6_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_6_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_6_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_6_00.tif")
 
-test <- raster("raster_files/L2_wd_16.50.tif")
-raster::crs(test) <- "EPSG:2056"
-plot(test)
+GL2_9_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_9_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_9_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_9_00.tif")
 
-test[test == 0] <- NA
-plot(test)
+GL2_11_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_11_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_11_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_11_00.tif")
+
+GL2_12_52 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_12_52.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_12_52.tif",
+                        raster_wd_path = "raster_files/GL2_wd_12_52.tif")
+
+GL2_16_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_16_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_16_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_16_00.tif")
+
+GL2_19_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_19_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_19_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_19_00.tif")
+
+GL2_22_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_22_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_22_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_22_00.tif")
+
+GL2_25_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_25_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_25_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_25_00.tif")
+
+GL2_28_00 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_28_00.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_28_00.tif",
+                        raster_wd_path = "raster_files/GL2_wd_28_00.tif")
+
+GL2_31_53 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_31_53.h5", 
+                        twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
+                        shp_path = "raster_files/GL2_shape.shp", 
+                        raster_v_path = "raster_files/GL2_v_31_53.tif",
+                        raster_wd_path = "raster_files/GL2_wd_31_53.tif")
 ```
 
 # ! - Landquart: L2
