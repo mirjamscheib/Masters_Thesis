@@ -40,8 +40,8 @@ pkgCheck("rgdal")
 source("mth_functions.R")
 ```
 
-# here Glenner: GL1
-## Single Attribute Rasters
+# Glenner: GL1
+## ok - Single Attribute Rasters
 ```{r}
  GL1_3_28 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_3_28.h5", 
                         twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
@@ -104,7 +104,7 @@ GL1_31_76 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_31_76.h5",
                         raster_wd_path = "raster_files/GL1_wd_31_76.tif")
 ```
 
-## Stacked Rasters 
+## - ab hier Stacked Rasters 
 3_28, 6_00, 9_00, 12_68, 16_00, 19_00, 22_00, 25_00, 28_00, 31_76
 ```{r}
 GL1_stacked_3_28 <- stack_raster(v_path = "raster_files/GL1_v_3_28.tif",
