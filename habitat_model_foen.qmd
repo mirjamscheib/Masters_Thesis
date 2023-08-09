@@ -33,151 +33,194 @@ pkgCheck("scales")
 source("mth_functions.R")
 ```
 
-# Glenner: GL1
+# Glenner
+## GL1
 ```{r}
-GL1_3.28 <- foen_hm(raster_path = "raster_files/GL1_v_3.28.tif", 
-                base_flow = "raster_files/GL1_v_3.28.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_3.28.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_3.28.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_3.28.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_3.28.tif", 
-                river = "GL1", discharge = 3.28)
+GL1_3_28 <- foen_hm(raster_path = "raster_files/GL1_v_3_28.tif", 
+                    base_flow = "raster_files/GL1_v_3_28.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_3_28.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_3_28.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_3_28.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_3_28.tif", 
+                    river = "GL1", 
+                    discharge = 3.28)
 
-GL1_6.00 <- foen_hm(raster_path = "raster_files/GL1_v_6.00.tif", 
-                base_flow = "raster_files/GL1_v_6.00.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_6.00.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_6.00.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_6.00.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_6.00.tif", 
-                river = "GL1", discharge = 6.00)
+GL1_6_00 <- foen_hm(raster_path = "raster_files/GL1_v_6_00.tif", 
+                    base_flow = "raster_files/GL1_v_6_00.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_6_00.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_6_00.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_6_00.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_6_00.tif", 
+                    river = "GL1", 
+                    discharge = 6.00)
 
-GL1_9.00 <- foen_hm(raster_path = "raster_files/GL1_v_9.00.tif", 
-                base_flow = "raster_files/GL1_v_9.00.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_9.00.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_9.00.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_9.00.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_9.00.tif", 
-                river = "GL1", discharge = 9.00)
+GL1_9_00 <- foen_hm(raster_path = "raster_files/GL1_v_9_00.tif", 
+                    base_flow = "raster_files/GL1_v_9_00.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_9_00.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_9_00.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_9_00.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_9_00.tif", 
+                    river = "GL1", 
+                    discharge = 9.00)
 
-GL1_12.68 <- foen_hm(raster_path = "raster_files/GL1_v_12.68.tif", 
-                base_flow = "raster_files/GL1_v_12.68.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_12.68.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_12.68.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_12.68.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_12.68.tif", 
-                river = "GL1", discharge = 12.68)
+GL1_12_68 <- foen_hm(raster_path = "raster_files/GL1_v_12_68.tif", 
+                    base_flow = "raster_files/GL1_v_12_68.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_12_68.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_12_68.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_12_68.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_12_68.tif", 
+                    river = "GL1", 
+                    discharge = 12.68)
 
-GL1_16.00 <- foen_hm(raster_path = "raster_files/GL1_v_16.00.tif", 
-                base_flow = "raster_files/GL1_v_16.00.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_16.00.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_16.00.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_16.00.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_16.00.tif", 
-                river = "GL1", discharge = 16.00)
+GL1_16_00 <- foen_hm(raster_path = "raster_files/GL1_v_16_00.tif", 
+                    base_flow = "raster_files/GL1_v_16_00.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_16_00.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_16_00.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_16_00.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_16_00.tif", 
+                    river = "GL1", 
+                    discharge = 16.00)
 
-GL1_19.00 <- foen_hm(raster_path = "raster_files/GL1_v_19.00.tif", 
-                base_flow = "raster_files/GL1_v_19.00.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_19.00.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_19.00.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_19.00.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_19.00.tif", 
-                river = "GL1", discharge = 19.00)
+GL1_19_00 <- foen_hm(raster_path = "raster_files/GL1_v_19_00.tif", 
+                    base_flow = "raster_files/GL1_v_19_00.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_19_00.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_19_00.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_19_00.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_19_00.tif", 
+                    river = "GL1", 
+                    discharge = 19.00)
 
-GL1_22.00 <- foen_hm(raster_path = "raster_files/GL1_v_22.00.tif", 
-                base_flow = "raster_files/GL1_v_22.00.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_22.00.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_22.00.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_22.00.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_22.00.tif", 
-                river = "GL1", discharge = 22.00)
+GL1_22_00 <- foen_hm(raster_path = "raster_files/GL1_v_22_00.tif", 
+                    base_flow = "raster_files/GL1_v_22_00.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_22_00.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_22_00.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_22_00.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_22_00.tif", 
+                    river = "GL1", 
+                    discharge = 22.00)
 
-GL1_25.00 <- foen_hm(raster_path = "raster_files/GL1_v_25.00.tif", 
-                base_flow = "raster_files/GL1_v_25.00.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL1_foen_class_pers_25.00.tif", 
-                output_path_reclass =
-                  "results_foen/GL1_foen_class_25.00.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL1_foen_25.00.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL1_foen_pers_25.00.tif", 
-                river = "GL1", discharge = 25.00)
+GL1_25_00 <- foen_hm(raster_path = "raster_files/GL1_v_25_00.tif", 
+                    base_flow = "raster_files/GL1_v_25_00.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_25_00.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_25_00.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_25_00.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_25_00.tif", 
+                    river = "GL1", 
+                    discharge = 25.00)
 
-# Define the range of values for discharge and results_h5
-h5_path_values <- c("hdm_models/GL1/results_GL1_3.28.h5", 
-             "hdm_models/GL1/results_GL1_6.00.h5", 
-             "hdm_models/GL1/results_GL1_9.00.h5", 
-             "hdm_models/GL1/results_GL1_12.68.h5", 
-             "hdm_models/GL1/results_GL1_16.00.h5", 
-             "hdm_models/GL1/results_GL1_19.00.h5", 
-             "hdm_models/GL1/results_GL1_22.00.h5", 
-             "hdm_models/GL1/results_GL1_25.00.h5", 
-             "hdm_models/GL1/results_GL1_28.00.h5", 
-             "hdm_models/GL1/results_GL1_31.76.h5")
+GL1_28_00 <- foen_hm(raster_path = "raster_files/GL1_v_28_00.tif", 
+                    base_flow = "raster_files/GL1_v_28_00.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_28_00.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_28_00.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_28_00.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_28_00.tif", 
+                    river = "GL1", 
+                    discharge = 28.00)
+
+GL1_31_76 <- foen_hm(raster_path = "raster_files/GL1_v_31_76.tif", 
+                    base_flow = "raster_files/GL1_v_31_76.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL1_foen_class_pers_31_76.tif", 
+                    output_path_reclass =
+                      "results_foen/GL1_foen_class_31_76.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL1_foen_31_76.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL1_foen_pers_31_76.tif", 
+                    river = "GL1", 
+                    discharge = 31.76)
 ```
 
 
-# Glenner: GL2
+## GL2
 ```{r}
-GL2_3.21 <- foen_hm(raster_path = "raster_files/GL2_v_3.21.tif", 
-                base_flow = "raster_files/GL2_v_3.21.tif",
-                output_path_pers_reclass =
-                  "results_foen/GL2_foen_class_pers_3.21.tif", 
-                output_path_reclass =
-                  "results_foen/GL2_foen_class_3.21.tif", 
-                HSC_path = "HSC_MI/HSC_MI.csv", 
-                col1 = "Bewohnbarkeitsklasse",
-                col2 = "HSI",
-                output_path_hm = "results_foen/GL2_foen_3.21.tif",
-                output_path_hm_persistent =
-                  "results_foen/GL2_foen_pers_3.21.tif", 
-                river = "GL2", discharge = 3.21)
-```
+GL2_3_21 <- foen_hm(raster_path = "raster_files/GL2_v_3_21.tif", 
+                    base_flow = "raster_files/GL2_v_3_21.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL2_foen_class_pers_3_21.tif", 
+                    output_path_reclass =
+                      "results_foen/GL2_foen_class_3_21.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL2_foen_3_21.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL2_foen_pers_3_21.tif", 
+                    river = "GL2", 
+                    discharge = 3.21)
 
+GL2_6_00 <- foen_hm(raster_path = "raster_files/GL2_v_3_21.tif", 
+                    base_flow = "raster_files/GL2_v_3_21.tif",
+                    output_path_pers_reclass =
+                      "results_foen/GL2_foen_class_pers_3_21.tif", 
+                    output_path_reclass =
+                      "results_foen/GL2_foen_class_3_21.tif", 
+                    HSC_path = "HSC_MI/HSC_MI.csv", 
+                    col1 = "Bewohnbarkeitsklasse",
+                    col2 = "HSI",
+                    output_path_hm = "results_foen/GL2_foen_3_21.tif",
+                    output_path_hm_persistent =
+                      "results_foen/GL2_foen_pers_3_21.tif", 
+                    river = "GL2", 
+                    discharge = 3.21)
+```
+6_00, 9_00, 11_00, 12_52, 16_00, 19_00, 22_00, 25_00, 28_00, 31_53
 
 # - Landquart: L2
 ```{r}

@@ -105,7 +105,6 @@ GL1_31_76 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_31_76.h5",
 ```
 
 ## ok - Stacked Rasters 
-3_28, 6_00, 9_00, 12_68, 16_00, 19_00, 22_00, 25_00, 28_00, 31_76
 ```{r}
 GL1_stacked_3_28 <- stack_raster(v_path = "raster_files/GL1_v_3_28.tif",
                                 wd_path = "raster_files/GL1_wd_3_28.tif",
@@ -219,7 +218,6 @@ GL2_31_53 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_31_53.h5",
 ```
 
 ## Stacked Rasters 
-3_21, 6_00, 9_00, 11_00, 12_52, 16_00, 19_00, 22_00, 25_00, 28_00, 31_53
 ```{r}
 GL2_stacked_3_21 <- stack_raster(v_path = "raster_files/GL2_v_3_21.tif",
                                 wd_path = "raster_files/GL2_wd_3_21.tif",
@@ -415,14 +413,53 @@ M1_22_84 <- hdm_results(h5_path = "hdm_models/M1/results_M1_22_84.h5",
                        raster_wd_path = "raster_files/M1_wd_22_84.tif")
 ```
 
-## here -- Stacked Rasters
+## Stacked Rasters
 0_47, 0_60, 4_00, 6_00, 8_00, 10_00, 12_00, 14_00, 16_00, 18_84, 22_84
 ```{r}
-M1_stacked_2_40 <- stack_raster(v_path = "raster_files/M1_v_2_40.tif",
-                                wd_path = "raster_files/M1_wd_2_40.tif",
-                                stack_path = "rasters_stacked/M1_2_40.grd")
-```
+M1_stacked_0_47 <- stack_raster(v_path = "raster_files/M1_v_0_47.tif",
+                                wd_path = "raster_files/M1_wd_0_47.tif",
+                                stack_path = "rasters_stacked/M1_0_47.grd")
 
+M1_stacked_0_60 <- stack_raster(v_path = "raster_files/M1_v_0_60.tif",
+                                wd_path = "raster_files/M1_wd_0_60.tif",
+                                stack_path = "rasters_stacked/M1_0_60.grd")
+
+M1_stacked_4_00 <- stack_raster(v_path = "raster_files/M1_v_4_00.tif",
+                                wd_path = "raster_files/M1_wd_4_00.tif",
+                                stack_path = "rasters_stacked/M1_4_00.grd")
+
+M1_stacked_6_00 <- stack_raster(v_path = "raster_files/M1_v_6_00.tif",
+                                wd_path = "raster_files/M1_wd_6_00.tif",
+                                stack_path = "rasters_stacked/M1_6_00.grd")
+
+M1_stacked_8_00 <- stack_raster(v_path = "raster_files/M1_v_8_00.tif",
+                                wd_path = "raster_files/M1_wd_8_00.tif",
+                                stack_path = "rasters_stacked/M1_8_00.grd")
+
+M1_stacked_10_00 <- stack_raster(v_path = "raster_files/M1_v_10_00.tif",
+                                wd_path = "raster_files/M1_wd_10_00.tif",
+                                stack_path = "rasters_stacked/M1_10_00.grd")
+
+M1_stacked_12_00 <- stack_raster(v_path = "raster_files/M1_v_12_00.tif",
+                                wd_path = "raster_files/M1_wd_12_00.tif",
+                                stack_path = "rasters_stacked/M1_12_00.grd")
+
+M1_stacked_14_00 <- stack_raster(v_path = "raster_files/M1_v_14_00.tif",
+                                wd_path = "raster_files/M1_wd_14_00.tif",
+                                stack_path = "rasters_stacked/M1_14_00.grd")
+
+M1_stacked_16_00 <- stack_raster(v_path = "raster_files/M1_v_16_00.tif",
+                                wd_path = "raster_files/M1_wd_16_00.tif",
+                                stack_path = "rasters_stacked/M1_16_00.grd")
+
+M1_stacked_18_84 <- stack_raster(v_path = "raster_files/M1_v_18_84.tif",
+                                wd_path = "raster_files/M1_wd_18_84.tif",
+                                stack_path = "rasters_stacked/M1_18_84.grd")
+
+M1_stacked_22_84 <- stack_raster(v_path = "raster_files/M1_v_22_84.tif",
+                                wd_path = "raster_files/M1_wd_22_84.tif",
+                                stack_path = "rasters_stacked/M1_22_84.grd")
+```
 
 # Sitter: S1
 ## Single Attribute Rasters
@@ -483,6 +520,45 @@ S1_20_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_20_00.h5",
                     raster_wd_path = "raster_files/S1_wd_20_00.tif")
 ```
 
+## Stacked Rasters
+2_00, 3_70, 6_50, 8_50, 10_68, 13_00, 15_00, 18_00, 20_00
+```{r}
+S1_stacked_2_00 <- stack_raster(v_path = "raster_files/S1_v_2_00.tif",
+                                wd_path = "raster_files/S1_wd_2_00.tif",
+                                stack_path = "rasters_stacked/S1_2_00.grd")
+
+S1_stacked_3_70 <- stack_raster(v_path = "raster_files/S1_v_3_70.tif",
+                                wd_path = "raster_files/S1_wd_3_70.tif",
+                                stack_path = "rasters_stacked/S1_3_70.grd")
+
+S1_stacked_6_50 <- stack_raster(v_path = "raster_files/S1_v_6_50.tif",
+                                wd_path = "raster_files/S1_wd_6_50.tif",
+                                stack_path = "rasters_stacked/S1_6_50.grd")
+
+S1_stacked_8_50 <- stack_raster(v_path = "raster_files/S1_v_8_50.tif",
+                                wd_path = "raster_files/S1_wd_8_50.tif",
+                                stack_path = "rasters_stacked/S1_8_50.grd")
+
+S1_stacked_10_68 <- stack_raster(v_path = "raster_files/S1_v_10_68.tif",
+                                wd_path = "raster_files/S1_wd_10_68.tif",
+                                stack_path = "rasters_stacked/S1_10_68.grd")
+
+S1_stacked_13_00 <- stack_raster(v_path = "raster_files/S1_v_13_00.tif",
+                                wd_path = "raster_files/S1_wd_13_00.tif",
+                                stack_path = "rasters_stacked/S1_13_00.grd")
+
+S1_stacked_15_00 <- stack_raster(v_path = "raster_files/S1_v_15_00.tif",
+                                wd_path = "raster_files/S1_wd_15_00.tif",
+                                stack_path = "rasters_stacked/S1_15_00.grd")
+
+S1_stacked_18_00 <- stack_raster(v_path = "raster_files/S1_v_18_00.tif",
+                                wd_path = "raster_files/S1_wd_18_00.tif",
+                                stack_path = "rasters_stacked/S1_18_00.grd")
+
+S1_stacked_20_00 <- stack_raster(v_path = "raster_files/S1_v_20_00.tif",
+                                wd_path = "raster_files/S1_wd_20_00.tif",
+                                stack_path = "rasters_stacked/S1_20_00.grd")
+```
 
 # Sitter: S2
 ## Single Attribute Rasters
@@ -540,6 +616,46 @@ S2_20_00 <- hdm_results(h5_path = "hdm_models/S2/results_S1_20_00.h5",
                        shp_path = "raster_files/S2_shape.shp", 
                        raster_v_path = "raster_files/S2_v_20_00.tif",
                        raster_wd_path = "raster_files/S2_wd_20_00.tif")
+```
+
+## Stacked Rasters
+2_00, 3_20, 6_50, 8_50, 10_93, 13_00, 15_00, 18_00, 20_00
+```{r}
+S2_stacked_2_00 <- stack_raster(v_path = "raster_files/S2_v_2_00.tif",
+                                wd_path = "raster_files/S2_wd_2_00.tif",
+                                stack_path = "rasters_stacked/S2_2_00.grd")
+
+S2_stacked_3_20 <- stack_raster(v_path = "raster_files/S2_v_3_20.tif",
+                                wd_path = "raster_files/S2_wd_3_20.tif",
+                                stack_path = "rasters_stacked/S2_3_20.grd")
+
+S2_stacked_6_50 <- stack_raster(v_path = "raster_files/S2_v_6_50.tif",
+                                wd_path = "raster_files/S2_wd_6_50.tif",
+                                stack_path = "rasters_stacked/S2_6_50.grd")
+
+S2_stacked_8_50 <- stack_raster(v_path = "raster_files/S2_v_8_50.tif",
+                                wd_path = "raster_files/S2_wd_8_50.tif",
+                                stack_path = "rasters_stacked/S2_8_50.grd")
+
+S2_stacked_10_93 <- stack_raster(v_path = "raster_files/S2_v_10_93.tif",
+                                wd_path = "raster_files/S2_wd_10_93.tif",
+                                stack_path = "rasters_stacked/S2_10_93.grd")
+
+S2_stacked_13_00 <- stack_raster(v_path = "raster_files/S2_v_13_00.tif",
+                                wd_path = "raster_files/S2_wd_13_00.tif",
+                                stack_path = "rasters_stacked/S2_13_00.grd")
+
+S2_stacked_15_00 <- stack_raster(v_path = "raster_files/S2_v_15_00.tif",
+                                wd_path = "raster_files/S2_wd_15_00.tif",
+                                stack_path = "rasters_stacked/S2_15_00.grd")
+
+S2_stacked_18_00 <- stack_raster(v_path = "raster_files/S2_v_18_00.tif",
+                                wd_path = "raster_files/S2_wd_18_00.tif",
+                                stack_path = "rasters_stacked/S2_18_00.grd")
+
+S2_stacked_20_00 <- stack_raster(v_path = "raster_files/S2_v_20_00.tif",
+                                wd_path = "raster_files/S2_wd_20_00.tif",
+                                stack_path = "rasters_stacked/S2_20_00.grd")
 ```
 
 # Thur: TH4
@@ -601,7 +717,46 @@ TH4_32_93 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_32_93.h5",
                        raster_wd_path = "raster_files/TH4_wd_32_93.tif")
 ```
 
-# * here Vorderrhein: VR3
+## Stacked Rasters
+```{r}
+TH4_stacked_11_45 <- stack_raster(v_path = "raster_files/TH4_v_11_45.tif",
+                                wd_path = "raster_files/TH4_wd_11_45.tif",
+                                stack_path = "rasters_stacked/TH4_11_45.grd")
+
+TH4_stacked_15_00 <- stack_raster(v_path = "raster_files/TH4_v_15_00.tif",
+                                wd_path = "raster_files/TH4_wd_15_00.tif",
+                                stack_path = "rasters_stacked/TH4_15_00.grd")
+
+TH4_stacked_18_00 <- stack_raster(v_path = "raster_files/TH4_v_18_00.tif",
+                                wd_path = "raster_files/TH4_wd_18_00.tif",
+                                stack_path = "rasters_stacked/TH4_18_00.grd")
+
+TH4_stacked_19_96 <- stack_raster(v_path = "raster_files/TH4_v_19_96.tif",
+                                wd_path = "raster_files/TH4_wd_19_96.tif",
+                                stack_path = "rasters_stacked/TH4_19_96.grd")
+
+TH4_stacked_22_50 <- stack_raster(v_path = "raster_files/TH4_v_22_50.tif",
+                                wd_path = "raster_files/TH4_wd_22_50.tif",
+                                stack_path = "rasters_stacked/TH4_22_50.grd")
+
+TH4_stacked_25_00 <- stack_raster(v_path = "raster_files/TH4_v_25_00.tif",
+                                wd_path = "raster_files/TH4_wd_25_00.tif",
+                                stack_path = "rasters_stacked/TH4_25_00.grd")
+
+TH4_stacked_27_00 <- stack_raster(v_path = "raster_files/TH4_v_27_00.tif",
+                                wd_path = "raster_files/TH4_wd_27_00.tif",
+                                stack_path = "rasters_stacked/TH4_27_00.grd")
+
+TH4_stacked_30_00 <- stack_raster(v_path = "raster_files/TH4_v_30_00.tif",
+                                wd_path = "raster_files/TH4_wd_30_00.tif",
+                                stack_path = "rasters_stacked/TH4_30_00.grd")
+
+TH4_stacked_32_93 <- stack_raster(v_path = "raster_files/TH4_v_32_93.tif",
+                                wd_path = "raster_files/TH4_wd_32_93.tif",
+                                stack_path = "rasters_stacked/TH4_32_93.grd")
+```
+
+# Vorderrhein: VR3
 ## Single Attribute Rasters
 2_90, 6_00, 9_00, 12_00, 15_00, 18_80, 22_00, 25_00, 28_00, 31_00, 34_00, 37_00, 40_10, 43_00, 46_00, 48_00, 50_00, 52_90
 ```{r}
@@ -610,6 +765,181 @@ VR3_2_90 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_2_90.h5",
                        shp_path = "raster_files/VR3_shape.shp", 
                        raster_v_path = "raster_files/VR3_v_2_90.tif",
                        raster_wd_path = "raster_files/VR3_wd_2_90.tif")
+
+VR3_6_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_6_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_6_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_6_00.tif")
+
+VR3_9_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_9_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_9_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_9_00.tif")
+
+VR3_12_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_12_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_12_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_12_00.tif")
+
+VR3_15_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_15_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_15_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_15_00.tif")
+
+VR3_18_80 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_18_80.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_18_80.tif",
+                       raster_wd_path = "raster_files/VR3_wd_18_80.tif")
+
+VR3_22_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_22_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_22_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_22_00.tif")
+
+VR3_25_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_25_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_25_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_25_00.tif")
+
+VR3_28_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_28_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_28_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_28_00.tif")
+
+VR3_31_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_31_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_31_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_31_00.tif")
+
+VR3_34_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_34_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_34_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_34_00.tif")
+
+VR3_37_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_37_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_37_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_37_00.tif")
+
+VR3_40_10 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_40_10.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_40_10.tif",
+                       raster_wd_path = "raster_files/VR3_wd_40_10.tif")
+
+VR3_43_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_43_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_43_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_43_00.tif")
+
+VR3_46_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_46_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_46_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_46_00.tif")
+
+VR3_48_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_48_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_48_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_48_00.tif")
+
+VR3_50_00 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_50_00.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_50_00.tif",
+                       raster_wd_path = "raster_files/VR3_wd_50_00.tif")
+
+VR3_52_90 <- hdm_results(h5_path = "hdm_models/VR3/results_VR3_52_90.h5", 
+                       twodm_path = "hdm_models/VR3/VR_computational-mesh_3.2dm",
+                       shp_path = "raster_files/VR3_shape.shp", 
+                       raster_v_path = "raster_files/VR3_v_52_90.tif",
+                       raster_wd_path = "raster_files/VR3_wd_52_90.tif")
 ```
 
+## Stacked Rasters
+```{r}
+VR3_stacked_2_90 <- stack_raster(v_path = "raster_files/VR3_v_2_90.tif",
+                                wd_path = "raster_files/VR3_wd_2_90.tif",
+                                stack_path = "rasters_stacked/VR3_2_90.grd")
 
+VR3_stacked_6_00 <- stack_raster(v_path = "raster_files/VR3_v_6_00.tif",
+                                wd_path = "raster_files/VR3_wd_6_00.tif",
+                                stack_path = "rasters_stacked/VR3_6_00.grd")
+
+VR3_stacked_9_00 <- stack_raster(v_path = "raster_files/VR3_v_9_00.tif",
+                                wd_path = "raster_files/VR3_wd_9_00.tif",
+                                stack_path = "rasters_stacked/VR3_9_00.grd")
+
+VR3_stacked_12_00 <- stack_raster(v_path = "raster_files/VR3_v_12_00.tif",
+                                wd_path = "raster_files/VR3_wd_12_00.tif",
+                                stack_path = "rasters_stacked/VR3_12_00.grd")
+
+VR3_stacked_15_00 <- stack_raster(v_path = "raster_files/VR3_v_15_00.tif",
+                                wd_path = "raster_files/VR3_wd_15_00.tif",
+                                stack_path = "rasters_stacked/VR3_15_00.grd")
+
+VR3_stacked_18_80 <- stack_raster(v_path = "raster_files/VR3_v_18_80.tif",
+                                wd_path = "raster_files/VR3_wd_18_80.tif",
+                                stack_path = "rasters_stacked/VR3_18_80.grd")
+
+VR3_stacked_22_00 <- stack_raster(v_path = "raster_files/VR3_v_22_00.tif",
+                                wd_path = "raster_files/VR3_wd_22_00.tif",
+                                stack_path = "rasters_stacked/VR3_22_00.grd")
+
+VR3_stacked_25_00 <- stack_raster(v_path = "raster_files/VR3_v_25_00.tif",
+                                wd_path = "raster_files/VR3_wd_25_00.tif",
+                                stack_path = "rasters_stacked/VR3_25_00.grd")
+
+VR3_stacked_28_00 <- stack_raster(v_path = "raster_files/VR3_v_28_00.tif",
+                                wd_path = "raster_files/VR3_wd_28_00.tif",
+                                stack_path = "rasters_stacked/VR3_28_00.grd")
+
+VR3_stacked_31_00 <- stack_raster(v_path = "raster_files/VR3_v_31_00.tif",
+                                wd_path = "raster_files/VR3_wd_31_00.tif",
+                                stack_path = "rasters_stacked/VR3_31_00.grd")
+
+VR3_stacked_34_00 <- stack_raster(v_path = "raster_files/VR3_v_34_00.tif",
+                                wd_path = "raster_files/VR3_wd_34_00.tif",
+                                stack_path = "rasters_stacked/VR3_34_00.grd")
+
+VR3_stacked_37_00 <- stack_raster(v_path = "raster_files/VR3_v_37_00.tif",
+                                wd_path = "raster_files/VR3_wd_37_00.tif",
+                                stack_path = "rasters_stacked/VR3_37_00.grd")
+
+VR3_stacked_40_10 <- stack_raster(v_path = "raster_files/VR3_v_40_10.tif",
+                                wd_path = "raster_files/VR3_wd_40_10.tif",
+                                stack_path = "rasters_stacked/VR3_40_10.grd")
+
+VR3_stacked_43_00 <- stack_raster(v_path = "raster_files/VR3_v_43_00.tif",
+                                wd_path = "raster_files/VR3_wd_43_00.tif",
+                                stack_path = "rasters_stacked/VR3_43_00.grd")
+
+VR3_stacked_46_00 <- stack_raster(v_path = "raster_files/VR3_v_46_00.tif",
+                                wd_path = "raster_files/VR3_wd_46_00.tif",
+                                stack_path = "rasters_stacked/VR3_46_00.grd")
+
+VR3_stacked_48_00 <- stack_raster(v_path = "raster_files/VR3_v_48_00.tif",
+                                wd_path = "raster_files/VR3_wd_48_00.tif",
+                                stack_path = "rasters_stacked/VR3_48_00.grd")
+
+VR3_stacked_50_00 <- stack_raster(v_path = "raster_files/VR3_v_50_00.tif",
+                                wd_path = "raster_files/VR3_wd_50_00.tif",
+                                stack_path = "rasters_stacked/VR3_50_00.grd")
+
+VR3_stacked_52_90 <- stack_raster(v_path = "raster_files/VR3_v_52_90.tif",
+                                wd_path = "raster_files/VR3_wd_52_90.tif",
+                                stack_path = "rasters_stacked/VR3_52_90.grd")
+```
