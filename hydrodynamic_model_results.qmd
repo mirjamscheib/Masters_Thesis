@@ -40,6 +40,15 @@ pkgCheck("rgdal")
 source("mth_functions.R")
 ```
 
+# Test
+```{r}
+r <- raster("raster_files/GL2_wd_6_00.tif")
+crs(r) <- "EPSG: 2056"
+plot(r)
+r[r == 0] <- NA
+plot(r)
+```
+
 # ok - Glenner: GL1
 ## ok - Single Attribute Rasters
 ```{r}
