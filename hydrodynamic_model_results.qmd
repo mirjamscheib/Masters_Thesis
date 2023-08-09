@@ -493,11 +493,11 @@ S1_2_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_2_00.h5",
                     raster_wd_path = "raster_files/S1_wd_2_00.tif")
 
 
-S1_3_20 <- hdm_results(h5_path = "hdm_models/S1/results_S1_3_20.h5", 
+S1_3_70 <- hdm_results(h5_path = "hdm_models/S1/results_S1_3_70.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
                     shp_path = "raster_files/S1_shape.shp", 
-                    raster_v_path = "raster_files/S1_v_3_20.tif",
-                    raster_wd_path = "raster_files/S1_wd_3_20.tif")
+                    raster_v_path = "raster_files/S1_v_3_70.tif",
+                    raster_wd_path = "raster_files/S1_wd_3_70.tif")
 
 S1_6_50 <- hdm_results(h5_path = "hdm_models/S1/results_S1_6_50.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
