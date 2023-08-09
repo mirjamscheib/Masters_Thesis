@@ -992,6 +992,7 @@ write.csv(freq_tables, file = "results_foen/results_foen_freq_tables.csv", row.n
 ```
 
 # Extract/Rekonstruct Discharges
+Idee: stacked raster für v und wd erstellen pro section, dann extract 
 ```{r}
 
 ```
