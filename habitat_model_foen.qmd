@@ -991,11 +991,7 @@ freq_tables <- rbind(L2_2$freq, L2_3$freq, L2_4$freq, L2_7$freq, L2_9$freq,
 write.csv(freq_tables, file = "results_foen/results_foen_freq_tables.csv", row.names = FALSE)
 ```
 
-# Extract/Rekonstruct Discharges
-Idee: stacked raster für v und wd erstellen pro section, dann extract 
-```{r}
 
-```
 
 
 
