@@ -137,6 +137,7 @@ stack_raster <- function(v_path, wd_path, stack_path){
 foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_path_reclass, HSC_path, col1, col2, 
                     output_path_hm, output_path_hm_persistent, river, discharge){
   scenario <- raster(raster_path)                          # read raster with discharge scenario
+  crs(scenario) <- "EPSG: 2056"                            # set coordinate system of raster
   scenario[scenario == 0] <- NA                            # Set all 0-cells in the raster to NA 
   reclass_table <- c(0, 0.05, 1,                           # Define reclassification table according to Schmidlin et al. (2023)
                      0.05, 0.25, 3, 
