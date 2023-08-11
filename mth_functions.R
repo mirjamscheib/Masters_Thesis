@@ -95,7 +95,7 @@ hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_
   shape <- shapefile(mesh.sp, shp_path, overwrite = TRUE)              # write new shapefile
   shapefile <- shapefile(shp_path)                                     # read the shapefile
   raster_extent <- extent(shapefile)                                   # Set the raster extent using the bounding box of the shapefile
-  raster_resolution <- 1.0                                             # Set the raster resolution in meters
+  raster_resolution <- 0.5                                             # Set the raster resolution in meters
   raster_layer <- raster(ext = extent(shapefile),                      # Create an empty raster layer with the specified extent and resolution
                          res = raster_resolution)
   raster_depth <- rasterize(shapefile, raster_layer, shapefile$depth)  # Rasterize the shapefile into the empty raster layer - water depth
