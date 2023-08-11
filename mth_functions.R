@@ -5,7 +5,7 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   model <- fromJSON(model_json) #read in model json # modify it change mesh
   model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$INTERPOLATION$REGIONDEF$STRINGDEF$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "output")
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == discharge, model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == discharge)
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == discharge, model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge == NA)
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "output", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type == "uniform_out", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type == "uniform_in")
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name == "input", model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope == slope, model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope == 0.000177)
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
@@ -26,7 +26,7 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   
   # Simulation in BASEMENT
   simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_cudaC.exe"
-  simulation_param1 = paste("-f ", getwd(), "\\", simulation_json, sep="")
+  simulation_param1 = paste("-f ", getwd(), "\\", simulation_new, sep="")
   simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
   simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
   system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2, simulation_param3, "-p"))
@@ -95,7 +95,7 @@ hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_
   shape <- shapefile(mesh.sp, shp_path, overwrite = TRUE)              # write new shapefile
   shapefile <- shapefile(shp_path)                                     # read the shapefile
   raster_extent <- extent(shapefile)                                   # Set the raster extent using the bounding box of the shapefile
-  raster_resolution <- 0.5                                             # Set the raster resolution in meters
+  raster_resolution <- 1.0                                             # Set the raster resolution in meters
   raster_layer <- raster(ext = extent(shapefile),                      # Create an empty raster layer with the specified extent and resolution
                          res = raster_resolution)
   raster_depth <- rasterize(shapefile, raster_layer, shapefile$depth)  # Rasterize the shapefile into the empty raster layer - water depth
