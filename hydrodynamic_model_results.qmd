@@ -956,11 +956,20 @@ VR3_stacked_52_90 <- stack_raster(v_path = "raster_files/VR3_v_52_90.tif",
 Idee: stacked raster für v und wd erstellen pro section, dann extract 
 ## Glenner: GL1
 ```{r}
-# read stacked rasters 
-GL1_3_28 <- raster("rasters_stacked/GL1_3_28.grd")
+# read stacked rasters (wd + v per discharge)
+GL1_3_28 <- raster("raster_files/GL1_wd_3_28.tif")
 GL1_6_00 <- raster("rasters_stacked/GL1_6_00.grd")
 GL1_9_00 <- raster("rasters_stacked/GL1_9_00.grd")
+GL1_31_76 <- raster("rasters_stacked/GL1_31_76.grd")
+GL1_31_76 <- raster("raster_files/GL1_wd_31_76.tif")
+
+plot(raster("raster_files/L2_wd_2_40.tif"))
+plot(raster("raster_files/L2_wd_18_90.tif"))
 
 # stack rasters into one stack
-GL1_stacked <- stack(GL1_3_28, GL1_6_00, GL1_9_00)
+GL1_stacked <- stack(GL1_3_28, GL1_6_00, GL1_9_00, GL1_31_76)
+
+plot(GL1_stacked)
+plot(GL1_3_28)
+plot(GL1_31_76)
 ```
