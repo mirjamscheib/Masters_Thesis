@@ -13,30 +13,22 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
-          "INTERPOLATION": {
-            "REGIONDEF": {
-              "STRINGDEF": {
-                "name": "input"
-              }
-            }
-          }
+          "mesh_file": "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
             "STANDARD": [
               {
-                "discharge": 9,
-                "name": "input",
-                "slope": 0.01,
+                "name": "inflow",
+                "slope": 0.0002,
                 "string_name": "input",
                 "type": "uniform_in"
               },
               {
-                "name": "input",
-                "slope": 0.01,
+                "name": "outflow",
+                "slope": 0.0002,
                 "string_name": "output",
-                "type": "uniform_out"
+                "type": "uniform_in"
               }
             ]
           },
