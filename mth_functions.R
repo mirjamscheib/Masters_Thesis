@@ -39,7 +39,7 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   
   # Simulation in BASEMENT
   simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_cudaC.exe"
-  simulation_param1 = paste("-f ", getwd(), "\\", simulation_json, sep="") # hier evt. simulation new
+  simulation_param1 = paste("-f ", getwd(), "\\", simulation_new, sep="") # hier evt. simulation new
   simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
   simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
   system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2, simulation_param3, "-p"))
