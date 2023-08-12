@@ -3,7 +3,34 @@ title: "test"
 format: html
 editor: visual
 ---
+  model <- fromJSON(model_json) #read in model json # modify it change mesh
+  model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$INTERPOLATION$REGIONDEF$STRINGDEF$name[1] == "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "inflow", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "outflow")
 
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "inflow", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge, 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- NA)
+  
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "outflow", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_in")
+  
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "inflow", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[1] <- slope, 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[1] <- 0.0001)
+  
+  model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
+  
+  model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE) #export 
+  write(model_exp, model_new)
+  
+  
+  simulation <- fromJSON(simulation_json) #read in simulation json
+  simulation$SIMULATION$TIME$end <- time_end #modify it
+  simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
+  write(simulation_exp, simulation_new) #export
 ```{r}
 rm(list = ls())
 
@@ -20,7 +47,7 @@ library(rgeos)
 library(hydroGOF)
 library(jsonlite)
 
-source("R2bas_func.r")
+source("bas_test.R")
 
 # set working directory ------
 # setwd("u:/MZB/03_modelle/7_glenner/GL2/3_basement")
@@ -74,7 +101,9 @@ write(simulation_exp, "simulation_new.json")
 
 
 
+```
 
+```{r}
 #RUN BAsement from RStudio
 #setup
 bas_setup(model_json, setup_h5)
@@ -82,10 +111,7 @@ bas_setup(model_json, setup_h5)
 bas_simul(simulation_json, setup_h5, results_h5)
 #export results
 bas_results(results_json, results_h5, results_xdmf)
-
-
 ```
-
 
 ```{r}
 #paths------
@@ -148,4 +174,3 @@ bas_results(results_json, results_h5, results_xdmf)
 
 
 ```
-
