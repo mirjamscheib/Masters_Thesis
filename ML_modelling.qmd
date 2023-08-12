@@ -1,0 +1,46 @@
+---
+title: "ML_modelling"
+format: html
+---
+
+# Load packages
+```{r}
+library(mlrMBO) # Hyperparameter optimization 
+library(gbm) # BRT 
+install.packages("ranger")
+library(ranger) # RF
+library(dplyr)
+library(raster)
+library(readr)
+```
+
+# Load data 
+```{r}
+data <- read.csv("abiotic_mi_sampling/Lab_k_index.csv", sep = ",")
+
+data_new <- data[ , c(2,3,4,7,9, 22, 23, 24, 27)]
+
+data_new <- data_new |>
+  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
+         x = as.numeric(x))
+```
+
+# Hyperparameter optimization 
+## BRT
+```{r}
+# Split the data into training and testing sets
+train_indices <- sample(1:nrow(data_new), 0.7 * nrow(data_new))
+train_data <- data_new[train_indices, ]
+test_data <- data_new[-train_indices, ]
+
+# At first, n hyperparameter settings are randomly chosen from a user-defined search space
+brt <- gbm(k_index ~., data = train_data, distribution = "gaussian", n.trees = 100, interaction.depth = 1, shrinkage = 0.1, n.minobsinnode = 1)
+
+
+```
+
+## RF
+```{r}
+
+```
+
