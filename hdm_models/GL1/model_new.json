@@ -21,15 +21,15 @@
               {
                 "discharge": 9,
                 "name": "inflow",
-                "slope": 0.01,
+                "slope": 0.0002,
                 "string_name": "input",
                 "type": "uniform_in"
               },
               {
                 "name": "outflow",
-                "slope": 0.01,
+                "slope": 0.0002,
                 "string_name": "output",
-                "type": "uniform_out"
+                "type": "uniform_in"
               }
             ]
           },
