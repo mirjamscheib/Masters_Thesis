@@ -19,20 +19,29 @@ library(readr)
 
 ```{r}
 # example data
-model.data <- read.csv("Data/model.data.csv")
+model.data <- read.csv("BRT_Model/model.data.csv")
 
 # make factor 
 model.data$Method <- as.factor(model.data$Method)
 
 # Load Data
-data <- read.csv("Data/Data_Complete/Lab_k_index.csv")
+data <- read.csv("abiotic_mi_sampling/Lab_k_index.csv")
 
 # choose only relevant variables 
-data <- data[ ,c(7, 9,27)] # 22:24 = x, y, z
+# data <- data[ ,c(7, 9,27)] # 22:24 = x, y, z
+data <- data[ ,c(2, 6, 7, 9, 14:16, 20, 22:24, 27)]
 
 data <- data |>
-  rename(wd_cm = Water_depth_cm, v_cm_s = `Flow_velocity_v60_cm.s`) |>
-  mutate(wd_cm = wd_cm/100)
+  rename(wd_cm = Water_depth_cm, 
+         v_cm_s = `Flow_velocity_v60_cm.s`,
+         reach = Reach_Untersuchungsstelle,
+         dist_w = DIstance_Wasseranschlaglinie_m,
+         alg_cover = Algae_cover_Bewuchsdichte_5_Kategorien_1.5,
+         moos_cover = Moos_cover_Deckungsgrad_6_Kategorien_0.5,
+         cpom_cover = CPOM_cover_Deckungsgrad_5_Kategorien_1.5,
+         ox_during = Oxygen_saturation_._during) |>
+  mutate(wd_cm = wd_cm/100,
+         reach = as.factor(reach))
 
 head(data)
 ```
@@ -60,11 +69,27 @@ angaus.tc5.lr01 <- gbm.step(data=model.data,
 
 # geht noch nicht
 data_l2 <- gbm.step(data= data, 
-    gbm.x = 1:2,
-    gbm.y = 3,
+    gbm.x = 1:8, # all 
+    gbm.y = 12,
     family = "laplace",
     tree.complexity = 2,
     learning.rate = 0.002,
+    bag.fraction = 0.5)
+
+data_x_l2 <- gbm.step(data= data, 
+    gbm.x = c(1,3,4), # reach, wd, v
+    gbm.y = 12,
+    family = "laplace",
+    tree.complexity = 2,
+    learning.rate = 0.002,
+    bag.fraction = 0.5)
+
+data_y_l2 <- gbm.step(data = data, 
+    gbm.x = c(3,4), # reach, wd, v
+    gbm.y = 12,
+    family = "laplace",
+    tree.complexity = 2,
+    learning.rate = 0.00002,
     bag.fraction = 0.5)
     
 # Note that this function is an alternative to the cross-validation one that Ridgeway provides). Here we are using the function gbm.step and have passed information to the function about data and settings. We explain what we have defined in the full word version of this tutorial
@@ -98,9 +123,10 @@ angaus.tc5.lr005 <- gbm.step(data=model.data,
     learning.rate = 0.005,
     bag.fraction = 0.5)
 
+
 data_l2.x <- gbm.step(data= data, 
-    gbm.x = 1:2,
-    gbm.y = 3,
+    gbm.x = c(1,3,4), # reach, wd, v
+    gbm.y = 12,
     family = "laplace",
     tree.complexity = 5,
     learning.rate = 0.00005,

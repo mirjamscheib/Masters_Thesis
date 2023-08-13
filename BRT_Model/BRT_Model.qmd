@@ -17,28 +17,35 @@ library(readr)
 # Load Data
 ```{r}
 # Load Data
-data <- read_delim("Data/Data_Complete/Lab_k_index.csv")
+data <- read_delim("abiotic_mi_sampling/Lab_k_index.csv")
 
 data <- data[ ,c(7, 9, 27)]
-# data <- data[ ,-c(1,2,3,4,5, 6, 10, 13, 17, 18:21, 25, 26)]
 
 data <- data |>
-  rename(Landquart_results_depth_9 = Water_depth_cm, Landquart_results_velocity_9 = `Flow_velocity_v60_cm/s`) |>
-  mutate(Landquart_results_depth_9 = Landquart_results_depth_9/100,
-         Landquart_results_velocity_9 = Landquart_results_velocity_9)
+  rename(L2_wd_2 = Water_depth_cm, 
+         L2_v_2 = `Flow_velocity_v60_cm/s`) |>
+  mutate(L2_wd_2 = L2_wd_2/100)
 
-# Units of raster files: 
-# velocity is in m/s
-# depth is in m
-
-# change variable type which we want to predict 
-# data$Reach_Untersuchungsstelle <- as.factor(data$Reach_Untersuchungsstelle)
-# data$Clogging_6_Klassen <- as.factor(data$Clogging_6_Klassen)
-# data$Clogging_3_Klassen <- as.factor(data$Clogging_3_Klassen)
-
-data$k_index <- as.factor(data$k_index)
+head(data)
 ```
 
+```{r}
+
+data <- data[ ,c(6, 7, 9, 14:16, 20, 22:24, 27)]
+
+data <- data |>
+  rename(wd_cm = Water_depth_cm, 
+         v_cm_s = `Flow_velocity_v60_cm/s`,
+         dist_w = DIstance_Wasseranschlaglinie_m,
+         alg_cover = `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`,
+         moos_cover = `Moos_cover_Deckungsgrad_6_Kategorien_0-5`,
+         cpom_cover = `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`,
+         ox_during = `Oxygen_saturation_%_during`) |>
+  mutate(wd_cm = wd_cm/100,
+         x = as.numeric(x))
+```
+
+         
 # TPE Hyperparameter Optimization 
 ```{r}
 #install.packages("mlr")
@@ -94,8 +101,7 @@ train_data <- data[train_indices, ]
 test_data <- data[-train_indices, ]
 
 # Define the boosted regression tree model
-boost_model <- gbm(k_index ~ ., data = train_data, distribution = "gaussian",
-                   n.trees = 100, interaction.depth = 1, shrinkage = 0.1, n.minobsinnode = 1)
+boost_model <- gbm(k_index ~ ., data = train_data, distribution = "gaussian", n.trees = 100, interaction.depth = 1, shrinkage = 0.1, n.minobsinnode = 1)
 
 # interaction.depth = maximale höhe des Baumes (2 = Baum splitted sich nur 2 mal auf, je höher die Zahl desto feiner werden die Bäume) --> bei nur zwei Variablen im default lassen für die erste male 
 # default: interaction.depth = 1
@@ -112,6 +118,8 @@ variable_importance <- summary(boost_model)
 
 # Display the variable importance scores
 print(variable_importance)
+
+# vlt. noch sampling point, also wo sampling location war
 ```
 
 # Model Performance 
@@ -124,31 +132,37 @@ mse <- mean((test_data$k_index - predictions)^2)
 print(paste("Mean Squared Error:", mse))
 ```
 
-# Predict to rasters 
+## 10 fold cross validation 
+```{r}
+# install.packages("caret")  # Install the caret package if not already installed
+library(caret)             # Load the caret package
+
+ctrl <- trainControl(method = "cv",  # Cross-validation method
+                     number = 10)    # Number of folds
+
+
+model <- train(k_index ~. , data = train_data, method = "gbm", trControl = ctrl)
+
+model$results  # Print the results of each fold
+
+
+# trainingsdaten werden in z.B. 5 folds aufgeteilt 
+# testdatensatz lässt man mal aussen vor, und tested man dann erst am schluss 
+
+# mse gibt dann resultat - je kleiner mse desto besser - so kann Parametereinstellung geprüft werden/ auswählen 
+# wenn parameter ausgewählt wurden, dann kann CV auf die Testdaten angewendet werden zum schauen wie gut das Modell ist 
+```
+
+# Visualization: Predict to rasters 
 ```{r}
 # predict results with raster
 # raster with depth and velocity data 
-env_data <- stack("Data/Rasters/env_rasters.grd")
+env_data <- stack("rasters_stacked/L2_2.grd")
 
-stack("Data/Rasters/env_rasters.grd")
 
 result_raster <- raster::predict(model = boost_model, object = env_data, index = 2) # index 2 because 2 layers of rasters are in the env_data variable 
 
 plot(result_raster)
-```
-
-# predict only single values from the whole model 
-```{r}
-# read raster 
-landquart <- raster("Data/raster_files/Landquart_results_velocity_9.tif")
-
-plot(landquart)
-
-# select value to be predicted 
-input_data <- test_data[["Landquart_results_velocity_9"]]
-
-# predict values 
-predictions <- raster::predict(model = boost_model, object = landquart)
 ```
 
 ```{r}
@@ -165,27 +179,3 @@ predictions <- predict(boost_model, newdata = flow_velocity_data, n.trees = 100,
 predicted_raster <- raster(landquart)
 values(predicted_raster) <- predictions
 ```
-
-# 10 fold cross validation 
-```{r}
-# install.packages("caret")  # Install the caret package if not already installed
-library(caret)             # Load the caret package
-
-ctrl <- trainControl(method = "cv",  # Cross-validation method
-                     number = 10)    # Number of folds
-
-
-model <- train(k_index ~. , data = train_data, method = "gbm", trControl = ctrl)
-
-model$results  # Print the results of each fold
-
-ggplot() +
-  geom_point(data = data, aes(x = x, y = y)) 
-
-# trainingsdaten werden in z.B. 5 folds aufgeteilt 
-# testdatensatz lässt man mal aussen vor, und tested man dann erst am schluss 
-
-# mse gibt dann resultat - je kleiner mse desto besser - so kann Parametereinstellung geprüft werden/ auswählen 
-# wenn parameter ausgewählt wurden, dann kann CV auf die Testdaten angewendet werden zum schauen wie gut das Modell ist 
-```
-
