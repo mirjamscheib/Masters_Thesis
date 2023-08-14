@@ -57,22 +57,144 @@ data_new <- data[ , c(2,3,4,7,9, 22, 23, 24, 27)]
 data_new <- data_new |>
   mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
          x = as.numeric(x))
+```
 
-head(data_new)
+# Book Exercise 
+## Load Data
+```{r}
+# Load Data
+data("lsl", "study_mask", package = "spDataLarge")
+ta = terra::rast(system.file("raster/ta.tif", package = "spDataLarge"))
+
+# Inspect Data - 175 landslide and 175 non-landslide points
+summary(lsl$lslpts)
+
+# look at the table 
+head(lsl)
+```
+
+## Conventional Modelling Approach GLM 
+```{r}
+# make model
+fit <- glm(lslpts ~ slope + cplan + cprof + elev + log10_carea,
+          family = binomial(),
+          data = lsl)
+
+# look at model output
+summary(fit)
+fit
+```
+
+The model object fit, of class glm, contains the coefficients defining the fitted relationship between response and predictors. It can also be used for prediction. This is done with the generic predict().
+Setting type to response returns the predicted probabilities (of landslide occurrence) for each observation in lsl, as illustrated below.
+
+```{r}
+pred_glm <- predict(object = fit, type = "response")
+head(pred_glm)
+#>      1      2      3      4      5      6 
+#> 0.1901 0.1172 0.0952 0.2503 0.3382 0.1575
+```
+
+```{r}
+# making the prediction
+pred <- terra::predict(ta, model = fit, type = "response")
+
+plot(pred)
+ta # raster hat schon alle eigenschaften, die auch im modell sind... 
+```
+
+## Calculate AUROC
+```{r}
+#  takes the response and the predicted values as inputs
+
+pROC::auc(pROC::roc(lsl$lslpts, fitted(fit)))
+#> Area under the curve: 0.8216
 ```
 
 ## Spatial CV with MLR3 
-### Spatial tuning of ML
-#### Random Forest 
+### GLM - create a task
 ```{r}
-mlr_learners$get("regr.ranger")
-lrn("regr.ranger")
+# create task
+task <- mlr3spatiotempcv::TaskClassifST$new(
+  id = "ecuador_lsl",
+  backend = mlr3::as_data_backend(lsl), #  input data includes the response and predictor variables
+  target = "lslpts", # name of a response variable (in our case this is lslpts) 
+  positive = "TRUE", # positive determines which of the two factor levels of the response variable indicate the landslide initiation point (in our case this is TRUE)
+  coordinate_names = c("x", "y"), # names of the coordinate columns
+  coords_as_features = FALSE, # decide if we want to use the coordinates as predictors in the modeling
+  crs = "EPSG:32717" # coordinate system 
+  )
+```
 
+For a short data exploration, the autoplot() function of the mlr3viz package might come in handy since it plots the response against all predictors and all predictors against all predictors (not shown).
+
+```{r}
+# plot response against each predictor
+mlr3viz::autoplot(task, type = "duo")
+# plot all variables against each other
+mlr3viz::autoplot(task, type = "pairs")
+```
+
+### GLM - choose learner
+Having created a task, we need to choose a learner that determines the statistical learning method to use. All classification learners start with classif. and all regression learners with regr. (see ?Learner for details).
+```{r}
+# kein Paket namens ‘dictionar6’
+# Access all learners
+mlr3extralearners::list_mlr3learners()
+
+# Filter learners for your specific problem 
+mlr3extralearners::list_mlr3learners(
+  filter = list(class = "classif", properties = "twoclass"), 
+  select = c("id", "mlr3_package", "required_packages")) |>
+  head()
+```
+
+This yields all learners able to model two-class problems (landslide yes or no). We opt for the binomial classification method used in Section 12.3 and implemented as classif.log_reg in mlr3learners. Additionally, we need to specify the predict.type which determines the type of the prediction with prob resulting in the predicted probability for landslide occurrence between 0 and 1 (this corresponds to type = response in predict.glm).
+
+```{r}
+learner <- mlr3::lrn("classif.log_reg", predict_type = "prob")
+
+# To access the help page of the learner and find out from which package it was taken, we can run:
+
+learner$help()
+```
+
+### GLM - resampling method
+We will use a 100-repeated 5-fold spatial CV: five partitions will be chosen based on the provided coordinates in our task and the partitioning will be repeated 100 times:
+
+```{r}
+resampling <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
+
+# reduce verbosity
+lgr::get_logger("mlr3")$set_threshold("warn")
+# run spatial cross-validation and save it to resample result glm (rr_glm)
+rr_spcv_glm <- mlr3::resample(task = task,
+                             learner = learner,
+                             resampling = resampling)
+# compute the AUROC as a data.table
+score_spcv_glm <- rr_spcv_glm$score(measure = mlr3::msr("classif.auc"))
+# keep only the columns you need
+score_spcv_glm <- score_spcv_glm[, .(task_id, learner_id, resampling_id, 
+                                    classif.auc)]
+```
+
+```{r}
+score <- readRDS("extdata/12-bmr_score.rds")
+score_spcv_glm <- score[learner_id == "classif.log_reg" & 
+                         resampling_id == "repeated_spcv_coords"]
+```
+
+```{r}
+mean(score_spcv_glm$classif.auc) |>
+  round(2)
+#> [1] 0.77
+```
+
+### Spatial tuning of ML
+```{r}
 # set up task 
-lrn_rf <- mlr3::lrn("regr.ranger", predict_type = "response", num.trees = to_tune(c(100, 200, 400)))
-
-# predict_type = "response" or "se"
-
+lrn_ksvm <- mlr3::lrn("classif.ksvm", predict_type = "prob", kernel = "rbfdot",
+                     type = "C-svc")
 lrn_ksvm$fallback <- lrn("classif.featureless", predict_type = "prob")
 
 # resampling strategy 
