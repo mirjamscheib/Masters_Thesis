@@ -144,7 +144,7 @@ hdm_results <- function(h5_path, twodm_path, shp_path, raster_wd_path, raster_v_
   writeRaster(raster_velocity, raster_v_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
               overwrite = TRUE)
   #h5 datei schliessen
-#  h5$close_all()
+ h5$close_all()
   return(length(ID))                                                   # return number of triangle cells 
 }
 
