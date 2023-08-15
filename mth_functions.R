@@ -48,7 +48,7 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   #setup --------
     setup_cmd_name <- "c:\\Program Files\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"
     
-    setup_param1 = paste("-f ", getwd(), "\\", model_json, sep="")
+    setup_param1 = paste("-f ", getwd(), "\\", model_new, sep="")
     setup_param2 = paste("-o ", getwd(), "\\", setup_h5, sep="")
     
     system2(setup_cmd_name, args = c(setup_param1, setup_param2))
