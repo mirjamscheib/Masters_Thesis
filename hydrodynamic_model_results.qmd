@@ -40,8 +40,8 @@ pkgCheck("rgdal")
 source("mth_functions.R")
 ```
 
-# ok - Glenner: GL1
-## ok - Single Attribute Rasters
+# - Glenner: GL1
+## - Single Attribute Rasters
 ```{r}
  GL1_3_28 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_3_28.h5", 
                         twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
@@ -104,7 +104,7 @@ GL1_31_76 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_31_76.h5",
                         raster_wd_path = "raster_files/GL1_wd_31_76.tif")
 ```
 
-## ok - Stacked Rasters 
+## - Stacked Rasters 
 ```{r}
 GL1_stacked_3_28 <- stack_raster(v_path = "raster_files/GL1_v_3_28.tif",
                                 wd_path = "raster_files/GL1_wd_3_28.tif",
@@ -478,8 +478,8 @@ M1_stacked_22_84 <- stack_raster(v_path = "raster_files/M1_v_22_84.tif",
                                 stack_path = "rasters_stacked/M1_22_84.grd")
 ```
 
-#ok -  Sitter: S1
-## ok - Single Attribute Rasters
+#-  Sitter: S1
+## - Single Attribute Rasters
 ```{r}
 S1_2_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_2_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
@@ -537,7 +537,7 @@ S1_20_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_20_00.h5",
                     raster_wd_path = "raster_files/S1_wd_20_00.tif")
 ```
 
-## ok - Stacked Rasters
+## - Stacked Rasters
 ```{r}
 S1_stacked_2_00 <- stack_raster(v_path = "raster_files/S1_v_2_00.tif",
                                 wd_path = "raster_files/S1_wd_2_00.tif",
@@ -576,8 +576,8 @@ S1_stacked_20_00 <- stack_raster(v_path = "raster_files/S1_v_20_00.tif",
                                 stack_path = "rasters_stacked/S1_20_00.grd")
 ```
 
-# ok - Sitter: S2
-## ok - Single Attribute Rasters
+# - Sitter: S2
+## - Single Attribute Rasters
 ```{r}
 S2_2_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_2_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
@@ -632,9 +632,17 @@ S2_20_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_20_00.h5",
                        shp_path = "raster_files/S2_shape.shp", 
                        raster_v_path = "raster_files/S2_v_20_00.tif",
                        raster_wd_path = "raster_files/S2_wd_20_00.tif")
+
+L_2 <- raster("raster_files/S2_wd_2_00.tif")
+crs(L_2) <- "EPSG: 2056"
+plot(L_2)
+
+L_3 <- raster("raster_files/S2_wd_20_00.tif")
+crs(L_3) <- "EPSG: 2056"
+plot(L_3)
 ```
 
-## ok - Stacked Rasters
+## - Stacked Rasters
 2_00, 3_20, 6_50, 8_50, 10_93, 13_00, 15_00, 18_00, 20_00
 ```{r}
 S2_stacked_2_00 <- stack_raster(v_path = "raster_files/S2_v_2_00.tif",
