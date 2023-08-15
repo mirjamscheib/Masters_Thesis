@@ -315,11 +315,11 @@ L2_18_90 <- hdm_results(h5_path = "hdm_models/L2/results_L2_18_90.h5",
                        raster_v_path = "raster_files/L2_v_18_90.tif",
                        raster_wd_path = "raster_files/L2_wd_18_90.tif")
 
-L_2 <- raster("raster_files/L2_v_2_40.tif")
+L_2 <- raster("raster_files/GL1_v_3_28.tif")
 crs(L_2) <- "EPSG: 2056"
 plot(L_2)
 
-L_3 <- raster("raster_files/L2_v_18_90.tif")
+L_3 <- raster("raster_files/GL1_wd_3_28.tif")
 crs(L_3) <- "EPSG: 2056"
 plot(L_3)
 ```
