@@ -264,8 +264,8 @@ GL2_stacked_31_53 <- stack_raster(v_path = "raster_files/GL2_v_31_53.tif",
                                 stack_path = "rasters_stacked/GL2_31_53.grd")
 ```
 
-# ok - Landquart: L2
-## ok- Single Attribute Rasters
+# - Landquart: L2
+## - Single Attribute Rasters
 ```{r}
 L2_2_40 <- hdm_results(h5_path = "hdm_models/L2/results_L2_2_40.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
@@ -317,7 +317,7 @@ L2_18_90 <- hdm_results(h5_path = "hdm_models/L2/results_L2_18_90.h5",
 ```
 
 
-## ok - Stacked Raster
+## - Stacked Raster
 ```{r}
 L2_stacked_2_40 <- stack_raster(v_path = "raster_files/L2_v_2_40.tif",
                                 wd_path = "raster_files/L2_wd_2_40.tif",
