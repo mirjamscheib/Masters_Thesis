@@ -1,0 +1,103 @@
+---
+title: "MLR3_Book"
+format: html
+---
+# Packages
+```{r}
+install.packages("mlr3verse")
+library(mlr3verse)
+
+install.packages("usethis")
+usethis::edit_r_profile()
+
+remotes::install_github("mlr-org/{pkg}") # with {pkg} replaced with the name of the package you want to install.
+```
+
+# Simple example
+```{r}
+library(mlr3)
+
+task = tsk("penguins")
+split = partition(task)
+learner = lrn("classif.rpart")
+
+learner$train(task, row_ids = split$train)
+learner$model
+```
+
+```{r}
+prediction = learner$predict(task, row_ids = split$test)
+prediction
+```
+
+```{r}
+prediction$score(msr("classif.acc"))
+```
+
+# More complex example
+```{r}
+library(mlr3verse)
+
+tasks = tsks(c("breast_cancer", "sonar"))
+
+glrn_rf_tuned = as_learner(ppl("robustify") |> 
+                             auto_tuner(
+    tnr("grid_search", resolution = 5),
+    lrn("classif.ranger", num.trees = to_tune(200, 500)),
+    rsmp("holdout")
+))
+glrn_rf_tuned$id = "RF"
+
+glrn_stack = as_learner(ppl("robustify") |> ppl("stacking",
+    lrns(c("classif.rpart", "classif.kknn")),
+    lrn("classif.log_reg")
+))
+glrn_stack$id = "Stack"
+
+learners = c(glrn_rf_tuned, glrn_stack)
+bmr = benchmark(benchmark_grid(tasks, learners, rsmp("cv", folds = 3)))
+
+bmr$aggregate(msr("classif.acc"))
+```
+
+# Hyperparameter Optimization 
+## Learner 
+```{r}
+# for SVM 
+as.data.table(lrn("classif.svm")$param_set)[,
+  .(id, class, lower, upper, nlevels)]
+
+# for RF
+as.data.table(lrn("regr.ranger")$param_set)[,
+  .(id, class, lower, upper, nlevels)]
+
+# for BRT
+as.data.table(lrn("regr.bart")$param_set)[,
+  .(id, class, lower, upper, nlevels)]
+```
+
+For numeric hyperparameters (we will explore others later) one must specify the bounds to tune over. We do this by constructing a learner and using to_tune() to set the lower and upper limits for the parameters we want to tune. This function allows us to mark the hyperparameter as requiring tuning in the specified range.
+
+```{r}
+# for SVM 
+learner_svm <- lrn("classif.svm",
+  type  = "C-classification",
+  kernel = "radial",
+  cost  = to_tune(1e-1, 1e5),
+  gamma = to_tune(1e-1, 1)
+)
+learner_svm
+
+# for RF 
+learner_rf <- lrn("regr.ranger",
+  type  = "regr",
+  kernel = "radial",
+  max.depth  = to_tune(0, 200),
+  num.trees = to_tune(1, 200)
+)
+learner_rf
+
+?lrn
+```
+
+## Terminator 
