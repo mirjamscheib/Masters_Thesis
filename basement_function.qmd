@@ -328,7 +328,7 @@ GL2_31_53 <-  basement(model_json = "hdm_models/GL2/model.json",
 ```
 
 # Landquart
-## L2 
+## ! L2 
 ```{r}
 L2_2_40 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -734,7 +734,7 @@ S1_20_00 <- basement(model_json = "hdm_models/S1/model.json",
                     slope = 0.001)
 ```
 
-## S2
+## ! S2
 ```{r}
 S2_2_00 <- basement(model_json = "hdm_models/S2/model.json", 
                     model_new = "hdm_models/S2/model_new.json",

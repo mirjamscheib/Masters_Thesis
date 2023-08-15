@@ -6,6 +6,12 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   model <- fromJSON(model_json)
   model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
   
+
+  #change regions
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$REGIONDEF$name[1] == "riverbed", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$REGIONDEF$index[1] <- as.array(1), 
+         model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$REGIONDEF$index[1] <- as.array(1))
+
   #change names
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "input", 
