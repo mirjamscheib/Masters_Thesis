@@ -1,8 +1,8 @@
 
 #### BASEMENT SIMULATIONS ####
-basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, results_h5, results_xdmf, results_json, discharge, strickler, time_end){
-  
-  
+basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, 
+                     results_h5, results_xdmf, results_json, discharge, strickler, time_end){
+
   #read in model json
   model <- fromJSON(model_json)
   
@@ -11,7 +11,9 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
   
   #change discharge
-  model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge, 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- NA)
   
   #change Strickler
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <- strickler
@@ -20,7 +22,7 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE)
   write(model_exp, model_new)
   
-  #
+  
   
   
   #read in simulation json
