@@ -3,38 +3,6 @@
     "DOMAIN": {
       "BASEPLANE_2D": {
         "GEOMETRY": {
-          "REGIONDEF": [
-            {
-              "index": [
-                1
-              ],
-              "name": "flussbett"
-            },
-            {
-              "index": [
-                2
-              ],
-              "name": "fussweg"
-            },
-            {
-              "index": [
-                3
-              ],
-              "name": "vegetation"
-            },
-            {
-              "index": [
-                4
-              ],
-              "name": "wiesen"
-            },
-            {
-              "index": [
-                5
-              ],
-              "name": "stein-etc"
-            }
-          ],
           "STRINGDEF": [
             {
               "name": "inflow",
@@ -45,7 +13,7 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/S2/computational-mesh-7-290323.2dm"
+          "mesh_file": "C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R/hdm_models/S2/computational-mesh-7-290323.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
@@ -67,28 +35,6 @@
           },
           "FRICTION": {
             "default_friction": 30.0,
-            "regions": [
-              {
-                "friction": 36.0,
-                "region_name": "flussbett"
-              },
-              {
-                "friction": 40.0,
-                "region_name": "fussweg"
-              },
-              {
-                "friction": 9.0,
-                "region_name": "vegetation"
-              },
-              {
-                "friction": 20.0,
-                "region_name": "wiesen"
-              },
-              {
-                "friction": 62.0,
-                "region_name": "stein-etc"
-              }
-            ],
             "type": "strickler"
           },
           "INITIAL": {

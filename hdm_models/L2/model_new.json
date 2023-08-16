@@ -3,20 +3,6 @@
     "DOMAIN": {
       "BASEPLANE_2D": {
         "GEOMETRY": {
-          "REGIONDEF": [
-            {
-              "index": 1,
-              "name": "riverbed"
-            },
-            {
-              "index": 2,
-              "name": "gravel "
-            },
-            {
-              "index": 3,
-              "name": "forest"
-            }
-          ],
           "STRINGDEF": [
             {
               "name": "input",
@@ -49,20 +35,6 @@
           },
           "FRICTION": {
             "default_friction": 11.5,
-            "regions": [
-              {
-                "friction": 11.5,
-                "region_name": "riverbed"
-              },
-              {
-                "friction": 15,
-                "region_name": "gravel "
-              },
-              {
-                "friction": 7,
-                "region_name": "forest"
-              }
-            ],
             "type": "strickler"
           },
           "INITIAL": {

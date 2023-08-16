@@ -3,26 +3,6 @@
     "DOMAIN": {
       "BASEPLANE_2D": {
         "GEOMETRY": {
-          "REGIONDEF": [
-            {
-              "index": [
-                1
-              ],
-              "name": "riverbed"
-            },
-            {
-              "index": [
-                2
-              ],
-              "name": "gravel "
-            },
-            {
-              "index": [
-                3
-              ],
-              "name": "forest"
-            }
-          ],
           "STRINGDEF": [
             {
               "name": "input",
@@ -33,7 +13,7 @@
               "upstream_direction": "left"
             }
           ],
-          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm"
+          "mesh_file": "C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R/hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
@@ -55,20 +35,6 @@
           },
           "FRICTION": {
             "default_friction": 11.5,
-            "regions": [
-              {
-                "friction": 11.5,
-                "region_name": "riverbed"
-              },
-              {
-                "friction": 15.0,
-                "region_name": "gravel "
-              },
-              {
-                "friction": 7.0,
-                "region_name": "forest"
-              }
-            ],
             "type": "strickler"
           },
           "INITIAL": {
