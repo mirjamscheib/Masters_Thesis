@@ -20,14 +20,15 @@ library(rgeos)
 library(hydroGOF)
 library(jsonlite)
 
-source("mth_functions.R")
+# source("mth_functions.R")
+ source("basement_function_origin.R")
 ```
 
 
 # Glenner
 ## GL1
 ```{r}
-GL1_3_28 <- basement(model_json = "hdm_models/GL1/model.json",
+GL1_3_28 <- basement_old(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
                        mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
                        simulation_json = "hdm_models/GL1/simulation.json",
@@ -36,9 +37,7 @@ GL1_3_28 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_h5 = "hdm_models/GL1/results_GL1_3_28.h5",
                        results_xdmf = "hdm_models/GL1/results_GL1_3_28",
                        results_json = "hdm_models/GL1/results.json",
-                       discharge = 3.28, 
-                         strickler = 38,
-                       time_end = 3600)
+                       discharge = 3.28)
 
 GL1_6_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
