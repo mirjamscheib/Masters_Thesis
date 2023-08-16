@@ -20,13 +20,13 @@
             "STANDARD": [
               {
                 "discharge": 3.21,
-                "name": "inflow",
+                "name": "input",
                 "slope": 0.01,
                 "string_name": "input",
                 "type": "uniform_in"
               },
               {
-                "name": "outflow",
+                "name": "output",
                 "slope": 0.01,
                 "string_name": "output",
                 "type": "uniform_out"
