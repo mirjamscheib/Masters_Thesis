@@ -1,0 +1,83 @@
+---
+title: "basement_function"
+format: html
+---
+```{r}
+rm(list = ls())
+
+# load all Packages ---
+library(hdf5r)
+library(sp)
+library(sf)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(Metrics)
+library(raster)
+library(rgeos)
+library(hydroGOF)
+library(jsonlite)
+```
+
+# function
+```{r}
+basement <- function(model_json, mesh_path, simulation_json, setup_h5, results_h5, results_xdmf, results_json, discharge, strickler, time_end, slope){
+
+# funktioniert nur wenn inflow/outflow im file gleich wie code
+# Lösung mit ifelse befehl 
+model <- fromJSON(model_json) #read in model json # modify it change mesh
+model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
+model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[2] <- discharge  #change discharge
+model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out"
+model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[2] <- slope
+model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <-  strickler #change Strickler
+
+model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE) #export 
+write(model_exp, "hdm_basement/model_new.json")
+
+simulation <- fromJSON(simulation_json) #read in simulation json
+simulation$SIMULATION$TIME$end <- time_end #modify it
+simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
+write(simulation_exp, "hdm_basement/simulation_new.json") #export 
+
+# Set up BASEMENT
+setup_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"
+  setup_param1 = paste("-f ", getwd(), "\\", model_json, sep="")
+  setup_param2 = paste("-o ", getwd(), "\\", setup_h5, sep="")
+  system2(setup_cmd_name, args = c(setup_param1, setup_param2))
+  
+  # Simulation in BASEMENT
+simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_omp.exe"
+  simulation_param1 = paste("-f ", getwd(), "\\", simulation_json, sep="")
+  simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
+  simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
+  system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2, simulation_param3, "-p", "-n 16"))
+
+  # Results of BASEMENT
+results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.exe"
+  results_param1 = paste("-f ", getwd(), "\\", results_json, sep="")
+  results_param2 = paste("-r ", getwd(), "\\", results_h5, sep="")
+  results_param3 = paste("-o ", getwd(), "\\", results_xdmf, sep="")
+  system2(results_cmd_name, args = c(results_param1, results_param2, results_param3))
+}
+```
+
+
+# Test-Application of function 
+```{r}
+basement(model_json = "hdm_basement/model.json", 
+         mesh_path = "hdm_basement/Landquart_computational-mesh_dsm_mod4.2dm", 
+         simulation_json = "hdm_basement/simulation.json",
+         setup_h5 = "hdm_basement/setup.h5",
+         results_h5 = "hdm_basement/results.h5",
+         results_xdmf = "hdm_basement/results", #this can actually remain always the same
+         results_json = "hdm_basement/results.json",
+         discharge = 13, 
+         strickler = 11, 
+         time_end = 3600,
+         slope = 0.002)
+
+# slope in inflow zone niedriger setzen - 0.0002 z.B. (bei Mass balance problem)
+```
+
+
