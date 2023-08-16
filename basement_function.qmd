@@ -328,7 +328,7 @@ GL2_31_53 <-  basement(model_json = "hdm_models/GL2/model.json",
 ```
 
 # Landquart
-## L2 
+## ] L2 
 ```{r}
 L2_2_40 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -340,9 +340,7 @@ L2_2_40 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_2_40",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 2.40, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 
 L2_3_90 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -354,9 +352,7 @@ L2_3_90 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_3_90",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 3.90, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 
 L2_7_00 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -368,9 +364,7 @@ L2_7_00 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_7_00",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 7.00, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 
 L2_9_24 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -382,9 +376,7 @@ L2_9_24 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_9_24",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 9.24, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 
 L2_11_40 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -396,9 +388,7 @@ L2_11_40 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_11_40",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 11.40, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 
 
 L2_13_30 <-  basement(model_json = "hdm_models/L2/model.json", 
@@ -411,9 +401,7 @@ L2_13_30 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_13_30",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 13.30, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 
 L2_16_50 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -425,9 +413,7 @@ L2_16_50 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_16_50",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 16.50, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 
 L2_18_90 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -439,9 +425,7 @@ L2_18_90 <-  basement(model_json = "hdm_models/L2/model.json",
                      results_xdmf = "hdm_models/L2/results_L2_18_90",
                      results_json = "hdm_models/L2/results.json",
                      discharge = 18.90, 
-                     strickler = 11.5, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 11.5)
 ```
 
 # Moesa

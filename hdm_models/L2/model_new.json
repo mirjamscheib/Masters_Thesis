@@ -19,9 +19,9 @@
           "BOUNDARY": {
             "STANDARD": [
               {
-                "discharge": 18.9,
+                "discharge": 2.4,
                 "name": "input",
-                "slope": 0.001,
+                "slope": 0.0033,
                 "string_name": "input",
                 "type": "uniform_in"
               },
@@ -43,7 +43,7 @@
           "PARAMETER": {
             "CFL": 0.9,
             "fluid_density": 1000,
-            "max_time_step": 100,
+            "max_time_step": 10,
             "minimum_water_depth": 0.01
           }
         }

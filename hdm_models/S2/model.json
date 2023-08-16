@@ -10,10 +10,10 @@
             },
             {
               "name": "outflow",
-              "upstream_direction": "right"
+              "upstream_direction": "left"
             }
           ],
-          "mesh_file": "C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R/hdm_models/S2/computational-mesh-7-290323.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/S2/computational-mesh-7-290323.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
@@ -43,7 +43,7 @@
           "PARAMETER": {
             "CFL": 0.9,
             "fluid_density": 1000.0,
-            "max_time_step": 100.0,
+            "max_time_step": 10.0,
             "minimum_water_depth": 0.01
           }
         }
