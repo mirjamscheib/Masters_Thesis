@@ -19,9 +19,9 @@
           "BOUNDARY": {
             "STANDARD": [
               {
-                "discharge": 2.4,
+                "discharge": 18.9,
                 "name": "input",
-                "slope": 0.01,
+                "slope": 0.001,
                 "string_name": "input",
                 "type": "uniform_in"
               },

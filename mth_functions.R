@@ -1,6 +1,6 @@
 
 #### BASEMENT SIMULATIONS ####
-basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, results_h5, results_xdmf, strickler, results_json, discharge, time_end, slope){
+basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, results_h5, results_xdmf, strickler, results_json, discharge){
 
   #read in model json
   model <- fromJSON(model_json)
@@ -22,10 +22,6 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
           model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_in", 
           model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out") 
    
-   # change slope
-   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
-          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[1] <- slope, 
-          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- 0.00017) 
 
   
   #change Strickler

@@ -22,7 +22,7 @@
                 "name": "output",
                 "slope": 0.0003,
                 "string_name": "inflow",
-                "type": "0.00017"
+                "type": "uniform_out"
               },
               {
                 "name": "outflow",

@@ -3,28 +3,6 @@
     "DOMAIN": {
       "BASEPLANE_2D": {
         "GEOMETRY": {
-          "REGIONDEF": [
-            {
-              "index": 1,
-              "name": "flussbett"
-            },
-            {
-              "index": 2,
-              "name": "fussweg"
-            },
-            {
-              "index": 3,
-              "name": "vegetation"
-            },
-            {
-              "index": 4,
-              "name": "wiesen"
-            },
-            {
-              "index": 5,
-              "name": "stein-etc"
-            }
-          ],
           "STRINGDEF": [
             {
               "name": "inflow",
@@ -44,7 +22,7 @@
                 "name": "output",
                 "slope": 0.0034,
                 "string_name": "inflow",
-                "type": "0.00017"
+                "type": "uniform_out"
               },
               {
                 "name": "outflow",
@@ -56,28 +34,6 @@
           },
           "FRICTION": {
             "default_friction": 36,
-            "regions": [
-              {
-                "friction": 36,
-                "region_name": "flussbett"
-              },
-              {
-                "friction": 40,
-                "region_name": "fussweg"
-              },
-              {
-                "friction": 9,
-                "region_name": "vegetation"
-              },
-              {
-                "friction": 20,
-                "region_name": "wiesen"
-              },
-              {
-                "friction": 62,
-                "region_name": "stein-etc"
-              }
-            ],
             "type": "strickler"
           },
           "INITIAL": {

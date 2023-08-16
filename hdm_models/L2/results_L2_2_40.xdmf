@@ -4,15 +4,15 @@
     <Domain>
         <Topology TopologyType="Triangle" Name="Topology" NumberOfElements="38694">
             <DataItem ItemType="Uniform" Dimensions="116082" Format="HDF">
-                C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:CellsAll/Topology
+                E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:CellsAll/Topology
             </DataItem>
         </Topology>
         <Geometry GeometryType="XYZ" Name="Coordinates">
             <DataItem ItemType="Uniform" Dimensions="58860" Format="HDF">
-                C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:NodesAll/Coordnts
+                E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:NodesAll/Coordnts
             </DataItem>
         </Geometry>
-        <Grid GridType="Collection" Name="C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5" CollectionType="Temporal">
+        <Grid GridType="Collection" Name="E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5" CollectionType="Temporal">
             <Grid GridType="Uniform" Name="Timestep">
                 <Time TimeType="Single" Name="time = 0.000000" Value="0.000000">
                 </Time>
@@ -26,7 +26,7 @@
                             0 0 1 1 38694 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38694 1" Format="HDF">
-                            C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:CellsAll/BottomEl
+                            E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:CellsAll/BottomEl
                         </DataItem>
                     </DataItem>
                 </Attribute>
@@ -37,7 +37,7 @@
                                 0 1 1 1 38694 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38694 3" Format="HDF">
-                                C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
+                                E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
                             </DataItem>
                         </DataItem>
                         <DataItem ItemType="HyperSlab" Dimensions="38694">
@@ -45,7 +45,7 @@
                                 0 2 1 1 38694 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38694 3" Format="HDF">
-                                C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
+                                E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
                             </DataItem>
                         </DataItem>
                     </DataItem>
@@ -57,7 +57,7 @@
                                 0 0 1 1 38694 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38694 3" Format="HDF">
-                                C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
+                                E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
                             </DataItem>
                         </DataItem>
                         <DataItem ItemType="HyperSlab" Dimensions="38694">
@@ -65,7 +65,7 @@
                                 0 0 1 1 38694 1
                             </DataItem>
                             <DataItem ItemType="Uniform" Dimensions="38694 1" Format="HDF">
-                                C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:CellsAll/BottomEl
+                                E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:CellsAll/BottomEl
                             </DataItem>
                         </DataItem>
                     </DataItem>
@@ -76,7 +76,7 @@
                             0 0 1 1 38694 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38694 3" Format="HDF">
-                            C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
+                            E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40.h5:/RESULTS/CellsAll/HydState/0000000
                         </DataItem>
                     </DataItem>
                 </Attribute>
@@ -86,7 +86,7 @@
                             0 0 1 1 38694 1
                         </DataItem>
                         <DataItem ItemType="Uniform" Dimensions="38694 1" Format="HDF">
-                            C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R\hdm_models/L2/results_L2_2_40_aux.h5:flow_velocity_abs/0
+                            E:/Mirjam/Masters_Thesis\hdm_models/L2/results_L2_2_40_aux.h5:flow_velocity_abs/0
                         </DataItem>
                     </DataItem>
                 </Attribute>
