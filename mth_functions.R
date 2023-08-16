@@ -1,32 +1,17 @@
 
 #### BASEMENT SIMULATIONS ####
-basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, results_h5, results_xdmf, strickler, results_json, discharge, time_end, slope){
+basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, results_h5, results_xdmf, results_json, discharge, strickler, time_end){
+  
   
   #read in model json
   model <- fromJSON(model_json)
+  
+  #modify it
+  #change mesh
   model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
   
-  #change names
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "input" | model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "inflow", 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "input", 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "output") 
-  
-  
   #change discharge
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge, 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- NA) 
-  
-  # change input
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_in", 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out") 
-  
-  # change slope
- # ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
-  #       model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[1] <- slope, 
-   #      model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- 0.00017) 
-  
+  model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge
   
   #change Strickler
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <- strickler
@@ -35,12 +20,14 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE)
   write(model_exp, model_new)
   
+  #
+  
   
   #read in simulation json
   simulation <- fromJSON(simulation_json)
   
   #modify it
-  simulation$SIMULATION$TIME$end <- 3600
+  simulation$SIMULATION$TIME$end <- time_end
   
   #export 
   simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
