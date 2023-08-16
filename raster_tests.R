@@ -25,11 +25,11 @@ pkgCheck("gstat")
 pkgCheck("purrr")
 pkgCheck("rgdal")
 
-L_2 <- raster("raster_files/GL1_wd_3_28.tif")
+L_2 <- raster("raster_files/GL1_v_3_28.tif")
 crs(L_2) <- "EPSG: 2056"
 plot(L_2)
 
-L_3 <- raster("raster_files/GL1_wd_19.tif")
+L_3 <- raster("raster_files/GL1_v_31_76.tif")
 crs(L_3) <- "EPSG: 2056"
 plot(L_3)
 
