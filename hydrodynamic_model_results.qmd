@@ -40,8 +40,8 @@ pkgCheck("rgdal")
 source("mth_functions.R")
 ```
 
-# Glenner: GL1
-## GL1_22_00 Single Attribute Rasters
+# done - Glenner: GL1
+## Single Attribute Rasters
 ```{r}
  GL1_3_28 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_3_28.h5", 
                         twodm_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm",
