@@ -5,15 +5,14 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   #read in model json
   model <- fromJSON(model_json)
   model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
-  
 
   #change names
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "input", 
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "inflow", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "output") 
   
   #change names
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "inflow", 
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "output")
   
