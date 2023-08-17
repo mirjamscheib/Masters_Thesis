@@ -147,7 +147,7 @@ GL1_stacked_31_76 <- stack_raster(v_path = "raster_files/GL1_v_31_76.tif",
                                 stack_path = "rasters_stacked/GL1_31_76.grd")
 ```
 
-# - Glenner: GL2
+# GL2_31_53 - Glenner: GL2
 ## - Single Attribute Rasters
 ```{r}
 GL2_3_21 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_3_21.h5", 
@@ -362,11 +362,19 @@ M1_0_47 <- hdm_results(h5_path = "hdm_models/M1/results_M1_0_47.h5",
                        raster_v_path = "raster_files/M1_v_0_47.tif",
                        raster_wd_path = "raster_files/M1_wd_0_47.tif")
 
+test <- raster("raster_files/M1_v_0_47.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
+
 M1_0_60 <- hdm_results(h5_path = "hdm_models/M1/results_M1_0_60.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_0_60.tif",
                        raster_wd_path = "raster_files/M1_wd_0_60.tif")
+
+test <- raster("raster_files/M1_v_0_60.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
 
 M1_4_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_4_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -374,11 +382,19 @@ M1_4_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_4_00.h5",
                        raster_v_path = "raster_files/M1_v_4_00.tif",
                        raster_wd_path = "raster_files/M1_wd_4_00.tif")
 
+test <- raster("raster_files/M1_v_4_00.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
+
 M1_6_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_6_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_6_00.tif",
                        raster_wd_path = "raster_files/M1_wd_6_00.tif")
+
+test <- raster("raster_files/M1_v_6_00.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
 
 M1_8_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_8_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -386,11 +402,19 @@ M1_8_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_8_00.h5",
                        raster_v_path = "raster_files/M1_v_8_00.tif",
                        raster_wd_path = "raster_files/M1_wd_8_00.tif")
 
+test <- raster("raster_files/M1_v_8_00.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
+
 M1_10_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_10_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_10_00.tif",
                        raster_wd_path = "raster_files/M1_wd_10_00.tif")
+
+test <- raster("raster_files/M1_v_10_00.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
 
 M1_12_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_12_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -398,11 +422,19 @@ M1_12_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_12_00.h5",
                        raster_v_path = "raster_files/M1_v_12_00.tif",
                        raster_wd_path = "raster_files/M1_wd_12_00.tif")
 
+test <- raster("raster_files/M1_v_12_00.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
+
 M1_14_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_14_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_14_00.tif",
                        raster_wd_path = "raster_files/M1_wd_14_00.tif")
+
+test <- raster("raster_files/M1_v_14_00.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
 
 M1_16_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_16_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -410,17 +442,29 @@ M1_16_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_16_00.h5",
                        raster_v_path = "raster_files/M1_v_16_00.tif",
                        raster_wd_path = "raster_files/M1_wd_16_00.tif")
 
+test <- raster("raster_files/M1_v_16_00.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
+
 M1_18_84 <- hdm_results(h5_path = "hdm_models/M1/results_M1_18_84.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_18_84.tif",
                        raster_wd_path = "raster_files/M1_wd_18_84.tif")
 
+test <- raster("raster_files/M1_v_18_84.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
+
 M1_22_84 <- hdm_results(h5_path = "hdm_models/M1/results_M1_22_84.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_22_84.tif",
                        raster_wd_path = "raster_files/M1_wd_22_84.tif")
+
+test <- raster("raster_files/M1_v_22_84.tif")
+crs(test) <- "EPSG: 2056"
+plot(test)
 ```
 
 ## Stacked Rasters
