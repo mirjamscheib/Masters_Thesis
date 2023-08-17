@@ -147,8 +147,8 @@ GL1_stacked_31_76 <- stack_raster(v_path = "raster_files/GL1_v_31_76.tif",
                                 stack_path = "rasters_stacked/GL1_31_76.grd")
 ```
 
-# Glenner: GL2
-## !! Single Attribute Rasters
+# - Glenner: GL2
+## - Single Attribute Rasters
 ```{r}
 GL2_3_21 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_3_21.h5", 
                         twodm_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm",
@@ -217,7 +217,7 @@ GL2_31_53 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_31_53.h5",
                         raster_wd_path = "raster_files/GL2_wd_31_53.tif")
 ```
 
-## Stacked Rasters 
+## - Stacked Rasters 
 ```{r}
 GL2_stacked_3_21 <- stack_raster(v_path = "raster_files/GL2_v_3_21.tif",
                                 wd_path = "raster_files/GL2_wd_3_21.tif",
