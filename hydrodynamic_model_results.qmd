@@ -354,7 +354,7 @@ L2_stacked_18_90 <- stack_raster(v_path = "raster_files/L2_v_18_90.tif",
 
 
 # !! Moesa: M1
-## Single Attribute Rasters
+## M1_16_00 Single Attribute Rasters
 ```{r}
 M1_0_47 <- hdm_results(h5_path = "hdm_models/M1/results_M1_0_47.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
