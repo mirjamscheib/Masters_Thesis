@@ -488,7 +488,7 @@ L2_stacked_18_90 <- stack_raster(v_path = "raster_files/L2_v_18_90.tif",
 ```
 
 # plots - Moesa: M1
-## M1_18_84 Single Attribute Rasters
+## - Single Attribute Rasters
 ```{r}
 M1_0_47 <- hdm_results(h5_path = "hdm_models/M1/results_M1_0_47.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -590,6 +590,7 @@ M1_18_84 <- hdm_results(h5_path = "hdm_models/M1/results_M1_18_84.h5",
                        raster_v_path = "raster_files/M1_v_18_84.tif",
                        raster_wd_path = "raster_files/M1_wd_18_84.tif")
 
+par(mfrow=c(3,3))
 test_v <- raster("raster_files/M1_v_18_84.tif")
 test_wd <- raster("raster_files/M1_wd_18_84.tif")
 crs(test_v) <- "EPSG: 2056"
@@ -611,7 +612,7 @@ plot(test_v)
 plot(test_wd)
 ```
 
-## Stacked Rasters
+## - Stacked Rasters
 ```{r}
 M1_stacked_0_47 <- stack_raster(v_path = "raster_files/M1_v_0_47.tif",
                                 wd_path = "raster_files/M1_wd_0_47.tif",
@@ -661,7 +662,7 @@ M1_stacked_22_84 <- stack_raster(v_path = "raster_files/M1_v_22_84.tif",
 # Sitter: S1
 ## Single Attribute Rasters
 ```{r}
-par(mfrow=c(4,4))
+par(mfrow=c(3,3))
 
 S1_2_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_2_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
