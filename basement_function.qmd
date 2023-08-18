@@ -308,6 +308,7 @@ GL2_31_53 <-  basement(model_json = "hdm_models/GL2/model.json",
 
           
 # Landquart
+
 ## ! L2 
 ```{r}
 L2_2_40 <-  basement(model_json = "hdm_models/L2/model.json", 

@@ -21,13 +21,14 @@
               {
                 "name": "output",
                 "slope": 0.01,
-                "string_name": "input",
+                "string_name": "output",
                 "type": "uniform_out"
               },
               {
+                "discharge": 31.53,
                 "name": "input",
                 "slope": 0.01,
-                "string_name": "output",
+                "string_name": "input",
                 "type": "uniform_in"
               }
             ]

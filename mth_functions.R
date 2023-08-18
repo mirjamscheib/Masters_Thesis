@@ -34,15 +34,30 @@ basement <- function(model_json, setup_h5, simulation_json, results_h5, results_
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge, 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- NA) 
   
+  #change discharge
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] == "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[2] <- discharge, 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[2] <- NA) 
+  
   # change input
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_in", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out") 
   
   # change input
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[1] <- "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[1] <- "output") 
+  
+  # change input
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] == "output", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[2] <- "uniform_out", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[2] <- "uniform_in") 
+  
+  # change input
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] == "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[2] <- "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[2] <- "input") 
   
   #change Strickler
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <- strickler
@@ -88,7 +103,6 @@ basement <- function(model_json, setup_h5, simulation_json, results_h5, results_
   
   system2(results_cmd_name, args = c(results_param1, results_param2, results_param3))
 }
-
 
 ####  HYDRODYNAMIC MODEL RESULTS ####
 # convert hydrodynamic model results into a shapefile, rasters 
