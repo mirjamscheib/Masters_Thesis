@@ -1,16 +1,33 @@
 
 #### BASEMENT SIMULATIONS ####
-basement_x <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, results_h5, results_xdmf, strickler, results_json, discharge, time_end, slope){
-  
+basement <- function(model_json, setup_h5, simulation_json, results_h5, results_json, results_xdmf, 
+                      simulation_new, model_new, mesh_path, strickler, discharge){
   #read in model json
   model <- fromJSON(model_json)
-  model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
   
+  #modify it
+  #change mesh
+  model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
   
   #change names
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "output")
+  
+  #change names
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[2] == "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] <- "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] <- "input")
+  
+  #change names
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[1] == "inflow", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] <- "output") 
+  
+  #change names
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$STRINGDEF$name[2] == "outflow", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] <- "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] <- "input")
   
   #change discharge
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
@@ -22,69 +39,10 @@ basement_x <- function(model_json, model_new, mesh_path, simulation_json, simula
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_in", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out") 
   
-  # change slope
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
-        model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$slope[1] <- slope, 
-        model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- 0.00017) 
-  
-  
-  #change Strickler
-  model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <- strickler
-  
-  #export 
-  model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE)
-  write(model_exp, model_new)
-  
-  
-  #read in simulation json
-  simulation <- fromJSON(simulation_json)
-  
-  #modify it
-  simulation$SIMULATION$TIME$end <- time_end
-  
-  #export 
-  simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
-  write(simulation_exp, simulation_new)
-  
-  
-  #setup 
-  setup_cmd_name <- "c:\\Program Files\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"
-  setup_param1 = paste("-f ", getwd(), "\\", model_new, sep="")
-  setup_param2 = paste("-o ", getwd(), "\\", setup_h5, sep="")
-  system2(setup_cmd_name, args = c(setup_param1, setup_param2))
-  
-  #simulation 
-  simulation_cmd_name <- "c:\\Program Files\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_cudaC.exe"
-  simulation_param1 = paste("-f ", getwd(), "\\", simulation_new, sep="")
-  simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
-  simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
-  system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2,
-                                        simulation_param3, "-p"))
-  
-  #results 
-  results_cmd_name <- "c:\\Program Files\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.exe"
-  results_param1 = paste("-f ", getwd(), "\\", results_json, sep="")
-  results_param2 = paste("-r ", getwd(), "\\", results_h5, sep="")
-  results_param3 = paste("-o ", getwd(), "\\", results_xdmf, sep="")
-  system2(results_cmd_name, args = c(results_param1, results_param2, results_param3))
-  
-}
-#### BASEMENT SIMULATIONS ####
-
-basement <- function(model_json, model_new, mesh_path, simulation_json, simulation_new, setup_h5, 
-                     results_h5, results_xdmf, results_json, discharge, strickler, time_end){
-
-  #read in model json
-  model <- fromJSON(model_json)
-  
-  #modify it
-  #change mesh
-  model$SETUP$DOMAIN$BASEPLANE_2D$GEOMETRY$mesh_file <- mesh_path
-  
-  #change discharge
-  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge, 
-         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- NA)
+  # change input
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] == "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[2] <- "uniform_out", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[2] <- "uniform_in") 
   
   #change Strickler
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <- strickler
@@ -93,43 +51,44 @@ basement <- function(model_json, model_new, mesh_path, simulation_json, simulati
   model_exp <- toJSON(model, pretty = TRUE, auto_unbox = TRUE)
   write(model_exp, model_new)
   
-  
-  
-  
   #read in simulation json
   simulation <- fromJSON(simulation_json)
   
   #modify it
-  simulation$SIMULATION$TIME$end <- time_end
+  simulation$SIMULATION$TIME$end <- 3600
   
   #export 
   simulation_exp <- toJSON(simulation, pretty = TRUE, auto_unbox = TRUE)
   write(simulation_exp, simulation_new)
   
+  # Set up Basement 
+  setup_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"
   
-  #setup 
-  setup_cmd_name <- "c:\\Program Files\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_setup.exe"
   setup_param1 = paste("-f ", getwd(), "\\", model_new, sep="")
   setup_param2 = paste("-o ", getwd(), "\\", setup_h5, sep="")
+  
   system2(setup_cmd_name, args = c(setup_param1, setup_param2))
   
-  #simulation 
-  simulation_cmd_name <- "c:\\Program Files\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_cudaC.exe"
-  simulation_param1 = paste("-f ", getwd(), "\\", simulation_new, sep="")
+  # Simulation
+  simulation_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_cudaC.exe"
+  
+  simulation_param1 = paste("-f ", getwd(), "\\", simulation_json, sep="")
   simulation_param2 = paste("-r ", getwd(), "\\", setup_h5, sep="")
   simulation_param3 = paste("-o ", getwd(), "\\", results_h5,  sep="")
+  
   system2(simulation_cmd_name, args = c(simulation_param1, simulation_param2,
                                         simulation_param3, "-p"))
   
-  #results 
-  results_cmd_name <- "c:\\Program Files\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.exe"
+  # Export Results
+  results_cmd_name <- "c:\\Programme\\BASEMENT 3.2.0\\bin\\BMv3_BASEplane_results.exe"
+  
   results_param1 = paste("-f ", getwd(), "\\", results_json, sep="")
   results_param2 = paste("-r ", getwd(), "\\", results_h5, sep="")
   results_param3 = paste("-o ", getwd(), "\\", results_xdmf, sep="")
+  
   system2(results_cmd_name, args = c(results_param1, results_param2, results_param3))
-  
-  
 }
+
 
 ####  HYDRODYNAMIC MODEL RESULTS ####
 # convert hydrodynamic model results into a shapefile, rasters 

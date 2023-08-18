@@ -25,7 +25,7 @@ pkgCheck("gstat")
 pkgCheck("purrr")
 pkgCheck("rgdal")
 
-L_2 <- raster("raster_files/L2_v_2_40.tif")
+L_2 <- raster("raster_files/S2_v_2_00.tif")
 crs(L_2) <- "EPSG: 2056"
 plot(L_2)
 

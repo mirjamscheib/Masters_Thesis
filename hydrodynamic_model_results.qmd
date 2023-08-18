@@ -673,7 +673,7 @@ L_2 <- raster("raster_files/S2_wd_2_00.tif")
 crs(L_2) <- "EPSG: 2056"
 plot(L_2)
 
-L_3 <- raster("raster_files/S2_wd_20_00.tif")
+L_3 <- raster("raster_files/S2_v_20_00.tif")
 crs(L_3) <- "EPSG: 2056"
 plot(L_3)
 
