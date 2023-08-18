@@ -19,7 +19,7 @@
           "BOUNDARY": {
             "STANDARD": [
               {
-                "discharge": 20,
+                "discharge": 10,
                 "name": "input",
                 "slope": 0.0034,
                 "string_name": "inflow",

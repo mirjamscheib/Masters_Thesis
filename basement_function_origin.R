@@ -49,15 +49,30 @@ bas_setup <- function(model_json, setup_h5, simulation_json, results_h5, results
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- discharge, 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[1] <- NA) 
   
+  #change discharge
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] == "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[2] <- discharge, 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$discharge[2] <- NA) 
+  
   # change input
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_in", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[1] <- "uniform_out") 
   
   # change input
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[1] == "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[1] <- "input", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[1] <- "output") 
+  
+  # change input
   ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] == "output", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[2] <- "uniform_out", 
          model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$type[2] <- "uniform_in") 
+  
+  # change input
+  ifelse(model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$name[2] == "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[2] <- "output", 
+         model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$BOUNDARY$STANDARD$string_name[2] <- "input") 
   
   #change Strickler
   model$SETUP$DOMAIN$BASEPLANE_2D$HYDRAULICS$FRICTION$default_friction <- strickler
@@ -108,31 +123,17 @@ bas_setup <- function(model_json, setup_h5, simulation_json, results_h5, results
 
 #RUN BAsement from RStudio
 #setup
-bas_setup(model_json = "hdm_models/S2/model.json", 
-          setup_h5 = "hdm_models/S2/setup.h5", 
-          simulation_json = "hdm_models/S2/simulation.json",
-          results_h5 = "hdm_models/S2/results_S2_20_00.h5", 
-          results_json = "hdm_models/S2/results.json",
-          results_xdmf = "hdm_models/S2/results_S2_20_00", 
-          simulation_new = "hdm_models/S2/simulation_new.json", 
-          model_new = "hdm_models/S2/model_new.json",
-          mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
-          discharge = 20.00, 
-          strickler = 36.0)
-
-GL1_31_76 <- basement(model_json = "hdm_models/GL1/model.json",
-                      model_new = "hdm_models/GL1/model_new.json",
-                      mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
-                      simulation_json = "hdm_models/GL1/simulation.json",
-                      simulation_new = "hdm_models/GL1/simulation_new.json",
-                      setup_h5 = "hdm_models/GL1/setup.h5",
-                      results_h5 = "hdm_models/GL1/results_GL1_31_76.h5",
-                      results_xdmf = "hdm_models/GL1/results_GL1_31_76",
-                      results_json = "hdm_models/GL1/results.json",
-                      discharge = 31.76, 
-                      strickler = 38, 
-                      time_end = 3600,
-                      slope = 0.01)
+bas_setup(model_json = "hdm_models/L2/model.json", 
+                     model_new = "hdm_models/L2/model_new.json",
+                     mesh_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm", 
+                     simulation_json = "hdm_models/L2/simulation.json",
+                     simulation_new = "hdm_models/L2/simulation_new.json",
+                     setup_h5 = "hdm_models/L2/setup.h5",
+                     results_h5 = "hdm_models/L2/results_L2_2_40.h5",
+                     results_xdmf = "hdm_models/L2/results_L2_2_40",
+                     results_json = "hdm_models/L2/results.json",
+                     discharge = 2.40,
+                     strickler = 11.5)
 
 
 

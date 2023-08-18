@@ -289,7 +289,10 @@ GL2_28_00 <-  basement(model_json = "hdm_models/GL2/model.json",
              results_json = "hdm_models/GL2/results.json",
              discharge = 28.00, 
              strickler = 38)
+```
 
+# ! GL2_31_53
+```{r}
 GL2_31_53 <-  basement(model_json = "hdm_models/GL2/model.json", 
              model_new = "hdm_models/GL2/model_new.json",
              mesh_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm", 
@@ -305,7 +308,7 @@ GL2_31_53 <-  basement(model_json = "hdm_models/GL2/model.json",
 
           
 # Landquart
-## ] L2 
+## ! L2 
 ```{r}
 L2_2_40 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -677,7 +680,7 @@ S1_20_00 <- basement(model_json = "hdm_models/S1/model.json",
                     strickler = 33.0)
 ```
 
-## S2
+## ok - S2
 ```{r}
 S2_2_00 <- basement(model_json = "hdm_models/S2/model.json", 
                     model_new = "hdm_models/S2/model_new.json",
