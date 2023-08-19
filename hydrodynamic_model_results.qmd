@@ -1357,19 +1357,80 @@ Idee: stacked raster für v und wd erstellen pro section, dann extract
 ## Glenner: GL1
 ```{r}
 # read stacked rasters (wd + v per discharge)
-GL1_3_28 <- raster("raster_files/GL1_wd_3_28.tif")
+GL1_3_28 <- raster("rasters_stacked/GL1_3_28.grd")
 GL1_6_00 <- raster("rasters_stacked/GL1_6_00.grd")
 GL1_9_00 <- raster("rasters_stacked/GL1_9_00.grd")
+GL1_12_68 <- raster("rasters_stacked/GL1_12_68.grd")
+GL1_16_00 <- raster("rasters_stacked/GL1_16_00.grd")
+GL1_19_00 <- raster("rasters_stacked/GL1_19_00.grd")
+GL1_22_00 <- raster("rasters_stacked/GL1_22_00.grd")
+GL1_25_00 <- raster("rasters_stacked/GL1_25_00.grd")
+GL1_28_00 <- raster("rasters_stacked/GL1_28_00.grd")
 GL1_31_76 <- raster("rasters_stacked/GL1_31_76.grd")
-GL1_31_76 <- raster("raster_files/GL1_wd_31_76.tif")
 
-plot(raster("raster_files/L2_wd_2_40.tif"))
-plot(raster("raster_files/L2_wd_18_90.tif"))
 
 # stack rasters into one stack
-GL1_stacked <- stack(GL1_3_28, GL1_6_00, GL1_9_00, GL1_31_76)
+GL1_stacked <- stack(GL1_3_28, GL1_6_00, GL1_9_00, GL1_12_68, GL1_16_00, GL1_19_00, GL1_22_00, GL1_25_00, GL1_28_00, GL1_31_76)
 
 plot(GL1_stacked)
-plot(GL1_3_28)
-plot(GL1_31_76)
+```
+
+## Glenner: GL2
+```{r}
+# read stacked rasters (wd + v per discharge)
+GL2_3_21 <- raster("rasters_stacked/GL2_3_21.grd")
+GL2_6_00 <- raster("rasters_stacked/GL2_6_00.grd")
+GL2_9_00 <- raster("rasters_stacked/GL2_9_00.grd")
+GL2_11_00 <- raster("rasters_stacked/GL2_11_00.grd")
+GL2_12_52 <- raster("rasters_stacked/GL2_12_52.grd")
+GL2_16_00 <- raster("rasters_stacked/GL2_16_00.grd")
+GL2_19_00 <- raster("rasters_stacked/GL2_19_00.grd")
+GL2_22_00 <- raster("rasters_stacked/GL2_22_00.grd")
+GL2_25_00 <- raster("rasters_stacked/GL2_25_00.grd")
+GL2_28_00 <- raster("rasters_stacked/GL2_28_00.grd")
+GL2_31_53 <- raster("rasters_stacked/GL2_31_53.grd") # funktioniert noch nicht
+
+
+# stack rasters into one stack
+GL2_stacked <- stack(GL2_3_21, GL2_6_00, GL2_9_00, GL2_11_00, GL2_12_52, GL2_16_00, GL2_19_00, GL2_22_00, GL2_25_00, GL2_28_00, GL2_31_53)
+
+plot(GL2_stacked)
+```
+
+## Landquart: L2
+```{r}
+# read stacked rasters (wd + v per discharge)
+L2_2_40 <- raster("rasters_stacked/L2_2_40.grd")
+L2_3_90 <- raster("rasters_stacked/L2_3_90.grd")
+L2_7_00 <- raster("rasters_stacked/L2_7_00.grd")
+L2_9_24 <- raster("rasters_stacked/L2_9_24.grd")
+L2_13_30 <- raster("rasters_stacked/L2_13_30.grd")
+L2_16_50 <- raster("rasters_stacked/L2_16_50.grd")
+L2_18_90 <- raster("rasters_stacked/L2_18_90.grd")
+
+# stack rasters into one stack
+L2_stacked <- stack(L2_2_40, L2_3_90, L2_7_00, L2_9_24, L2_13_30, L2_16_50, L2_18_90)
+
+plot(L2_stacked)
+```
+
+## Moesa: M1
+```{r}
+# read stacked rasters (wd + v per discharge)
+M1_0_47 <- raster("rasters_stacked/M1_0_47.grd")
+M1_0_60 <- raster("rasters_stacked/M1_0_60.grd")
+M1_4_00 <- raster("rasters_stacked/M1_4_00.grd")
+M1_6_00 <- raster("rasters_stacked/M1_6_00.grd")
+M1_8_00 <- raster("rasters_stacked/M1_8_00.grd")
+M1_10_00 <- raster("rasters_stacked/M1_10_00.grd")
+M1_12_00 <- raster("rasters_stacked/M1_12_00.grd")
+M1_14_00 <- raster("rasters_stacked/M1_14_00.grd")
+M1_16_00 <- raster("rasters_stacked/M1_16_00.grd")
+M1_18_84 <- raster("rasters_stacked/M1_18_84.grd")
+M1_22_84 <- raster("rasters_stacked/M1_22_84.grd")
+
+# stack rasters into one stack
+M1_stacked <- stack(M1_0_47, M1_0_60, M1_4_00, M1_6_00, M1_8_00, M1_10_00, M1_12_00, M1_14_00, M1_16_00, M1_18_84, M1_22_84)
+
+plot(M1_stacked)
 ```
