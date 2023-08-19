@@ -40,7 +40,7 @@ pkgCheck("rgdal")
 source("mth_functions.R")
 ```
 
-# plots - Glenner: GL1
+# - Glenner: GL1
 ## - Single Attribute Rasters
 ```{r}
  GL1_3_28 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_3_28.h5", 
@@ -147,7 +147,7 @@ GL1_stacked_31_76 <- stack_raster(v_path = "raster_files/GL1_v_31_76.tif",
                                 stack_path = "rasters_stacked/GL1_31_76.grd")
 ```
 
-# plots - Glenner: GL2
+# - Glenner: GL2
 ## - Single Attribute Rasters
 ```{r}
 GL2_3_21 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_3_21.h5", 
@@ -215,84 +215,6 @@ GL2_31_53 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_31_53.h5",
                         shp_path = "raster_files/GL2_shape.shp", 
                         raster_v_path = "raster_files/GL2_v_31_53.tif",
                         raster_wd_path = "raster_files/GL2_wd_31_53.tif")
-
-par(mfrow=c(4,4))
-test_v <- raster("raster_files/GL2_v_31_53.tif")
-test_wd <- raster("raster_files/GL2_wd_31_53.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_28_00.tif")
-test_wd <- raster("raster_files/GL2_wd_28_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_25_00.tif")
-test_wd <- raster("raster_files/GL2_wd_25_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_22_00.tif")
-test_wd <- raster("raster_files/GL2_wd_22_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_19_00.tif")
-test_wd <- raster("raster_files/GL2_wd_19_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_16_00.tif")
-test_wd <- raster("raster_files/GL2_wd_16_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_12_52.tif")
-test_wd <- raster("raster_files/GL2_wd_12_52.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_11_00.tif")
-test_wd <- raster("raster_files/GL2_wd_11_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_9_00.tif")
-test_wd <- raster("raster_files/GL2_wd_9_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_6_00.tif")
-test_wd <- raster("raster_files/GL2_wd_6_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
-test_v <- raster("raster_files/GL2_v_3_21.tif")
-test_wd <- raster("raster_files/GL2_wd_3_21.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 ```
 
 ## - Stacked Rasters 
@@ -345,20 +267,11 @@ GL2_stacked_31_53 <- stack_raster(v_path = "raster_files/GL2_v_31_53.tif",
 # - Landquart: L2
 ## - Single Attribute Rasters
 ```{r}
-par(mfrow=c(4,4))
-
 L2_2_40 <- hdm_results(h5_path = "hdm_models/L2/results_L2_2_40.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
                        shp_path = "raster_files/L2_shape.shp", 
                        raster_v_path = "raster_files/L2_v_2_40.tif",
                        raster_wd_path = "raster_files/L2_wd_2_40.tif")
-
-test_v <- raster("raster_files/L2_v_2_40.tif")
-test_wd <- raster("raster_files/L2_wd_2_40.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 L2_3_90 <- hdm_results(h5_path = "hdm_models/L2/results_L2_3_90.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
@@ -366,25 +279,11 @@ L2_3_90 <- hdm_results(h5_path = "hdm_models/L2/results_L2_3_90.h5",
                        raster_v_path = "raster_files/L2_v_3_90.tif",
                        raster_wd_path = "raster_files/L2_wd_3_90.tif")
 
-test_v <- raster("raster_files/L2_v_3_90.tif")
-test_wd <- raster("raster_files/L2_wd_3_90.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 L2_7_00 <- hdm_results(h5_path = "hdm_models/L2/results_L2_7_00.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
                        shp_path = "raster_files/L2_shape.shp", 
                        raster_v_path = "raster_files/L2_v_7_00.tif",
                        raster_wd_path = "raster_files/L2_wd_7_00.tif")
-
-test_v <- raster("raster_files/L2_v_7_00.tif")
-test_wd <- raster("raster_files/L2_wd_7_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 L2_9_24 <- hdm_results(h5_path = "hdm_models/L2/results_L2_9_24.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
@@ -392,25 +291,11 @@ L2_9_24 <- hdm_results(h5_path = "hdm_models/L2/results_L2_9_24.h5",
                        raster_v_path = "raster_files/L2_v_9_24.tif",
                        raster_wd_path = "raster_files/L2_wd_9_24.tif")
 
-test_v <- raster("raster_files/L2_v_9_24.tif")
-test_wd <- raster("raster_files/L2_wd_9_24.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 L2_11_40 <- hdm_results(h5_path = "hdm_models/L2/results_L2_11_40.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
                        shp_path = "raster_files/L2_shape.shp", 
                        raster_v_path = "raster_files/L2_v_11_40.tif",
                        raster_wd_path = "raster_files/L2_wd_11_40.tif")
-
-test_v <- raster("raster_files/L2_v_11_40.tif")
-test_wd <- raster("raster_files/L2_wd_11_40.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 L2_13_30 <- hdm_results(h5_path = "hdm_models/L2/results_L2_13_30.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
@@ -418,38 +303,17 @@ L2_13_30 <- hdm_results(h5_path = "hdm_models/L2/results_L2_13_30.h5",
                        raster_v_path = "raster_files/L2_v_13_30.tif",
                        raster_wd_path = "raster_files/L2_wd_13_30.tif")
 
-test_v <- raster("raster_files/L2_v_13_30.tif")
-test_wd <- raster("raster_files/L2_wd_13_30.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 L2_16_50 <- hdm_results(h5_path = "hdm_models/L2/results_L2_16_50.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
                        shp_path = "raster_files/L2_shape.shp", 
                        raster_v_path = "raster_files/L2_v_16_50.tif",
                        raster_wd_path = "raster_files/L2_wd_16_50.tif")
 
-test_v <- raster("raster_files/L2_v_16_50.tif")
-test_wd <- raster("raster_files/L2_wd_16_50.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 L2_18_90 <- hdm_results(h5_path = "hdm_models/L2/results_L2_18_90.h5", 
                        twodm_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm",
                        shp_path = "raster_files/L2_shape.shp", 
                        raster_v_path = "raster_files/L2_v_18_90.tif",
                        raster_wd_path = "raster_files/L2_wd_18_90.tif")
-
-test_v <- raster("raster_files/L2_v_18_90.tif")
-test_wd <- raster("raster_files/L2_wd_18_90.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 ```
 
 ## - Stacked Raster
@@ -487,7 +351,7 @@ L2_stacked_18_90 <- stack_raster(v_path = "raster_files/L2_v_18_90.tif",
                                 stack_path = "rasters_stacked/L2_18_90.grd")
 ```
 
-# plots - Moesa: M1
+# - Moesa: M1
 ## - Single Attribute Rasters
 ```{r}
 M1_0_47 <- hdm_results(h5_path = "hdm_models/M1/results_M1_0_47.h5", 
@@ -496,19 +360,11 @@ M1_0_47 <- hdm_results(h5_path = "hdm_models/M1/results_M1_0_47.h5",
                        raster_v_path = "raster_files/M1_v_0_47.tif",
                        raster_wd_path = "raster_files/M1_wd_0_47.tif")
 
-test <- raster("raster_files/M1_v_0_47.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
-
 M1_0_60 <- hdm_results(h5_path = "hdm_models/M1/results_M1_0_60.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_0_60.tif",
                        raster_wd_path = "raster_files/M1_wd_0_60.tif")
-
-test <- raster("raster_files/M1_v_0_60.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
 
 M1_4_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_4_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -516,19 +372,11 @@ M1_4_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_4_00.h5",
                        raster_v_path = "raster_files/M1_v_4_00.tif",
                        raster_wd_path = "raster_files/M1_wd_4_00.tif")
 
-test <- raster("raster_files/M1_v_4_00.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
-
 M1_6_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_6_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_6_00.tif",
                        raster_wd_path = "raster_files/M1_wd_6_00.tif")
-
-test <- raster("raster_files/M1_v_6_00.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
 
 M1_8_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_8_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -536,19 +384,11 @@ M1_8_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_8_00.h5",
                        raster_v_path = "raster_files/M1_v_8_00.tif",
                        raster_wd_path = "raster_files/M1_wd_8_00.tif")
 
-test <- raster("raster_files/M1_v_8_00.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
-
 M1_10_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_10_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_10_00.tif",
                        raster_wd_path = "raster_files/M1_wd_10_00.tif")
-
-test <- raster("raster_files/M1_v_10_00.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
 
 M1_12_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_12_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -556,19 +396,11 @@ M1_12_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_12_00.h5",
                        raster_v_path = "raster_files/M1_v_12_00.tif",
                        raster_wd_path = "raster_files/M1_wd_12_00.tif")
 
-test <- raster("raster_files/M1_v_12_00.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
-
 M1_14_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_14_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_14_00.tif",
                        raster_wd_path = "raster_files/M1_wd_14_00.tif")
-
-test <- raster("raster_files/M1_v_14_00.tif")
-crs(test) <- "EPSG: 2056"
-plot(test)
 
 M1_16_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_16_00.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
@@ -576,40 +408,17 @@ M1_16_00 <- hdm_results(h5_path = "hdm_models/M1/results_M1_16_00.h5",
                        raster_v_path = "raster_files/M1_v_16_00.tif",
                        raster_wd_path = "raster_files/M1_wd_16_00.tif")
 
-par(mfrow=c(4,4))
-test_v <- raster("raster_files/M1_v_16_00.tif")
-test_wd <- raster("raster_files/M1_wd_16_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 M1_18_84 <- hdm_results(h5_path = "hdm_models/M1/results_M1_18_84.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_18_84.tif",
                        raster_wd_path = "raster_files/M1_wd_18_84.tif")
 
-par(mfrow=c(3,3))
-test_v <- raster("raster_files/M1_v_18_84.tif")
-test_wd <- raster("raster_files/M1_wd_18_84.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 M1_22_84 <- hdm_results(h5_path = "hdm_models/M1/results_M1_22_84.h5", 
                        twodm_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm",
                        shp_path = "raster_files/M1_shape.shp", 
                        raster_v_path = "raster_files/M1_v_22_84.tif",
                        raster_wd_path = "raster_files/M1_wd_22_84.tif")
-
-test_v <- raster("raster_files/M1_v_22_84.tif")
-test_wd <- raster("raster_files/M1_wd_22_84.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 ```
 
 ## - Stacked Rasters
@@ -659,23 +468,14 @@ M1_stacked_22_84 <- stack_raster(v_path = "raster_files/M1_v_22_84.tif",
                                 stack_path = "rasters_stacked/M1_22_84.grd")
 ```
 
-# 2_00 & 20_00 Sitter: S1
+# - Sitter: S1
 ## - Single Attribute Rasters
 ```{r}
-par(mfrow=c(3,3))
-
 S1_2_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_2_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
                     shp_path = "raster_files/S1_shape.shp", 
                     raster_v_path = "raster_files/S1_v_2_00.tif",
                     raster_wd_path = "raster_files/S1_wd_2_00.tif")
-
-test_v <- raster("raster_files/S1_v_2_00.tif")
-test_wd <- raster("raster_files/S1_wd_2_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S1_3_70 <- hdm_results(h5_path = "hdm_models/S1/results_S1_3_70.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
@@ -683,25 +483,11 @@ S1_3_70 <- hdm_results(h5_path = "hdm_models/S1/results_S1_3_70.h5",
                     raster_v_path = "raster_files/S1_v_3_70.tif",
                     raster_wd_path = "raster_files/S1_wd_3_70.tif")
 
-test_v <- raster("raster_files/S1_v_3_70.tif")
-test_wd <- raster("raster_files/S1_wd_3_70.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S1_6_50 <- hdm_results(h5_path = "hdm_models/S1/results_S1_6_50.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
                     shp_path = "raster_files/S1_shape.shp", 
                     raster_v_path = "raster_files/S1_v_6_50.tif",
                     raster_wd_path = "raster_files/S1_wd_6_50.tif")
-
-test_v <- raster("raster_files/S1_v_6_50.tif")
-test_wd <- raster("raster_files/S1_wd_6_50.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S1_8_50 <- hdm_results(h5_path = "hdm_models/S1/results_S1_8_50.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
@@ -709,25 +495,11 @@ S1_8_50 <- hdm_results(h5_path = "hdm_models/S1/results_S1_8_50.h5",
                     raster_v_path = "raster_files/S1_v_8_50.tif",
                     raster_wd_path = "raster_files/S1_wd_8_50.tif")
 
-test_v <- raster("raster_files/S1_v_8_50.tif")
-test_wd <- raster("raster_files/S1_wd_8_50.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S1_10_68 <- hdm_results(h5_path = "hdm_models/S1/results_S1_10_68.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
                     shp_path = "raster_files/S1_shape.shp", 
                     raster_v_path = "raster_files/S1_v_10_68.tif",
                     raster_wd_path = "raster_files/S1_wd_10_68.tif")
-
-test_v <- raster("raster_files/S1_v_10_68.tif")
-test_wd <- raster("raster_files/S1_wd_10_68.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S1_13_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_13_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
@@ -735,25 +507,11 @@ S1_13_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_13_00.h5",
                     raster_v_path = "raster_files/S1_v_13_00.tif",
                     raster_wd_path = "raster_files/S1_wd_13_00.tif")
 
-test_v <- raster("raster_files/S1_v_13_00.tif")
-test_wd <- raster("raster_files/S1_wd_13_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S1_15_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_15_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
                     shp_path = "raster_files/S1_shape.shp", 
                     raster_v_path = "raster_files/S1_v_15_00.tif",
                     raster_wd_path = "raster_files/S1_wd_15_00.tif")
-
-test_v <- raster("raster_files/S1_v_15_00.tif")
-test_wd <- raster("raster_files/S1_wd_15_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S1_18_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_18_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
@@ -761,25 +519,11 @@ S1_18_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_18_00.h5",
                     raster_v_path = "raster_files/S1_v_18_00.tif",
                     raster_wd_path = "raster_files/S1_wd_18_00.tif")
 
-test_v <- raster("raster_files/S1_v_18_00.tif")
-test_wd <- raster("raster_files/S1_wd_18_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S1_20_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_20_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
                     shp_path = "raster_files/S1_shape.shp", 
                     raster_v_path = "raster_files/S1_v_20_00.tif",
                     raster_wd_path = "raster_files/S1_wd_20_00.tif")
-
-test_v <- raster("raster_files/S1_v_20_00.tif")
-test_wd <- raster("raster_files/S1_wd_20_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 ```
 
 ## - Stacked Rasters
@@ -824,20 +568,11 @@ S1_stacked_20_00 <- stack_raster(v_path = "raster_files/S1_v_20_00.tif",
 # - Sitter: S2
 ## - Single Attribute Rasters
 ```{r}
-par(mfrow=c(4,4))
-
 S2_2_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_2_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
                        shp_path = "raster_files/S2_shape.shp", 
                        raster_v_path = "raster_files/S2_v_2_00.tif",
                        raster_wd_path = "raster_files/S2_wd_2_00.tif")
-
-test_v <- raster("raster_files/S2_v_2_00.tif")
-test_wd <- raster("raster_files/S2_wd_2_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S2_3_20 <- hdm_results(h5_path = "hdm_models/S2/results_S2_3_20.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
@@ -845,25 +580,11 @@ S2_3_20 <- hdm_results(h5_path = "hdm_models/S2/results_S2_3_20.h5",
                        raster_v_path = "raster_files/S2_v_3_20.tif",
                        raster_wd_path = "raster_files/S2_wd_3_20.tif")
 
-test_v <- raster("raster_files/S2_v_3_20.tif")
-test_wd <- raster("raster_files/S2_wd_3_20.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S2_6_50 <- hdm_results(h5_path = "hdm_models/S2/results_S2_6_50.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
                        shp_path = "raster_files/S2_shape.shp", 
                        raster_v_path = "raster_files/S2_v_6_50.tif",
                        raster_wd_path = "raster_files/S2_wd_6_50.tif")
-
-test_v <- raster("raster_files/S2_v_6_50.tif")
-test_wd <- raster("raster_files/S2_wd_6_50.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S2_8_50 <- hdm_results(h5_path = "hdm_models/S2/results_S2_8_50.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
@@ -871,25 +592,11 @@ S2_8_50 <- hdm_results(h5_path = "hdm_models/S2/results_S2_8_50.h5",
                        raster_v_path = "raster_files/S2_v_8_50.tif",
                        raster_wd_path = "raster_files/S2_wd_8_50.tif")
 
-test_v <- raster("raster_files/S2_v_8_50.tif")
-test_wd <- raster("raster_files/S2_wd_8_50.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S2_10_93 <- hdm_results(h5_path = "hdm_models/S2/results_S2_10_93.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
                        shp_path = "raster_files/S2_shape.shp", 
                        raster_v_path = "raster_files/S2_v_10_93.tif",
                        raster_wd_path = "raster_files/S2_wd_10_93.tif")
-
-test_v <- raster("raster_files/S2_v_10_93.tif")
-test_wd <- raster("raster_files/S2_wd_10_93.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S2_13_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_13_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
@@ -897,25 +604,11 @@ S2_13_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_13_00.h5",
                        raster_v_path = "raster_files/S2_v_13_00.tif",
                        raster_wd_path = "raster_files/S2_wd_13_00.tif")
 
-test_v <- raster("raster_files/S2_v_13_00.tif")
-test_wd <- raster("raster_files/S2_wd_13_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S2_15_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_15_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
                        shp_path = "raster_files/S2_shape.shp", 
                        raster_v_path = "raster_files/S2_v_15_00.tif",
                        raster_wd_path = "raster_files/S2_wd_15_00.tif")
-
-test_v <- raster("raster_files/S2_v_15_00.tif")
-test_wd <- raster("raster_files/S2_wd_15_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 
 S2_18_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_18_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
@@ -923,25 +616,11 @@ S2_18_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_18_00.h5",
                        raster_v_path = "raster_files/S2_v_18_00.tif",
                        raster_wd_path = "raster_files/S2_wd_18_00.tif")
 
-test_v <- raster("raster_files/S2_v_18_00.tif")
-test_wd <- raster("raster_files/S2_wd_18_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
-
 S2_20_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_20_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
                        shp_path = "raster_files/S2_shape.shp", 
                        raster_v_path = "raster_files/S2_v_20_00.tif",
                        raster_wd_path = "raster_files/S2_wd_20_00.tif")
-
-test_v <- raster("raster_files/S2_v_20_00.tif")
-test_wd <- raster("raster_files/S2_wd_20_00.tif")
-crs(test_v) <- "EPSG: 2056"
-crs(test_wd) <- "EPSG: 2056"
-plot(test_v)
-plot(test_wd)
 ```
 
 ## - Stacked Rasters
