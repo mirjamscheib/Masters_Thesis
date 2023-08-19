@@ -659,8 +659,8 @@ M1_stacked_22_84 <- stack_raster(v_path = "raster_files/M1_v_22_84.tif",
                                 stack_path = "rasters_stacked/M1_22_84.grd")
 ```
 
-# Sitter: S1
-## Single Attribute Rasters
+# 2_00 & 20_00 Sitter: S1
+## - Single Attribute Rasters
 ```{r}
 par(mfrow=c(3,3))
 
@@ -782,7 +782,7 @@ plot(test_v)
 plot(test_wd)
 ```
 
-## Stacked Rasters
+## - Stacked Rasters
 ```{r}
 S1_stacked_2_00 <- stack_raster(v_path = "raster_files/S1_v_2_00.tif",
                                 wd_path = "raster_files/S1_wd_2_00.tif",
@@ -994,11 +994,30 @@ TH4_11_45 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_11_45.h5",
                        raster_v_path = "raster_files/TH4_v_11_45.tif",
                        raster_wd_path = "raster_files/TH4_wd_11_45.tif")
 
+par(mfrow=c(3,3))
+test_v <- raster("raster_files/TH4_v_11_45.tif")
+test_wd <- raster("raster_files/TH4_wd_11_45.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 11.45")
+plot(test_wd)
+title(main = "Q: 11.45")
+
 TH4_15_00 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_15_00.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
                        shp_path = "raster_files/TH4_shape.shp", 
                        raster_v_path = "raster_files/TH4_v_15_00.tif",
                        raster_wd_path = "raster_files/TH4_wd_15_00.tif")
+
+test_v <- raster("raster_files/TH4_v_15_00.tif")
+test_wd <- raster("raster_files/TH4_wd_15_00.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 15.00")
+plot(test_wd)
+title(main = "Q: 15.00")
 
 TH4_18_00 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_18_00.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
@@ -1006,11 +1025,29 @@ TH4_18_00 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_18_00.h5",
                        raster_v_path = "raster_files/TH4_v_18_00.tif",
                        raster_wd_path = "raster_files/TH4_wd_18_00.tif")
 
+test_v <- raster("raster_files/TH4_v_18_00.tif")
+test_wd <- raster("raster_files/TH4_wd_18_00.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 18.00")
+plot(test_wd)
+title(main = "Q: 18.00")
+
 TH4_19_96 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_19_96.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
                        shp_path = "raster_files/TH4_shape.shp", 
                        raster_v_path = "raster_files/TH4_v_19_96.tif",
                        raster_wd_path = "raster_files/TH4_wd_19_96.tif")
+
+test_v <- raster("raster_files/TH4_v_19_96.tif")
+test_wd <- raster("raster_files/TH4_wd_19_96.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 19.96")
+plot(test_wd)
+title(main = "Q: 19.96")
 
 TH4_22_50 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_22_50.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
@@ -1018,11 +1055,29 @@ TH4_22_50 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_22_50.h5",
                        raster_v_path = "raster_files/TH4_v_22_50.tif",
                        raster_wd_path = "raster_files/TH4_wd_22_50.tif")
 
+test_v <- raster("raster_files/TH4_v_22_50.tif")
+test_wd <- raster("raster_files/TH4_wd_22_50.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 22.50")
+plot(test_wd)
+title(main = "Q: 22.50")
+
 TH4_25_00 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_25_00.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
                        shp_path = "raster_files/TH4_shape.shp", 
                        raster_v_path = "raster_files/TH4_v_25_00.tif",
                        raster_wd_path = "raster_files/TH4_wd_25_00.tif")
+
+test_v <- raster("raster_files/TH4_v_25_00.tif")
+test_wd <- raster("raster_files/TH4_wd_25_00.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 25.00")
+plot(test_wd)
+title(main = "Q: 25.00")
 
 TH4_27_00 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_27_00.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
@@ -1030,17 +1085,44 @@ TH4_27_00 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_27_00.h5",
                        raster_v_path = "raster_files/TH4_v_27_00.tif",
                        raster_wd_path = "raster_files/TH4_wd_27_00.tif")
 
+test_v <- raster("raster_files/TH4_v_27_00.tif")
+test_wd <- raster("raster_files/TH4_wd_27_00.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 27.00")
+plot(test_wd)
+title(main = "Q: 27.00")
+
 TH4_30_00 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_30_00.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
                        shp_path = "raster_files/TH4_shape.shp", 
                        raster_v_path = "raster_files/TH4_v_30_00.tif",
                        raster_wd_path = "raster_files/TH4_wd_30_00.tif")
 
+test_v <- raster("raster_files/TH4_v_30_00.tif")
+test_wd <- raster("raster_files/TH4_wd_30_00.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 30.00")
+plot(test_wd)
+title(main = "Q: 30.00")
+
 TH4_32_93 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_32_93.h5", 
                        twodm_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm",
                        shp_path = "raster_files/TH4_shape.shp", 
                        raster_v_path = "raster_files/TH4_v_32_93.tif",
                        raster_wd_path = "raster_files/TH4_wd_32_93.tif")
+
+test_v <- raster("raster_files/TH4_v_32_93.tif")
+test_wd <- raster("raster_files/TH4_wd_32_93.tif")
+crs(test_v) <- "EPSG: 2056"
+crs(test_wd) <- "EPSG: 2056"
+plot(test_v)
+title(main = "Q: 32.93")
+plot(test_wd)
+title(main = "Q: 32.93")
 ```
 
 ## Stacked Rasters
