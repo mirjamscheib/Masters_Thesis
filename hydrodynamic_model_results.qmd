@@ -1303,6 +1303,7 @@ writeRaster(TH4_stacked, "rasters_stacked/TH4_stacked.grd", overwrite = TRUE)
 ```
 
 ## Vorderrhein: VR3
+2_90, 6_00, 9_00, 12_00, 15_00, 18_80, 22_00, 25_00, 28_00, 31_00, 34_00, 37_00, 40_10, 43_00, 46_00, 48_00, 50_00, 52_90
 ```{r}
 # read stacked rasters (wd + v per discharge)
 TH4_v_11_45 <- raster("raster_files/TH4_v_11_45.tif")
