@@ -762,9 +762,7 @@ TH4_11_45 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_11_45",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 11.45, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_15_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -776,9 +774,7 @@ TH4_15_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_15_00",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 15.00, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_18_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -790,9 +786,7 @@ TH4_18_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_18_00",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 18.00, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_19_96 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -804,9 +798,7 @@ TH4_19_96 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_19_96",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 19.96, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_22_50 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -818,9 +810,7 @@ TH4_22_50 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_22_50",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 22.50, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_25_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -832,9 +822,7 @@ TH4_25_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_25_00",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 25.00, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_27_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -846,9 +834,7 @@ TH4_27_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_27_00",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 27.00, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_30_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -860,9 +846,7 @@ TH4_30_00 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_30_00",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 30.00, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 
 TH4_32_93 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
@@ -874,9 +858,7 @@ TH4_32_93 <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_32_93",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 32.93, 
-                      strickler = 42.0,
-                      time_end = 3600,
-                      slope = 0.001)
+                      strickler = 42.0)
 ```
 
 # Vorderrhein

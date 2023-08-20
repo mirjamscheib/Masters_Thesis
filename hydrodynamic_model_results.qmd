@@ -953,7 +953,41 @@ VR3_stacked_52_90 <- stack_raster(v_path = "raster_files/VR3_v_52_90.tif",
 Idee: stacked raster für v und wd erstellen pro section, dann extract 
 ## Read/prepare .csv files
 ```{r}
+mzb_data <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
 
+data <- mzb_data |>
+  select(x, y, Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm) |>
+  rename(reach = Reach_Untersuchungsstelle,
+         velocity = `Flow_velocity_v60_cm/s`,
+         depth = Water_depth_cm)
+
+# select only single river sections 
+data_GL1 <- data |>
+  subset(reach == "GL1") |>
+  mutate(x = as.numeric(x),
+         y = as.numeric(y)) |>
+  select(x, y)
+
+data_GL2 <- data |>
+  subset(reach == "GL2")
+
+data_L2 <- data |>
+  subset(reach == "L2")
+
+data_M1 <- data |>
+  subset(reach == "M1")
+
+data_S1 <- data |>
+  subset(reach == "S1")
+
+data_S2 <- data |>
+  subset(reach == "S2")
+
+data_TH4 <- data |>
+  subset(reach == "TH4")
+
+data_VR3 <- data |>
+  subset(reach == "VR3")
 ```
 
 
@@ -992,13 +1026,25 @@ GL1_wd_31_76 <- raster("raster_files/GL1_wd_31_76.tif")
 
 
 # stack all rasters into one stack
-GL1_stacked <- stack(GL1_v_3_28, GL1_wd_3_28, GL1_v_6_00, GL1_wd_6_00, GL1_v_9_00, GL1_wd_9_00, GL1_v_12_68, GL1_wd_12_68, GL1_v_16_00, GL1_wd_16_00, GL1_v_19_00, GL1_wd_19_00, GL1_v_22_00, GL1_wd_22_00, GL1_v_25_00, GL1_wd_25_00, GL1_v_28_00, GL1_wd_28_00, GL1_v_31_76, GL1_wd_31_76)
+GL1 <- c(GL1_v_3_28, GL1_wd_3_28, GL1_v_6_00, GL1_wd_6_00, GL1_v_9_00, GL1_wd_9_00, GL1_v_12_68, GL1_wd_12_68, GL1_v_16_00, GL1_wd_16_00, GL1_v_19_00, GL1_wd_19_00, GL1_v_22_00, GL1_wd_22_00, GL1_v_25_00, GL1_wd_25_00, GL1_v_28_00, GL1_wd_28_00, GL1_v_31_76, GL1_wd_31_76)
+
+GL1_stacked <- stack(GL1)
+
+crs(GL1_stacked) <- "EPSG: 2056"
 
 # check if rasters are correct
 plot(GL1_stacked)
 
 # write stacked raster 
 writeRaster(GL1_stacked, "rasters_stacked/GL1_stacked.grd", overwrite = TRUE)
+
+# read stacked raster
+GL1_stacked <- stack("rasters_stacked/GL1_stacked.grd")
+
+# .rs.unloadPackage("tidyr")
+
+# extract velocity and water depth information for plots 
+GL1_extract <- terra::extract(GL1_stacked, data_GL1)
 ```
 
 ## Glenner: GL2
@@ -1214,4 +1260,84 @@ plot(S2_stacked$S2_wd_20_00)
 
 # write stacked raster 
 writeRaster(S2_stacked, "rasters_stacked/S2_stacked.grd", overwrite = TRUE)
+```
+
+## Thur: TH4
+```{r}
+# read stacked rasters (wd + v per discharge)
+TH4_v_11_45 <- raster("raster_files/TH4_v_11_45.tif")
+TH4_wd_11_45 <- raster("raster_files/TH4_wd_11_45.tif")
+
+TH4_v_15_00 <- raster("raster_files/TH4_v_15_00.tif")
+TH4_wd_15_00 <- raster("raster_files/TH4_wd_15_00.tif")
+
+TH4_v_18_00 <- raster("raster_files/TH4_v_18_00.tif")
+TH4_wd_18_00 <- raster("raster_files/TH4_wd_18_00.tif")
+
+TH4_v_19_96 <- raster("raster_files/TH4_v_19_96.tif")
+TH4_wd_19_96 <- raster("raster_files/TH4_wd_19_96.tif")
+
+TH4_v_22_50 <- raster("raster_files/TH4_v_22_50.tif")
+TH4_wd_22_50 <- raster("raster_files/TH4_wd_22_50.tif")
+
+TH4_v_25_00 <- raster("raster_files/TH4_v_25_00.tif")
+TH4_wd_25_00 <- raster("raster_files/TH4_wd_25_00.tif")
+
+TH4_v_27_00 <- raster("raster_files/TH4_v_27_00.tif")
+TH4_wd_27_00 <- raster("raster_files/TH4_wd_27_00.tif")
+
+TH4_v_30_00 <- raster("raster_files/TH4_v_30_00.tif")
+TH4_wd_30_00 <- raster("raster_files/TH4_wd_30_00.tif")
+
+TH4_v_32_93 <- raster("raster_files/TH4_v_32_93.tif")
+TH4_wd_32_93 <- raster("raster_files/TH4_wd_32_93.tif")
+
+# stack all rasters into one stack
+TH4_stacked <- stack(TH4_v_11_45, TH4_wd_11_45, TH4_v_15_00, TH4_wd_15_00, TH4_v_18_00, TH4_wd_18_00, TH4_v_19_96, TH4_wd_19_96, TH4_v_22_50, TH4_wd_22_50, TH4_v_25_00, TH4_wd_25_00, TH4_v_27_00, TH4_wd_27_00, TH4_v_30_00, TH4_wd_30_00, TH4_v_32_93, TH4_wd_32_93)
+
+# check if rasters are correct
+plot(TH4_stacked)
+
+# write stacked raster 
+writeRaster(TH4_stacked, "rasters_stacked/TH4_stacked.grd", overwrite = TRUE)
+```
+
+## Vorderrhein: VR3
+```{r}
+# read stacked rasters (wd + v per discharge)
+TH4_v_11_45 <- raster("raster_files/TH4_v_11_45.tif")
+TH4_wd_11_45 <- raster("raster_files/TH4_wd_11_45.tif")
+
+TH4_v_15_00 <- raster("raster_files/TH4_v_15_00.tif")
+TH4_wd_15_00 <- raster("raster_files/TH4_wd_15_00.tif")
+
+TH4_v_18_00 <- raster("raster_files/TH4_v_18_00.tif")
+TH4_wd_18_00 <- raster("raster_files/TH4_wd_18_00.tif")
+
+TH4_v_19_96 <- raster("raster_files/TH4_v_19_96.tif")
+TH4_wd_19_96 <- raster("raster_files/TH4_wd_19_96.tif")
+
+TH4_v_22_50 <- raster("raster_files/TH4_v_22_50.tif")
+TH4_wd_22_50 <- raster("raster_files/TH4_wd_22_50.tif")
+
+TH4_v_25_00 <- raster("raster_files/TH4_v_25_00.tif")
+TH4_wd_25_00 <- raster("raster_files/TH4_wd_25_00.tif")
+
+TH4_v_27_00 <- raster("raster_files/TH4_v_27_00.tif")
+TH4_wd_27_00 <- raster("raster_files/TH4_wd_27_00.tif")
+
+TH4_v_30_00 <- raster("raster_files/TH4_v_30_00.tif")
+TH4_wd_30_00 <- raster("raster_files/TH4_wd_30_00.tif")
+
+TH4_v_32_93 <- raster("raster_files/TH4_v_32_93.tif")
+TH4_wd_32_93 <- raster("raster_files/TH4_wd_32_93.tif")
+
+# stack all rasters into one stack
+TH4_stacked <- stack(TH4_v_11_45, TH4_wd_11_45, TH4_v_15_00, TH4_wd_15_00, TH4_v_18_00, TH4_wd_18_00, TH4_v_19_96, TH4_wd_19_96, TH4_v_22_50, TH4_wd_22_50, TH4_v_25_00, TH4_wd_25_00, TH4_v_27_00, TH4_wd_27_00, TH4_v_30_00, TH4_wd_30_00, TH4_v_32_93, TH4_wd_32_93)
+
+# check if rasters are correct
+plot(TH4_stacked)
+
+# write stacked raster 
+writeRaster(TH4_stacked, "rasters_stacked/TH4_stacked.grd", overwrite = TRUE)
 ```

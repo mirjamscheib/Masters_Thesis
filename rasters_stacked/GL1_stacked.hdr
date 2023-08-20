@@ -1,0 +1,35 @@
+ENVI
+description = {
+C:/Users/mirja/Documents/MSc_ENR_Studium/3_Semester_HS23/Master_Thesis/MTh_R/rasters_stacked/GL1_stacked.envi}
+samples = 722
+lines   = 1154
+bands   = 20
+header offset = 0
+file type = ENVI Standard
+data type = 4
+interleave = bsq
+byte order = 0
+map info = {Hotine_Oblique_Mercator_Azimuth_Center, 1, 1, 2735165.01298928, 1180657.73103033, 0.5, 0.5}
+coordinate system string = {PROJCS["CH1903+_LV95",GEOGCS["GCS_CH1903+",DATUM["D_CH1903+",SPHEROID["Bessel_1841",6377397.155,299.1528128]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Hotine_Oblique_Mercator_Azimuth_Center"],PARAMETER["False_Easting",2600000.0],PARAMETER["False_Northing",1200000.0],PARAMETER["Scale_Factor",1.0],PARAMETER["Azimuth",90.0],PARAMETER["Longitude_Of_Center",7.43958333333333],PARAMETER["Latitude_Of_Center",46.9524055555556],UNIT["Meter",1.0]]}
+band names = {
+Band 1,
+Band 2,
+Band 3,
+Band 4,
+Band 5,
+Band 6,
+Band 7,
+Band 8,
+Band 9,
+Band 10,
+Band 11,
+Band 12,
+Band 13,
+Band 14,
+Band 15,
+Band 16,
+Band 17,
+Band 18,
+Band 19,
+Band 20}
+data ignore value = -3.39999999999999996e+38
