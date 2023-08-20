@@ -174,18 +174,39 @@ GL1_plot <- GL1_wd |>
 
 
 ### Plot 
-```{r}
 ggplot(GL1_plot, aes(discharge, water_depth, col = join_key)) +
   geom_point() +
   geom_point(data = GL1_plot, aes(y = depth_measured), col = "blue") +
-  ggtitle(" ") 
+  ggtitle(" ")
+```{r}
+ggplot(GL1_plot, aes(discharge, water_depth, col = join_key)) +
+  geom_line() +
+  geom_smooth(se = FALSE)
 
-lineplot <- ggplot(GL1_plot, aes(discharge, water_depth, col = join_key)) +
-  geom_line()
+# Perform linear regression and extract coefficients
+lm_model <- lm(water_depth ~ discharge, data = GL1_plot)
+slope <- coef(lm_model)[2]
+intercept <- coef(lm_model)[1]
 
-# extract information from plot
-data_from_scatterplot <- ggplot_build(lineplot)
-data_from_scatterplot$data[[1]]
+# Print slope and intercept
+cat("Slope:", slope, "\n")
+cat("Intercept:", intercept, "\n")
+
+```
+
+### extract x values
+```{r}
+# Example data with only Y values
+y_values <- c(2, 4, 6, 8, 10)
+
+# Assuming the equation of the line is Y = m*X + b
+m <- 2      # Slope
+b <- -3     # Intercept
+
+# Calculate X values using the equation: X = (Y - b) / m
+x_values <- (y_values - b) / m
+
+print(x_values)
 ```
 
 
