@@ -1,0 +1,26 @@
+[general]
+creator=R package 'raster'
+created=2023-08-20 10:33:02
+[data]
+datatype=FLT4S
+byteorder=little
+nbands=18
+bandorder=BIL
+minvalue=NA:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:NA:0
+maxvalue=NA:0:9.47500038146973:1.22899997234344:9.47500038146973:1.22899997234344:9.47500038146973:1.22899997234344:9.47500038146973:1.22899997234344:9.47500038146973:1.22899997234344:9.47500038146973:1.22899997234344:9.47500038146973:1.22899997234344:NA:0
+nodatavalue=-3.4e+38
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=S1_v_2_00:S1_wd_2_00:S1_v_3_70:S1_wd_3_70:S1_v_6_50:S1_wd_6_50:S1_v_8_50:S1_wd_8_50:S1_v_10_68:S1_wd_10_68:S1_v_13_00:S1_wd_13_00:S1_v_15_00:S1_wd_15_00:S1_v_18_00:S1_wd_18_00:S1_v_20_00:S1_wd_20_00
+[georeference]
+nrows=996
+ncols=463
+xmin=2742062.10069603
+ymin=1251859.69031008
+xmax=2742293.60069603
+ymax=1252357.69031008
+projection=NA
+wkt=

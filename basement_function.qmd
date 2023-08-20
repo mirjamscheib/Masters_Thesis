@@ -37,7 +37,8 @@ GL1_3_28 <- basement_old(model_json = "hdm_models/GL1/model.json",
                        results_h5 = "hdm_models/GL1/results_GL1_3_28.h5",
                        results_xdmf = "hdm_models/GL1/results_GL1_3_28",
                        results_json = "hdm_models/GL1/results.json",
-                       discharge = 3.28)
+                       discharge = 3.28,
+                       strickler = 38)
 
 GL1_6_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -49,9 +50,7 @@ GL1_6_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_6_00",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 6.00, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_9_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -63,9 +62,7 @@ GL1_9_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_9_00",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 9.00, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_12_68 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -77,9 +74,7 @@ GL1_12_68 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_12_68",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 12.68, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_16_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -91,9 +86,7 @@ GL1_16_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_16_00",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 16.00, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_19_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -105,9 +98,7 @@ GL1_19_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_19_00",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 19.00, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_22_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -119,9 +110,7 @@ GL1_22_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_22_00",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 22.00, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_25_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -133,9 +122,7 @@ GL1_25_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_25_00",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 25.00, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_28_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -147,9 +134,7 @@ GL1_28_00 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_28_00",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 28.00, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 
 GL1_31_76 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
@@ -161,9 +146,7 @@ GL1_31_76 <- basement(model_json = "hdm_models/GL1/model.json",
                        results_xdmf = "hdm_models/GL1/results_GL1_31_76",
                        results_json = "hdm_models/GL1/results.json",
                        discharge = 31.76, 
-                       strickler = 38, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 38)
 ```
 
 
@@ -289,10 +272,7 @@ GL2_28_00 <-  basement(model_json = "hdm_models/GL2/model.json",
              results_json = "hdm_models/GL2/results.json",
              discharge = 28.00, 
              strickler = 38)
-```
 
-# ! GL2_31_53
-```{r}
 GL2_31_53 <-  basement(model_json = "hdm_models/GL2/model.json", 
              model_new = "hdm_models/GL2/model_new.json",
              mesh_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm", 
@@ -308,8 +288,7 @@ GL2_31_53 <-  basement(model_json = "hdm_models/GL2/model.json",
 
           
 # Landquart
-
-## ! L2 
+## L2 
 ```{r}
 L2_2_40 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
@@ -422,9 +401,7 @@ M1_0_47 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_0_47",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 0.47, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_0_60 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -436,9 +413,7 @@ M1_0_60 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_0_60",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 0.60, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_4_00 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -450,9 +425,7 @@ M1_4_00 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_4_00",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 4.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_6_00 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -464,9 +437,7 @@ M1_6_00 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_6_00",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 6.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 
 M1_8_00 <-    basement(model_json = "hdm_models/M1/model.json",  
@@ -479,9 +450,7 @@ M1_8_00 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_8_00",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 8.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_10_00 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -493,9 +462,7 @@ M1_10_00 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_10_00",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 10.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_12_00 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -507,9 +474,7 @@ M1_12_00 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_12_00",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 12.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_14_00 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -521,9 +486,7 @@ M1_14_00 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_14_00",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 14.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_16_00 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -535,9 +498,7 @@ M1_16_00 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_16_00",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 16.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 M1_18_84 <-    basement(model_json = "hdm_models/M1/model.json",  
                        model_new = "hdm_models/M1/model_new.json",
@@ -549,9 +510,7 @@ M1_18_84 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_18_84",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 16.00, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 
 
 M1_22_84 <-    basement(model_json = "hdm_models/M1/model.json",  
@@ -564,9 +523,7 @@ M1_22_84 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_22_84",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 22.84, 
-                       strickler = 35.0, 
-                       time_end = 3600,
-                       slope = 0.01)
+                       strickler = 35.0)
 ```
 
 # Sitter
@@ -681,7 +638,7 @@ S1_20_00 <- basement(model_json = "hdm_models/S1/model.json",
                     strickler = 33.0)
 ```
 
-## ok - S2
+## S2
 ```{r}
 S2_2_00 <- basement(model_json = "hdm_models/S2/model.json", 
                     model_new = "hdm_models/S2/model_new.json",
