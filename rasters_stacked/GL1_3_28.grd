@@ -1,6 +1,6 @@
 [general]
 creator=R package 'raster'
-created=2023-08-19 10:07:16
+created=2023-08-22 11:40:42
 [data]
 datatype=FLT4S
 byteorder=little
@@ -22,5 +22,5 @@ xmin=2735165.01298928
 ymin=1180080.73103033
 xmax=2735526.01298928
 ymax=1180657.73103033
-projection=NA
+projection=
 wkt=
