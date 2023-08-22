@@ -48,8 +48,18 @@ mzb_data <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
 data <- mzb_data |>
   select(x, y, Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, join_key) |>
   rename(reach = Reach_Untersuchungsstelle,
-         velocity = `Flow_velocity_v60_cm/s`,
-         depth = Water_depth_cm)
+         v_measured = `Flow_velocity_v60_cm/s`,
+         wd_measured = Water_depth_cm)
+
+# function to extract and prepare data
+prep_data <- function(data, reach_name, x, y, data_add, v, d){
+  data <- subset(reach == reach_name) 
+  data <- mutate(x = as.numeric(x),
+                 y = as.numeric(y)) 
+  data <- select(x, y) 
+  data_add <- subset(reach == reach_name) 
+  data_add <- select(reach, v, d, join_key)
+}
 
 # select only single river sections 
 data_GL1 <- data |>
@@ -95,6 +105,18 @@ data_VR3 <- data |>
 ## Glenner: GL1
 ### create Plot df
 ```{r}
+# function to extract and prepare data
+extract_data <- function(stack_path, data){
+# read stacked raster
+stacked <- stack(stack_path)
+
+# extract velocity and water depth information for plots 
+section_extract <- terra::extract(stacked, data) |>
+  cbind(data_GL1_add) |>
+  mutate(depth_measured = depth/100,
+         velocity_measured = velocity/100)
+}
+
 # read stacked raster
 GL1_stacked <- stack("rasters_stacked/GL1_stacked.grd")
 
@@ -106,6 +128,9 @@ GL1_extract <- terra::extract(GL1_stacked, data_GL1) |>
 
 # extract only measured values 
 GL1_measured <- GL1_extract[, c(24:26)] 
+
+# select columns with certain conditions (i want to select columns with v and columns with wd)
+df %>%  dplyr::select(contains("date", ignore.case = TRUE))
 
 # create long table with velocity values from rasters
 GL1_v <- GL1_extract[ ,c(1,3,5,7,9,11,13,15,17,19, 24)] |>

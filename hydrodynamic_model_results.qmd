@@ -766,8 +766,8 @@ plot(S1_stacked)
 writeRaster(S1_stacked, "rasters_stacked/S1_stacked.grd", overwrite = TRUE)
 ```
 
-# Sitter: S2
-## Single Attribute Rasters
+# - Sitter: S2
+## - Single Attribute Rasters
 ```{r}
 S2_2_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_2_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
@@ -824,7 +824,7 @@ S2_20_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_20_00.h5",
                        raster_wd_path = "raster_files/S2_wd_20_00.tif")
 ```
 
-## Stacked Rasters
+## - Stacked Rasters
 2_00, 3_20, 6_50, 8_50, 10_93, 13_00, 15_00, 18_00, 20_00
 ```{r}
 S2_stacked_2_00 <- stack_raster(v_path = "raster_files/S2_v_2_00.tif",
