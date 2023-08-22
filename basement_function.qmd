@@ -21,14 +21,13 @@ library(hydroGOF)
 library(jsonlite)
 
 source("mth_functions.R")
- #source("basement_function_origin.R")
 ```
 
 
 # Glenner
 ## GL1
 ```{r}
-GL1_3_28 <- basement_old(model_json = "hdm_models/GL1/model.json",
+GL1_3_28 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
                        mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
                        simulation_json = "hdm_models/GL1/simulation.json",
@@ -874,9 +873,7 @@ VR3_2_90 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_2_90",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 2.90, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_6_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -888,9 +885,7 @@ VR3_6_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_6_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 6.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_9_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -902,9 +897,7 @@ VR3_9_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_9_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 9.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_12_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -916,9 +909,7 @@ VR3_12_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_12_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 12.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_15_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -930,9 +921,7 @@ VR3_15_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_15_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 15.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_18_80 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -944,9 +933,7 @@ VR3_18_80 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_18_80",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 18.80, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_22_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -958,9 +945,7 @@ VR3_22_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_22_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 22.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_25_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -972,9 +957,7 @@ VR3_25_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_25_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 25.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_28_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -986,9 +969,7 @@ VR3_28_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_28_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 28.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_31_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1000,9 +981,7 @@ VR3_31_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_31_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 31.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_34_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1014,9 +993,7 @@ VR3_34_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_34_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 34.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_37_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1028,9 +1005,7 @@ VR3_37_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_37_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 37.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_40_10 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1042,9 +1017,7 @@ VR3_40_10 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_40_10",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 40.10, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_43_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1056,9 +1029,7 @@ VR3_43_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_43_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 43.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_46_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1070,9 +1041,7 @@ VR3_46_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_46_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 46.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_48_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1084,9 +1053,7 @@ VR3_48_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_48_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 48.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_50_00 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1098,9 +1065,7 @@ VR3_50_00 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_50_00",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 50.00, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 
 VR3_52_90 <- basement(model_json = "hdm_models/VR3/model.json", 
                      model_new = "hdm_models/VR3/model_new.json",
@@ -1112,8 +1077,6 @@ VR3_52_90 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_52_90",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 52.90, 
-                     strickler = 35.0, 
-                     time_end = 3600,
-                     slope = 0.001)
+                     strickler = 35.0)
 ```
 

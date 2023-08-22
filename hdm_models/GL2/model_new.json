@@ -25,7 +25,7 @@
                 "type": "uniform_out"
               },
               {
-                "discharge": 31.53,
+                "discharge": 3.21,
                 "name": "input",
                 "slope": 0.01,
                 "string_name": "input",

@@ -104,7 +104,7 @@ GL1_31_76 <- hdm_results(h5_path = "hdm_models/GL1/results_GL1_31_76.h5",
                         raster_wd_path = "raster_files/GL1_wd_31_76.tif")
 ```
 
-## - Stacked Rasters 
+## Stacked Rasters 
 ```{r}
 GL1_stacked_3_28 <- stack_raster(v_path = "raster_files/GL1_v_3_28.tif",
                                 wd_path = "raster_files/GL1_wd_3_28.tif",
@@ -145,6 +145,48 @@ GL1_stacked_28_00 <- stack_raster(v_path = "raster_files/GL1_v_28_00.tif",
 GL1_stacked_31_76 <- stack_raster(v_path = "raster_files/GL1_v_31_76.tif",
                                 wd_path = "raster_files/GL1_wd_31_76.tif",
                                 stack_path = "rasters_stacked/GL1_31_76.grd")
+
+# read all raster files (wd + v per discharge)
+GL1_v_3_28 <- raster("raster_files/GL1_v_3_28.tif")
+GL1_wd_3_28 <- raster("raster_files/GL1_wd_3_28.tif")
+
+GL1_v_6_00 <- raster("raster_files/GL1_v_6_00.tif")
+GL1_wd_6_00 <- raster("raster_files/GL1_wd_6_00.tif")
+
+GL1_v_9_00 <- raster("raster_files/GL1_v_9_00.tif")
+GL1_wd_9_00 <- raster("raster_files/GL1_wd_9_00.tif")
+
+GL1_v_12_68 <- raster("raster_files/GL1_v_12_68.tif")
+GL1_wd_12_68 <- raster("raster_files/GL1_wd_12_68.tif")
+
+GL1_v_16_00 <- raster("raster_files/GL1_v_16_00.tif")
+GL1_wd_16_00 <- raster("raster_files/GL1_wd_16_00.tif")
+
+GL1_v_19_00 <- raster("raster_files/GL1_v_19_00.tif")
+GL1_wd_19_00 <- raster("raster_files/GL1_wd_19_00.tif")
+
+GL1_v_22_00 <- raster("raster_files/GL1_v_22_00.tif")
+GL1_wd_22_00 <- raster("raster_files/GL1_wd_22_00.tif")
+
+GL1_v_25_00 <- raster("raster_files/GL1_v_25_00.tif")
+GL1_wd_25_00 <- raster("raster_files/GL1_wd_25_00.tif")
+
+GL1_v_28_00 <- raster("raster_files/GL1_v_28_00.tif")
+GL1_wd_28_00 <- raster("raster_files/GL1_wd_28_00.tif")
+
+GL1_v_31_76 <- raster("raster_files/GL1_v_31_76.tif")
+GL1_wd_31_76 <- raster("raster_files/GL1_wd_31_76.tif")
+
+
+# stack all rasters into one stack
+GL1_stacked <- stack(GL1_v_3_28, GL1_wd_3_28, GL1_v_6_00, GL1_wd_6_00, GL1_v_9_00, GL1_wd_9_00, GL1_v_12_68, GL1_wd_12_68, GL1_v_16_00, GL1_wd_16_00, GL1_v_19_00, GL1_wd_19_00, GL1_v_22_00, GL1_wd_22_00, GL1_v_25_00, GL1_wd_25_00, GL1_v_28_00, GL1_wd_28_00, GL1_v_31_76, GL1_wd_31_76)
+
+
+# check if rasters are correct
+plot(GL1_stacked)
+
+# write stacked raster 
+writeRaster(GL1_stacked, "rasters_stacked/GL1_stacked.grd", overwrite = TRUE)
 ```
 
 # - Glenner: GL2
@@ -217,7 +259,7 @@ GL2_31_53 <- hdm_results(h5_path = "hdm_models/GL2/results_GL2_31_53.h5",
                         raster_wd_path = "raster_files/GL2_wd_31_53.tif")
 ```
 
-## - Stacked Rasters 
+## Stacked Rasters 
 ```{r}
 GL2_stacked_3_21 <- stack_raster(v_path = "raster_files/GL2_v_3_21.tif",
                                 wd_path = "raster_files/GL2_wd_3_21.tif",
@@ -262,6 +304,51 @@ GL2_stacked_28_00 <- stack_raster(v_path = "raster_files/GL2_v_28_00.tif",
 GL2_stacked_31_53 <- stack_raster(v_path = "raster_files/GL2_v_31_53.tif",
                                 wd_path = "raster_files/GL2_wd_31_53.tif",
                                 stack_path = "rasters_stacked/GL2_31_53.grd")
+
+
+# read all rasters to stack them (wd + v per discharge)
+GL2_v_3_21 <- raster("raster_files/GL2_v_3_21.tif")
+GL2_wd_3_21 <- raster("raster_files/GL2_wd_3_21.tif")
+
+GL2_v_6_00 <- raster("raster_files/GL2_v_6_00.tif")
+GL2_wd_6_00 <- raster("raster_files/GL2_wd_6_00.tif")
+
+GL2_v_9_00 <- raster("raster_files/GL2_v_9_00.tif")
+GL2_wd_9_00 <- raster("raster_files/GL2_wd_9_00.tif")
+
+GL2_v_11_00 <- raster("raster_files/GL2_v_11_00.tif")
+GL2_wd_11_00 <- raster("raster_files/GL2_wd_11_00.tif")
+
+GL2_v_12_52 <- raster("raster_files/GL2_v_12_52.tif")
+GL2_wd_12_52 <- raster("raster_files/GL2_wd_12_52.tif")
+
+GL2_v_16_00 <- raster("raster_files/GL2_v_16_00.tif")
+GL2_wd_16_00 <- raster("raster_files/GL2_wd_16_00.tif")
+
+GL2_v_19_00 <- raster("raster_files/GL2_v_19_00.tif")
+GL2_wd_19_00 <- raster("raster_files/GL2_wd_19_00.tif")
+
+GL2_v_22_00 <- raster("raster_files/GL2_v_22_00.tif")
+GL2_wd_22_00 <- raster("raster_files/GL2_wd_22_00.tif")
+
+GL2_v_25_00 <- raster("raster_files/GL2_v_25_00.tif")
+GL2_wd_25_00 <- raster("raster_files/GL2_wd_25_00.tif")
+
+GL2_v_28_00 <- raster("raster_files/GL2_v_28_00.tif")
+GL2_wd_28_00 <- raster("raster_files/GL2_wd_28_00.tif")
+
+GL2_v_31_53 <- raster("raster_files/GL2_v_31_53.tif")
+GL2_wd_31_53 <- raster("raster_files/GL2_wd_31_53.tif")
+
+
+# stack all rasters into one stack
+GL2_stacked <- stack(GL2_v_3_21, GL2_wd_3_21, GL2_v_6_00, GL2_wd_6_00, GL2_v_9_00, GL2_wd_9_00, GL2_v_11_00, GL2_wd_11_00, GL2_v_12_52, GL2_wd_12_52, GL2_v_16_00, GL2_wd_16_00, GL2_v_19_00, GL2_wd_19_00, GL2_v_22_00, GL2_wd_22_00, GL2_v_25_00, GL2_wd_25_00, GL2_v_28_00, GL2_wd_28_00, GL2_v_31_53, GL2_wd_31_53)
+
+# check if rasters are correct
+plot(GL2_stacked)
+
+# write stacked raster 
+writeRaster(GL2_stacked, "rasters_stacked/GL2_stacked.grd", overwrite = TRUE)
 ```
 
 # - Landquart: L2
@@ -316,7 +403,7 @@ L2_18_90 <- hdm_results(h5_path = "hdm_models/L2/results_L2_18_90.h5",
                        raster_wd_path = "raster_files/L2_wd_18_90.tif")
 ```
 
-## - Stacked Raster
+## Stacked Raster
 ```{r}
 L2_stacked_2_40 <- stack_raster(v_path = "raster_files/L2_v_2_40.tif",
                                 wd_path = "raster_files/L2_wd_2_40.tif",
@@ -349,6 +436,38 @@ L2_stacked_16_50 <- stack_raster(v_path = "raster_files/L2_v_16_50.tif",
 L2_stacked_18_90 <- stack_raster(v_path = "raster_files/L2_v_18_90.tif",
                                 wd_path = "raster_files/L2_wd_18_90.tif",
                                 stack_path = "rasters_stacked/L2_18_90.grd")
+
+# read all rasters (wd + v per discharge)
+L2_v_2_40 <- raster("raster_files/L2_v_2_40.tif")
+L2_wd_2_40 <- raster("raster_files/L2_wd_2_40.tif")
+
+L2_v_3_90 <- raster("raster_files/L2_v_3_90.tif")
+L2_wd_3_90 <- raster("raster_files/L2_wd_3_90.tif")
+
+L2_v_7_00 <- raster("raster_files/L2_v_7_00.tif")
+L2_wd_7_00 <- raster("raster_files/L2_wd_7_00.tif")
+
+L2_v_9_24 <- raster("raster_files/L2_v_9_24.tif")
+L2_wd_9_24 <- raster("raster_files/L2_wd_9_24.tif")
+
+L2_v_13_30 <- raster("raster_files/L2_v_13_30.tif")
+L2_wd_13_30 <- raster("raster_files/L2_wd_13_30.tif")
+
+L2_v_16_50 <- raster("raster_files/L2_v_16_50.tif")
+L2_wd_16_50 <- raster("raster_files/L2_wd_16_50.tif")
+
+L2_v_18_90 <- raster("raster_files/L2_v_18_90.tif")
+L2_wd_18_90 <- raster("raster_files/L2_wd_18_90.tif")
+
+
+# stack all rasters into one stack
+L2_stacked <- stack(L2_v_2_40, L2_wd_2_40, L2_v_3_90, L2_wd_3_90, L2_v_7_00, L2_wd_7_00, L2_v_9_24, L2_wd_9_24, L2_v_13_30, L2_wd_13_30, L2_v_16_50, L2_wd_16_50, L2_v_18_90, L2_wd_18_90)
+
+# check if rasters are correct
+plot(L2_stacked)
+
+# write stacked raster 
+writeRaster(L2_stacked, "rasters_stacked/L2_stacked.grd", overwrite = TRUE)
 ```
 
 # - Moesa: M1
@@ -421,7 +540,7 @@ M1_22_84 <- hdm_results(h5_path = "hdm_models/M1/results_M1_22_84.h5",
                        raster_wd_path = "raster_files/M1_wd_22_84.tif")
 ```
 
-## - Stacked Rasters
+## Stacked Rasters
 ```{r}
 M1_stacked_0_47 <- stack_raster(v_path = "raster_files/M1_v_0_47.tif",
                                 wd_path = "raster_files/M1_wd_0_47.tif",
@@ -466,10 +585,54 @@ M1_stacked_18_84 <- stack_raster(v_path = "raster_files/M1_v_18_84.tif",
 M1_stacked_22_84 <- stack_raster(v_path = "raster_files/M1_v_22_84.tif",
                                 wd_path = "raster_files/M1_wd_22_84.tif",
                                 stack_path = "rasters_stacked/M1_22_84.grd")
+
+# read all rasters (wd + v per discharge)
+M1_v_0_47 <- raster("raster_files/M1_v_0_47.tif")
+M1_wd_0_47 <- raster("raster_files/M1_wd_0_47.tif")
+
+M1_v_0_60 <- raster("raster_files/M1_v_0_60.tif")
+M1_wd_0_60 <- raster("raster_files/M1_wd_0_60.tif")
+
+M1_v_4_00 <- raster("raster_files/M1_v_4_00.tif")
+M1_wd_4_00 <- raster("raster_files/M1_wd_4_00.tif")
+
+M1_v_6_00 <- raster("raster_files/M1_v_6_00.tif")
+M1_wd_6_00 <- raster("raster_files/M1_wd_6_00.tif")
+
+M1_v_8_00 <- raster("raster_files/M1_v_8_00.tif")
+M1_wd_8_00 <- raster("raster_files/M1_wd_8_00.tif")
+
+M1_v_10_00 <- raster("raster_files/M1_v_10_00.tif")
+M1_wd_10_00 <- raster("raster_files/M1_wd_10_00.tif")
+
+M1_v_12_00 <- raster("raster_files/M1_v_12_00.tif")
+M1_wd_12_00 <- raster("raster_files/M1_wd_12_00.tif")
+
+M1_v_14_00 <- raster("raster_files/M1_v_14_00.tif")
+M1_wd_14_00 <- raster("raster_files/M1_wd_14_00.tif")
+
+M1_v_16_00 <- raster("raster_files/M1_v_16_00.tif")
+M1_wd_16_00 <- raster("raster_files/M1_wd_16_00.tif")
+
+M1_v_18_84 <- raster("raster_files/M1_v_18_84.tif")
+M1_wd_18_84 <- raster("raster_files/M1_wd_18_84.tif")
+
+M1_v_22_84 <- raster("raster_files/M1_v_22_84.tif")
+M1_wd_22_84 <- raster("raster_files/M1_wd_22_84.tif")
+
+
+# stack all rasters into one stack
+M1_stacked <- stack(M1_v_0_47, M1_wd_0_47, M1_v_0_60, M1_wd_0_60, M1_v_4_00, M1_wd_4_00, M1_v_6_00, M1_wd_6_00, M1_v_8_00, M1_wd_8_00, M1_v_10_00, M1_wd_10_00, M1_v_12_00, M1_wd_12_00, M1_v_14_00, M1_wd_14_00, M1_v_16_00, M1_wd_16_00, M1_v_18_84, M1_wd_18_84, M1_v_22_84, M1_wd_22_84)
+
+# check if rasters are correct
+plot(M1_stacked)
+
+# write stacked raster 
+writeRaster(M1_stacked, "rasters_stacked/M1_stacked.grd", overwrite = TRUE)
 ```
 
-# - Sitter: S1
-## - Single Attribute Rasters
+# Sitter: S1
+## Single Attribute Rasters
 ```{r}
 S1_2_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_2_00.h5", 
                     twodm_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm",
@@ -526,7 +689,7 @@ S1_20_00 <- hdm_results(h5_path = "hdm_models/S1/results_S1_20_00.h5",
                     raster_wd_path = "raster_files/S1_wd_20_00.tif")
 ```
 
-## - Stacked Rasters
+## Stacked Rasters
 ```{r}
 S1_stacked_2_00 <- stack_raster(v_path = "raster_files/S1_v_2_00.tif",
                                 wd_path = "raster_files/S1_wd_2_00.tif",
@@ -563,10 +726,48 @@ S1_stacked_18_00 <- stack_raster(v_path = "raster_files/S1_v_18_00.tif",
 S1_stacked_20_00 <- stack_raster(v_path = "raster_files/S1_v_20_00.tif",
                                 wd_path = "raster_files/S1_wd_20_00.tif",
                                 stack_path = "rasters_stacked/S1_20_00.grd")
+
+# read stacked rasters (wd + v per discharge)
+S1_v_2_00 <- raster("raster_files/S1_v_2_00.tif")
+S1_wd_2_00 <- raster("raster_files/S1_wd_2_00.tif")
+
+S1_v_3_70 <- raster("raster_files/S1_v_3_70.tif")
+S1_wd_3_70 <- raster("raster_files/S1_wd_3_70.tif")
+
+S1_v_6_50 <- raster("raster_files/S1_v_6_50.tif")
+S1_wd_6_50 <- raster("raster_files/S1_wd_6_50.tif")
+
+S1_v_8_50 <- raster("raster_files/S1_v_8_50.tif")
+S1_wd_8_50 <- raster("raster_files/S1_wd_8_50.tif")
+
+S1_v_10_68 <- raster("raster_files/S1_v_10_68.tif")
+S1_wd_10_68 <- raster("raster_files/S1_wd_10_68.tif")
+
+S1_v_13_00 <- raster("raster_files/S1_v_13_00.tif")
+S1_wd_13_00 <- raster("raster_files/S1_wd_13_00.tif")
+
+S1_v_15_00 <- raster("raster_files/S1_v_15_00.tif")
+S1_wd_15_00 <- raster("raster_files/S1_wd_15_00.tif")
+
+S1_v_18_00 <- raster("raster_files/S1_v_18_00.tif")
+S1_wd_18_00 <- raster("raster_files/S1_wd_18_00.tif")
+
+S1_v_20_00 <- raster("raster_files/S1_v_20_00.tif")
+S1_wd_20_00 <- raster("raster_files/S1_wd_20_00.tif")
+
+
+# stack all rasters into one stack
+S1_stacked <- stack(S1_v_2_00, S1_wd_2_00, S1_v_3_70, S1_wd_3_70, S1_v_6_50, S1_wd_6_50, S1_v_8_50, S1_wd_8_50, S1_v_10_68, S1_wd_10_68, S1_v_13_00, S1_wd_13_00, S1_v_15_00, S1_wd_15_00, S1_v_18_00, S1_wd_18_00, S1_v_20_00, S1_wd_20_00)
+
+# check if rasters are correct
+plot(S1_stacked)
+
+# write stacked raster 
+writeRaster(S1_stacked, "rasters_stacked/S1_stacked.grd", overwrite = TRUE)
 ```
 
-# - Sitter: S2
-## - Single Attribute Rasters
+# Sitter: S2
+## Single Attribute Rasters
 ```{r}
 S2_2_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_2_00.h5", 
                        twodm_path = "hdm_models/S2/computational-mesh-7-290323.2dm",
@@ -623,7 +824,7 @@ S2_20_00 <- hdm_results(h5_path = "hdm_models/S2/results_S2_20_00.h5",
                        raster_wd_path = "raster_files/S2_wd_20_00.tif")
 ```
 
-## - Stacked Rasters
+## Stacked Rasters
 2_00, 3_20, 6_50, 8_50, 10_93, 13_00, 15_00, 18_00, 20_00
 ```{r}
 S2_stacked_2_00 <- stack_raster(v_path = "raster_files/S2_v_2_00.tif",
@@ -661,6 +862,44 @@ S2_stacked_18_00 <- stack_raster(v_path = "raster_files/S2_v_18_00.tif",
 S2_stacked_20_00 <- stack_raster(v_path = "raster_files/S2_v_20_00.tif",
                                 wd_path = "raster_files/S2_wd_20_00.tif",
                                 stack_path = "rasters_stacked/S2_20_00.grd")
+
+# read all rasters (wd + v per discharge)
+S2_v_2_00 <- raster("raster_files/S2_v_2_00.tif")
+S2_wd_2_00 <- raster("raster_files/S2_wd_2_00.tif")
+
+S2_v_3_20 <- raster("raster_files/S2_v_3_20.tif")
+S2_wd_3_20 <- raster("raster_files/S2_wd_3_20.tif")
+
+S2_v_6_50 <- raster("raster_files/S2_v_6_50.tif")
+S2_wd_6_50 <- raster("raster_files/S2_wd_6_50.tif")
+
+S2_v_8_50 <- raster("raster_files/S2_v_8_50.tif")
+S2_wd_8_50 <- raster("raster_files/S2_wd_8_50.tif")
+
+S2_v_10_93 <- raster("raster_files/S2_v_10_93.tif")
+S2_wd_10_93 <- raster("raster_files/S2_wd_10_93.tif")
+
+S2_v_13_00 <- raster("raster_files/S2_v_13_00.tif")
+S2_wd_13_00 <- raster("raster_files/S2_wd_13_00.tif")
+
+S2_v_15_00 <- raster("raster_files/S2_v_15_00.tif")
+S2_wd_15_00 <- raster("raster_files/S2_wd_15_00.tif")
+
+S2_v_18_00 <- raster("raster_files/S2_v_18_00.tif")
+S2_wd_18_00 <- raster("raster_files/S2_wd_18_00.tif")
+
+S2_v_20_00 <- raster("raster_files/S2_v_20_00.tif")
+S2_wd_20_00 <- raster("raster_files/S2_wd_20_00.tif")
+
+
+# stack all rasters into one stack
+S2_stacked <- stack(S2_v_2_00, S2_wd_2_00, S2_v_3_20, S2_wd_3_20, S2_v_6_50, S2_wd_6_50, S2_v_8_50, S2_wd_8_50, S2_v_10_93, S2_wd_10_93, S2_v_13_00, S2_wd_13_00, S2_v_15_00, S2_wd_15_00, S2_v_18_00, S2_wd_18_00, S2_v_20_00, S2_wd_20_00)
+
+# check if rasters are correct
+plot(S2_stacked)
+
+# write stacked raster 
+writeRaster(S2_stacked, "rasters_stacked/S2_stacked.grd", overwrite = TRUE)
 ```
 
 # - Thur: TH4
@@ -722,7 +961,7 @@ TH4_32_93 <- hdm_results(h5_path = "hdm_models/TH4/results_TH4_32_93.h5",
                        raster_wd_path = "raster_files/TH4_wd_32_93.tif")
 ```
 
-## - Stacked Rasters
+## Stacked Rasters
 ```{r}
 TH4_stacked_11_45 <- stack_raster(v_path = "raster_files/TH4_v_11_45.tif",
                                 wd_path = "raster_files/TH4_wd_11_45.tif",
@@ -759,6 +998,43 @@ TH4_stacked_30_00 <- stack_raster(v_path = "raster_files/TH4_v_30_00.tif",
 TH4_stacked_32_93 <- stack_raster(v_path = "raster_files/TH4_v_32_93.tif",
                                 wd_path = "raster_files/TH4_wd_32_93.tif",
                                 stack_path = "rasters_stacked/TH4_32_93.grd")
+
+# read all rasters (wd + v per discharge)
+TH4_v_11_45 <- raster("raster_files/TH4_v_11_45.tif")
+TH4_wd_11_45 <- raster("raster_files/TH4_wd_11_45.tif")
+
+TH4_v_15_00 <- raster("raster_files/TH4_v_15_00.tif")
+TH4_wd_15_00 <- raster("raster_files/TH4_wd_15_00.tif")
+
+TH4_v_18_00 <- raster("raster_files/TH4_v_18_00.tif")
+TH4_wd_18_00 <- raster("raster_files/TH4_wd_18_00.tif")
+
+TH4_v_19_96 <- raster("raster_files/TH4_v_19_96.tif")
+TH4_wd_19_96 <- raster("raster_files/TH4_wd_19_96.tif")
+
+TH4_v_22_50 <- raster("raster_files/TH4_v_22_50.tif")
+TH4_wd_22_50 <- raster("raster_files/TH4_wd_22_50.tif")
+
+TH4_v_25_00 <- raster("raster_files/TH4_v_25_00.tif")
+TH4_wd_25_00 <- raster("raster_files/TH4_wd_25_00.tif")
+
+TH4_v_27_00 <- raster("raster_files/TH4_v_27_00.tif")
+TH4_wd_27_00 <- raster("raster_files/TH4_wd_27_00.tif")
+
+TH4_v_30_00 <- raster("raster_files/TH4_v_30_00.tif")
+TH4_wd_30_00 <- raster("raster_files/TH4_wd_30_00.tif")
+
+TH4_v_32_93 <- raster("raster_files/TH4_v_32_93.tif")
+TH4_wd_32_93 <- raster("raster_files/TH4_wd_32_93.tif")
+
+# stack all rasters into one stack
+TH4_stacked <- stack(TH4_v_11_45, TH4_wd_11_45, TH4_v_15_00, TH4_wd_15_00, TH4_v_18_00, TH4_wd_18_00, TH4_v_19_96, TH4_wd_19_96, TH4_v_22_50, TH4_wd_22_50, TH4_v_25_00, TH4_wd_25_00, TH4_v_27_00, TH4_wd_27_00, TH4_v_30_00, TH4_wd_30_00, TH4_v_32_93, TH4_wd_32_93)
+
+# check if rasters are correct
+plot(TH4_stacked)
+
+# write stacked raster 
+writeRaster(TH4_stacked, "rasters_stacked/TH4_stacked.grd", overwrite = TRUE)
 ```
 
 # Vorderrhein: VR3
@@ -948,5 +1224,70 @@ VR3_stacked_50_00 <- stack_raster(v_path = "raster_files/VR3_v_50_00.tif",
 VR3_stacked_52_90 <- stack_raster(v_path = "raster_files/VR3_v_52_90.tif",
                                 wd_path = "raster_files/VR3_wd_52_90.tif",
                                 stack_path = "rasters_stacked/VR3_52_90.grd")
+
+# read all rasters (wd + v per discharge)
+VR3_v_2_90 <- raster("raster_files/VR3_v_2_90.tif")
+VR3_wd_2_90 <- raster("raster_files/VR3_wd_2_90.tif")
+
+VR3_v_6_00 <- raster("raster_files/VR3_v_6_00.tif")
+VR3_wd_6_00 <- raster("raster_files/VR3_wd_6_00.tif")
+
+VR3_v_9_00 <- raster("raster_files/VR3_v_9_00.tif")
+VR3_wd_9_00 <- raster("raster_files/VR3_wd_9_00.tif")
+
+VR3_v_12_00 <- raster("raster_files/VR3_v_12_00.tif")
+VR3_wd_12_00 <- raster("raster_files/VR3_wd_12_00.tif")
+
+VR3_v_15_00 <- raster("raster_files/VR3_v_15_00.tif")
+VR3_wd_15_00 <- raster("raster_files/VR3_wd_15_00.tif")
+
+VR3_v_18_80 <- raster("raster_files/VR3_v_18_80.tif")
+VR3_wd_18_80 <- raster("raster_files/VR3_wd_18_80.tif")
+
+VR3_v_22_00 <- raster("raster_files/VR3_v_22_00.tif")
+VR3_wd_22_00 <- raster("raster_files/VR3_wd_22_00.tif")
+
+VR3_v_25_00 <- raster("raster_files/VR3_v_25_00.tif")
+VR3_wd_25_00 <- raster("raster_files/VR3_wd_25_00.tif")
+
+VR3_v_28_00 <- raster("raster_files/VR3_v_28_00.tif")
+VR3_wd_28_00 <- raster("raster_files/VR3_wd_28_00.tif")
+
+VR3_v_31_00 <- raster("raster_files/VR3_v_31_00.tif")
+VR3_wd_31_00 <- raster("raster_files/VR3_wd_31_00.tif")
+
+VR3_v_34_00 <- raster("raster_files/VR3_v_34_00.tif")
+VR3_wd_34_00 <- raster("raster_files/VR3_wd_34_00.tif")
+
+VR3_v_37_00 <- raster("raster_files/VR3_v_37_00.tif")
+VR3_wd_37_00 <- raster("raster_files/VR3_wd_37_00.tif")
+
+VR3_v_40_10 <- raster("raster_files/VR3_v_40_10.tif")
+VR3_wd_40_10 <- raster("raster_files/VR3_wd_40_10.tif")
+
+VR3_v_43_00 <- raster("raster_files/VR3_v_43_00.tif")
+VR3_wd_43_00 <- raster("raster_files/VR3_wd_43_00.tif")
+
+VR3_v_46_00 <- raster("raster_files/VR3_v_46_00.tif")
+VR3_wd_46_00 <- raster("raster_files/VR3_wd_46_00.tif")
+
+VR3_v_48_00 <- raster("raster_files/VR3_v_48_00.tif")
+VR3_wd_48_00 <- raster("raster_files/VR3_wd_48_00.tif")
+
+VR3_v_50_00 <- raster("raster_files/VR3_v_50_00.tif")
+VR3_wd_50_00 <- raster("raster_files/VR3_wd_50_00.tif")
+
+VR3_v_52_90 <- raster("raster_files/VR3_v_52_90.tif")
+VR3_wd_52_90 <- raster("raster_files/VR3_wd_52_90.tif")
+
+
+# stack all rasters into one stack
+VR3_stacked <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_v_6_00, VR3_wd_6_00, VR3_v_9_00, VR3_wd_9_00, VR3_v_12_00, VR3_wd_12_00, VR3_v_15_00, VR3_wd_15_00, VR3_v_18_80, VR3_wd_18_80, VR3_v_22_00, VR3_wd_22_00, VR3_v_25_00, VR3_wd_25_00, VR3_v_28_00, VR3_wd_28_00, VR3_v_31_00, VR3_wd_31_00, VR3_v_34_00, VR3_wd_34_00, VR3_v_37_00, VR3_wd_37_00, VR3_v_40_10, VR3_wd_40_10, VR3_v_43_00, VR3_wd_43_00, VR3_v_46_00, VR3_wd_46_00, VR3_v_48_00, VR3_wd_48_00, VR3_v_50_00, VR3_wd_50_00, VR3_v_52_90, VR3_wd_52_90)
+
+# check if rasters are correct
+plot(VR3_stacked)
+
+# write stacked raster 
+writeRaster(VR3_stacked, "rasters_stacked/VR3_stacked.grd", overwrite = TRUE)
 ```
 

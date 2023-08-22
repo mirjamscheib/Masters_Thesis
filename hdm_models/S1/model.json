@@ -27,7 +27,7 @@
               },
               {
                 "name": "outflow",
-                "slope": 5e-05,
+                "slope": 0.0003,
                 "string_name": "outflow",
                 "type": "uniform_out"
               }
