@@ -1,0 +1,26 @@
+[general]
+creator=R package 'raster'
+created=2023-08-22 20:22:45
+[data]
+datatype=FLT4S
+byteorder=little
+nbands=2
+bandorder=BIL
+minvalue=NA:0
+maxvalue=NA:0
+nodatavalue=-3.4e+38
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=VR3_v_2_90:VR3_wd_2_90
+[georeference]
+nrows=1084
+ncols=1946
+xmin=2737203.1223338
+ymin=1182740.70866286
+xmax=2738176.1223338
+ymax=1183282.70866286
+projection=
+wkt=
