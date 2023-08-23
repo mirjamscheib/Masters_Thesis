@@ -43,89 +43,108 @@ source("mth_functions.R")
 
 ## Read/prepare .csv files
 ```{r}
+# load mzb_data 
 mzb_data <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
 
+# select relevant columns 
 data <- mzb_data |>
-  select(x, y, Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, join_key) |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, join_key) |>
   rename(reach = Reach_Untersuchungsstelle,
          v_measured = `Flow_velocity_v60_cm/s`,
-         wd_measured = Water_depth_cm)
-
-# function to extract and prepare data
-prep_data <- function(data, reach_name, x, y, data_add, v, d){
-  data <- subset(reach == reach_name) 
-  data <- mutate(x = as.numeric(x),
-                 y = as.numeric(y)) 
-  data <- select(x, y) 
-  data_add <- subset(reach == reach_name) 
-  data_add <- select(reach, v, d, join_key)
-}
+         wd_measured = Water_depth_cm) |>
+  mutate(x = as.numeric(x),
+         y = as.numeric(y))
 
 # select only single river sections 
+# GL1
 data_GL1 <- data |>
   subset(reach == "GL1") |>
-  mutate(x = as.numeric(x),
-         y = as.numeric(y)) |>
-  select(x, y)
+  dplyr::select(x, y)
 
 data_GL1_add <- data |>
   subset(reach == "GL1") |>
-  select(reach, velocity, depth, join_key)
+  dplyr::select(reach, v_measured, wd_measured, join_key)
 
+# GL2
 data_GL2 <- data |>
   subset(reach == "GL2")|>
-  mutate(x = as.numeric(x),
-         y = as.numeric(y)) |>
-  select(x, y)
+  dplyr::select(x, y)
 
 data_GL2_add <- data |>
   subset(reach == "GL2") |>
-  select(reach, velocity, depth, join_key)
+  dplyr::select(reach, v_measured, wd_measured, join_key)
 
+# L2
 data_L2 <- data |>
-  subset(reach == "L2")
+  subset(reach == "L2") |>
+  dplyr::select(x, y)
 
+data_L2_add <- data |>
+  subset(reach == "L2") |>
+  dplyr::select(reach, v_measured, wd_measured, join_key)
+
+# M1
 data_M1 <- data |>
-  subset(reach == "M1")
+  subset(reach == "M1") |>
+  dplyr::select(x, y)
 
+data_M1_add <- data |>
+  subset(reach == "M1") |>
+  dplyr::select(reach, v_measured, wd_measured, join_key)
+
+# S1
 data_S1 <- data |>
-  subset(reach == "S1")
+  subset(reach == "S1") |>
+  dplyr::select(x, y)
 
+data_S1_add <- data |>
+  subset(reach == "S1") |>
+  dplyr::select(reach, v_measured, wd_measured, join_key)
+
+# S2
 data_S2 <- data |>
-  subset(reach == "S2")
+  subset(reach == "S2") |>
+  dplyr::select(x, y)
 
+data_S2_add <- data |>
+  subset(reach == "S2") |>
+  dplyr::select(reach, v_measured, wd_measured, join_key)
+
+# TH4
 data_TH4 <- data |>
-  subset(reach == "TH4")
+  subset(reach == "TH4") |>
+  dplyr::select(x, y)
 
+data_TH4_add <- data |>
+  subset(reach == "TH4") |>
+  dplyr::select(reach, v_measured, wd_measured, join_key)
+
+# VR3
 data_VR3 <- data |>
-  subset(reach == "VR3")
+  subset(reach == "VR3") |>
+  dplyr::select(x, y)
+
+data_VR3_add <- data |>
+  subset(reach == "VR3") |>
+  dplyr::select(reach, v_measured, wd_measured, join_key)
 ```
 
 
 ## Glenner: GL1
-### create Plot df
+### Extract Data
 ```{r}
-# function to extract and prepare data
-extract_data <- function(stack_path, data){
-# read stacked raster
-stacked <- stack(stack_path)
-
-# extract velocity and water depth information for plots 
-section_extract <- terra::extract(stacked, data) |>
-  cbind(data_GL1_add) |>
-  mutate(depth_measured = depth/100,
-         velocity_measured = velocity/100)
-}
-
 # read stacked raster
 GL1_stacked <- stack("rasters_stacked/GL1_stacked.grd")
 
 # extract velocity and water depth information for plots 
 GL1_extract <- terra::extract(GL1_stacked, data_GL1) |>
   cbind(data_GL1_add) |>
-  mutate(depth_measured = depth/100,
-         velocity_measured = velocity/100)
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
+```
 
+
+```{r}
 # extract only measured values 
 GL1_measured <- GL1_extract[, c(24:26)] 
 
@@ -152,8 +171,6 @@ GL1_plot <- GL1_wd |>
   full_join(GL1_measured, by = "join_key")
 ```
 
-
-### Plot 
 ggplot(GL1_plot, aes(discharge, water_depth, col = join_key)) +
   geom_point() +
   geom_point(data = GL1_plot, aes(y = depth_measured), col = "blue") +
@@ -174,7 +191,6 @@ cat("Intercept:", intercept, "\n")
 
 ```
 
-### extract x values
 ```{r}
 # Example data with only Y values
 y_values <- c(2, 4, 6, 8, 10)
@@ -191,7 +207,7 @@ print(x_values)
 
 
 ## Glenner: GL2
-### create Plot df
+### Extract Data
 ```{r}
 # read stacked raster
 GL2_stacked <- stack("rasters_stacked/GL2_stacked.grd")
@@ -199,9 +215,12 @@ GL2_stacked <- stack("rasters_stacked/GL2_stacked.grd")
 # extract velocity and water depth information for plots 
 GL2_extract <- terra::extract(GL2_stacked, data_GL2) |>
   cbind(data_GL2_add) |>
-  mutate(depth = depth/100,
-         velocity = velocity/100)
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
+```
 
+
+```{r}
 # create long table with velocity values from rasters
 GL2_v <- GL2_extract[ ,c(1,3,5,7,9,11,13,15,17,19,22)] |>
   pivot_longer(cols = c(1:10),names_to = "discharge_v",
@@ -222,31 +241,79 @@ GL2_wd <- GL2_extract[ ,c(2,4,6,8,10,12,14,16,18,20,22,23)] |>
 
 
 ## Landquart: L2
+### Extract Data 
 ```{r}
+# read stacked raster
+L2_stacked <- stack("rasters_stacked/L2_stacked.grd")
 
+# extract velocity and water depth information for plots 
+L2_extract <- terra::extract(L2_stacked, data_L2) |>
+  cbind(data_L2_add) |>
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
 ```
 
 ## Moesa: M1
+### Extract Data 
 ```{r}
+# read stacked raster
+M1_stacked <- stack("rasters_stacked/M1_stacked.grd")
 
+# extract velocity and water depth information for plots 
+M1_extract <- terra::extract(M1_stacked, data_M1) |>
+  cbind(data_M1_add) |>
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
 ```
 
 ## Sitter: S1
+### Extract Data 
 ```{r}
+# read stacked raster
+S1_stacked <- stack("rasters_stacked/S1_stacked.grd")
 
+# extract velocity and water depth information for plots 
+S1_extract <- terra::extract(S1_stacked, data_S1) |>
+  cbind(data_S1_add) |>
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
 ```
 
 ## Sitter: S2
+### Extract Data 
 ```{r}
+# read stacked raster
+S2_stacked <- stack("rasters_stacked/S2_stacked.grd")
 
+# extract velocity and water depth information for plots 
+S2_extract <- terra::extract(S2_stacked, data_S2) |>
+  cbind(data_S2_add) |>
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
 ```
 
 ## Thur: TH4
+### Extract Data 
 ```{r}
+# read stacked raster
+TH4_stacked <- stack("rasters_stacked/TH4_stacked.grd")
 
+# extract velocity and water depth information for plots 
+TH4_extract <- terra::extract(TH4_stacked, data_TH4) |>
+  cbind(data_TH4_add) |>
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
 ```
 
 ## Vorderrhein: VR3
+### Extract Data 
 ```{r}
+# read stacked raster
+VR3_stacked <- stack("rasters_stacked/VR3_stacked.grd")
 
+# extract velocity and water depth information for plots 
+VR3_extract <- terra::extract(VR3_stacked, data_VR3) |>
+  cbind(data_VR3_add) |>
+  mutate(wd_measured = wd_measured/100,
+         v_measured = v_measured/100)
 ```
