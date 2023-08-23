@@ -245,3 +245,19 @@ foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_pat
                               "value", "normal", "persistent")
   results <- list(metrics = results_metrics, freq = results_freq)   # combine the two resulting dataframes into a list object to recall later
 }
+
+
+#### EXTRACT DISCHARGES ####
+extract_Q <- function(data, response, predictor, 
+                      response_measured, v_wd, transect){
+  lm_model <- lm(response ~ predictor,
+                 data = data)
+  slope <- coef(lm_model)[2]
+  intercept <- coef(lm_model)[1]
+  Q <- (response_measured - intercept) / slope
+  results <- list(Q_sampling = Q, V_WD = v_wd, transect
+                  = transect)
+  return(data.frame(Q_samp = results$Q_sampling,
+                    V_WD = results$V_WD,
+                    transect = results$transect))
+}
