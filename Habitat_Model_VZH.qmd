@@ -1,0 +1,397 @@
+---
+title: "Habitat_Model_VZH"
+format: html
+---
+
+# Clear R environment 
+```{r}
+#clear R environment ---------------------------------------
+rm(list = ls())
+```
+
+# Install and load packages 
+```{r}
+# check for a package, install and load ---------------------------------------
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+pkgCheck("terra")
+pkgCheck("raster")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
+pkgCheck("scales")
+```
+
+# Load input rasters (velocity only)
+```{r}
+# Read raster-files of velocities ---------------------------------------
+v_path <- "raster_files"
+
+# read raster-files ---------------------------------------
+velocity_2 <- raster(file.path(v_path, "Landquart_results_velocity_2.tif"))
+velocity_3 <- raster(file.path(v_path, "Landquart_results_velocity_3.tif"))
+velocity_4 <- raster(file.path(v_path, "Landquart_results_velocity_4.tif"))
+velocity_7 <- raster(file.path(v_path, "Landquart_results_velocity_7.tif"))
+velocity_9 <- raster(file.path(v_path, "Landquart_results_velocity_9.tif"))
+velocity_11 <- raster(file.path(v_path, "Landquart_results_velocity_11.tif"))
+velocity_13 <- raster(file.path(v_path, "Landquart_results_velocity_13.tif"))
+velocity_15 <- raster(file.path(v_path, "Landquart_results_velocity_15.tif"))
+velocity_18 <- raster(file.path(v_path, "Landquart_results_velocity_18.tif"))
+velocity_22 <- raster(file.path(v_path, "Landquart_results_velocity_22.tif"))
+velocity_25 <- raster(file.path(v_path, "Landquart_results_velocity_25.tif"))
+velocity_28 <- raster(file.path(v_path, "Landquart_results_velocity_28.tif"))
+velocity_32 <- raster(file.path(v_path, "Landquart_results_velocity_32.tif"))
+
+# Set all 0-cells to NA ---------------------------------------
+velocity_2[velocity_2 == 0] <- NA
+velocity_3[velocity_3 == 0] <- NA
+velocity_4[velocity_4 == 0] <- NA
+velocity_7[velocity_7 == 0] <- NA
+velocity_9[velocity_9 == 0] <- NA
+velocity_11[velocity_11 == 0] <- NA
+velocity_13[velocity_13 == 0] <- NA
+velocity_15[velocity_15 == 0] <- NA
+velocity_18[velocity_18 == 0] <- NA
+velocity_22[velocity_22 == 0] <- NA
+velocity_25[velocity_25 == 0] <- NA
+velocity_28[velocity_28 == 0] <- NA
+velocity_32[velocity_32 == 0] <- NA
+```
+
+# Reclassify Rasters (VZH)
+```{r}
+# Define the reclassification table ---------------------------------------
+# In this example, values from 0 to 0.05 are set to 1,
+# values from 0.05 to 0.25 are set to 3, and so on.
+# values from VZH are in cm/s, in raster in m/s (therefore values from VZH are converted into m/s with e.g., 5cm/s / 100 = 0.05m/s)
+reclass_table <- c(0, 0.05, 1, 
+                   0.05, 0.25, 3, 
+                   0.25, 0.75, 5,
+                   0.75, 1.50, 4,
+                   1.50, 2.50, 2,
+                   2.50, Inf, NA)
+
+# Classify rasters (include.lowest = TRUE includes 0 m/s, which will be also classified as 1) ---------------------------------------
+raster_classify_2 <- reclassify(velocity_2, reclass_table,  include.lowest = TRUE)
+raster_classify_3 <- reclassify(velocity_3, reclass_table,  include.lowest = TRUE)
+raster_classify_4 <- reclassify(velocity_4, reclass_table,  include.lowest = TRUE)
+raster_classify_7 <- reclassify(velocity_7, reclass_table,  include.lowest = TRUE)
+raster_classify_9 <- reclassify(velocity_9, reclass_table,  include.lowest = TRUE)
+raster_classify_11 <- reclassify(velocity_11, reclass_table,  include.lowest = TRUE)
+raster_classify_13 <- reclassify(velocity_13, reclass_table,  include.lowest = TRUE)
+raster_classify_15 <- reclassify(velocity_15, reclass_table,  include.lowest = TRUE)
+raster_classify_18 <- reclassify(velocity_18, reclass_table,  include.lowest = TRUE)
+raster_classify_22 <- reclassify(velocity_22, reclass_table,  include.lowest = TRUE)
+raster_classify_25 <- reclassify(velocity_25, reclass_table,  include.lowest = TRUE)
+raster_classify_28 <- reclassify(velocity_28, reclass_table,  include.lowest = TRUE)
+raster_classify_32 <- reclassify(velocity_32, reclass_table,  include.lowest = TRUE)
+
+
+# write/save reclassified rasters ---------------------------------------
+writeRaster(raster_classify_2, "QGIS_Project/results_univariate/raster_classify_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_3, "QGIS_Project/results_univariate/raster_classify_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_4, "QGIS_Project/results_univariate/raster_classify_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_7, "QGIS_Project/results_univariate/raster_classify_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_9, "QGIS_Project/results_univariate/raster_classify_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_11, "QGIS_Project/results_univariate/raster_classify_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_13, "QGIS_Project/results_univariate/raster_classify_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_15, "QGIS_Project/results_univariate/raster_classify_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_18, "QGIS_Project/results_univariate/raster_classify_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_22, "QGIS_Project/results_univariate/raster_classify_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_25, "QGIS_Project/results_univariate/raster_classify_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_28, "QGIS_Project/results_univariate/raster_classify_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(raster_classify_32, "QGIS_Project/results_univariate/raster_classify_32.tif", format="GTiff", overwrite = TRUE)
+```
+
+## Persistent Habitats with reclassified rasters
+```{r}
+# Clip the raster1 with raster2 ---------------------------------------
+pers_class_2 <- mask(raster_classify_2, raster_classify_2)
+pers_class_3 <- mask(raster_classify_3, raster_classify_2)
+pers_class_4 <- mask(raster_classify_4, raster_classify_2)
+pers_class_7 <- mask(raster_classify_7, raster_classify_2)
+pers_class_9 <- mask(raster_classify_9, raster_classify_2)
+pers_class_11 <- mask(raster_classify_11, raster_classify_2)
+pers_class_13 <- mask(raster_classify_13, raster_classify_2)
+pers_class_15 <- mask(raster_classify_15, raster_classify_2)
+pers_class_18 <- mask(raster_classify_18, raster_classify_2)
+pers_class_22 <- mask(raster_classify_22, raster_classify_2)
+pers_class_25 <- mask(raster_classify_25, raster_classify_2)
+pers_class_28 <- mask(raster_classify_28, raster_classify_2)
+pers_class_32 <- mask(raster_classify_32, raster_classify_2)
+
+# Save the clipped raster-files ---------------------------------------
+writeRaster(pers_class_2, filename="QGIS_Project/results_univariate/pers_class_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_3, filename="QGIS_Project/results_univariate/pers_class_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_4, filename="QGIS_Project/results_univariate/pers_class_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_7, filename="QGIS_Project/results_univariate/pers_class_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_9, filename="QGIS_Project/results_univariate/pers_class_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_11, filename="QGIS_Project/results_univariate/pers_class_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_13, filename="QGIS_Project/results_univariate/pers_class_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_15, filename="QGIS_Project/results_univariate/pers_class_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_18, filename="QGIS_Project/results_univariate/pers_class_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_22, filename="QGIS_Project/results_univariate/pers_class_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_25, filename="QGIS_Project/results_univariate/pers_class_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_28, filename="QGIS_Project/results_univariate/pers_class_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(pers_class_32, filename="QGIS_Project/results_univariate/pers_class_32.tif", format="GTiff", overwrite = TRUE)
+```
+
+# Habitat modelling 
+## Read Suitability Curve 
+```{r}
+# Read suitability curve ---------------------------------------
+sc_v_VZH_path <- "Suitability_Curves_Data/VZH/VZH_B5.csv" 
+sc_v_VZH <- read.csv(sc_v_VZH_path, sep=";", dec=".", header = TRUE)
+```
+
+## Univariate Habitat Model (Velocity Class)
+```{r}
+# Read raster-files of velocities ---------------------------------------
+v_path <- "QGIS_Project/results_univariate"
+
+# read raster-files ---------------------------------------
+v_2 <- raster(file.path(v_path, "raster_classify_2.tif"))
+v_3 <- raster(file.path(v_path, "raster_classify_3.tif"))
+v_4 <- raster(file.path(v_path, "raster_classify_4.tif"))
+v_7 <- raster(file.path(v_path, "raster_classify_7.tif"))
+v_9 <- raster(file.path(v_path, "raster_classify_9.tif"))
+v_11 <- raster(file.path(v_path, "raster_classify_11.tif"))
+v_13 <- raster(file.path(v_path, "raster_classify_13.tif"))
+v_15 <- raster(file.path(v_path, "raster_classify_15.tif"))
+v_18 <- raster(file.path(v_path, "raster_classify_18.tif"))
+v_22 <- raster(file.path(v_path, "raster_classify_22.tif"))
+v_25 <- raster(file.path(v_path, "raster_classify_25.tif"))
+v_28 <- raster(file.path(v_path, "raster_classify_28.tif"))
+v_32 <- raster(file.path(v_path, "raster_classify_32.tif"))
+
+# define function for univariate calculation -----------------------------------
+univariat_v <- function(x, y = sc_v_VZH$Bewohnbarkeitsklasse, z = sc_v_VZH$HSI){
+  calc(x, fun = approxfun(y, z, rule = 2))
+}
+
+# calculation for all Q's ---------------------------------------
+VZH_2 <- univariat_v(v_2)
+VZH_3 <- univariat_v(v_3)
+VZH_4 <- univariat_v(v_4)
+VZH_7 <- univariat_v(v_7)
+VZH_9 <- univariat_v(v_9)
+VZH_11 <- univariat_v(v_11)
+VZH_13 <- univariat_v(v_13)
+VZH_15 <- univariat_v(v_15)
+VZH_18 <- univariat_v(v_18)
+VZH_22 <- univariat_v(v_22)
+VZH_25 <- univariat_v(v_25)
+VZH_28 <- univariat_v(v_28)
+VZH_32 <- univariat_v(v_32)
+
+# Save the clipped raster-files ---------------------------------------
+writeRaster(VZH_2, filename="QGIS_Project/results_univariate/VZH_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_3, filename="QGIS_Project/results_univariate/VZH_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_4, filename="QGIS_Project/results_univariate/VZH_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_7, filename="QGIS_Project/results_univariate/VZH_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_9, filename="QGIS_Project/results_univariate/VZH_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_11, filename="QGIS_Project/results_univariate/VZH_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_13, filename="QGIS_Project/results_univariate/VZH_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_15, filename="QGIS_Project/results_univariate/VZH_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_18, filename="QGIS_Project/results_univariate/VZH_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_22, filename="QGIS_Project/results_univariate/VZH_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_25, filename="QGIS_Project/results_univariate/VZH_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_28, filename="QGIS_Project/results_univariate/VZH_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(VZH_32, filename="QGIS_Project/results_univariate/VZH_32.tif", format="GTiff", overwrite = TRUE)
+```
+
+## Persistent Habitats of Habitat Model 
+```{r}
+# Clip the raster1 with raster2 ---------------------------------------
+persistent_2 <- mask(VZH_2, VZH_2)
+persistent_3 <- mask(VZH_3, VZH_2)
+persistent_4 <- mask(VZH_4, VZH_2)
+persistent_7 <- mask(VZH_7, VZH_2)
+persistent_9 <- mask(VZH_9, VZH_2)
+persistent_11 <- mask(VZH_11, VZH_2)
+persistent_13 <- mask(VZH_13, VZH_2)
+persistent_15 <- mask(VZH_15, VZH_2)
+persistent_18 <- mask(VZH_18, VZH_2)
+persistent_22 <- mask(VZH_22, VZH_2)
+persistent_25 <- mask(VZH_25, VZH_2)
+persistent_28 <- mask(VZH_28, VZH_2)
+persistent_32 <- mask(VZH_32, VZH_2)
+
+# Save the clipped raster-files ---------------------------------------
+writeRaster(persistent_2, filename="QGIS_Project/results_univariate/persistent_VZH_2.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_3, filename="QGIS_Project/results_univariate/persistent_VZH_3.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_4, filename="QGIS_Project/results_univariate/persistent_VZH_4.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_7, filename="QGIS_Project/results_univariate/persistent_VZH_7.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_9, filename="QGIS_Project/results_univariate/persistent_VZH_9.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_11, filename="QGIS_Project/results_univariate/persistent_VZH_11.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_13, filename="QGIS_Project/results_univariate/persistent_VZH_13.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_15, filename="QGIS_Project/results_univariate/persistent_VZH_15.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_18, filename="QGIS_Project/results_univariate/persistent_VZH_18.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_22, filename="QGIS_Project/results_univariate/persistent_VZH_22.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_25, filename="QGIS_Project/results_univariate/persistent_VZH_25.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_28, filename="QGIS_Project/results_univariate/persistent_VZH_28.tif", format="GTiff", overwrite = TRUE)
+writeRaster(persistent_32, filename="QGIS_Project/results_univariate/persistent_VZH_32.tif", format="GTiff", overwrite = TRUE)
+```
+
+# Calculate WUA 
+```{r}
+# define function for WUA calculation -----------------------------------
+wua <- function(x){
+  cellStats(x, 'sum') * 4
+}
+
+# calculate WUA for all Q's -----------------------------------
+WUA_VZH_2 <- wua(VZH_2)
+WUA_VZH_3 <- wua(VZH_3)
+WUA_VZH_4 <- wua(VZH_4)
+WUA_VZH_7 <- wua(VZH_7)
+WUA_VZH_9 <- wua(VZH_9)
+WUA_VZH_11 <- wua(VZH_11)
+WUA_VZH_13 <- wua(VZH_13)
+WUA_VZH_15 <- wua(VZH_15)
+WUA_VZH_18 <- wua(VZH_18)
+WUA_VZH_22 <- wua(VZH_22)
+WUA_VZH_25 <- wua(VZH_25)
+WUA_VZH_28 <- wua(VZH_28)
+WUA_VZH_32 <- wua(VZH_32)
+
+# calculate WUA für pers. habitats for all Q's ----------------------------------
+WUA_pers_2 <- wua(persistent_2)
+WUA_pers_3 <- wua(persistent_3)
+WUA_pers_4 <- wua(persistent_4)
+WUA_pers_7 <- wua(persistent_7)
+WUA_pers_9 <- wua(persistent_9)
+WUA_pers_11 <- wua(persistent_11)
+WUA_pers_13 <- wua(persistent_13)
+WUA_pers_15 <- wua(persistent_15)
+WUA_pers_18 <- wua(persistent_18)
+WUA_pers_22 <- wua(persistent_22)
+WUA_pers_25 <- wua(persistent_25)
+WUA_pers_28 <- wua(persistent_28)
+WUA_pers_32 <- wua(persistent_32)
+```
+
+# Calculate frequency table 
+```{r}
+# define function for feq_table calculation -----------------------------------
+feq_table <- function(x){
+  as.data.frame(freq(x, digit=1, useNA= "no"))
+}
+
+# calculate feq_table for all Q's -----------------------------------
+freq_VZH_2 <- feq_table(VZH_2)
+freq_VZH_3 <- feq_table(VZH_3)
+freq_VZH_4 <- feq_table(VZH_4)
+freq_VZH_7 <- feq_table(VZH_7)
+freq_VZH_9 <- feq_table(VZH_9)
+freq_VZH_11 <- feq_table(VZH_11)
+freq_VZH_13 <- feq_table(VZH_13)
+freq_VZH_15 <- feq_table(VZH_15)
+freq_VZH_18 <- feq_table(VZH_18)
+freq_VZH_22 <- feq_table(VZH_22)
+freq_VZH_25 <- feq_table(VZH_25)
+freq_VZH_28 <- feq_table(VZH_28)
+freq_VZH_32 <- feq_table(VZH_32)
+```
+
+# Calculate WA_tot 
+```{r}
+# define function for WA_tot calculation -----------------------------------
+wa_tot <- function(x, column_name){
+  sum(x[[column_name]]) * 4
+}
+
+# calculate feq_table for all Q's -----------------------------------
+WA_tot_VZH_2 <- wa_tot(freq_VZH_2, column_name = "count")
+WA_tot_VZH_3 <- wa_tot(freq_VZH_3, column_name = "count")
+WA_tot_VZH_4 <- wa_tot(freq_VZH_4, column_name = "count")
+WA_tot_VZH_7 <- wa_tot(freq_VZH_7, column_name = "count")
+WA_tot_VZH_9 <- wa_tot(freq_VZH_9, column_name = "count")
+WA_tot_VZH_11 <- wa_tot(freq_VZH_11, column_name = "count")
+WA_tot_VZH_13 <- wa_tot(freq_VZH_13, column_name = "count")
+WA_tot_VZH_15 <- wa_tot(freq_VZH_15, column_name = "count")
+WA_tot_VZH_18 <- wa_tot(freq_VZH_18, column_name = "count")
+WA_tot_VZH_22 <- wa_tot(freq_VZH_22, column_name = "count")
+WA_tot_VZH_25 <- wa_tot(freq_VZH_25, column_name = "count")
+WA_tot_VZH_28 <- wa_tot(freq_VZH_28, column_name = "count")
+WA_tot_VZH_32 <- wa_tot(freq_VZH_32, column_name = "count")
+```
+
+# Calculate HHS [-] 
+```{r}
+# calculate HHS for all Q's -----------------------------------
+HHS_VZH_2 <- WUA_VZH_2/WA_tot_VZH_2
+HHS_VZH_3 <- WUA_VZH_3/WA_tot_VZH_3
+HHS_VZH_4 <- WUA_VZH_4/WA_tot_VZH_4
+HHS_VZH_7 <- WUA_VZH_7/WA_tot_VZH_7
+HHS_VZH_9 <- WUA_VZH_9/WA_tot_VZH_9
+HHS_VZH_11 <- WUA_VZH_11/WA_tot_VZH_11
+HHS_VZH_13 <- WUA_VZH_13/WA_tot_VZH_13
+HHS_VZH_15 <- WUA_VZH_15/WA_tot_VZH_15
+HHS_VZH_18 <- WUA_VZH_18/WA_tot_VZH_18
+HHS_VZH_22 <- WUA_VZH_22/WA_tot_VZH_22
+HHS_VZH_25 <- WUA_VZH_25/WA_tot_VZH_25
+HHS_VZH_28 <- WUA_VZH_28/WA_tot_VZH_28
+HHS_VZH_32 <- WUA_VZH_32/WA_tot_VZH_32
+
+# calculate HHS persistent for all Q's -----------------------------------
+HHS_pers_2 <- WUA_pers_2/WA_tot_VZH_2
+HHS_pers_3 <- WUA_pers_3/WA_tot_VZH_3
+HHS_pers_4 <- WUA_pers_4/WA_tot_VZH_4
+HHS_pers_7 <- WUA_pers_7/WA_tot_VZH_7
+HHS_pers_9 <- WUA_pers_9/WA_tot_VZH_9
+HHS_pers_11 <- WUA_pers_11/WA_tot_VZH_11
+HHS_pers_13 <- WUA_pers_13/WA_tot_VZH_13
+HHS_pers_15 <- WUA_pers_15/WA_tot_VZH_15
+HHS_pers_18 <- WUA_pers_18/WA_tot_VZH_18
+HHS_pers_22 <- WUA_pers_22/WA_tot_VZH_22
+HHS_pers_25 <- WUA_pers_25/WA_tot_VZH_25
+HHS_pers_28 <- WUA_pers_28/WA_tot_VZH_28
+HHS_pers_32 <- WUA_pers_32/WA_tot_VZH_32
+```
+
+# Create dataframe and .csv of calculated indices 
+```{r}
+# data frame WUA, HHS etc. -----------------------------------
+results_VZH <- data.frame(Description = c("VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH", "VZH"), Discharge = c(2.4, 3.9, 4.6, 7, 9, 11.4, 13.3, 15, 18.9, 22, 25, 28, 32.69), 
+                      WUA_normal = c(WUA_VZH_2, WUA_VZH_3, WUA_VZH_4, WUA_VZH_7, WUA_VZH_9, WUA_VZH_11, WUA_VZH_13, WUA_VZH_15, WUA_VZH_18, WUA_VZH_22, WUA_VZH_25, WUA_VZH_28, WUA_VZH_32), 
+                      WUA_pers = c(WUA_pers_2, WUA_pers_3, WUA_pers_4, WUA_pers_7, WUA_pers_9,  WUA_pers_11, WUA_pers_13, WUA_pers_15, WUA_pers_18, WUA_pers_22, WUA_pers_25, WUA_pers_28, WUA_pers_32),
+                      HHS = c(HHS_VZH_2, HHS_VZH_3, HHS_VZH_4, HHS_VZH_7, HHS_VZH_9, HHS_VZH_11, HHS_VZH_13, HHS_VZH_15, HHS_VZH_18, HHS_VZH_22, HHS_VZH_25, HHS_VZH_28, HHS_VZH_32),
+                      HHS_pers = c(HHS_pers_2, HHS_pers_3, HHS_pers_4, HHS_pers_7, HHS_pers_9, HHS_pers_11, HHS_pers_13, HHS_pers_15, HHS_pers_18, HHS_pers_22, HHS_pers_25, HHS_pers_28, HHS_pers_32),
+                      WA_tot = c(WA_tot_VZH_2, WA_tot_VZH_3, WA_tot_VZH_4, WA_tot_VZH_7, WA_tot_VZH_9, WA_tot_VZH_11, WA_tot_VZH_13, WA_tot_VZH_15, WA_tot_VZH_18, WA_tot_VZH_22, WA_tot_VZH_25, WA_tot_VZH_28, WA_tot_VZH_32))
+
+# safe df into .csv file -----------------------------------
+write.csv(results_VZH, file = "results_statistics/Results_VZH_Habitat_Model.csv", row.names = FALSE)
+
+# create dataframe for barchart visualisation 
+freq_VZH_2 <- feq_table(raster_classify_2)
+freq_VZH_9 <- feq_table(raster_classify_9)
+freq_VZH_pers_9 <- feq_table(pers_class_9)
+
+
+# bind together frequency table results for plots
+join <- freq_VZH_2 |>
+  full_join(freq_VZH_9, by = "value") |>
+  full_join(freq_VZH_pers_9, by = "value")
+
+# give colnames for plotting 
+colnames(join) <- c("value", "VZH_2", "VZH_9", "VZH_pers_9")
+
+# write data frame into .csv file
+write.csv(join, file = "results_statistics/VZH.csv", row.names = FALSE)
+```
+
+
+
+
