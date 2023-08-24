@@ -2702,14 +2702,16 @@ Q_4_3_wd <- extract_Q(data = VR3_4_3_wd,
 
 
 ```{r}
+
 VR3_Q <- rbind(Q_1_1_v, Q_1_2_v, Q_1_3_v, Q_2_1_v, Q_2_2_v,
                Q_2_3_v, Q_3_1_v, Q_3_2_v, Q_3_3_v, Q_4_1_v,
                Q_4_2_v, Q_4_3_v,
+               
                Q_1_1_wd, Q_1_2_wd, Q_1_3_wd, Q_2_1_wd,
                Q_2_2_wd, Q_2_3_wd, Q_3_1_wd, Q_3_2_wd, 
                Q_3_3_wd, Q_4_1_wd, Q_4_2_wd, Q_4_3_wd)
 
-VR3_Q_mean <- mean(TH4_Q$Q_samp)
+VR3_Q_mean <- mean(VR3_Q$Q_samp, na.rm = TRUE)
 ```
 
 # Intermediate Results
