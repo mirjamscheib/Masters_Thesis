@@ -207,7 +207,7 @@ foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_pat
                      2.50, Inf, NA)
   raster_classify <- reclassify(scenario, reclass_table,   # reclassify raster according to reclass_table
                                 include.lowest = TRUE) 
-  pers_class <- mask(raster_classify, raster(base_flow))   # cut reclassified raster with base flow scenario to get persistent habitats
+  pers_class <- mask(raster_classify, raster(base_flow))  # cut reclassified raster with base flow scenario to get persistent habitats
   writeRaster(pers_class, output_path_pers_reclass,        # save reclassified raster
               format = "GTiff", overwrite = TRUE) 
   writeRaster(raster_classify, output_path_reclass,        # save reclassified raster of persistent habitats
