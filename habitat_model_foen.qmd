@@ -52,7 +52,7 @@ GL1_3_28 <- foen_hm(raster_path = "raster_files/GL1_v_3_28.tif",
                     discharge = 3.28)
 
 GL1_6_00 <- foen_hm(raster_path = "raster_files/GL1_v_6_00.tif", 
-                    base_flow = "raster_files/GL1_v_6_00.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_6_00.tif", 
                     output_path_reclass =
@@ -67,7 +67,7 @@ GL1_6_00 <- foen_hm(raster_path = "raster_files/GL1_v_6_00.tif",
                     discharge = 6.00)
 
 GL1_9_00 <- foen_hm(raster_path = "raster_files/GL1_v_9_00.tif", 
-                    base_flow = "raster_files/GL1_v_9_00.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_9_00.tif", 
                     output_path_reclass =
@@ -82,7 +82,7 @@ GL1_9_00 <- foen_hm(raster_path = "raster_files/GL1_v_9_00.tif",
                     discharge = 9.00)
 
 GL1_12_68 <- foen_hm(raster_path = "raster_files/GL1_v_12_68.tif", 
-                    base_flow = "raster_files/GL1_v_12_68.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_12_68.tif", 
                     output_path_reclass =
@@ -97,7 +97,7 @@ GL1_12_68 <- foen_hm(raster_path = "raster_files/GL1_v_12_68.tif",
                     discharge = 12.68)
 
 GL1_16_00 <- foen_hm(raster_path = "raster_files/GL1_v_16_00.tif", 
-                    base_flow = "raster_files/GL1_v_16_00.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_16_00.tif", 
                     output_path_reclass =
@@ -112,7 +112,7 @@ GL1_16_00 <- foen_hm(raster_path = "raster_files/GL1_v_16_00.tif",
                     discharge = 16.00)
 
 GL1_19_00 <- foen_hm(raster_path = "raster_files/GL1_v_19_00.tif", 
-                    base_flow = "raster_files/GL1_v_19_00.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_19_00.tif", 
                     output_path_reclass =
@@ -127,7 +127,7 @@ GL1_19_00 <- foen_hm(raster_path = "raster_files/GL1_v_19_00.tif",
                     discharge = 19.00)
 
 GL1_22_00 <- foen_hm(raster_path = "raster_files/GL1_v_22_00.tif", 
-                    base_flow = "raster_files/GL1_v_22_00.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_22_00.tif", 
                     output_path_reclass =
@@ -142,7 +142,7 @@ GL1_22_00 <- foen_hm(raster_path = "raster_files/GL1_v_22_00.tif",
                     discharge = 22.00)
 
 GL1_25_00 <- foen_hm(raster_path = "raster_files/GL1_v_25_00.tif", 
-                    base_flow = "raster_files/GL1_v_25_00.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_25_00.tif", 
                     output_path_reclass =
@@ -157,7 +157,7 @@ GL1_25_00 <- foen_hm(raster_path = "raster_files/GL1_v_25_00.tif",
                     discharge = 25.00)
 
 GL1_28_00 <- foen_hm(raster_path = "raster_files/GL1_v_28_00.tif", 
-                    base_flow = "raster_files/GL1_v_28_00.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_28_00.tif", 
                     output_path_reclass =
@@ -172,7 +172,7 @@ GL1_28_00 <- foen_hm(raster_path = "raster_files/GL1_v_28_00.tif",
                     discharge = 28.00)
 
 GL1_31_76 <- foen_hm(raster_path = "raster_files/GL1_v_31_76.tif", 
-                    base_flow = "raster_files/GL1_v_31_76.tif",
+                    base_flow = "raster_files/GL1_v_3_28.tif",
                     output_path_pers_reclass =
                       "results_foen/GL1_foen_class_pers_31_76.tif", 
                     output_path_reclass =
@@ -205,7 +205,7 @@ GL2_3_21 <- foen_hm(raster_path = "raster_files/GL2_v_3_21.tif",
                     discharge = 3.21)
 
 GL2_6_00 <- foen_hm(raster_path = "raster_files/GL2_v_6_00.tif", 
-                    base_flow = "raster_files/GL2_v_6_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_6_00.tif", 
                     output_path_reclass =
@@ -220,7 +220,7 @@ GL2_6_00 <- foen_hm(raster_path = "raster_files/GL2_v_6_00.tif",
                     discharge = 6.00)
 
 GL2_9_00 <- foen_hm(raster_path = "raster_files/GL2_v_9_00.tif", 
-                    base_flow = "raster_files/GL2_v_9_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_9_00.tif", 
                     output_path_reclass =
@@ -235,7 +235,7 @@ GL2_9_00 <- foen_hm(raster_path = "raster_files/GL2_v_9_00.tif",
                     discharge = 9.00)
 
 GL2_11_00 <- foen_hm(raster_path = "raster_files/GL2_v_11_00.tif", 
-                    base_flow = "raster_files/GL2_v_11_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_11_00.tif", 
                     output_path_reclass =
@@ -250,7 +250,7 @@ GL2_11_00 <- foen_hm(raster_path = "raster_files/GL2_v_11_00.tif",
                     discharge = 11.00)
 
 GL2_12_52 <- foen_hm(raster_path = "raster_files/GL2_v_12_52.tif", 
-                    base_flow = "raster_files/GL2_v_12_52.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_12_52.tif", 
                     output_path_reclass =
@@ -265,7 +265,7 @@ GL2_12_52 <- foen_hm(raster_path = "raster_files/GL2_v_12_52.tif",
                     discharge = 12.52)
 
 GL2_16_00 <- foen_hm(raster_path = "raster_files/GL2_v_16_00.tif", 
-                    base_flow = "raster_files/GL2_v_16_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_16_00.tif", 
                     output_path_reclass =
@@ -278,8 +278,9 @@ GL2_16_00 <- foen_hm(raster_path = "raster_files/GL2_v_16_00.tif",
                       "results_foen/GL2_foen_pers_16_00.tif", 
                     river = "GL2", 
                     discharge = 16.00)
+
 GL2_19_00 <- foen_hm(raster_path = "raster_files/GL2_v_19_00.tif", 
-                    base_flow = "raster_files/GL2_v_19_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_19_00.tif", 
                     output_path_reclass =
@@ -294,7 +295,7 @@ GL2_19_00 <- foen_hm(raster_path = "raster_files/GL2_v_19_00.tif",
                     discharge = 19.00)
 
 GL2_22_00 <- foen_hm(raster_path = "raster_files/GL2_v_22_00.tif", 
-                    base_flow = "raster_files/GL2_v_22_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_22_00.tif", 
                     output_path_reclass =
@@ -308,7 +309,7 @@ GL2_22_00 <- foen_hm(raster_path = "raster_files/GL2_v_22_00.tif",
                     river = "GL2", 
                     discharge = 22.00)
 GL2_25_00 <- foen_hm(raster_path = "raster_files/GL2_v_25_00.tif", 
-                    base_flow = "raster_files/GL2_v_25_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_25_00.tif", 
                     output_path_reclass =
@@ -324,7 +325,7 @@ GL2_25_00 <- foen_hm(raster_path = "raster_files/GL2_v_25_00.tif",
 
 
 GL2_28_00 <- foen_hm(raster_path = "raster_files/GL2_v_28_00.tif", 
-                    base_flow = "raster_files/GL2_v_28_00.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_28_00.tif", 
                     output_path_reclass =
@@ -337,8 +338,9 @@ GL2_28_00 <- foen_hm(raster_path = "raster_files/GL2_v_28_00.tif",
                       "results_foen/GL2_foen_pers_28_00.tif", 
                     river = "GL2", 
                     discharge = 28.00)
+
 GL2_31_53 <- foen_hm(raster_path = "raster_files/GL2_v_31_53.tif", 
-                    base_flow = "raster_files/GL2_v_31_53.tif",
+                    base_flow = "raster_files/GL2_v_3_21.tif",
                     output_path_pers_reclass =
                       "results_foen/GL2_foen_class_pers_31_53.tif", 
                     output_path_reclass =
@@ -372,7 +374,7 @@ L2_2_40 <- foen_hm(raster_path = "raster_files/L2_v_2_40.tif",
                    discharge = 2.40)
 
 L2_3_90 <- foen_hm(raster_path = "raster_files/L2_v_3_90.tif", 
-                   base_flow = "raster_files/L2_v_3_90.tif",
+                   base_flow = "raster_files/L2_v_2_40.tif",
                    output_path_pers_reclass =
                      "results_foen/L2_foen_class_pers_3_90.tif", 
                    output_path_reclass =
@@ -387,7 +389,7 @@ L2_3_90 <- foen_hm(raster_path = "raster_files/L2_v_3_90.tif",
                    discharge = 3.90)
 
 L2_7_00 <- foen_hm(raster_path = "raster_files/L2_v_7_00.tif", 
-                   base_flow = "raster_files/L2_v_7_00.tif",
+                   base_flow = "raster_files/L2_v_2_40.tif",
                    output_path_pers_reclass =
                      "results_foen/L2_foen_class_pers_7_00.tif", 
                    output_path_reclass =
@@ -402,7 +404,7 @@ L2_7_00 <- foen_hm(raster_path = "raster_files/L2_v_7_00.tif",
                    discharge = 7.00)
 
 L2_9_24 <- foen_hm(raster_path = "raster_files/L2_v_9_24.tif", 
-                   base_flow = "raster_files/L2_v_9_24.tif",
+                   base_flow = "raster_files/L2_v_2_40.tif",
                    output_path_pers_reclass =
                      "results_foen/L2_foen_class_pers_9_24.tif", 
                    output_path_reclass =
@@ -417,7 +419,7 @@ L2_9_24 <- foen_hm(raster_path = "raster_files/L2_v_9_24.tif",
                    discharge = 9.24)
 
 L2_11_40 <- foen_hm(raster_path = "raster_files/L2_v_11_40.tif", 
-                   base_flow = "raster_files/L2_v_11_40.tif",
+                   base_flow = "raster_files/L2_v_2_40.tif",
                    output_path_pers_reclass =
                      "results_foen/L2_foen_class_pers_11_40.tif", 
                    output_path_reclass =
@@ -432,7 +434,7 @@ L2_11_40 <- foen_hm(raster_path = "raster_files/L2_v_11_40.tif",
                    discharge = 11.40)
 
 L2_13_30 <- foen_hm(raster_path = "raster_files/L2_v_13_30.tif", 
-                   base_flow = "raster_files/L2_v_13_30.tif",
+                   base_flow = "raster_files/L2_v_2_40.tif",
                    output_path_pers_reclass =
                      "results_foen/L2_foen_class_pers_13_30.tif", 
                    output_path_reclass =
@@ -447,7 +449,7 @@ L2_13_30 <- foen_hm(raster_path = "raster_files/L2_v_13_30.tif",
                    discharge = 13.30)
 
 L2_16_50 <- foen_hm(raster_path = "raster_files/L2_v_16_50.tif", 
-                   base_flow = "raster_files/L2_v_16_50.tif",
+                   base_flow = "raster_files/L2_v_2_40.tif",
                    output_path_pers_reclass =
                      "results_foen/L2_foen_class_pers_16_50.tif", 
                    output_path_reclass =
@@ -462,7 +464,7 @@ L2_16_50 <- foen_hm(raster_path = "raster_files/L2_v_16_50.tif",
                    discharge = 16.50)
 
 L2_18_90 <- foen_hm(raster_path = "raster_files/L2_v_18_90.tif", 
-                   base_flow = "raster_files/L2_v_18_90.tif",
+                   base_flow = "raster_files/L2_v_2_40.tif",
                    output_path_pers_reclass =
                      "results_foen/L2_foen_class_pers_18_90.tif", 
                    output_path_reclass =
@@ -497,7 +499,7 @@ M1_0_47 <- foen_hm(raster_path = "raster_files/M1_v_0_47.tif",
                    discharge = 0.47)
 
 M1_0_60 <- foen_hm(raster_path = "raster_files/M1_v_0_60.tif", 
-                   base_flow = "raster_files/M1_v_0_60.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_0_60.tif", 
                    output_path_reclass =
@@ -512,7 +514,7 @@ M1_0_60 <- foen_hm(raster_path = "raster_files/M1_v_0_60.tif",
                    discharge = 0.60)
 
 M1_4_00 <- foen_hm(raster_path = "raster_files/M1_v_4_00.tif", 
-                   base_flow = "raster_files/M1_v_4_00.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_4_00.tif", 
                    output_path_reclass =
@@ -525,8 +527,9 @@ M1_4_00 <- foen_hm(raster_path = "raster_files/M1_v_4_00.tif",
                      "results_foen/M1_foen_pers_4_00.tif", 
                    river = "M1", 
                    discharge = 4.00)
+
 M1_6_00 <- foen_hm(raster_path = "raster_files/M1_v_6_00.tif", 
-                   base_flow = "raster_files/M1_v_6_00.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_6_00.tif", 
                    output_path_reclass =
@@ -541,7 +544,7 @@ M1_6_00 <- foen_hm(raster_path = "raster_files/M1_v_6_00.tif",
                    discharge = 6.00)
 
 M1_8_00 <- foen_hm(raster_path = "raster_files/M1_v_8_00.tif", 
-                   base_flow = "raster_files/M1_v_8_00.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_8_00.tif", 
                    output_path_reclass =
@@ -554,8 +557,9 @@ M1_8_00 <- foen_hm(raster_path = "raster_files/M1_v_8_00.tif",
                      "results_foen/M1_foen_pers_8_00.tif", 
                    river = "M1", 
                    discharge = 8.00)
+
 M1_10_00 <- foen_hm(raster_path = "raster_files/M1_v_10_00.tif", 
-                   base_flow = "raster_files/M1_v_10_00.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_10_00.tif", 
                    output_path_reclass =
@@ -570,7 +574,7 @@ M1_10_00 <- foen_hm(raster_path = "raster_files/M1_v_10_00.tif",
                    discharge = 10.00)
 
 M1_12_00 <- foen_hm(raster_path = "raster_files/M1_v_12_00.tif", 
-                   base_flow = "raster_files/M1_v_12_00.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_12_00.tif", 
                    output_path_reclass =
@@ -585,7 +589,7 @@ M1_12_00 <- foen_hm(raster_path = "raster_files/M1_v_12_00.tif",
                    discharge = 12.00)
 
 M1_14_00 <- foen_hm(raster_path = "raster_files/M1_v_14_00.tif", 
-                   base_flow = "raster_files/M1_v_14_00.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_14_00.tif", 
                    output_path_reclass =
@@ -600,7 +604,7 @@ M1_14_00 <- foen_hm(raster_path = "raster_files/M1_v_14_00.tif",
                    discharge = 14.00)
 
 M1_16_00 <- foen_hm(raster_path = "raster_files/M1_v_16_00.tif", 
-                   base_flow = "raster_files/M1_v_16_00.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_16_00.tif", 
                    output_path_reclass =
@@ -615,7 +619,7 @@ M1_16_00 <- foen_hm(raster_path = "raster_files/M1_v_16_00.tif",
                    discharge = 16.00)
 
 M1_18_84 <- foen_hm(raster_path = "raster_files/M1_v_18_84.tif", 
-                   base_flow = "raster_files/M1_v_18_84.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_18_84.tif", 
                    output_path_reclass =
@@ -630,7 +634,7 @@ M1_18_84 <- foen_hm(raster_path = "raster_files/M1_v_18_84.tif",
                    discharge = 18.84)
 
 M1_22_84 <- foen_hm(raster_path = "raster_files/M1_v_22_84.tif", 
-                   base_flow = "raster_files/M1_v_22_84.tif",
+                   base_flow = "raster_files/M1_v_0_47.tif",
                    output_path_pers_reclass =
                      "results_foen/M1_foen_class_pers_22_84.tif", 
                    output_path_reclass =
@@ -664,7 +668,7 @@ S1_2_00 <- foen_hm(raster_path = "raster_files/S1_v_2_00.tif",
                    discharge = 2.00)
 
 S1_3_70 <- foen_hm(raster_path = "raster_files/S1_v_3_70.tif", 
-                   base_flow = "raster_files/S1_v_3_70.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_3_70.tif", 
                    output_path_reclass =
@@ -679,7 +683,7 @@ S1_3_70 <- foen_hm(raster_path = "raster_files/S1_v_3_70.tif",
                    discharge = 3.70)
 
 S1_6_50 <- foen_hm(raster_path = "raster_files/S1_v_6_50.tif", 
-                   base_flow = "raster_files/S1_v_6_50.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_6_50.tif", 
                    output_path_reclass =
@@ -694,7 +698,7 @@ S1_6_50 <- foen_hm(raster_path = "raster_files/S1_v_6_50.tif",
                    discharge = 6.50)
 
 S1_8_50 <- foen_hm(raster_path = "raster_files/S1_v_8_50.tif", 
-                   base_flow = "raster_files/S1_v_8_50.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_8_50.tif", 
                    output_path_reclass =
@@ -709,7 +713,7 @@ S1_8_50 <- foen_hm(raster_path = "raster_files/S1_v_8_50.tif",
                    discharge = 8.50)
 
 S1_10_68 <- foen_hm(raster_path = "raster_files/S1_v_10_68.tif", 
-                   base_flow = "raster_files/S1_v_10_68.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_10_68.tif", 
                    output_path_reclass =
@@ -724,7 +728,7 @@ S1_10_68 <- foen_hm(raster_path = "raster_files/S1_v_10_68.tif",
                    discharge = 10.68)
 
 S1_13_00 <- foen_hm(raster_path = "raster_files/S1_v_13_00.tif", 
-                   base_flow = "raster_files/S1_v_13_00.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_13_00.tif", 
                    output_path_reclass =
@@ -739,7 +743,7 @@ S1_13_00 <- foen_hm(raster_path = "raster_files/S1_v_13_00.tif",
                    discharge = 13.00)
 
 S1_15_00 <- foen_hm(raster_path = "raster_files/S1_v_15_00.tif", 
-                   base_flow = "raster_files/S1_v_15_00.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_15_00.tif", 
                    output_path_reclass =
@@ -754,7 +758,7 @@ S1_15_00 <- foen_hm(raster_path = "raster_files/S1_v_15_00.tif",
                    discharge = 15.00)
 
 S1_18_00 <- foen_hm(raster_path = "raster_files/S1_v_18_00.tif", 
-                   base_flow = "raster_files/S1_v_18_00.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_18_00.tif", 
                    output_path_reclass =
@@ -769,7 +773,7 @@ S1_18_00 <- foen_hm(raster_path = "raster_files/S1_v_18_00.tif",
                    discharge = 18.00)
 
 S1_20_00 <- foen_hm(raster_path = "raster_files/S1_v_20_00.tif", 
-                   base_flow = "raster_files/S1_v_20_00.tif",
+                   base_flow = "raster_files/S1_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S1_foen_class_pers_20_00.tif", 
                    output_path_reclass =
@@ -802,7 +806,7 @@ S2_2_00 <- foen_hm(raster_path = "raster_files/S2_v_2_00.tif",
                    discharge = 2.00)
 
 S2_3_20 <- foen_hm(raster_path = "raster_files/S2_v_3_20.tif", 
-                   base_flow = "raster_files/S2_v_3_20.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_3_20.tif", 
                    output_path_reclass =
@@ -817,7 +821,7 @@ S2_3_20 <- foen_hm(raster_path = "raster_files/S2_v_3_20.tif",
                    discharge = 3.20)
 
 S2_6_50 <- foen_hm(raster_path = "raster_files/S2_v_6_50.tif", 
-                   base_flow = "raster_files/S2_v_6_50.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_6_50.tif", 
                    output_path_reclass =
@@ -832,7 +836,7 @@ S2_6_50 <- foen_hm(raster_path = "raster_files/S2_v_6_50.tif",
                    discharge = 6.50)
 
 S2_8_50 <- foen_hm(raster_path = "raster_files/S2_v_8_50.tif", 
-                   base_flow = "raster_files/S2_v_8_50.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_8_50.tif", 
                    output_path_reclass =
@@ -847,7 +851,7 @@ S2_8_50 <- foen_hm(raster_path = "raster_files/S2_v_8_50.tif",
                    discharge = 8.50)
 
 S2_10_93 <- foen_hm(raster_path = "raster_files/S2_v_10_93.tif", 
-                   base_flow = "raster_files/S2_v_10_93.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_10_93.tif", 
                    output_path_reclass =
@@ -862,7 +866,7 @@ S2_10_93 <- foen_hm(raster_path = "raster_files/S2_v_10_93.tif",
                    discharge = 10.93)
 
 S2_13_00 <- foen_hm(raster_path = "raster_files/S2_v_13_00.tif", 
-                   base_flow = "raster_files/S2_v_13_00.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_13_00.tif", 
                    output_path_reclass =
@@ -877,7 +881,7 @@ S2_13_00 <- foen_hm(raster_path = "raster_files/S2_v_13_00.tif",
                    discharge = 13.00)
 
 S2_15_00 <- foen_hm(raster_path = "raster_files/S2_v_15_00.tif", 
-                   base_flow = "raster_files/S2_v_15_00.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_15_00.tif", 
                    output_path_reclass =
@@ -892,7 +896,7 @@ S2_15_00 <- foen_hm(raster_path = "raster_files/S2_v_15_00.tif",
                    discharge = 15.00)
 
 S2_18_00 <- foen_hm(raster_path = "raster_files/S2_v_18_00.tif", 
-                   base_flow = "raster_files/S2_v_18_00.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_18_00.tif", 
                    output_path_reclass =
@@ -907,7 +911,7 @@ S2_18_00 <- foen_hm(raster_path = "raster_files/S2_v_18_00.tif",
                    discharge = 18.00)
 
 S2_20_00 <- foen_hm(raster_path = "raster_files/S2_v_20_00.tif", 
-                   base_flow = "raster_files/S2_v_20_00.tif",
+                   base_flow = "raster_files/S2_v_2_00.tif",
                    output_path_pers_reclass =
                      "results_foen/S2_foen_class_pers_20_00.tif", 
                    output_path_reclass =
@@ -941,7 +945,7 @@ TH4_11_45 <- foen_hm(raster_path = "raster_files/TH4_v_11_45.tif",
                    discharge = 11.45)
 
 TH4_15_00 <- foen_hm(raster_path = "raster_files/TH4_v_15_00.tif", 
-                   base_flow = "raster_files/TH4_v_15_00.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_15_00.tif", 
                    output_path_reclass =
@@ -956,7 +960,7 @@ TH4_15_00 <- foen_hm(raster_path = "raster_files/TH4_v_15_00.tif",
                    discharge = 15.00)
 
 TH4_18_00 <- foen_hm(raster_path = "raster_files/TH4_v_18_00.tif", 
-                   base_flow = "raster_files/TH4_v_18_00.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_18_00.tif", 
                    output_path_reclass =
@@ -971,7 +975,7 @@ TH4_18_00 <- foen_hm(raster_path = "raster_files/TH4_v_18_00.tif",
                    discharge = 18.00)
 
 TH4_19_96 <- foen_hm(raster_path = "raster_files/TH4_v_19_96.tif", 
-                   base_flow = "raster_files/TH4_v_19_96.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_19_96.tif", 
                    output_path_reclass =
@@ -986,7 +990,7 @@ TH4_19_96 <- foen_hm(raster_path = "raster_files/TH4_v_19_96.tif",
                    discharge = 19.96)
 
 TH4_22_50 <- foen_hm(raster_path = "raster_files/TH4_v_22_50.tif", 
-                   base_flow = "raster_files/TH4_v_22_50.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_22_50.tif", 
                    output_path_reclass =
@@ -1001,7 +1005,7 @@ TH4_22_50 <- foen_hm(raster_path = "raster_files/TH4_v_22_50.tif",
                    discharge = 22.50)
  
 TH4_25_00 <- foen_hm(raster_path = "raster_files/TH4_v_25_00.tif", 
-                   base_flow = "raster_files/TH4_v_25_00.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_25_00.tif", 
                    output_path_reclass =
@@ -1016,7 +1020,7 @@ TH4_25_00 <- foen_hm(raster_path = "raster_files/TH4_v_25_00.tif",
                    discharge = 25.00)
 
 TH4_27_00 <- foen_hm(raster_path = "raster_files/TH4_v_27_00.tif", 
-                   base_flow = "raster_files/TH4_v_27_00.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_27_00.tif", 
                    output_path_reclass =
@@ -1031,7 +1035,7 @@ TH4_27_00 <- foen_hm(raster_path = "raster_files/TH4_v_27_00.tif",
                    discharge = 27.00)
 
 TH4_30_00 <- foen_hm(raster_path = "raster_files/TH4_v_30_00.tif", 
-                   base_flow = "raster_files/TH4_v_30_00.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_30_00.tif", 
                    output_path_reclass =
@@ -1046,7 +1050,7 @@ TH4_30_00 <- foen_hm(raster_path = "raster_files/TH4_v_30_00.tif",
                    discharge = 30.00)
 
 TH4_32_93 <- foen_hm(raster_path = "raster_files/TH4_v_32_93.tif", 
-                   base_flow = "raster_files/TH4_v_32_93.tif",
+                   base_flow = "raster_files/TH4_v_11_45.tif",
                    output_path_pers_reclass =
                      "results_foen/TH4_foen_class_pers_32_93.tif", 
                    output_path_reclass =
@@ -1080,7 +1084,7 @@ VR3_2_90 <- foen_hm(raster_path = "raster_files/VR3_v_2_90.tif",
                    discharge = 2.90)
 
 VR3_6_00 <- foen_hm(raster_path = "raster_files/VR3_v_6_00.tif", 
-                   base_flow = "raster_files/VR3_v_6_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_6_00.tif", 
                    output_path_reclass =
@@ -1095,7 +1099,7 @@ VR3_6_00 <- foen_hm(raster_path = "raster_files/VR3_v_6_00.tif",
                    discharge = 6.00)
 
 VR3_9_00 <- foen_hm(raster_path = "raster_files/VR3_v_9_00.tif", 
-                   base_flow = "raster_files/VR3_v_9_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_9_00.tif", 
                    output_path_reclass =
@@ -1110,7 +1114,7 @@ VR3_9_00 <- foen_hm(raster_path = "raster_files/VR3_v_9_00.tif",
                    discharge = 9.00)
 
 VR3_12_00 <- foen_hm(raster_path = "raster_files/VR3_v_12_00.tif", 
-                   base_flow = "raster_files/VR3_v_12_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_12_00.tif", 
                    output_path_reclass =
@@ -1125,7 +1129,7 @@ VR3_12_00 <- foen_hm(raster_path = "raster_files/VR3_v_12_00.tif",
                    discharge = 12.00)
 
 VR3_15_00 <- foen_hm(raster_path = "raster_files/VR3_v_15_00.tif", 
-                   base_flow = "raster_files/VR3_v_15_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_15_00.tif", 
                    output_path_reclass =
@@ -1140,7 +1144,7 @@ VR3_15_00 <- foen_hm(raster_path = "raster_files/VR3_v_15_00.tif",
                    discharge = 15.00)
 
 VR3_18_80 <- foen_hm(raster_path = "raster_files/VR3_v_18_80.tif", 
-                   base_flow = "raster_files/VR3_v_18_80.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_18_80.tif", 
                    output_path_reclass =
@@ -1155,7 +1159,7 @@ VR3_18_80 <- foen_hm(raster_path = "raster_files/VR3_v_18_80.tif",
                    discharge = 18.80)
 
 VR3_22_00 <- foen_hm(raster_path = "raster_files/VR3_v_22_00.tif", 
-                   base_flow = "raster_files/VR3_v_22_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_22_00.tif", 
                    output_path_reclass =
@@ -1170,7 +1174,7 @@ VR3_22_00 <- foen_hm(raster_path = "raster_files/VR3_v_22_00.tif",
                    discharge = 22.00)
 
 VR3_25_00 <- foen_hm(raster_path = "raster_files/VR3_v_25_00.tif", 
-                   base_flow = "raster_files/VR3_v_25_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_25_00.tif", 
                    output_path_reclass =
@@ -1185,7 +1189,7 @@ VR3_25_00 <- foen_hm(raster_path = "raster_files/VR3_v_25_00.tif",
                    discharge = 25.00)
 
 VR3_28_00 <- foen_hm(raster_path = "raster_files/VR3_v_28_00.tif", 
-                   base_flow = "raster_files/VR3_v_28_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_28_00.tif", 
                    output_path_reclass =
@@ -1200,7 +1204,7 @@ VR3_28_00 <- foen_hm(raster_path = "raster_files/VR3_v_28_00.tif",
                    discharge = 28.00)
 
 VR3_31_00 <- foen_hm(raster_path = "raster_files/VR3_v_31_00.tif", 
-                   base_flow = "raster_files/VR3_v_31_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_31_00.tif", 
                    output_path_reclass =
@@ -1215,7 +1219,7 @@ VR3_31_00 <- foen_hm(raster_path = "raster_files/VR3_v_31_00.tif",
                    discharge = 31.00)
 
 VR3_34_00 <- foen_hm(raster_path = "raster_files/VR3_v_34_00.tif", 
-                   base_flow = "raster_files/VR3_v_34_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_34_00.tif", 
                    output_path_reclass =
@@ -1230,7 +1234,7 @@ VR3_34_00 <- foen_hm(raster_path = "raster_files/VR3_v_34_00.tif",
                    discharge = 34.00)
 
 VR3_37_00 <- foen_hm(raster_path = "raster_files/VR3_v_37_00.tif", 
-                   base_flow = "raster_files/VR3_v_37_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_37_00.tif", 
                    output_path_reclass =
@@ -1245,7 +1249,7 @@ VR3_37_00 <- foen_hm(raster_path = "raster_files/VR3_v_37_00.tif",
                    discharge = 37.00)
 
 VR3_40_10 <- foen_hm(raster_path = "raster_files/VR3_v_40_10.tif", 
-                   base_flow = "raster_files/VR3_v_40_10.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_40_10.tif", 
                    output_path_reclass =
@@ -1260,7 +1264,7 @@ VR3_40_10 <- foen_hm(raster_path = "raster_files/VR3_v_40_10.tif",
                    discharge = 40.10)
 
 VR3_43_00 <- foen_hm(raster_path = "raster_files/VR3_v_43_00.tif", 
-                   base_flow = "raster_files/VR3_v_43_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_43_00.tif", 
                    output_path_reclass =
@@ -1275,7 +1279,7 @@ VR3_43_00 <- foen_hm(raster_path = "raster_files/VR3_v_43_00.tif",
                    discharge = 43.00)
 
 VR3_46_00 <- foen_hm(raster_path = "raster_files/VR3_v_46_00.tif", 
-                   base_flow = "raster_files/VR3_v_46_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_46_00.tif", 
                    output_path_reclass =
@@ -1290,7 +1294,7 @@ VR3_46_00 <- foen_hm(raster_path = "raster_files/VR3_v_46_00.tif",
                    discharge = 46.00)
 
 VR3_48_00 <- foen_hm(raster_path = "raster_files/VR3_v_48_00.tif", 
-                   base_flow = "raster_files/VR3_v_48_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_48_00.tif", 
                    output_path_reclass =
@@ -1305,7 +1309,7 @@ VR3_48_00 <- foen_hm(raster_path = "raster_files/VR3_v_48_00.tif",
                    discharge = 48.00)
 
 VR3_50_00 <- foen_hm(raster_path = "raster_files/VR3_v_50_00.tif", 
-                   base_flow = "raster_files/VR3_v_50_00.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_50_00.tif", 
                    output_path_reclass =
@@ -1320,7 +1324,7 @@ VR3_50_00 <- foen_hm(raster_path = "raster_files/VR3_v_50_00.tif",
                    discharge = 50.00)
 
 VR3_52_90 <- foen_hm(raster_path = "raster_files/VR3_v_52_90.tif", 
-                   base_flow = "raster_files/VR3_v_52_90.tif",
+                   base_flow = "raster_files/VR3_v_2_90.tif",
                    output_path_pers_reclass =
                      "results_foen/VR3_foen_class_pers_52_90.tif", 
                    output_path_reclass =
