@@ -1740,19 +1740,13 @@ S1_Q <- rbind(Q_1_1_v, Q_1_2_v, Q_1_3_v, Q_2_1_v, Q_2_2_v,
                Q_2_2_wd, Q_2_3_wd, Q_3_1_wd, Q_3_2_wd, 
                Q_3_3_wd, Q_4_1_wd, Q_4_2_wd, Q_4_3_wd)
 
-S1_Q_mean <- mean(S1_Q$Q_samp, na.rm = TRUE)
+S1_Q_mean <- mean(S1_Q$Q_samp)
 ```
 
-# Intermediate Results
-```{r}
-results <- data.frame(GL1_Q_mean, GL2_Q_mean, 
-           L2_Q_mean, M1_Q_mean, S1_Q_mean)
 
-results_Q_mean <- pivot_longer(results, names_to = "section", values_to = "Q_mean", cols = (1:5))
-```
 
-## Sitter: S2
-### Extract Data 
+# Sitter: S2
+## Extract Data 
 ```{r}
 # read stacked raster
 S2_stacked <- stack("rasters_stacked/S2_stacked.grd")
@@ -1764,7 +1758,7 @@ S2_extract <- terra::extract(S2_stacked, data_S2) |>
          v_measured = v_measured/100)
 ```
 
-### Prep Data for LM Model 
+## Prep Data for LM Model 
 ```{r}
 # select columns with certain conditions (i want to select columns with v and columns with wd)
 S2_v <- S2_extract |>  
@@ -1860,205 +1854,205 @@ S2_4_3_wd <- S2_wd |>
   subset(join_key == "S2-4-3")
 ```
 
-### ! Plot & LM
+## Plot & LM
 ```{r}
 # reconstruct discharges 
-# S1 VELOCITY 
-## Transect: S1-1-1
-Q_1_1_v <- extract_Q(data = S1_1_1_v, 
-                   response = S1_1_1_v$velocity, 
-                   predictor = S1_1_1_v$discharge,
-                   response_measured = S1_extract[1, "v_measured"],
+# S2 VELOCITY 
+## Transect: S2-1-1
+Q_1_1_v <- extract_Q(data = S2_1_1_v, 
+                   response = S2_1_1_v$velocity, 
+                   predictor = S2_1_1_v$discharge,
+                   response_measured = S2_extract[1, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_1_1")
+                   transect = "S2_1_1")
 
-## Transect: S1-1-2
-Q_1_2_v <- extract_Q(data = S1_1_2_v, 
-                   response = S1_1_2_v$velocity, 
-                   predictor = S1_1_2_v$discharge,
-                   response_measured = S1_extract[2, "v_measured"],
+## Transect: S2-1-2
+Q_1_2_v <- extract_Q(data = S2_1_2_v, 
+                   response = S2_1_2_v$velocity, 
+                   predictor = S2_1_2_v$discharge,
+                   response_measured = S2_extract[2, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_1_2")
+                   transect = "S2_1_2")
 
-## Transect: S1-1-3
-Q_1_3_v <- extract_Q(data = S1_1_3_v, 
-                   response = S1_1_3_v$velocity, 
-                   predictor = S1_1_3_v$discharge,
-                   response_measured = S1_extract[3, "v_measured"],
+## Transect: S2-1-3
+Q_1_3_v <- extract_Q(data = S2_1_3_v, 
+                   response = S2_1_3_v$velocity, 
+                   predictor = S2_1_3_v$discharge,
+                   response_measured = S2_extract[3, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_1_3")
+                   transect = "S2_1_3")
 
-## Transect: S1-2-1
-Q_2_1_v <- extract_Q(data = S1_2_1_v, 
-                   response = S1_2_1_v$velocity, 
-                   predictor = S1_2_1_v$discharge,
-                   response_measured = S1_extract[4, "v_measured"],
+## Transect: S2-2-1
+Q_2_1_v <- extract_Q(data = S2_2_1_v, 
+                   response = S2_2_1_v$velocity, 
+                   predictor = S2_2_1_v$discharge,
+                   response_measured = S2_extract[4, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_2_1")
+                   transect = "S2_2_1")
 
-## Transect: S1-2-2
-Q_2_2_v <- extract_Q(data = S1_2_2_v, 
-                   response = S1_2_2_v$velocity, 
-                   predictor = S1_2_2_v$discharge,
-                   response_measured = S1_extract[5, "v_measured"],
+## Transect: S2-2-2
+Q_2_2_v <- extract_Q(data = S2_2_2_v, 
+                   response = S2_2_2_v$velocity, 
+                   predictor = S2_2_2_v$discharge,
+                   response_measured = S2_extract[5, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_2_2")
+                   transect = "S2_2_2")
 
-## Transect: S1-2-3
-Q_2_3_v <- extract_Q(data = S1_2_3_v, 
-                   response = S1_2_3_v$velocity, 
-                   predictor = S1_2_3_v$discharge,
-                   response_measured = S1_extract[6, "v_measured"],
+## Transect: S2-2-3
+Q_2_3_v <- extract_Q(data = S2_2_3_v, 
+                   response = S2_2_3_v$velocity, 
+                   predictor = S2_2_3_v$discharge,
+                   response_measured = S2_extract[6, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_2_3")
+                   transect = "S2_2_3")
 
-## Transect: S1-3-1
-Q_3_1_v <- extract_Q(data = S1_3_1_v, 
-                   response = S1_3_1_v$velocity, 
-                   predictor = S1_3_1_v$discharge,
-                   response_measured = S1_extract[7, "v_measured"],
+## Transect: S2-3-1
+Q_3_1_v <- extract_Q(data = S2_3_1_v, 
+                   response = S2_3_1_v$velocity, 
+                   predictor = S2_3_1_v$discharge,
+                   response_measured = S2_extract[7, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_3_1")
+                   transect = "S2_3_1")
 
-## Transect: S1-3-2
-Q_3_2_v <- extract_Q(data = S1_3_2_v, 
-                   response = S1_3_2_v$velocity, 
-                   predictor = S1_3_2_v$discharge,
-                   response_measured = S1_extract[8, "v_measured"],
+## Transect: S2-3-2
+Q_3_2_v <- extract_Q(data = S2_3_2_v, 
+                   response = S2_3_2_v$velocity, 
+                   predictor = S2_3_2_v$discharge,
+                   response_measured = S2_extract[8, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_3_2")
+                   transect = "S2_3_2")
 
-## Transect: S1-3-3
-Q_3_3_v <- extract_Q(data = S1_3_3_v, 
-                   response = S1_3_3_v$velocity, 
-                   predictor = S1_3_3_v$discharge,
-                   response_measured = S1_extract[9, "v_measured"],
+## Transect: S2-3-3
+Q_3_3_v <- extract_Q(data = S2_3_3_v, 
+                   response = S2_3_3_v$velocity, 
+                   predictor = S2_3_3_v$discharge,
+                   response_measured = S2_extract[9, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_3_3")
+                   transect = "S2_3_3")
 
-## Transect: S1-4-1
-Q_4_1_v <- extract_Q(data = S1_4_1_v, 
-                   response = S1_4_1_v$velocity, 
-                   predictor = S1_4_1_v$discharge,
-                   response_measured = S1_extract[10, "v_measured"],
+## Transect: S2-4-1
+Q_4_1_v <- extract_Q(data = S2_4_1_v, 
+                   response = S2_4_1_v$velocity, 
+                   predictor = S2_4_1_v$discharge,
+                   response_measured = S2_extract[10, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_4_1")
+                   transect = "S2_4_1")
 
-## Transect: S1-4-2
-Q_4_2_v <- extract_Q(data = S1_4_2_v, 
-                   response = S1_4_2_v$velocity, 
-                   predictor = S1_4_2_v$discharge,
-                   response_measured = S1_extract[11, "v_measured"],
+## Transect: S2-4-2
+Q_4_2_v <- extract_Q(data = S2_4_2_v, 
+                   response = S2_4_2_v$velocity, 
+                   predictor = S2_4_2_v$discharge,
+                   response_measured = S2_extract[11, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_4_2")
+                   transect = "S2_4_2")
 
-## Transect: S1-4-3
-Q_4_3_v <- extract_Q(data = S1_4_3_v, 
-                   response = S1_4_3_v$velocity, 
-                   predictor = S1_4_3_v$discharge,
-                   response_measured = S1_extract[12, "v_measured"],
+## Transect: S2-4-3
+Q_4_3_v <- extract_Q(data = S2_4_3_v, 
+                   response = S2_4_3_v$velocity, 
+                   predictor = S2_4_3_v$discharge,
+                   response_measured = S2_extract[12, "v_measured"],
                    v_wd = "velocity",
-                   transect = "S1_4_3")
+                   transect = "S2_4_3")
 ```
 
 
 ```{r}
-# S1 WATER DEPTH
-## Transect: S1-1-1
-Q_1_1_wd <- extract_Q(data = S1_1_1_wd, 
-                   response = S1_1_1_wd$water_depth, 
-                   predictor = S1_1_1_wd$discharge,
-                   response_measured = S1_extract[1, "wd_measured"],
+# S2 WATER DEPTH
+## Transect: S2-1-1
+Q_1_1_wd <- extract_Q(data = S2_1_1_wd, 
+                   response = S2_1_1_wd$water_depth, 
+                   predictor = S2_1_1_wd$discharge,
+                   response_measured = S2_extract[1, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_1_1")
+                   transect = "S2_1_1")
 
-## Transect: S1-1-2
-Q_1_2_wd <- extract_Q(data = S1_1_2_wd, 
-                   response = S1_1_1_wd$water_depth, 
-                   predictor = S1_1_2_wd$discharge,
-                   response_measured = S1_extract[2, "wd_measured"],
+## Transect: S2-1-2
+Q_1_2_wd <- extract_Q(data = S2_1_2_wd, 
+                   response = S2_1_1_wd$water_depth, 
+                   predictor = S2_1_2_wd$discharge,
+                   response_measured = S2_extract[2, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_1_2")
+                   transect = "S2_1_2")
 
-## Transect: S1-1-3
-Q_1_3_wd <- extract_Q(data = S1_1_3_wd, 
-                   response = S1_1_1_wd$water_depth, 
-                   predictor = S1_1_3_wd$discharge,
-                   response_measured = S1_extract[3, "wd_measured"],
+## Transect: S2-1-3
+Q_1_3_wd <- extract_Q(data = S2_1_3_wd, 
+                   response = S2_1_1_wd$water_depth, 
+                   predictor = S2_1_3_wd$discharge,
+                   response_measured = S2_extract[3, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_1_3")
+                   transect = "S2_1_3")
 
-## Transect: S1-2-1
-Q_2_1_wd <- extract_Q(data = S1_2_1_wd, 
-                   response = S1_1_1_wd$water_depth, 
-                   predictor = S1_2_1_wd$discharge,
-                   response_measured = S1_extract[4, "wd_measured"],
+## Transect: S2-2-1
+Q_2_1_wd <- extract_Q(data = S2_2_1_wd, 
+                   response = S2_1_1_wd$water_depth, 
+                   predictor = S2_2_1_wd$discharge,
+                   response_measured = S2_extract[4, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_2_1")
+                   transect = "S2_2_1")
 
-## Transect: S1-2-2
-Q_2_2_wd <- extract_Q(data = S1_2_2_wd, 
-                   response = S1_2_2_wd$water_depth, 
-                   predictor = S1_2_2_wd$discharge,
-                   response_measured = S1_extract[5, "wd_measured"],
+## Transect: S2-2-2
+Q_2_2_wd <- extract_Q(data = S2_2_2_wd, 
+                   response = S2_2_2_wd$water_depth, 
+                   predictor = S2_2_2_wd$discharge,
+                   response_measured = S2_extract[5, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_2_2")
+                   transect = "S2_2_2")
 
-## Transect: S1-2-3
-Q_2_3_wd <- extract_Q(data = S1_2_3_wd, 
-                   response = S1_2_3_wd$water_depth, 
-                   predictor = S1_2_3_wd$discharge,
-                   response_measured = S1_extract[6, "wd_measured"],
+## Transect: S2-2-3
+Q_2_3_wd <- extract_Q(data = S2_2_3_wd, 
+                   response = S2_2_3_wd$water_depth, 
+                   predictor = S2_2_3_wd$discharge,
+                   response_measured = S2_extract[6, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_2_3")
+                   transect = "S2_2_3")
 
 ## Transect: S1-3-1
-Q_3_1_wd <- extract_Q(data = S1_3_1_wd, 
-                   response = S1_3_1_wd$water_depth, 
-                   predictor = S1_3_1_wd$discharge,
-                   response_measured = S1_extract[7, "wd_measured"],
+Q_3_1_wd <- extract_Q(data = S2_3_1_wd, 
+                   response = S2_3_1_wd$water_depth, 
+                   predictor = S2_3_1_wd$discharge,
+                   response_measured = S2_extract[7, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_3_1")
+                   transect = "S2_3_1")
 
-## Transect: S1-3-2
-Q_3_2_wd <- extract_Q(data = S1_3_2_wd, 
-                   response = S1_3_2_wd$water_depth, 
-                   predictor = S1_3_2_wd$discharge,
-                   response_measured = S1_extract[8, "wd_measured"],
+## Transect: S2-3-2
+Q_3_2_wd <- extract_Q(data = S2_3_2_wd, 
+                   response = S2_3_2_wd$water_depth, 
+                   predictor = S2_3_2_wd$discharge,
+                   response_measured = S2_extract[8, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_3_2")
+                   transect = "S2_3_2")
 
-## Transect: S1-3-3
-Q_3_3_wd <- extract_Q(data = S1_3_3_wd, 
-                   response = S1_3_3_wd$water_depth, 
-                   predictor = S1_3_3_wd$discharge,
-                   response_measured = S1_extract[9, "wd_measured"],
+## Transect: S2-3-3
+Q_3_3_wd <- extract_Q(data = S2_3_3_wd, 
+                   response = S2_3_3_wd$water_depth, 
+                   predictor = S2_3_3_wd$discharge,
+                   response_measured = S2_extract[9, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_3_3")
+                   transect = "S2_3_3")
 
-## Transect: S1-4-1
-Q_4_1_wd <- extract_Q(data = S1_4_1_wd, 
-                   response = S1_4_1_wd$water_depth, 
-                   predictor = S1_4_1_wd$discharge,
-                   response_measured = S1_extract[10, "wd_measured"],
+## Transect: S2-4-1
+Q_4_1_wd <- extract_Q(data = S2_4_1_wd, 
+                   response = S2_4_1_wd$water_depth, 
+                   predictor = S2_4_1_wd$discharge,
+                   response_measured = S2_extract[10, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_4_1")
+                   transect = "S2_4_1")
 
-## Transect: S1-4-2
-Q_4_2_wd <- extract_Q(data = S1_4_2_wd, 
-                   response = S1_4_2_wd$water_depth, 
-                   predictor = S1_4_2_wd$discharge,
-                   response_measured = S1_extract[11, "wd_measured"],
+## Transect: S2-4-2
+Q_4_2_wd <- extract_Q(data = S2_4_2_wd, 
+                   response = S2_4_2_wd$water_depth, 
+                   predictor = S2_4_2_wd$discharge,
+                   response_measured = S2_extract[11, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_4_2")
+                   transect = "S2_4_2")
 
-## Transect: S1-4-3
-Q_4_3_wd <- extract_Q(data = S1_4_3_wd, 
-                   response = S1_4_3_wd$water_depth, 
-                   predictor = S1_4_3_wd$discharge,
-                   response_measured = S1_extract[12, "wd_measured"],
+## Transect: S2-4-3
+Q_4_3_wd <- extract_Q(data = S2_4_3_wd, 
+                   response = S2_4_3_wd$water_depth, 
+                   predictor = S2_4_3_wd$discharge,
+                   response_measured = S2_extract[12, "wd_measured"],
                    v_wd = "water_depth",
-                   transect = "S1_4_3")
+                   transect = "S2_4_3")
 ```
 
 
@@ -2070,11 +2064,11 @@ S2_Q <- rbind(Q_1_1_v, Q_1_2_v, Q_1_3_v, Q_2_1_v, Q_2_2_v,
                Q_2_2_wd, Q_2_3_wd, Q_3_1_wd, Q_3_2_wd, 
                Q_3_3_wd, Q_4_1_wd, Q_4_2_wd, Q_4_3_wd)
 
-mean(S2_Q$Q_samp, na.rm = TRUE)
+S2_Q_mean <- mean(S2_Q$Q_samp, na.rm = TRUE)
 ```
 
-## Thur: TH4
-### Extract Data 
+# Thur: TH4
+## Extract Data 
 ```{r}
 # read stacked raster
 TH4_stacked <- stack("rasters_stacked/TH4_stacked.grd")
@@ -2086,8 +2080,318 @@ TH4_extract <- terra::extract(TH4_stacked, data_TH4) |>
          v_measured = v_measured/100)
 ```
 
-## Vorderrhein: VR3
-### Extract Data 
+## Prep Data for LM Model 
+```{r}
+# select columns with certain conditions (i want to select columns with v and columns with wd)
+TH4_v <- TH4_extract |>  
+  dplyr::select(contains(c("v", "join_key"), ignore.case = TRUE)) |>
+  dplyr::select(-v_measured) |>
+  pivot_longer(cols = c(1:9),names_to = "discharge",
+               values_to = "velocity") |>
+  mutate(discharge = gsub("TH4_v_", "", discharge),
+         discharge = as.numeric(gsub("_", ".", discharge)))
+
+TH4_wd <- TH4_extract |>  
+  dplyr::select(contains(c("wd", "join_key"), ignore.case = TRUE)) |>
+  dplyr::select(-wd_measured) |>
+  pivot_longer(cols = c(1:9),names_to = "discharge",
+               values_to = "water_depth") |>
+  mutate(discharge = gsub("TH4_wd_", "", discharge),
+         discharge = as.numeric(gsub("_", ".", discharge)))
+
+
+# select single transect points for lm model & plot 
+# TH4 VELOCITY
+TH4_1_1_v <- TH4_v |>
+  subset(join_key == "TH4-1-1") 
+
+TH4_1_2_v <- TH4_v |>
+  subset(join_key == "TH4-1-2")
+
+TH4_1_3_v <- TH4_v |>
+  subset(join_key == "TH4-1-3")
+
+TH4_2_1_v <- TH4_v |>
+  subset(join_key == "TH4-2-1")
+
+TH4_2_2_v <- TH4_v |>
+  subset(join_key == "TH4-2-2")
+
+TH4_2_3_v <- TH4_v |>
+  subset(join_key == "TH4-2-3")
+
+TH4_3_1_v <- TH4_v |>
+  subset(join_key == "TH4-3-1")
+
+TH4_3_2_v <- TH4_v |>
+  subset(join_key == "TH4-3-2")
+
+TH4_3_3_v <- TH4_v |>
+  subset(join_key == "TH4-3-3")
+
+TH4_4_1_v <- TH4_v |>
+  subset(join_key == "TH4-4-1")
+
+TH4_4_2_v <- TH4_v |>
+  subset(join_key == "TH4-4-2")
+
+TH4_4_3_v <- TH4_v |>
+  subset(join_key == "TH4-4-3")
+
+# TH4 WATER DEPTH
+TH4_1_1_wd <- TH4_wd |>
+  subset(join_key == "TH4-1-1") 
+
+TH4_1_2_wd <- TH4_wd |>
+  subset(join_key == "TH4-1-2")
+
+TH4_1_3_wd <- TH4_wd |>
+  subset(join_key == "TH4-1-3")
+
+TH4_2_1_wd <- TH4_wd |>
+  subset(join_key == "TH4-2-1")
+
+TH4_2_2_wd <- TH4_wd |>
+  subset(join_key == "TH4-2-2")
+
+TH4_2_3_wd <- TH4_wd |>
+  subset(join_key == "TH4-2-3")
+
+TH4_3_1_wd <- TH4_wd |>
+  subset(join_key == "TH4-3-1")
+
+TH4_3_2_wd <- TH4_wd |>
+  subset(join_key == "TH4-3-2")
+
+TH4_3_3_wd <- TH4_wd |>
+  subset(join_key == "TH4-3-3")
+
+TH4_4_1_wd <- TH4_wd |>
+  subset(join_key == "TH4-4-1")
+
+TH4_4_2_wd <- TH4_wd |>
+  subset(join_key == "TH4-4-2")
+
+TH4_4_3_wd <- TH4_wd |>
+  subset(join_key == "TH4-4-3")
+```
+
+## Plot & LM
+```{r}
+# reconstruct discharges 
+# TH4 VELOCITY 
+## Transect: TH4-1-1
+Q_1_1_v <- extract_Q(data = TH4_1_1_v, 
+                   response = TH4_1_1_v$velocity, 
+                   predictor = TH4_1_1_v$discharge,
+                   response_measured = TH4_extract[1, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_1_1")
+
+## Transect: TH4-1-2
+Q_1_2_v <- extract_Q(data = TH4_1_2_v, 
+                   response = TH4_1_2_v$velocity, 
+                   predictor = TH4_1_2_v$discharge,
+                   response_measured = TH4_extract[2, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_1_2")
+
+## Transect: TH4-1-3
+Q_1_3_v <- extract_Q(data = TH4_1_3_v, 
+                   response = TH4_1_3_v$velocity, 
+                   predictor = TH4_1_3_v$discharge,
+                   response_measured = TH4_extract[3, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_1_3")
+
+## Transect: TH4-2-1
+Q_2_1_v <- extract_Q(data = TH4_2_1_v, 
+                   response = TH4_2_1_v$velocity, 
+                   predictor = TH4_2_1_v$discharge,
+                   response_measured = TH4_extract[4, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_2_1")
+
+## Transect: TH4-2-2
+Q_2_2_v <- extract_Q(data = TH4_2_2_v, 
+                   response = TH4_2_2_v$velocity, 
+                   predictor = TH4_2_2_v$discharge,
+                   response_measured = TH4_extract[5, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_2_2")
+
+## Transect: TH4-2-3
+Q_2_3_v <- extract_Q(data = TH4_2_3_v, 
+                   response = TH4_2_3_v$velocity, 
+                   predictor = TH4_2_3_v$discharge,
+                   response_measured = TH4_extract[6, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_2_3")
+
+## Transect: TH4-3-1
+Q_3_1_v <- extract_Q(data = TH4_3_1_v, 
+                   response = TH4_3_1_v$velocity, 
+                   predictor = TH4_3_1_v$discharge,
+                   response_measured = TH4_extract[7, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_3_1")
+
+## Transect: TH4-3-2
+Q_3_2_v <- extract_Q(data = TH4_3_2_v, 
+                   response = TH4_3_2_v$velocity, 
+                   predictor = TH4_3_2_v$discharge,
+                   response_measured = TH4_extract[8, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_3_2")
+
+## Transect: TH4-3-3
+Q_3_3_v <- extract_Q(data = TH4_3_3_v, 
+                   response = TH4_3_3_v$velocity, 
+                   predictor = TH4_3_3_v$discharge,
+                   response_measured = TH4_extract[9, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_3_3")
+
+## Transect: TH4-4-1
+Q_4_1_v <- extract_Q(data = TH4_4_1_v, 
+                   response = TH4_4_1_v$velocity, 
+                   predictor = TH4_4_1_v$discharge,
+                   response_measured = TH4_extract[10, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_4_1")
+
+## Transect: TH4-4-2
+Q_4_2_v <- extract_Q(data = TH4_4_2_v, 
+                   response = TH4_4_2_v$velocity, 
+                   predictor = TH4_4_2_v$discharge,
+                   response_measured = TH4_extract[11, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_4_2")
+
+## Transect: TH4-4-3
+Q_4_3_v <- extract_Q(data = TH4_4_3_v, 
+                   response = TH4_4_3_v$velocity, 
+                   predictor = TH4_4_3_v$discharge,
+                   response_measured = TH4_extract[12, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "TH4_4_3")
+```
+
+
+```{r}
+# TH4 WATER DEPTH
+## Transect: TH4-1-1
+Q_1_1_wd <- extract_Q(data = TH4_1_1_wd, 
+                   response = TH4_1_1_wd$water_depth, 
+                   predictor = TH4_1_1_wd$discharge,
+                   response_measured = TH4_extract[1, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_1_1")
+
+## Transect: TH4-1-2
+Q_1_2_wd <- extract_Q(data = TH4_1_2_wd, 
+                   response = TH4_1_1_wd$water_depth, 
+                   predictor = TH4_1_2_wd$discharge,
+                   response_measured = TH4_extract[2, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_1_2")
+
+## Transect: TH4-1-3
+Q_1_3_wd <- extract_Q(data = TH4_1_3_wd, 
+                   response = TH4_1_1_wd$water_depth, 
+                   predictor = TH4_1_3_wd$discharge,
+                   response_measured = TH4_extract[3, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_1_3")
+
+## Transect: TH4-2-1
+Q_2_1_wd <- extract_Q(data = TH4_2_1_wd, 
+                   response = TH4_1_1_wd$water_depth, 
+                   predictor = TH4_2_1_wd$discharge,
+                   response_measured = TH4_extract[4, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_2_1")
+
+## Transect: TH4-2-2
+Q_2_2_wd <- extract_Q(data = TH4_2_2_wd, 
+                   response = TH4_2_2_wd$water_depth, 
+                   predictor = TH4_2_2_wd$discharge,
+                   response_measured = TH4_extract[5, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_2_2")
+
+## Transect: TH4-2-3
+Q_2_3_wd <- extract_Q(data = TH4_2_3_wd, 
+                   response = TH4_2_3_wd$water_depth, 
+                   predictor = TH4_2_3_wd$discharge,
+                   response_measured = TH4_extract[6, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_2_3")
+
+## Transect: TH4-3-1
+Q_3_1_wd <- extract_Q(data = TH4_3_1_wd, 
+                   response = TH4_3_1_wd$water_depth, 
+                   predictor = TH4_3_1_wd$discharge,
+                   response_measured = TH4_extract[7, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_3_1")
+
+## Transect: TH4-3-2
+Q_3_2_wd <- extract_Q(data = TH4_3_2_wd, 
+                   response = TH4_3_2_wd$water_depth, 
+                   predictor = TH4_3_2_wd$discharge,
+                   response_measured = TH4_extract[8, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_3_2")
+
+## Transect: TH4-3-3
+Q_3_3_wd <- extract_Q(data = TH4_3_3_wd, 
+                   response = TH4_3_3_wd$water_depth, 
+                   predictor = TH4_3_3_wd$discharge,
+                   response_measured = TH4_extract[9, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_3_3")
+
+## Transect: TH4-4-1
+Q_4_1_wd <- extract_Q(data = TH4_4_1_wd, 
+                   response = TH4_4_1_wd$water_depth, 
+                   predictor = TH4_4_1_wd$discharge,
+                   response_measured = TH4_extract[10, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_4_1")
+
+## Transect: TH4-4-2
+Q_4_2_wd <- extract_Q(data = TH4_4_2_wd, 
+                   response = TH4_4_2_wd$water_depth, 
+                   predictor = TH4_4_2_wd$discharge,
+                   response_measured = TH4_extract[11, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_4_2")
+
+## Transect: TH4-4-3
+Q_4_3_wd <- extract_Q(data = TH4_4_3_wd, 
+                   response = TH4_4_3_wd$water_depth, 
+                   predictor = TH4_4_3_wd$discharge,
+                   response_measured = TH4_extract[12, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "TH4_4_3")
+```
+
+
+```{r}
+TH4_Q <- rbind(Q_1_1_v, Q_1_2_v, Q_1_3_v, Q_2_1_v, Q_2_2_v,
+               Q_2_3_v, Q_3_1_v, Q_3_2_v, Q_3_3_v, Q_4_1_v,
+               Q_4_2_v, Q_4_3_v,
+               Q_1_1_wd, Q_1_2_wd, Q_1_3_wd, Q_2_1_wd,
+               Q_2_2_wd, Q_2_3_wd, Q_3_1_wd, Q_3_2_wd, 
+               Q_3_3_wd, Q_4_1_wd, Q_4_2_wd, Q_4_3_wd)
+
+TH4_Q_mean <- mean(TH4_Q$Q_samp)
+```
+
+
+# Vorderrhein: VR3
+## Extract Data 
 ```{r}
 # read stacked raster
 VR3_stacked <- stack("rasters_stacked/VR3_stacked.grd")
@@ -2099,6 +2403,324 @@ VR3_extract <- terra::extract(VR3_stacked, data_VR3) |>
          v_measured = v_measured/100)
 ```
 
+## Prep Data for LM Model 
+```{r}
+# select columns with certain conditions (i want to select columns with v and columns with wd)
+VR3_v <- VR3_extract |>  
+  dplyr::select(contains(c("v", "join_key"), ignore.case = TRUE)) |>
+  dplyr::select(-v_measured) |>
+  pivot_longer(cols = c(1:18),names_to = "discharge",
+               values_to = "velocity") |>
+  mutate(discharge = gsub("VR3_v_", "", discharge),
+         discharge = as.numeric(gsub("_", ".", discharge)))
+
+VR3_wd <- VR3_extract |>  
+  dplyr::select(contains(c("wd", "join_key"), ignore.case = TRUE)) |>
+  dplyr::select(-wd_measured) |>
+  pivot_longer(cols = c(1:18),names_to = "discharge",
+               values_to = "water_depth") |>
+  mutate(discharge = gsub("VR3_wd_", "", discharge),
+         discharge = as.numeric(gsub("_", ".", discharge)))
+
+
+# select single transect points for lm model & plot 
+# TH4 VELOCITY
+VR3_1_1_v <- VR3_v |>
+  subset(join_key == "VR3-1-1") 
+
+VR3_1_2_v <- VR3_v |>
+  subset(join_key == "VR3-1-2")
+
+VR3_1_3_v <- VR3_v |>
+  subset(join_key == "VR3-1-3")
+
+VR3_2_1_v <- VR3_v |>
+  subset(join_key == "VR3-2-1")
+
+VR3_2_2_v <- VR3_v |>
+  subset(join_key == "VR3-2-2")
+
+VR3_2_3_v <- VR3_v |>
+  subset(join_key == "VR3-2-3")
+
+VR3_3_1_v <- VR3_v |>
+  subset(join_key == "VR3-3-1")
+
+VR3_3_2_v <- VR3_v |>
+  subset(join_key == "VR3-3-2")
+
+VR3_3_3_v <- VR3_v |>
+  subset(join_key == "VR3-3-3")
+
+VR3_4_1_v <- VR3_v |>
+  subset(join_key == "VR3-4-1")
+
+VR3_4_2_v <- VR3_v |>
+  subset(join_key == "VR3-4-2")
+
+VR3_4_3_v <- VR3_v |>
+  subset(join_key == "VR3-4-3")
+
+# VR3 WATER DEPTH
+VR3_1_1_wd <- VR3_wd |>
+  subset(join_key == "VR3-1-1") 
+
+VR3_1_2_wd <- VR3_wd |>
+  subset(join_key == "VR3-1-2")
+
+VR3_1_3_wd <- VR3_wd |>
+  subset(join_key == "VR3-1-3")
+
+VR3_2_1_wd <- VR3_wd |>
+  subset(join_key == "VR3-2-1")
+
+VR3_2_2_wd <- VR3_wd |>
+  subset(join_key == "VR3-2-2")
+
+VR3_2_3_wd <- VR3_wd |>
+  subset(join_key == "VR3-2-3")
+
+VR3_3_1_wd <- VR3_wd |>
+  subset(join_key == "VR3-3-1")
+
+VR3_3_2_wd <- VR3_wd |>
+  subset(join_key == "VR3-3-2")
+
+VR3_3_3_wd <- VR3_wd |>
+  subset(join_key == "VR3-3-3")
+
+VR3_4_1_wd <- VR3_wd |>
+  subset(join_key == "VR3-4-1")
+
+VR3_4_2_wd <- VR3_wd |>
+  subset(join_key == "VR3-4-2")
+
+VR3_4_3_wd <- VR3_wd |>
+  subset(join_key == "VR3-4-3")
+```
+
+## Plot & LM
+```{r}
+# reconstruct discharges 
+# VR3 VELOCITY 
+## Transect: VR3-1-1
+Q_1_1_v <- extract_Q(data = VR3_1_1_v, 
+                   response = VR3_1_1_v$velocity, 
+                   predictor = VR3_1_1_v$discharge,
+                   response_measured = VR3_extract[1, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_1_1")
+
+## Transect: VR3-1-2
+Q_1_2_v <- extract_Q(data = VR3_1_2_v, 
+                   response = VR3_1_2_v$velocity, 
+                   predictor = VR3_1_2_v$discharge,
+                   response_measured = VR3_extract[2, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_1_2")
+
+## Transect: VR3-1-3
+Q_1_3_v <- extract_Q(data = VR3_1_3_v, 
+                   response = VR3_1_3_v$velocity, 
+                   predictor = VR3_1_3_v$discharge,
+                   response_measured = VR3_extract[3, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_1_3")
+
+## Transect: VR3-2-1
+Q_2_1_v <- extract_Q(data = VR3_2_1_v, 
+                   response = VR3_2_1_v$velocity, 
+                   predictor = VR3_2_1_v$discharge,
+                   response_measured = VR3_extract[4, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_2_1")
+
+## Transect: VR3-2-2
+Q_2_2_v <- extract_Q(data = VR3_2_2_v, 
+                   response = VR3_2_2_v$velocity, 
+                   predictor = VR3_2_2_v$discharge,
+                   response_measured = VR3_extract[5, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_2_2")
+
+## Transect: VR3-2-3
+Q_2_3_v <- extract_Q(data = VR3_2_3_v, 
+                   response = VR3_2_3_v$velocity, 
+                   predictor = VR3_2_3_v$discharge,
+                   response_measured = VR3_extract[6, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_2_3")
+
+## Transect: VR3-3-1
+Q_3_1_v <- extract_Q(data = VR3_3_1_v, 
+                   response = VR3_3_1_v$velocity, 
+                   predictor = VR3_3_1_v$discharge,
+                   response_measured = VR3_extract[7, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_3_1")
+
+## Transect: VR3-3-2
+Q_3_2_v <- extract_Q(data = VR3_3_2_v, 
+                   response = VR3_3_2_v$velocity, 
+                   predictor = VR3_3_2_v$discharge,
+                   response_measured = VR3_extract[8, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_3_2")
+
+## Transect: VR3-3-3
+Q_3_3_v <- extract_Q(data = VR3_3_3_v, 
+                   response = VR3_3_3_v$velocity, 
+                   predictor = VR3_3_3_v$discharge,
+                   response_measured = VR3_extract[9, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_3_3")
+
+## Transect: VR3-4-1
+Q_4_1_v <- extract_Q(data = VR3_4_1_v, 
+                   response = VR3_4_1_v$velocity, 
+                   predictor = VR3_4_1_v$discharge,
+                   response_measured = VR3_extract[10, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_4_1")
+
+## Transect: VR3-4-2
+Q_4_2_v <- extract_Q(data = VR3_4_2_v, 
+                   response = VR3_4_2_v$velocity, 
+                   predictor = VR3_4_2_v$discharge,
+                   response_measured = VR3_extract[11, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_4_2")
+
+## Transect: VR3-4-3
+Q_4_3_v <- extract_Q(data = VR3_4_3_v, 
+                   response = VR3_4_3_v$velocity, 
+                   predictor = VR3_4_3_v$discharge,
+                   response_measured = VR3_extract[12, "v_measured"],
+                   v_wd = "velocity",
+                   transect = "VR3_4_3")
+```
+
+
+```{r}
+# VR3 WATER DEPTH
+## Transect: VR3-1-1
+Q_1_1_wd <- extract_Q(data = VR3_1_1_wd, 
+                   response = VR3_1_1_wd$water_depth, 
+                   predictor = VR3_1_1_wd$discharge,
+                   response_measured = VR3_extract[1, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_1_1")
+
+## Transect: VR3-1-2
+Q_1_2_wd <- extract_Q(data = VR3_1_2_wd, 
+                   response = VR3_1_1_wd$water_depth, 
+                   predictor = VR3_1_2_wd$discharge,
+                   response_measured = VR3_extract[2, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_1_2")
+
+## Transect: VR3-1-3
+Q_1_3_wd <- extract_Q(data = VR3_1_3_wd, 
+                   response = VR3_1_1_wd$water_depth, 
+                   predictor = VR3_1_3_wd$discharge,
+                   response_measured = VR3_extract[3, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_1_3")
+
+## Transect: VR3-2-1
+Q_2_1_wd <- extract_Q(data = VR3_2_1_wd, 
+                   response = VR3_1_1_wd$water_depth, 
+                   predictor = VR3_2_1_wd$discharge,
+                   response_measured = VR3_extract[4, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_2_1")
+
+## Transect: VR3-2-2
+Q_2_2_wd <- extract_Q(data = VR3_2_2_wd, 
+                   response = VR3_2_2_wd$water_depth, 
+                   predictor = VR3_2_2_wd$discharge,
+                   response_measured = VR3_extract[5, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_2_2")
+
+## Transect: VR3-2-3
+Q_2_3_wd <- extract_Q(data = VR3_2_3_wd, 
+                   response = VR3_2_3_wd$water_depth, 
+                   predictor = VR3_2_3_wd$discharge,
+                   response_measured = VR3_extract[6, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_2_3")
+
+## Transect: VR3-3-1
+Q_3_1_wd <- extract_Q(data = VR3_3_1_wd, 
+                   response = VR3_3_1_wd$water_depth, 
+                   predictor = VR3_3_1_wd$discharge,
+                   response_measured = VR3_extract[7, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_3_1")
+
+## Transect: VR3-3-2
+Q_3_2_wd <- extract_Q(data = VR3_3_2_wd, 
+                   response = VR3_3_2_wd$water_depth, 
+                   predictor = VR3_3_2_wd$discharge,
+                   response_measured = VR3_extract[8, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_3_2")
+
+## Transect: VR3-3-3
+Q_3_3_wd <- extract_Q(data = VR3_3_3_wd, 
+                   response = VR3_3_3_wd$water_depth, 
+                   predictor = VR3_3_3_wd$discharge,
+                   response_measured = VR3_extract[9, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_3_3")
+
+## Transect: VR3-4-1
+Q_4_1_wd <- extract_Q(data = VR3_4_1_wd, 
+                   response = VR3_4_1_wd$water_depth, 
+                   predictor = VR3_4_1_wd$discharge,
+                   response_measured = VR3_extract[10, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_4_1")
+
+## Transect: VR3-4-2
+Q_4_2_wd <- extract_Q(data = VR3_4_2_wd, 
+                   response = VR3_4_2_wd$water_depth, 
+                   predictor = VR3_4_2_wd$discharge,
+                   response_measured = VR3_extract[11, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_4_2")
+
+## Transect: VR3-4-3
+Q_4_3_wd <- extract_Q(data = VR3_4_3_wd, 
+                   response = VR3_4_3_wd$water_depth, 
+                   predictor = VR3_4_3_wd$discharge,
+                   response_measured = VR3_extract[12, "wd_measured"],
+                   v_wd = "water_depth",
+                   transect = "VR3_4_3")
+```
+
+
+```{r}
+VR3_Q <- rbind(Q_1_1_v, Q_1_2_v, Q_1_3_v, Q_2_1_v, Q_2_2_v,
+               Q_2_3_v, Q_3_1_v, Q_3_2_v, Q_3_3_v, Q_4_1_v,
+               Q_4_2_v, Q_4_3_v,
+               Q_1_1_wd, Q_1_2_wd, Q_1_3_wd, Q_2_1_wd,
+               Q_2_2_wd, Q_2_3_wd, Q_3_1_wd, Q_3_2_wd, 
+               Q_3_3_wd, Q_4_1_wd, Q_4_2_wd, Q_4_3_wd)
+
+VR3_Q_mean <- mean(TH4_Q$Q_samp)
+```
+
+# Intermediate Results
+```{r}
+results <- data.frame(GL1_Q_mean, GL2_Q_mean, 
+           L2_Q_mean, M1_Q_mean, S1_Q_mean, S2_Q_mean, TH4_Q_mean)
+
+# VR3_Q_mean
+
+results_Q_mean <- pivot_longer(results, names_to = "section", values_to = "Q_mean", cols = (1:7))
+```
 #### ADDITION 
 extract_Q <- function(data, t_1_1_2, response, predictor, response_measured, v_wd, transect){
   lm_model <- lm(response ~ predictor,

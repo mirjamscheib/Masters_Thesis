@@ -1061,7 +1061,7 @@ TH4_32_93 <- foen_hm(raster_path = "raster_files/TH4_v_32_93.tif",
                    discharge = 32.93)
 ```
 
-# Vorderrhein
+# ! Vorderrhein
 ## VR3
 ```{r}
 VR3_2_90 <- foen_hm(raster_path = "raster_files/VR3_v_2_90.tif", 
@@ -1367,12 +1367,7 @@ metric_results <- rbind(GL1_3_28$metrics, GL1_6_00$metrics, GL1_9_00$metrics, GL
                         S2_15_00$metrics, S2_18_00$metrics, S2_20_00$metrics,
                         
                         TH4_11_45$metrics, TH4_15_00$metrics, TH4_18_00$metrics, TH4_19_96$metrics, TH4_22_50$metrics,
-                        TH4_25_00$metrics, TH4_27_00$metrics, TH4_30_00$metrics, TH4_32_93$metrics,
-                        
-                        VR3_2_90$metrics, VR3_6_00$metrics, VR3_9_00$metrics, VR3_12_00$metrics, VR3_15_00$metrics,
-                        VR3_18_80$metrics, VR3_22_00$metrics, VR3_25_00$metrics, VR3_28_00$metrics, VR3_31_00$metrics,
-                        VR3_34_00$metrics, VR3_37_00$metrics, VR3_40_10$metrics, VR3_43_00$metrics, VR3_46_00$metrics,
-                        VR3_48_00$metrics, VR3_50_00$metrics, VR3_52_90$metrics)
+                        TH4_25_00$metrics, TH4_27_00$metrics, TH4_30_00$metrics, TH4_32_93$metrics)
 
 # safe df into .csv file
 write.csv(metric_results, file = "results_foen/results_foen_metrics.csv", row.names = FALSE)
@@ -1406,17 +1401,21 @@ freq_tables <- rbind(GL1_3_28$freq, GL1_6_00$freq, GL1_9_00$freq, GL1_12_68$freq
                      S2_18_00$freq, S2_20_00$freq,
                      
                      TH4_11_45$freq, TH4_15_00$freq, TH4_18_00$freq, TH4_19_96$freq, TH4_22_50$freq, TH4_25_00$freq,
-                     TH4_27_00$freq, TH4_30_00$freq, TH4_32_93$freq,
-                     
-                     VR3_2_90$freq, VR3_6_00$freq, VR3_9_00$freq, VR3_12_00$freq, VR3_15_00$freq, VR3_18_80$freq, VR3_22_00$freq,
-                     VR3_25_00$freq, VR3_28_00$freq, VR3_31_00$freq, VR3_34_00$freq, VR3_37_00$freq, VR3_40_10$freq,
-                     VR3_43_00$freq, VR3_46_00$freq, VR3_48_00$freq, VR3_50_00$freq, VR3_52_90$freq)
+                     TH4_27_00$freq, TH4_30_00$freq, TH4_32_93$freq)
 
 # write data frame into .csv file
 write.csv(freq_tables, file = "results_foen/results_foen_freq_tables.csv", row.names = FALSE)
 ```
 
+                        
+                        VR3_2_90$metrics, VR3_6_00$metrics, VR3_9_00$metrics, VR3_12_00$metrics, VR3_15_00$metrics,
+                        VR3_18_80$metrics, VR3_22_00$metrics, VR3_25_00$metrics, VR3_28_00$metrics, VR3_31_00$metrics,
+                        VR3_34_00$metrics, VR3_37_00$metrics, VR3_40_10$metrics, VR3_43_00$metrics, VR3_46_00$metrics,
+                        VR3_48_00$metrics, VR3_50_00$metrics, VR3_52_90$metrics
+                        
 
-
+  VR3_2_90$freq, VR3_6_00$freq, VR3_9_00$freq, VR3_12_00$freq, VR3_15_00$freq, VR3_18_80$freq, VR3_22_00$freq,
+                     VR3_25_00$freq, VR3_28_00$freq, VR3_31_00$freq, VR3_34_00$freq, VR3_37_00$freq, VR3_40_10$freq,
+                     VR3_43_00$freq, VR3_46_00$freq, VR3_48_00$freq, VR3_50_00$freq, VR3_52_90$freq
 
 
