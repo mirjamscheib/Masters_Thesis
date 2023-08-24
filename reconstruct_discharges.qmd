@@ -143,7 +143,7 @@ GL1_extract <- terra::extract(GL1_stacked, data_GL1) |>
          v_measured = v_measured/100)
 ```
 
-### Prep Data for LM Model 
+## Prep Data for LM Model 
 ```{r}
 # select columns with certain conditions (i want to select columns with v and columns with wd)
 GL1_v <- GL1_extract |>  
@@ -239,7 +239,7 @@ GL1_4_3_wd <- GL1_wd |>
   subset(join_key == "GL1-4-3")
 ```
 
-### Plot & LM
+## Plot & LM
 ```{r}
 # reconstruct discharges 
 # GL1 VELOCITY 

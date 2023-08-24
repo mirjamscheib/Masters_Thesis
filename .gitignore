@@ -2,4 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+rasters_stacked
+raster_files
+hdm_models
+results_foen
 
