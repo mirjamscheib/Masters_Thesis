@@ -1289,6 +1289,6 @@ VR3_stacked <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_v_6_00, VR3_wd_6_00, VR3_v_9_0
 plot(VR3_stacked)
 
 # write stacked raster 
-writeRaster(VR3_stacked, "rasters_stacked/VR3_stacked.grd", overwrite = TRUE)
+# writeRaster(VR3_stacked, "rasters_stacked/VR3_stacked.grd", overwrite = TRUE)
 ```
 
