@@ -22,6 +22,7 @@ library("stringr")
 library(gbm)
 library(dismo)
 library(raster)
+library("writexl")
 ```
 
 # Load Data
@@ -170,6 +171,26 @@ na_row_indices <- which(na_rows)
 # Print the resulting rows and indices
 print(na_rows_data)
 print(na_row_indices)
+```
+
+# Univariate HM DF
+```{r}
+# combine all abiotic data with abundance & Shannon Diversity 
+lab_univariate <- cbind(lab_exp, shannon, abundance)
+
+# write results into new .csv file 
+write_xlsx(lab_univariate,"abiotic_mi_sampling\\lab_univariate.xlsx") 
+
+# create clean df which only contains the values needed 
+# lab_univariate <- lab_univariate |>
+#  subset(Reach_Untersuchungsstelle == "GL1" | 
+#           Reach_Untersuchungsstelle == "GL2" |
+#           Reach_Untersuchungsstelle == "L2" |
+#           Reach_Untersuchungsstelle == "M1" |
+#           Reach_Untersuchungsstelle == "S1" |
+#           Reach_Untersuchungsstelle == "S2" |
+#           Reach_Untersuchungsstelle == "TH4" |
+#           Reach_Untersuchungsstelle == "VR3")
 ```
 
 

@@ -71,7 +71,7 @@ mzb_data <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
 
 # select relevant columns 
 data <- mzb_data %>%
-  mutate(mean_Q = rowMeans(select(., Discharge_m3_s_before,
+  mutate(mean_Q = rowMeans(dplyr::select(., Discharge_m3_s_before,
                                   Discharge_m3_s_during,
                                   Discharge_m3_s_after))) %>%
   dplyr::select(Reach_Untersuchungsstelle, Discharge_m3_s_before,
@@ -83,49 +83,49 @@ data <- mzb_data %>%
 Q_MI_GL1 <- data |>
   subset(Reach_Untersuchungsstelle == "GL1") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_GL1 = mean(mean_Q))
 
 # GL2
 Q_MI_GL2 <- data |>
   subset(Reach_Untersuchungsstelle == "GL2") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_GL2 = mean(mean_Q))
 
 # L2
 Q_MI_L2 <- data |>
   subset(Reach_Untersuchungsstelle == "L2") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_L2 = mean(mean_Q))
 
 # M1
 Q_MI_M1 <- data |>
   subset(Reach_Untersuchungsstelle == "M1") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_M1 = mean(mean_Q))
 
 # S1
 Q_MI_S1 <- data |>
   subset(Reach_Untersuchungsstelle == "S1") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_S1 = mean(mean_Q))
 
 # S2
 Q_MI_S2 <- data |>
   subset(Reach_Untersuchungsstelle == "S2") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_S2 = mean(mean_Q))
 
 # TH4
 Q_MI_TH4 <- data |>
   subset(Reach_Untersuchungsstelle == "TH4") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_TH4 = mean(mean_Q))
 
 # VR3
 Q_MI_VR3 <- data |>
   subset(Reach_Untersuchungsstelle == "VR3") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q = mean(mean_Q))
+  summarise(Q_MI_VR3 = mean(mean_Q))
 ```
 
 ## Q_pegel_site
@@ -133,11 +133,29 @@ Q_MI_VR3 <- data |>
 
 ```
 
+## bind Qs together
+```{r}
+GL1 <- cbind(Q_model_GL1, Q_MI_GL1)
+GL2 <- cbind(Q_model_GL2, Q_MI_GL2)
+```
+
 
 ## Calculate Q 
 ```{r}
 # formula to reconstuct discharges 
-Q_sampling_GL1 <- Q_MI_GL1 * Q_model_GL1 / Q_pegel_GL1
+Q_sampling_GL1$Q <- Q_MI_GL1 * Q_model_GL1 / Q_pegel_GL1
+Q_sampling_GL1$Q <- 0.7
+
+Q_sampling_GL1 <- Q_model_GL1 |>
+  cbind(Q_MI_GL1) |>
+  mutate(Q = Q_MI_GL1 * Q_model_GL1,
+         reach = "GL1")
+
+Q_sampling_GL2 <- GL2 |>
+  mutate(Q = Q_MI_GL2 * Q_model_GL2,
+         reach = "GL2") |>
+  cbind(Q_MI_GL2)
+
 Q_sampling_GL2 <- Q_MI_GL2 * Q_model_GL2 / Q_pegel_GL2
 Q_sampling_L2 <- Q_MI_L2 * Q_model_L2 / Q_pegel_L2
 Q_sampling_M1 <- Q_MI_M1 * Q_model_M1 / Q_pegel_M1

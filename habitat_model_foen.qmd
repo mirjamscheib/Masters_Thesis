@@ -34,7 +34,7 @@ source("mth_functions.R")
 ```
 
 # Glenner
-## GL1
+## GL1: HM Calculation 
 ```{r}
 GL1_3_28 <- foen_hm(raster_path = "raster_files/GL1_v_3_28.tif", 
                     base_flow = "raster_files/GL1_v_3_28.tif",
@@ -187,7 +187,7 @@ GL1_31_76 <- foen_hm(raster_path = "raster_files/GL1_v_31_76.tif",
                     discharge = 31.76)
 ```
 
-## GL2
+## GL2: HM Calculation 
 ```{r}
 GL2_3_21 <- foen_hm(raster_path = "raster_files/GL2_v_3_21.tif", 
                     base_flow = "raster_files/GL2_v_3_21.tif",
@@ -356,7 +356,7 @@ GL2_31_53 <- foen_hm(raster_path = "raster_files/GL2_v_31_53.tif",
 ```
 
 # Landquart
-## L2
+## L2: HM Calculation 
 ```{r}
 L2_2_40 <- foen_hm(raster_path = "raster_files/L2_v_2_40.tif", 
                    base_flow = "raster_files/L2_v_2_40.tif",
@@ -1065,7 +1065,7 @@ TH4_32_93 <- foen_hm(raster_path = "raster_files/TH4_v_32_93.tif",
                    discharge = 32.93)
 ```
 
-# ! Vorderrhein
+# Vorderrhein
 ## VR3
 ```{r}
 VR3_2_90 <- foen_hm(raster_path = "raster_files/VR3_v_2_90.tif", 
@@ -1371,7 +1371,12 @@ metric_results <- rbind(GL1_3_28$metrics, GL1_6_00$metrics, GL1_9_00$metrics, GL
                         S2_15_00$metrics, S2_18_00$metrics, S2_20_00$metrics,
                         
                         TH4_11_45$metrics, TH4_15_00$metrics, TH4_18_00$metrics, TH4_19_96$metrics, TH4_22_50$metrics,
-                        TH4_25_00$metrics, TH4_27_00$metrics, TH4_30_00$metrics, TH4_32_93$metrics)
+                        TH4_25_00$metrics, TH4_27_00$metrics, TH4_30_00$metrics, TH4_32_93$metrics,
+                        
+                          VR3_2_90$metrics, VR3_6_00$metrics, VR3_9_00$metrics, VR3_12_00$metrics, VR3_15_00$metrics,
+                        VR3_18_80$metrics, VR3_22_00$metrics, VR3_25_00$metrics, VR3_28_00$metrics, VR3_31_00$metrics,
+                        VR3_34_00$metrics, VR3_37_00$metrics, VR3_40_10$metrics, VR3_43_00$metrics, VR3_46_00$metrics,
+                        VR3_48_00$metrics, VR3_50_00$metrics, VR3_52_90$metrics)
 
 # safe df into .csv file
 write.csv(metric_results, file = "results_foen/results_foen_metrics.csv", row.names = FALSE)
@@ -1405,21 +1410,208 @@ freq_tables <- rbind(GL1_3_28$freq, GL1_6_00$freq, GL1_9_00$freq, GL1_12_68$freq
                      S2_18_00$freq, S2_20_00$freq,
                      
                      TH4_11_45$freq, TH4_15_00$freq, TH4_18_00$freq, TH4_19_96$freq, TH4_22_50$freq, TH4_25_00$freq,
-                     TH4_27_00$freq, TH4_30_00$freq, TH4_32_93$freq)
+                     TH4_27_00$freq, TH4_30_00$freq, TH4_32_93$freq,
+                     
+                     VR3_2_90$freq, VR3_6_00$freq, VR3_9_00$freq, VR3_12_00$freq, VR3_15_00$freq, VR3_18_80$freq, VR3_22_00$freq,
+                     VR3_25_00$freq, VR3_28_00$freq, VR3_31_00$freq, VR3_34_00$freq, VR3_37_00$freq, VR3_40_10$freq,
+                     VR3_43_00$freq, VR3_46_00$freq, VR3_48_00$freq, VR3_50_00$freq, VR3_52_90$freq)
 
 # write data frame into .csv file
 write.csv(freq_tables, file = "results_foen/results_foen_freq_tables.csv", row.names = FALSE)
 ```
+ 
+                  
+# Extract Modelled Values 
+## Load Data
+```{r}
+# read .csv with lab results from river sections 
+univariate <- read_delim("abiotic_mi_sampling/lab_univariate.csv")
+
+# create clean df which only contains the values needed 
+ univariate <- univariate |>
+  subset(Reach_Untersuchungsstelle == "GL1" | 
+           Reach_Untersuchungsstelle == "GL2" |
+           Reach_Untersuchungsstelle == "L2" |
+           Reach_Untersuchungsstelle == "M1" |
+           Reach_Untersuchungsstelle == "S1" |
+           Reach_Untersuchungsstelle == "S2" |
+           Reach_Untersuchungsstelle == "TH4" |
+           Reach_Untersuchungsstelle == "VR3") |>
+   dplyr::select(Reach_Untersuchungsstelle, x, y, abundance, shannon) |>
+   mutate(x = as.numeric(x),
+          y = as.numeric(y))
+```
+
+## Extract 
+```{r}
+# read all raster results (one time flow velocity classes and one time for habitat suitability)
+# NOTE: CHANGE TO RASTERS WHICH REPRESENT DISCHARGE AT SAMPLING DAY
+GL1_class <- raster("results_foen/GL1_foen_class_3_28.tif")
+GL1_HS <- raster("results_foen/GL1_foen_3_28.tif")
+stack_GL1 <- stack(GL1_class, GL1_HS)
+
+GL2_class <- raster("results_foen/GL2_foen_class_3_21.tif")
+GL2_HS <- raster("results_foen/GL2_foen_3_21.tif")
+stack_GL2 <- stack(GL2_class, GL2_HS)
+
+L2_class <- raster("results_foen/L2_foen_class_2_40.tif")
+L2_HS <- raster("results_foen/L2_foen_2_40.tif")
+stack_L2 <- stack(L2_class, L2_HS)
+
+M1_class <- raster("results_foen/M1_foen_class_0_47.tif")
+M1_HS <- raster("results_foen/M1_foen_0_47.tif")
+stack_M1 <- stack(M1_class, M1_HS)
+
+S1_class <- raster("results_foen/S1_foen_class_2_00.tif")
+S1_HS <- raster("results_foen/S1_foen_2_00.tif")
+stack_S1 <- stack(S1_class, S1_HS)
+
+S2_class <- raster("results_foen/S2_foen_class_2_00.tif")
+S2_HS <- raster("results_foen/S2_foen_2_00.tif")
+stack_S2 <- stack(S2_class, S2_HS)
+
+TH4_class <- raster("results_foen/TH4_foen_class_11_45.tif")
+TH4_HS <- raster("results_foen/TH4_foen_11_45.tif")
+stack_TH4 <- stack(TH4_class, TH4_HS)
+
+VR3_class <- raster("results_foen/VR3_foen_class_2_90.tif")
+VR3_HS <- raster("results_foen/VR3_foen_2_90.tif")
+stack_VR3 <- stack(VR3_class, VR3_HS)
+
+# prep extraction data 
+## GL1
+univariate_coord_GL1 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(x, y) 
+
+univariate_GL1 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon) 
+
+## GL2
+univariate_coord_GL2 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "GL2") |>
+  dplyr::select(x, y) 
+
+univariate_GL2 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "GL2") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+
+## L2
+univariate_coord_L2 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "L2") |>
+  dplyr::select(x, y) 
+
+univariate_L2 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "L2") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+
+## M1
+univariate_coord_M1 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "M1") |>
+  dplyr::select(x, y) 
+
+univariate_M1 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "M1") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+
+## S1
+univariate_coord_S1 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "S1") |>
+  dplyr::select(x, y) 
+
+univariate_S1 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "S1") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+
+## S2
+univariate_coord_S2 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "S2") |>
+  dplyr::select(x, y) 
+
+univariate_S2 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "S2") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+
+## TH4
+univariate_coord_TH4 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "TH4") |>
+  dplyr::select(x, y) 
+
+univariate_TH4 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "TH4") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+
+## VR3
+univariate_coord_VR3 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(x, y) 
+
+univariate_VR3 <- univariate |>
+  subset(Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  
+
+# extract raster information for regression analysis later
+regr_data_GL1 <- extract(stack_GL1, univariate_coord_GL1)
+data_GL1 <- cbind(regr_data_GL1, univariate_GL1) |>
+  rename(foen_class = GL1_foen_class_3_28,
+         foen_hsi = GL1_foen_3_28)
+
+regr_data_GL2 <- extract(stack_GL2, univariate_coord_GL2)
+data_GL2 <- cbind(regr_data_GL2, univariate_GL2) |>
+  rename(foen_class = GL2_foen_class_3_21,
+         foen_hsi = GL2_foen_3_21)
+
+regr_data_L2 <- extract(stack_L2, univariate_coord_L2)
+data_L2 <- cbind(regr_data_L2, univariate_L2) |>
+  rename(foen_class = L2_foen_class_2_40,
+         foen_hsi = L2_foen_2_40)
+
+regr_data_M1 <- extract(stack_M1, univariate_coord_M1)
+data_M1 <- cbind(regr_data_M1, univariate_M1) |>
+  rename(foen_class = M1_foen_class_0_47,
+         foen_hsi = M1_foen_0_47)
+
+regr_data_S1 <- extract(stack_S1, univariate_coord_S1)
+data_S1 <- cbind(regr_data_S1, univariate_S1) |>
+  rename(foen_class = S1_foen_class_2_00,
+         foen_hsi = S1_foen_2_00)
+
+regr_data_S2 <- extract(stack_S2, univariate_coord_S2)
+data_S2 <- cbind(regr_data_S2, univariate_S2) |>
+  rename(foen_class = S2_foen_class_2_00,
+         foen_hsi = S2_foen_2_00)
+
+regr_data_TH4 <- extract(stack_TH4, univariate_coord_TH4)
+data_TH4 <- cbind(regr_data_TH4, univariate_TH4) |>
+  rename(foen_class = TH4_foen_class_11_45,
+         foen_hsi = TH4_foen_11_45)
+
+regr_data_VR3 <- extract(stack_VR3, univariate_coord_VR3)
+data_VR3 <- cbind(regr_data_VR3, univariate_VR3) |>
+  rename(foen_class = VR3_foen_class_2_90,
+         foen_hsi = VR3_foen_2_90)
+
+# bind results together 
+results <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, data_TH4, data_VR3)
+```
+
+# Regression Analysis 
+```{r}
+# plot results 
+ggplot(results, aes(x = foen_hsi, y = shannon)) +
+  geom_point() +
+  geom_smooth(method = lm)
+
+# obtain regression model 
+lm_foen <- lm(shannon ~ foen_hsi, data = results)
+summary(lm_foen)
+```
 
                         
-                        VR3_2_90$metrics, VR3_6_00$metrics, VR3_9_00$metrics, VR3_12_00$metrics, VR3_15_00$metrics,
-                        VR3_18_80$metrics, VR3_22_00$metrics, VR3_25_00$metrics, VR3_28_00$metrics, VR3_31_00$metrics,
-                        VR3_34_00$metrics, VR3_37_00$metrics, VR3_40_10$metrics, VR3_43_00$metrics, VR3_46_00$metrics,
-                        VR3_48_00$metrics, VR3_50_00$metrics, VR3_52_90$metrics
-                        
+                           
 
-  VR3_2_90$freq, VR3_6_00$freq, VR3_9_00$freq, VR3_12_00$freq, VR3_15_00$freq, VR3_18_80$freq, VR3_22_00$freq,
-                     VR3_25_00$freq, VR3_28_00$freq, VR3_31_00$freq, VR3_34_00$freq, VR3_37_00$freq, VR3_40_10$freq,
-                     VR3_43_00$freq, VR3_46_00$freq, VR3_48_00$freq, VR3_50_00$freq, VR3_52_90$freq
+
 
 
