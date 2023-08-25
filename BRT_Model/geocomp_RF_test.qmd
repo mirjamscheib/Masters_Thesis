@@ -1,0 +1,44 @@
+---
+title: "geocomp_RF_test"
+format: html
+---
+
+# Libraries 
+```{r}
+library(sf)
+library(terra)
+library(dplyr)
+library(data.table)        # fast data.frame manipulation (used by mlr3)
+library(mlr3)              # machine learning (see Chapter 12)
+library(mlr3spatiotempcv)  # spatio-temporal resampling 
+library(mlr3tuning)        # hyperparameter tuning package
+library(mlr3learners)      # interface to most important machine learning packages
+library(paradox)           # defining hyperparameter spaces
+library(ranger)            # random forest package
+library(qgisprocess)       # bridge to QGIS (Chapter 10)
+library(tree)              # decision tree package
+library(vegan)             # community ecology package
+library(readr)
+```
+
+# Load data 
+```{r}
+data <- read_delim("abiotic_mi_sampling/lab_ml_models.csv") 
+
+data_new <- data |>
+  dplyr::select(k_index, `Flow_velocity_v60_cm/s`, Transect, x, y) |>
+  mutate(x = as.numeric(x)) |>
+  na.omit()
+
+data_new <-  st_as_sf(data_new, coords =  c("x", "y"))
+```
+
+# Task 
+```{r}
+# create task
+task = mlr3spatiotempcv::as_task_regr_st(select(data_new),
+   target = "k_index")
+
+lrn_rf = lrn("regr.ranger", predict_type = "response")
+```
+
