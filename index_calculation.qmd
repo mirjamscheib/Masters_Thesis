@@ -37,6 +37,8 @@ lab <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
 lab_exp <- lab[ , c(1:60)]
 
 lab <- lab[ ,-c(1:60)]
+
+lab <- as.data.frame(lapply(lab, as.numeric))
 ```
 
 # Calculate EPT Taxa 
@@ -111,6 +113,60 @@ Number_Taxa <- apply(lab_Shannon, 1, function(row) {
 })
 ```
 
+# Example Simpsons Index
+```{r}
+# Create the data frame
+df <- data.frame(
+  sampling_location = c(1, 2, 3, 4),
+  species1 = c(5, 8, 10, 3),
+  species2 = c(12, 2, 1, 5),
+  species3 = c(5, 5, 3, 1)
+)
+
+# Calculate relative abundance for each species
+df <- df %>%
+  mutate_at(vars(starts_with("species")), ~ . / rowSums(.[2:4]))
+
+# Calculate squared relative abundance for each species
+df_squared <- df %>%
+  mutate_at(vars(starts_with("species")), ~ .^2)
+
+# Calculate the sum of squared relative abundances for each location
+df_sum_squared <- df_squared %>%
+  rowwise() %>%
+  mutate(sum_squared = sum(c_across(starts_with("species"))))
+
+# Calculate Simpson Index for each location
+df_simpson <- df_sum_squared %>%
+  mutate(simpson_index = 1 / sum_squared)
+
+# Print the resulting data frame
+print(df_simpson)
+```
+
+# Calculate Simpsons Index 
+```{r}
+# Calculate relative abundance for each species
+lab[is.na(lab)] <- 0
+lab$rel_abundance <- rowSums(lab[, c(1:199)]) / rowSums(lab[, c(1:199)], na.rm = TRUE)
+
+# Calculate squared relative abundance for each species
+lab_squared <- lab |>
+  mutate(rel_abundance2 = rel_abundance^2)
+
+# Calculate the sum of squared relative abundances for each location
+lab_sum_squared <- lab_squared |>
+  mutate(sum_squared = rowSums(lab_squared[1:199]))
+
+# Calculate Simpson Index for each location
+lab_simpson <- lab_sum_squared |>
+  mutate(simpson_index = 1 / sum_squared)
+
+# Print the resulting data frame
+print(lab_simpson)
+```
+
+
 # Combine all Results in one DF
 ```{r}
 # combine all results + response variables 
@@ -122,40 +178,16 @@ lab_index <- lab_new |>
 ```
 
 # Calculate K-Index (Theodoropoulos et al., 2018)
-lab_index <- lab_index |>
-  mutate(k_index = 0.4*(Number_Taxa/max(Number_Taxa, na.rm = TRUE))
-         + 0.3*(shannon/max(shannon, na.rm = TRUE))
-         + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
-         + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  dplyr::select(-EPT_Taxa, -shannon, -Number_Taxa, -abundance)
 ```{r}
-lab_index <- lab_new |>
+lab_ml_model <- lab_new |>
   mutate(k_index = 0.4*(Number_Taxa/max(Number_Taxa, na.rm = TRUE))
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
          + 0.2*(lab$EPT_Taxa/max(lab$EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  dplyr::select(-lab$EPT_Taxa, -shannon, -Number_Taxa, -abundance, -Varia, -Varia_before,
-                -Varia_during, -Varia_after,
-                -Water_gauge_MueM_during,-Water_gauge_MueM_after,
-                -Discharge_m3_s_before, -Discharge_m3_s_during, -Discharge_m3_s_after,
-                -Water_gauge_MueM_before, -Turbidity_FNU_during, -Turbidity_FNU_after,
-                -Temperature_C_before, -Temperature_C_during, -Temperature_C_after,
-                -Turbidity_FNU_before,
-                -Conductivity_ys_s_after, -Oxygen_content_mg_l_before,
-                -Oxygen_content_mg_l_during, -Oxygen_content_mg_l_after,
-                -Time_of_survey_after, -pH_before, -pH_during, -pH_after,
-                -Conductivity_ys_s_before, -Conductivity_ys_s_during, -join_key,
-                -Abiotic_measured_by.y, -Gauging_station, -Time_of_survey_before,
-                -Time_of_survey_during, -Abiotic_measured_by.x)
+  cbind(lab_simpson$simpson_index)
 
-lab_index
-
-# Remove rows with NA values using na.omit()
-#lab_index_clean <- na.omit(lab_index)
-
-# export .csv for model 
-write.csv(lab_index, "abiotic_mi_sampling/Lab_k_index.csv")
-
+# write results into new .csv file 
+write_xlsx(lab_ml_model,"abiotic_mi_sampling\\lab_ml_models.xlsx") 
 ```
 
 ```{r}
@@ -180,17 +212,6 @@ lab_univariate <- cbind(lab_exp, shannon, abundance)
 
 # write results into new .csv file 
 write_xlsx(lab_univariate,"abiotic_mi_sampling\\lab_univariate.xlsx") 
-
-# create clean df which only contains the values needed 
-# lab_univariate <- lab_univariate |>
-#  subset(Reach_Untersuchungsstelle == "GL1" | 
-#           Reach_Untersuchungsstelle == "GL2" |
-#           Reach_Untersuchungsstelle == "L2" |
-#           Reach_Untersuchungsstelle == "M1" |
-#           Reach_Untersuchungsstelle == "S1" |
-#           Reach_Untersuchungsstelle == "S2" |
-#           Reach_Untersuchungsstelle == "TH4" |
-#           Reach_Untersuchungsstelle == "VR3")
 ```
 
 
