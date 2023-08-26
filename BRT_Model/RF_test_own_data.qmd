@@ -1,0 +1,120 @@
+---
+title: "RF_test_own_data"
+format: html
+---
+
+# Libraries 
+```{r}
+library(sf)
+library(terra)
+library(dplyr)
+library(data.table)        # fast data.frame manipulation (used by mlr3)
+library(mlr3)              # machine learning (see Chapter 12)
+library(mlr3spatiotempcv)  # spatio-temporal resampling 
+library(mlr3tuning)        # hyperparameter tuning package
+library(mlr3learners)      # interface to most important machine learning packages
+library(paradox)           # defining hyperparameter spaces
+library(ranger)            # random forest package
+library(tree)              # decision tree package
+library(readr)
+library(sp)
+library(raster)
+```
+
+# Load data 
+```{r}
+data <- read_delim("abiotic_mi_sampling/lab_ml_models.csv") 
+
+data_new <- data |>
+  dplyr::select(k_index, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y) |>
+  mutate(x = as.numeric(x)) |>
+  rename(velocity = `Flow_velocity_v60_cm/s`,
+         wd = Water_depth_cm) |>
+  na.omit()
+
+data_new <-  st_as_sf(data_new, coords =  c("x", "y"))
+st_crs(data_new) <- "EPSG: 2056"
+```
+
+# Random Forest 
+```{r}
+# Visualize tree plot with one predictor variable 
+tree_v <- tree::tree(k_index ~ velocity, data = data_new)
+plot(tree_v)
+text(tree_v, pretty = 0)
+# two internal nodes 
+# three terminal nodes
+# the lower the velocity, the higher the k_index
+
+tree_wd <- tree::tree(k_index ~ wd, data = data_new)
+plot(tree_wd)
+text(tree_wd, pretty = 0)
+# one internal node
+# two terminal nodes
+# the lower the wd, the higher the k_index
+```
+
+## Create Task & Learner
+```{r}
+# create task
+task <- mlr3spatiotempcv::as_task_regr_st(data_new,
+  id = "test", target = "k_index")
+
+?mlr3spatiotempcv::as_task_regr_st
+# select: select df and remove not to be used variables 
+# id: Id for the new task. Defaults to the (deparsed and substituted) name of the data argument.
+# target: response variable, name of the target column
+
+?mlr3spatiotempcv
+?lrn
+
+# learner for random forest
+# from the ranger package
+lrn_rf <- lrn("regr.ranger", predict_type = "response")
+```
+
+## Specifying the search space
+```{r}
+# specifying the search space
+search_space <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+```
+
+## Hyperparameter tuning 
+```{r}
+autotuner_rf <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
+```{r}
+# hyperparameter tuning
+set.seed(0412022)
+autotuner_rf$train(task)
+
+# read the results 
+autotuner_rf$tuning_result
+```
+
+## Predict to maps 
+```{r}
+# read rasters
+GL1_3_28 <- stack("rasters_stacked/GL1_22_00.grd")
+
+new_names <- c("velocity", "wd")  # Replace with your desired new names
+names(GL1_3_28) <- new_names
+crs(GL1_3_28) <- "EPSG: 2056"
+
+pred = terra::predict(GL1_3_28, model = autotuner_rf, fun = predict, index = 2)
+
+plot(pred)
+```
+
