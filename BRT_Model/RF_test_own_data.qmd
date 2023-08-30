@@ -477,7 +477,26 @@ pred = terra::predict(GL1_22_00, model = autotuner_xbrt, fun = predict, index = 
 plot(pred)
 ```
 
-## ! Make model 
+## ! Make model
+```{r}
+# turn sf object into dataframe 
+data_new <- data.frame(st_drop_geometry(data_new))
+
+# make training data
+training.x <- model.matrix(k_index ~ ., data = train_data)
+
+# make testing dataset
+testing.x <- model.matrix(k_index ~ ., data = test_data)
+
+# make model 
+model.xgb <- xgboost(data = data.matrix(training.x[ ,-1]),
+                     label = as.numeric(as.character(train_data$k_index)),
+                     eta = 0.1,
+                     max_depth = 3,
+                     nrounds = 100,
+                     objective = "reg:linear")
+```
+
 ```{r}
 # turn sf object into dataframe 
 data_new <- data.frame(st_drop_geometry(data_new))
@@ -509,8 +528,27 @@ print(xbrt_model)
 ## Evaluation Metrics
 ### !! Partial dependence plots
 ```{r}
+# Define the feature names
+feature_names <- colnames(training.x)[2:length(colnames(training.x))]
+
+# Generate partial dependence plots
+pdp_plots <- lapply(feature_names, function(feature) {
+  pdp_object <- pdp::partial(model.xgb, pred.var = feature_names, train = training.x)
+  pdp_plot <- pdp::plotPartial(pdp_object, feature_names)
+  return(pdp_plot)
+})
+
+# Plot the partial dependence plots
+#pdf("pdp_plots.pdf")  # You can change the output format if needed
+for (i in seq_along(pdp_plot)) {
+  print(pdp_plot[[i]])
+}
+dev.off()
+```
+
+```{r}
 # Create the partial dependence plot
-pdp_plot_v <- partial(xbrt_model, pred.var = "velocity", train = train_data)
+pdp_plot_v <- partial(model.xgb, pred.var = "wd", train = train_data)
 
 # Plot the PDP
 ggplot(pdp_plot_v, aes(velocity, yhat)) + 
