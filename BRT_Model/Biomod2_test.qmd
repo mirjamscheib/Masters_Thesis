@@ -130,19 +130,17 @@ myBiomodOptions <- BIOMOD_ModelingOptions()
 # ---------------------------------------------------------------------------- #
 # Model single models
 myBiomodModelOut <- BIOMOD_Modeling(bm.format = myBiomodData,
-                                    modeling.id = 'AllModels',
-                                    models = c("GLM", "GBM", "GAM", "CTA",
-                                               "ANN", "SRE", "FDA", "MARS",
-                                               "RF", "MAXENT",
-                                               "MAXNET", "XGBOOST"),
+                                    modeling.id = "AllModels",
+                                    models = c("RF", "XGBOOST"),
                                     bm.options = myBiomodOptions,
-                                    CV.strategy = 'random', # further options: kfold, block, strat, env or user.defined
-                                    CV.nb.rep = 2,
+                                    CV.strategy = "kfold", # further options: kfold, block, strat, env or user.defined
+                                    CV.nb.rep = as.integer(2),
                                     CV.perc = 0.8,
                                     metric.eval = c("KAPPA", "TSS", "ROC"),
                                     var.import = 2,
                                     seed.val = 42)
 
+?BIOMOD_Modeling
 myBiomodModelOut
 
 # Get evaluation scores & variables importance
