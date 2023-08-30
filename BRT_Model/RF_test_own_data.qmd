@@ -22,6 +22,7 @@ library(raster)
 library(gbm)
 library(xgboost)
 library(caret) # for cohen's kappa calculation 
+library("pdp")
 ```
 
 # Load data 
@@ -142,6 +143,26 @@ rf_model <- ranger(formula = k_index ~., data = train_data, mtry = 2, sample.fra
 ```
 
 ## Evaluation Metrics
+### Partial dependence plots
+```{r}
+# Create the partial dependence plot
+pdp_plot_v <- partial(rf_model, pred.var = "velocity")
+
+# Plot the PDP
+ggplot(pdp_plot_v, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+
+# Create the partial dependence plot
+pdp_plot_wd <- partial(rf_model, pred.var = "wd")
+
+# Plot the PDP
+ggplot(pdp_plot_wd, aes(wd, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+```
+
+
 ### ! Deviance explained
 ```{r}
 # Assuming 'rf_model' is your trained random forest model
@@ -474,7 +495,9 @@ test_dmatrix <- xgb.DMatrix(data = as.matrix(test_data[, c("wd", "velocity")]), 
 # Create and train the random forest model
 xbrt_model <- xgboost(data = train_dmatrix, 
                       nrounds = 100, 
-                      max_depth = 3)
+                      max_depth = 3,
+                      objective = "reg:squarederror")
+
 
 # make predictions using the trained model
 # predictions <- predict(rf_model, test_data) # das stimmt bestimmt noch nicht
@@ -484,6 +507,25 @@ print(xbrt_model)
 ```
 
 ## Evaluation Metrics
+### !! Partial dependence plots
+```{r}
+# Create the partial dependence plot
+pdp_plot_v <- partial(xbrt_model, pred.var = "velocity", train = train_data)
+
+# Plot the PDP
+ggplot(pdp_plot_v, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+
+# Create the partial dependence plot
+pdp_plot_wd <- partial(xbrt_model, pred.var = "wd")
+
+# Plot the PDP
+ggplot(pdp_plot_wd, aes(wd, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+```
+
 ### !! Deviance explained
 ```{r}
 # Get predictions from the XGBoost model
