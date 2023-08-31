@@ -1,0 +1,177 @@
+---
+title: "Biomod2_test"
+format: html
+---
+# Libraries
+```{r}
+library(terra)
+# install.packages("biomod2")
+library("biomod2")
+library("readr")
+library("tidyr")
+library("dplyr")
+```
+
+# Example 
+```{r}
+# Load species occurrences (6 species available)
+data(DataSpecies)
+head(DataSpecies)
+
+# Select the name of the studied species
+myRespName <- 'GuloGulo'
+
+# Get corresponding presence/absence data
+myResp <- as.numeric(DataSpecies[, myRespName])
+
+# Get corresponding XY coordinates
+myRespXY <- DataSpecies[, c('X_WGS84', 'Y_WGS84')]
+
+# Load environmental variables extracted from BIOCLIM (bio_3, bio_4, bio_7, bio_11 & bio_12)
+data(bioclim_current)
+myExpl <- terra::rast(bioclim_current)
+
+
+# ---------------------------------------------------------------------------- #
+# Format Data with true absences
+myBiomodData <- BIOMOD_FormatingData(resp.var = myResp,
+                                     expl.var = myExpl,
+                                     resp.xy = myRespXY,
+                                     resp.name = myRespName)
+
+# Create default modeling options
+myBiomodOptions <- BIOMOD_ModelingOptions()
+
+
+# ---------------------------------------------------------------------------- #
+# Model single models
+myBiomodModelOut <- BIOMOD_Modeling(bm.format = myBiomodData,
+                                    modeling.id = 'AllModels',
+                                    models = c("GLM", "GBM", "GAM", "CTA",
+                                               "ANN", "SRE", "FDA", "MARS",
+                                               "RF", "MAXENT",
+                                               "MAXNET", "XGBOOST"),
+                                    bm.options = myBiomodOptions,
+                                    CV.strategy = 'random', # further options: kfold, block, strat, env or user.defined
+                                    CV.nb.rep = 2,
+                                    CV.perc = 0.8,
+                                    metric.eval = c("KAPPA", "TSS", "ROC"),
+                                    var.import = 2,
+                                    seed.val = 42)
+
+myBiomodModelOut
+
+# Get evaluation scores & variables importance
+get_evaluations(myBiomodModelOut)
+get_variables_importance(myBiomodModelOut)
+
+# Represent evaluation scores 
+bm_PlotEvalMean(bm.out = myBiomodModelOut, dataset = 'calibration')
+bm_PlotEvalMean(bm.out = myBiomodModelOut, dataset = 'validation')
+bm_PlotEvalBoxplot(bm.out = myBiomodModelOut, group.by = c('algo', 'run'))
+
+# # Represent variables importance 
+ bm_PlotVarImpBoxplot(bm.out = myBiomodModelOut, group.by = c('expl.var', 'algo', 'algo'))
+ # bm_PlotVarImpBoxplot(bm.out = myBiomodModelOut, group.by = c('expl.var', 'algo', 'dataset'))
+ # bm_PlotVarImpBoxplot(bm.out = myBiomodModelOut, group.by = c('algo', 'expl.var', 'dataset'))
+
+# # Represent response curves 
+ mods <- get_built_models(myBiomodModelOut, run = 'RUN1')
+ bm_PlotResponseCurves(bm.out = myBiomodModelOut, 
+                       models.chosen = mods,
+                       fixed.var = 'median')
+# bm_PlotResponseCurves(bm.out = myBiomodModelOut, 
+#                       models.chosen = mods,
+#                       fixed.var = 'min')
+# mods <- get_built_models(myBiomodModelOut, full.name = 'GuloGulo_allData_RUN2_RF')
+# bm_PlotResponseCurves(bm.out = myBiomodModelOut, 
+#                       models.chosen = mods,
+#                       fixed.var = 'median',
+#                       do.bivariate = TRUE)
+
+
+```
+
+# With own data
+```{r}
+# Load species data
+data <- read_delim("abiotic_mi_sampling/lab_ml_models.csv") 
+
+data <- data |>
+  dplyr::select(k_index, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y) |>
+  mutate(x = as.numeric(x)) |>
+  rename(velocity = `Flow_velocity_v60_cm/s`,
+         wd = Water_depth_cm)
+
+# Select the name of the studied species
+myRespName <- 'k_index'
+
+# Get corresponding presence/absence data
+myResp <- data[, c("k_index")]
+
+# Get corresponding XY coordinates
+myRespXY <- data[, c('x', 'y')]
+
+# Load environmental variables extracted from BIOCLIM (bio_3, bio_4, bio_7, bio_11 & bio_12)
+myExpl <- data[, c('velocity', 'wd')]
+
+
+# ---------------------------------------------------------------------------- #
+# Format Data with true absences
+myBiomodData <- BIOMOD_FormatingData(resp.var = myResp,
+                                     expl.var = myExpl,
+                                     resp.xy = myRespXY,
+                                     resp.name = myRespName)
+
+# Create default modeling options
+myBiomodOptions <- BIOMOD_ModelingOptions()
+
+
+# ---------------------------------------------------------------------------- #
+# Model single models
+# NOTE: funktioniert nur mit CV.strategy = random, ich möchte aber kfold. Konnte bisland nicht lösen...
+myBiomodModelOut <- BIOMOD_Modeling(bm.format = myBiomodData,
+                                    modeling.id = "AllModels",
+                                    models = c("RF", "XGBOOST"),
+                                    bm.options = myBiomodOptions,
+                                    CV.strategy = "kfold", # further options: kfold, block, strat, env or user.defined
+                                    CV.nb.rep = as.integer(2),
+                                    CV.perc = 0.8,
+                                    metric.eval = c("KAPPA", "TSS", "ROC"),
+                                    var.import = 2,
+                                    seed.val = 42)
+
+?BIOMOD_Modeling
+myBiomodModelOut
+
+# Get evaluation scores & variables importance
+get_evaluations(myBiomodModelOut)
+get_variables_importance(myBiomodModelOut)
+
+# Represent evaluation scores 
+bm_PlotEvalMean(bm.out = myBiomodModelOut, dataset = 'calibration')
+bm_PlotEvalMean(bm.out = myBiomodModelOut, dataset = 'validation')
+bm_PlotEvalBoxplot(bm.out = myBiomodModelOut, group.by = c('algo', 'run'))
+
+# # Represent variables importance 
+ bm_PlotVarImpBoxplot(bm.out = myBiomodModelOut, group.by = c('expl.var', 'algo', 'algo'))
+ # bm_PlotVarImpBoxplot(bm.out = myBiomodModelOut, group.by = c('expl.var', 'algo', 'dataset'))
+ # bm_PlotVarImpBoxplot(bm.out = myBiomodModelOut, group.by = c('algo', 'expl.var', 'dataset'))
+
+# # Represent response curves 
+ mods <- get_built_models(myBiomodModelOut, run = 'RUN1')
+ bm_PlotResponseCurves(bm.out = myBiomodModelOut, 
+                       models.chosen = mods,
+                       fixed.var = 'median')
+# bm_PlotResponseCurves(bm.out = myBiomodModelOut, 
+#                       models.chosen = mods,
+#                       fixed.var = 'min')
+# mods <- get_built_models(myBiomodModelOut, full.name = 'GuloGulo_allData_RUN2_RF')
+# bm_PlotResponseCurves(bm.out = myBiomodModelOut, 
+#                       models.chosen = mods,
+#                       fixed.var = 'median',
+#                       do.bivariate = TRUE)
+
+
+```
+

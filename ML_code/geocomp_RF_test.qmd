@@ -1,0 +1,219 @@
+---
+title: "geocomp_RF_test"
+format: html
+---
+
+# Libraries 
+```{r}
+library(sf)
+library(terra)
+library(dplyr)
+library(data.table)        # fast data.frame manipulation (used by mlr3)
+library(mlr3)              # machine learning (see Chapter 12)
+library(mlr3spatiotempcv)  # spatio-temporal resampling 
+library(mlr3tuning)        # hyperparameter tuning package
+library(mlr3learners)      # interface to most important machine learning packages
+library(paradox)           # defining hyperparameter spaces
+library(ranger)            # random forest package
+library(qgisprocess)       # bridge to QGIS (Chapter 10)
+library(tree)              # decision tree package
+library(vegan)             # community ecology package
+library(readr)
+```
+
+# Load data 
+```{r}
+data("study_area", "random_points", "comm", package = "spDataLarge")
+dem = rast(system.file("raster/dem.tif", package = "spDataLarge"))
+ndvi = rast(system.file("raster/ndvi.tif", package = "spDataLarge"))
+
+head(comm) # is type list not df?
+
+# rownames in comm correspond to the id column of random_points
+head(random_points)
+
+# visualize data to get an overview - simple plot with baseR (but you can also use ggplot or tmap)
+plot(dem) # +
+points(random_points) # +
+lines(study_area)
+```
+
+```{r}
+data <- read_delim("abiotic_mi_sampling/lab_ml_models.csv") 
+
+data_new <- data |>
+  dplyr::select(k_index, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y) |>
+  mutate(x = as.numeric(x)) |>
+  rename(velocity = `Flow_velocity_v60_cm/s`,
+         wd = Water_depth_cm) |>
+  na.omit()
+
+data_new <-  st_as_sf(data_new, coords =  c("x", "y"))
+```
+
+# Eliminate Variables 
+```{r}
+# install.packages("remotes")
+remotes::install_github("r-spatial/qgisprocess")
+library("qgisprocess")
+
+# if not already done, enable the saga next generation plugin
+qgisprocess::qgis_enable_plugins("processing_saga_nextgen")
+
+# show help
+qgisprocess::qgis_show_help("sagang:sagawetnessindex")
+
+# environmental predictors: catchment slope and catchment area
+ep = qgisprocess::qgis_run_algorithm(
+  alg = "sagang:sagawetnessindex",
+  DEM = dem,
+  SLOPE_TYPE = 1, 
+  SLOPE = tempfile(fileext = ".sdat"),
+  AREA = tempfile(fileext = ".sdat"),
+  .quiet = TRUE)
+```
+
+```{r}
+# read in catchment area and catchment slope
+ep = ep[c("AREA", "SLOPE")] |>
+  unlist() |>
+  terra::rast()
+
+names(ep) = c("carea", "cslope") # assign proper names 
+terra::origin(ep) = terra::origin(dem) # make sure rasters have the same origin
+ep = c(dem, ndvi, ep) # add dem and ndvi to the multilayer SpatRaster object
+
+# correct skewdness to the right with log10 transformation 
+ep$carea = log10(ep$carea)
+
+# ep from spDataLarge 
+ep = terra::rast(system.file("raster/ep.tif", package = "spDataLarge"))
+
+# extract terrain attributes to fiel observations 
+# terra::extract adds automatically a for our purposes unnecessary ID column
+ep_rp = terra::extract(ep, random_points) |>
+  select(-ID)
+random_points = cbind(random_points, ep_rp)
+```
+
+# Ordination NMDS
+```{r}
+# develop presence-absence matrix from species data
+pa = vegan::decostand(comm, "pa")  # 100 rows (sites), 69 columns (species)
+
+# keep only sites in which at least one species was found
+pa = pa[rowSums(pa) != 0, ]  # 84 rows, 69 columns
+```
+
+```{r}
+# try to 500 to make sure the algorithm converges
+set.seed(25072018)
+nmds = vegan::metaMDS(comm = pa, k = 4, try = 500)
+nmds$stress
+
+
+elev = dplyr::filter(random_points, id %in% rownames(pa)) |> 
+  dplyr::pull(dem)
+# rotating NMDS in accordance with altitude (proxy for humidity)
+rotnmds = vegan::MDSrotate(nmds, elev)
+# extracting the first two axes
+sc = vegan::scores(rotnmds, choices = 1:2, display = "sites")
+# plotting the first axis against altitude
+plot(y = sc[, 1], x = elev, xlab = "elevation in m", 
+     ylab = "First NMDS axis", cex.lab = 0.8, cex.axis = 0.8)
+```
+
+# Random Forest
+```{r}
+# construct response-predictor matrix
+# id- and response variable
+rp = data.frame(id = as.numeric(rownames(sc)), sc = sc[, 1])
+
+# join the predictors (dem, ndvi and terrain attributes)
+rp = inner_join(random_points, rp, by = "id")
+
+# visualize tree plot with one predictor variable 
+tree_mo = tree::tree(sc ~ dem, data = rp)
+plot(tree_mo)
+text(tree_mo, pretty = 0)
+# the resulting tree has three internal nodes and four terminal nodes
+# Overall, we can interpret the tree as follows: the higher the elevation, the higher the NMDS score becomes. 
+```
+
+
+
+## Task 
+```{r}
+# create task
+task = mlr3spatiotempcv::as_task_regr_st(select(rp, -id, -spri),
+  id = "mongon", target = "sc")
+
+?mlr3spatiotempcv::as_task_regr_st
+# select: select df and remove not to be used variables 
+# id: Id for the new task. Defaults to the (deparsed and substituted) name of the data argument.
+# target: response variable 
+
+# learner for random forest
+# from the ranger package
+lrn_rf = lrn("regr.ranger", predict_type = "response")
+```
+
+## Specifying the search space
+```{r}
+# specifying the search space
+search_space = paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+```
+
+Having defined the search space, we are all set for specifying our tuning via the AutoTuner() function. Since we deal with geographic data, we will again make use of spatial cross-validation to tune the hyperparameters (see Sections 12.4 and 12.5). Specifically, we will use a five-fold spatial partitioning with only one repetition (rsmp()). In each of these spatial partitions, we run 50 models (trm()) while using randomly selected hyperparameter configurations (tnr()) within predefined limits (seach_space) to find the optimal hyperparameter combination (see also Section 12.5.2 and https://mlr3book.mlr-org.com/optimization.html#autotuner, Becker et al. 2022). The performance measure is the root mean squared error (RMSE).
+
+```{r}
+autotuner_rf = mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
+Calling the train()-method of the AutoTuner-object finally runs the hyperparameter tuning, and will find the optimal hyperparameter combination for the specified parameters.
+
+```{r}
+# hyperparameter tuning
+set.seed(0412022)
+autotuner_rf$train(task)
+
+# read the results 
+autotuner_rf$tuning_result
+#>    mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
+#> 1:    4             0.9             7          <list[4]> <list[3]>     0.375
+```
+
+### Predictive Mapping
+```{r}
+# predicting using the best hyperparameter combination
+autotuner_rf$predict(task)
+#> Warning: Detected version mismatch: Learner 'regr.ranger.tuned' has been
+#> trained with mlr3 version '0.13.3', not matching currently installed version
+#> '0.16.1'
+#> Warning: Detected version mismatch: Learner 'regr.ranger' has been trained with
+#> mlr3 version '0.13.3', not matching currently installed version '0.16.1'
+#> <PredictionRegr> for 84 observations:
+#>     row_ids  truth response
+#>           1 -1.084   -1.073
+#>           2 -0.975   -1.050
+#>           3 -0.912   -1.012
+#> ---                        
+#>          82  0.814    0.646
+#>          83  0.814    0.790
+#>          84  0.808    0.845
+
+pred = terra::predict(ep, model = autotuner_rf, fun = predict)
+plot(pred)
+```
+

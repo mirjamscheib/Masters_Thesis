@@ -1,0 +1,214 @@
+<?xml version="1.0" ?>
+<!DOCTYPE Xdmf SYSTEM "Xdmf.dtd" []>
+<Xdmf Version="2.0">
+    <Domain>
+        <Topology TopologyType="Triangle" Name="Topology" NumberOfElements="30797">
+            <DataItem ItemType="Uniform" Dimensions="92391" Format="HDF">
+                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:CellsAll/Topology
+            </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ" Name="Coordinates">
+            <DataItem ItemType="Uniform" Dimensions="46947" Format="HDF">
+                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:NodesAll/Coordnts
+            </DataItem>
+        </Geometry>
+        <Grid GridType="Collection" Name="E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5" CollectionType="Temporal">
+            <Grid GridType="Uniform" Name="Timestep">
+                <Time TimeType="Single" Name="time = 0.000000" Value="0.000000">
+                </Time>
+                <Topology TopologyType="Triangle" Reference="/Xdmf/Domain/Topology[1]">
+                </Topology>
+                <Geometry GeometryType="XY" Reference="/Xdmf/Domain/Geometry[1]">
+                </Geometry>
+                <Attribute AttributeType="Scalar" Name="bottom_elevation" Center="Cell">
+                    <DataItem ItemType="HyperSlab" Dimensions="30797">
+                        <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                            0 0 1 1 30797 1
+                        </DataItem>
+                        <DataItem ItemType="Uniform" Dimensions="30797 1" Format="HDF">
+                            E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:CellsAll/BottomEl
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Vector" Name="spec_discharge" Center="Cell">
+                    <DataItem ItemType="Function" Dimensions="30797 3" Function="JOIN($0, $1, 0*$1)">
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 1 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000000
+                            </DataItem>
+                        </DataItem>
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 2 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000000
+                            </DataItem>
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Scalar" Name="water_depth" Center="Cell">
+                    <DataItem ItemType="Function" Dimensions="30797" Function="$0-$1">
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 0 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000000
+                            </DataItem>
+                        </DataItem>
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 0 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 1" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:CellsAll/BottomEl
+                            </DataItem>
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Scalar" Name="water_surface" Center="Cell">
+                    <DataItem ItemType="HyperSlab" Dimensions="30797">
+                        <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                            0 0 1 1 30797 1
+                        </DataItem>
+                        <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                            E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000000
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Scalar" Name="flow_velocity_abs" Center="Cell">
+                    <DataItem ItemType="HyperSlab" Dimensions="30797">
+                        <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                            0 0 1 1 30797 1
+                        </DataItem>
+                        <DataItem ItemType="Uniform" Dimensions="30797 1" Format="HDF">
+                            E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00_aux.h5:flow_velocity_abs/0
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Vector" Name="flow_velocity" Center="Cell">
+                    <DataItem ItemType="Function" Dimensions="30797 3" Function="JOIN($0, $1, 0*$1)">
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 0 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 2" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00_aux.h5:flow_velocity/0
+                            </DataItem>
+                        </DataItem>
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 1 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 2" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00_aux.h5:flow_velocity/0
+                            </DataItem>
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+            </Grid>
+            <Grid GridType="Uniform" Name="Timestep">
+                <Time TimeType="Single" Name="time = 7200.000000" Value="7200.000000">
+                </Time>
+                <Topology TopologyType="Triangle" Reference="/Xdmf/Domain/Topology[1]">
+                </Topology>
+                <Geometry GeometryType="XY" Reference="/Xdmf/Domain/Geometry[1]">
+                </Geometry>
+                <Attribute AttributeType="Scalar" Name="bottom_elevation" Center="Cell">
+                    <DataItem ItemType="HyperSlab" Dimensions="30797">
+                        <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                            0 0 1 1 30797 1
+                        </DataItem>
+                        <DataItem ItemType="Uniform" Dimensions="30797 1" Format="HDF">
+                            E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:CellsAll/BottomEl
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Vector" Name="spec_discharge" Center="Cell">
+                    <DataItem ItemType="Function" Dimensions="30797 3" Function="JOIN($0, $1, 0*$1)">
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 1 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000001
+                            </DataItem>
+                        </DataItem>
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 2 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000001
+                            </DataItem>
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Scalar" Name="water_depth" Center="Cell">
+                    <DataItem ItemType="Function" Dimensions="30797" Function="$0-$1">
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 0 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000001
+                            </DataItem>
+                        </DataItem>
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 0 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 1" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:CellsAll/BottomEl
+                            </DataItem>
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Scalar" Name="water_surface" Center="Cell">
+                    <DataItem ItemType="HyperSlab" Dimensions="30797">
+                        <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                            0 0 1 1 30797 1
+                        </DataItem>
+                        <DataItem ItemType="Uniform" Dimensions="30797 3" Format="HDF">
+                            E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00.h5:/RESULTS/CellsAll/HydState/0000001
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Scalar" Name="flow_velocity_abs" Center="Cell">
+                    <DataItem ItemType="HyperSlab" Dimensions="30797">
+                        <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                            0 0 1 1 30797 1
+                        </DataItem>
+                        <DataItem ItemType="Uniform" Dimensions="30797 1" Format="HDF">
+                            E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00_aux.h5:flow_velocity_abs/1
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+                <Attribute AttributeType="Vector" Name="flow_velocity" Center="Cell">
+                    <DataItem ItemType="Function" Dimensions="30797 3" Function="JOIN($0, $1, 0*$1)">
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 0 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 2" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00_aux.h5:flow_velocity/1
+                            </DataItem>
+                        </DataItem>
+                        <DataItem ItemType="HyperSlab" Dimensions="30797">
+                            <DataItem ItemType="Uniform" Dimensions="3 2" Format="XML" NumberType="Int">
+                                0 1 1 1 30797 1
+                            </DataItem>
+                            <DataItem ItemType="Uniform" Dimensions="30797 2" Format="HDF">
+                                E:/Mirjam/Masters_Thesis\hdm_models/S2/results_S2_15_00_aux.h5:flow_velocity/1
+                            </DataItem>
+                        </DataItem>
+                    </DataItem>
+                </Attribute>
+            </Grid>
+        </Grid>
+    </Domain>
+</Xdmf>

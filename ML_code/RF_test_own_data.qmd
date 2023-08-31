@@ -1,0 +1,813 @@
+---
+title: "RF_test_own_data"
+format: html
+---
+
+# Libraries 
+```{r}
+library(sf)
+library(terra)
+library(dplyr)
+library(data.table)        # fast data.frame manipulation (used by mlr3)
+library(mlr3)              # machine learning (see Chapter 12)
+library(mlr3spatiotempcv)  # spatio-temporal resampling 
+library(mlr3tuning)        # hyperparameter tuning package
+library(mlr3learners)      # interface to most important machine learning packages
+library(paradox)           # defining hyperparameter spaces
+library(ranger)            # random forest package
+library(tree)              # decision tree package
+library(readr)
+library(sp)
+library(raster)
+library(gbm)
+library(xgboost)
+library(caret) # for cohen's kappa calculation 
+library("pdp")
+```
+
+# Load data 
+```{r}
+data <- read_delim("abiotic_mi_sampling/lab_ml_models.csv") 
+
+data_new <- data |>
+  dplyr::select(k_index, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y) |>
+  mutate(x = as.numeric(x)) |>
+  rename(velocity = `Flow_velocity_v60_cm/s`,
+         wd = Water_depth_cm) |>
+  na.omit()
+
+data_new <-  st_as_sf(data_new, coords =  c("x", "y"))
+st_crs(data_new) <- "EPSG: 2056"
+```
+
+# Random Forest 
+```{r}
+# Visualize tree plot with one predictor variable 
+tree_v <- tree::tree(k_index ~ velocity, data = data_new)
+plot(tree_v)
+text(tree_v, pretty = 0)
+# two internal nodes 
+# three terminal nodes
+# the lower the velocity, the higher the k_index
+
+tree_wd <- tree::tree(k_index ~ wd, data = data_new)
+plot(tree_wd)
+text(tree_wd, pretty = 0)
+# one internal node
+# two terminal nodes
+# the lower the wd, the higher the k_index
+```
+
+## Create Task & Learner
+```{r}
+# create task
+task <- mlr3spatiotempcv::as_task_regr_st(data_new,
+  id = "test", target = "k_index")
+
+?mlr3spatiotempcv::as_task_regr_st
+# select: select df and remove not to be used variables 
+# id: Id for the new task. Defaults to the (deparsed and substituted) name of the data argument.
+# target: response variable, name of the target column
+
+?mlr3spatiotempcv
+?lrn
+
+# learner for random forest
+# from the ranger package
+lrn_rf <- lrn("regr.ranger", predict_type = "response")
+```
+
+## Specifying the search space
+```{r}
+# specifying the search space
+search_space <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# num.trees noch suchen? 
+```
+
+## Hyperparameter tuning 
+```{r}
+autotuner_rf <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
+```{r}
+# hyperparameter tuning
+set.seed(0412022)
+autotuner_rf$train(task)
+
+# read the results 
+autotuner_rf$tuning_result
+```
+
+## Predict to maps 
+```{r}
+# read rasters
+GL1_3_28 <- stack("rasters_stacked/GL1_22_00.grd")
+
+new_names <- c("velocity", "wd")  # Replace with your desired new names
+names(GL1_3_28) <- new_names
+crs(GL1_3_28) <- "EPSG: 2056"
+
+pred = terra::predict(GL1_3_28, model = autotuner_rf, fun = predict, index = 2)
+
+plot(pred)
+```
+
+## ! Make model 
+```{r}
+# turn sf object into dataframe 
+data_new <- data.frame(st_drop_geometry(data_new))
+
+# Split the data into training and testing sets
+train_indices <- sample(1:nrow(data_new), 0.7 * nrow(data_new))
+train_data <- data_new[train_indices, ]
+test_data <- data_new[-train_indices, ]
+
+# Create and train the random forest model
+rf_model <- ranger(formula = k_index ~., data = train_data, mtry = 2, sample.fraction = 0.2202553, min.node.size = 9)
+
+# make predictions using the trained model
+# predictions <- predict(rf_model, test_data) # das stimmt bestimmt noch nicht
+
+```
+
+## Evaluation Metrics
+### Partial dependence plots
+```{r}
+# Create the partial dependence plot
+pdp_plot_v <- partial(rf_model, pred.var = "velocity")
+
+# Plot the PDP
+ggplot(pdp_plot_v, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+
+# Create the partial dependence plot
+pdp_plot_wd <- partial(rf_model, pred.var = "wd")
+
+# Plot the PDP
+ggplot(pdp_plot_wd, aes(wd, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+```
+
+
+### ! Deviance explained
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)
+actual_responses <- test_data$k_index
+
+# Calculate the total sum of squares (TSS)
+tss <- sum((actual_responses - mean(actual_responses))^2)
+
+# Calculate the residual sum of squares (RSS)
+rss <- sum((actual_responses - rf_predictions$predictions)^2)
+
+# Calculate R-squared
+rsquared <- 1 - rss / tss
+
+# Print R-squared
+print(rsquared)
+```
+
+### ! AUC
+```{r}
+# Install and load the required package
+# install.packages("pROC")
+library(pROC)
+
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Transform the actual responses into a binary indicator (0 or 1)
+actual_binary <- ifelse(actual_responses > 0.5, 1, 0)  # Set the appropriate threshold
+# threshold im moment 0.5 aber nachher noch anpassen vlt. 
+
+# Calculate the AUC-ROC
+roc_auc <- auc(roc(response = actual_binary, predictor = rf_predictions))
+
+# Print AUC-ROC
+print(roc_auc)
+```
+
+### ! Sensitivity & Specificity 
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate sensitivity (true positive rate)
+sensitivity <- conf_matrix[1, 2] / (conf_matrix[1, 2] + conf_matrix[1, 1])
+
+# Print sensitivity
+print(sensitivity)
+
+# Calculate specificity (true negative rate)
+specificity <- conf_matrix[1, 1] / (conf_matrix[1, 1] + conf_matrix[1, 2])
+
+# Print specificity
+print(specificity)
+```
+
+### ! Accuracy
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Print accuracy
+print(accuracy)
+```
+
+### ! Root mean squared deviation (RMSD)
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Calculate squared deviations
+squared_deviations <- (rf_predictions - actual_responses)^2
+
+# Calculate mean of squared deviations
+mean_squared_deviation <- mean(squared_deviations)
+
+# Calculate root mean squared deviation (RMSE)
+root_mean_squared_deviation <- sqrt(mean_squared_deviation)
+
+# Print RMSE
+print(root_mean_squared_deviation)
+```
+
+### ! Bias
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Calculate the differences between predicted and actual values
+differences <- rf_predictions - actual_responses
+
+# Calculate the mean of the differences (bias)
+bias <- mean(differences)
+
+# Print bias
+print(bias)
+```
+
+### ! Nash-Sutcliffe efficiency (NSE)
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Calculate the NSE
+nse <- 1 - sum((actual_responses - rf_predictions)^2) / sum((actual_responses - mean(actual_responses))^2)
+
+# Print NSE
+print(nse)
+```
+
+### ! F - measure
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate precision
+precision <- conf_matrix[2, 2] / (conf_matrix[2, 2] + conf_matrix[1, 2])
+
+# Calculate recall (sensitivity)
+recall <- conf_matrix[2, 2] / (conf_matrix[2, 2] + conf_matrix[2, 1])
+
+# Calculate F1-score
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+# Print F1-score
+print(f1_score)
+
+```
+
+### ! True Skill Statistic 
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate sensitivity (true positive rate)
+sensitivity <- conf_matrix[1, 2] / (conf_matrix[1, 2] + conf_matrix[1, 1])
+
+# Calculate specificity (true negative rate)
+specificity <- conf_matrix[1, 1] / (conf_matrix[1, 1] + conf_matrix[1, 2])
+
+# Calculate TSS (True Skill Statistic)
+tss <- sensitivity + specificity - 1
+
+# Print TSS
+print(tss)
+```
+
+### ! CCI w/o CV
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate correctly classified instances (CCI)
+cci <- conf_matrix[1, 1] + conf_matrix[2, 2]
+
+# Print CCI
+print(cci)
+```
+
+### ! Kohen's Kappa
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate observed agreement (OA)
+oa <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Calculate expected agreement (EA)
+p_yes <- sum(conf_matrix[, 2]) / sum(conf_matrix)
+p_no <- sum(conf_matrix[, 1]) / sum(conf_matrix)
+ea <- p_yes * p_yes + p_no * p_no
+
+# Calculate Cohen's Kappa
+kappa <- (oa - ea) / (1 - ea)
+
+# Print Cohen's Kappa
+print(kappa)
+```
+ 
+
+# Boosted Regression Tree
+## Create Task & Learner
+```{r}
+ # create task
+task_xbrt <- mlr3spatiotempcv::as_task_regr_st(data_new,
+  id = "brt", target = "k_index")
+
+# select: select df and remove not to be used variables 
+# id: Id for the new task. Defaults to the (deparsed and substituted) name of the data argument.
+# target: response variable, name of the target column
+
+?mlr3spatiotempcv
+?lrn
+
+# learner for random forest
+# from the ranger package
+lrn_xbrt <- lrn("regr.xgboost", predict_type = "response")
+```
+
+## Specifying the search space
+```{r}
+# specifying the search space
+search_space_xbrt <- paradox::ps(
+  #learning_rate = p_dbl(lower = 0.01, upper = 0.1),
+  nrounds = p_int(lower = 100, upper = 1000),
+  max_depth = p_int(lower = 3, upper = 10)
+)
+
+?xgboost
+```
+
+## Hyperparameter tuning 
+```{r}
+autotuner_xbrt <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
+```{r}
+# hyperparameter tuning
+set.seed(0412022)
+autotuner_xbrt$train(task_xbrt)
+
+# read the results 
+autotuner_xbrt$tuning_result
+```
+
+## Predict to maps 
+```{r}
+# read rasters
+GL1_22_00 <- stack("rasters_stacked/GL1_22_00.grd")
+
+new_names <- c("velocity", "wd")  # Replace with your desired new names
+names(GL1_22_00) <- new_names
+crs(GL1_22_00) <- "EPSG: 2056"
+
+pred = terra::predict(GL1_22_00, model = autotuner_xbrt, fun = predict, index = 2)
+
+plot(pred)
+```
+
+## ! Make model
+```{r}
+# turn sf object into dataframe 
+data_new <- data.frame(st_drop_geometry(data_new))
+
+# make training data
+training.x <- model.matrix(k_index ~ ., data = train_data)
+
+# make testing dataset
+testing.x <- model.matrix(k_index ~ ., data = test_data)
+
+# make model 
+model.xgb <- xgboost(data = data.matrix(training.x[ ,-1]),
+                     label = as.numeric(as.character(train_data$k_index)),
+                     eta = 0.1,
+                     max_depth = 3,
+                     nrounds = 100,
+                     objective = "reg:linear")
+```
+
+```{r}
+# turn sf object into dataframe 
+data_new <- data.frame(st_drop_geometry(data_new))
+
+# Split the data into training and testing sets
+train_indices <- sample(1:nrow(data_new), 0.7 * nrow(data_new))
+train_data <- as.matrix(data_new[train_indices, ])
+test_data <- as.matrix(data_new[-train_indices, ])
+
+# Create the DMatrix object
+train_dmatrix <- xgb.DMatrix(data = as.matrix(train_data[, c("wd", "velocity")]), label = train_data[, "k_index"])
+
+test_dmatrix <- xgb.DMatrix(data = as.matrix(test_data[, c("wd", "velocity")]), label = test_data[, "k_index"])
+
+# Create and train the random forest model
+xbrt_model <- xgboost(data = train_dmatrix, 
+                      nrounds = 100, 
+                      max_depth = 3,
+                      objective = "reg:squarederror")
+
+
+# make predictions using the trained model
+# predictions <- predict(rf_model, test_data) # das stimmt bestimmt noch nicht
+
+# Print the trained model
+print(xbrt_model)
+```
+
+## Evaluation Metrics
+### !! Partial dependence plots
+```{r}
+# Define the feature names
+feature_names <- colnames(training.x)[2:length(colnames(training.x))]
+
+# Generate partial dependence plots
+pdp_plots <- lapply(feature_names, function(feature) {
+  pdp_object <- pdp::partial(model.xgb, pred.var = feature_names, train = training.x)
+  pdp_plot <- pdp::plotPartial(pdp_object, feature_names)
+  return(pdp_plot)
+})
+
+# Plot the partial dependence plots
+#pdf("pdp_plots.pdf")  # You can change the output format if needed
+for (i in seq_along(pdp_plot)) {
+  print(pdp_plot[[i]])
+}
+dev.off()
+```
+
+```{r}
+# Create the partial dependence plot
+pdp_plot_v <- partial(model.xgb, pred.var = "wd", train = train_data)
+
+# Plot the PDP
+ggplot(pdp_plot_v, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+
+# Create the partial dependence plot
+pdp_plot_wd <- partial(xbrt_model, pred.var = "wd")
+
+# Plot the PDP
+ggplot(pdp_plot_wd, aes(wd, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line()
+```
+
+### !! Deviance explained
+```{r}
+# Get predictions from the XGBoost model
+xbrt_predictions <- predict(xbrt_model, test_dmatrix)
+
+# Calculate the deviance of the XGBoost predictions
+deviance_xbrt <- 2 * sum(dpois(test_data[, "k_index"], xbrt_predictions, log = TRUE))
+
+# Calculate the deviance of a null model (mean response)
+mean_response <- mean(test_data[, "k_index"])
+deviance_null <- 2 * sum(dpois(test_data[, "k_index"], mean_response, log = TRUE))
+
+# Calculate the deviance explained
+deviance_explained <- (deviance_null - deviance_xbrt) / deviance_null
+
+# Print deviance explained
+print(deviance_explained)
+```
+
+### !! AUC
+```{r}
+# Install and load the required package
+# install.packages("pROC")
+library(pROC)
+
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Transform the actual responses into a binary indicator (0 or 1)
+actual_binary <- ifelse(actual_responses > 0.5, 1, 0)  # Set the appropriate threshold
+# threshold im moment 0.5 aber nachher noch anpassen vlt. 
+
+# Calculate the AUC-ROC
+roc_auc <- auc(roc(response = actual_binary, predictor = rf_predictions))
+
+# Print AUC-ROC
+print(roc_auc)
+```
+
+### ! Sensitivity & Specificity 
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate sensitivity (true positive rate)
+sensitivity <- conf_matrix[1, 2] / (conf_matrix[1, 2] + conf_matrix[1, 1])
+
+# Print sensitivity
+print(sensitivity)
+
+# Calculate specificity (true negative rate)
+specificity <- conf_matrix[1, 1] / (conf_matrix[1, 1] + conf_matrix[1, 2])
+
+# Print specificity
+print(specificity)
+```
+
+### ! Accuracy
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Print accuracy
+print(accuracy)
+```
+
+### ! Root mean squared deviation (RMSD)
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Calculate squared deviations
+squared_deviations <- (rf_predictions - actual_responses)^2
+
+# Calculate mean of squared deviations
+mean_squared_deviation <- mean(squared_deviations)
+
+# Calculate root mean squared deviation (RMSE)
+root_mean_squared_deviation <- sqrt(mean_squared_deviation)
+
+# Print RMSE
+print(root_mean_squared_deviation)
+```
+
+### ! Bias
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Calculate the differences between predicted and actual values
+differences <- rf_predictions - actual_responses
+
+# Calculate the mean of the differences (bias)
+bias <- mean(differences)
+
+# Print bias
+print(bias)
+```
+
+### ! Nash-Sutcliffe efficiency (NSE)
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Calculate the NSE
+nse <- 1 - sum((actual_responses - rf_predictions)^2) / sum((actual_responses - mean(actual_responses))^2)
+
+# Print NSE
+print(nse)
+```
+
+### ! F - measure
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate precision
+precision <- conf_matrix[2, 2] / (conf_matrix[2, 2] + conf_matrix[1, 2])
+
+# Calculate recall (sensitivity)
+recall <- conf_matrix[2, 2] / (conf_matrix[2, 2] + conf_matrix[2, 1])
+
+# Calculate F1-score
+f1_score <- 2 * (precision * recall) / (precision + recall)
+
+# Print F1-score
+print(f1_score)
+
+```
+
+### ! True Skill Statistic 
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate sensitivity (true positive rate)
+sensitivity <- conf_matrix[1, 2] / (conf_matrix[1, 2] + conf_matrix[1, 1])
+
+# Calculate specificity (true negative rate)
+specificity <- conf_matrix[1, 1] / (conf_matrix[1, 1] + conf_matrix[1, 2])
+
+# Calculate TSS (True Skill Statistic)
+tss <- sensitivity + specificity - 1
+
+# Print TSS
+print(tss)
+```
+
+### ! CCI w/o CV
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate correctly classified instances (CCI)
+cci <- conf_matrix[1, 1] + conf_matrix[2, 2]
+
+# Print CCI
+print(cci)
+```
+
+### ! Kohen's Kappa
+```{r}
+# Assuming 'rf_model' is your trained random forest model
+rf_predictions <- predict(rf_model, data = test_data)$predictions
+actual_responses <- test_data$k_index
+
+# Assuming you have set an appropriate threshold to classify positive and negative cases
+threshold <- 0.5
+
+# Transform the actual responses into binary indicators (0 or 1)
+actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+
+# Calculate confusion matrix
+conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+
+# Calculate observed agreement (OA)
+oa <- sum(diag(conf_matrix)) / sum(conf_matrix)
+
+# Calculate expected agreement (EA)
+p_yes <- sum(conf_matrix[, 2]) / sum(conf_matrix)
+p_no <- sum(conf_matrix[, 1]) / sum(conf_matrix)
+ea <- p_yes * p_yes + p_no * p_no
+
+# Calculate Cohen's Kappa
+kappa <- (oa - ea) / (1 - ea)
+
+# Print Cohen's Kappa
+print(kappa)
+```
+ 

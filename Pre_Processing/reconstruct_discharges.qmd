@@ -1,0 +1,174 @@
+---
+title: "Reconstruct Discharges of Sampling Days"
+format: html
+---
+
+# Load packages
+```{r}
+# clear R memory 
+rm(list = ls())
+
+# load packages 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+pkgCheck("terra")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
+pkgCheck("scales")
+pkgCheck("hdf5r")
+pkgCheck("sp")
+pkgCheck("sf")
+pkgCheck("spatstat.geom")
+pkgCheck("spatstat.explore")
+pkgCheck("gstat")
+pkgCheck("purrr")
+pkgCheck("rgdal")
+
+# load self-written functions 
+source("mth_functions.R")
+
+# set working directory 
+setwd("Pre_Processing")
+```
+
+Q_study_site_MZB = Q_pegel_MZB * Q_model_site / Q_pegel_model
+
+Mit
+
+Q_study_site_MZB: gesuchter Abfluss am Tag und Uhrzeit des Samplings in der Sektion (=Study site)
+Q_pegel_MZB: am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit des Samplings (diese Info müsste in der Abiotik tabelle von Diego drin sein)
+Q_model_site: im study site gemessenen Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell (findest du in der Tabelle, die ich dir am 3.8. geschickt habe)
+Q_pegel_model: am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell. 
+
+# Reconstruct 
+## Q_model_site
+```{r}
+# Discharge measured in the study site on the day and time of the field recordings for the hydrodynamic model 
+
+Q_model_GL1 <- "x" # Was kann ich hier machen?
+Q_model_GL2 <- 11.0
+Q_model_L2 <- 7.0
+Q_model_M1 <- 0.6
+Q_model_S1 <- 3.7
+Q_model_S2 <- 3.2
+Q_model_TH4 <- 25.0
+Q_model_VR3 <- 18.8
+```
+
+## Q_MI_site
+```{r}
+# Q MI for all sections (from abiotic data)
+# load mzb_data 
+mzb_data <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
+
+# select relevant columns 
+data <- mzb_data %>%
+  mutate(mean_Q = rowMeans(dplyr::select(., Discharge_m3_s_before,
+                                  Discharge_m3_s_during,
+                                  Discharge_m3_s_after))) %>%
+  dplyr::select(Reach_Untersuchungsstelle, Discharge_m3_s_before,
+                Discharge_m3_s_after,
+                Discharge_m3_s_during, mean_Q)
+
+# select only single river sections 
+# GL1
+Q_MI_GL1 <- data |>
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_GL1 = mean(mean_Q))
+
+# GL2
+Q_MI_GL2 <- data |>
+  subset(Reach_Untersuchungsstelle == "GL2") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_GL2 = mean(mean_Q))
+
+# L2
+Q_MI_L2 <- data |>
+  subset(Reach_Untersuchungsstelle == "L2") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_L2 = mean(mean_Q))
+
+# M1
+Q_MI_M1 <- data |>
+  subset(Reach_Untersuchungsstelle == "M1") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_M1 = mean(mean_Q))
+
+# S1
+Q_MI_S1 <- data |>
+  subset(Reach_Untersuchungsstelle == "S1") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_S1 = mean(mean_Q))
+
+# S2
+Q_MI_S2 <- data |>
+  subset(Reach_Untersuchungsstelle == "S2") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_S2 = mean(mean_Q))
+
+# TH4
+Q_MI_TH4 <- data |>
+  subset(Reach_Untersuchungsstelle == "TH4") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_TH4 = mean(mean_Q))
+
+# VR3
+Q_MI_VR3 <- data |>
+  subset(Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  summarise(Q_MI_VR3 = mean(mean_Q))
+```
+
+## Q_pegel_site
+```{r}
+
+```
+
+## bind Qs together
+```{r}
+GL1 <- cbind(Q_model_GL1, Q_MI_GL1)
+GL2 <- cbind(Q_model_GL2, Q_MI_GL2)
+```
+
+
+## Calculate Q 
+```{r}
+# formula to reconstuct discharges 
+Q_sampling_GL1$Q <- Q_MI_GL1 * Q_model_GL1 / Q_pegel_GL1
+Q_sampling_GL1$Q <- 0.7
+
+Q_sampling_GL1 <- Q_model_GL1 |>
+  cbind(Q_MI_GL1) |>
+  mutate(Q = Q_MI_GL1 * Q_model_GL1,
+         reach = "GL1")
+
+Q_sampling_GL2 <- GL2 |>
+  mutate(Q = Q_MI_GL2 * Q_model_GL2,
+         reach = "GL2") |>
+  cbind(Q_MI_GL2)
+
+Q_sampling_GL2 <- Q_MI_GL2 * Q_model_GL2 / Q_pegel_GL2
+Q_sampling_L2 <- Q_MI_L2 * Q_model_L2 / Q_pegel_L2
+Q_sampling_M1 <- Q_MI_M1 * Q_model_M1 / Q_pegel_M1
+Q_sampling_S1 <- Q_MI_S1 * Q_model_S1 / Q_pegel_S1
+Q_sampling_S2 <- Q_MI_S2 * Q_model_S2 / Q_pegel_S2
+Q_sampling_TH4 <- Q_MI_TH4 * Q_model_TH4 / Q_pegel_TH4
+Q_sampling_VR3 <- Q_MI_VR3 * Q_model_VR3 / Q_pegel_VR3
+
+# bind results together
+results <- rbind(Q_sampling_GL1, Q_sampling_GL2, Q_sampling_L2, Q_sampling_M1, Q_sampling_S1, Q_sampling_S2, Q_sampling_TH4, Q_sampling_VR3)
+```
+

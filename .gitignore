@@ -2,8 +2,10 @@
 .Rhistory
 .RData
 .Ruserdata
-rasters_stacked
-raster_files
-hdm_models
-results_foen
+#HSC_model/HSC_MI
+#HSC_model/results_foen
+#Pre_Processing/abiotic_mi_sampling
+#Pre_Processing/hdm_models
+#Pre_Processing/raster_files
+#Pre_Processing/rasters_stacked
 
