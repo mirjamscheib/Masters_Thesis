@@ -45,12 +45,10 @@ setwd("Pre_Processing")
 
 Q_study_site_MZB = Q_pegel_MZB * Q_model_site / Q_pegel_model
 
-Mit
-
-Q_study_site_MZB: gesuchter Abfluss am Tag und Uhrzeit des Samplings in der Sektion (=Study site)
-Q_pegel_MZB: am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit des Samplings (diese Info müsste in der Abiotik tabelle von Diego drin sein)
-Q_model_site: im study site gemessenen Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell (findest du in der Tabelle, die ich dir am 3.8. geschickt habe)
-Q_pegel_model: am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell. 
+*Q_study_site_MZB:* gesuchter Abfluss am Tag und Uhrzeit des Samplings in der Sektion (=Study site)
+*Q_pegel_MZB:* am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit des Samplings (diese Info müsste in der Abiotik tabelle von Diego drin sein)
+*Q_model_site:* im study site gemessenen Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell (findest du in der Tabelle, die ich dir am 3.8. geschickt habe)
+*Q_pegel_model:* am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell. 
 
 # Reconstruct 
 ## Q_model_site
@@ -69,8 +67,8 @@ Q_model_VR3 <- 18.8
 
 ## Q_MI_site
 ```{r}
-# Q MI for all sections (from abiotic data)
-# load mzb_data 
+# Extract Q of MI sampling days for all sections (from abiotic data)
+# Load MI Data
 mzb_data <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
 
 # select relevant columns 
@@ -82,18 +80,19 @@ data <- mzb_data %>%
                 Discharge_m3_s_after,
                 Discharge_m3_s_during, mean_Q)
 
-# select only single river sections 
+
+# select only single river sections and calculate mean Q per river section 
 # GL1
 Q_MI_GL1 <- data |>
   subset(Reach_Untersuchungsstelle == "GL1") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q_MI_GL1 = mean(mean_Q))
+  summarise(Q_MI_GL1 = mean(mean_Q)) 
 
 # GL2
 Q_MI_GL2 <- data |>
   subset(Reach_Untersuchungsstelle == "GL2") |>
   dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
-  summarise(Q_MI_GL2 = mean(mean_Q))
+  summarise(Q_MI_GL2 =mean(mean_Q))
 
 # L2
 Q_MI_L2 <- data |>
@@ -134,32 +133,21 @@ Q_MI_VR3 <- data |>
 
 ## Q_pegel_site
 ```{r}
-
+# Assign discharge of nearest gauging station at the time of MI sampling
+Q_pegel_GL1 <- "x"
+Q_pegel_GL2 <- "x"
+Q_pegel_L2 <- "x"
+Q_pegel_M1 <- "x"
+Q_pegel_S1 <- "x"
+Q_pegel_S2 <- "x"
+Q_pegel_TH4 <- "x"
+Q_pegel_VR3 <- "x"
 ```
 
-## bind Qs together
+## ! Calculate Q 
 ```{r}
-GL1 <- cbind(Q_model_GL1, Q_MI_GL1)
-GL2 <- cbind(Q_model_GL2, Q_MI_GL2)
-```
-
-
-## Calculate Q 
-```{r}
-# formula to reconstuct discharges 
-Q_sampling_GL1$Q <- Q_MI_GL1 * Q_model_GL1 / Q_pegel_GL1
-Q_sampling_GL1$Q <- 0.7
-
-Q_sampling_GL1 <- Q_model_GL1 |>
-  cbind(Q_MI_GL1) |>
-  mutate(Q = Q_MI_GL1 * Q_model_GL1,
-         reach = "GL1")
-
-Q_sampling_GL2 <- GL2 |>
-  mutate(Q = Q_MI_GL2 * Q_model_GL2,
-         reach = "GL2") |>
-  cbind(Q_MI_GL2)
-
+# reconstuct discharges using the formula from the beginning 
+Q_sampling_GL1 <- Q_MI_GL1 * Q_model_GL1 / Q_pegel_GL1
 Q_sampling_GL2 <- Q_MI_GL2 * Q_model_GL2 / Q_pegel_GL2
 Q_sampling_L2 <- Q_MI_L2 * Q_model_L2 / Q_pegel_L2
 Q_sampling_M1 <- Q_MI_M1 * Q_model_M1 / Q_pegel_M1
@@ -167,8 +155,24 @@ Q_sampling_S1 <- Q_MI_S1 * Q_model_S1 / Q_pegel_S1
 Q_sampling_S2 <- Q_MI_S2 * Q_model_S2 / Q_pegel_S2
 Q_sampling_TH4 <- Q_MI_TH4 * Q_model_TH4 / Q_pegel_TH4
 Q_sampling_VR3 <- Q_MI_VR3 * Q_model_VR3 / Q_pegel_VR3
-
-# bind results together
-results <- rbind(Q_sampling_GL1, Q_sampling_GL2, Q_sampling_L2, Q_sampling_M1, Q_sampling_S1, Q_sampling_S2, Q_sampling_TH4, Q_sampling_VR3)
 ```
 
+## Save results 
+```{r}
+# Put all results into a dataframe 
+results <- data.frame(Q_model = c(Q_model_GL1, Q_model_GL2, Q_model_L2, Q_model_M1,
+                                  Q_model_S1,Q_model_S2, Q_model_TH4, Q_model_VR3), 
+                      Q_MI = c(Q_MI_GL1$Q_MI_GL1, Q_MI_GL2$Q_MI_GL2, Q_MI_L2$Q_MI_L2,
+                               Q_MI_M1$Q_MI_M1, Q_MI_S1$Q_MI_S1, Q_MI_S2$Q_MI_S2,
+                               Q_MI_TH4$Q_MI_TH4, Q_MI_VR3$Q_MI_VR3), 
+                      Q_pegel = c(Q_pegel_GL1, Q_pegel_GL2, Q_pegel_L2, Q_pegel_M1,
+                                  Q_pegel_S1,Q_pegel_S2, Q_pegel_TH4, Q_pegel_VR3), 
+                      Q_reconstructed = c(Q_sampling_GL1, Q_sampling_GL2, Q_sampling_L2,
+                                          Q_sampling_M1, Q_sampling_S1, Q_sampling_S2,
+                                          Q_sampling_TH4, Q_sampling_VR3),
+                      section = c("GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"))
+
+
+# Save results as .csv - file 
+write.csv(results, "reconstructed_discharges.csv", row.names = FALSE)
+```

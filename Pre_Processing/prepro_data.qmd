@@ -9,12 +9,21 @@ format: html
 rm(list = ls())
 
 # Load the required packages
-library("dplyr")
-library("readr")
-library("tidyr")
-library("tidyverse")
-library("stringr")
-library("writexl")
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("dplyr")
+pkgCheck("readr")
+pkgCheck("tidyr")
+pkgCheck("tidyverse")
+pkgCheck("stringr")
+pkgCheck("writexl")
 ```
 
 # Load Data
@@ -124,7 +133,7 @@ abiotic1 <- abiotic1 |>
   subset(join_key != "NA-NA-NA")
 ```
 
-### Abiotic2
+### ! Abiotic2
 ```{r}
 # cut abiotic data into two datasets - the two different tables which are in the original excel file 
 abiotic2 <- abiotic[c(1:177) ,c(25:39)]
@@ -188,7 +197,6 @@ varia <- varia[c(1:59), ]
 # bind dataframes together to one dataframe  
 abiotic2 <- cbind(abiotic2_sum, time, pH, conductivity, oxy_content, oxy_sat, turbidity, temp, discharge, water_gauge, varia)
 
-# time
 
 # bind abiotic1 with abiotic2 together
 abiotic <- abiotic1 |>
