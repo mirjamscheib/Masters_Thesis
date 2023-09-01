@@ -24,6 +24,9 @@ pkgCheck("tidyr")
 pkgCheck("tidyverse")
 pkgCheck("stringr")
 pkgCheck("writexl")
+
+# set working directory 
+setwd("Pre_Processing")
 ```
 
 # Load Data
@@ -115,7 +118,7 @@ vr6 <- read_delim("abiotic_mi_sampling/GPS_Points/VR6.csv", col_names = FALSE)
 ```
 
 # Create Join Key
-## ! Abiotic Data
+## Abiotic Data
 ### Abiotic1
 ```{r}
 # cut abiotic data into two datasets - the two different tables which are in the original excel file 
@@ -133,7 +136,7 @@ abiotic1 <- abiotic1 |>
   subset(join_key != "NA-NA-NA")
 ```
 
-### ! Abiotic2
+### Abiotic2
 ```{r}
 # cut abiotic data into two datasets - the two different tables which are in the original excel file 
 abiotic2 <- abiotic[c(1:177) ,c(25:39)]
@@ -172,7 +175,7 @@ oxy_content <- na.omit(oxy_content)
 
 oxy_sat <- as.data.frame(matrix(unlist(abiotic2$`Oxygen_saturation_%`, use.names=FALSE),ncol=3, byrow=TRUE))
 colnames(oxy_sat) <- c("Oxygen_saturation_%_before", "Oxygen_saturation_%_during", "Oxygen_saturation_%_after")
-oxy_sat <- oxy_sat[c(1:59), ]
+oxy_sat <- oxy_sat[c(1:54), ]
 
 turbidity <- as.data.frame(matrix(unlist(abiotic2$Turbidity_FNU, use.names=FALSE),ncol=3, byrow=TRUE))
 colnames(turbidity) <- c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after")
@@ -192,7 +195,7 @@ water_gauge <- na.omit(water_gauge)
 
 varia <- as.data.frame(matrix(unlist(abiotic2$Varia, use.names=FALSE),ncol=3, byrow=TRUE))
 colnames(varia) <- c("Varia_before", "Varia_during", "Varia_after")
-varia <- varia[c(1:59), ]
+varia <- varia[c(1:54), ]
 
 # bind dataframes together to one dataframe  
 abiotic2 <- cbind(abiotic2_sum, time, pH, conductivity, oxy_content, oxy_sat, turbidity, temp, discharge, water_gauge, varia)
@@ -324,6 +327,7 @@ gl3 <- join_key(gl3, "GL3")
 gl4 <- join_key(gl4, "GL4")
 gl5 <- join_key(gl5, "GL5")
 gl6 <- join_key(gl6, "GL6")
+gl6$X5 <- NA
 
 # Landquart
 l1 <- join_key(l1, "L1")
@@ -400,10 +404,9 @@ vr6 <- join_key(vr6, "VR6")
 ```
 
 # Bind Coordinate DFs together
-gl6, l1, l2, l3, l4, lr, m1, m2, m3, m4, m5, m6, m7, mr, p1, p2, p3, pr, s1, s2, s3, s4, s5, s6, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sar, se1, se2, se3, se4, sr, t1, t2, t3, th1, th2, th3, th4, th5, ve2, ve3, ve4, vr1, vr2, vr3, vr4, vr5, vr6
 ```{r}
 # bind all coordinate dfs together  
-coordinates <- rbind(gl1, gl2, gl3, gl4, gl5)
+coordinates <- rbind(gl1, gl2, gl3, gl4, gl5, gl6, l1, l2, l3, l4, lr, m1, m2, m3, m4, m5, m6, m7, mr, p1, p2, p3, pr, s1, s2, s3, s4, s5, s6, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sar, se1, se2, se3, se4, sr, t1, t2, t3, th1, th2, th3, th4, th5, ve2, ve3, ve4, vr1, vr2, vr3, vr4, vr5, vr6)
 
 # discard columns which are not needed & rename columns 
 coordinates <- coordinates |>
@@ -424,7 +427,7 @@ abiotic_field <- abiotic_field |>
   select(-River.y, -Transect.y, -Flow_range_location, -Date_of_survey.y)
 
 # write excel with field MZB results 
-write_xlsx(abiotic_field,"abiotic_mi_sampling\\Abiotic_MI_Field.xlsx")
+write_xlsx(abiotic_field,"abiotic_mi_sampling\\Abiotic_MI_Field2.xlsx")
 ```
   
 ## All + MZB Lab 
@@ -439,7 +442,7 @@ abiotic_lab <- abiotic_lab |>
   select(-River.y, -Date_of_survey.y)
  
 # write excel with Lab results 
-write_xlsx(abiotic_lab,"abiotic_mi_sampling\\Abiotic_MI_Lab.xlsx")  
+write_xlsx(abiotic_lab,"abiotic_mi_sampling\\Abiotic_MI_Lab2.xlsx")  
 ```
 
 ## All + MZB Lab with only Lab results 
@@ -453,7 +456,7 @@ abiotic_lab_model <- abiotic_lab_model |>
   select(-River.y, -Date_of_survey.y)
  
 # write excel with Lab results 
-write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model.xlsx")  
+write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model2.xlsx")  
 ```
 
 
