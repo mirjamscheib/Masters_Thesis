@@ -157,7 +157,7 @@ lab_ml_model_v <- lab_new |>
          + 0.2*(lab$EPT_Taxa/max(lab$EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   cbind(lab_simpson$simpson_index) |>
-  dplyr::select(`Flow_velocity_v60_cm/s`, x, y, shannon, abundance, k_index) |>
+  dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, x, y, shannon, abundance, k_index) |>
   rename(velocity = `Flow_velocity_v60_cm/s`)
 
 # water depth + velocity
@@ -167,7 +167,7 @@ lab_ml_model_wd_v <- lab_new |>
          + 0.2*(lab$EPT_Taxa/max(lab$EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   cbind(lab_simpson$simpson_index) |>
-  dplyr::select(`Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, shannon, abundance, k_index) |>
+  dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, shannon, abundance, k_index) |>
   rename(velocity = `Flow_velocity_v60_cm/s`,
          wd_cm = Water_depth_cm)
 
