@@ -1,0 +1,53 @@
+---
+title: "Habitat_Model_VZH"
+format: html
+---
+
+# Load packages 
+```{r}
+#clear R environment
+rm(list = ls())
+
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+pkgCheck("terra")
+pkgCheck("raster")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
+pkgCheck("scales")
+
+# load self-written functions 
+source("mth_functions.R")
+```
+
+# Regression Analysis 
+```{r}
+# plot results 
+ggplot(results, aes(x = foen_hsi, y = shannon)) +
+  geom_point() +
+  geom_smooth(method = lm)
+
+# obtain regression model 
+lm_foen <- lm(shannon ~ foen_hsi, data = results)
+summary(lm_foen)
+```
+
+                        
+                           
+
+
+
+
