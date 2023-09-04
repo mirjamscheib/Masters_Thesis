@@ -35,7 +35,7 @@ setwd("Pre_Processing")
 # Load Data
 ## Lab Data
 ```{r}
-lab <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab_Model2.csv")
+lab <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab_Model.csv")
 ```
 
 # Prepare Data 

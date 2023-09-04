@@ -269,7 +269,7 @@ lab_mzb <- lab_mzb |>
   mutate(X1 = paste(X1, X2, sep = "_"),
          X1 = gsub(" ", "_", X1),
          X1 = gsub("_NA", "", X1)) |>
-  select(-X2) 
+  dplyr::select(-X2) 
 
 # transpose dataframe with MZB 
 lab_mzb <- as.data.frame(t(lab_mzb))
@@ -303,7 +303,7 @@ lab_file <- read_delim("abiotic_mi_sampling/Lab_intermediate.csv")
 
 # remove double names 
 lab_file <- lab_file |>
-  select(- ...1, -BRYOZOA...8, -`"NEMATHELMINTHES"...14`, -Hirudinea...16, -Hirudinea...21, -Oligochaeta...23, -Bivalvia...43, -Transect_Kick)
+  dplyr::select(- ...1, -BRYOZOA...8, -`"NEMATHELMINTHES"...14`, -Hirudinea...16, -Hirudinea...21, -Oligochaeta...23, -Bivalvia...43, -Transect_Kick)
 ```
 
 ## Coordinate Data 
@@ -410,7 +410,7 @@ coordinates <- rbind(gl1, gl2, gl3, gl4, gl5, gl6, l1, l2, l3, l4, lr, m1, m2, m
 
 # discard columns which are not needed & rename columns 
 coordinates <- coordinates |>
-  select(-X1, -X2, -river, -transect, -sampling_point) |>
+  dplyr::select(-X1, -X2, -river, -transect, -sampling_point) |>
   rename(x = X3, y = X4, z = X5)
 ```
 
@@ -424,10 +424,10 @@ abiotic_field <- abiotic |>
 
 # remove unnessecary columns
 abiotic_field <- abiotic_field |>
-  select(-River.y, -Transect.y, -Flow_range_location, -Date_of_survey.y)
+  dplyr::select(-River.y, -Transect.y, -Flow_range_location, -Date_of_survey.y)
 
 # write excel with field MZB results 
-write_xlsx(abiotic_field,"abiotic_mi_sampling\\Abiotic_MI_Field2.xlsx")
+write_xlsx(abiotic_field,"abiotic_mi_sampling\\Abiotic_MI_Field.xlsx")
 ```
   
 ## All + MZB Lab 
@@ -439,10 +439,10 @@ abiotic_lab <- abiotic |>
 
 # remove unnessecary columns
 abiotic_lab <- abiotic_lab |>
-  select(-River.y, -Date_of_survey.y)
+  dplyr::select(-River.y, -Date_of_survey.y)
  
 # write excel with Lab results 
-write_xlsx(abiotic_lab,"abiotic_mi_sampling\\Abiotic_MI_Lab2.xlsx")  
+write_xlsx(abiotic_lab,"abiotic_mi_sampling\\Abiotic_MI_Lab.xlsx")  
 ```
 
 ## All + MZB Lab with only Lab results 
@@ -453,10 +453,10 @@ abiotic_lab_model <- abiotic |>
   right_join(lab_file, by = "join_key")
 
 abiotic_lab_model <- abiotic_lab_model |>
-  select(-River.y, -Date_of_survey.y)
+  dplyr::select(-River.y, -Date_of_survey.y)
  
 # write excel with Lab results 
-write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model2.xlsx")  
+write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model.xlsx")  
 ```
 
 
