@@ -1426,7 +1426,7 @@ write.csv(freq_tables, file = "HSC_model/results_foen/results_foen_freq_tables.c
 ## Load Data
 ```{r}
 # read .csv with lab results from river sections 
-univariate <- read_delim("Pre_Processing/abiotic_mi_sampling/Abiotic_MI_Lab_Model2.csv")
+univariate <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_univariate.csv")
 
 # create clean df which only contains the values needed 
  univariate <- univariate |>
@@ -1441,7 +1441,6 @@ univariate <- read_delim("Pre_Processing/abiotic_mi_sampling/Abiotic_MI_Lab_Mode
    dplyr::select(Reach_Untersuchungsstelle, x, y, abundance, shannon, k_index) |>
    mutate(x = as.numeric(x),
           y = as.numeric(y))
-
 ```
 
 ## Extract 
@@ -1488,7 +1487,7 @@ univariate_coord_GL1 <- univariate |>
 
 univariate_GL1 <- univariate |>
   subset(Reach_Untersuchungsstelle == "GL1") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon) 
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index) 
 
 ## GL2
 univariate_coord_GL2 <- univariate |>
@@ -1497,7 +1496,7 @@ univariate_coord_GL2 <- univariate |>
 
 univariate_GL2 <- univariate |>
   subset(Reach_Untersuchungsstelle == "GL2") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
 
 ## L2
 univariate_coord_L2 <- univariate |>
@@ -1506,7 +1505,7 @@ univariate_coord_L2 <- univariate |>
 
 univariate_L2 <- univariate |>
   subset(Reach_Untersuchungsstelle == "L2") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
 
 ## M1
 univariate_coord_M1 <- univariate |>
@@ -1515,7 +1514,7 @@ univariate_coord_M1 <- univariate |>
 
 univariate_M1 <- univariate |>
   subset(Reach_Untersuchungsstelle == "M1") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
 
 ## S1
 univariate_coord_S1 <- univariate |>
@@ -1524,7 +1523,7 @@ univariate_coord_S1 <- univariate |>
 
 univariate_S1 <- univariate |>
   subset(Reach_Untersuchungsstelle == "S1") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
 
 ## S2
 univariate_coord_S2 <- univariate |>
@@ -1533,7 +1532,7 @@ univariate_coord_S2 <- univariate |>
 
 univariate_S2 <- univariate |>
   subset(Reach_Untersuchungsstelle == "S2") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
 
 ## TH4
 univariate_coord_TH4 <- univariate |>
@@ -1542,7 +1541,7 @@ univariate_coord_TH4 <- univariate |>
 
 univariate_TH4 <- univariate |>
   subset(Reach_Untersuchungsstelle == "TH4") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
 
 ## VR3
 univariate_coord_VR3 <- univariate |>
@@ -1551,7 +1550,7 @@ univariate_coord_VR3 <- univariate |>
 
 univariate_VR3 <- univariate |>
   subset(Reach_Untersuchungsstelle == "VR3") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
   
 
 # extract raster information for regression analysis later

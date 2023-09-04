@@ -33,7 +33,6 @@ setwd("Pre_Processing")
 ```
 
 # Load Data
-## Lab Data
 ```{r}
 lab <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab_Model.csv")
 ```
@@ -119,27 +118,6 @@ Number_Taxa <- apply(lab_Shannon, 1, function(row) {
 })
 ```
 
-# ! Simpsons Index 
-```{r}
-# Calculate relative abundance for each species
-lab[is.na(lab)] <- 0
-lab$rel_abundance <- rowSums(lab[, c(1:199)]) / rowSums(lab[, c(1:199)], na.rm = TRUE)
-
-# Calculate squared relative abundance for each species
-lab_squared <- lab |>
-  mutate(rel_abundance2 = rel_abundance^2)
-
-# Calculate the sum of squared relative abundances for each location
-lab_sum_squared <- lab_squared |>
-  mutate(sum_squared = rowSums(lab_squared[1:199]))
-
-# Calculate Simpson Index for each location
-lab_simpson <- lab_sum_squared |>
-  mutate(simpson_index = 1 / sum_squared)
-
-# Print the resulting data frame
-print(lab_simpson)
-```
 
 # Combine all Results in one DF
 ```{r}
@@ -154,9 +132,8 @@ lab_new <- cbind(lab_exp, shannon, Number_Taxa, abundance, EPT_Taxa)
 lab_ml_model_v <- lab_new |>
   mutate(k_index = 0.4*(Number_Taxa/max(Number_Taxa, na.rm = TRUE))
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
-         + 0.2*(lab$EPT_Taxa/max(lab$EPT_Taxa, na.rm = TRUE))
+         + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  cbind(lab_simpson$simpson_index) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, x, y, shannon, abundance, k_index) |>
   rename(velocity = `Flow_velocity_v60_cm/s`)
 
@@ -164,9 +141,8 @@ lab_ml_model_v <- lab_new |>
 lab_ml_model_wd_v <- lab_new |>
   mutate(k_index = 0.4*(Number_Taxa/max(Number_Taxa, na.rm = TRUE))
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
-         + 0.2*(lab$EPT_Taxa/max(lab$EPT_Taxa, na.rm = TRUE))
+         + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  cbind(lab_simpson$simpson_index) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, shannon, abundance, k_index) |>
   rename(velocity = `Flow_velocity_v60_cm/s`,
          wd_cm = Water_depth_cm)
@@ -177,15 +153,12 @@ write_xlsx(lab_ml_model_v,"abiotic_mi_sampling\\lab_ml_v.xlsx")
 write_xlsx(lab_ml_model_wd_v,"abiotic_mi_sampling\\lab_ml_wd_v.xlsx") 
 ```
 
-# create ML dataframes
-```{r}
-
-```
 
 # Univariate HM DF
 ```{r}
 # combine all abiotic data with abundance & Shannon Diversity 
-lab_univariate <- cbind(lab_exp, shannon, abundance)
+lab_univariate <- lab_ml_model_wd_v |>
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm, x, y, shannon, abundance, k_index)
 
 # write results into new .csv file 
 write_xlsx(lab_univariate,"abiotic_mi_sampling\\lab_univariate.xlsx") 
