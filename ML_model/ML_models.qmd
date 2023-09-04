@@ -66,23 +66,6 @@ st_crs(data_wd_sp) <- "EPSG: 2056"
 ```
 
 # Random Forest 
-```{r}
-# Visualize tree plot with one predictor variable 
-tree_v <- tree::tree(k_index ~ velocity, data = data_new)
-plot(tree_v)
-text(tree_v, pretty = 0)
-# two internal nodes 
-# three terminal nodes
-# the lower the velocity, the higher the k_index
-
-tree_wd <- tree::tree(k_index ~ wd, data = data_new)
-plot(tree_wd)
-text(tree_wd, pretty = 0)
-# one internal node
-# two terminal nodes
-# the lower the wd, the higher the k_index
-```
-
 ## Create Task & Learner
 ### K_index & Velocity
 ```{r}
@@ -93,6 +76,9 @@ task_rf_v <- mlr3spatiotempcv::as_task_regr_st(data_v_sp,
 # learner for random forest
 # from the ranger package
 lrn_rf_v <- lrn("regr.ranger", predict_type = "response")
+
+# performance estimation level
+#perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
 ```
 
 ### K_index & Velocity + Water Depth
@@ -477,43 +463,58 @@ print(kappa)
 
 # Boosted Regression Tree
 ## Create Task & Learner
+### K_index & Velocity
 ```{r}
  # create task
-task_xbrt <- mlr3spatiotempcv::as_task_regr_st(data_new,
-  id = "brt", target = "k_index")
-
-# select: select df and remove not to be used variables 
-# id: Id for the new task. Defaults to the (deparsed and substituted) name of the data argument.
-# target: response variable, name of the target column
-
-?mlr3spatiotempcv
-?lrn
+task_xbrt_v <- mlr3spatiotempcv::as_task_regr_st(data_v_sp,
+  id = "velocity", target = "k_index")
 
 # learner for random forest
 # from the ranger package
-lrn_xbrt <- lrn("regr.xgboost", predict_type = "response")
+lrn_xbrt_v <- lrn("regr.xgboost", predict_type = "response")
+```
+
+### K_index & Velocity + Water Depth
+```{r}
+ # create task
+task_xbrt_wd <- mlr3spatiotempcv::as_task_regr_st(data_wd_sp,
+  id = "water_depth", target = "k_index")
+
+# learner for random forest
+# from the ranger package
+lrn_xbrt_wd <- lrn("regr.xgboost", predict_type = "response")
 ```
 
 ## Specifying the search space
+### K_index & Velocity
 ```{r}
 # specifying the search space
-search_space_xbrt <- paradox::ps(
-  #learning_rate = p_dbl(lower = 0.01, upper = 0.1),
+search_space_xbrt_v <- paradox::ps(
+  #learning_rate = p_dbl(lower = 0.01, upper = 0.5),
   nrounds = p_int(lower = 100, upper = 1000),
   max_depth = p_int(lower = 3, upper = 10)
 )
+```
 
-?xgboost
+### K_index & Velocity + Water Depth
+```{r}
+# specifying the search space
+search_space_xbrt_wd <- paradox::ps(
+  #learning_rate = p_dbl(lower = 0.01, upper = 0.5),
+  nrounds = p_int(lower = 100, upper = 1000),
+  max_depth = p_int(lower = 3, upper = 10)
+)
 ```
 
 ## Hyperparameter tuning 
+### K_index & Velocity
 ```{r}
-autotuner_xbrt <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+autotuner_xbrt_v <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt_v,
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
   terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
-  search_space = search_space_xbrt, # predefined hyperparameter search space
+  search_space = search_space_xbrt_v, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 ```
@@ -521,10 +522,31 @@ autotuner_xbrt <- mlr3tuning::AutoTuner$new(
 ```{r}
 # hyperparameter tuning
 set.seed(0412022)
-autotuner_xbrt$train(task_xbrt)
+autotuner_xbrt_v$train(task_xbrt_v)
 
 # read the results 
-autotuner_xbrt$tuning_result
+autotuner_xbrt_v$tuning_result
+```
+
+### K_index & Velocity + Water Depth
+```{r}
+autotuner_xbrt_wd <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt_wd,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_xbrt_wd, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
+```{r}
+# hyperparameter tuning
+set.seed(0412022)
+autotuner_xbrt_wd$train(task_xbrt_wd)
+
+# read the results 
+autotuner_xbrt_wd$tuning_result
 ```
 
 ## Predict to maps 
