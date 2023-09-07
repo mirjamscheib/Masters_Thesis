@@ -10,6 +10,12 @@ library(geoR)
 library(plotly)
 library(ggplot2)
 library(dplyr)
+library(tidyr)
+install.packages("gstat")
+library(gstat)
+
+# set working directory
+setwd("ML_model")
 ```
 
 
@@ -17,24 +23,28 @@ library(dplyr)
 ```{r}
 SET <- 1
 N_REALIZATIONS <- 5
-XDIR <- 'x'
-YDIR <- 'y'
+XDIR <- 'X'
+YDIR <- 'Y'
 ```
 
 
 # Read the data
 ```{r}
 training <- read_csv(file.path(getwd(), "Files", "Datasets", paste0("demo", SET, "_train.csv")), col_types = cols(X = col_double(), Y = col_double()))
-training <- training %>% mutate(UWI = row_number())
+
+training <- training |> 
+  mutate(UWI = row_number())
 
 real_world <- read_csv(file.path(getwd(), "Files", "Datasets", paste0("demo", SET, "_rw.csv")), col_types = cols(X = col_double(), Y = col_double()))
-real_world <- real_world %>% mutate(UWI = row_number())
+
+real_world <- real_world |> 
+  mutate(UWI = row_number())
 ```
 
 
 # Geostatistical setup and definitions
 ```{r}
-vario <- variog(cbind(training$X, training$Y), training$Perm, uvec=seq(0, 1000, 10), max.dist=100)
+vario <- variogram(cbind(training$X, training$Y), training$Perm, uvec=seq(0, 1000, 10), max.dist=100)
 ```
 
 
