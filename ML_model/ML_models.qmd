@@ -36,7 +36,10 @@ pkgCheck("gbm")
 pkgCheck("xgboost")
 pkgCheck("caret") # for cohen's kappa calculation 
 pkgCheck("pdp")
+pkgCheck("gbm")
 ```
+
+einfachste Variante die möglich ist test und train dataset zu trennen (hydrodyn. modelle)
 
 # Load data 
 ```{r}
@@ -78,7 +81,7 @@ task_rf_v <- mlr3spatiotempcv::as_task_regr_st(data_v_sp,
 lrn_rf_v <- lrn("regr.ranger", predict_type = "response")
 
 # performance estimation level
-#perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
+perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
 ```
 
 ### K_index & Velocity + Water Depth
@@ -163,17 +166,20 @@ autotuner_rf_wd$tuning_result
 ## Predict to maps 
 ```{r}
 # read rasters
-GL1_3_28 <- stack("rasters_stacked/GL1_22_00.grd")
+GL1_3_28 <- stack("Pre_Processing/rasters_stacked/GL1_22_00.grd")
 
-new_names <- c("velocity", "wd")  # Replace with your desired new names
+new_names <- c("velocity", "wd_cm")  # Replace with your desired new names
 names(GL1_3_28) <- new_names
 crs(GL1_3_28) <- "EPSG: 2056"
 
-pred = terra::predict(GL1_3_28, model = autotuner_rf, fun = predict, index = 2)
+pred = terra::predict(GL1_3_28, model = autotuner_rf_wd, fun = predict, index = 2)
 
 plot(pred)
 ```
 
+vlt. zwischenschritt einbauen, Resultate vergleichen nur mit gemessenen wd und simulierten wd ein ML modell (welche Fehler macht das Modell, weil wir ihm nur simuliere Werte zum predicten geben anstatt)
+
+Regressionsanalyse wd, v zwischen gemessen und simuliert, ich muss schon quantifizieren wie die abweichung zwischen input daten und simulierten daten sind. 
 ## ! Make model 
 ```{r}
 # turn sf object into dataframe 
@@ -463,6 +469,41 @@ print(kappa)
 
 # Boosted Regression Tree
 ## Create Task & Learner
+```{r}
+ # create task
+task_brt_wd <- mlr3spatiotempcv::as_task_regr_st(data_wd_sp,
+  id = "water_depth", target = "k_index")
+
+# Create a custom learner for the 'gbm' model
+custom_learner <- lrn("regr.custom_gbm", predict_type = "response")
+
+# Define the hyperparameter search space
+param_set <- ParamSet$new(
+  ParamDbl("learning_rate", lower = 0.01, upper = 0.3),
+  ParamInt("n_trees", lower = 50, upper = 500),
+  # Add other hyperparameters here
+)
+
+# Choose a tuning method (e.g., grid search)
+tune_method <- tuneParamsGrid()
+
+# Define the resampling strategy (e.g., 5-fold cross-validation)
+resampling <- rsmp("cv", folds = 5)
+
+# Run hyperparameter tuning
+tune_result <- tuneParams(custom_learner, task = your_task, resampling = resampling,
+                          par.set = param_set, control = tune_method)
+
+# Get the best model
+best_model <- tune_result$learner
+
+# Train the final model
+final_model <- train(best_model, task = your_task)
+
+# Make predictions
+predictions <- predict(final_model, newdata = your_new_data)
+```
+
 ### K_index & Velocity
 ```{r}
  # create task
@@ -487,7 +528,12 @@ lrn_xbrt_wd <- lrn("regr.xgboost", predict_type = "response")
 
 ## Specifying the search space
 ### K_index & Velocity
+folgende Parameter sollten getuned werden: 
+- bag fraction (search space = 0.5 - 0.75)
+- learning rate (search space = ?)
+- tree complexity (search space = ?)
 ```{r}
+
 # specifying the search space
 search_space_xbrt_v <- paradox::ps(
   #learning_rate = p_dbl(lower = 0.01, upper = 0.5),
@@ -552,13 +598,13 @@ autotuner_xbrt_wd$tuning_result
 ## Predict to maps 
 ```{r}
 # read rasters
-GL1_22_00 <- stack("rasters_stacked/GL1_22_00.grd")
+GL1_22_00 <- stack("Pre_Processing/rasters_stacked/GL1_22_00.grd")
 
-new_names <- c("velocity", "wd")  # Replace with your desired new names
+new_names <- c("velocity", "wd_cm")  # Replace with your desired new names
 names(GL1_22_00) <- new_names
 crs(GL1_22_00) <- "EPSG: 2056"
 
-pred = terra::predict(GL1_22_00, model = autotuner_xbrt, fun = predict, index = 2)
+pred = terra::predict(GL1_22_00, model = autotuner_xbrt_wd, fun = predict, index = 2)
 
 plot(pred)
 ```
