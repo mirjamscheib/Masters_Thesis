@@ -47,7 +47,20 @@ einfachste Variante die möglich ist test und train dataset zu trennen (hydrodyn
 data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") 
 data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
 
+# w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
+training_v <- data_v |>
+  mutate(x = as.numeric(x)) |>
+  na.omit() |>
+  filter(Reach_Untersuchungsstelle != c("GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3")) |>
+  dplyr::select(k_index, velocity, x, y)
 
+# w/ hydr. models 
+test_v <- data_v |>
+  mutate(x = as.numeric(x)) |>
+  na.omit() |>
+  filter(Reach_Untersuchungsstelle == c("GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3")) |>
+  dplyr::select(k_index, velocity, x, y)
+  
 # Prep data to model 
 # With k_index as response variable
 data_v <- data_v |>
@@ -61,7 +74,7 @@ data_wd <- data_wd |>
   na.omit()
 
 # convert dataframes into spatial objects 
-data_v_sp <-  st_as_sf(data_v, coords =  c("x", "y"))
+data_v_sp <-  st_as_sf(training_v, coords =  c("x", "y"))
 st_crs(data_v_sp) <- "EPSG: 2056"
 
 data_wd_sp <-  st_as_sf(data_wd, coords =  c("x", "y"))
@@ -513,6 +526,9 @@ task_xbrt_v <- mlr3spatiotempcv::as_task_regr_st(data_v_sp,
 # learner for random forest
 # from the ranger package
 lrn_xbrt_v <- lrn("regr.xgboost", predict_type = "response")
+
+# performance estimation level
+perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
 ```
 
 ### K_index & Velocity + Water Depth
@@ -524,6 +540,9 @@ task_xbrt_wd <- mlr3spatiotempcv::as_task_regr_st(data_wd_sp,
 # learner for random forest
 # from the ranger package
 lrn_xbrt_wd <- lrn("regr.xgboost", predict_type = "response")
+
+# performance estimation level
+perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
 ```
 
 ## Specifying the search space
@@ -536,9 +555,10 @@ folgende Parameter sollten getuned werden:
 
 # specifying the search space
 search_space_xbrt_v <- paradox::ps(
-  #learning_rate = p_dbl(lower = 0.01, upper = 0.5),
+  eta = p_dbl(lower = 0.01, upper = 1.0), # learning rate
   nrounds = p_int(lower = 100, upper = 1000),
-  max_depth = p_int(lower = 3, upper = 10)
+  max_depth = p_int(lower = 3, upper = 10), # tree complexity
+  subsample = p_dbl(lower = 0.5, upper = 0.75) # bag fraction 
 )
 ```
 
@@ -546,9 +566,10 @@ search_space_xbrt_v <- paradox::ps(
 ```{r}
 # specifying the search space
 search_space_xbrt_wd <- paradox::ps(
-  #learning_rate = p_dbl(lower = 0.01, upper = 0.5),
+  eta = p_dbl(lower = 0.01, upper = 1.0), # learning rate
   nrounds = p_int(lower = 100, upper = 1000),
-  max_depth = p_int(lower = 3, upper = 10)
+  max_depth = p_int(lower = 3, upper = 10), # tree complexity
+  subsample = p_dbl(lower = 0.5, upper = 0.75) # bag fraction
 )
 ```
 
