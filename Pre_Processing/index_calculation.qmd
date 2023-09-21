@@ -29,7 +29,7 @@ pkgCheck("dismo")
 pkgCheck("raster")
 
 # set working directory 
-setwd("Pre_Processing")
+#setwd("Pre_Processing")
 ```
 
 # Load Data
@@ -135,7 +135,9 @@ lab_ml_model_v <- lab_new |>
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, x, y, shannon, abundance, k_index) |>
-  rename(velocity = `Flow_velocity_v60_cm/s`)
+  rename(velocity = `Flow_velocity_v60_cm/s`) |>
+  mutate(x = as.numeric(x),
+         y = as.numeric(y))
 
 # water depth + velocity
 lab_ml_model_wd_v <- lab_new |>
@@ -145,7 +147,9 @@ lab_ml_model_wd_v <- lab_new |>
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, shannon, abundance, k_index) |>
   rename(velocity = `Flow_velocity_v60_cm/s`,
-         wd_cm = Water_depth_cm)
+         wd_cm = Water_depth_cm) |>
+  mutate(x = as.numeric(x),
+         y = as.numeric(y))
 
 
 # write results into new .csv file 
@@ -158,7 +162,9 @@ write_xlsx(lab_ml_model_wd_v,"abiotic_mi_sampling\\lab_ml_wd_v.xlsx")
 ```{r}
 # combine all abiotic data with abundance & Shannon Diversity 
 lab_univariate <- lab_ml_model_wd_v |>
-  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm, x, y, shannon, abundance, k_index)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm, x, y, shannon, abundance, k_index) |>
+  mutate(x = as.numeric(x),
+         y = as.numeric(y))
 
 # write results into new .csv file 
 write_xlsx(lab_univariate,"abiotic_mi_sampling\\lab_univariate.xlsx") 

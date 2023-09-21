@@ -49,37 +49,68 @@ data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv")
 
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
 training_v <- data_v |>
-  mutate(x = as.numeric(x)) |>
-  na.omit() |>
-  filter(Reach_Untersuchungsstelle != c("GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3")) |>
-  dplyr::select(k_index, velocity, x, y)
+  filter(Reach_Untersuchungsstelle != "GL1",
+         Reach_Untersuchungsstelle != "GL2",         
+         Reach_Untersuchungsstelle != "L2",
+         Reach_Untersuchungsstelle != "M1",
+         Reach_Untersuchungsstelle != "S1",
+         Reach_Untersuchungsstelle != "S2",
+         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "VR3")
+
+training_wd <- data_wd |>
+  filter(Reach_Untersuchungsstelle != "GL1",
+         Reach_Untersuchungsstelle != "GL2",         
+         Reach_Untersuchungsstelle != "L2",
+         Reach_Untersuchungsstelle != "M1",
+         Reach_Untersuchungsstelle != "S1",
+         Reach_Untersuchungsstelle != "S2",
+         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "VR3")
 
 # w/ hydr. models 
 test_v <- data_v |>
-  mutate(x = as.numeric(x)) |>
-  na.omit() |>
-  filter(Reach_Untersuchungsstelle == c("GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3")) |>
-  dplyr::select(k_index, velocity, x, y)
-  
+  filter(Reach_Untersuchungsstelle == "GL1" |
+         Reach_Untersuchungsstelle == "GL2" |       
+         Reach_Untersuchungsstelle == "L2" |
+         Reach_Untersuchungsstelle == "M1" |
+         Reach_Untersuchungsstelle == "S1" |
+         Reach_Untersuchungsstelle == "S2" |
+         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "VR3")
+
+test_wd <- data_wd |>
+  filter(Reach_Untersuchungsstelle == "GL1" |
+         Reach_Untersuchungsstelle == "GL2" |       
+         Reach_Untersuchungsstelle == "L2" |
+         Reach_Untersuchungsstelle == "M1" |
+         Reach_Untersuchungsstelle == "S1" |
+         Reach_Untersuchungsstelle == "S2" |
+         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "VR3")
+
 # Prep data to model 
 # With k_index as response variable
-data_v <- data_v |>
-  dplyr::select(k_index, velocity, x, y) |>
-  mutate(x = as.numeric(x)) |>
-  na.omit()
+training_v <- training_v |>
+  dplyr::select(k_index, velocity, x, y)
 
-data_wd <- data_wd |>
-  dplyr::select(k_index, velocity, wd_cm, x, y) |>
-  mutate(x = as.numeric(x)) |>
-  na.omit()
+training_wd <- training_wd |>
+  dplyr::select(k_index, velocity, wd_cm, x, y)
+
+test_v <- test_v |>
+  dplyr::select(k_index, velocity, x, y) 
+
+test_wd <- test_wd |>
+  dplyr::select(k_index, velocity, wd_cm, x, y) 
 
 # convert dataframes into spatial objects 
 data_v_sp <-  st_as_sf(training_v, coords =  c("x", "y"))
 st_crs(data_v_sp) <- "EPSG: 2056"
 
-data_wd_sp <-  st_as_sf(data_wd, coords =  c("x", "y"))
+data_wd_sp <-  st_as_sf(training_wd, coords =  c("x", "y"))
 st_crs(data_wd_sp) <- "EPSG: 2056"
 ```
+
 
 # Random Forest 
 ## Create Task & Learner
@@ -196,16 +227,18 @@ Regressionsanalyse wd, v zwischen gemessen und simuliert, ich muss schon quantif
 ## ! Make model 
 ```{r}
 # turn sf object into dataframe 
-data_new <- data.frame(st_drop_geometry(data_new))
+#data_new <- data.frame(st_drop_geometry(data_new))
 
-# Split the data into training and testing sets
-train_indices <- sample(1:nrow(data_new), 0.7 * nrow(data_new))
-train_data <- data_new[train_indices, ]
-test_data <- data_new[-train_indices, ]
 
-# Create and train the random forest model
-rf_model <- ranger(formula = k_index ~., data = train_data, mtry = 2, sample.fraction = 0.2202553, min.node.size = 9)
+# Create and train the random forest model with only velocity
+#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
+#1:    1       0.2059293            10          <list[4]> <list[3]> 0.1413796
+rf_model_v <- ranger(formula = k_index ~., data = test_v, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
 
+# Create and train the random forest model with velocity + wd
+#      mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
+# 1:    1       0.2059293            10          <list[4]> <list[3]>  0.141822
+rf_model_wd <- ranger(formula = k_index ~., data = test_wd, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
 # make predictions using the trained model
 # predictions <- predict(rf_model, test_data) # das stimmt bestimmt noch nicht
 
@@ -215,7 +248,7 @@ rf_model <- ranger(formula = k_index ~., data = train_data, mtry = 2, sample.fra
 ### Partial dependence plots
 ```{r}
 # Create the partial dependence plot
-pdp_plot_v <- partial(rf_model, pred.var = "velocity")
+pdp_plot_v <- partial(rf_model_v, pred.var = "velocity")
 
 # Plot the PDP
 ggplot(pdp_plot_v, aes(velocity, yhat)) + 
@@ -223,10 +256,10 @@ ggplot(pdp_plot_v, aes(velocity, yhat)) +
   geom_line()
 
 # Create the partial dependence plot
-pdp_plot_wd <- partial(rf_model, pred.var = "wd")
+pdp_plot_wd <- partial(rf_model_wd, pred.var = "wd_cm")
 
 # Plot the PDP
-ggplot(pdp_plot_wd, aes(wd, yhat)) + 
+ggplot(pdp_plot_wd, aes(wd_cm, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line()
 ```
@@ -235,20 +268,27 @@ ggplot(pdp_plot_wd, aes(wd, yhat)) +
 ### ! Deviance explained
 ```{r}
 # Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model, data = test_data)
-actual_responses <- test_data$k_index
+rf_predictions_v <- predict(rf_model_v, data = test_v)
+actual_responses_v <- test_v$k_index
+
+rf_predictions_wd <- predict(rf_model_wd, data = test_wd)
+actual_responses_wd <- test_wd$k_index
 
 # Calculate the total sum of squares (TSS)
-tss <- sum((actual_responses - mean(actual_responses))^2)
+tss_v <- sum((actual_responses_v - mean(actual_responses_v))^2)
+tss_wd <- sum((actual_responses_wd - mean(actual_responses_wd))^2)
 
 # Calculate the residual sum of squares (RSS)
-rss <- sum((actual_responses - rf_predictions$predictions)^2)
+rss_v <- sum((actual_responses_v - rf_predictions_v$predictions)^2)
+rss_wd <- sum((actual_responses_wd - rf_predictions_wd$predictions)^2)
 
 # Calculate R-squared
-rsquared <- 1 - rss / tss
+rsquared_v <- 1 - rss_v / tss_v
+rsquared_wd <- 1 - rss_wd / tss_wd
 
 # Print R-squared
-print(rsquared)
+print(rsquared_v)
+print(rsquared_wd)
 ```
 
 ### ! AUC
@@ -258,46 +298,62 @@ print(rsquared)
 library(pROC)
 
 # Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model, data = test_data)$predictions
-actual_responses <- test_data$k_index
+rf_predictions_v <- predict(rf_model_v, data = test_v)$predictions
+actual_responses_v <- test_v$k_index
+
+rf_predictions_wd <- predict(rf_model_wd, data = test_wd)$predictions
+actual_responses_wd <- test_wd$k_index
 
 # Transform the actual responses into a binary indicator (0 or 1)
-actual_binary <- ifelse(actual_responses > 0.5, 1, 0)  # Set the appropriate threshold
+actual_binary_v <- ifelse(actual_responses_v > 0.5, 1, 0)  # Set the appropriate threshold
 # threshold im moment 0.5 aber nachher noch anpassen vlt. 
+actual_binary_wd <- ifelse(actual_responses_wd > 0.5, 1, 0) 
 
 # Calculate the AUC-ROC
-roc_auc <- auc(roc(response = actual_binary, predictor = rf_predictions))
+roc_auc_v <- auc(roc(response = actual_binary_v, predictor = rf_predictions_v))
+roc_auc_wd <- auc(roc(response = actual_binary_wd, predictor = rf_predictions_wd))
 
 # Print AUC-ROC
-print(roc_auc)
+print(roc_auc_v)
+print(roc_auc_wd)
 ```
 
 ### ! Sensitivity & Specificity 
 ```{r}
 # Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model, data = test_data)$predictions
-actual_responses <- test_data$k_index
+rf_predictions_v <- predict(rf_model_v, data = test_v)$predictions
+actual_responses_v <- test_v$k_index
+
+rf_predictions_wd <- predict(rf_model_wd, data = test_wd)$predictions
+actual_responses_wd <- test_wd$k_index
 
 # Assuming you have set an appropriate threshold to classify positive and negative cases
-threshold <- 0.5
+threshold_v <- 0.5
+threshold_wd <- 0.5
 
 # Transform the actual responses into binary indicators (0 or 1)
-actual_binary <- ifelse(actual_responses > threshold, 1, 0)
+actual_binary_v <- ifelse(actual_responses_v > threshold_v, 1, 0)
+actual_binary_wd <- ifelse(actual_responses_wd > threshold_wd, 1, 0)
 
 # Calculate confusion matrix
-conf_matrix <- table(predicted = ifelse(rf_predictions > threshold, 1, 0), actual = actual_binary)
+conf_matrix_v <- table(predicted = ifelse(rf_predictions_v > threshold_v, 1, 0), actual = actual_binary_v)
+conf_matrix_wd <- table(predicted = ifelse(rf_predictions_wd > threshold_wd, 1, 0), actual = actual_binary_wd)
 
 # Calculate sensitivity (true positive rate)
-sensitivity <- conf_matrix[1, 2] / (conf_matrix[1, 2] + conf_matrix[1, 1])
+sensitivity_v <- conf_matrix_v[1, 2] / (conf_matrix_v[1, 2] + conf_matrix_v[1, 1])
+sensitivity_wd <- conf_matrix_wd[1, 2] / (conf_matrix_wd[1, 2] + conf_matrix_wd[1, 1])
 
 # Print sensitivity
-print(sensitivity)
+print(sensitivity_v)
+print(sensitivity_wd)
 
 # Calculate specificity (true negative rate)
-specificity <- conf_matrix[1, 1] / (conf_matrix[1, 1] + conf_matrix[1, 2])
+specificity_v <- conf_matrix_v[1, 1] / (conf_matrix_v[1, 1] + conf_matrix_v[1, 2])
+specificity_wd <- conf_matrix_wd[1, 1] / (conf_matrix_wd[1, 1] + conf_matrix_wd[1, 2])
 
 # Print specificity
-print(specificity)
+print(specificity_v)
+print(specificity_wd)
 ```
 
 ### ! Accuracy

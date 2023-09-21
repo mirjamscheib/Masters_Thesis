@@ -26,7 +26,7 @@ pkgCheck("stringr")
 pkgCheck("writexl")
 
 # set working directory 
-setwd("Pre_Processing")
+#setwd("Pre_Processing")
 ```
 
 # Load Data
@@ -205,7 +205,6 @@ abiotic2 <- cbind(abiotic2_sum, time, pH, conductivity, oxy_content, oxy_sat, tu
 abiotic <- abiotic1 |>
   full_join(abiotic2, by = "Reach_Untersuchungsstelle")
 ```
-
 
 ## MI Data
 ### Field Data
@@ -429,7 +428,7 @@ abiotic_field <- abiotic_field |>
 # write excel with field MZB results 
 write_xlsx(abiotic_field,"abiotic_mi_sampling\\Abiotic_MI_Field.xlsx")
 ```
-  
+
 ## All + MZB Lab 
 ```{r}
 # join dataframes together 
@@ -456,10 +455,56 @@ abiotic_lab_model <- abiotic_lab_model |>
   dplyr::select(-River.y, -Date_of_survey.y)
  
 # write excel with Lab results 
-write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model.xlsx")  
+write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model.xlsx") 
 ```
 
+# test
+```{r}
+# abiotic1, abiotic2, abiotic, field1, lab_file, coordinates, abiotic_field, abiotic_lab, abiotic_lab_model
 
+abiotic1 # 648 rows - unique(abiotic1$join_key)
+abiotic1_t <- unique(abiotic1$Reach_Untersuchungsstelle)
+length(abiotic1_t) <- length(field_t)
+
+abiotic2 # 54 rows
+abiotic2_t <- unique(abiotic2$Reach_Untersuchungsstelle)
+length(abiotic2_t) <- length(field_t)
+
+abiotic # 648 rows
+abiotic_t <- unique(abiotic$`Reach (Untersuchungsstelle)...4`)
+length(abiotic_t) <- length(field_t)
+
+# field data 
+field1 # 753 rows
+field_t <- unique(field1$Sampling_site) # 59 river sections 
+
+# lab data 
+lab_file # 300 rows
+lab_t <- unique(lab_file$Sampling_site) # 59 river sections 
+length(lab_t) <- length(field_t)
+
+# coordinates
+coordinates # 708 rows
+708/12 # 59 river sections 
+coord <- c("gl1", "gl2", "gl3", "gl4", "gl5", "gl6", "l1", "l2", "l3", "l4", "lr", "m1", "m2", "m3", "m4", "m5", "m6", "m7", "mr", "p1", "p2", "p3", "pr", "s1", "s2", "s3", "s4", "s5", "s6", "sa1", "sa2", "sa3", "sa4", "sa5", "sa6", "sa7", "sar", "se1", "se2", "se3", "se4", "sr", "t1", "t2", "t3", "th1", "th2", "th3", "th4", "th5", "ve2", "ve3", "ve4", "vr1", "vr2", "vr3", "vr4", "vr5", "vr6")
+coord <- toupper(coord) 
+
+abiotic_field # 765 rows
+abiotic_field_t <- unique(abiotic_field$Reach_Untersuchungsstelle)
+length(abiotic_field_t) <- length(field_t)
+
+abiotic_lab # 717 rows
+abiotic_lab_t <- unique(abiotic_lab$Reach_Untersuchungsstelle)
+length(abiotic_lab_t) <- length(field_t)
+
+abiotic_lab_model # 300 rows 
+abiotic_lab_model_t <- unique(abiotic_lab_model$Reach_Untersuchungsstelle)
+length(abiotic_lab_model_t) <- length(field_t)
+
+test <- as.data.frame(cbind(field_t, coord, lab_t, abiotic1_t, abiotic2_t, abiotic_t, abiotic_field_t, abiotic_lab_t, abiotic_lab_model_t))
+
+write_xlsx(test,"abiotic_mi_sampling\\Test.xlsx")  
+```
 
 
 
