@@ -48,6 +48,7 @@ data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv")
 data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
 
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
+# training set containing velocity 
 training_v <- data_v |>
   filter(Reach_Untersuchungsstelle != "GL1",
          Reach_Untersuchungsstelle != "GL2",         
@@ -58,6 +59,7 @@ training_v <- data_v |>
          Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
          Reach_Untersuchungsstelle != "VR3")
 
+# training set containing velocity + wd
 training_wd <- data_wd |>
   filter(Reach_Untersuchungsstelle != "GL1",
          Reach_Untersuchungsstelle != "GL2",         
@@ -69,6 +71,7 @@ training_wd <- data_wd |>
          Reach_Untersuchungsstelle != "VR3")
 
 # w/ hydr. models 
+# test set containing velocity 
 test_v <- data_v |>
   filter(Reach_Untersuchungsstelle == "GL1" |
          Reach_Untersuchungsstelle == "GL2" |       
@@ -79,6 +82,7 @@ test_v <- data_v |>
          Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
          Reach_Untersuchungsstelle == "VR3")
 
+# test set containing velocity + wd
 test_wd <- data_wd |>
   filter(Reach_Untersuchungsstelle == "GL1" |
          Reach_Untersuchungsstelle == "GL2" |       
@@ -90,73 +94,162 @@ test_wd <- data_wd |>
          Reach_Untersuchungsstelle == "VR3")
 
 # Prep data to model 
-# With k_index as response variable
-training_v <- training_v |>
+# TRAINING SETS
+# With k_index as response variable & velocity 
+training_v_k <- training_v |>
   dplyr::select(k_index, velocity, x, y)
 
-training_wd <- training_wd |>
+# With shannon index as response variable & velocity 
+training_v_s <- training_v |>
+  dplyr::select(shannon, velocity, x, y)
+
+# With abundance as response variable & velocity 
+training_v_a <- training_v |>
+  dplyr::select(abundance, velocity, x, y)
+
+# With k_index as response variable & velocity + wd
+training_wd_k <- training_wd |>
   dplyr::select(k_index, velocity, wd_cm, x, y)
 
-test_v <- test_v |>
+# With shannon index as response variable & velocity + wd
+training_wd_s <- training_wd |>
+  dplyr::select(shannon, velocity, wd_cm, x, y)
+
+# With abundance index as response variable & velocity + wd
+training_wd_a <- training_wd |>
+  dplyr::select(abundance, velocity, wd_cm, x, y)
+
+# TEST SETS
+# With k_index as response variable & velocity
+test_v_k <- test_v |>
   dplyr::select(k_index, velocity, x, y) 
 
-test_wd <- test_wd |>
+# With shannon index as response variable & velocity
+test_v_s <- test_v |>
+  dplyr::select(shannon, velocity, x, y) 
+
+# With abundance as response variable & velocity
+test_v_a <- test_v |>
+  dplyr::select(abundance, velocity, x, y) 
+
+# With k_index as response variable & velocity + wd
+test_wd_k <- test_wd |>
   dplyr::select(k_index, velocity, wd_cm, x, y) 
 
-# convert dataframes into spatial objects 
-data_v_sp <-  st_as_sf(training_v, coords =  c("x", "y"))
-st_crs(data_v_sp) <- "EPSG: 2056"
+# With shannon index as response variable & velocity + wd
+test_wd_s <- test_wd |>
+  dplyr::select(shannon, velocity, wd_cm, x, y) 
 
-data_wd_sp <-  st_as_sf(training_wd, coords =  c("x", "y"))
-st_crs(data_wd_sp) <- "EPSG: 2056"
+# With abundance as response variable & velocity + wd
+test_wd_a <- test_wd |>
+  dplyr::select(abundance, velocity, wd_cm, x, y) 
+
+# convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning 
+# for k_index and velocity 
+data_v_k_sp <-  st_as_sf(training_v_k, coords =  c("x", "y"))
+st_crs(data_v_k_sp) <- "EPSG: 2056"
+
+# for shannon index and velocity 
+data_v_s_sp <-  st_as_sf(training_v_s, coords =  c("x", "y"))
+st_crs(data_v_s_sp) <- "EPSG: 2056"
+
+# for abundance and velocity 
+data_v_a_sp <-  st_as_sf(training_v_a, coords =  c("x", "y"))
+st_crs(data_v_a_sp) <- "EPSG: 2056"
+
+# for k_index and velocity + wd
+data_wd_k_sp <-  st_as_sf(training_wd_k, coords =  c("x", "y"))
+st_crs(data_wd_k_sp) <- "EPSG: 2056"
+
+# for shannon index and velocity + wd
+data_wd_s_sp <-  st_as_sf(training_wd_s, coords =  c("x", "y"))
+st_crs(data_wd_s_sp) <- "EPSG: 2056"
+
+# for abundance and velocity + wd
+data_wd_a_sp <-  st_as_sf(training_wd_a, coords =  c("x", "y"))
+st_crs(data_wd_a_sp) <- "EPSG: 2056"
 ```
 
 
 # Random Forest 
 ## Create Task & Learner
-### K_index & Velocity
 ```{r}
-# create task
-task_rf_v <- mlr3spatiotempcv::as_task_regr_st(data_v_sp,
+# ONLY VELOCITY AS PREDICTOR (& x, y for spatial hyperparameter tuning)
+# create task for k_index and velocity
+task_rf_v_k <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp,
   id = "velocity", target = "k_index")
 
-# learner for random forest
-# from the ranger package
-lrn_rf_v <- lrn("regr.ranger", predict_type = "response")
+# create task for shannon index and velocity
+task_rf_v_s <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp,
+  id = "velocity", target = "shannon")
+
+# create task for abundance and velocity
+task_rf_v_a <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp,
+  id = "velocity", target = "abundance")
+
+# VELOCITY + WD AS PREDICTORS (& x, y for spatial hyperparameter tuning)
+# create task for k_index and velocity + wd
+task_rf_wd_k <- mlr3spatiotempcv::as_task_regr_st(data_wd_k_sp,
+  id = "velocity", target = "k_index")
+
+# create task for shannon index and velocity + wd
+task_rf_wd_s <- mlr3spatiotempcv::as_task_regr_st(data_wd_s_sp,
+  id = "velocity", target = "shannon")
+
+# create task for abundance and velocity + wd
+task_rf_wd_a <- mlr3spatiotempcv::as_task_regr_st(data_wd_a_sp,
+  id = "velocity", target = "abundance")
+
+# create learner for a random forest model from the ranger package
+# for k_index, shannon index and abundance + velocity + wd valid
+lrn_rf <- lrn("regr.ranger", predict_type = "response")
 
 # performance estimation level
-perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
-```
-
-### K_index & Velocity + Water Depth
-```{r}
-# create task
-task_rf_wd <- mlr3spatiotempcv::as_task_regr_st(data_wd_sp,
-  id = "water_depth", target = "k_index")
-
-# learner for random forest
-# from the ranger package
-lrn_rf_wd <- lrn("regr.ranger", predict_type = "response")
+perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100) # wo brauche ich das??
 ```
 
 ## Specifying the search space
-### K_index & Velocity
 ```{r}
-# specifying the search space
-search_space_v <- paradox::ps(
-  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v$data()) - 1),
+# ONLY VELOCITY AS PREDICTOR
+# specifying the search space for k_index and velocity
+search_space_v_k <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_k$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# num.trees noch suchen? 
-```
+# specifying the search space for shannon index and velocity
+search_space_v_s <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_s$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
 
-### K_index & Velocity + Water Depth
-```{r}
-# specifying the search space
-search_space_wd <- paradox::ps(
-  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd$data()) - 1),
+# specifying the search space for abundance and velocity
+search_space_v_a <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_a$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# VELOCITY + WD AS PREDICTORS 
+# specifying the search space for k_index and velocity + wd
+search_space_wd_k <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_k$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for shannon index and velocity + wd
+search_space_wd_s <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_s$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for abundance and velocity + wd
+search_space_wd_a <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_a$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
@@ -165,47 +258,117 @@ search_space_wd <- paradox::ps(
 ```
 
 ## Hyperparameter tuning 
-### K_index & Velocity
 ```{r}
-autotuner_rf_v <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf_v,
+# VELOCITY AS PREDICTOR 
+# with k_index and velocity 
+autotuner_rf_v_k <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
   terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
-  search_space = search_space_v, # predefined hyperparameter search space
+  search_space = search_space_v_k, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with shannon index and velocity 
+autotuner_rf_v_s <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_v_s, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with abundance and velocity 
+autotuner_rf_v_a <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_v_a, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# VELOCITY AND WD AS PREDICTORS
+# with k_index and velocity + wd
+autotuner_rf_wd_k <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_wd_k, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with shannon index and velocity + wd
+autotuner_rf_wd_s <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_wd_s, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with abundance and velocity + wd
+autotuner_rf_wd_a <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_wd_a, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 ```
 
 ```{r}
-# hyperparameter tuning
+# set seed to obtain the same results with each run
 set.seed(0412022)
-autotuner_rf_v$train(task_rf_v)
+
+# hyperparameter tuning
+# VELOCITY AS PREDICTOR
+# k_index and velocity 
+autotuner_rf_v_k$train(task_rf_v_k)
+
+# shannon index and velocity 
+autotuner_rf_v_s$train(task_rf_v_s)
+
+# abundance and velocity 
+autotuner_rf_v_a$train(task_rf_v_a)
+
+# VELOCITY + WD AS PREDICTORS
+# k_index and velocity + wd
+autotuner_rf_wd_k$train(task_rf_wd_k)
+
+# shannon index and velocity + wd 
+autotuner_rf_wd_s$train(task_rf_wd_s)
+
+# abundance and velocity + wd
+autotuner_rf_wd_a$train(task_rf_wd_a)
 
 # read the results 
-autotuner_rf_v$tuning_result
+# VELOCITY AS PREDICTOR
+# for k_index and velocity
+autotuner_rf_v_k$tuning_result
+
+# for shannon index and velocity
+autotuner_rf_v_s$tuning_result
+
+# for abundance and velocity
+autotuner_rf_v_a$tuning_result
+
+# VELOCITY + WD AS PREDICTORS
+# for k_index and velocity + wd
+autotuner_rf_wd_k$tuning_result
+
+# for shannon index and velocity + wd
+autotuner_rf_wd_s$tuning_result
+
+# for abundance and velocity + wd
+autotuner_rf_wd_a$tuning_result
 ```
 
-### K_index & Velocity + Water Depth
-```{r}
-autotuner_rf_wd <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf_wd,
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
-  search_space = search_space_wd, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-```
-
-```{r}
-# hyperparameter tuning
-set.seed(0412022)
-autotuner_rf_wd$train(task_rf_wd)
-
-# read the results 
-autotuner_rf_wd$tuning_result
-```
 
 ## Predict to maps 
 ```{r}
@@ -225,23 +388,84 @@ vlt. zwischenschritt einbauen, Resultate vergleichen nur mit gemessenen wd und s
 
 Regressionsanalyse wd, v zwischen gemessen und simuliert, ich muss schon quantifizieren wie die abweichung zwischen input daten und simulierten daten sind. 
 ## ! Make model 
+Muss ich Model noch machen? 
+with training or test data? 
+### Prep Data
 ```{r}
-# turn sf object into dataframe 
-#data_new <- data.frame(st_drop_geometry(data_new))
+# TRAINING SETS
+# With k_index as response variable & velocity 
+training_v_k <- training_v |>
+  dplyr::select(k_index, velocity)
 
+# With shannon index as response variable & velocity 
+training_v_s <- training_v |>
+  dplyr::select(shannon, velocity)
 
+# With abundance as response variable & velocity 
+training_v_a <- training_v |>
+  dplyr::select(abundance, velocity)
+
+# With k_index as response variable & velocity + wd
+training_wd_k <- training_wd |>
+  dplyr::select(k_index, velocity, wd_cm)
+
+# With shannon index as response variable & velocity + wd
+training_wd_s <- training_wd |>
+  dplyr::select(shannon, velocity, wd_cm)
+
+# With abundance index as response variable & velocity + wd
+training_wd_a <- training_wd |>
+  dplyr::select(abundance, velocity, wd_cm)
+
+# TEST SETS
+# With k_index as response variable & velocity
+test_v_k <- test_v |>
+  dplyr::select(k_index, velocity) 
+
+# With shannon index as response variable & velocity
+test_v_s <- test_v |>
+  dplyr::select(shannon, velocity) 
+
+# With abundance as response variable & velocity
+test_v_a <- test_v |>
+  dplyr::select(abundance, velocity) 
+
+# With k_index as response variable & velocity + wd
+test_wd_k <- test_wd |>
+  dplyr::select(k_index, velocity, wd_cm) 
+
+# With shannon index as response variable & velocity + wd
+test_wd_s <- test_wd |>
+  dplyr::select(shannon, velocity, wd_cm) 
+
+# With abundance as response variable & velocity + wd
+test_wd_a <- test_wd |>
+  dplyr::select(abundance, velocity, wd_cm) 
+```
+
+### Make models 
+```{r}
 # Create and train the random forest model with only velocity
 #   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
 #1:    1       0.2059293            10          <list[4]> <list[3]> 0.1413796
-rf_model_v <- ranger(formula = k_index ~., data = test_v, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
+rf_model_v_k <- ranger(formula = k_index ~., data = training_v_k, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
+
+rf_model_v_s <- ranger(formula = shannon ~., data = training_v_s, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
+
+rf_model_v_a <- ranger(formula = abundance ~., data = training_v_a, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
 
 # Create and train the random forest model with velocity + wd
 #      mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
 # 1:    1       0.2059293            10          <list[4]> <list[3]>  0.141822
-rf_model_wd <- ranger(formula = k_index ~., data = test_wd, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
+rf_model_wd_k <- ranger(formula = k_index ~., data = training_wd_k, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
+
+rf_model_wd_s <- ranger(formula = shannon ~., data = training_wd_s, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
+
+rf_model_wd_a <- ranger(formula = abundance ~., data = training_wd_a, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
+
+
 # make predictions using the trained model
 # predictions <- predict(rf_model, test_data) # das stimmt bestimmt noch nicht
-
 ```
 
 ## Evaluation Metrics
