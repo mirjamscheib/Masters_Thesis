@@ -20,3 +20,17 @@ plot(pred)
 vlt. zwischenschritt einbauen, Resultate vergleichen nur mit gemessenen wd und simulierten wd ein ML modell (welche Fehler macht das Modell, weil wir ihm nur simuliere Werte zum predicten geben anstatt)
 
 Regressionsanalyse wd, v zwischen gemessen und simuliert, ich muss schon quantifizieren wie die abweichung zwischen input daten und simulierten daten sind. 
+
+## Predict to maps 
+```{r}
+# read rasters
+GL1_22_00 <- stack("Pre_Processing/rasters_stacked/GL1_22_00.grd")
+
+new_names <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(GL1_22_00) <- new_names
+crs(GL1_22_00) <- "EPSG: 2056"
+
+pred = terra::predict(GL1_22_00, model = autotuner_xbrt_wd, fun = predict, index = 2)
+
+plot(pred)
+```

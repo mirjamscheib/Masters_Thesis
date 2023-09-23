@@ -37,6 +37,8 @@ pkgCheck("xgboost")
 pkgCheck("caret") # for cohen's kappa calculation 
 pkgCheck("pdp")
 pkgCheck("gbm")
+pkgCheck("Metrics")
+pkgCheck("modEvA")
 ```
 
 
@@ -171,9 +173,10 @@ st_crs(data_wd_a_sp) <- "EPSG: 2056"
 
 
 # Random Forest 
-## Create Task & Learner
+## Hyperparameter tuning 
+### Create Task & Learner
 ```{r}
-# ONLY VELOCITY AS PREDICTOR (& x, y for spatial hyperparameter tuning)
+### ONLY VELOCITY AS PREDICTOR (& x, y for spatial hyperparameter tuning) ###
 # create task for k_index and velocity
 task_rf_v_k <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp,
   id = "velocity", target = "k_index")
@@ -186,7 +189,7 @@ task_rf_v_s <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp,
 task_rf_v_a <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp,
   id = "velocity", target = "abundance")
 
-# VELOCITY + WD AS PREDICTORS (& x, y for spatial hyperparameter tuning)
+### VELOCITY + WD AS PREDICTORS (& x, y for spatial hyperparameter tuning) ###
 # create task for k_index and velocity + wd
 task_rf_wd_k <- mlr3spatiotempcv::as_task_regr_st(data_wd_k_sp,
   id = "velocity", target = "k_index")
@@ -199,6 +202,7 @@ task_rf_wd_s <- mlr3spatiotempcv::as_task_regr_st(data_wd_s_sp,
 task_rf_wd_a <- mlr3spatiotempcv::as_task_regr_st(data_wd_a_sp,
   id = "velocity", target = "abundance")
 
+### LEARNER ###
 # create learner for a random forest model from the ranger package
 # for k_index, shannon index and abundance + velocity + wd valid
 lrn_rf <- lrn("regr.ranger", predict_type = "response")
@@ -207,9 +211,9 @@ lrn_rf <- lrn("regr.ranger", predict_type = "response")
 # perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100) # wo brauche ich das??
 ```
 
-## Specifying the search space
+### Specify search space
 ```{r}
-# ONLY VELOCITY AS PREDICTOR
+### ONLY VELOCITY AS PREDICTOR ###
 # specifying the search space for k_index and velocity
 search_space_v_k <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_k$data()) - 1),
@@ -231,7 +235,7 @@ search_space_v_a <- paradox::ps(
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# VELOCITY + WD AS PREDICTORS 
+### VELOCITY + WD AS PREDICTORS ###
 # specifying the search space for k_index and velocity + wd
 search_space_wd_k <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_k$data()) - 1),
@@ -256,13 +260,14 @@ search_space_wd_a <- paradox::ps(
 # num.trees noch suchen? 
 ```
 
-## Hyperparameter tuning 
+### Hyperparameter tuning 
+resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning # gibt kein richtig, falsch, je mehr folds desto mehr modelle müssen trainiert werden
 ```{r}
-# VELOCITY AS PREDICTOR 
+### VELOCITY AS PREDICTOR ###
 # with k_index and velocity 
 autotuner_rf_v_k <- mlr3tuning::AutoTuner$new(
   learner = lrn_rf,
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning # gibt kein richtig, falsch, je mehr folds desto mehr modelle müssen trainiert werden (rechenintensiver), 5 ist relativ üblich 
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning  (rechenintensiver), 5 ist relativ üblich 
   measure = mlr3::msr("regr.rmse"), # performance measure
   terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
   search_space = search_space_v_k, # predefined hyperparameter search space
@@ -289,7 +294,7 @@ autotuner_rf_v_a <- mlr3tuning::AutoTuner$new(
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# VELOCITY AND WD AS PREDICTORS
+### VELOCITY AND WD AS PREDICTORS ###
 # with k_index and velocity + wd
 autotuner_rf_wd_k <- mlr3tuning::AutoTuner$new(
   learner = lrn_rf,
@@ -326,7 +331,7 @@ autotuner_rf_wd_a <- mlr3tuning::AutoTuner$new(
 set.seed(0412022)
 
 # hyperparameter tuning
-# VELOCITY AS PREDICTOR
+### VELOCITY AS PREDICTOR ###
 # k_index and velocity 
 autotuner_rf_v_k$train(task_rf_v_k)
 
@@ -336,7 +341,7 @@ autotuner_rf_v_s$train(task_rf_v_s)
 # abundance and velocity 
 autotuner_rf_v_a$train(task_rf_v_a)
 
-# VELOCITY + WD AS PREDICTORS
+### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 autotuner_rf_wd_k$train(task_rf_wd_k)
 
@@ -345,9 +350,12 @@ autotuner_rf_wd_s$train(task_rf_wd_s)
 
 # abundance and velocity + wd
 autotuner_rf_wd_a$train(task_rf_wd_a)
+```
 
+
+```{r}
 # read the results 
-# VELOCITY AS PREDICTOR
+### VELOCITY AS PREDICTOR ###
 # for k_index and velocity
 autotuner_rf_v_k$tuning_result
 
@@ -357,7 +365,7 @@ autotuner_rf_v_s$tuning_result
 # for abundance and velocity
 autotuner_rf_v_a$tuning_result
 
-# VELOCITY + WD AS PREDICTORS
+### VELOCITY + WD AS PREDICTORS ###
 # for k_index and velocity + wd
 autotuner_rf_wd_k$tuning_result
 
@@ -368,10 +376,10 @@ autotuner_rf_wd_s$tuning_result
 autotuner_rf_wd_a$tuning_result
 ```
 
-## Make RF model 
+## RF Model
 ### Prep Data w/o Coordinates
 ```{r}
-# TRAINING SETS
+### TRAINING SETS ###
 # With k_index as response variable & velocity 
 training_v_k <- training_v |>
   dplyr::select(k_index, velocity)
@@ -396,7 +404,7 @@ training_wd_s <- training_wd |>
 training_wd_a <- training_wd |>
   dplyr::select(abundance, velocity, wd_cm)
 
-# TEST SETS
+### TEST SETS ###
 # With k_index as response variable & velocity
 test_v_k <- test_v |>
   dplyr::select(k_index, velocity) 
@@ -463,7 +471,9 @@ rf_model_wd_a <- ranger(formula = abundance ~., data = training_wd_a, mtry = 1, 
 ### - Partial dependence plots
 ```{r}
 # yhat ist die response variable (k-index, simpson oder shannon)
-pdp_plot_v_k <- partial(rf_model_v_k, pred.var = "velocity", ice = TRUE, center = TRUE, plot = TRUE, rug = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = training_v_k, type = "regression")
+pdp_plot_v_k <- partial(rf_model_v_k, pred.var = "velocity", ice = TRUE, center = TRUE, plot = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = training_v_k, type = "regression")
+
+?partial
 
 # yhat ist die response variable (k-index, simpson oder shannon)
 pdp_plot_wd_k <- partial(rf_model_wd_k, pred.var = c("velocity", "wd_cm"), center = TRUE, plot = TRUE, rug = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = training_wd_k, type = "regression")
@@ -477,13 +487,12 @@ ggplot(pdp_plot_v_k, aes(velocity, yhat)) +
 pdp_plot_wd_k <- partial(rf_model_wd_k, pred.var = "wd_cm")
 pdp_plot_wd_v_k <- partial(rf_model_wd_k, pred.var = "velocity")
 
-pdp_wd <- cbind(pdp_plot_wd_k, pdp_plot_wd_v_k)
+pdp_wd <- full_join(pdp_plot_wd_k, pdp_plot_wd_v_k, by = "yhat")
 
 # Plot the PDP
-ggplot(pdp_wd, aes(wd, yhat)) + 
+ggplot(pdp_wd, aes(wd_cm, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
-  facet_wrap(~yhat) +
-  geom_line()
+  facet_wrap(~yhat) 
 
 ggplot(pdp_plot_wd_v_k, aes(velocity, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
@@ -491,109 +500,186 @@ ggplot(pdp_plot_wd_v_k, aes(velocity, yhat)) +
 ```
 
 
-### ! Deviance explained macht Sinn
+### Obs and Pred
+```{r}
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+rf_predictions_v_k <- predict(rf_model_v_k, data = test_v_k)$predictions
+
+# shannon index and velocity
+rf_predictions_v_s <- predict(rf_model_v_s, data = test_v_s)$predictions
+
+# abundance and velocity
+rf_predictions_v_a <- predict(rf_model_v_a, data = test_v_a)$predictions
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+rf_predictions_wd_k <- predict(rf_model_wd_k, data = test_wd_k)$predictions
+
+# shannon index and velocity + wd
+rf_predictions_wd_s <- predict(rf_model_wd_s, data = test_wd_s)$predictions
+
+# abundance and velocity + wd
+rf_predictions_wd_a <- predict(rf_model_wd_a, data = test_wd_a)$predictions
+```
+
+```{r}
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+responses_v_k <- test_v_k$k_index
+
+# shannon index and velocity
+responses_v_s <- test_v_s$shannon
+
+# abundance and velocity
+responses_v_a <- test_v_a$abundance
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+responses_wd_k <- test_wd_k$k_index
+
+# shannon index and velocity + wd
+responses_wd_s <- test_wd_s$shannon
+
+# abundance and velocity + wd
+responses_wd_a <- test_wd_a$abundance
+```
+
+
+### Deviance explained (R2)
 https://de.wikipedia.org/wiki/Bestimmtheitsmaß
 
 Regressionsproblem, wenn Index/kont. Daten vorausgesagt werden
 mit variante 1 rechnen 
 ```{r}
-# # Step 1: Get predicted values
-rf_predictions_v_k <- predict(rf_model_v_k, data = test_v_k)$predictions
+# Calculate R-squared
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity 
+r2_v_k <- R2(pred = rf_predictions_v_k, obs = responses_v_k)
 
-# Step 2: Calculate TSS
-mean_k <- mean(test_v_k$k_index)
-TSS <- sum((test_v_k$k_index - mean_k)^2)
+# shannon index and velocity 
+r2_v_s <- R2(pred = rf_predictions_v_s, obs = responses_v_s)
 
-# Step 3: Calculate RSS
-RSS <- sum((test_v_k$k_index - rf_predictions_v_k)^2)
+# abundance and velocity 
+r2_v_a <- R2(pred = rf_predictions_v_a, obs = responses_v_a)
 
-# Step 4: Calculate R-squared
-R_squared <- RSS / TSS
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+r2_wd_k <- R2(pred = rf_predictions_wd_k, obs = responses_wd_k)
 
-# Print the R-squared value
-cat("R-squared (Deviance Explained):", R_squared, "\n")
+# shannon index and velocity + wd 
+r2_wd_s <- R2(pred = rf_predictions_wd_s, obs = responses_wd_s)
+
+# abundance and velocity + wd 
+r2_wd_a <- R2(pred = rf_predictions_wd_a, obs = responses_wd_a)
 ```
 
-### ! AUC nein - AUPRC?
+### RMSE & MAE
 ```{r}
-# Install and load the required package
-# install.packages("pROC")
-library(pROC)
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+rmse_v_k <- rmse(actual = responses_v_k, predicted = rf_predictions_v_k)
+mae_v_k <- mae(actual = responses_v_k, predicted = rf_predictions_v_k)
 
-# Assuming 'rf_model' is your trained random forest model
-rf_predictions_v_k <- predict(rf_model_v_k, data = test_v_k)$predictions
-actual_responses_v_k <- test_v_k$k_index
+# shannon index and velocity
+rmse_v_s <- rmse(actual = responses_v_s, predicted = rf_predictions_v_s)
+mae_v_s <- mae(actual = responses_v_s, predicted = rf_predictions_v_s)
 
-rf_predictions_wd_k <- predict(rf_model_wd_k, data = test_wd_k)$predictions
-actual_responses_wd_k <- test_wd_k$k_index
+# abundance and velocity
+rmse_v_a <- rmse(actual = responses_v_a, predicted = rf_predictions_v_a)
+mae_v_a <- mae(actual = responses_v_a, predicted = rf_predictions_v_a)
 
-# Transform the actual responses into a binary indicator (0 or 1)
-actual_binary_v_k <- ifelse(actual_responses_v_k > 0.5, 1, 0)  # Set the appropriate threshold
-# threshold im moment 0.5 aber nachher noch anpassen vlt. 
-actual_binary_wd_k <- ifelse(actual_responses_wd_k > 0.5, 1, 0) 
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+rmse_wd_k <- rmse(actual = responses_wd_k, predicted = rf_predictions_wd_k)
+mae_wd_k <- mae(actual = responses_wd_k, predicted = rf_predictions_wd_k)
 
-# Calculate the AUC-ROC
-roc_auc_v_k <- auc(roc(response = actual_binary_v_k, predictor = rf_predictions_v_k))
-roc_auc_wd_k <- auc(roc(response = actual_binary_wd_k, predictor = rf_predictions_wd_k))
+# shannon index and velocity + wd
+rmse_wd_s <- rmse(actual = responses_wd_s, predicted = rf_predictions_wd_s)
+mae_wd_s <- mae(actual = responses_wd_s, predicted = rf_predictions_wd_s)
 
-# Print AUC-ROC
-print(roc_auc_v_k)
-print(roc_auc_wd_k)
+# abundance and velocity + wd
+rmse_wd_a <- rmse(actual = responses_wd_a, predicted = rf_predictions_wd_a)
+mae_wd_a <- mae(actual = responses_wd_a, predicted = rf_predictions_wd_a)
 ```
 
-### ! Root mean squared deviation (RMSD) = RMSE
-```{r}
-# Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model_v_k, data = test_v_k)$predictions
-actual_responses <- test_v_k$k_index
-
-# Calculate squared deviations
-squared_deviations <- (rf_predictions - actual_responses)^2
-
-# Calculate mean of squared deviations
-mean_squared_deviation <- mean(squared_deviations)
-
-# Calculate root mean squared deviation (RMSE)
-root_mean_squared_deviation <- sqrt(mean_squared_deviation)
-
-# Print RMSE
-print(root_mean_squared_deviation)
-```
-
-### ! Bias 
+### Bias 
 keine Metric per se, Abweichung per Mittelwert (wird nicht als performance metric verwendet direkt), hat Bezug zu RMSE
 ```{r}
-# Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model_v_k, data = test_v_k)$predictions
-actual_responses <- test_v_k$k_index
-
 # Calculate the differences between predicted and actual values
-differences <- rf_predictions - actual_responses
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+differences_v_k <- rf_predictions_v_k - responses_v_k
 
-# Calculate the mean of the differences (bias)
-bias <- mean(differences)
+# shannon index and velocity
+differences_v_s <- rf_predictions_v_s - responses_v_s
 
-# Print bias
-print(bias)
+# abundance and velocity
+differences_v_a <- rf_predictions_v_a - responses_v_a
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+differences_wd_k <- rf_predictions_wd_k - responses_wd_k
+
+# shannon index and velocity + wd
+differences_wd_s <- rf_predictions_wd_s - responses_wd_s
+
+# abundance and velocity + wd
+differences_wd_a <- rf_predictions_wd_a - responses_wd_a
 ```
 
-### ! Nash-Sutcliffe efficiency (NSE) ok
-sieht für Regressionsproblem au
+
+```{r}
+# Calculate the mean of the differences (bias)
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+bias_v_k <- mean(differences_v_k)
+
+# shannon index and velocity
+bias_v_s <- mean(differences_v_s)
+
+# abundance and velocity
+bias_v_a <- mean(differences_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+bias_wd_k <- mean(differences_wd_k)
+
+# shannon index and velocity + wd
+bias_wd_s <- mean(differences_wd_s)
+
+# abundance and velocity + wd
+bias_wd_a <- mean(differences_wd_a)
+```
+
+### Nash-Sutcliffe efficiency (NSE) 
 spezifisch für hydrologische Modelle 
 ```{r}
-# Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model_v_k, data = test_v_k)$predictions
-actual_responses <- test_v_k$k_index
-
 # Calculate the NSE
-nse <- 1 - sum((actual_responses - rf_predictions)^2) / sum((actual_responses - mean(actual_responses))^2)
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+nse_v_k <- 1 - sum((responses_v_k - rf_predictions_v_k)^2) / sum((responses_v_k - mean(responses_v_k))^2)
 
-# Print NSE
-print(nse)
+# shannon index and velocity
+nse_v_s <- 1 - sum((responses_v_s - rf_predictions_v_s)^2) / sum((responses_v_s - mean(responses_v_s))^2)
+
+# abundance and velocity
+nse_v_a <- 1 - sum((responses_v_a - rf_predictions_v_a)^2) / sum((responses_v_a - mean(responses_v_a))^2)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+nse_wd_k <- 1 - sum((responses_wd_k - rf_predictions_wd_k)^2) / sum((responses_wd_k - mean(responses_wd_k))^2)
+
+# shannon index and velocity + wd
+nse_wd_s <- 1 - sum((responses_wd_s - rf_predictions_wd_s)^2) / sum((responses_wd_s - mean(responses_wd_s))^2)
+
+# abundance and velocity + wd
+nse_wd_a <- 1 - sum((responses_wd_a - rf_predictions_wd_a)^2) / sum((responses_wd_a - mean(responses_wd_a))^2)
 ```
- 
+
 # Boosted Regression Tree
-## Create Task & Learner
+## Hyperparameter tuning
+### Create Task & Learner
 ```{r}
 # VELOCITY AS PREDICTOR
 # for k_index and velocity 
@@ -628,28 +714,14 @@ lrn_xbrt <- lrn("regr.xgboost", predict_type = "response")
 # perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
 ```
 
-```{r}
- # create task
-task_xbrt_wd <- mlr3spatiotempcv::as_task_regr_st(data_wd_sp,
-  id = "water_depth", target = "k_index")
-
-# learner for random forest
-# from the ranger package
-lrn_xbrt_wd <- lrn("regr.xgboost", predict_type = "response")
-
-# performance estimation level
-perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
-```
-
-## Specifying the search space
+### Specify search space
 folgende Parameter sollten getuned werden: 
 - bag fraction (search space = 0.5 - 0.75)
 - learning rate (search space = ?)
 - tree complexity (search space = ?)
 ```{r}
-
 # specifying the search space
-search_space_xbrt_v <- paradox::ps(
+search_space_xbrt <- paradox::ps(
   eta = p_dbl(lower = 0.01, upper = 1.0), # learning rate
   nrounds = p_int(lower = 100, upper = 1000),
   max_depth = p_int(lower = 3, upper = 10), # tree complexity
@@ -657,44 +729,67 @@ search_space_xbrt_v <- paradox::ps(
 )
 ```
 
+### Hyperparameter tuning 
 ```{r}
-# specifying the search space
-search_space_xbrt_wd <- paradox::ps(
-  eta = p_dbl(lower = 0.01, upper = 1.0), # learning rate
-  nrounds = p_int(lower = 100, upper = 1000),
-  max_depth = p_int(lower = 3, upper = 10), # tree complexity
-  subsample = p_dbl(lower = 0.5, upper = 0.75) # bag fraction
-)
-```
-
-## Hyperparameter tuning 
-```{r}
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
 autotuner_xbrt_v_k <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt,
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
   terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
-  search_space = search_space_xbrt_v, # predefined hyperparameter search space
+  search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
-```
 
-```{r}
-# hyperparameter tuning
-set.seed(0412022)
-autotuner_xbrt_v_k$train(task_xbrt_v_k)
-
-# read the results 
-autotuner_xbrt_v_k$tuning_result
-```
-
-```{r}
-autotuner_xbrt_wd <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt_wd,
+# shannon index and velocity
+autotuner_xbrt_v_s <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt,
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
   terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
-  search_space = search_space_xbrt_wd, # predefined hyperparameter search space
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# abundance and velocity
+autotuner_xbrt_v_a <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+autotuner_xbrt_wd_k <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# shannon index and velocity + wd
+autotuner_xbrt_wd_s <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# abundance and velocity + wd
+autotuner_xbrt_wd_a <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 ```
@@ -702,78 +797,176 @@ autotuner_xbrt_wd <- mlr3tuning::AutoTuner$new(
 ```{r}
 # hyperparameter tuning
 set.seed(0412022)
-autotuner_xbrt_wd$train(task_xbrt_wd)
 
-# read the results 
-autotuner_xbrt_wd$tuning_result
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+autotuner_xbrt_v_k$train(task_xbrt_v_k)
+
+# shannon index and velocity
+autotuner_xbrt_v_s$train(task_xbrt_v_s)
+
+# abundance and velocity
+autotuner_xbrt_v_a$train(task_xbrt_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+autotuner_xbrt_wd_k$train(task_xbrt_wd_k)
+
+# shannon index and velocity + wd
+autotuner_xbrt_wd_s$train(task_xbrt_wd_s)
+
+# abundance and velocity + wd
+autotuner_xbrt_wd_a$train(task_xbrt_wd_a)
 ```
 
-## Predict to maps 
+
 ```{r}
-# read rasters
-GL1_22_00 <- stack("Pre_Processing/rasters_stacked/GL1_22_00.grd")
+# read the results 
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+autotuner_xbrt_v_k$tuning_result
 
-new_names <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(GL1_22_00) <- new_names
-crs(GL1_22_00) <- "EPSG: 2056"
+# shannon index and velocity
+autotuner_xbrt_v_s$tuning_result
 
-pred = terra::predict(GL1_22_00, model = autotuner_xbrt_wd, fun = predict, index = 2)
+# abundance and velocity
+autotuner_xbrt_v_a$tuning_result
 
-plot(pred)
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+autotuner_xbrt_wd_k$tuning_result
+
+# shannon index and velocity + wd
+autotuner_xbrt_wd_s$tuning_result
+
+# abundance and velocity + wd
+autotuner_xbrt_wd_a$tuning_result
 ```
 
-## ! Make model
+
+## BRT Model
+### Prep Data 
 ```{r}
 # make training data
-training.x <- model.matrix(k_index ~ ., data = training_v_k)
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity 
+trainx_v_k <- model.matrix(k_index ~ ., data = training_v_k)
+
+# shannon index and velocity 
+trainx_v_s <- model.matrix(shannon ~ ., data = training_v_s)
+
+# abundance and velocity 
+trainx_v_a <- model.matrix(abundance ~ ., data = training_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+trainx_wd_k <- model.matrix(k_index ~ ., data = training_wd_k)
+
+# shannon index and velocity + wd
+trainx_wd_s <- model.matrix(shannon ~ ., data = training_wd_s)
+
+# abundance and velocity + wd
+trainx_wd_a <- model.matrix(abundance ~ ., data = training_wd_a)
+```
 
 
+```{r}
 # make testing dataset
-testing.x <- model.matrix(k_index ~ ., data = test_v_k)
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+testx_v_k <- model.matrix(k_index ~ ., data = test_v_k)
 
-# make model 
+# shannon index and velocity
+testx_v_s <- model.matrix(shannon ~ ., data = test_v_s)
+
+# abundance and velocity
+testx_v_a <- model.matrix(abundance ~ ., data = test_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+testx_wd_k <- model.matrix(k_index ~ ., data = test_wd_k)
+
+# shannon index and velocity + wd
+testx_wd_s <- model.matrix(shannon ~ ., data = test_wd_s)
+
+# abundance and velocity + wd
+testx_wd_a <- model.matrix(abundance ~ ., data = test_wd_a)
+```
+
+### Make models 
+```{r}
+### ONLY VELOCITY AS PREDICTOR ###
 # k_index and velocity
 #          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
 #1: 0.01838576     922         3 0.6312782          <list[7]> <list[4]>  0.159874
-model.xgb <- xgboost(data = data.matrix(training.x[ ,-1]),
+model.xgb_v_k <- xgboost(data = data.matrix(trainx_v_k[ ,-1]),
                      label = as.numeric(as.character(training_v_k$k_index)),
                      eta = 0.01838576,
                      max_depth = 3,
                      nrounds = 922,
                      subsample = 0.6312782,
                      objective = "reg:linear")
-```
 
-```{r}
-# turn sf object into dataframe 
-data_new <- data.frame(st_drop_geometry(data_new))
+# shannon index and velocity
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.06108969     117         4 0.6531705          <list[7]> <list[4]> 0.6777164
+model.xgb_v_s <- xgboost(data = data.matrix(trainx_v_s[ ,-1]),
+                     label = as.numeric(as.character(training_v_s$shannon)),
+                     eta = 0.06108969,
+                     max_depth = 4,
+                     nrounds = 117,
+                     subsample = 0.6531705,
+                     objective = "reg:linear")
 
-# Split the data into training and testing sets
-train_indices <- sample(1:nrow(data_new), 0.7 * nrow(data_new))
-train_data <- as.matrix(data_new[train_indices, ])
-test_data <- as.matrix(data_new[-train_indices, ])
+# abundance and velocity
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.06943808     314         4 0.7209312          <list[7]> <list[4]>  837.6009
+model.xgb_v_a <- xgboost(data = data.matrix(trainx_v_a[ ,-1]),
+                     label = as.numeric(as.character(training_v_a$abundance)),
+                     eta = 0.06943808,
+                     max_depth = 4,
+                     nrounds = 314,
+                     subsample = 0.7209312,
+                     objective = "reg:linear")
 
-# Create the DMatrix object
-train_dmatrix <- xgb.DMatrix(data = as.matrix(train_data[, c("wd", "velocity")]), label = train_data[, "k_index"])
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.01598317     563         5 0.6270098          <list[7]> <list[4]>  0.160993
+model.xgb_wd_k <- xgboost(data = data.matrix(trainx_wd_k[ ,-1]),
+                     label = as.numeric(as.character(training_wd_k$k_index)),
+                     eta = 0.01598317,
+                     max_depth = 5,
+                     nrounds = 563,
+                     subsample = 0.6270098,
+                     objective = "reg:linear")
 
-test_dmatrix <- xgb.DMatrix(data = as.matrix(test_data[, c("wd", "velocity")]), label = test_data[, "k_index"])
+# shannon index and velocity + wd
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.04028586     240        10 0.5747886          <list[7]> <list[4]> 0.7265847
+model.xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
+                     label = as.numeric(as.character(training_wd_s$shannon)),
+                     eta = 0.04028586,
+                     max_depth = 10,
+                     nrounds = 240,
+                     subsample = 0.5747886,
+                     objective = "reg:linear")
 
-# Create and train the random forest model
-xbrt_model <- xgboost(data = train_dmatrix, 
-                      nrounds = 100, 
-                      max_depth = 3,
-                      objective = "reg:squarederror")
+# abundance and velocity + wd
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.1906722     586         7 0.7487879          <list[7]> <list[4]>  907.4666
+model.xgb_wd_a <- xgboost(data = data.matrix(trainx_wd_a[ ,-1]),
+                     label = as.numeric(as.character(training_wd_a$abundance)),
+                     eta = 0.1906722,
+                     max_depth = 7,
+                     nrounds = 586,
+                     subsample = 0.7487879,
+                     objective = "reg:linear")
 
-
-# make predictions using the trained model
-# predictions <- predict(rf_model, test_data) # das stimmt bestimmt noch nicht
-
-# Print the trained model
-print(xbrt_model)
 ```
 
 ## Evaluation Metrics
-### Partial dependence plots
+### - Partial dependence plots
 https://stackoverflow.com/questions/66016542/partial-dependence-ale-ice-plots-xgboost-in-r
 ```{r}
  xv <- data.matrix(subset(training_v_k, select = -k_index))  # training features
@@ -787,93 +980,177 @@ ggplot(pdp_plot_v_k, aes(velocity, yhat)) +
   geom_line()
 ```
 
-
-### !! Deviance explained
+### Obs and Pred 
 ```{r}
 # Get predictions from the XGBoost model
-xbrt_predictions <- predict(model.xgb, testing.x)
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity 
+xbrt_predictions_v_k <- predict(model.xgb_v_k, newdata = data.matrix(testx_v_k[, -1]))
 
-# Calculate the deviance of the XGBoost predictions
-deviance_xbrt <- 2 * sum(dpois(testing.x[, "k_index"], xbrt_predictions, log = TRUE))
+# shannon index and velocity 
+xbrt_predictions_v_s <- predict(model.xgb_v_s, newdata = data.matrix(testx_v_s[, -1]))
 
-# Calculate the deviance of a null model (mean response)
-mean_response <- mean(test_data[, "k_index"])
-deviance_null <- 2 * sum(dpois(test_data[, "k_index"], mean_response, log = TRUE))
+# abundance and velocity 
+xbrt_predictions_v_a <- predict(model.xgb_v_a, newdata = data.matrix(testx_v_a[, -1]))
 
-# Calculate the deviance explained
-deviance_explained <- (deviance_null - deviance_xbrt) / deviance_null
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+xbrt_predictions_wd_k <- predict(model.xgb_wd_k, newdata = data.matrix(testx_wd_k[, -1]))
 
-# Print deviance explained
-print(deviance_explained)
+# shannon index and velocity + wd
+xbrt_predictions_wd_s <- predict(model.xgb_wd_s, newdata = data.matrix(testx_wd_s[, -1]))
+
+# abundance and velocity + wd
+xbrt_predictions_wd_a <- predict(model.xgb_wd_a, newdata = data.matrix(testx_wd_a[, -1]))
 ```
 
-### !! AUC
+### Deviance explained (R2)
 ```{r}
-# Install and load the required package
-# install.packages("pROC")
-library(pROC)
+# Calculate R-squared
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity 
+brt_r2_v_k <- R2(pred = xbrt_predictions_v_k, obs = responses_v_k)
 
-# Assuming 'rf_model' is your trained random forest model
-brt_predictions_v <- predict(model.xgb, data = test_v_k)$predictions
-actual_responses <- test_data$k_index
+# shannon index and velocity 
+brt_r2_v_s <- R2(pred = xbrt_predictions_v_s, obs = responses_v_s)
 
-# Transform the actual responses into a binary indicator (0 or 1)
-actual_binary <- ifelse(actual_responses > 0.5, 1, 0)  # Set the appropriate threshold
-# threshold im moment 0.5 aber nachher noch anpassen vlt. 
+# abundance and velocity 
+brt_r2_v_a <- R2(pred = xbrt_predictions_v_a, obs = responses_v_a)
 
-# Calculate the AUC-ROC
-roc_auc <- auc(roc(response = actual_binary, predictor = rf_predictions))
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+brt_r2_wd_k <- R2(pred = xbrt_predictions_wd_k, obs = responses_wd_k)
 
-# Print AUC-ROC
-print(roc_auc)
+# shannon index and velocity + wd 
+brt_r2_wd_s <- R2(pred = xbrt_predictions_wd_s, obs = responses_wd_s)
+
+# abundance and velocity + wd 
+brt_r2_wd_a <- R2(pred = xbrt_predictions_wd_a, obs = responses_wd_a)
 ```
 
-### ! Root mean squared deviation (RMSD)
+### RMSE & MAE
 ```{r}
-# Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model, data = test_data)$predictions
-actual_responses <- test_data$k_index
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+brt_rmse_v_k <- rmse(actual = responses_v_k, predicted = xbrt_predictions_v_k)
+brt_mae_v_k <- mae(actual = responses_v_k, predicted = xbrt_predictions_v_k)
 
-# Calculate squared deviations
-squared_deviations <- (rf_predictions - actual_responses)^2
+# shannon index and velocity
+brt_rmse_v_s <- rmse(actual = responses_v_s, predicted = xbrt_predictions_v_s)
+brt_mae_v_s <- mae(actual = responses_v_s, predicted = xbrt_predictions_v_s)
 
-# Calculate mean of squared deviations
-mean_squared_deviation <- mean(squared_deviations)
+# abundance and velocity
+brt_rmse_v_a <- rmse(actual = responses_v_a, predicted = xbrt_predictions_v_a)
+brt_mae_v_a <- mae(actual = responses_v_a, predicted = xbrt_predictions_v_a)
 
-# Calculate root mean squared deviation (RMSE)
-root_mean_squared_deviation <- sqrt(mean_squared_deviation)
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+brt_rmse_wd_k <- rmse(actual = responses_wd_k, predicted = xbrt_predictions_wd_k)
+brt_mae_wd_k <- mae(actual = responses_wd_k, predicted = xbrt_predictions_wd_k)
 
-# Print RMSE
-print(root_mean_squared_deviation)
+# shannon index and velocity + wd
+brt_rmse_wd_s <- rmse(actual = responses_wd_s, predicted = xbrt_predictions_wd_s)
+brt_mae_wd_s <- mae(actual = responses_wd_s, predicted = xbrt_predictions_wd_s)
+
+# abundance and velocity + wd
+brt_rmse_wd_a <- rmse(actual = responses_wd_a, predicted = xbrt_predictions_wd_a)
+brt_mae_wd_a <- mae(actual = responses_wd_a, predicted = xbrt_predictions_wd_a)
 ```
 
-### ! Bias
+### Bias
 ```{r}
-# Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model, data = test_data)$predictions
-actual_responses <- test_data$k_index
-
 # Calculate the differences between predicted and actual values
-differences <- rf_predictions - actual_responses
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+brt_differences_v_k <- xbrt_predictions_v_k - responses_v_k
 
-# Calculate the mean of the differences (bias)
-bias <- mean(differences)
+# shannon index and velocity
+brt_differences_v_s <- xbrt_predictions_v_s - responses_v_s
 
-# Print bias
-print(bias)
+# abundance and velocity
+brt_differences_v_a <- xbrt_predictions_v_a - responses_v_a
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+brt_differences_wd_k <- xbrt_predictions_wd_k - responses_wd_k
+
+# shannon index and velocity + wd
+brt_differences_wd_s <- xbrt_predictions_wd_s - responses_wd_s
+
+# abundance and velocity + wd
+brt_differences_wd_a <- xbrt_predictions_wd_a - responses_wd_a
 ```
 
-### ! Nash-Sutcliffe efficiency (NSE)
+
 ```{r}
-# Assuming 'rf_model' is your trained random forest model
-rf_predictions <- predict(rf_model, data = test_data)$predictions
-actual_responses <- test_data$k_index
+# Calculate the mean of the differences (bias)
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+brt_bias_v_k <- mean(brt_differences_v_k)
 
-# Calculate the NSE
-nse <- 1 - sum((actual_responses - rf_predictions)^2) / sum((actual_responses - mean(actual_responses))^2)
+# shannon index and velocity
+brt_bias_v_s <- mean(brt_differences_v_s)
 
-# Print NSE
-print(nse)
+# abundance and velocity
+brt_bias_v_a <- mean(brt_differences_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+brt_bias_wd_k <- mean(brt_differences_wd_k)
+
+# shannon index and velocity + wd
+brt_bias_wd_s <- mean(brt_differences_wd_s)
+
+# abundance and velocity + wd
+brt_bias_wd_a <- mean(brt_differences_wd_a)
 ```
 
+### Nash-Sutcliffe efficiency (NSE) 
+spezifisch für hydrologische Modelle 
+```{r}
+# Calculate the NSE
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+brt_nse_v_k <- 1 - sum((responses_v_k - xbrt_predictions_v_k)^2) / sum((responses_v_k - mean(responses_v_k))^2)
+
+# shannon index and velocity
+brt_nse_v_s <- 1 - sum((responses_v_s - xbrt_predictions_v_s)^2) / sum((responses_v_s - mean(responses_v_s))^2)
+
+# abundance and velocity
+brt_nse_v_a <- 1 - sum((responses_v_a - xbrt_predictions_v_a)^2) / sum((responses_v_a - mean(responses_v_a))^2)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+brt_nse_wd_k <- 1 - sum((responses_wd_k - xbrt_predictions_wd_k)^2) / sum((responses_wd_k - mean(responses_wd_k))^2)
+
+# shannon index and velocity + wd
+brt_nse_wd_s <- 1 - sum((responses_wd_s - xbrt_predictions_wd_s)^2) / sum((responses_wd_s - mean(responses_wd_s))^2)
+
+# abundance and velocity + wd
+brt_nse_wd_a <- 1 - sum((responses_wd_a - xbrt_predictions_wd_a)^2) / sum((responses_wd_a - mean(responses_wd_a))^2)
+```
+
+### Write Results 
+```{r}
+# write evaluation metrics into df
+results <- data.frame(r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_wd_k, r2_wd_s,
+                             r2_wd_a, brt_r2_v_k, brt_r2_v_s, brt_r2_v_a, brt_r2_wd_k, brt_r2_wd_s, brt_r2_wd_a),
+                      nse = c(nse_v_k, nse_v_s, nse_v_a, nse_wd_k, nse_wd_s,
+                              nse_wd_a, brt_nse_v_k, brt_nse_v_s, brt_nse_v_a, brt_nse_wd_k, brt_nse_wd_s, brt_nse_wd_a),
+                        bias = c(bias_v_k, bias_v_s, bias_v_a, bias_wd_k,
+                               bias_wd_s, bias_wd_a, brt_bias_v_k, brt_bias_v_s, brt_bias_v_a, brt_bias_wd_k, brt_bias_wd_s, brt_bias_wd_a),
+                        rmse = c(rmse_v_k, rmse_v_s, rmse_v_a, rmse_wd_k,
+                                  rmse_wd_s, rmse_wd_a, brt_rmse_v_k, brt_rmse_v_s, brt_rmse_v_a, brt_rmse_wd_k, brt_rmse_wd_s, brt_rmse_wd_a), 
+                         mae = c(mae_v_k, mae_v_s, mae_v_a, mae_wd_k,
+                                 mae_wd_s,mae_wd_a, brt_mae_v_k, brt_mae_v_s, brt_mae_v_a, brt_mae_wd_k, brt_mae_wd_s, brt_mae_wd_a),
+                         predictor = c("velocity", "velocity", "velocity",
+                                       "velocity + wd", "velocity + wd",
+                                       "velocity + wd", "velocity", "velocity", "velocity",
+                                       "velocity + wd", "velocity + wd",
+                                       "velocity + wd"),
+                         index = c("k-index", "shannon index", "abundance",
+                                   "k-index", "shannon index", "abundance", "k-index", "shannon index", "abundance",
+                                   "k-index", "shannon index", "abundance"),
+                      model = c("rf", "rf", "rf", "rf", "rf", "rf", "xgbrt", "xgbrt", "xgbrt", "xgbrt", "xgbrt", "xgbrt"))
+```
  
