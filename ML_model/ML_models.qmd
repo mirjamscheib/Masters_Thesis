@@ -378,56 +378,58 @@ autotuner_rf_wd_a$tuning_result
 
 ## RF Model
 ### Prep Data w/o Coordinates
+x und y coord müssten meines Wissens nach nicht drin sein weil sie nur für das tuning verwendet wurden
+kein grosser Unterschied der Model performance wenn x, y drin oder draussen sind
 ```{r}
 ### TRAINING SETS ###
 # With k_index as response variable & velocity 
 training_v_k <- training_v |>
-  dplyr::select(k_index, velocity)
+  dplyr::select(k_index, velocity, x, y)
 
 # With shannon index as response variable & velocity 
 training_v_s <- training_v |>
-  dplyr::select(shannon, velocity)
+  dplyr::select(shannon, velocity, x, y)
 
 # With abundance as response variable & velocity 
 training_v_a <- training_v |>
-  dplyr::select(abundance, velocity)
+  dplyr::select(abundance, velocity, x, y)
 
 # With k_index as response variable & velocity + wd
 training_wd_k <- training_wd |>
-  dplyr::select(k_index, velocity, wd_cm)
+  dplyr::select(k_index, velocity, wd_cm, x, y)
 
 # With shannon index as response variable & velocity + wd
 training_wd_s <- training_wd |>
-  dplyr::select(shannon, velocity, wd_cm)
+  dplyr::select(shannon, velocity, wd_cm, x, y)
 
 # With abundance index as response variable & velocity + wd
 training_wd_a <- training_wd |>
-  dplyr::select(abundance, velocity, wd_cm)
+  dplyr::select(abundance, velocity, wd_cm, x, y)
 
 ### TEST SETS ###
 # With k_index as response variable & velocity
 test_v_k <- test_v |>
-  dplyr::select(k_index, velocity) 
+  dplyr::select(k_index, velocity, x, y) 
 
 # With shannon index as response variable & velocity
 test_v_s <- test_v |>
-  dplyr::select(shannon, velocity) 
+  dplyr::select(shannon, velocity, x, y) 
 
 # With abundance as response variable & velocity
 test_v_a <- test_v |>
-  dplyr::select(abundance, velocity) 
+  dplyr::select(abundance, velocity, x, y) 
 
 # With k_index as response variable & velocity + wd
 test_wd_k <- test_wd |>
-  dplyr::select(k_index, velocity, wd_cm) 
+  dplyr::select(k_index, velocity, wd_cm, x, y) 
 
 # With shannon index as response variable & velocity + wd
 test_wd_s <- test_wd |>
-  dplyr::select(shannon, velocity, wd_cm) 
+  dplyr::select(shannon, velocity, wd_cm, x, y) 
 
 # With abundance as response variable & velocity + wd
 test_wd_a <- test_wd |>
-  dplyr::select(abundance, velocity, wd_cm) 
+  dplyr::select(abundance, velocity, wd_cm, x, y) 
 ```
 
 ### Make models 
@@ -653,7 +655,12 @@ bias_wd_a <- mean(differences_wd_a)
 ```
 
 ### Nash-Sutcliffe efficiency (NSE) 
+https://en.wikipedia.org/wiki/Nash%E2%80%93Sutcliffe_model_efficiency_coefficient
 spezifisch für hydrologische Modelle 
+
+Range: −∞ to 1
+Meaning: NSE = 1 corresponds to a perfect match and values > 0.5 indicate good model performance
+
 ```{r}
 # Calculate the NSE
 ### ONLY VELOCITY AS PREDICTOR ###
