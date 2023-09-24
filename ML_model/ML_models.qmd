@@ -39,6 +39,7 @@ pkgCheck("pdp")
 pkgCheck("gbm")
 pkgCheck("Metrics")
 pkgCheck("modEvA")
+pkgCheck("tidyr")
 ```
 
 
@@ -503,6 +504,30 @@ ggplot(pdp_plot_wd_v_k, aes(velocity, yhat)) +
 
 
 ### Obs and Pred
+#### From Autotuner 
+```{r}
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+rf_predictions_v_k <- predict(autotuner_rf_v_k, newdata = test_v_k)
+
+# shannon index and velocity
+rf_predictions_v_s <- predict(autotuner_rf_v_s, newdata = test_v_s)
+
+# abundance and velocity
+rf_predictions_v_a <- predict(autotuner_rf_v_a, newdata = test_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+rf_predictions_wd_k <- predict(autotuner_rf_wd_k, newdata = test_wd_k)
+
+# shannon index and velocity + wd
+rf_predictions_wd_s <- predict(autotuner_rf_wd_s, newdata = test_wd_s)
+
+# abundance and velocity + wd
+rf_predictions_wd_a <- predict(autotuner_rf_wd_a, newdata = test_wd_a)
+```
+
+#### From Model 
 ```{r}
 ### ONLY VELOCITY AS PREDICTOR ###
 # k_index and velocity
@@ -988,6 +1013,31 @@ ggplot(pdp_plot_v_k, aes(velocity, yhat)) +
 ```
 
 ### Obs and Pred 
+#### From Autotuner
+```{r}
+# Get predictions from the XGBoost model
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity 
+xbrt_predictions_v_k <- predict(autotuner_xbrt_v_k, newdata = test_v_k)
+
+# shannon index and velocity 
+xbrt_predictions_v_s <- predict(autotuner_xbrt_v_s, newdata = test_v_s)
+
+# abundance and velocity 
+xbrt_predictions_v_a <- predict(autotuner_xbrt_v_a, newdata = test_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+xbrt_predictions_wd_k <- predict(autotuner_xbrt_wd_k, newdata = test_wd_k)
+
+# shannon index and velocity + wd
+xbrt_predictions_wd_s <- predict(autotuner_xbrt_wd_s, newdata = test_wd_s)
+
+# abundance and velocity + wd
+xbrt_predictions_wd_a <- predict(autotuner_xbrt_wd_a, newdata = test_wd_a)
+```
+
+#### From Model
 ```{r}
 # Get predictions from the XGBoost model
 ### ONLY VELOCITY AS PREDICTOR ###
@@ -1137,7 +1187,7 @@ brt_nse_wd_s <- 1 - sum((responses_wd_s - xbrt_predictions_wd_s)^2) / sum((respo
 brt_nse_wd_a <- 1 - sum((responses_wd_a - xbrt_predictions_wd_a)^2) / sum((responses_wd_a - mean(responses_wd_a))^2)
 ```
 
-### Write Results 
+## Write Evaluation Results 
 ```{r}
 # write evaluation metrics into df
 results <- data.frame(r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_wd_k, r2_wd_s,
@@ -1161,3 +1211,597 @@ results <- data.frame(r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_wd_k, r2_wd_s,
                       model = c("rf", "rf", "rf", "rf", "rf", "rf", "xgbrt", "xgbrt", "xgbrt", "xgbrt", "xgbrt", "xgbrt"))
 ```
  
+## Extract 
+### Predict to maps ML models - here RF
+```{r}
+# read rasters containing only velocity 
+#GL1_samp_v <- stack("Pre_Processing/raster_files/GL1_v_3_28.tif")
+#GL2_samp_v <- stack("Pre_Processing/raster_files/GL2_v_3_21.tif")
+#L2_samp_v <- stack("Pre_Processing/raster_files/L2_v_2_40.tif")
+#M1_samp_v <- stack("Pre_Processing/raster_files/M1_v_0_47.tif")
+#S1_samp_v <- stack("Pre_Processing/raster_files/S1_v_2_00.tif")
+#S2_samp_v <- stack("Pre_Processing/raster_files/S2_v_2_00.tif")
+#TH4_samp_v <- stack("Pre_Processing/raster_files/TH4_v_11_45.tif")
+#VR3_samp_v <- stack("Pre_Processing/raster_files/VR3_v_2_90.tif")
+
+# read rasters containing wd and velocity 
+GL1_samp <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+GL2_samp <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+L2_samp <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+M1_samp <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
+S1_samp <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
+S2_samp <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
+TH4_samp <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
+VR3_samp <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+
+# rename raster 
+names(GL1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(GL2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(L2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(M1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(TH4_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(VR3_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+
+# assign coordinate system 
+crs(GL1_samp) <- "EPSG: 2056"
+crs(GL2_samp) <- "EPSG: 2056"
+crs(L2_samp) <- "EPSG: 2056"
+crs(M1_samp) <- "EPSG: 2056"
+crs(S1_samp) <- "EPSG: 2056"
+crs(S2_samp) <- "EPSG: 2056"
+crs(TH4_samp) <- "EPSG: 2056"
+crs(VR3_samp) <- "EPSG: 2056"
+```
+
+### Predict Models to Maps 
+```{r}
+# predict ML model to rasters with velocity and wd 
+### RANDOM FORESTS ###
+# GL1 - all indices with velocity and wd as predictors
+GL1_pred_rf_wd_k <- terra::predict(GL1_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+GL1_pred_rf_wd_s <- terra::predict(GL1_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+GL1_pred_rf_wd_a <- terra::predict(GL1_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# GL1 - all indices with only velocity as predictor
+GL1_pred_rf_v_k <- terra::predict(GL1_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+GL1_pred_rf_v_s <- terra::predict(GL1_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+GL1_pred_rf_v_a <- terra::predict(GL1_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+
+# GL2 - all indices with velocity and wd as predictors 
+GL2_pred_rf_wd_k <- terra::predict(GL2_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+GL2_pred_rf_wd_s <- terra::predict(GL2_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+GL2_pred_rf_wd_a <- terra::predict(GL2_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# GL2 - all indices with only velocity predictor
+GL2_pred_rf_v_k <- terra::predict(GL2_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+GL2_pred_rf_v_s <- terra::predict(GL2_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+GL2_pred_rf_v_a <- terra::predict(GL2_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+
+# L2 - all indices with velocity and wd as predictors 
+L2_pred_rf_wd_k <- terra::predict(L2_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+L2_pred_rf_wd_s <- terra::predict(L2_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+L2_pred_rf_wd_a <- terra::predict(L2_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# L2 - all indices with only velocity as predictor
+L2_pred_rf_v_k <- terra::predict(L2_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+L2_pred_rf_v_s <- terra::predict(L2_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+L2_pred_rf_v_a <- terra::predict(L2_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+
+# M1  - all indices with velocity and wd as predictors 
+M1_pred_rf_wd_k <- terra::predict(M1_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+M1_pred_rf_wd_s <- terra::predict(M1_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+M1_pred_rf_wd_a <- terra::predict(M1_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# M1  - all indices with only velocity as predictor
+M1_pred_rf_v_k <- terra::predict(M1_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+M1_pred_rf_v_s <- terra::predict(M1_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+M1_pred_rf_v_a <- terra::predict(M1_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+
+# S1  - all indices with velocity and wd as predictors 
+S1_pred_rf_wd_k <- terra::predict(S1_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+S1_pred_rf_wd_s <- terra::predict(S1_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+S1_pred_rf_wd_a <- terra::predict(S1_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# S1  - all indices with only velocity as predictor
+S1_pred_rf_v_k <- terra::predict(S1_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+S1_pred_rf_v_s <- terra::predict(S1_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+S1_pred_rf_v_a <- terra::predict(S1_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+
+# S2  - all indices with velocity and wd as predictors 
+S2_pred_rf_wd_k <- terra::predict(S2_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+S2_pred_rf_wd_s <- terra::predict(S2_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+S2_pred_rf_wd_a <- terra::predict(S2_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# S2  - all indices with only velocity as predictor
+S2_pred_rf_v_k <- terra::predict(S2_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+S2_pred_rf_v_s <- terra::predict(S2_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+S2_pred_rf_v_a <- terra::predict(S2_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+
+# TH4  - all indices with velocity and wd as predictors 
+TH4_pred_rf_wd_k <- terra::predict(TH4_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+TH4_pred_rf_wd_s <- terra::predict(TH4_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+TH4_pred_rf_wd_a <- terra::predict(TH4_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# TH4  - all indices with only velocity as predictor
+TH4_pred_rf_v_k <- terra::predict(TH4_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+TH4_pred_rf_v_s <- terra::predict(TH4_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+TH4_pred_rf_v_a <- terra::predict(TH4_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+
+# VR3  - all indices with velocity and wd as predictors 
+VR3_pred_rf_wd_k <- terra::predict(VR3_samp, model = autotuner_rf_wd_k, fun = predict, index = 2)
+VR3_pred_rf_wd_s <- terra::predict(VR3_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+VR3_pred_rf_wd_a <- terra::predict(VR3_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+
+# VR3  - all indices with only velocity as predictor
+VR3_pred_rf_v_k <- terra::predict(VR3_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+VR3_pred_rf_v_s <- terra::predict(VR3_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+VR3_pred_rf_v_a <- terra::predict(VR3_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+```
+
+
+```{r}
+### BOOSTED REGRESSION TREE ###
+# GL1 - all indices with velocity and wd as predictors
+GL1_pred_brt_wd_k <- terra::predict(GL1_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+GL1_pred_brt_wd_s <- terra::predict(GL1_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+GL1_pred_brt_wd_a <- terra::predict(GL1_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# GL1 - all indices with only velocity as predictor
+GL1_pred_brt_v_k <- terra::predict(GL1_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+GL1_pred_brt_v_s <- terra::predict(GL1_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+GL1_pred_brt_v_a <- terra::predict(GL1_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+
+# GL2 - all indices with velocity and wd as predictors
+GL2_pred_brt_wd_k <- terra::predict(GL2_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+GL2_pred_brt_wd_s <- terra::predict(GL2_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+GL2_pred_brt_wd_a <- terra::predict(GL2_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# GL2 - all indices with only velocity as predictor
+GL2_pred_brt_v_k <- terra::predict(GL2_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+GL2_pred_brt_v_s <- terra::predict(GL2_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+GL2_pred_brt_v_a <- terra::predict(GL2_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+
+# L2 - all indices with velocity and wd as predictors
+L2_pred_brt_wd_k <- terra::predict(L2_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+L2_pred_brt_wd_s <- terra::predict(L2_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+L2_pred_brt_wd_a <- terra::predict(L2_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# L2 - all indices with only velocity as predictor
+L2_pred_brt_v_k <- terra::predict(L2_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+L2_pred_brt_v_s <- terra::predict(L2_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+L2_pred_brt_v_a <- terra::predict(L2_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+
+# M1 - all indices with velocity and wd as predictors
+M1_pred_brt_wd_k <- terra::predict(M1_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+M1_pred_brt_wd_s <- terra::predict(M1_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+M1_pred_brt_wd_a <- terra::predict(M1_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# M1 - all indices with only velocity as predictor
+M1_pred_brt_v_k <- terra::predict(M1_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+M1_pred_brt_v_s <- terra::predict(M1_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+M1_pred_brt_v_a <- terra::predict(M1_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+
+# S1 - all indices with velocity and wd as predictors
+S1_pred_brt_wd_k <- terra::predict(S1_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+S1_pred_brt_wd_s <- terra::predict(S1_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+S1_pred_brt_wd_a <- terra::predict(S1_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# S1 - all indices with only velocity as predictor
+S1_pred_brt_v_k <- terra::predict(S1_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+S1_pred_brt_v_s <- terra::predict(S1_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+S1_pred_brt_v_a <- terra::predict(S1_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+
+# S2 - all indices with velocity and wd as predictors
+S2_pred_brt_wd_k <- terra::predict(S2_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+S2_pred_brt_wd_s <- terra::predict(S2_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+S2_pred_brt_wd_a <- terra::predict(S2_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# S2 - all indices with only velocity as predictor
+S2_pred_brt_v_k <- terra::predict(S2_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+S2_pred_brt_v_s <- terra::predict(S2_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+S2_pred_brt_v_a <- terra::predict(S2_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+
+# TH4 - all indices with velocity and wd as predictors
+TH4_pred_brt_wd_k <- terra::predict(TH4_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+TH4_pred_brt_wd_s <- terra::predict(TH4_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+TH4_pred_brt_wd_a <- terra::predict(TH4_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# TH4 - all indices with only velocity as predictor
+TH4_pred_brt_v_k <- terra::predict(TH4_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+TH4_pred_brt_v_s <- terra::predict(TH4_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+TH4_pred_brt_v_a <- terra::predict(TH4_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+
+# VR3 - all indices with velocity and wd as predictors
+VR3_pred_brt_wd_k <- terra::predict(VR3_samp, model = autotuner_xbrt_wd_k, fun = predict, index = 2)
+VR3_pred_brt_wd_s <- terra::predict(VR3_samp, model = autotuner_xbrt_wd_s, fun = predict, index = 2)
+VR3_pred_brt_wd_a <- terra::predict(VR3_samp, model = autotuner_xbrt_wd_a, fun = predict, index = 2)
+
+# VR3 - all indices with only velocity and as predictor
+VR3_pred_brt_v_k <- terra::predict(VR3_samp, model = autotuner_xbrt_v_k, fun = predict, index = "velocity")
+VR3_pred_brt_v_s <- terra::predict(VR3_samp, model = autotuner_xbrt_v_s, fun = predict, index = "velocity")
+VR3_pred_brt_v_a <- terra::predict(VR3_samp, model = autotuner_xbrt_v_a, fun = predict, index = "velocity")
+```
+
+```{r}
+# read all raster results (one time flow velocity classes and one time for habitat suitability)
+# prep extraction data 
+## GL1
+coord_GL1 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(x, y) 
+
+GL1 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "GL1")
+
+## GL2
+coord_GL2 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "GL2") |>
+  dplyr::select(x, y) 
+
+GL2 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "GL2")
+
+## L2
+coord_L2 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "L2") |>
+  dplyr::select(x, y) 
+
+L2 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "L2")
+
+## M1
+coord_M1 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "M1") |>
+  dplyr::select(x, y) 
+
+M1 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "M1")
+
+## S1
+coord_S1 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "S1") |>
+  dplyr::select(x, y) 
+
+S1 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "S1")
+
+## S2
+coord_S2 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "S2") |>
+  dplyr::select(x, y) 
+
+S2 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "S2")
+
+## TH4
+coord_TH4 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "TH4") |>
+  dplyr::select(x, y) 
+
+TH4 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "TH4")
+
+## VR3
+coord_VR3 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(x, y) 
+
+VR3 <- test_wd |>
+  subset(Reach_Untersuchungsstelle == "VR3")
+```
+
+### Extract Results
+```{r}
+# extract raster information for regression analysis later
+# GL1 
+# random forest 
+regr_rf_data_GL1_wd_k <- extract(GL1_pred_rf_wd_k, coord_GL1) 
+regr_rf_data_GL1_wd_s <- extract(GL1_pred_rf_wd_s, coord_GL1) 
+regr_rf_data_GL1_wd_a <- extract(GL1_pred_rf_wd_a, coord_GL1) 
+
+regr_rf_data_GL1_v_k <- extract(GL1_pred_rf_v_k, coord_GL1) 
+regr_rf_data_GL1_v_s <- extract(GL1_pred_rf_v_s, coord_GL1) 
+regr_rf_data_GL1_v_a <- extract(GL1_pred_rf_v_a, coord_GL1) 
+
+# boosted regression tree
+regr_brt_data_GL1_wd_k <- extract(GL1_pred_brt_wd_k, coord_GL1) 
+regr_brt_data_GL1_wd_s <- extract(GL1_pred_brt_wd_s, coord_GL1) 
+regr_brt_data_GL1_wd_a <- extract(GL1_pred_brt_wd_a, coord_GL1) 
+
+regr_brt_data_GL1_v_k <- extract(GL1_pred_brt_v_k, coord_GL1) 
+regr_brt_data_GL1_v_s <- extract(GL1_pred_brt_v_s, coord_GL1) 
+regr_brt_data_GL1_v_a <- extract(GL1_pred_brt_v_a, coord_GL1)
+
+# GL2
+# random forest 
+regr_rf_data_GL2_wd_k <- extract(GL2_pred_rf_wd_k, coord_GL2) 
+regr_rf_data_GL2_wd_s <- extract(GL2_pred_rf_wd_s, coord_GL2) 
+regr_rf_data_GL2_wd_a <- extract(GL2_pred_rf_wd_a, coord_GL2) 
+
+regr_rf_data_GL2_v_k <- extract(GL2_pred_rf_v_k, coord_GL2) 
+regr_rf_data_GL2_v_s <- extract(GL2_pred_rf_v_s, coord_GL2) 
+regr_rf_data_GL2_v_a <- extract(GL2_pred_rf_v_a, coord_GL2)
+
+# boosted regression tree
+regr_brt_data_GL2_wd_k <- extract(GL2_pred_brt_wd_k, coord_GL2) 
+regr_brt_data_GL2_wd_s <- extract(GL2_pred_brt_wd_s, coord_GL2) 
+regr_brt_data_GL2_wd_a <- extract(GL2_pred_brt_wd_a, coord_GL2) 
+
+regr_brt_data_GL2_v_k <- extract(GL2_pred_brt_v_k, coord_GL2) 
+regr_brt_data_GL2_v_s <- extract(GL2_pred_brt_v_s, coord_GL2) 
+regr_brt_data_GL2_v_a <- extract(GL2_pred_brt_v_a, coord_GL2)
+
+# L2
+# random forest 
+regr_rf_data_L2_wd_k <- extract(L2_pred_rf_wd_k, coord_L2) 
+regr_rf_data_L2_wd_s <- extract(L2_pred_rf_wd_s, coord_L2) 
+regr_rf_data_L2_wd_a <- extract(L2_pred_rf_wd_a, coord_L2) 
+
+regr_rf_data_L2_v_k <- extract(L2_pred_rf_v_k, coord_L2) 
+regr_rf_data_L2_v_s <- extract(L2_pred_rf_v_s, coord_L2) 
+regr_rf_data_L2_v_a <- extract(L2_pred_rf_v_a, coord_L2)
+
+# boosted regression tree
+regr_brt_data_L2_wd_k <- extract(L2_pred_brt_wd_k, coord_L2) 
+regr_brt_data_L2_wd_s <- extract(L2_pred_brt_wd_s, coord_L2) 
+regr_brt_data_L2_wd_a <- extract(L2_pred_brt_wd_a, coord_L2) 
+
+regr_brt_data_L2_v_k <- extract(L2_pred_brt_v_k, coord_L2) 
+regr_brt_data_L2_v_s <- extract(L2_pred_brt_v_s, coord_L2) 
+regr_brt_data_L2_v_a <- extract(L2_pred_brt_v_a, coord_L2)
+
+# M1
+# random forest 
+regr_rf_data_M1_wd_k <- extract(M1_pred_rf_wd_k, coord_M1) 
+regr_rf_data_M1_wd_s <- extract(M1_pred_rf_wd_s, coord_M1) 
+regr_rf_data_M1_wd_a <- extract(M1_pred_rf_wd_a, coord_M1) 
+
+regr_rf_data_M1_v_k <- extract(M1_pred_rf_v_k, coord_M1) 
+regr_rf_data_M1_v_s <- extract(M1_pred_rf_v_s, coord_M1) 
+regr_rf_data_M1_v_a <- extract(M1_pred_rf_v_a, coord_M1)
+
+# boosted regression tree
+regr_brt_data_M1_wd_k <- extract(M1_pred_brt_wd_k, coord_M1) 
+regr_brt_data_M1_wd_s <- extract(M1_pred_brt_wd_s, coord_M1) 
+regr_brt_data_M1_wd_a <- extract(M1_pred_brt_wd_a, coord_M1) 
+
+regr_brt_data_M1_v_k <- extract(M1_pred_brt_v_k, coord_M1) 
+regr_brt_data_M1_v_s <- extract(M1_pred_brt_v_s, coord_M1) 
+regr_brt_data_M1_v_a <- extract(M1_pred_brt_v_a, coord_M1)
+
+# S1
+# random forest 
+regr_rf_data_S1_wd_k <- extract(S1_pred_rf_wd_k, coord_S1) 
+regr_rf_data_S1_wd_s <- extract(S1_pred_rf_wd_s, coord_S1) 
+regr_rf_data_S1_wd_a <- extract(S1_pred_rf_wd_a, coord_S1) 
+
+regr_rf_data_S1_v_k <- extract(S1_pred_rf_v_k, coord_S1) 
+regr_rf_data_S1_v_s <- extract(S1_pred_rf_v_s, coord_S1) 
+regr_rf_data_S1_v_a <- extract(S1_pred_rf_v_a, coord_S1)
+
+# boosted regression tree
+regr_brt_data_S1_wd_k <- extract(S1_pred_brt_wd_k, coord_S1) 
+regr_brt_data_S1_wd_s <- extract(S1_pred_brt_wd_s, coord_S1) 
+regr_brt_data_S1_wd_a <- extract(S1_pred_brt_wd_a, coord_S1) 
+
+regr_brt_data_S1_v_k <- extract(S1_pred_brt_v_k, coord_S1) 
+regr_brt_data_S1_v_s <- extract(S1_pred_brt_v_s, coord_S1) 
+regr_brt_data_S1_v_a <- extract(S1_pred_brt_v_a, coord_S1)
+
+# S2
+# random forest 
+regr_rf_data_S2_wd_k <- extract(S2_pred_rf_wd_k, coord_S2) 
+regr_rf_data_S2_wd_s <- extract(S2_pred_rf_wd_s, coord_S2) 
+regr_rf_data_S2_wd_a <- extract(S2_pred_rf_wd_a, coord_S2) 
+
+regr_rf_data_S2_v_k <- extract(S2_pred_rf_v_k, coord_S2) 
+regr_rf_data_S2_v_s <- extract(S2_pred_rf_v_s, coord_S2) 
+regr_rf_data_S2_v_a <- extract(S2_pred_rf_v_a, coord_S2)
+
+# boosted regression tree
+regr_brt_data_S2_wd_k <- extract(S2_pred_brt_wd_k, coord_S2) 
+regr_brt_data_S2_wd_s <- extract(S2_pred_brt_wd_s, coord_S2) 
+regr_brt_data_S2_wd_a <- extract(S2_pred_brt_wd_a, coord_S2) 
+
+regr_brt_data_S2_v_k <- extract(S2_pred_brt_v_k, coord_S2) 
+regr_brt_data_S2_v_s <- extract(S2_pred_brt_v_s, coord_S2) 
+regr_brt_data_S2_v_a <- extract(S2_pred_brt_v_a, coord_S2)
+
+# TH4
+# random forest 
+regr_rf_data_TH4_wd_k <- extract(TH4_pred_rf_wd_k, coord_TH4) 
+regr_rf_data_TH4_wd_s <- extract(TH4_pred_rf_wd_s, coord_TH4) 
+regr_rf_data_TH4_wd_a <- extract(TH4_pred_rf_wd_a, coord_TH4) 
+
+regr_rf_data_TH4_v_k <- extract(TH4_pred_rf_v_k, coord_TH4) 
+regr_rf_data_TH4_v_s <- extract(TH4_pred_rf_v_s, coord_TH4) 
+regr_rf_data_TH4_v_a <- extract(TH4_pred_rf_v_a, coord_TH4)
+
+# boosted regression tree
+regr_brt_data_TH4_wd_k <- extract(TH4_pred_brt_wd_k, coord_TH4) 
+regr_brt_data_TH4_wd_s <- extract(TH4_pred_brt_wd_s, coord_TH4) 
+regr_brt_data_TH4_wd_a <- extract(TH4_pred_brt_wd_a, coord_TH4) 
+
+regr_brt_data_TH4_v_k <- extract(TH4_pred_brt_v_k, coord_TH4) 
+regr_brt_data_TH4_v_s <- extract(TH4_pred_brt_v_s, coord_TH4) 
+regr_brt_data_TH4_v_a <- extract(TH4_pred_brt_v_a, coord_TH4)
+
+# VR3
+# random forest 
+regr_rf_data_VR3_wd_k <- extract(VR3_pred_rf_wd_k, coord_VR3) 
+regr_rf_data_VR3_wd_s <- extract(VR3_pred_rf_wd_s, coord_VR3) 
+regr_rf_data_VR3_wd_a <- extract(VR3_pred_rf_wd_a, coord_VR3) 
+
+regr_rf_data_VR3_v_k <- extract(VR3_pred_rf_v_k, coord_VR3) 
+regr_rf_data_VR3_v_s <- extract(VR3_pred_rf_v_s, coord_VR3) 
+regr_rf_data_VR3_v_a <- extract(VR3_pred_rf_v_a, coord_VR3)
+
+# boosted regression tree
+regr_brt_data_VR3_wd_k <- extract(VR3_pred_brt_wd_k, coord_VR3) 
+regr_brt_data_VR3_wd_s <- extract(VR3_pred_brt_wd_s, coord_VR3) 
+regr_brt_data_VR3_wd_a <- extract(VR3_pred_brt_wd_a, coord_VR3) 
+
+regr_brt_data_VR3_v_k <- extract(VR3_pred_brt_v_k, coord_VR3) 
+regr_brt_data_VR3_v_s <- extract(VR3_pred_brt_v_s, coord_VR3) 
+regr_brt_data_VR3_v_a <- extract(VR3_pred_brt_v_a, coord_VR3)
+```
+
+### Combine into DF
+```{r}
+# combine all results into dataframe
+# GL1
+data_GL1 <- cbind(regr_rf_data_GL1_wd_k, regr_rf_data_GL1_wd_s, regr_rf_data_GL1_wd_a, regr_rf_data_GL1_v_k, regr_rf_data_GL1_v_s, regr_rf_data_GL1_v_a, regr_brt_data_GL1_wd_k, regr_brt_data_GL1_wd_s, regr_brt_data_GL1_wd_a, regr_brt_data_GL1_v_k, regr_brt_data_GL1_v_s, regr_brt_data_GL1_v_a, GL1) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_GL1_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_GL1_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_GL1_wd_a,
+         rf_pred_k_index_v = regr_rf_data_GL1_v_k,
+         rf_pred_shannon_v = regr_rf_data_GL1_v_s,
+         rf_pred_abundance_v = regr_rf_data_GL1_v_a,
+         brt_pred_k_index_2 = regr_brt_data_GL1_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_GL1_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_GL1_wd_a,
+         brt_pred_k_index_v = regr_brt_data_GL1_v_k,
+         brt_pred_shannon_v = regr_brt_data_GL1_v_s,
+         brt_pred_abundance_v = regr_brt_data_GL1_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+
+# GL2
+data_GL2 <- cbind(regr_rf_data_GL2_wd_k, regr_rf_data_GL2_wd_s, regr_rf_data_GL2_wd_a, regr_rf_data_GL2_v_k, regr_rf_data_GL2_v_s, regr_rf_data_GL2_v_a, regr_brt_data_GL2_wd_k, regr_brt_data_GL2_wd_s, regr_brt_data_GL2_wd_a, regr_brt_data_GL2_v_k, regr_brt_data_GL2_v_s, regr_brt_data_GL2_v_a, GL2) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_GL2_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_GL2_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_GL2_wd_a,
+         rf_pred_k_index_v = regr_rf_data_GL2_v_k,
+         rf_pred_shannon_v = regr_rf_data_GL2_v_s,
+         rf_pred_abundance_v = regr_rf_data_GL2_v_a,
+         brt_pred_k_index_2 = regr_brt_data_GL2_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_GL2_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_GL2_wd_a,
+         brt_pred_k_index_v = regr_brt_data_GL2_v_k,
+         brt_pred_shannon_v = regr_brt_data_GL2_v_s,
+         brt_pred_abundance_v = regr_brt_data_GL2_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+
+# L2
+data_L2 <- cbind(regr_rf_data_L2_wd_k, regr_rf_data_L2_wd_s, regr_rf_data_L2_wd_a, regr_rf_data_L2_v_k, regr_rf_data_L2_v_s, regr_rf_data_L2_v_a, regr_brt_data_L2_wd_k, regr_brt_data_L2_wd_s, regr_brt_data_L2_wd_a, regr_brt_data_L2_v_k, regr_brt_data_L2_v_s, regr_brt_data_L2_v_a, L2) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_L2_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_L2_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_L2_wd_a,
+         rf_pred_k_index_v = regr_rf_data_L2_v_k,
+         rf_pred_shannon_v = regr_rf_data_L2_v_s,
+         rf_pred_abundance_v = regr_rf_data_L2_v_a,
+         brt_pred_k_index_2 = regr_brt_data_L2_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_L2_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_L2_wd_a,
+         brt_pred_k_index_v = regr_brt_data_L2_v_k,
+         brt_pred_shannon_v = regr_brt_data_L2_v_s,
+         brt_pred_abundance_v = regr_brt_data_L2_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+
+# M1
+data_M1 <- cbind(regr_rf_data_M1_wd_k, regr_rf_data_M1_wd_s, regr_rf_data_M1_wd_a, regr_rf_data_M1_v_k, regr_rf_data_M1_v_s, regr_rf_data_M1_v_a, regr_brt_data_M1_wd_k, regr_brt_data_M1_wd_s, regr_brt_data_M1_wd_a, regr_brt_data_M1_v_k, regr_brt_data_M1_v_s, regr_brt_data_M1_v_a, M1) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_M1_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_M1_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_M1_wd_a,
+         rf_pred_k_index_v = regr_rf_data_M1_v_k,
+         rf_pred_shannon_v = regr_rf_data_M1_v_s,
+         rf_pred_abundance_v = regr_rf_data_M1_v_a,
+         brt_pred_k_index_2 = regr_brt_data_M1_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_M1_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_M1_wd_a,
+         brt_pred_k_index_v = regr_brt_data_M1_v_k,
+         brt_pred_shannon_v = regr_brt_data_M1_v_s,
+         brt_pred_abundance_v = regr_brt_data_M1_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+
+# S1
+data_S1 <- cbind(regr_rf_data_S1_wd_k, regr_rf_data_S1_wd_s, regr_rf_data_S1_wd_a, regr_rf_data_S1_v_k, regr_rf_data_S1_v_s, regr_rf_data_S1_v_a, regr_brt_data_S1_wd_k, regr_brt_data_S1_wd_s, regr_brt_data_S1_wd_a, regr_brt_data_S1_v_k, regr_brt_data_S1_v_s, regr_brt_data_S1_v_a, S1) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_S1_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_S1_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_S1_wd_a,
+         rf_pred_k_index_v = regr_rf_data_S1_v_k,
+         rf_pred_shannon_v = regr_rf_data_S1_v_s,
+         rf_pred_abundance_v = regr_rf_data_S1_v_a,
+         brt_pred_k_index_2 = regr_brt_data_S1_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_S1_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_S1_wd_a,
+         brt_pred_k_index_v = regr_brt_data_S1_v_k,
+         brt_pred_shannon_v = regr_brt_data_S1_v_s,
+         brt_pred_abundance_v = regr_brt_data_S1_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+
+# S2
+data_S2 <- cbind(regr_rf_data_S2_wd_k, regr_rf_data_S2_wd_s, regr_rf_data_S2_wd_a, regr_rf_data_S2_v_k, regr_rf_data_S2_v_s, regr_rf_data_S2_v_a, regr_brt_data_S2_wd_k, regr_brt_data_S2_wd_s, regr_brt_data_S2_wd_a, regr_brt_data_S2_v_k, regr_brt_data_S2_v_s, regr_brt_data_S2_v_a, S2) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_S2_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_S2_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_S2_wd_a,
+         rf_pred_k_index_v = regr_rf_data_S2_v_k,
+         rf_pred_shannon_v = regr_rf_data_S2_v_s,
+         rf_pred_abundance_v = regr_rf_data_S2_v_a,
+         brt_pred_k_index_2 = regr_brt_data_S2_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_S2_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_S2_wd_a,
+         brt_pred_k_index_v = regr_brt_data_S2_v_k,
+         brt_pred_shannon_v = regr_brt_data_S2_v_s,
+         brt_pred_abundance_v = regr_brt_data_S2_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+
+# TH4
+data_TH4 <- cbind(regr_rf_data_TH4_wd_k, regr_rf_data_TH4_wd_s, regr_rf_data_TH4_wd_a, regr_rf_data_TH4_v_k, regr_rf_data_TH4_v_s, regr_rf_data_TH4_v_a, regr_brt_data_TH4_wd_k, regr_brt_data_TH4_wd_s, regr_brt_data_TH4_wd_a, regr_brt_data_TH4_v_k, regr_brt_data_TH4_v_s, regr_brt_data_TH4_v_a, TH4) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_TH4_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_TH4_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_TH4_wd_a,
+         rf_pred_k_index_v = regr_rf_data_TH4_v_k,
+         rf_pred_shannon_v = regr_rf_data_TH4_v_s,
+         rf_pred_abundance_v = regr_rf_data_TH4_v_a,
+         brt_pred_k_index_2 = regr_brt_data_TH4_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_TH4_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_TH4_wd_a,
+         brt_pred_k_index_v = regr_brt_data_TH4_v_k,
+         brt_pred_shannon_v = regr_brt_data_TH4_v_s,
+         brt_pred_abundance_v = regr_brt_data_TH4_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+
+# VR3
+data_VR3 <- cbind(regr_rf_data_VR3_wd_k, regr_rf_data_VR3_wd_s, regr_rf_data_VR3_wd_a, regr_rf_data_VR3_v_k, regr_rf_data_VR3_v_s, regr_rf_data_VR3_v_a, regr_brt_data_VR3_wd_k, regr_brt_data_VR3_wd_s, regr_brt_data_VR3_wd_a, regr_brt_data_VR3_v_k, regr_brt_data_VR3_v_s, regr_brt_data_VR3_v_a, VR3) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_VR3_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_VR3_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_VR3_wd_a,
+         rf_pred_k_index_v = regr_rf_data_VR3_v_k,
+         rf_pred_shannon_v = regr_rf_data_VR3_v_s,
+         rf_pred_abundance_v = regr_rf_data_VR3_v_a,
+         brt_pred_k_index_2 = regr_brt_data_VR3_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_VR3_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_VR3_wd_a,
+         brt_pred_k_index_v = regr_brt_data_VR3_v_k,
+         brt_pred_shannon_v = regr_brt_data_VR3_v_s,
+         brt_pred_abundance_v = regr_brt_data_VR3_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance) 
+```
+
+### Results from Extraction 
+```{r}
+# bind results together 
+# data_TH4 fehlt noch
+regr_analysis <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, data_TH4, data_VR3)
+
+# export to .csv file
+write.csv(regr_analysis, "Stat_Analysis/ml_regr_analysis.csv", row.names = FALSE)
+```
