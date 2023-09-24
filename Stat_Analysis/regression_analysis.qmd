@@ -3,34 +3,103 @@ title: "Regression_Analysis"
 format: html
 ---
 
-## Predict to maps ML models - here RF
+# Libraries 
 ```{r}
-# read rasters
-GL1_3_28 <- stack("Pre_Processing/rasters_stacked/GL1_22_00.grd")
+#clear R environment
+rm(list = ls())
 
-new_names <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(GL1_3_28) <- new_names
-crs(GL1_3_28) <- "EPSG: 2056"
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
 
-pred = terra::predict(GL1_3_28, model = autotuner_rf_wd_k, fun = predict, index = 2)
-
-plot(pred)
+pkgCheck("sf")
+pkgCheck("terra")
+pkgCheck("dplyr")
+pkgCheck("readr")
+pkgCheck("sp")
+pkgCheck("raster")
+pkgCheck("Metrics")
+pkgCheck("tidyr")
 ```
 
 vlt. zwischenschritt einbauen, Resultate vergleichen nur mit gemessenen wd und simulierten wd ein ML modell (welche Fehler macht das Modell, weil wir ihm nur simuliere Werte zum predicten geben anstatt)
 
 Regressionsanalyse wd, v zwischen gemessen und simuliert, ich muss schon quantifizieren wie die abweichung zwischen input daten und simulierten daten sind. 
 
-## Predict to maps 
+# Regression v / wd obs vs. measured
+## Load rasters
+Ersetze Raster durch Raster vom MZB Sampling Tag 
 ```{r}
-# read rasters
-GL1_22_00 <- stack("Pre_Processing/rasters_stacked/GL1_22_00.grd")
+# read rasters containing wd and velocity 
+GL1_samp <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+GL2_samp <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+L2_samp <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+M1_samp <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
+S1_samp <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
+S2_samp <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
+TH4_samp <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
+VR3_samp <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
 
-new_names <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(GL1_22_00) <- new_names
-crs(GL1_22_00) <- "EPSG: 2056"
+# rename raster 
+names(GL1_samp) <- c("hydr_velocity", "hydr_wd_cm")  # Replace with your desired new names
+names(GL2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(L2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(M1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(TH4_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(VR3_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
 
-pred = terra::predict(GL1_22_00, model = autotuner_xbrt_wd, fun = predict, index = 2)
-
-plot(pred)
+# assign coordinate system 
+crs(GL1_samp) <- "EPSG: 2056"
+crs(GL2_samp) <- "EPSG: 2056"
+crs(L2_samp) <- "EPSG: 2056"
+crs(M1_samp) <- "EPSG: 2056"
+crs(S1_samp) <- "EPSG: 2056"
+crs(S2_samp) <- "EPSG: 2056"
+crs(TH4_samp) <- "EPSG: 2056"
+crs(VR3_samp) <- "EPSG: 2056"
 ```
+
+## Extract v / wd Information 
+```{r}
+# load data 
+data_extr <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
+
+# extract and prep df containing x, y, observed velocity + observed wd
+extract_var <- data_extr |>
+  filter(Reach_Untersuchungsstelle == "GL1" |
+         Reach_Untersuchungsstelle == "GL2" |       
+         Reach_Untersuchungsstelle == "L2" |
+         Reach_Untersuchungsstelle == "M1" |
+         Reach_Untersuchungsstelle == "S1" |
+         Reach_Untersuchungsstelle == "S2" |
+         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(x, y, wd_cm, velocity)
+
+data_GL1 <- extract(GL1_samp, extract_var)
+```
+
+# ML Regression 
+```{r}
+# load data
+ml_regr <- read_delim("Stat_Analysis/ml_regr_analysis.csv") 
+
+# regr. analysis
+ggplot(ml_regr, aes(obs_shannon, rf_pred_shannon_v, col = Reach_Untersuchungsstelle)) +
+  geom_point() +
+  geom_line()
+```
+
+# HSC Regression 
+```{r}
+
+```
+

@@ -1447,36 +1447,36 @@ univariate <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_univariate.csv"
 ```{r}
 # read all raster results (one time flow velocity classes and one time for habitat suitability)
 # NOTE: CHANGE TO RASTERS WHICH REPRESENT DISCHARGE AT SAMPLING DAY
-GL1_class <- raster("results_foen/GL1_foen_class_3_28.tif")
-GL1_HS <- raster("results_foen/GL1_foen_3_28.tif")
+GL1_class <- raster("HSC_model/results_foen/GL1_foen_class_3_28.tif")
+GL1_HS <- raster("HSC_model/results_foen/GL1_foen_3_28.tif")
 stack_GL1 <- stack(GL1_class, GL1_HS)
 
-GL2_class <- raster("results_foen/GL2_foen_class_3_21.tif")
-GL2_HS <- raster("results_foen/GL2_foen_3_21.tif")
+GL2_class <- raster("HSC_model/results_foen/GL2_foen_class_3_21.tif")
+GL2_HS <- raster("HSC_model/results_foen/GL2_foen_3_21.tif")
 stack_GL2 <- stack(GL2_class, GL2_HS)
 
-L2_class <- raster("results_foen/L2_foen_class_2_40.tif")
-L2_HS <- raster("results_foen/L2_foen_2_40.tif")
+L2_class <- raster("HSC_model/results_foen/L2_foen_class_2_40.tif")
+L2_HS <- raster("HSC_model/results_foen/L2_foen_2_40.tif")
 stack_L2 <- stack(L2_class, L2_HS)
 
-M1_class <- raster("results_foen/M1_foen_class_0_47.tif")
-M1_HS <- raster("results_foen/M1_foen_0_47.tif")
+M1_class <- raster("HSC_model/results_foen/M1_foen_class_0_47.tif")
+M1_HS <- raster("HSC_model/results_foen/M1_foen_0_47.tif")
 stack_M1 <- stack(M1_class, M1_HS)
 
-S1_class <- raster("results_foen/S1_foen_class_2_00.tif")
-S1_HS <- raster("results_foen/S1_foen_2_00.tif")
+S1_class <- raster("HSC_model/results_foen/S1_foen_class_2_00.tif")
+S1_HS <- raster("HSC_model/results_foen/S1_foen_2_00.tif")
 stack_S1 <- stack(S1_class, S1_HS)
 
-S2_class <- raster("results_foen/S2_foen_class_2_00.tif")
-S2_HS <- raster("results_foen/S2_foen_2_00.tif")
+S2_class <- raster("HSC_model/results_foen/S2_foen_class_2_00.tif")
+S2_HS <- raster("HSC_model/results_foen/S2_foen_2_00.tif")
 stack_S2 <- stack(S2_class, S2_HS)
 
-TH4_class <- raster("results_foen/TH4_foen_class_11_45.tif")
-TH4_HS <- raster("results_foen/TH4_foen_11_45.tif")
+TH4_class <- raster("HSC_model/results_foen/TH4_foen_class_11_45.tif")
+TH4_HS <- raster("HSC_model/results_foen/TH4_foen_11_45.tif")
 stack_TH4 <- stack(TH4_class, TH4_HS)
 
-VR3_class <- raster("results_foen/VR3_foen_class_2_90.tif")
-VR3_HS <- raster("results_foen/VR3_foen_2_90.tif")
+VR3_class <- raster("HSC_model/results_foen/VR3_foen_class_2_90.tif")
+VR3_HS <- raster("HSC_model/results_foen/VR3_foen_2_90.tif")
 stack_VR3 <- stack(VR3_class, VR3_HS)
 
 # prep extraction data 
@@ -1596,4 +1596,7 @@ data_VR3 <- cbind(regr_data_VR3, univariate_VR3) |>
 
 # bind results together 
 results <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, data_TH4, data_VR3)
+
+# export results to .csv dataframe
+write.csv(results, "Stat_Analysis/hsc_regr_analysis.csv", row.names = FALSE)
 ```

@@ -1213,17 +1213,8 @@ results <- data.frame(r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_wd_k, r2_wd_s,
  
 ## Extract 
 ### Predict to maps ML models - here RF
+Ersetze Raster durch Raster vom MZB Sampling Tag 
 ```{r}
-# read rasters containing only velocity 
-#GL1_samp_v <- stack("Pre_Processing/raster_files/GL1_v_3_28.tif")
-#GL2_samp_v <- stack("Pre_Processing/raster_files/GL2_v_3_21.tif")
-#L2_samp_v <- stack("Pre_Processing/raster_files/L2_v_2_40.tif")
-#M1_samp_v <- stack("Pre_Processing/raster_files/M1_v_0_47.tif")
-#S1_samp_v <- stack("Pre_Processing/raster_files/S1_v_2_00.tif")
-#S2_samp_v <- stack("Pre_Processing/raster_files/S2_v_2_00.tif")
-#TH4_samp_v <- stack("Pre_Processing/raster_files/TH4_v_11_45.tif")
-#VR3_samp_v <- stack("Pre_Processing/raster_files/VR3_v_2_90.tif")
-
 # read rasters containing wd and velocity 
 GL1_samp <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
 GL2_samp <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
