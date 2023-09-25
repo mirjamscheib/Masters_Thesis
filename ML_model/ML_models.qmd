@@ -43,13 +43,17 @@ pkgCheck("tidyr")
 ```
 
 
-# Load data 
+# Load & prepare data 
+All predictors: date & time noch richtig formatieren und ox_sat
 ```{r}
 # Load data containing only v, and v + wd explanatory variables
 data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") 
 data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
 data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") 
-data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") 
+data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
+  mutate(date = as.POSIXct(date, format = "%d.%m.%Y",tz = "UTC"),
+         time = as.POSIXct(time, format = "%H:%M", tz = "UTC"))
+
 
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
 # training set containing velocity 
@@ -85,6 +89,17 @@ training_sampling <- data_sampling |>
          Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
          Reach_Untersuchungsstelle != "VR3")
 
+# training set containing all env. variables measured at each sampling location and overall river section 
+training_section <- data_section |>
+  filter(Reach_Untersuchungsstelle != "GL1",
+         Reach_Untersuchungsstelle != "GL2",         
+         Reach_Untersuchungsstelle != "L2",
+         Reach_Untersuchungsstelle != "M1",
+         Reach_Untersuchungsstelle != "S1",
+         Reach_Untersuchungsstelle != "S2",
+         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "VR3")
+
 # w/ hydr. models 
 # test set containing velocity 
 test_v <- data_v |>
@@ -108,8 +123,34 @@ test_wd <- data_wd |>
          Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
          Reach_Untersuchungsstelle == "VR3")
 
+# test set containing all env. variables measured at each sampling location 
+test_sampling <- data_sampling |>
+  filter(Reach_Untersuchungsstelle == "GL1" |
+         Reach_Untersuchungsstelle == "GL2" |       
+         Reach_Untersuchungsstelle == "L2" |
+         Reach_Untersuchungsstelle == "M1" |
+         Reach_Untersuchungsstelle == "S1" |
+         Reach_Untersuchungsstelle == "S2" |
+         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "VR3")
+
+# test set containing all env. variables measured at each sampling location and overall river section 
+test_section <- data_section |>
+  filter(Reach_Untersuchungsstelle == "GL1" |
+         Reach_Untersuchungsstelle == "GL2" |       
+         Reach_Untersuchungsstelle == "L2" |
+         Reach_Untersuchungsstelle == "M1" |
+         Reach_Untersuchungsstelle == "S1" |
+         Reach_Untersuchungsstelle == "S2" |
+         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "VR3")
+```
+
+
+```{r}
 # Prep data to model 
 # TRAINING SETS
+### PREDICTOR: VELOCITY ###
 # With k_index as response variable & velocity 
 training_v_k <- training_v |>
   dplyr::select(k_index, velocity, x, y)
@@ -122,6 +163,11 @@ training_v_s <- training_v |>
 training_v_a <- training_v |>
   dplyr::select(abundance, velocity, x, y)
 
+# With relative abundance as response variable & velocity 
+training_v_ra <- training_v |>
+  dplyr::select(rel_abundance, velocity, x, y)
+
+### PREDICTOR: VELOCITY AND WD ###
 # With k_index as response variable & velocity + wd
 training_wd_k <- training_wd |>
   dplyr::select(k_index, velocity, wd_cm, x, y)
@@ -134,7 +180,49 @@ training_wd_s <- training_wd |>
 training_wd_a <- training_wd |>
   dplyr::select(abundance, velocity, wd_cm, x, y)
 
+# With relative abundance index as response variable & velocity + wd
+training_wd_ra <- training_wd |>
+  dplyr::select(rel_abundance, velocity, wd_cm, x, y)
+
+### PREDICTOR: SAMPLING LOCATIONS ###
+# With k_index as response variable & sampling location 
+training_samp_k <- training_sampling |>
+  dplyr::select(-shannon, -abundance, -rel_abundance)
+
+# With shannon index as response variable & sampling location 
+training_samp_s <- training_sampling |>
+  dplyr::select(-k_index, -abundance, -rel_abundance)
+
+# With abundance index as response variable & sampling location 
+training_samp_a <- training_sampling |>
+  dplyr::select(-shannon, -k_index, -rel_abundance)
+
+# With relative abundance index as response variable & sampling location 
+training_samp_ra <- training_sampling |>
+  dplyr::select(-shannon, -abundance, -k_index)
+
+### PREDICTOR: ALL POSSIBLE PREDICTORS ###
+# With k_index as response variable & all predictors
+training_sec_k <- training_section |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -time, -date, -ox_sat)
+
+# With shannon index as response variable & all predictors 
+training_sec_s <- training_section |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -time, -date, -ox_sat)
+
+# With abundance index as response variable & all predictors 
+training_sec_a <- training_section |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -time, -date, -ox_sat)
+
+# With relative abundance index as response variable & all predictors 
+training_sec_ra <- training_section |>
+  dplyr::select(-shannon, -abundance, -k_index, -time, -date, -ox_sat)
+```
+
+
+```{r}
 # TEST SETS
+### PREDICTOR: VELOCITY ###
 # With k_index as response variable & velocity
 test_v_k <- test_v |>
   dplyr::select(k_index, velocity, x, y) 
@@ -147,6 +235,11 @@ test_v_s <- test_v |>
 test_v_a <- test_v |>
   dplyr::select(abundance, velocity, x, y) 
 
+# With relative abundance as response variable & velocity
+test_v_ra <- test_v |>
+  dplyr::select(rel_abundance, velocity, x, y) 
+
+### PREDICTOR: VELOCITY + WD ###
 # With k_index as response variable & velocity + wd
 test_wd_k <- test_wd |>
   dplyr::select(k_index, velocity, wd_cm, x, y) 
@@ -157,9 +250,51 @@ test_wd_s <- test_wd |>
 
 # With abundance as response variable & velocity + wd
 test_wd_a <- test_wd |>
-  dplyr::select(abundance, velocity, wd_cm, x, y) 
+  dplyr::select(abundance, velocity, wd_cm, x, y)
 
-# convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning 
+# With relative abundance as response variable & velocity + wd
+test_wd_ra <- test_wd |>
+  dplyr::select(rel_abundance, velocity, wd_cm, x, y)
+
+### PREDICTOR: SAMPLING LOCATIONS ###
+# With k_index as response variable & sampling location 
+test_samp_k <- test_sampling |>
+  dplyr::select(-shannon, -abundance, -rel_abundance) 
+
+# With shannon index as response variable & sampling location 
+test_samp_s <- test_sampling |>
+  dplyr::select(-k_index, -abundance, -rel_abundance)
+
+# With abundance index as response variable & sampling location 
+test_samp_a <- test_sampling |>
+  dplyr::select(-shannon, -k_index, -rel_abundance)
+
+# With relative abundance index as response variable & sampling location 
+test_samp_ra <- test_sampling |>
+  dplyr::select(-shannon, -abundance, -k_index)
+
+### PREDICTOR: ALL POSSIBLE PREDICTORS ###
+# With k_index as response variable & all predictors
+test_sec_k <- test_section |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -time, -date, -ox_sat)
+
+# With shannon index as response variable & all predictors 
+test_sec_s <- test_section |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -time, -date, -ox_sat)
+
+# With abundance index as response variable & all predictors 
+test_sec_a <- test_section |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -time, -date, -ox_sat)
+
+# With relative abundance index as response variable & all predictors 
+test_sec_ra <- test_section |>
+  dplyr::select(-shannon, -abundance, -k_index, -time, -date, -ox_sat)
+```
+
+
+```{r}
+# convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning
+### PREDICTOR: VELOCITY ###
 # for k_index and velocity 
 data_v_k_sp <-  st_as_sf(training_v_k, coords =  c("x", "y"))
 st_crs(data_v_k_sp) <- "EPSG: 2056"
@@ -172,6 +307,11 @@ st_crs(data_v_s_sp) <- "EPSG: 2056"
 data_v_a_sp <-  st_as_sf(training_v_a, coords =  c("x", "y"))
 st_crs(data_v_a_sp) <- "EPSG: 2056"
 
+# for relative abundance and velocity 
+data_v_ra_sp <-  st_as_sf(training_v_ra, coords =  c("x", "y"))
+st_crs(data_v_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: VELOCITY + WD ###
 # for k_index and velocity + wd
 data_wd_k_sp <-  st_as_sf(training_wd_k, coords =  c("x", "y"))
 st_crs(data_wd_k_sp) <- "EPSG: 2056"
@@ -183,6 +323,44 @@ st_crs(data_wd_s_sp) <- "EPSG: 2056"
 # for abundance and velocity + wd
 data_wd_a_sp <-  st_as_sf(training_wd_a, coords =  c("x", "y"))
 st_crs(data_wd_a_sp) <- "EPSG: 2056"
+
+# for relative abundance and velocity + wd
+data_wd_ra_sp <-  st_as_sf(training_wd_ra, coords =  c("x", "y"))
+st_crs(data_wd_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: SAMPLING LOCATIONS ###
+# for k_index and sampling locations
+data_samp_k_sp <-  st_as_sf(training_samp_k, coords =  c("x", "y"))
+st_crs(data_samp_k_sp) <- "EPSG: 2056"
+
+# for shannon index and sampling locations
+data_samp_s_sp <-  st_as_sf(training_samp_s, coords =  c("x", "y"))
+st_crs(data_samp_s_sp) <- "EPSG: 2056"
+
+# for abundance and sampling locations
+data_samp_a_sp <-  st_as_sf(training_samp_a, coords =  c("x", "y"))
+st_crs(data_samp_a_sp) <- "EPSG: 2056"
+
+# for relative abundance and sampling locations
+data_samp_ra_sp <-  st_as_sf(training_samp_ra, coords =  c("x", "y"))
+st_crs(data_samp_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: ALL POSSIBLE PREDICTORS ###
+# for k_index and all predictors
+data_sec_k_sp <-  st_as_sf(training_sec_k, coords =  c("x", "y"))
+st_crs(data_sec_k_sp) <- "EPSG: 2056"
+
+# for shannon index and all predictors
+data_sec_s_sp <-  st_as_sf(training_sec_s, coords =  c("x", "y"))
+st_crs(data_sec_s_sp) <- "EPSG: 2056"
+
+# for abundance and all predictors
+data_sec_a_sp <-  st_as_sf(training_sec_a, coords =  c("x", "y"))
+st_crs(data_sec_a_sp) <- "EPSG: 2056"
+
+# for relative abundance and all predictors
+data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
+st_crs(data_sec_ra_sp) <- "EPSG: 2056"
 ```
 
 
@@ -203,6 +381,10 @@ task_rf_v_s <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp,
 task_rf_v_a <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp,
   id = "velocity", target = "abundance")
 
+# create task for relative abundance and velocity
+task_rf_v_ra <- mlr3spatiotempcv::as_task_regr_st(data_v_ra_sp,
+  id = "velocity", target = "rel_abundance")
+
 ### VELOCITY + WD AS PREDICTORS (& x, y for spatial hyperparameter tuning) ###
 # create task for k_index and velocity + wd
 task_rf_wd_k <- mlr3spatiotempcv::as_task_regr_st(data_wd_k_sp,
@@ -216,6 +398,47 @@ task_rf_wd_s <- mlr3spatiotempcv::as_task_regr_st(data_wd_s_sp,
 task_rf_wd_a <- mlr3spatiotempcv::as_task_regr_st(data_wd_a_sp,
   id = "velocity", target = "abundance")
 
+# create task for relative abundance and velocity + wd
+task_rf_wd_ra <- mlr3spatiotempcv::as_task_regr_st(data_wd_ra_sp,
+  id = "velocity", target = "rel_abundance")
+
+### PREDICTORS: SAMPLING LOCATIONS (& x, y for spatial hyperparameter tuning) ###
+# create task for k_index and sampling locations
+task_rf_samp_k <- mlr3spatiotempcv::as_task_regr_st(data_samp_k_sp,
+  id = "sampling", target = "k_index")
+
+# create task for shannon index and sampling locations
+task_rf_samp_s <- mlr3spatiotempcv::as_task_regr_st(data_samp_s_sp,
+  id = "sampling", target = "shannon")
+
+# create task for abundance and sampling locations
+task_rf_samp_a <- mlr3spatiotempcv::as_task_regr_st(data_samp_a_sp,
+  id = "sampling", target = "abundance")
+
+# create task for relative abundance and sampling locations
+task_rf_samp_ra <- mlr3spatiotempcv::as_task_regr_st(data_samp_ra_sp,
+  id = "sampling", target = "rel_abundance")
+
+### PREDICTORS: ALL PREDICTORS (& x, y for spatial hyperparameter tuning) ###
+# create task for k_index and all predictors 
+task_rf_sec_k <- mlr3spatiotempcv::as_task_regr_st(data_sec_k_sp,
+  id = "section", target = "k_index")
+
+# create task for shannon index and all predictors 
+task_rf_sec_s <- mlr3spatiotempcv::as_task_regr_st(data_sec_s_sp,
+  id = "section", target = "shannon")
+
+# create task for abundance and all predictors 
+task_rf_sec_a <- mlr3spatiotempcv::as_task_regr_st(data_sec_a_sp,
+  id = "section", target = "abundance")
+
+# create task for relative abundance and all predictors 
+task_rf_sec_ra <- mlr3spatiotempcv::as_task_regr_st(data_sec_ra_sp,
+  id = "section", target = "rel_abundance")
+```
+
+
+```{r}
 ### LEARNER ###
 # create learner for a random forest model from the ranger package
 # for k_index, shannon index and abundance + velocity + wd valid
@@ -249,6 +472,16 @@ search_space_v_a <- paradox::ps(
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
+# specifying the search space for relative abundance and velocity
+search_space_v_ra <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_ra$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+```
+
+
+```{r}
 ### VELOCITY + WD AS PREDICTORS ###
 # specifying the search space for k_index and velocity + wd
 search_space_wd_k <- paradox::ps(
@@ -271,8 +504,82 @@ search_space_wd_a <- paradox::ps(
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
+# specifying the search space for relative abundance and velocity + wd
+search_space_wd_ra <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_ra$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
 # num.trees noch suchen? 
 ```
+
+```{r}
+### PREDICTORS: SAMPLING LOCATIONS ###
+# specifying the search space for k_index and sampling locations
+search_space_samp_k <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_k$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for shannon index and sampling locations
+search_space_samp_s <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_s$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for abundance and sampling locations
+search_space_samp_a <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_a$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for relative abundance and sampling locations
+search_space_samp_ra <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_ra$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# num.trees noch suchen? 
+```
+
+```{r}
+### PREDICTORS: ALL PREDICTORS ###
+# specifying the search space for k_index and all predictors
+search_space_sec_k <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_k$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for shannon index and all predictors
+search_space_sec_s <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_s$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for abundance and all predictors
+search_space_sec_a <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_a$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specifying the search space for relative abundance and all predictors
+search_space_sec_ra <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_ra$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# num.trees noch suchen? 
+```
+
 
 ### Hyperparameter tuning 
 resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning # gibt kein richtig, falsch, je mehr folds desto mehr modelle müssen trainiert werden
@@ -308,6 +615,19 @@ autotuner_rf_v_a <- mlr3tuning::AutoTuner$new(
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
+# with relative abundance and velocity 
+autotuner_rf_v_ra <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_v_ra, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
+
+```{r}
 ### VELOCITY AND WD AS PREDICTORS ###
 # with k_index and velocity + wd
 autotuner_rf_wd_k <- mlr3tuning::AutoTuner$new(
@@ -338,7 +658,104 @@ autotuner_rf_wd_a <- mlr3tuning::AutoTuner$new(
   search_space = search_space_wd_a, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
+
+# with relative abundance and velocity + wd
+autotuner_rf_wd_ra <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_wd_ra, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
 ```
+
+```{r}
+### PREDICTORS: SAMPLING LOCATION ###
+# with k_index and sampling location
+autotuner_rf_samp_k <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_samp_k, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with shannon index and sampling location
+autotuner_rf_samp_s <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_samp_s, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with abundance and sampling location
+autotuner_rf_samp_a <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_samp_a, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with relative abundance and sampling location
+autotuner_rf_samp_ra <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_samp_ra, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
+```{r}
+### PREDICTORS: ALL PREDICTORS ###
+# with k_index and all predictors
+autotuner_rf_sec_k <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_sec_k, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with shannon index and all predictors
+autotuner_rf_sec_s <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_sec_s, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with abundance and all predictors
+autotuner_rf_sec_a <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_sec_a, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# with relative abundance and all predictors
+autotuner_rf_sec_ra <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf,
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  search_space = search_space_sec_ra, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+```
+
 
 ```{r}
 # set seed to obtain the same results with each run
@@ -355,6 +772,9 @@ autotuner_rf_v_s$train(task_rf_v_s)
 # abundance and velocity 
 autotuner_rf_v_a$train(task_rf_v_a)
 
+# relative abundance and velocity 
+autotuner_rf_v_ra$train(task_rf_v_ra)
+
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 autotuner_rf_wd_k$train(task_rf_wd_k)
@@ -364,6 +784,35 @@ autotuner_rf_wd_s$train(task_rf_wd_s)
 
 # abundance and velocity + wd
 autotuner_rf_wd_a$train(task_rf_wd_a)
+
+# relative abundance and velocity + wd
+autotuner_rf_wd_ra$train(task_rf_wd_ra)
+
+### PREDICTORS: SAMPLING LOCATION ###
+# k_index and sampling locations
+autotuner_rf_samp_k$train(task_rf_samp_k)
+
+# shannon index and sampling locations 
+autotuner_rf_samp_s$train(task_rf_samp_s)
+
+# abundance and sampling locations
+autotuner_rf_samp_a$train(task_rf_samp_a)
+
+# relative abundance and sampling locations
+autotuner_rf_samp_ra$train(task_rf_samp_ra)
+
+### PREDICTORS: ALL PREDICTORS ###
+# k_index and all predictors
+autotuner_rf_sec_k$train(task_rf_sec_k)
+
+# shannon index and all predictors 
+autotuner_rf_sec_s$train(task_rf_sec_s)
+
+# abundance and all predictors
+autotuner_rf_sec_a$train(task_rf_sec_a)
+
+# relative abundance and all predictors
+autotuner_rf_sec_ra$train(task_rf_sec_ra)
 ```
 
 
@@ -379,6 +828,9 @@ autotuner_rf_v_s$tuning_result
 # for abundance and velocity
 autotuner_rf_v_a$tuning_result
 
+# for relative abundance and velocity
+autotuner_rf_v_ra$tuning_result
+
 ### VELOCITY + WD AS PREDICTORS ###
 # for k_index and velocity + wd
 autotuner_rf_wd_k$tuning_result
@@ -388,132 +840,67 @@ autotuner_rf_wd_s$tuning_result
 
 # for abundance and velocity + wd
 autotuner_rf_wd_a$tuning_result
+
+# for relative abundance and velocity + wd
+autotuner_rf_wd_ra$tuning_result
+
+### PREDICTORS: SAMPLING LOCATIONS ###
+# for k_index and sampling locations
+autotuner_rf_samp_k$tuning_result
+
+# for shannon index and sampling locations
+autotuner_rf_samp_s$tuning_result
+
+# for abundance and sampling locations
+autotuner_rf_samp_a$tuning_result
+
+# for relative abundance and sampling locations
+autotuner_rf_samp_ra$tuning_result
+
+### PREDICTORS: ALL PREDICTORS ###
+# for k_index and all predictors
+autotuner_rf_sec_k$tuning_result
+
+# for shannon index and all predictors
+autotuner_rf_sec_s$tuning_result
+
+# for abundance and all predictors
+autotuner_rf_sec_a$tuning_result
+
+# for relative abundance and all predictors
+autotuner_rf_sec_ra$tuning_result
 ```
 
-## RF Model
-### Prep Data w/o Coordinates
-x und y coord müssten meines Wissens nach nicht drin sein weil sie nur für das tuning verwendet wurden
-kein grosser Unterschied der Model performance wenn x, y drin oder draussen sind
-```{r}
-### TRAINING SETS ###
-# With k_index as response variable & velocity 
-training_v_k <- training_v |>
-  dplyr::select(k_index, velocity, x, y)
-
-# With shannon index as response variable & velocity 
-training_v_s <- training_v |>
-  dplyr::select(shannon, velocity, x, y)
-
-# With abundance as response variable & velocity 
-training_v_a <- training_v |>
-  dplyr::select(abundance, velocity, x, y)
-
-# With k_index as response variable & velocity + wd
-training_wd_k <- training_wd |>
-  dplyr::select(k_index, velocity, wd_cm, x, y)
-
-# With shannon index as response variable & velocity + wd
-training_wd_s <- training_wd |>
-  dplyr::select(shannon, velocity, wd_cm, x, y)
-
-# With abundance index as response variable & velocity + wd
-training_wd_a <- training_wd |>
-  dplyr::select(abundance, velocity, wd_cm, x, y)
-
-### TEST SETS ###
-# With k_index as response variable & velocity
-test_v_k <- test_v |>
-  dplyr::select(k_index, velocity, x, y) 
-
-# With shannon index as response variable & velocity
-test_v_s <- test_v |>
-  dplyr::select(shannon, velocity, x, y) 
-
-# With abundance as response variable & velocity
-test_v_a <- test_v |>
-  dplyr::select(abundance, velocity, x, y) 
-
-# With k_index as response variable & velocity + wd
-test_wd_k <- test_wd |>
-  dplyr::select(k_index, velocity, wd_cm, x, y) 
-
-# With shannon index as response variable & velocity + wd
-test_wd_s <- test_wd |>
-  dplyr::select(shannon, velocity, wd_cm, x, y) 
-
-# With abundance as response variable & velocity + wd
-test_wd_a <- test_wd |>
-  dplyr::select(abundance, velocity, wd_cm, x, y) 
-```
-
-### Make models 
-```{r}
-# Create and train the random forest model with only velocity
-# VELOCITY AS PREDICTOR
-# for k_index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2059293            10          <list[4]> <list[3]> 0.1413796
-rf_model_v_k <- ranger(formula = k_index ~., data = training_v_k, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
-
-# for shannon index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2426534             7          <list[4]> <list[3]> 0.5703676
-rf_model_v_s <- ranger(formula = shannon ~., data = training_v_s, mtry = 1, sample.fraction = 0.2426534, min.node.size = 7)
-
-# for abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.3763677             9          <list[4]> <list[3]>  741.6989
-rf_model_v_a <- ranger(formula = abundance ~., data = training_v_a, mtry = 1, sample.fraction = 0.3763677, min.node.size = 9)
-
-# Create and train the random forest model with velocity + wd
-# VELOCITY + WD AS PREDICTORS 
-# for k_index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[4]> <list[3]> 0.1371224
-rf_model_wd_k <- ranger(formula = k_index ~., data = training_wd_k, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9)
-
-# for shannon index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2019869             6          <list[4]> <list[3]> 0.5556115
-rf_model_wd_s <- ranger(formula = shannon ~., data = training_wd_s, mtry = 1, sample.fraction = 0.2019869, min.node.size = 6)
-
-# for abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2068668             5          <list[4]> <list[3]>  730.9148
-rf_model_wd_a <- ranger(formula = abundance ~., data = training_wd_a, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5)
-```
 
 ## Evaluation Metrics
 ### - Partial dependence plots
-```{r}
-# yhat ist die response variable (k-index, simpson oder shannon)
+- yhat ist die response variable (k-index, simpson oder shannon)
 pdp_plot_v_k <- partial(rf_model_v_k, pred.var = "velocity", ice = TRUE, center = TRUE, plot = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = training_v_k, type = "regression")
 
 ?partial
 
-# yhat ist die response variable (k-index, simpson oder shannon)
+- yhat ist die response variable (k-index, simpson oder shannon)
 pdp_plot_wd_k <- partial(rf_model_wd_k, pred.var = c("velocity", "wd_cm"), center = TRUE, plot = TRUE, rug = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = training_wd_k, type = "regression")
 
-# Plot the PDP
+- Plot the PDP
 ggplot(pdp_plot_v_k, aes(velocity, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line()
 
-# Create the partial dependence plot
+- Create the partial dependence plot
 pdp_plot_wd_k <- partial(rf_model_wd_k, pred.var = "wd_cm")
 pdp_plot_wd_v_k <- partial(rf_model_wd_k, pred.var = "velocity")
 
 pdp_wd <- full_join(pdp_plot_wd_k, pdp_plot_wd_v_k, by = "yhat")
 
-# Plot the PDP
+- Plot the PDP
 ggplot(pdp_wd, aes(wd_cm, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   facet_wrap(~yhat) 
 
 ggplot(pdp_plot_wd_v_k, aes(velocity, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
-  geom_line() 
-```
+  geom_line()
 
 
 ### Obs and Pred
@@ -529,6 +916,9 @@ rf_predictions_v_s <- predict(autotuner_rf_v_s, newdata = test_v_s)
 # abundance and velocity
 rf_predictions_v_a <- predict(autotuner_rf_v_a, newdata = test_v_a)
 
+# relative abundance and velocity
+rf_predictions_v_ra <- predict(autotuner_rf_v_ra, newdata = test_v_ra)
+
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 rf_predictions_wd_k <- predict(autotuner_rf_wd_k, newdata = test_wd_k)
@@ -538,29 +928,35 @@ rf_predictions_wd_s <- predict(autotuner_rf_wd_s, newdata = test_wd_s)
 
 # abundance and velocity + wd
 rf_predictions_wd_a <- predict(autotuner_rf_wd_a, newdata = test_wd_a)
-```
 
-#### From Model 
-```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-rf_predictions_v_k <- predict(rf_model_v_k, data = test_v_k)$predictions
+# relative abundance and velocity + wd
+rf_predictions_wd_ra <- predict(autotuner_rf_wd_ra, newdata = test_wd_ra)
 
-# shannon index and velocity
-rf_predictions_v_s <- predict(rf_model_v_s, data = test_v_s)$predictions
+### PREDICTORS: SAMPLING LOCATIONS ###
+# k_index and sampling locations
+rf_predictions_samp_k <- predict(autotuner_rf_samp_k, newdata = test_samp_k)
 
-# abundance and velocity
-rf_predictions_v_a <- predict(rf_model_v_a, data = test_v_a)$predictions
+# shannon index and sampling locations
+rf_predictions_samp_s <- predict(autotuner_rf_samp_s, newdata = test_samp_s)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-rf_predictions_wd_k <- predict(rf_model_wd_k, data = test_wd_k)$predictions
+# abundance and sampling locations
+rf_predictions_samp_a <- predict(autotuner_rf_samp_a, newdata = test_samp_a)
 
-# shannon index and velocity + wd
-rf_predictions_wd_s <- predict(rf_model_wd_s, data = test_wd_s)$predictions
+# abundance and sampling locations
+rf_predictions_samp_ra <- predict(autotuner_rf_samp_ra, newdata = test_samp_ra)
 
-# abundance and velocity + wd
-rf_predictions_wd_a <- predict(rf_model_wd_a, data = test_wd_a)$predictions
+### PREDICTORS: ALL PREDICTORS ###
+# k_index and all predictors
+rf_predictions_sec_k <- predict(autotuner_rf_sec_k, newdata = test_sec_k)
+
+# shannon index and all predictors
+rf_predictions_sec_s <- predict(autotuner_rf_sec_s, newdata = test_sec_s)
+
+# abundance and all predictors
+rf_predictions_sec_a <- predict(autotuner_rf_sec_a, newdata = test_sec_a)
+
+# abundance and all predictors
+rf_predictions_sec_ra <- predict(autotuner_rf_sec_ra, newdata = test_sec_ra)
 ```
 
 ```{r}
@@ -574,6 +970,9 @@ responses_v_s <- test_v_s$shannon
 # abundance and velocity
 responses_v_a <- test_v_a$abundance
 
+# relative abundance and velocity
+responses_v_ra <- test_v_ra$rel_abundance
+
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 responses_wd_k <- test_wd_k$k_index
@@ -583,6 +982,35 @@ responses_wd_s <- test_wd_s$shannon
 
 # abundance and velocity + wd
 responses_wd_a <- test_wd_a$abundance
+
+# relative abundance and velocity + wd
+responses_wd_ra <- test_wd_ra$rel_abundance
+
+### PREDICTORS: SAMPLING LOCATIONS ###
+# k_index and sampling locations
+responses_samp_k <- test_samp_k$k_index
+
+# shannon index and sampling locations
+responses_samp_s <- test_samp_s$shannon
+
+# abundance and sampling locations
+responses_samp_a <- test_samp_a$abundance
+
+# relative abundance and sampling locations
+responses_samp_ra <- test_samp_ra$rel_abundance
+
+### PREDICTORS: ALL PREDICTORS ###
+# k_index and all predictors
+responses_sec_k <- test_sec_k$k_index
+
+# shannon index and all predictors
+responses_sec_s <- test_sec_s$shannon
+
+# abundance and all predictors
+responses_sec_a <- test_sec_a$abundance
+
+# relative abundance and all predictors
+responses_sec_ra <- test_sec_ra$rel_abundance
 ```
 
 
@@ -603,6 +1031,9 @@ r2_v_s <- R2(pred = rf_predictions_v_s, obs = responses_v_s)
 # abundance and velocity 
 r2_v_a <- R2(pred = rf_predictions_v_a, obs = responses_v_a)
 
+# relative abundance and velocity 
+r2_v_ra <- R2(pred = rf_predictions_v_ra, obs = responses_v_ra)
+
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 r2_wd_k <- R2(pred = rf_predictions_wd_k, obs = responses_wd_k)
@@ -612,6 +1043,35 @@ r2_wd_s <- R2(pred = rf_predictions_wd_s, obs = responses_wd_s)
 
 # abundance and velocity + wd 
 r2_wd_a <- R2(pred = rf_predictions_wd_a, obs = responses_wd_a)
+
+# relative abundance and velocity + wd 
+r2_wd_ra <- R2(pred = rf_predictions_wd_ra, obs = responses_wd_ra)
+
+### PREDICTORS: SAMPLING LOCATIONS ###
+# k_index and sampling locations
+r2_samp_k <- R2(pred = rf_predictions_samp_k, obs = responses_samp_k)
+
+# shannon index and sampling locations
+r2_samp_s <- R2(pred = rf_predictions_samp_s, obs = responses_samp_s)
+
+# abundance and sampling locations
+r2_samp_a <- R2(pred = rf_predictions_samp_a, obs = responses_samp_a)
+
+# relative abundance and sampling locations
+r2_samp_ra <- R2(pred = rf_predictions_samp_ra, obs = responses_samp_ra)
+
+### PREDICTORS: ALL PREDICTORS ###
+# k_index and all predictors
+r2_sec_k <- R2(pred = rf_predictions_sec_k, obs = responses_sec_k)
+
+# shannon index and all predictors
+r2_sec_s <- R2(pred = rf_predictions_sec_s, obs = responses_sec_s)
+
+# abundance and all predictors
+r2_sec_a <- R2(pred = rf_predictions_sec_a, obs = responses_sec_a)
+
+# relative abundance and all predictors
+r2_sec_ra <- R2(pred = rf_predictions_sec_ra, obs = responses_sec_ra)
 ```
 
 ### RMSE & MAE
@@ -629,6 +1089,10 @@ mae_v_s <- mae(actual = responses_v_s, predicted = rf_predictions_v_s)
 rmse_v_a <- rmse(actual = responses_v_a, predicted = rf_predictions_v_a)
 mae_v_a <- mae(actual = responses_v_a, predicted = rf_predictions_v_a)
 
+# relative abundance and velocity
+rmse_v_ra <- rmse(actual = responses_v_ra, predicted = rf_predictions_v_ra)
+mae_v_ra <- mae(actual = responses_v_ra, predicted = rf_predictions_v_ra)
+
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 rmse_wd_k <- rmse(actual = responses_wd_k, predicted = rf_predictions_wd_k)
@@ -641,6 +1105,46 @@ mae_wd_s <- mae(actual = responses_wd_s, predicted = rf_predictions_wd_s)
 # abundance and velocity + wd
 rmse_wd_a <- rmse(actual = responses_wd_a, predicted = rf_predictions_wd_a)
 mae_wd_a <- mae(actual = responses_wd_a, predicted = rf_predictions_wd_a)
+
+# relative abundance and velocity + wd
+rmse_wd_ra <- rmse(actual = responses_wd_ra, predicted = rf_predictions_wd_ra)
+mae_wd_ra <- mae(actual = responses_wd_ra, predicted = rf_predictions_wd_ra)
+```
+
+```{r}
+### PREDICTORS: SAMPLING LOCATIONS ###
+# k_index and sampling locations
+rmse_samp_k <- rmse(actual = responses_samp_k, predicted = rf_predictions_samp_k)
+mae_samp_k <- mae(actual = responses_samp_k, predicted = rf_predictions_samp_k)
+
+# shannon index and sampling locations
+rmse_samp_s <- rmse(actual = responses_samp_s, predicted = rf_predictions_samp_s)
+mae_samp_s <- mae(actual = responses_samp_s, predicted = rf_predictions_samp_s)
+
+# abundance and sampling locations
+rmse_samp_a <- rmse(actual = responses_samp_a, predicted = rf_predictions_samp_a)
+mae_samp_a <- mae(actual = responses_samp_a, predicted = rf_predictions_samp_a)
+
+# relative abundance and sampling locations
+rmse_samp_ra <- rmse(actual = responses_samp_ra, predicted = rf_predictions_samp_ra)
+mae_samp_ra <- mae(actual = responses_samp_ra, predicted = rf_predictions_samp_ra)
+
+### PREDICTORS: ALL PREDICTORS ###
+# k_index and all predictors
+rmse_sec_k <- rmse(actual = responses_sec_k, predicted = rf_predictions_sec_k)
+mae_sec_k <- mae(actual = responses_sec_k, predicted = rf_predictions_sec_k)
+
+# shannon index and all predictors
+rmse_sec_s <- rmse(actual = responses_sec_s, predicted = rf_predictions_sec_s)
+mae_sec_s <- mae(actual = responses_sec_s, predicted = rf_predictions_sec_s)
+
+# abundance and all predictors
+rmse_sec_a <- rmse(actual = responses_sec_a, predicted = rf_predictions_sec_a)
+mae_sec_a <- mae(actual = responses_sec_a, predicted = rf_predictions_sec_a)
+
+# relative abundance and all predictors
+rmse_sec_ra <- rmse(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
+mae_sec_ra <- mae(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
 ```
 
 ### Bias 
@@ -657,6 +1161,9 @@ differences_v_s <- rf_predictions_v_s - responses_v_s
 # abundance and velocity
 differences_v_a <- rf_predictions_v_a - responses_v_a
 
+# relative abundance and velocity
+differences_v_ra <- rf_predictions_v_ra - responses_v_ra
+
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 differences_wd_k <- rf_predictions_wd_k - responses_wd_k
@@ -666,6 +1173,9 @@ differences_wd_s <- rf_predictions_wd_s - responses_wd_s
 
 # abundance and velocity + wd
 differences_wd_a <- rf_predictions_wd_a - responses_wd_a
+
+# relative abundance and velocity + wd
+differences_wd_ra <- rf_predictions_wd_ra - responses_wd_ra
 ```
 
 
@@ -681,6 +1191,9 @@ bias_v_s <- mean(differences_v_s)
 # abundance and velocity
 bias_v_a <- mean(differences_v_a)
 
+# relative abundance and velocity
+bias_v_ra <- mean(differences_v_ra)
+
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
 bias_wd_k <- mean(differences_wd_k)
@@ -690,6 +1203,9 @@ bias_wd_s <- mean(differences_wd_s)
 
 # abundance and velocity + wd
 bias_wd_a <- mean(differences_wd_a)
+
+# relative abundance and velocity + wd
+bias_wd_ra <- mean(differences_wd_ra)
 ```
 
 ### Nash-Sutcliffe efficiency (NSE) 
@@ -886,128 +1402,6 @@ autotuner_xbrt_wd_s$tuning_result
 
 # abundance and velocity + wd
 autotuner_xbrt_wd_a$tuning_result
-```
-
-
-## BRT Model
-### Prep Data 
-```{r}
-# make training data
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity 
-trainx_v_k <- model.matrix(k_index ~ ., data = training_v_k)
-
-# shannon index and velocity 
-trainx_v_s <- model.matrix(shannon ~ ., data = training_v_s)
-
-# abundance and velocity 
-trainx_v_a <- model.matrix(abundance ~ ., data = training_v_a)
-
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-trainx_wd_k <- model.matrix(k_index ~ ., data = training_wd_k)
-
-# shannon index and velocity + wd
-trainx_wd_s <- model.matrix(shannon ~ ., data = training_wd_s)
-
-# abundance and velocity + wd
-trainx_wd_a <- model.matrix(abundance ~ ., data = training_wd_a)
-```
-
-
-```{r}
-# make testing dataset
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-testx_v_k <- model.matrix(k_index ~ ., data = test_v_k)
-
-# shannon index and velocity
-testx_v_s <- model.matrix(shannon ~ ., data = test_v_s)
-
-# abundance and velocity
-testx_v_a <- model.matrix(abundance ~ ., data = test_v_a)
-
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-testx_wd_k <- model.matrix(k_index ~ ., data = test_wd_k)
-
-# shannon index and velocity + wd
-testx_wd_s <- model.matrix(shannon ~ ., data = test_wd_s)
-
-# abundance and velocity + wd
-testx_wd_a <- model.matrix(abundance ~ ., data = test_wd_a)
-```
-
-### Make models 
-```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.01838576     922         3 0.6312782          <list[7]> <list[4]>  0.159874
-model.xgb_v_k <- xgboost(data = data.matrix(trainx_v_k[ ,-1]),
-                     label = as.numeric(as.character(training_v_k$k_index)),
-                     eta = 0.01838576,
-                     max_depth = 3,
-                     nrounds = 922,
-                     subsample = 0.6312782,
-                     objective = "reg:linear")
-
-# shannon index and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.06108969     117         4 0.6531705          <list[7]> <list[4]> 0.6777164
-model.xgb_v_s <- xgboost(data = data.matrix(trainx_v_s[ ,-1]),
-                     label = as.numeric(as.character(training_v_s$shannon)),
-                     eta = 0.06108969,
-                     max_depth = 4,
-                     nrounds = 117,
-                     subsample = 0.6531705,
-                     objective = "reg:linear")
-
-# abundance and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.06943808     314         4 0.7209312          <list[7]> <list[4]>  837.6009
-model.xgb_v_a <- xgboost(data = data.matrix(trainx_v_a[ ,-1]),
-                     label = as.numeric(as.character(training_v_a$abundance)),
-                     eta = 0.06943808,
-                     max_depth = 4,
-                     nrounds = 314,
-                     subsample = 0.7209312,
-                     objective = "reg:linear")
-
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.01598317     563         5 0.6270098          <list[7]> <list[4]>  0.160993
-model.xgb_wd_k <- xgboost(data = data.matrix(trainx_wd_k[ ,-1]),
-                     label = as.numeric(as.character(training_wd_k$k_index)),
-                     eta = 0.01598317,
-                     max_depth = 5,
-                     nrounds = 563,
-                     subsample = 0.6270098,
-                     objective = "reg:linear")
-
-# shannon index and velocity + wd
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.04028586     240        10 0.5747886          <list[7]> <list[4]> 0.7265847
-model.xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
-                     label = as.numeric(as.character(training_wd_s$shannon)),
-                     eta = 0.04028586,
-                     max_depth = 10,
-                     nrounds = 240,
-                     subsample = 0.5747886,
-                     objective = "reg:linear")
-
-# abundance and velocity + wd
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1906722     586         7 0.7487879          <list[7]> <list[4]>  907.4666
-model.xgb_wd_a <- xgboost(data = data.matrix(trainx_wd_a[ ,-1]),
-                     label = as.numeric(as.character(training_wd_a$abundance)),
-                     eta = 0.1906722,
-                     max_depth = 7,
-                     nrounds = 586,
-                     subsample = 0.7487879,
-                     objective = "reg:linear")
-
 ```
 
 ## Evaluation Metrics
