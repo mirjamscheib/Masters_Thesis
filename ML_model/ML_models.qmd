@@ -1147,7 +1147,7 @@ rmse_sec_ra <- rmse(actual = responses_sec_ra, predicted = rf_predictions_sec_ra
 mae_sec_ra <- mae(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
 ```
 
-### Bias 
+### --- Bias 
 keine Metric per se, Abweichung per Mittelwert (wird nicht als performance metric verwendet direkt), hat Bezug zu RMSE
 ```{r}
 # Calculate the differences between predicted and actual values
