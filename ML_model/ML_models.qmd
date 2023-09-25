@@ -48,6 +48,8 @@ pkgCheck("tidyr")
 # Load data containing only v, and v + wd explanatory variables
 data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") 
 data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") 
+data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") 
 
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
 # training set containing velocity 
@@ -63,6 +65,17 @@ training_v <- data_v |>
 
 # training set containing velocity + wd
 training_wd <- data_wd |>
+  filter(Reach_Untersuchungsstelle != "GL1",
+         Reach_Untersuchungsstelle != "GL2",         
+         Reach_Untersuchungsstelle != "L2",
+         Reach_Untersuchungsstelle != "M1",
+         Reach_Untersuchungsstelle != "S1",
+         Reach_Untersuchungsstelle != "S2",
+         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "VR3")
+
+# training set containing all env. variables measured at each sampling location 
+training_sampling <- data_sampling |>
   filter(Reach_Untersuchungsstelle != "GL1",
          Reach_Untersuchungsstelle != "GL2",         
          Reach_Untersuchungsstelle != "L2",
