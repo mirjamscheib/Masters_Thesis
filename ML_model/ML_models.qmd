@@ -50,18 +50,6 @@ All predictors:
 - ox_sat - NA's sind ein Problem... 
 - turbidity - ok 
 
-Additional: Assess Variable Importance 
--- Fit the random forest model
-rf_model_v_k <- ranger(formula = k_index ~ ., data = training_v_k, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10)
-
--- Method 1: Using the importance() function
-var_importance <- importance(rf_model_v_k)
-print(var_importance)
-
--- Method 2: Accessing the importance attribute
-var_importance <- rf_model_v_k$variable.importance
-print(var_importance)
-
 + PDP Plots 
 ```{r}
 # Load data containing only v, and v + wd explanatory variables
@@ -465,7 +453,7 @@ task_rf_sec_ra <- mlr3spatiotempcv::as_task_regr_st(data_sec_ra_sp,
 ### LEARNER ###
 # create learner for a random forest model from the ranger package
 # for k_index, shannon index and abundance + velocity + wd valid
-lrn_rf <- lrn("regr.ranger", predict_type = "response")
+lrn_rf <- lrn("regr.ranger", predict_type = "response", importance = "permutation")
 
 # performance estimation level
 # perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100) # wo brauche ich das??
@@ -788,6 +776,7 @@ set.seed(0412022)
 ### VELOCITY AS PREDICTOR ###
 # k_index and velocity 
 autotuner_rf_v_k$train(task_rf_v_k)
+best_rf_v_k <- autotuner_rf_v_k$learners[[1]]
 
 # shannon index and velocity 
 autotuner_rf_v_s$train(task_rf_v_s)
@@ -896,6 +885,37 @@ autotuner_rf_sec_ra$tuning_result
 
 
 ## Evaluation Metrics
+### Variable Importance
+https://stackoverflow.com/questions/72206468/mlr3-extract-variable-importance-for-each-resampling-iteration
+```{r}
+### PREDICTORS: ONLY VELOCITY ###
+autotuner_rf_v_k$importance()
+autotuner_rf_v_s$importance()
+autotuner_rf_v_a$importance()
+autotuner_rf_v_ra$importance()
+
+### PREDICTORS: VELOCITY AND WD ###
+autotuner_rf_wd_k$importance()
+autotuner_rf_wd_s$importance()
+autotuner_rf_wd_a$importance()
+autotuner_rf_wd_ra$importance()
+
+### PREDICTORS: SAMPLING LOCATIONS ###
+var_importance_rf_samp_k <- autotuner_rf_samp_k$importance()
+var_importance_rf_samp_s <- autotuner_rf_samp_s$importance()
+var_importance_rf_samp_a <- autotuner_rf_samp_a$importance()
+var_importance_rf_samp_ra <- autotuner_rf_samp_ra$importance()
+
+# bind results together
+var_imp_rf_samp <- rbind(var_importance_rf_samp_k, var_importance_rf_samp_s, var_importance_rf_samp_a, var_importance_rf_samp_ra)
+
+### PREDICTORS: ALL PREDICTORS ###
+autotuner_rf_sec_k$importance()
+autotuner_rf_sec_s$importance()
+autotuner_rf_sec_a$importance()
+autotuner_rf_sec_ra$importance()
+```
+
 ### - Partial dependence plots
 - yhat ist die response variable (k-index, simpson oder shannon)
 pdp_plot_v_k <- partial(rf_model_v_k, pred.var = "velocity", ice = TRUE, center = TRUE, plot = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = training_v_k, type = "regression")
@@ -1170,7 +1190,7 @@ rmse_sec_ra <- rmse(actual = responses_sec_ra, predicted = rf_predictions_sec_ra
 mae_sec_ra <- mae(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
 ```
 
-### --- Bias 
+### Bias 
 keine Metric per se, Abweichung per Mittelwert (wird nicht als performance metric verwendet direkt), hat Bezug zu RMSE
 ```{r}
 # Calculate the differences between predicted and actual values
@@ -1606,7 +1626,7 @@ autotuner_xbrt_sec_a <- mlr3tuning::AutoTuner$new(
 # relative abundance and all predictors
 autotuner_xbrt_sec_ra <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt,
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning example: folds = 10, repeats = 50)
   measure = mlr3::msr("regr.rmse"), # performance measure
   terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
   search_space = search_space_xbrt, # predefined hyperparameter search space
