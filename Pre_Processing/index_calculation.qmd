@@ -184,9 +184,17 @@ lab_q <- lab_new[ ,c("Discharge_m3_s_before", "Discharge_m3_s_during", "Discharg
 
 lab_temp <- lab_new[ ,c("Temperature_C_before", "Temperature_C_during", "Temperature_C_after")]
 
-lab_turb <- lab_new[ ,c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after")]
+# Sample character string
+text <- "Hello, World!"
 
-lab_turb$Turbidity_FNU_after <- as.numeric(lab_turb$Turbidity_FNU_after)
+# Remove a single character (e.g., comma)
+modified_text <- gsub(",", "", text)
+
+# Print the result
+print(modified_text)
+
+lab_new$Turbidity_FNU_after <- as.numeric(gsub(">", "", lab_new$Turbidity_FNU_after))
+lab_turb <- lab_new[ ,c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after")]
 
 lab_ox_sat <- lab_new[ ,c("Oxygen_saturation_%_before", "Oxygen_saturation_%_during", "Oxygen_saturation_%_after")]
 
