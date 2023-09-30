@@ -180,3 +180,174 @@ results <- data.frame(Q_model = c(Q_model_GL1, Q_model_GL2, Q_model_L2, Q_model_
 # Save results as .csv - file 
 write.csv(results, "reconstructed_discharges.csv", row.names = FALSE)
 ```
+
+# Regression Analysis Prep
+## Load Rasters
+```{r}
+# read rasters containing wd and velocity 
+GL1_samp <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+GL2_samp <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+L2_samp <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+M1_samp <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
+S1_samp <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
+S2_samp <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
+TH4_samp <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
+VR3_samp <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+
+# rename raster 
+names(GL1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(GL2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(L2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(M1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(TH4_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(VR3_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+
+# assign coordinate system 
+crs(GL1_samp) <- "EPSG: 2056"
+crs(GL2_samp) <- "EPSG: 2056"
+crs(L2_samp) <- "EPSG: 2056"
+crs(M1_samp) <- "EPSG: 2056"
+crs(S1_samp) <- "EPSG: 2056"
+crs(S2_samp) <- "EPSG: 2056"
+crs(TH4_samp) <- "EPSG: 2056"
+crs(VR3_samp) <- "EPSG: 2056"
+```
+
+## Load Data
+```{r}
+# load data 
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") |>
+  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle), # convert character variables into categorical variables (factors with levels) for ML algorithm 
+         velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
+         wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
+
+# read all raster results (one time flow velocity classes and one time for habitat suitability)
+# prep extraction data 
+## GL1
+coord_GL1 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(x, y) 
+
+GL1 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "GL1")
+
+## GL2
+coord_GL2 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "GL2") |>
+  dplyr::select(x, y) 
+
+GL2 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "GL2")
+
+## L2
+coord_L2 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "L2") |>
+  dplyr::select(x, y) 
+
+L2 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "L2")
+
+## M1
+coord_M1 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "M1") |>
+  dplyr::select(x, y) 
+
+M1 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "M1")
+
+## S1
+coord_S1 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "S1") |>
+  dplyr::select(x, y) 
+
+S1 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "S1")
+
+## S2
+coord_S2 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "S2") |>
+  dplyr::select(x, y) 
+
+S2 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "S2")
+
+## TH4
+coord_TH4 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "TH4") |>
+  dplyr::select(x, y) 
+
+TH4 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "TH4")
+
+## VR3
+coord_VR3 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(x, y) 
+
+VR3 <- data_wd |>
+  subset(Reach_Untersuchungsstelle == "VR3")
+```
+
+### Extract Results
+```{r}
+# extract raster information for regression analysis later
+# GL1 
+regr_data_GL1_wd <- extract(GL1_samp, coord_GL1) 
+
+# GL2
+regr_data_GL2_wd <- extract(GL2_samp, coord_GL2) 
+
+# L2
+regr_data_L2_wd <- extract(L2_samp, coord_L2) 
+
+# M1
+regr_data_M1_wd <- extract(M1_samp, coord_M1) 
+
+# S1
+regr_data_S1_wd <- extract(S1_samp, coord_S1) 
+
+# S2
+regr_data_S2_wd <- extract(S2_samp, coord_S2) 
+
+# TH4
+regr_data_TH4_wd <- extract(TH4_samp, coord_TH4) 
+
+# VR3
+regr_data_VR3_wd <- extract(VR3_samp, coord_VR3) 
+```
+
+### Combine Results
+```{r}
+# combine all results into dataframe
+# GL1
+data_GL1 <- cbind(regr_rf_data_GL1_wd_k, regr_rf_data_GL1_wd_s, regr_rf_data_GL1_wd_a, regr_rf_data_GL1_v_k, regr_rf_data_GL1_v_s, regr_rf_data_GL1_v_a, regr_brt_data_GL1_wd_k, regr_brt_data_GL1_wd_s, regr_brt_data_GL1_wd_a, regr_brt_data_GL1_v_k, regr_brt_data_GL1_v_s, regr_brt_data_GL1_v_a, GL1) |>
+  rename(rf_pred_k_index_2 = regr_rf_data_GL1_wd_k,
+         rf_pred_shannon_2 = regr_rf_data_GL1_wd_s,
+         rf_pred_abundance_2 = regr_rf_data_GL1_wd_a,
+         rf_pred_k_index_v = regr_rf_data_GL1_v_k,
+         rf_pred_shannon_v = regr_rf_data_GL1_v_s,
+         rf_pred_abundance_v = regr_rf_data_GL1_v_a,
+         brt_pred_k_index_2 = regr_brt_data_GL1_wd_k,
+         brt_pred_shannon_2 = regr_brt_data_GL1_wd_s,
+         brt_pred_abundance_2 = regr_brt_data_GL1_wd_a,
+         brt_pred_k_index_v = regr_brt_data_GL1_v_k,
+         brt_pred_shannon_v = regr_brt_data_GL1_v_s,
+         brt_pred_abundance_v = regr_brt_data_GL1_v_a,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance)
+```
+
+### Results from Extraction 
+```{r}
+# bind results together 
+# data_TH4 fehlt noch
+regr_analysis <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, data_TH4, data_VR3)
+
+# export to .csv file
+write.csv(regr_analysis, "Stat_Analysis/ml_regr_analysis.csv", row.names = FALSE)
+```
+
+

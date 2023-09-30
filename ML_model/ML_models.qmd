@@ -44,6 +44,11 @@ pkgCheck("tidyr")
 
 
 # Load & prepare data 
+```{r}
+# eigene Sortierung machen 
+#factor(wochentage, levels = c("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"), ordered = TRUE)
+```
+
 All predictors: 
 - date - ok - evt. komplett separieren
 - time - ok - evt. komplett separieren
@@ -53,9 +58,24 @@ All predictors:
 + PDP Plots 
 ```{r}
 # Load data containing only v, and v + wd explanatory variables
-data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") 
-data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
-data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") 
+data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") |>
+  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
+         velocity = velocity/100) # convert cm/s in to m/s (to have the same units as the hdms)
+   
+
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") |>
+  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle), # convert character variables into categorical variables (factors with levels) for ML algorithm 
+         velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
+         wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
+
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
+  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
+         clog_3_class = as.factor(clog_3_class),
+         clog_6_class = as.factor(clog_6_class),
+         sub_type = as.factor(sub_type),
+         velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
+         wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
+
 data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
   unite(date_time, date, time, sep = ".") |>
   mutate(date_time = as.POSIXct(date_time, format = "%d.%m.%Y.%H:%M",tz = "UTC"),
@@ -64,8 +84,17 @@ data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.cs
          day = as.integer(format(date_time, "%d")),
          hour = as.integer(format(date_time, "%H")),
          minute = as.integer(format(date_time, "%M")),
-         second = as.integer(format(date_time, "%S")))
+         second = as.integer(format(date_time, "%S")),
+         Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
+         clog_3_class = as.factor(clog_3_class),
+         clog_6_class = as.factor(clog_6_class),
+         sub_type = as.factor(sub_type),
+         velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
+         wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
+```
 
+
+```{r}
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
 # training set containing velocity 
 training_v <- data_v |>
@@ -197,37 +226,45 @@ training_wd_ra <- training_wd |>
 
 ### PREDICTOR: SAMPLING LOCATIONS ###
 # With k_index as response variable & sampling location 
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_samp_k <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -abundance, -rel_abundance)
 
 # With shannon index as response variable & sampling location 
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_samp_s <- training_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-k_index, -abundance, -rel_abundance)
 
 # With abundance index as response variable & sampling location 
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_samp_a <- training_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -k_index, -rel_abundance)
 
-# With relative abundance index as response variable & sampling location 
+# With relative abundance index as response variable & sampling location
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_samp_ra <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -abundance, -k_index)
 
 ### PREDICTOR: ALL POSSIBLE PREDICTORS ###
 # With k_index as response variable & all predictors
+# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_sec_k <- training_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -date_time, -ox_sat)
 
 # With shannon index as response variable & all predictors 
+# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_sec_s <- training_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -date_time, -ox_sat)
 
 # With abundance index as response variable & all predictors 
+# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_sec_a <- training_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -date_time, -ox_sat)
 
 # With relative abundance index as response variable & all predictors 
+# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_sec_ra <- training_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -abundance, -k_index, -date_time, -ox_sat)
 ```
 
 
@@ -269,37 +306,45 @@ test_wd_ra <- test_wd |>
 
 ### PREDICTOR: SAMPLING LOCATIONS ###
 # With k_index as response variable & sampling location 
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_samp_k <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type) 
+  dplyr::select(-shannon, -abundance, -rel_abundance) 
 
 # With shannon index as response variable & sampling location 
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_samp_s <- test_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-k_index, -abundance, -rel_abundance)
 
 # With abundance index as response variable & sampling location 
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_samp_a <- test_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -k_index, -rel_abundance)
 
 # With relative abundance index as response variable & sampling location 
+# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_samp_ra <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -abundance, -k_index)
 
 ### PREDICTOR: ALL POSSIBLE PREDICTORS ###
 # With k_index as response variable & all predictors
+# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_sec_k <- test_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -date_time, -ox_sat)
 
 # With shannon index as response variable & all predictors 
+# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_sec_s <- test_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -date_time, -ox_sat)
 
 # With abundance index as response variable & all predictors 
+# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_sec_a <- test_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -date_time, -ox_sat)
 
 # With relative abundance index as response variable & all predictors 
+# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_sec_ra <- test_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-shannon, -abundance, -k_index, -date_time, -ox_sat)
 ```
 
 
@@ -457,6 +502,18 @@ lrn_rf <- lrn("regr.ranger", predict_type = "response", importance = "permutatio
 
 # performance estimation level
 # perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100) # wo brauche ich das??
+```
+
+#### Autoplots
+```{r}
+# plot response against each predictor
+#mlr3viz::autoplot(task, type = "duo")
+# plot all variables against each other
+#mlr3viz::autoplot(task, type = "pairs")
+
+#tree_mo = tree::tree(sc ~ dem, data = rp)
+#plot(tree_mo)
+#text(tree_mo, pretty = 0)
 ```
 
 ### Specify search space
@@ -889,31 +946,34 @@ autotuner_rf_sec_ra$tuning_result
 https://stackoverflow.com/questions/72206468/mlr3-extract-variable-importance-for-each-resampling-iteration
 ```{r}
 ### PREDICTORS: ONLY VELOCITY ###
-autotuner_rf_v_k$importance()
-autotuner_rf_v_s$importance()
-autotuner_rf_v_a$importance()
-autotuner_rf_v_ra$importance()
+var_imp_rf_v_k <- autotuner_rf_v_k$importance()
+var_imp_rf_v_s <- autotuner_rf_v_s$importance()
+var_imp_rf_v_a <- autotuner_rf_v_a$importance()
+var_imp_rf_v_ra <- autotuner_rf_v_ra$importance()
 
 ### PREDICTORS: VELOCITY AND WD ###
-autotuner_rf_wd_k$importance()
-autotuner_rf_wd_s$importance()
-autotuner_rf_wd_a$importance()
-autotuner_rf_wd_ra$importance()
+var_imp_rf_wd_k <- autotuner_rf_wd_k$importance()
+var_imp_rf_wd_s <- autotuner_rf_wd_s$importance()
+var_imp_rf_wd_a <- autotuner_rf_wd_a$importance()
+var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance()
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
-var_importance_rf_samp_k <- autotuner_rf_samp_k$importance()
-var_importance_rf_samp_s <- autotuner_rf_samp_s$importance()
-var_importance_rf_samp_a <- autotuner_rf_samp_a$importance()
-var_importance_rf_samp_ra <- autotuner_rf_samp_ra$importance()
-
-# bind results together
-var_imp_rf_samp <- rbind(var_importance_rf_samp_k, var_importance_rf_samp_s, var_importance_rf_samp_a, var_importance_rf_samp_ra)
+var_imp_rf_samp_k <- autotuner_rf_samp_k$importance()
+var_imp_rf_samp_s <- autotuner_rf_samp_s$importance()
+var_imp_rf_samp_a <- autotuner_rf_samp_a$importance()
+var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance()
 
 ### PREDICTORS: ALL PREDICTORS ###
-autotuner_rf_sec_k$importance()
-autotuner_rf_sec_s$importance()
-autotuner_rf_sec_a$importance()
-autotuner_rf_sec_ra$importance()
+var_imp_rf_sec_k <- autotuner_rf_sec_k$importance()
+var_imp_rf_sec_s <- autotuner_rf_sec_s$importance()
+var_imp_rf_sec_a <- autotuner_rf_sec_a$importance()
+var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance()
+
+# bind results together
+vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra)
+vi_rf_wd <- rbind(var_imp_rf_wd_k, var_imp_rf_wd_s, var_imp_rf_wd_a, var_imp_rf_wd_ra)
+vi_rf_samp <- rbind(var_imp_rf_samp_k, var_imp_rf_samp_s, var_imp_rf_samp_a, var_imp_rf_samp_ra)
+vi_rf_sec <- rbind(var_imp_rf_sec_k, var_imp_rf_sec_s, var_imp_rf_sec_a, var_imp_rf_sec_ra)
 ```
 
 ### - Partial dependence plots
@@ -1722,6 +1782,41 @@ autotuner_xbrt_wd_ra$tuning_result
 ```
 
 ## Evaluation Metrics
+### Variable Importance
+https://stackoverflow.com/questions/72206468/mlr3-extract-variable-importance-for-each-resampling-iteration
+```{r}
+### PREDICTORS: ONLY VELOCITY ###
+var_imp_xbrt_v_k <- autotuner_xbrt_v_k$importance()
+var_imp_xbrt_v_s <- autotuner_xbrt_v_s$importance()
+var_imp_xbrt_v_a <- autotuner_xbrt_v_a$importance()
+var_imp_xbrt_v_ra <- autotuner_xbrt_v_ra$importance()
+
+### PREDICTORS: VELOCITY AND WD ###
+var_imp_xbrt_wd_k <- autotuner_xbrt_wd_k$importance()
+var_imp_xbrt_wd_s <- autotuner_xbrt_wd_s$importance()
+var_imp_xbrt_wd_a <- autotuner_xbrt_wd_a$importance()
+var_imp_xbrt_wd_ra <- autotuner_xbrt_wd_ra$importance()
+
+### PREDICTORS: SAMPLING LOCATIONS ###
+var_imp_xbrt_samp_k <- autotuner_xbrt_samp_k$importance()
+var_imp_xbrt_samp_s <- autotuner_xbrt_samp_s$importance()
+var_imp_xbrt_samp_a <- autotuner_xbrt_samp_a$importance()
+var_imp_xbrt_samp_ra <- autotuner_xbrt_samp_ra$importance()
+
+
+### PREDICTORS: ALL PREDICTORS ###
+var_imp_xbrt_sec_k <- autotuner_xbrt_sec_k$importance()
+var_imp_xbrt_sec_s <- autotuner_xbrt_sec_s$importance()
+var_imp_xbrt_sec_a <- autotuner_xbrt_sec_a$importance()
+var_imp_xbrt_sec_ra <- autotuner_xbrt_sec_ra$importance()
+
+# bind results together
+vi_xbrt_v <- rbind(var_imp_xbrt_v_k, var_imp_xbrt_v_s, var_imp_xbrt_v_a, var_imp_xbrt_v_ra)
+vi_xbrt_wd <- rbind(var_imp_xbrt_wd_k, var_imp_xbrt_wd_s, var_imp_xbrt_wd_a, var_imp_xbrt_wd_ra)
+vi_xbrt_samp <- rbind(var_imp_xbrt_samp_k, var_imp_xbrt_samp_s, var_imp_xbrt_samp_a, var_imp_xbrt_samp_ra)
+vi_xbrt_sec <- rbind(var_imp_xbrt_sec_k, var_imp_xbrt_sec_s, var_imp_xbrt_sec_a, var_imp_xbrt_sec_ra)
+```
+
 ### - Partial dependence plots
 https://stackoverflow.com/questions/66016542/partial-dependence-ale-ice-plots-xgboost-in-r
  xv <- data.matrix(subset(training_v_k, select = -k_index))  # training features
