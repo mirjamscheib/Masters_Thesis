@@ -56,24 +56,22 @@ All predictors:
 - turbidity - ok 
 
 + PDP Plots 
-```{r}
-# Load data containing only v, and v + wd explanatory variables
-data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") |>
-  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
-         velocity = velocity/100) # convert cm/s in to m/s (to have the same units as the hdms)
-   
-
-data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") |>
-  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle), # convert character variables into categorical variables (factors with levels) for ML algorithm 
-         velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
-         wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
-
-data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
-  mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
+Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
          clog_3_class = as.factor(clog_3_class),
          clog_6_class = as.factor(clog_6_class),
          sub_type = as.factor(sub_type),
-         velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
+```{r}
+# Load data containing only v, and v + wd explanatory variables
+data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") |>
+  mutate(velocity = velocity/100) # convert cm/s in to m/s (to have the same units as the hdms)
+   
+
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") |>
+  mutate(velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
+         wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
+
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
+  mutate(velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
          wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
 
 data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
@@ -85,10 +83,6 @@ data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.cs
          hour = as.integer(format(date_time, "%H")),
          minute = as.integer(format(date_time, "%M")),
          second = as.integer(format(date_time, "%S")),
-         Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
-         clog_3_class = as.factor(clog_3_class),
-         clog_6_class = as.factor(clog_6_class),
-         sub_type = as.factor(sub_type),
          velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
          wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
 ```
@@ -507,13 +501,13 @@ lrn_rf <- lrn("regr.ranger", predict_type = "response", importance = "permutatio
 #### Autoplots
 ```{r}
 # plot response against each predictor
-#mlr3viz::autoplot(task, type = "duo")
+mlr3viz::autoplot(task_rf_wd_k, type = "pairs")
 # plot all variables against each other
 #mlr3viz::autoplot(task, type = "pairs")
 
-#tree_mo = tree::tree(sc ~ dem, data = rp)
-#plot(tree_mo)
-#text(tree_mo, pretty = 0)
+tree_mo <- tree::tree(rel_abundance ~., data = training_samp_ra)
+plot(tree_mo)
+text(tree_mo, pretty = 0)
 ```
 
 ### Specify search space
@@ -974,6 +968,24 @@ vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra
 vi_rf_wd <- rbind(var_imp_rf_wd_k, var_imp_rf_wd_s, var_imp_rf_wd_a, var_imp_rf_wd_ra)
 vi_rf_samp <- rbind(var_imp_rf_samp_k, var_imp_rf_samp_s, var_imp_rf_samp_a, var_imp_rf_samp_ra)
 vi_rf_sec <- rbind(var_imp_rf_sec_k, var_imp_rf_sec_s, var_imp_rf_sec_a, var_imp_rf_sec_ra)
+
+# write results into .csv
+write.csv(vi_rf_v, "ML_model/vi_rf_v.csv", row.names = FALSE)
+write.csv(vi_rf_wd, "ML_model/vi_rf_wd.csv", row.names = FALSE)
+write.csv(vi_rf_samp, "ML_model/vi_rf_samp.csv", row.names = FALSE)
+write.csv(vi_rf_sec, "ML_model/vi_rf_sec.csv", row.names = FALSE)
+```
+
+```{r}
+# 2. Extract the variable importance scores
+rf_model <- autotuner_rf_sec_ra$learners[[1]]$train(task_rf_sec_ra)
+importance_scores <- mlr3::getFeatureImportance(var_imp_rf_samp_k)
+
+# 3. Normalize the importance scores to make them relative
+relative_importance <- var_imp_rf_sec_k / sum(var_imp_rf_sec_k)
+
+# Print or visualize the relative variable importance
+print(relative_importance)
 ```
 
 ### - Partial dependence plots
@@ -1815,6 +1827,12 @@ vi_xbrt_v <- rbind(var_imp_xbrt_v_k, var_imp_xbrt_v_s, var_imp_xbrt_v_a, var_imp
 vi_xbrt_wd <- rbind(var_imp_xbrt_wd_k, var_imp_xbrt_wd_s, var_imp_xbrt_wd_a, var_imp_xbrt_wd_ra)
 vi_xbrt_samp <- rbind(var_imp_xbrt_samp_k, var_imp_xbrt_samp_s, var_imp_xbrt_samp_a, var_imp_xbrt_samp_ra)
 vi_xbrt_sec <- rbind(var_imp_xbrt_sec_k, var_imp_xbrt_sec_s, var_imp_xbrt_sec_a, var_imp_xbrt_sec_ra)
+
+# write results into .csv
+write.csv(vi_xgbrt_v, "ML_model/vi_xgbrt_v.csv", row.names = FALSE)
+write.csv(vi_xgbrt_wd, "ML_model/vi_xgbrt_wd.csv", row.names = FALSE)
+write.csv(vi_xgbrt_samp, "ML_model/vi_xgbrt_samp.csv", row.names = FALSE)
+write.csv(vi_xgbrt_sec, "ML_model/vi_xgbrt_sec.csv", row.names = FALSE)
 ```
 
 ### - Partial dependence plots
