@@ -1447,9 +1447,13 @@ univariate <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_univariate.csv"
 ```{r}
 # read all raster results (one time flow velocity classes and one time for habitat suitability)
 # NOTE: CHANGE TO RASTERS WHICH REPRESENT DISCHARGE AT SAMPLING DAY
-GL1_class <- raster("HSC_model/results_foen/GL1_foen_class_3_28.tif")
-GL1_HS <- raster("HSC_model/results_foen/GL1_foen_3_28.tif")
-stack_GL1 <- stack(GL1_class, GL1_HS)
+GL1_class_ezg <- raster("HSC_model/results_foen/GL1_foen_class_3_28.tif")
+GL1_HS_ezg <- raster("HSC_model/results_foen/GL1_foen_3_28.tif")
+stack_GL1_ezg <- stack(GL1_class_ezg, GL1_HS_ezg)
+
+GL1_class_q <- raster("HSC_model/results_foen/GL1_foen_class_3_28.tif")
+GL1_HS_q <- raster("HSC_model/results_foen/GL1_foen_3_28.tif")
+stack_GL1_q <- stack(GL1_class_q, GL1_HS_q)
 
 GL2_class <- raster("HSC_model/results_foen/GL2_foen_class_3_21.tif")
 GL2_HS <- raster("HSC_model/results_foen/GL2_foen_3_21.tif")
@@ -1487,7 +1491,7 @@ univariate_coord_GL1 <- univariate |>
 
 univariate_GL1 <- univariate |>
   subset(Reach_Untersuchungsstelle == "GL1") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index) 
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance) 
 
 ## GL2
 univariate_coord_GL2 <- univariate |>
@@ -1496,7 +1500,7 @@ univariate_coord_GL2 <- univariate |>
 
 univariate_GL2 <- univariate |>
   subset(Reach_Untersuchungsstelle == "GL2") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance)
 
 ## L2
 univariate_coord_L2 <- univariate |>
@@ -1505,7 +1509,7 @@ univariate_coord_L2 <- univariate |>
 
 univariate_L2 <- univariate |>
   subset(Reach_Untersuchungsstelle == "L2") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance)
 
 ## M1
 univariate_coord_M1 <- univariate |>
@@ -1514,7 +1518,7 @@ univariate_coord_M1 <- univariate |>
 
 univariate_M1 <- univariate |>
   subset(Reach_Untersuchungsstelle == "M1") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance)
 
 ## S1
 univariate_coord_S1 <- univariate |>
@@ -1523,7 +1527,7 @@ univariate_coord_S1 <- univariate |>
 
 univariate_S1 <- univariate |>
   subset(Reach_Untersuchungsstelle == "S1") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance)
 
 ## S2
 univariate_coord_S2 <- univariate |>
@@ -1532,7 +1536,7 @@ univariate_coord_S2 <- univariate |>
 
 univariate_S2 <- univariate |>
   subset(Reach_Untersuchungsstelle == "S2") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance)
 
 ## TH4
 univariate_coord_TH4 <- univariate |>
@@ -1541,7 +1545,7 @@ univariate_coord_TH4 <- univariate |>
 
 univariate_TH4 <- univariate |>
   subset(Reach_Untersuchungsstelle == "TH4") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance)
 
 ## VR3
 univariate_coord_VR3 <- univariate |>
@@ -1550,46 +1554,46 @@ univariate_coord_VR3 <- univariate |>
 
 univariate_VR3 <- univariate |>
   subset(Reach_Untersuchungsstelle == "VR3") |>
-  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index)
+  dplyr::select(x, y, Reach_Untersuchungsstelle, abundance, shannon, k_index, rel_abundance)
   
 
 # extract raster information for regression analysis later
-regr_data_GL1 <- extract(stack_GL1, univariate_coord_GL1)
+regr_data_GL1 <- raster::extract(stack_GL1_ezg, univariate_coord_GL1)
 data_GL1 <- cbind(regr_data_GL1, univariate_GL1) |>
   rename(foen_class = GL1_foen_class_3_28,
          foen_hsi = GL1_foen_3_28)
 
-regr_data_GL2 <- extract(stack_GL2, univariate_coord_GL2)
+regr_data_GL2 <- raster::extract(stack_GL2, univariate_coord_GL2)
 data_GL2 <- cbind(regr_data_GL2, univariate_GL2) |>
   rename(foen_class = GL2_foen_class_3_21,
          foen_hsi = GL2_foen_3_21)
 
-regr_data_L2 <- extract(stack_L2, univariate_coord_L2)
+regr_data_L2 <- raster::extract(stack_L2, univariate_coord_L2)
 data_L2 <- cbind(regr_data_L2, univariate_L2) |>
   rename(foen_class = L2_foen_class_2_40,
          foen_hsi = L2_foen_2_40)
 
-regr_data_M1 <- extract(stack_M1, univariate_coord_M1)
+regr_data_M1 <- raster::extract(stack_M1, univariate_coord_M1)
 data_M1 <- cbind(regr_data_M1, univariate_M1) |>
   rename(foen_class = M1_foen_class_0_47,
          foen_hsi = M1_foen_0_47)
 
-regr_data_S1 <- extract(stack_S1, univariate_coord_S1)
+regr_data_S1 <- raster::extract(stack_S1, univariate_coord_S1)
 data_S1 <- cbind(regr_data_S1, univariate_S1) |>
   rename(foen_class = S1_foen_class_2_00,
          foen_hsi = S1_foen_2_00)
 
-regr_data_S2 <- extract(stack_S2, univariate_coord_S2)
+regr_data_S2 <- raster::extract(stack_S2, univariate_coord_S2)
 data_S2 <- cbind(regr_data_S2, univariate_S2) |>
   rename(foen_class = S2_foen_class_2_00,
          foen_hsi = S2_foen_2_00)
 
-regr_data_TH4 <- extract(stack_TH4, univariate_coord_TH4)
+regr_data_TH4 <- raster::extract(stack_TH4, univariate_coord_TH4)
 data_TH4 <- cbind(regr_data_TH4, univariate_TH4) |>
   rename(foen_class = TH4_foen_class_11_45,
          foen_hsi = TH4_foen_11_45)
 
-regr_data_VR3 <- extract(stack_VR3, univariate_coord_VR3)
+regr_data_VR3 <- raster::extract(stack_VR3, univariate_coord_VR3)
 data_VR3 <- cbind(regr_data_VR3, univariate_VR3) |>
   rename(foen_class = VR3_foen_class_2_90,
          foen_hsi = VR3_foen_2_90)
