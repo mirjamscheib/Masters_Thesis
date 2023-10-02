@@ -37,23 +37,21 @@ pkgCheck("purrr")
 pkgCheck("rgdal")
 
 # load self-written functions 
-source("mth_functions.R")
+#source("mth_functions.R")
 
 # set working directory 
-setwd("Pre_Processing")
+#setwd("Pre_Processing")
 ```
 
 Q_study_site_MZB = Q_pegel_MZB * Q_model_site / Q_pegel_model
 
-mit einzugsgebiet einbezogen:
-Q_study_site_MZB = Q_studysite_area / Q_pegel_area * Q_pegel_MZB
 
 *Q_study_site_MZB:* gesuchter Abfluss am Tag und Uhrzeit des Samplings in der Sektion (=Study site)
 *Q_pegel_MZB:* am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit des Samplings (diese Info müsste in der Abiotik tabelle von Diego drin sein)
 *Q_model_site:* im study site gemessenen Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell (findest du in der Tabelle, die ich dir am 3.8. geschickt habe)
 *Q_pegel_model:* am nächstgelegenen Pegel gemessener Abfluss am Tag und Uhrzeit der Feldaufnahmen für das Modell. 
 
-# Reconstruct 
+# Reconstruct using Qs
 ## Q_model_site
 Als Abflusswert für GL1 kannst du die 11 m3/s nehmen, die wir auf Gl2 gemessen haben, da es zwischen Gl1 und Gl2 keine grosse Zuflüsse vorhanden sind.
 ```{r}
@@ -73,65 +71,66 @@ Q_model_VR3 <- 18.8
 ```{r}
 # Extract Q of MI sampling days for all sections (from abiotic data)
 # Load MI Data
-mzb_data <- read_delim("abiotic_mi_sampling/Abiotic_MI_Lab.csv")
+mzb_data <- read_delim("Pre_Processing/abiotic_mi_sampling/Abiotic_MI_Field.csv")
 
 # select relevant columns 
 data <- mzb_data %>%
   mutate(mean_Q = rowMeans(dplyr::select(., Discharge_m3_s_before,
                                   Discharge_m3_s_during,
                                   Discharge_m3_s_after))) %>%
-  dplyr::select(Reach_Untersuchungsstelle, Discharge_m3_s_before,
+  dplyr::select(reach, Discharge_m3_s_before,
                 Discharge_m3_s_after,
                 Discharge_m3_s_during, mean_Q)
+
 
 
 # select only single river sections and calculate mean Q per river section 
 # GL1
 Q_MI_GL1 <- data |>
-  subset(Reach_Untersuchungsstelle == "GL1") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "GL1") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_GL1 = mean(mean_Q)) 
 
 # GL2
 Q_MI_GL2 <- data |>
-  subset(Reach_Untersuchungsstelle == "GL2") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "GL2") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_GL2 =mean(mean_Q))
 
 # L2
 Q_MI_L2 <- data |>
-  subset(Reach_Untersuchungsstelle == "L2") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "L2") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_L2 = mean(mean_Q))
 
 # M1
 Q_MI_M1 <- data |>
-  subset(Reach_Untersuchungsstelle == "M1") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "M1") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_M1 = mean(mean_Q))
 
 # S1
 Q_MI_S1 <- data |>
-  subset(Reach_Untersuchungsstelle == "S1") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "S1") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_S1 = mean(mean_Q))
 
 # S2
 Q_MI_S2 <- data |>
-  subset(Reach_Untersuchungsstelle == "S2") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "S2") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_S2 = mean(mean_Q))
 
 # TH4
 Q_MI_TH4 <- data |>
-  subset(Reach_Untersuchungsstelle == "TH4") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "TH4") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_TH4 = mean(mean_Q))
 
 # VR3
 Q_MI_VR3 <- data |>
-  subset(Reach_Untersuchungsstelle == "VR3") |>
-  dplyr::select(Reach_Untersuchungsstelle, mean_Q) |>
+  subset(reach == "VR3") |>
+  dplyr::select(reach, mean_Q) |>
   summarise(Q_MI_VR3 = mean(mean_Q))
 ```
 
@@ -161,7 +160,51 @@ Q_sampling_TH4 <- Q_MI_TH4 * Q_model_TH4 / Q_pegel_TH4
 Q_sampling_VR3 <- Q_MI_VR3 * Q_model_VR3 / Q_pegel_VR3
 ```
 
-## Save results 
+# Reconstruct using EZG
+mit einzugsgebiet einbezogen:
+Q_study_site_MZB = Q_studysite_area / Q_pegel_area * Q_pegel_MZB
+
+*Q_studysite_area*: Catchment area of the study site (river section) in km2
+*Q_pegel_area*: Catchment area of the pegel area/site in km2
+*Q_pegel_MZB*: = Q_MI_site
+
+## Q_studysite_area
+```{r}
+Q_studysite_area_GL1 <- 380.3714661
+Q_studysite_area_GL2 <- 371.5935349
+Q_studysite_area_L2 <- 320.5772706
+Q_studysite_area_M1 <- 199.4
+Q_studysite_area_S1 <- 269.7738
+Q_studysite_area_S2 <- 287.1519
+Q_studysite_area_TH4 <- 472.2496
+Q_studysite_area_VR3 <- 1182
+```
+
+## Q_pegel_area
+```{r}
+Q_pegel_area_GL1 <- 381 # Glenner - Castrisch: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2498
+Q_pegel_area_GL2 <- 381 # Glenner - Castrisch: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2498 
+Q_pegel_area_L2 <- 614 # Landquart - Felsenbach: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2150
+Q_pegel_area_M1 <- 472  # Moesa-Lumino: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2420
+Q_pegel_area_S1 <- 261 # Sitter - St. Gallen, Bruggen / Au: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2468
+Q_pegel_area_S2 <- 261 # Sitter - St. Gallen, Bruggen / Au: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2468
+Q_pegel_area_TH4 <- 493 # Thur - Jonschwil, Mühlau: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2303
+Q_pegel_area_VR3 <- 774 # Vorderrhein - Ilanz: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2033
+```
+
+## Calculate Q
+```{r}
+Q_study_site_MZB_GL1 <- Q_studysite_area_GL1 / Q_pegel_area_GL1 * Q_MI_GL1
+Q_study_site_MZB_GL2 <- Q_studysite_area_GL2 / Q_pegel_area_GL2 * Q_MI_GL2
+Q_study_site_MZB_L2 <- Q_studysite_area_L2 / Q_pegel_area_GL1 * Q_MI_L2
+Q_study_site_MZB_M1 <- Q_studysite_area_M1 / Q_pegel_area_GL1 * Q_MI_M1
+Q_study_site_MZB_S1 <- Q_studysite_area_S1 / Q_pegel_area_GL1 * Q_MI_S1
+Q_study_site_MZB_S2 <- Q_studysite_area_S2 / Q_pegel_area_GL1 * Q_MI_S2
+Q_study_site_MZB_TH4 <- Q_studysite_area_TH4 / Q_pegel_area_GL1 * Q_MI_TH4
+Q_study_site_MZB_VR3 <- Q_studysite_area_VR3 / Q_pegel_area_GL1 * Q_MI_VR3
+```
+
+# Save results
 ```{r}
 # Put all results into a dataframe 
 results <- data.frame(Q_model = c(Q_model_GL1, Q_model_GL2, Q_model_L2, Q_model_M1,
@@ -171,48 +214,81 @@ results <- data.frame(Q_model = c(Q_model_GL1, Q_model_GL2, Q_model_L2, Q_model_
                                Q_MI_TH4$Q_MI_TH4, Q_MI_VR3$Q_MI_VR3), 
                       Q_pegel = c(Q_pegel_GL1, Q_pegel_GL2, Q_pegel_L2, Q_pegel_M1,
                                   Q_pegel_S1,Q_pegel_S2, Q_pegel_TH4, Q_pegel_VR3), 
-                      Q_reconstructed = c(Q_sampling_GL1, Q_sampling_GL2, Q_sampling_L2,
-                                          Q_sampling_M1, Q_sampling_S1, Q_sampling_S2,
-                                          Q_sampling_TH4, Q_sampling_VR3),
+                      Q_pegel_EZG = c(Q_pegel_area_GL1, Q_pegel_area_GL2, Q_pegel_area_M1, Q_pegel_area_L2, Q_pegel_area_S1, Q_pegel_area_S2, Q_pegel_area_TH4, Q_pegel_area_VR3),
+                      Q_study_EZG = c(Q_studysite_area_GL1, Q_studysite_area_GL2, Q_studysite_area_L2, Q_studysite_area_M1, Q_studysite_area_S1, Q_studysite_area_S2, Q_studysite_area_TH4, Q_studysite_area_VR3),
+                      Q_reconstructed_EZG = c(Q_study_site_MZB_GL1$Q_MI_GL1, Q_study_site_MZB_GL2$Q_MI_GL2, Q_study_site_MZB_L2$Q_MI_L2, Q_study_site_MZB_M1$Q_MI_M1, Q_study_site_MZB_S1$Q_MI_S1, Q_study_site_MZB_S2$Q_MI_S2, Q_study_site_MZB_TH4$Q_MI_TH4, Q_study_site_MZB_VR3$Q_MI_VR3),
                       section = c("GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"))
 
-
 # Save results as .csv - file 
-write.csv(results, "reconstructed_discharges.csv", row.names = FALSE)
+write.csv(results, "Pre_Processing/reconstructed_discharges.csv", row.names = FALSE)
 ```
 
+                                  
 # Regression Analysis Prep
 ## Load Rasters
 ```{r}
 # read rasters containing wd and velocity 
-GL1_samp <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
-GL2_samp <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
-L2_samp <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
-M1_samp <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
-S1_samp <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
-S2_samp <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
-TH4_samp <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
-VR3_samp <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+# RASTERS WITH EZG CALCULATED
+GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
+S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
+S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
+TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
+VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+
+# RASTERS WITH Qs CALCULATED
+GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+GL2_q <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+L2_q <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+M1_q <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
+S1_q <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
+S2_q <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
+TH4_q <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
+VR3_q <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
 
 # rename raster 
-names(GL1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(GL2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(L2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(M1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(S1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(S2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(TH4_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(VR3_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
+# RASTERS WITH EZG CALCULATED
+names(GL1_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(GL2_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(L2_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(M1_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S1_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S2_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(TH4_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(VR3_ezg) <- c("velocity", "wd_cm")  # Replace with your desired new names
+
+# RASTERS WITH Qs CALCULATED
+names(GL1_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(GL2_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(L2_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(M1_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S1_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(S2_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(TH4_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
+names(VR3_q) <- c("velocity", "wd_cm")  # Replace with your desired new names
 
 # assign coordinate system 
-crs(GL1_samp) <- "EPSG: 2056"
-crs(GL2_samp) <- "EPSG: 2056"
-crs(L2_samp) <- "EPSG: 2056"
-crs(M1_samp) <- "EPSG: 2056"
-crs(S1_samp) <- "EPSG: 2056"
-crs(S2_samp) <- "EPSG: 2056"
-crs(TH4_samp) <- "EPSG: 2056"
-crs(VR3_samp) <- "EPSG: 2056"
+# RASTERS WITH EZG CALCULATED
+crs(GL1_ezg) <- "EPSG: 2056"
+crs(GL2_ezg) <- "EPSG: 2056"
+crs(L2_ezg) <- "EPSG: 2056"
+crs(M1_ezg) <- "EPSG: 2056"
+crs(S1_ezg) <- "EPSG: 2056"
+crs(S2_ezg) <- "EPSG: 2056"
+crs(TH4_ezg) <- "EPSG: 2056"
+crs(VR3_ezg) <- "EPSG: 2056"
+
+# RASTERS WITH Qs CALCULATED
+crs(GL1_q) <- "EPSG: 2056"
+crs(GL2_q) <- "EPSG: 2056"
+crs(L2_q) <- "EPSG: 2056"
+crs(M1_q) <- "EPSG: 2056"
+crs(S1_q) <- "EPSG: 2056"
+crs(S2_q) <- "EPSG: 2056"
+crs(TH4_q) <- "EPSG: 2056"
+crs(VR3_q) <- "EPSG: 2056"
 ```
 
 ## Load Data
@@ -231,7 +307,8 @@ coord_GL1 <- data_wd |>
   dplyr::select(x, y) 
 
 GL1 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "GL1")
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(Reach_Untersuchungsstelle)
 
 ## GL2
 coord_GL2 <- data_wd |>
@@ -239,7 +316,8 @@ coord_GL2 <- data_wd |>
   dplyr::select(x, y) 
 
 GL2 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "GL2")
+  subset(Reach_Untersuchungsstelle == "GL2")|>
+  dplyr::select(Reach_Untersuchungsstelle)
 
 ## L2
 coord_L2 <- data_wd |>
@@ -247,7 +325,8 @@ coord_L2 <- data_wd |>
   dplyr::select(x, y) 
 
 L2 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "L2")
+  subset(Reach_Untersuchungsstelle == "L2")|>
+  dplyr::select(Reach_Untersuchungsstelle)
 
 ## M1
 coord_M1 <- data_wd |>
@@ -255,7 +334,8 @@ coord_M1 <- data_wd |>
   dplyr::select(x, y) 
 
 M1 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "M1")
+  subset(Reach_Untersuchungsstelle == "M1")|>
+  dplyr::select(Reach_Untersuchungsstelle)
 
 ## S1
 coord_S1 <- data_wd |>
@@ -263,7 +343,8 @@ coord_S1 <- data_wd |>
   dplyr::select(x, y) 
 
 S1 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "S1")
+  subset(Reach_Untersuchungsstelle == "S1")|>
+  dplyr::select(Reach_Untersuchungsstelle)
 
 ## S2
 coord_S2 <- data_wd |>
@@ -271,7 +352,8 @@ coord_S2 <- data_wd |>
   dplyr::select(x, y) 
 
 S2 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "S2")
+  subset(Reach_Untersuchungsstelle == "S2")|>
+  dplyr::select(Reach_Untersuchungsstelle)
 
 ## TH4
 coord_TH4 <- data_wd |>
@@ -279,7 +361,8 @@ coord_TH4 <- data_wd |>
   dplyr::select(x, y) 
 
 TH4 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "TH4")
+  subset(Reach_Untersuchungsstelle == "TH4")|>
+  dplyr::select(Reach_Untersuchungsstelle)
 
 ## VR3
 coord_VR3 <- data_wd |>
@@ -287,57 +370,128 @@ coord_VR3 <- data_wd |>
   dplyr::select(x, y) 
 
 VR3 <- data_wd |>
-  subset(Reach_Untersuchungsstelle == "VR3")
+  subset(Reach_Untersuchungsstelle == "VR3")|>
+  dplyr::select(Reach_Untersuchungsstelle)
 ```
 
 ### Extract Results
 ```{r}
 # extract raster information for regression analysis later
 # GL1 
-regr_data_GL1_wd <- extract(GL1_samp, coord_GL1) 
+regr_GL1_ezg <- raster::extract(GL1_ezg, coord_GL1) |>
+  as.data.frame(regr_GL1_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm)
+
+regr_GL1_q <- raster::extract(GL1_q, coord_GL1) |>
+  as.data.frame(regr_GL1_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 
 # GL2
-regr_data_GL2_wd <- extract(GL2_samp, coord_GL2) 
+regr_GL2_ezg <- raster::extract(GL2_ezg, coord_GL2)|>
+  as.data.frame(regr_GL2_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm)
+
+regr_GL2_q <- raster::extract(GL2_q, coord_GL2) |>
+  as.data.frame(regr_GL2_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 
 # L2
-regr_data_L2_wd <- extract(L2_samp, coord_L2) 
+regr_L2_ezg <- raster::extract(L2_ezg, coord_L2)|>
+  as.data.frame(regr_L2_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm)
+
+regr_L2_q <- raster::extract(L2_q, coord_L2)  |>
+  as.data.frame(regr_L2_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 
 # M1
-regr_data_M1_wd <- extract(M1_samp, coord_M1) 
+regr_M1_ezg <- raster::extract(M1_ezg, coord_M1) |>
+  as.data.frame(regr_M1_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm)
+
+regr_M1_q <- raster::extract(M1_q, coord_M1)  |>
+  as.data.frame(regr_M1_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 
 # S1
-regr_data_S1_wd <- extract(S1_samp, coord_S1) 
+regr_S1_ezg <- raster::extract(S1_ezg, coord_S1) |>
+  as.data.frame(regr_S1_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm)
+
+regr_S1_q <- raster::extract(S1_q, coord_S1) |>
+  as.data.frame(regr_S1_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 
 # S2
-regr_data_S2_wd <- extract(S2_samp, coord_S2) 
+regr_S2_ezg <- raster::extract(S2_ezg, coord_S2) |>
+  as.data.frame(regr_S2_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm)
+
+regr_S2_q <- raster::extract(S2_q, coord_S2) |>
+  as.data.frame(regr_S2_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 
 # TH4
-regr_data_TH4_wd <- extract(TH4_samp, coord_TH4) 
+regr_TH4_ezg <- raster::extract(TH4_ezg, coord_TH4) |>
+  as.data.frame(regr_TH4_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm)
+
+regr_TH4_q <- raster::extract(TH4_q, coord_TH4) |>
+  as.data.frame(regr_TH4_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 
 # VR3
-regr_data_VR3_wd <- extract(VR3_samp, coord_VR3) 
+regr_VR3_ezg <- raster::extract(VR3_ezg, coord_VR3) |>
+  as.data.frame(regr_VR3_ezg) |>
+  rename(v_ezg = velocity,
+         wd_cm_ezg = wd_cm) 
+
+regr_VR3_q <- raster::extract(VR3_q, coord_VR3) |>
+  as.data.frame(regr_VR3_q) |>
+  rename(v_q = velocity,
+         wd_cm_q = wd_cm)
 ```
 
 ### Combine Results
 ```{r}
 # combine all results into dataframe
 # GL1
-data_GL1 <- cbind(regr_rf_data_GL1_wd_k, regr_rf_data_GL1_wd_s, regr_rf_data_GL1_wd_a, regr_rf_data_GL1_v_k, regr_rf_data_GL1_v_s, regr_rf_data_GL1_v_a, regr_brt_data_GL1_wd_k, regr_brt_data_GL1_wd_s, regr_brt_data_GL1_wd_a, regr_brt_data_GL1_v_k, regr_brt_data_GL1_v_s, regr_brt_data_GL1_v_a, GL1) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_GL1_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_GL1_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_GL1_wd_a,
-         rf_pred_k_index_v = regr_rf_data_GL1_v_k,
-         rf_pred_shannon_v = regr_rf_data_GL1_v_s,
-         rf_pred_abundance_v = regr_rf_data_GL1_v_a,
-         brt_pred_k_index_2 = regr_brt_data_GL1_wd_k,
-         brt_pred_shannon_2 = regr_brt_data_GL1_wd_s,
-         brt_pred_abundance_2 = regr_brt_data_GL1_wd_a,
-         brt_pred_k_index_v = regr_brt_data_GL1_v_k,
-         brt_pred_shannon_v = regr_brt_data_GL1_v_s,
-         brt_pred_abundance_v = regr_brt_data_GL1_v_a,
-         obs_k_index = k_index,
-         obs_shannon = shannon,
-         obs_abundance = abundance)
+data_GL1 <- cbind(regr_GL1_ezg, regr_GL1_q, GL1)
+ 
+# GL2
+data_GL2 <- cbind(regr_GL2_ezg, regr_GL2_q, GL2)
+
+# L2
+data_L2 <- cbind(regr_L2_ezg, regr_L2_q, L2)
+
+# M1
+data_M1 <- cbind(regr_M1_ezg, regr_M1_q, M1)
+
+# S1
+data_S1 <- cbind(regr_S1_ezg, regr_S1_q, S1)
+
+# S2
+data_S2 <- cbind(regr_S2_ezg, regr_S2_q, S2)
+
+# TH4
+data_TH4 <- cbind(regr_TH4_ezg, regr_TH4_q, TH4)
+
+# VR3
+data_VR3 <- cbind(regr_VR3_ezg, regr_VR3_q, VR3)
 ```
 
 ### Results from Extraction 
@@ -347,7 +501,7 @@ data_GL1 <- cbind(regr_rf_data_GL1_wd_k, regr_rf_data_GL1_wd_s, regr_rf_data_GL1
 regr_analysis <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, data_TH4, data_VR3)
 
 # export to .csv file
-write.csv(regr_analysis, "Stat_Analysis/ml_regr_analysis.csv", row.names = FALSE)
+write.csv(regr_analysis, "Stat_Analysis/hdm_regr_analysis.csv", row.names = FALSE)
 ```
 
 

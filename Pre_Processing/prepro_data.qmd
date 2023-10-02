@@ -125,11 +125,11 @@ vr6 <- read_delim("abiotic_mi_sampling/GPS_Points/VR6.csv", col_names = FALSE)
 abiotic1 <- abiotic[ ,c(1:23)]
 
 # label header into R friendly characters &
-colnames(abiotic1) <- c("River", "Hydropeaking_river_type", "Hydrokeaking_residual_flow_natural_near_natural", "Reach_Untersuchungsstelle", "Abiotic_measured_by", "Date_of_survey", "Transect", "Sampling_point", "Time_of_survey", "DIstance_Wasseranschlaglinie_m", "Flow_velocity_v60_cm/s", "Category_Flow_velocity_5_Bewohnbarkeits-klasse", "Water_depth_cm", "Category_Water_depth", "Clogging_6_Klassen", "Clogging_3_Klassen", "Substrate_type", "Algae_cover_Bewuchsdichte_5_Kategorien_1-5", "Moos_cover_Deckungsgrad_6_Kategorien_0-5", "CPOM_cover_Deckungsgrad_5_Kategorien_1-5", "RTK-GPS_Nr", "MZB_kick-net_taken_by", "Varia")
+colnames(abiotic1) <- c("River", "Hydropeaking_river_type", "Hydrokeaking_residual_flow_natural_near_natural", "reach", "Abiotic_measured_by", "Date_of_survey", "Transect", "Sampling_point", "Time_of_survey", "DIstance_Wasseranschlaglinie_m", "Flow_velocity_v60_cm/s", "Category_Flow_velocity_5_Bewohnbarkeits-klasse", "Water_depth_cm", "Category_Water_depth", "Clogging_6_Klassen", "Clogging_3_Klassen", "Substrate_type", "Algae_cover_Bewuchsdichte_5_Kategorien_1-5", "Moos_cover_Deckungsgrad_6_Kategorien_0-5", "CPOM_cover_Deckungsgrad_5_Kategorien_1-5", "RTK-GPS_Nr", "MZB_kick-net_taken_by", "Varia")
 
 # create join key with "river-transect-sampling_point"
 abiotic1 <- abiotic1 |>
-  mutate(join_key = paste(Reach_Untersuchungsstelle, Transect, Sampling_point, sep = "-")) 
+  mutate(join_key = paste(reach, Transect, Sampling_point, sep = "-")) 
 
 # remove NA-NA-NA rows 
 abiotic1 <- abiotic1 |>
@@ -137,73 +137,100 @@ abiotic1 <- abiotic1 |>
 ```
 
 ### Abiotic2
+abiotic2_sum <- abiotic2 |>
+  group_by(River, Reach_Untersuchungsstelle, Abiotic_measured_by, Date_of_survey, Gauging_station) |>
+ summarise() |>
+  na.omit()
 ```{r}
 # cut abiotic data into two datasets - the two different tables which are in the original excel file 
-abiotic2 <- abiotic[c(1:177) ,c(25:39)]
+abiotic2 <- abiotic[c(1:162) ,c(25:39)]
 
 # label header into R friendly characters 
-colnames(abiotic2) <- c("River", "Reach_Untersuchungsstelle", "Abiotic_measured_by", "Date_of_survey", "Time_of_survey", "pH", "Conductivity_ys_s", "Oxygen_content_mg_l", "Oxygen_saturation_%", "Turbidity_FNU", "Temperature_C", "Discharge_m3_s", "Water_gauge_MueM", "Gauging_station", "Varia")
+colnames(abiotic2) <- c("River", "reach", "Abiotic_measured_by", "Date_of_survey", "Time_of_survey", "pH", "Conductivity_ys_s", "Oxygen_content_mg_l", "Oxygen_saturation_%", "Turbidity_FNU", "Temperature_C", "Discharge_m3_s", "Water_gauge_MueM", "Gauging_station", "Varia")
 
 # group and sum variables, which can be grouped  
 abiotic2_sum <- abiotic2 |>
-  group_by(River, Reach_Untersuchungsstelle, Abiotic_measured_by, Date_of_survey, Gauging_station) |>
-  summarise() |>
-  na.omit()
+  dplyr::select(River, reach, Abiotic_measured_by, Date_of_survey, Gauging_station)
 
 # Reshaping the data into three columns
+#abiotic2$time_new <- abiotic2 |>
+#  dplyr::select(Time_of_survey, Reach_Untersuchungsstelle)
+
 num_rows <- length(abiotic2$Time_of_survey) / 3 
 
 # Extracting every third value
 time <- data.frame(
   Time_of_survey_before = abiotic2$Time_of_survey[seq(1, length(abiotic2$Time_of_survey), by = 3)],
   Time_of_survey_during = abiotic2$Time_of_survey[seq(2, length(abiotic2$Time_of_survey), by = 3)],
-  Time_of_survey_after = abiotic2$Time_of_survey[seq(3, length(abiotic2$Time_of_survey), by = 3)]
+  Time_of_survey_after = abiotic2$Time_of_survey[seq(3, length(abiotic2$Time_of_survey), by = 3)],
+  reach = abiotic2$reach[seq(3, length(abiotic2$Time_of_survey), by = 3)]
 )
 time <- na.omit(time)
 
 pH <- as.data.frame(matrix(unlist(abiotic2$pH, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(pH) <- c("pH_before", "pH_during", "pH_after")
+pH_reach <- as.data.frame(matrix(unlist(abiotic2$reach, use.names=FALSE),ncol=3, byrow=TRUE))
+pH_reach <- pH_reach[, 1]
+pH <- cbind(pH, pH_reach)
+colnames(pH) <- c("pH_before", "pH_during", "pH_after", "reach")
 pH <- na.omit(pH)
 
 conductivity <- as.data.frame(matrix(unlist(abiotic2$Conductivity_ys_s, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(conductivity) <- c("Conductivity_ys_s_before", "Conductivity_ys_s_during", "Conductivity_ys_s_after")
+conductivity <- cbind(conductivity, pH_reach)
+colnames(conductivity) <- c("Conductivity_ys_s_before", "Conductivity_ys_s_during", "Conductivity_ys_s_after", "reach")
 conductivity <- na.omit(conductivity)
 
 oxy_content <- as.data.frame(matrix(unlist(abiotic2$Oxygen_content_mg_l, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(oxy_content) <- c("Oxygen_content_mg_l_before", "Oxygen_content_mg_l_during", "Oxygen_content_mg_l_after")
+oxy_content <- cbind(oxy_content, pH_reach)
+colnames(oxy_content) <- c("Oxygen_content_mg_l_before", "Oxygen_content_mg_l_during", "Oxygen_content_mg_l_after", "reach")
 oxy_content <- na.omit(oxy_content)
 
 oxy_sat <- as.data.frame(matrix(unlist(abiotic2$`Oxygen_saturation_%`, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(oxy_sat) <- c("Oxygen_saturation_%_before", "Oxygen_saturation_%_during", "Oxygen_saturation_%_after")
+oxy_sat <- cbind(oxy_sat, pH_reach)
+colnames(oxy_sat) <- c("Oxygen_saturation_%_before", "Oxygen_saturation_%_during", "Oxygen_saturation_%_after", "reach")
 oxy_sat <- oxy_sat[c(1:54), ]
 
 turbidity <- as.data.frame(matrix(unlist(abiotic2$Turbidity_FNU, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(turbidity) <- c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after")
+turbidity <- cbind(turbidity, pH_reach)
+colnames(turbidity) <- c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after", "reach")
 turbidity <- na.omit(turbidity)
 
 temp <- as.data.frame(matrix(unlist(abiotic2$Temperature_C, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(temp) <- c("Temperature_C_before", "Temperature_C_during", "Temperature_C_after")
+temp <- cbind(temp, pH_reach)
+colnames(temp) <- c("Temperature_C_before", "Temperature_C_during", "Temperature_C_after", "reach")
 temp <- na.omit(temp)
 
 discharge <- as.data.frame(matrix(unlist(abiotic2$Discharge_m3_s, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(discharge) <- c("Discharge_m3_s_before", "Discharge_m3_s_during", "Discharge_m3_s_after")
+discharge <- cbind(discharge, pH_reach)
+colnames(discharge) <- c("Discharge_m3_s_before", "Discharge_m3_s_during", "Discharge_m3_s_after", "reach")
 discharge <- na.omit(discharge)
 
 water_gauge <- as.data.frame(matrix(unlist(abiotic2$Water_gauge_MueM, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(water_gauge) <- c("Water_gauge_MueM_before", "Water_gauge_MueM_during", "Water_gauge_MueM_after")
+water_gauge <- cbind(water_gauge, pH_reach)
+colnames(water_gauge) <- c("Water_gauge_MueM_before", "Water_gauge_MueM_during", "Water_gauge_MueM_after", "reach")
 water_gauge <- na.omit(water_gauge)
 
 varia <- as.data.frame(matrix(unlist(abiotic2$Varia, use.names=FALSE),ncol=3, byrow=TRUE))
-colnames(varia) <- c("Varia_before", "Varia_during", "Varia_after")
+varia <- cbind(varia, pH_reach)
+colnames(varia) <- c("Varia_before", "Varia_during", "Varia_after", "reach")
 varia <- varia[c(1:54), ]
 
 # bind dataframes together to one dataframe  
-abiotic2 <- cbind(abiotic2_sum, time, pH, conductivity, oxy_content, oxy_sat, turbidity, temp, discharge, water_gauge, varia)
+abiotic2 <- abiotic2_sum |>
+  full_join(time, by = "reach") |>
+  full_join(pH, by = "reach") |>
+  full_join(conductivity, by = "reach") |>
+  full_join(oxy_content, by = "reach") |>
+  full_join(oxy_sat, by = "reach") |>
+  full_join(turbidity, by = "reach") |>
+  full_join(temp, by = "reach") |>
+  full_join(discharge, by = "reach") |>
+  full_join(water_gauge, by = "reach") |>
+  full_join(varia, by = "reach")
 
 
 # bind abiotic1 with abiotic2 together
 abiotic <- abiotic1 |>
-  full_join(abiotic2, by = "Reach_Untersuchungsstelle")
+  full_join(abiotic2, by = "reach", relationship = "many-to-many")
 ```
 
 ## MI Data
@@ -457,60 +484,5 @@ abiotic_lab_model <- abiotic_lab_model |>
 # write excel with Lab results 
 write_xlsx(abiotic_lab_model,"abiotic_mi_sampling\\Abiotic_MI_Lab_Model.xlsx") 
 ```
-
-# test
-```{r}
-# abiotic1, abiotic2, abiotic, field1, lab_file, coordinates, abiotic_field, abiotic_lab, abiotic_lab_model
-
-abiotic1 # 648 rows - unique(abiotic1$join_key)
-abiotic1_t <- unique(abiotic1$Reach_Untersuchungsstelle)
-length(abiotic1_t) <- length(field_t)
-
-abiotic2 # 54 rows
-abiotic2_t <- unique(abiotic2$Reach_Untersuchungsstelle)
-length(abiotic2_t) <- length(field_t)
-
-abiotic # 648 rows
-abiotic_t <- unique(abiotic$`Reach (Untersuchungsstelle)...4`)
-length(abiotic_t) <- length(field_t)
-
-# field data 
-field1 # 753 rows
-field_t <- unique(field1$Sampling_site) # 59 river sections 
-
-# lab data 
-lab_file # 300 rows
-lab_t <- unique(lab_file$Sampling_site) # 59 river sections 
-length(lab_t) <- length(field_t)
-
-# coordinates
-coordinates # 708 rows
-708/12 # 59 river sections 
-coord <- c("gl1", "gl2", "gl3", "gl4", "gl5", "gl6", "l1", "l2", "l3", "l4", "lr", "m1", "m2", "m3", "m4", "m5", "m6", "m7", "mr", "p1", "p2", "p3", "pr", "s1", "s2", "s3", "s4", "s5", "s6", "sa1", "sa2", "sa3", "sa4", "sa5", "sa6", "sa7", "sar", "se1", "se2", "se3", "se4", "sr", "t1", "t2", "t3", "th1", "th2", "th3", "th4", "th5", "ve2", "ve3", "ve4", "vr1", "vr2", "vr3", "vr4", "vr5", "vr6")
-coord <- toupper(coord) 
-
-abiotic_field # 765 rows
-abiotic_field_t <- unique(abiotic_field$Reach_Untersuchungsstelle)
-length(abiotic_field_t) <- length(field_t)
-
-abiotic_lab # 717 rows
-abiotic_lab_t <- unique(abiotic_lab$Reach_Untersuchungsstelle)
-length(abiotic_lab_t) <- length(field_t)
-
-abiotic_lab_model # 300 rows 
-abiotic_lab_model_t <- unique(abiotic_lab_model$Reach_Untersuchungsstelle)
-length(abiotic_lab_model_t) <- length(field_t)
-
-test <- as.data.frame(cbind(field_t, coord, lab_t, abiotic1_t, abiotic2_t, abiotic_t, abiotic_field_t, abiotic_lab_t, abiotic_lab_model_t))
-
-write_xlsx(test,"abiotic_mi_sampling\\Test.xlsx")  
-```
-
-
-
-
-
-
-
 
 

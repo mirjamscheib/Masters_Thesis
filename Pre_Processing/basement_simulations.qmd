@@ -41,6 +41,18 @@ setwd("Pre_Processing")
 # Glenner
 ## GL1
 ```{r}
+GL1_2_56_ezg <- basement(model_json = "hdm_models/GL1/model.json",
+                       model_new = "hdm_models/GL1/model_new.json",
+                       mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
+                       simulation_json = "hdm_models/GL1/simulation.json",
+                       simulation_new = "hdm_models/GL1/simulation_new.json",
+                       setup_h5 = "hdm_models/GL1/setup.h5",
+                       results_h5 = "hdm_models/GL1/results_GL1_2_56_ezg.h5",
+                       results_xdmf = "hdm_models/GL1/results_GL1_2_56_ezg",
+                       results_json = "hdm_models/GL1/results.json",
+                       discharge = 2.56,
+                       strickler = 38)
+
 GL1_2_74 <- basement(model_json = "hdm_models/GL1/model.json",
                        model_new = "hdm_models/GL1/model_new.json",
                        mesh_path = "hdm_models/GL1/GL1_mesh_computational-mesh_3.2dm", 
@@ -178,6 +190,18 @@ GL1_31_76 <- basement(model_json = "hdm_models/GL1/model.json",
 
 ## GL2
 ```{r}
+GL2_2_37_ezg <-  basement(model_json = "hdm_models/GL2/model.json", 
+             model_new = "hdm_models/GL2/model_new.json",
+             mesh_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm", 
+             simulation_json = "hdm_models/GL2/simulation.json",
+             simulation_new = "hdm_models/GL2/simulation_new.json",
+             setup_h5 = "hdm_models/GL2/setup.h5",
+             results_h5 = "hdm_models/GL2/results_GL2_2_37_ezg.h5",
+             results_xdmf = "hdm_models/GL2/results_GL2_2_37_ezg",
+             results_json = "hdm_models/GL2/results.json",
+             discharge = 2.37, 
+             strickler = 38)
+
 GL2_3_21 <-  basement(model_json = "hdm_models/GL2/model.json", 
              model_new = "hdm_models/GL2/model_new.json",
              mesh_path = "hdm_models/GL2/Gl2_computational-mesh_mod.2dm", 
@@ -375,6 +399,18 @@ L2_9_24 <-  basement(model_json = "hdm_models/L2/model.json",
                      discharge = 9.24,
                      strickler = 11.5)
 
+L2_9_54_ezg <-  basement(model_json = "hdm_models/L2/model.json", 
+                     model_new = "hdm_models/L2/model_new.json",
+                     mesh_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm", 
+                     simulation_json = "hdm_models/L2/simulation.json",
+                     simulation_new = "hdm_models/L2/simulation_new.json",
+                     setup_h5 = "hdm_models/L2/setup.h5",
+                     results_h5 = "hdm_models/L2/results_L2_9_54_ezg.h5",
+                     results_xdmf = "hdm_models/L2/results_L2_9_54_ezg",
+                     results_json = "hdm_models/L2/results.json",
+                     discharge = 9.54,
+                     strickler = 11.5)
+
 L2_11_40 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
                      mesh_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm", 
@@ -450,6 +486,18 @@ M1_0_60 <-    basement(model_json = "hdm_models/M1/model.json",
                        results_xdmf = "hdm_models/M1/results_M1_0_60",
                        results_json = "hdm_models/M1/results.json",
                        discharge = 0.60, 
+                       strickler = 35.0)
+
+M1_1_50_ezg <-    basement(model_json = "hdm_models/M1/model.json",  
+                       model_new = "hdm_models/M1/model_new.json",
+                       mesh_path = "hdm_models/M1/moesa_mzb_uebersicht_computational-mesh2.2dm", 
+                       simulation_json = "hdm_models/M1/simulation.json",
+                       simulation_new = "hdm_models/M1/simulation_new.json",
+                       setup_h5 = "hdm_models/M1/setup.h5",
+                       results_h5 = "hdm_models/M1/results_M1_1_50_ezg.h5",
+                       results_xdmf = "hdm_models/M1/results_M1_1_50_ezg",
+                       results_json = "hdm_models/M1/results.json",
+                       discharge = 1.50, 
                        strickler = 35.0)
 
 M1_4_00 <-    basement(model_json = "hdm_models/M1/model.json",  
@@ -566,6 +614,18 @@ M1_22_84 <-    basement(model_json = "hdm_models/M1/model.json",
 # Sitter
 ## S1
 ```{r}
+S1_1_94_ezg <- basement(model_json = "hdm_models/S1/model.json",  
+                    model_new = "hdm_models/S1/model_new.json",
+                    mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
+                    simulation_json = "hdm_models/S1/simulation.json",
+                    simulation_new = "hdm_models/S1/simulation_new.json",
+                    setup_h5 = "hdm_models/S1/setup.h5", 
+                    results_h5 = "hdm_models/S1/results_S1_1_94_ezg.h5",
+                    results_xdmf = "hdm_models/S1/results_S1_1_94_ezg", 
+                    results_json = "hdm_models/S1/results.json",
+                    discharge = 1.94, 
+                    strickler = 33.0)
+
 S1_2_00 <- basement(model_json = "hdm_models/S1/model.json",  
                     model_new = "hdm_models/S1/model_new.json",
                     mesh_path = "hdm_models/S1/S1_mesh_computational-mesh1.2dm", 
@@ -677,6 +737,18 @@ S1_20_00 <- basement(model_json = "hdm_models/S1/model.json",
 
 ## S2
 ```{r}
+S2_1_93_ezg <- basement(model_json = "hdm_models/S2/model.json", 
+                    model_new = "hdm_models/S2/model_new.json",
+                    mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
+                    simulation_json = "hdm_models/S2/simulation.json",
+                    simulation_new = "hdm_models/S2/simulation_new.json",
+                    setup_h5 = "hdm_models/S2/setup.h5",
+                    results_h5 = "hdm_models/S2/results_S2_1_93_ezg.h5",
+                    results_xdmf = "hdm_models/S2/results_S2_1_93_ezg",
+                    results_json = "hdm_models/S2/results.json",
+                    discharge = 1.93, 
+                    strickler = 36.0)
+
 S2_2_00 <- basement(model_json = "hdm_models/S2/model.json", 
                     model_new = "hdm_models/S2/model_new.json",
                     mesh_path = "hdm_models/S2/computational-mesh-7-290323.2dm", 
@@ -909,6 +981,18 @@ TH4_32_93 <- basement(model_json = "hdm_models/TH4/model.json",
                       discharge = 32.93, 
                       strickler = 42.0)
 
+TH4_35_12_ezg <- basement(model_json = "hdm_models/TH4/model.json",
+                      model_new = "hdm_models/TH4/model_new.json",
+                      mesh_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm", 
+                      simulation_json = "hdm_models/TH4/simulation.json",
+                      simulation_new = "hdm_models/TH4/simulation_new.json",
+                      setup_h5 = "hdm_models/TH4/setup.h5",
+                      results_h5 = "hdm_models/TH4/results_TH4_35_12_ezg.h5",
+                      results_xdmf = "hdm_models/TH4/results_TH4_35_12_ezg",
+                      results_json = "hdm_models/TH4/results.json", 
+                      discharge = 35.12, 
+                      strickler = 42.0)
+
 TH4_36_30 <- basement(model_json = "hdm_models/TH4/model.json",
                       model_new = "hdm_models/TH4/model_new.json",
                       mesh_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm", 
@@ -995,6 +1079,18 @@ VR3_18_80 <- basement(model_json = "hdm_models/VR3/model.json",
                      results_xdmf = "hdm_models/VR3/results_VR3_18_80",
                      results_json = "hdm_models/VR3/results.json",
                      discharge = 18.80, 
+                     strickler = 35.0)
+
+VR3_21_51_ezg <- basement(model_json = "hdm_models/VR3/model.json", 
+                     model_new = "hdm_models/VR3/model_new.json",
+                     mesh_path = "hdm_models/VR3/VR_computational-mesh_3.2dm", 
+                     simulation_json = "hdm_models/VR3/simulation.json", 
+                     simulation_new = "hdm_models/VR3/simulation_new.json",
+                     setup_h5 = "hdm_models/VR3/setup.h5",
+                     results_h5 = "hdm_models/VR3/results_VR3_21_51_ezg.h5",
+                     results_xdmf = "hdm_models/VR3/results_VR3_21_51_ezg",
+                     results_json = "hdm_models/VR3/results.json",
+                     discharge = 21.51, 
                      strickler = 35.0)
 
 VR3_22_00 <- basement(model_json = "hdm_models/VR3/model.json", 
