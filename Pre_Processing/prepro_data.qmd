@@ -125,7 +125,7 @@ vr6 <- read_delim("abiotic_mi_sampling/GPS_Points/VR6.csv", col_names = FALSE)
 abiotic1 <- abiotic[ ,c(1:23)]
 
 # label header into R friendly characters &
-colnames(abiotic1) <- c("River", "Hydropeaking_river_type", "Hydrokeaking_residual_flow_natural_near_natural", "reach", "Abiotic_measured_by", "Date_of_survey", "Transect", "Sampling_point", "Time_of_survey", "DIstance_Wasseranschlaglinie_m", "Flow_velocity_v60_cm/s", "Category_Flow_velocity_5_Bewohnbarkeits-klasse", "Water_depth_cm", "Category_Water_depth", "Clogging_6_Klassen", "Clogging_3_Klassen", "Substrate_type", "Algae_cover_Bewuchsdichte_5_Kategorien_1-5", "Moos_cover_Deckungsgrad_6_Kategorien_0-5", "CPOM_cover_Deckungsgrad_5_Kategorien_1-5", "RTK-GPS_Nr", "MZB_kick-net_taken_by", "Varia")
+colnames(abiotic1) <- c("River", "Hydropeaking_river_type", "Hydrokeaking_residual_flow_natural_near_natural", "reach", "Abiotic_measured_by", "Date_of_survey", "Transect", "Sampling_point", "Time_of_survey", "DIstance_Wasseranschlaglinie_m", "velocity", "Category_Flow_velocity_5_Bewohnbarkeits-klasse", "wd_cm", "Category_Water_depth", "Clogging_6_Klassen", "Clogging_3_Klassen", "Substrate_type", "Algae_cover_Bewuchsdichte_5_Kategorien_1-5", "Moos_cover_Deckungsgrad_6_Kategorien_0-5", "CPOM_cover_Deckungsgrad_5_Kategorien_1-5", "RTK-GPS_Nr", "MZB_kick-net_taken_by", "Varia")
 
 # create join key with "river-transect-sampling_point"
 abiotic1 <- abiotic1 |>

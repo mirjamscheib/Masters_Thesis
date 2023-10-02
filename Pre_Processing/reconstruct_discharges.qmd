@@ -308,7 +308,7 @@ coord_GL1 <- data_wd |>
 
 GL1 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "GL1") |>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## GL2
 coord_GL2 <- data_wd |>
@@ -317,7 +317,7 @@ coord_GL2 <- data_wd |>
 
 GL2 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "GL2")|>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## L2
 coord_L2 <- data_wd |>
@@ -326,7 +326,7 @@ coord_L2 <- data_wd |>
 
 L2 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "L2")|>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## M1
 coord_M1 <- data_wd |>
@@ -335,7 +335,7 @@ coord_M1 <- data_wd |>
 
 M1 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "M1")|>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## S1
 coord_S1 <- data_wd |>
@@ -344,7 +344,7 @@ coord_S1 <- data_wd |>
 
 S1 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "S1")|>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## S2
 coord_S2 <- data_wd |>
@@ -353,7 +353,7 @@ coord_S2 <- data_wd |>
 
 S2 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "S2")|>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## TH4
 coord_TH4 <- data_wd |>
@@ -362,7 +362,7 @@ coord_TH4 <- data_wd |>
 
 TH4 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "TH4")|>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## VR3
 coord_VR3 <- data_wd |>
@@ -371,96 +371,126 @@ coord_VR3 <- data_wd |>
 
 VR3 <- data_wd |>
   subset(Reach_Untersuchungsstelle == "VR3")|>
-  dplyr::select(Reach_Untersuchungsstelle)
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 ```
 
 ### Extract Results
 ```{r}
 # extract raster information for regression analysis later
 # GL1 
-regr_GL1_ezg <- raster::extract(GL1_ezg, coord_GL1) |>
+regr_GL1_ezg <- raster::extract(GL1_ezg, coord_GL1)
+regr_GL1_ezg <- regr_GL1_ezg |>  
   as.data.frame(regr_GL1_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm)
 
-regr_GL1_q <- raster::extract(GL1_q, coord_GL1) |>
+regr_GL1_q <- raster::extract(GL1_q, coord_GL1) 
+regr_GL1_q <- regr_GL1_q |> 
   as.data.frame(regr_GL1_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
 
 # GL2
-regr_GL2_ezg <- raster::extract(GL2_ezg, coord_GL2)|>
+regr_GL2_ezg <- raster::extract(GL2_ezg, coord_GL2)
+
+regr_GL2_ezg <- regr_GL2_ezg |> 
   as.data.frame(regr_GL2_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm)
 
-regr_GL2_q <- raster::extract(GL2_q, coord_GL2) |>
+regr_GL2_q <- raster::extract(GL2_q, coord_GL2) 
+
+regr_GL2_q <- regr_GL2_q |> 
   as.data.frame(regr_GL2_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
 
 # L2
-regr_L2_ezg <- raster::extract(L2_ezg, coord_L2)|>
+regr_L2_ezg <- raster::extract(L2_ezg, coord_L2)
+
+regr_L2_ezg <- regr_L2_ezg |> 
   as.data.frame(regr_L2_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm)
 
-regr_L2_q <- raster::extract(L2_q, coord_L2)  |>
+regr_L2_q <- raster::extract(L2_q, coord_L2)
+
+regr_L2_q <- regr_L2_q |> 
   as.data.frame(regr_L2_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
 
 # M1
-regr_M1_ezg <- raster::extract(M1_ezg, coord_M1) |>
+regr_M1_ezg <- raster::extract(M1_ezg, coord_M1) 
+  
+regr_M1_ezg <- regr_M1_ezg |> 
   as.data.frame(regr_M1_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm)
 
-regr_M1_q <- raster::extract(M1_q, coord_M1)  |>
+regr_M1_q <- raster::extract(M1_q, coord_M1)
+
+regr_M1_q <- regr_M1_q |> 
   as.data.frame(regr_M1_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
 
 # S1
-regr_S1_ezg <- raster::extract(S1_ezg, coord_S1) |>
+regr_S1_ezg <- raster::extract(S1_ezg, coord_S1) 
+  
+regr_S1_ezg <- regr_S1_ezg |> 
   as.data.frame(regr_S1_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm)
 
-regr_S1_q <- raster::extract(S1_q, coord_S1) |>
+regr_S1_q <- raster::extract(S1_q, coord_S1) 
+
+regr_S1_q <- regr_S1_q |> 
   as.data.frame(regr_S1_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
 
 # S2
-regr_S2_ezg <- raster::extract(S2_ezg, coord_S2) |>
+regr_S2_ezg <- raster::extract(S2_ezg, coord_S2) 
+
+regr_S2_ezg <- regr_S2_ezg |> 
   as.data.frame(regr_S2_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm)
 
-regr_S2_q <- raster::extract(S2_q, coord_S2) |>
+regr_S2_q <- raster::extract(S2_q, coord_S2)
+
+regr_S2_q <- regr_S2_q |> 
   as.data.frame(regr_S2_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
 
 # TH4
-regr_TH4_ezg <- raster::extract(TH4_ezg, coord_TH4) |>
+regr_TH4_ezg <- raster::extract(TH4_ezg, coord_TH4) 
+
+regr_TH4_ezg <- regr_TH4_ezg |> 
   as.data.frame(regr_TH4_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm)
 
-regr_TH4_q <- raster::extract(TH4_q, coord_TH4) |>
+regr_TH4_q <- raster::extract(TH4_q, coord_TH4)
+
+regr_TH4_q <- regr_TH4_q |> 
   as.data.frame(regr_TH4_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
 
 # VR3
-regr_VR3_ezg <- raster::extract(VR3_ezg, coord_VR3) |>
+regr_VR3_ezg <- raster::extract(VR3_ezg, coord_VR3) 
+
+regr_VR3_ezg <- regr_VR3_ezg |> 
   as.data.frame(regr_VR3_ezg) |>
   rename(v_ezg = velocity,
          wd_cm_ezg = wd_cm) 
 
-regr_VR3_q <- raster::extract(VR3_q, coord_VR3) |>
+regr_VR3_q <- raster::extract(VR3_q, coord_VR3)
+
+regr_VR3_q <- regr_VR3_q |> 
   as.data.frame(regr_VR3_q) |>
   rename(v_q = velocity,
          wd_cm_q = wd_cm)
