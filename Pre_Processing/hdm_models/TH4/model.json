@@ -13,28 +13,28 @@
               "upstream_direction": "right"
             }
           ],
-          "mesh_file": "E:/Mirjam/Masters_Thesis/hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm"
+          "mesh_file": "E:/Mirjam/Masters_Thesis1/Pre_Processing/hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm"
         },
         "HYDRAULICS": {
           "BOUNDARY": {
             "STANDARD": [
               {
-                "discharge": 25.0,
+                "discharge": 1.5,
                 "name": "inflow",
-                "slope": 0.004,
+                "slope": 0.013,
                 "string_name": "input",
                 "type": "uniform_in"
               },
               {
                 "name": "outflow",
-                "slope": 0.004,
+                "slope": 0.04,
                 "string_name": "output",
                 "type": "uniform_out"
               }
             ]
           },
           "FRICTION": {
-            "default_friction": 42.0,
+            "default_friction": 35.0,
             "type": "strickler"
           },
           "INITIAL": {

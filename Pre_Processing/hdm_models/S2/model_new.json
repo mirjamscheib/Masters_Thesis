@@ -19,17 +19,17 @@
           "BOUNDARY": {
             "STANDARD": [
               {
-                "discharge": 2,
-                "name": "inflow",
+                "name": "outflow",
                 "slope": 0.0034,
                 "string_name": "inflow",
-                "type": "uniform_in"
+                "type": "uniform_out"
               },
               {
-                "name": "outflow",
+                "discharge": 1.93,
+                "name": "inflow",
                 "slope": 0.0002,
                 "string_name": "outflow",
-                "type": "uniform_out"
+                "type": "uniform_in"
               }
             ]
           },

@@ -8,8 +8,8 @@
       "flow_velocity_abs"
     ],
     "TIME": {
-      "end": 1800.0,
-      "out": 1800.0,
+      "end": 3600.0,
+      "out": 3600.0,
       "start": 0.0
     },
     "TIMESTEP": {
