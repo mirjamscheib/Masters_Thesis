@@ -229,14 +229,15 @@ write.csv(results, "Pre_Processing/reconstructed_discharges.csv", row.names = FA
 ```{r}
 # read rasters containing wd and velocity 
 # RASTERS WITH EZG CALCULATED
-GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
-GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
-L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
-M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
-S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
-S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
-TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
-VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg.grd")
+GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg.grd")
+L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg.grd")
+M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg.grd")
+S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg.grd")
+S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg.grd")
+TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg.grd")
+VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg.grd")
+
 
 # RASTERS WITH Qs CALCULATED
 GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
@@ -532,6 +533,30 @@ regr_analysis <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, d
 
 # export to .csv file
 write.csv(regr_analysis, "Stat_Analysis/hdm_regr_analysis.csv", row.names = FALSE)
+```
+
+```{r}
+library(Metrics)
+regr_analysis <- na.omit(regr_analysis)
+rmse(actual = regr_analysis$velocity, predicted = regr_analysis$v_ezg)
+rmse(actual = regr_analysis$wd_cm, predicted = regr_analysis$wd_cm_ezg)
+
+rmse(actual = regr_analysis$velocity, predicted = regr_analysis$v_q)
+rmse(actual = regr_analysis$wd_cm, predicted = regr_analysis$wd_cm_q)
+
+lm_v_ezg <- lm(velocity ~ v_ezg, data = regr_analysis)
+summary(lm_v_ezg)
+
+lm_wd_ezg <- lm(wd_cm ~ wd_cm_ezg, data = regr_analysis)
+summary(lm_wd_ezg)
+
+ggplot(regr_analysis, aes(wd_cm, wd_cm_ezg)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+ggplot(regr_analysis, aes(velocity, v_ezg)) +
+  geom_point() +
+  geom_smooth(method = "lm")
 ```
 
 
