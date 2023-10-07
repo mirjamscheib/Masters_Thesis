@@ -135,7 +135,8 @@ lab_ml_model_v <- lab_new |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, x, y, shannon, abundance, k_index, rel_abundance) |>
   rename(velocity = `Flow_velocity_v60_cm/s`) |>
   mutate(x = as.numeric(x),
-         y = as.numeric(y))
+         y = as.numeric(y),
+         velocity = velocity/100)
 
 # water depth + velocity
 lab_ml_model_wd_v <- lab_new |>
@@ -145,9 +146,11 @@ lab_ml_model_wd_v <- lab_new |>
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, shannon, abundance, k_index, rel_abundance) |>
   rename(velocity = `Flow_velocity_v60_cm/s`,
-         wd_cm = Water_depth_cm) |>
+         wd_m = Water_depth_cm) |>
   mutate(x = as.numeric(x),
-         y = as.numeric(y))
+         y = as.numeric(y),
+         velocity = velocity/100,
+         wd_m = wd_m/100)
 
 
 # write results into new .csv file 
@@ -155,6 +158,7 @@ write_xlsx(lab_ml_model_v,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_v.xlsx")
 write_xlsx(lab_ml_model_wd_v,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_wd_v.xlsx") 
 ```
 
+  dplyr::select(Date_of_survey.x, Time_of_survey, Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, z, `DIstance_Wasseranschlaglinie_m`, `Category_Flow_velocity_5_Bewohnbarkeits-klasse`, Clogging_3_Klassen, Clogging_6_Klassen, Substrate_type, `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`, `Moos_cover_Deckungsgrad_6_Kategorien_0-5`, `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`, shannon, abundance, k_index, rel_abundance) |>
 ```{r}
 # df with all environmental variables measured at each sampling location 
 lab_ml_model_sampling <- lab_new |>
@@ -164,7 +168,7 @@ lab_ml_model_sampling <- lab_new |>
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, z, `DIstance_Wasseranschlaglinie_m`, `Category_Flow_velocity_5_Bewohnbarkeits-klasse`, Clogging_3_Klassen, Clogging_6_Klassen, Substrate_type, `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`, `Moos_cover_Deckungsgrad_6_Kategorien_0-5`, `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`, shannon, abundance, k_index, rel_abundance) |>
   rename(velocity = `Flow_velocity_v60_cm/s`,
-         wd_cm = Water_depth_cm,
+         wd_m = Water_depth_cm,
          cat_velocity = `Category_Flow_velocity_5_Bewohnbarkeits-klasse`,
          dist_w = DIstance_Wasseranschlaglinie_m,
          clog_3_class = Clogging_3_Klassen,
@@ -174,7 +178,9 @@ lab_ml_model_sampling <- lab_new |>
          moos_cover = `Moos_cover_Deckungsgrad_6_Kategorien_0-5`,
          cpom_cover = `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`) |>
   mutate(x = as.numeric(x),
-         y = as.numeric(y))
+         y = as.numeric(y),
+         velocity = velocity/100,
+         wd_m = wd_m/100)
 
 # df with all environmental variables measured including mean value of before, during and after sampling measured variables 
 # prep data to calculate mean for variables measured only at one location per section
@@ -183,15 +189,6 @@ lab_gauging <- lab_new[ ,c("Water_gauge_MueM_before", "Water_gauge_MueM_during",
 lab_q <- lab_new[ ,c("Discharge_m3_s_before", "Discharge_m3_s_during", "Discharge_m3_s_after")]
 
 lab_temp <- lab_new[ ,c("Temperature_C_before", "Temperature_C_during", "Temperature_C_after")]
-
-# Sample character string
-text <- "Hello, World!"
-
-# Remove a single character (e.g., comma)
-modified_text <- gsub(",", "", text)
-
-# Print the result
-print(modified_text)
 
 lab_new$Turbidity_FNU_after <- as.numeric(gsub(">", "", lab_new$Turbidity_FNU_after))
 lab_turb <- lab_new[ ,c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after")]
@@ -211,19 +208,11 @@ lab_ml_model_section <- lab_new |>
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  dplyr::select(Date_of_survey.x, Time_of_survey, Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, z, `DIstance_Wasseranschlaglinie_m`, `Category_Flow_velocity_5_Bewohnbarkeits-klasse`, Clogging_3_Klassen, Clogging_6_Klassen, Substrate_type, `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`, `Moos_cover_Deckungsgrad_6_Kategorien_0-5`, `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`, shannon, abundance, k_index, rel_abundance) |>
-  mutate(gaug_station = rowMeans(lab_gauging),
-         discharge = rowMeans(lab_q),
-         temp = rowMeans(lab_temp),
-         turbidity = rowMeans(lab_turb),
-         ox_sat = rowMeans(lab_ox_sat),
-         ox_cont = rowMeans(lab_ox_cont),
-         conductivity = rowMeans(lab_cond),
-         ph = rowMeans(lab_ph)) |>
+  dplyr::select(-Transect, -Sampling_point, -Abiotic_measured_by.x, -Abiotic_measured_by.y, -River.x, -`RTK-GPS_Nr`, -`MZB_kick-net_taken_by`, -Varia, -Varia_before, -Varia_during, -Varia_after, -Gauging_station, -Sampling_site, -join_key) |>
   rename(date = Date_of_survey.x,
          time = Time_of_survey,
          velocity = `Flow_velocity_v60_cm/s`,
-         wd_cm = Water_depth_cm,
+         wd_m = Water_depth_cm,
          cat_velocity = `Category_Flow_velocity_5_Bewohnbarkeits-klasse`,
          dist_w = DIstance_Wasseranschlaglinie_m,
          clog_3_class = Clogging_3_Klassen,
@@ -231,9 +220,35 @@ lab_ml_model_section <- lab_new |>
          sub_type = Substrate_type,
          alg_cover = `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`,
          moos_cover = `Moos_cover_Deckungsgrad_6_Kategorien_0-5`,
-         cpom_cover = `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`) |>
+         cpom_cover = `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`,
+         time_before = Time_of_survey_before,
+         time_during = Time_of_survey_during,
+         time_after = Time_of_survey_after, 
+         conduct_before = Conductivity_ys_s_before,
+         conduct_during = Conductivity_ys_s_during,
+         conduct_after = Conductivity_ys_s_after,
+         ox_before = Oxygen_content_mg_l_before,
+         ox_during = Oxygen_content_mg_l_during,
+         ox_after = Oxygen_content_mg_l_after, 
+         ox_sat_before = `Oxygen_saturation_%_before`,
+         ox_sat_during = `Oxygen_saturation_%_during`,
+         ox_sat_after = `Oxygen_saturation_%_after`,
+         gaug_before = Water_gauge_MueM_before,
+         gaug_during = Water_gauge_MueM_during,
+         gaug_after = Water_gauge_MueM_after,
+         q_before = Discharge_m3_s_before,
+         q_during = Discharge_m3_s_during,
+         q_after = Discharge_m3_s_after,
+         temp_before = Temperature_C_before,
+         temp_during = Temperature_C_during,
+         temp_after = Temperature_C_after,
+         turb_before = Turbidity_FNU_before,
+         turb_during = Turbidity_FNU_during,
+         turb_after = Turbidity_FNU_after) |>
   mutate(x = as.numeric(x),
-         y = as.numeric(y))
+         y = as.numeric(y),
+         velocity = velocity/100,
+         wd_m = wd_m/100)
 
 
 # write results into new .csv file 
@@ -247,9 +262,11 @@ write_xlsx(lab_ml_model_section,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_sec
 ```{r}
 # combine all abiotic data with abundance & Shannon Diversity 
 lab_univariate <- lab_ml_model_wd_v |>
-  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm, x, y, shannon, abundance, k_index) |>
+  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_m, x, y, shannon, abundance, k_index) |>
   mutate(x = as.numeric(x),
-         y = as.numeric(y))
+         y = as.numeric(y),
+         velocity = velocity/100,
+         wd_m = wd_m/100)
 
 # write results into new .csv file 
 write_xlsx(lab_univariate,"Pre_Processing\\abiotic_mi_sampling\\lab_univariate.xlsx") 
