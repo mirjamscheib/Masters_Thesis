@@ -48,25 +48,37 @@ pkgCheck("tidyr")
 # Load data containing only v, and v + wd explanatory variables
 data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv")
 data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv")
-data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv")
-data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
-  unite(date_time, date, time, sep = ".") |>
-  mutate(date_time = as.POSIXct(date_time, format = "%d.%m.%Y.%H:%M",tz = "UTC"),
-         year = as.integer(format(date_time, "%Y")),
-         month = as.integer(format(date_time, "%m")),
-         day = as.integer(format(date_time, "%d")),
-         hour = as.integer(format(date_time, "%H")),
-         minute = as.integer(format(date_time, "%M")),
-         second = as.integer(format(date_time, "%S")),
-         hydr_riv_type = as.factor(Hydropeaking_river_type),
-         hydr_type = as.factor(Hydrokeaking_residual_flow_natural_near_natural),
-         Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle),
-         clog_6_class = as.factor(clog_6_class),
-         clog_3_class = as.factor(clog_3_class),
-         sub_type = as.factor(sub_type)) |>
-  dplyr::select(-date_time, -time_before, -time_during, -time_after, -Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural)
-```
 
+clog_3_int <- c("none" = 0, "strong" = 2, "slight-medium" = 1)
+clog_6_int <- c("none" = 0, "none-light" = 1, "none-slight" = 2, "slight" = 3, "slight-medium" = 4, "medium-strong" = 5, "strong" = 6)
+sub_int <- c("< 2.5 mm" = 0, "25 mm > x > 2.5 mm" = 1, "250 mm > x > 25 mm" = 2, "> 250 mm" = 3)
+
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
+  mutate(clog_3_class_int = ifelse(clog_3_class %in% names(clog_3_int), 
+                                   clog_3_int[clog_3_class], NA),
+         clog_6_class_int = ifelse(clog_6_class %in% names(clog_6_int), 
+                                   clog_6_int[clog_6_class], NA),
+         sub_type_int = ifelse(sub_type %in% names(sub_int), 
+                                   sub_int[sub_type], NA)) |>
+  dplyr::select(-clog_3_class, -clog_6_class, -sub_type)
+
+hydr_type <- c("2a" = 1, "2b" = 2, "3a" = 3, "3b" = 4)
+hydr_int <- c("Hydropeaking" = 1, "Residual flow" = 2, "Natural/near-natural" = 3)
+
+data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
+    mutate(clog_3_class_int = ifelse(clog_3_class %in% names(clog_3_int), 
+                                   clog_3_int[clog_3_class], NA),
+         clog_6_class_int = ifelse(clog_6_class %in% names(clog_6_int), 
+                                   clog_6_int[clog_6_class], NA),
+         sub_type_int = ifelse(sub_type %in% names(sub_int), 
+                                   sub_int[sub_type], NA),
+         hydr_type_int = ifelse(Hydropeaking_river_type %in%
+                                  names(hydr_type), 
+                                   hydr_type[Hydropeaking_river_type], NA),
+         hydr_int = ifelse(Hydrokeaking_residual_flow_natural_near_natural
+                           %in% names(hydr_int), hydr_int[Hydrokeaking_residual_flow_natural_near_natural], NA)) |>
+  dplyr::select(-Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -Category_Water_depth, -date, -time, -time_before, -time_during, -time_after, -clog_3_class, -clog_6_class, -sub_type, -hydr_type_int, -ox_sat_after, -ox_sat_before, -ox_sat_during)
+```
 
 ```{r}
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
@@ -160,7 +172,7 @@ test_section <- data_section |>
          Reach_Untersuchungsstelle == "VR3")
 ```
 
-
+### Training Sets w/ coordinates
 ```{r}
 # Prep data to model 
 # TRAINING SETS
@@ -180,7 +192,9 @@ training_v_a <- training_v |>
 # With relative abundance as response variable & velocity 
 training_v_ra <- training_v |>
   dplyr::select(rel_abundance, velocity, x, y)
+```
 
+```{r}
 ### PREDICTOR: VELOCITY AND WD ###
 # With k_index as response variable & velocity + wd
 training_wd_k <- training_wd |>
@@ -197,7 +211,9 @@ training_wd_a <- training_wd |>
 # With relative abundance index as response variable & velocity + wd
 training_wd_ra <- training_wd |>
   dplyr::select(rel_abundance, velocity, wd_m, x, y)
+```
 
+```{r}
 ### PREDICTOR: SAMPLING LOCATIONS ###
 # With k_index as response variable & sampling location 
 # -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
@@ -218,7 +234,9 @@ training_samp_a <- training_sampling |>
 # -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 training_samp_ra <- training_sampling |>
   dplyr::select(-shannon, -abundance, -k_index)
+```
 
+```{r}
 ### PREDICTOR: ALL POSSIBLE PREDICTORS ###
 # With k_index as response variable & all predictors
 # -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
@@ -241,7 +259,74 @@ training_sec_ra <- training_section |>
   dplyr::select(-shannon, -abundance, -k_index)
 ```
 
+### Training Sets w/o coordinates
+```{r}
+# w/o coordinates
+training_v_k_c <- training_v |>
+  dplyr::select(k_index, velocity)
 
+# w/o coordinates
+training_v_s_c <- training_v |>
+  dplyr::select(shannon, velocity)
+
+# w/o coordinates
+training_v_a_c <- training_v |>
+  dplyr::select(abundance, velocity)
+
+# w/o coordinates
+training_v_ra_c <- training_v |>
+  dplyr::select(rel_abundance, velocity)
+
+# w/o coordinates
+training_wd_k_c <- training_wd |>
+  dplyr::select(k_index, velocity, wd_m)
+
+# w/o coordinates
+training_wd_s_c <- training_wd |>
+  dplyr::select(shannon, velocity, wd_m)
+
+# w/o coordinates
+training_wd_a_c <- training_wd |>
+  dplyr::select(abundance, velocity, wd_m)
+
+# w/o coordinates
+training_wd_ra_c <- training_wd |>
+  dplyr::select(rel_abundance, velocity, wd_m)
+
+# w/o coordinates
+training_samp_k_c <- training_sampling |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y)
+
+# w/o coordinates
+training_samp_s_c <- training_sampling |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+
+# w/o coordinates
+training_samp_a_c <- training_sampling |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+
+# w/o coordinates
+training_samp_ra_c <- training_sampling |>
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
+
+# w/o coordinates
+training_sec_k_c <- training_section |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y)
+
+# w/o coordinates
+training_sec_s_c <- training_section |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+
+# w/o coordinates
+training_sec_a_c <- training_section |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+
+# w/o coordinates
+training_sec_ra_c <- training_section |>
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
+```
+
+### Test Sets w/ coordinates
 ```{r}
 # TEST SETS
 ### PREDICTOR: VELOCITY ###
@@ -259,8 +344,10 @@ test_v_a <- test_v |>
 
 # With relative abundance as response variable & velocity
 test_v_ra <- test_v |>
-  dplyr::select(rel_abundance, velocity, x, y) 
+  dplyr::select(rel_abundance, velocity, x, y)
+```
 
+```{r}
 ### PREDICTOR: VELOCITY + WD ###
 # With k_index as response variable & velocity + wd
 test_wd_k <- test_wd |>
@@ -277,7 +364,9 @@ test_wd_a <- test_wd |>
 # With relative abundance as response variable & velocity + wd
 test_wd_ra <- test_wd |>
   dplyr::select(rel_abundance, velocity, wd_m, x, y)
+```
 
+```{r}
 ### PREDICTOR: SAMPLING LOCATIONS ###
 # With k_index as response variable & sampling location 
 # -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
@@ -298,7 +387,9 @@ test_samp_a <- test_sampling |>
 # -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_samp_ra <- test_sampling |>
   dplyr::select(-shannon, -abundance, -k_index)
+```
 
+```{r}
 ### PREDICTOR: ALL POSSIBLE PREDICTORS ###
 # With k_index as response variable & all predictors
 # -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
@@ -319,6 +410,73 @@ test_sec_a <- test_section |>
 # -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
 test_sec_ra <- test_section |>
   dplyr::select(-shannon, -abundance, -k_index)
+```
+
+### Test Sets w/o coordinates
+```{r}
+# w/o coordinates
+test_v_k_c <- test_v |>
+  dplyr::select(k_index, velocity)
+
+# w/o coordinates
+test_v_s_c <- test_v |>
+  dplyr::select(shannon, velocity) 
+
+# w/o coordinates
+test_v_a_c <- test_v |>
+  dplyr::select(abundance, velocity) 
+
+# w/o coordinates
+test_v_ra_c <- test_v |>
+  dplyr::select(rel_abundance, velocity)
+
+# w/o coordinates
+test_wd_k_c <- test_wd |>
+  dplyr::select(k_index, velocity, wd_m) 
+
+# w/o coordinates
+test_wd_s_c <- test_wd |>
+  dplyr::select(shannon, velocity, wd_m)
+
+# w/o coordinates
+test_wd_a_c <- test_wd |>
+  dplyr::select(abundance, velocity, wd_m)
+
+# w/o coordinates
+test_wd_ra_c <- test_wd |>
+  dplyr::select(rel_abundance, velocity, wd_m)
+
+# w/o coordinates
+test_samp_k_c <- test_sampling |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y) 
+
+# w/o coordinates
+test_samp_s_c <- test_sampling |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+
+# w/o coordinates
+test_samp_a_c <- test_sampling |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+
+# w/o coordinates
+test_samp_ra_c <- test_sampling |>
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
+
+# w/o coordinates
+test_sec_k_c <- test_section |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y)
+
+# w/o coordinates
+test_sec_s_c <- test_section |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+
+# w/o coordinates
+test_sec_a_c <- test_section |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+
+# w/o coordinates
+test_sec_ra_c <- test_section |>
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
 ```
 
 
@@ -392,7 +550,6 @@ st_crs(data_sec_a_sp) <- "EPSG: 2056"
 data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
 st_crs(data_sec_ra_sp) <- "EPSG: 2056"
 ```
-
 # Boosted Regression Tree
 ## Hyperparameter tuning
 ### Create Task & Learner
@@ -742,6 +899,176 @@ autotuner_xbrt_wd_a$tuning_result
 autotuner_xbrt_wd_ra$tuning_result
 ```
 
+### Make models 
+```{r}
+# make training data
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity 
+trainx_v_k <- model.matrix(k_index ~ ., data = training_v_k)
+
+# shannon index and velocity 
+trainx_v_s <- model.matrix(shannon ~ ., data = training_v_s)
+
+# abundance and velocity 
+trainx_v_a <- model.matrix(abundance ~ ., data = training_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+trainx_wd_k <- model.matrix(k_index ~ ., data = training_wd_k)
+
+# shannon index and velocity + wd
+trainx_wd_s <- model.matrix(shannon ~ ., data = training_wd_s)
+
+# abundance and velocity + wd
+trainx_wd_a <- model.matrix(abundance ~ ., data = training_wd_a)
+```
+
+
+```{r}
+# make testing dataset
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+testx_v_k <- model.matrix(k_index ~ ., data = test_v_k)
+
+# shannon index and velocity
+testx_v_s <- model.matrix(shannon ~ ., data = test_v_s)
+
+# abundance and velocity
+testx_v_a <- model.matrix(abundance ~ ., data = test_v_a)
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+testx_wd_k <- model.matrix(k_index ~ ., data = test_wd_k)
+
+# shannon index and velocity + wd
+testx_wd_s <- model.matrix(shannon ~ ., data = test_wd_s)
+
+# abundance and velocity + wd
+testx_wd_a <- model.matrix(abundance ~ ., data = test_wd_a)
+```
+
+#### w/ coordinates
+```{r}
+### ONLY VELOCITY AS PREDICTOR ###
+# k_index and velocity
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.01838576     922         3 0.6312782          <list[7]> <list[4]>  0.159874
+model.xgb_v_k <- xgboost(data = data.matrix(trainx_v_k[ ,-1]),
+                     label = as.numeric(as.character(training_v_k$k_index)),
+                     eta = 0.01838576,
+                     max_depth = 3,
+                     nrounds = 922,
+                     subsample = 0.6312782,
+                     objective = "reg:linear")
+
+# shannon index and velocity
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.06108969     117         4 0.6531705          <list[7]> <list[4]> 0.6777164
+model.xgb_v_s <- xgboost(data = data.matrix(trainx_v_s[ ,-1]),
+                     label = as.numeric(as.character(training_v_s$shannon)),
+                     eta = 0.06108969,
+                     max_depth = 4,
+                     nrounds = 117,
+                     subsample = 0.6531705,
+                     objective = "reg:linear")
+
+# abundance and velocity
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.06943808     314         4 0.7209312          <list[7]> <list[4]>  837.6009
+model.xgb_v_a <- xgboost(data = data.matrix(trainx_v_a[ ,-1]),
+                     label = as.numeric(as.character(training_v_a$abundance)),
+                     eta = 0.06943808,
+                     max_depth = 4,
+                     nrounds = 314,
+                     subsample = 0.7209312,
+                     objective = "reg:linear")
+
+### VELOCITY + WD AS PREDICTORS ###
+# k_index and velocity + wd
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.01598317     563         5 0.6270098          <list[7]> <list[4]>  0.160993
+model.xgb_wd_k <- xgboost(data = data.matrix(trainx_wd_k[ ,-1]),
+                     label = as.numeric(as.character(training_wd_k$k_index)),
+                     eta = 0.01598317,
+                     max_depth = 5,
+                     nrounds = 563,
+                     subsample = 0.6270098,
+                     objective = "reg:linear")
+
+# shannon index and velocity + wd
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.04028586     240        10 0.5747886          <list[7]> <list[4]> 0.7265847
+model.xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
+                     label = as.numeric(as.character(training_wd_s$shannon)),
+                     eta = 0.04028586,
+                     max_depth = 10,
+                     nrounds = 240,
+                     subsample = 0.5747886,
+                     objective = "reg:linear")
+
+# abundance and velocity + wd
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.1906722     586         7 0.7487879          <list[7]> <list[4]>  907.4666
+model.xgb_wd_a <- xgboost(data = data.matrix(trainx_wd_a[ ,-1]),
+                     label = as.numeric(as.character(training_wd_a$abundance)),
+                     eta = 0.1906722,
+                     max_depth = 7,
+                     nrounds = 586,
+                     subsample = 0.7487879,
+                     objective = "reg:linear")
+
+```
+
+```{r}
+# make training data
+training.x <- model.matrix(k_index ~ ., data = training_v_k)
+
+
+# make testing dataset
+testing.x <- model.matrix(k_index ~ ., data = test_v_k)
+
+# make model 
+# k_index and velocity
+#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
+#1: 0.01838576     922         3 0.6312782          <list[7]> <list[4]>  0.159874
+model.xgb <- xgboost(data = data.matrix(training.x[ ,-1]),
+                     label = as.numeric(as.character(training_v_k$k_index)),
+                     eta = 0.01838576,
+                     max_depth = 3,
+                     nrounds = 922,
+                     subsample = 0.6312782,
+                     objective = "reg:linear")
+```
+
+```{r}
+# turn sf object into dataframe 
+data_new <- data.frame(st_drop_geometry(data_new))
+
+# Split the data into training and testing sets
+train_indices <- sample(1:nrow(data_new), 0.7 * nrow(data_new))
+train_data <- as.matrix(data_new[train_indices, ])
+test_data <- as.matrix(data_new[-train_indices, ])
+
+# Create the DMatrix object
+train_dmatrix <- xgb.DMatrix(data = as.matrix(train_data[, c("wd", "velocity")]), label = train_data[, "k_index"])
+
+test_dmatrix <- xgb.DMatrix(data = as.matrix(test_data[, c("wd", "velocity")]), label = test_data[, "k_index"])
+
+# Create and train the random forest model
+xbrt_model <- xgboost(data = train_dmatrix, 
+                      nrounds = 100, 
+                      max_depth = 3,
+                      objective = "reg:squarederror")
+
+
+# make predictions using the trained model
+# predictions <- predict(rf_model, test_data) # das stimmt bestimmt noch nicht
+
+# Print the trained model
+print(xbrt_model)
+```
+
+#### w/o coordinates
 ## Evaluation Metrics
 ### Variable Importance
 https://stackoverflow.com/questions/72206468/mlr3-extract-variable-importance-for-each-resampling-iteration
