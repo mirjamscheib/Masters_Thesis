@@ -1961,80 +1961,126 @@ library(Fgmutils) # for bias calculation (bias() function)
 ### ONLY VELOCITY AS PREDICTOR ###
 # k_index 
 bias_v_k <- bias(observados = responses_v_k, estimados = brt_pred_v_k)
+bias_model_v_k <- bias(observados = responses_v_k, estimados = brt_pred_model_v_k)
+bias_model_v_k_c <- bias(observados = responses_v_k, estimados = brt_pred_model_v_k_c)
 
 # shannon index and velocity
-brt_bias_v_s <- mean(brt_differences_v_s)
+bias_v_s <- bias(observados = responses_v_s, estimados = brt_pred_v_s)
+bias_model_v_s <- bias(observados = responses_v_s, estimados = brt_pred_model_v_s)
+bias_model_v_s_c <- bias(observados = responses_v_s, estimados = brt_pred_model_v_s_c)
 
 # abundance and velocity
-brt_bias_v_a <- mean(brt_differences_v_a)
+bias_v_a <- bias(observados = responses_v_a, estimados = brt_pred_v_a)
+bias_model_v_a <- bias(observados = responses_v_a, estimados = brt_pred_model_v_a)
+bias_model_v_a_c <- bias(observados = responses_v_a, estimados = brt_pred_model_v_a_c)
 
 # relative abundance and velocity
-brt_bias_v_ra <- mean(brt_differences_v_ra)
+bias_v_ra <- bias(observados = responses_v_ra, estimados = brt_pred_v_ra)
+bias_model_v_ra <- bias(observados = responses_v_ra, estimados = brt_pred_model_v_ra)
+bias_model_v_ra_c <- bias(observados = responses_v_ra, estimados = brt_pred_model_v_ra_c)
 
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
-brt_bias_wd_k <- mean(brt_differences_wd_k)
+bias_wd_k <- bias(observados = responses_wd_k, estimados = brt_pred_wd_k)
+bias_model_wd_k <- bias(observados = responses_wd_k, estimados = brt_pred_model_wd_k)
+bias_model_wd_k_c <- bias(observados = responses_wd_k, estimados = brt_pred_model_wd_k_c)
 
 # shannon index and velocity + wd
-brt_bias_wd_s <- mean(brt_differences_wd_s)
+bias_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_wd_s)
+bias_model_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s)
+bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s_c)
 
 # abundance and velocity + wd
-brt_bias_wd_a <- mean(brt_differences_wd_a)
+bias_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_wd_a)
+bias_model_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a)
+bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a_c)
 
 # relative abundance and velocity + wd
-brt_bias_wd_ra <- mean(brt_differences_wd_ra)
+bias_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_wd_ra)
+bias_model_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra)
+bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
 # k_index and sampling locations
-brt_bias_samp_k <- mean(brt_differences_samp_k)
+bias_samp_k <- bias(observados = responses_samp_k, 
+                    estimados = brt_pred_samp_k)
+bias_model_samp_k <- bias(observados = responses_samp_k, 
+                    estimados = brt_pred_model_samp_k)
+bias_model_samp_k_c <- bias(observados = responses_samp_k, 
+                    estimados = brt_pred_model_samp_k_c)
 
 # shannon index and sampling locations
-brt_bias_samp_s <- mean(brt_differences_samp_s)
+bias_samp_s <- bias(observados = responses_samp_s, 
+                    estimados = brt_pred_samp_s)
+bias_model_samp_s <- bias(observados = responses_samp_s, 
+                    estimados = brt_pred_model_samp_s)
+bias_model_samp_s_c <- bias(observados = responses_samp_s, 
+                    estimados = brt_pred_model_samp_s_c)
 
 # abundance and sampling locations
-brt_bias_samp_a <- mean(brt_differences_samp_a)
+bias_samp_a <- bias(observados = responses_samp_a, 
+                    estimados = brt_pred_samp_a)
+bias_model_samp_a <- bias(observados = responses_samp_a, 
+                    estimados = brt_pred_model_samp_a)
+bias_model_samp_a_c <- bias(observados = responses_samp_a, 
+                    estimados = brt_pred_model_samp_a_c)
 
 # relative abundance and sampling locations
-brt_bias_samp_ra <- mean(brt_differences_samp_ra)
+bias_samp_ra <- bias(observados = responses_samp_ra, 
+                    estimados = brt_pred_samp_ra)
+bias_model_samp_ra <- bias(observados = responses_samp_ra, 
+                    estimados = brt_pred_model_samp_ra)
+bias_model_samp_ra_c <- bias(observados = responses_samp_ra, 
+                    estimados = brt_pred_model_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ###
 # k_index and all predictors
-brt_bias_sec_k <- mean(brt_differences_sec_k)
+bias_sec_k <- bias(observados = responses_sec_k, 
+                    estimados = brt_pred_sec_k)
+bias_model_sec_k <- bias(observados = responses_sec_k, 
+                    estimados = brt_pred_model_sec_k)
+bias_model_sec_k_c <- bias(observados = responses_sec_k, 
+                    estimados = brt_pred_model_sec_k_c)
 
 # shannon index and all predictors
-brt_bias_sec_s <- mean(brt_differences_sec_s)
+bias_sec_s <- bias(observados = responses_sec_s, 
+                    estimados = brt_pred_sec_s)
+bias_model_sec_s <- bias(observados = responses_model_sec_s, 
+                    estimados = brt_pred_model_sec_s)
+bias_model_sec_s_c <- bias(observados = responses_model_sec_s, 
+                    estimados = brt_pred_model_sec_s_c)
 
 # abundance and all predictors
-brt_bias_sec_a <- mean(brt_differences_sec_a)
+bias_sec_a <- bias(observados = responses_sec_a, 
+                    estimados = brt_pred_sec_a)
+bias_model_sec_a <- bias(observados = responses_sec_a, 
+                    estimados = brt_pred_model_sec_a)
+bias_model_sec_a_c <- bias(observados = responses_sec_a, 
+                    estimados = brt_pred_model_sec_a_c)
 
 # relative abundance and all predictors
-brt_bias_sec_ra <- mean(brt_differences_sec_ra)
+bias_sec_ra <- bias(observados = responses_sec_ra, 
+                    estimados = brt_pred_sec_ra)
+bias_model_sec_ra <- bias(observados = responses_sec_ra, 
+                    estimados = brt_pred_model_sec_ra)
+bias_model_sec_ra_c <- bias(observados = responses_sec_ra, 
+                    estimados = brt_pred_model_sec_ra_c)
 ```
 
-mae = c(mae_v_k, mae_model_v_k, mae_model_v_k_c, mae_v_s, mae_model_v_s, mae_model_v_s_c, mae_v_a, mae_model_v_a, mae_model_v_a_c, mae_v_ra, mae_model_v_ra, mae_model_v_ra_c, mae_wd_k, mae_model_wd_k, mae_model_wd_k_c, mae_wd_s, mae_model_wd_s, mae_model_wd_s_c, mae_wd_a, mae_model_wd_a, mae_model_wd_a_c, mae_wd_ra, mae_model_wd_ra, mae_model_wd_ra_c, mae_samp_k, mae_model_samp_k, mae_model_samp_k_c, mae_samp_s, mae_model_samp_s, mae_model_samp_s_c, mae_samp_a, mae_model_samp_a, mae_model_samp_a_c, mae_samp_ra, mae_model_samp_ra, mae_model_samp_ra_c, mae_sec_k, mae_model_sec_k, mae_model_sec_k_c, mae_sec_s, mae_model_sec_s, mae_model_sec_s_c, mae_sec_a, mae_model_sec_a, mae_model_sec_a_c, mae_sec_ra, mae_model_sec_ra, mae_model_sec_ra_c), 
-
-rmse = c(rmse_v_k, rmse_model_v_k, rmse_model_v_k_c, rmse_v_s, rmse_model_v_s, rmse_model_v_s_c, rmse_v_a, rmse_model_v_a, rmse_model_v_a_c, rmse_v_ra, rmse_model_v_ra, rmse_model_v_ra_c, rmse_wd_k, rmse_model_wd_k, rmse_model_wd_k_c, rmse_wd_s, rmse_model_wd_s, rmse_model_wd_s_c, rmse_wd_a, rmse_model_wd_a, rmse_model_wd_a_c, rmse_wd_ra, rmse_model_wd_ra, rmse_model_wd_ra_c, rmse_samp_k, rmse_model_samp_k, rmse_model_samp_k_c, rmse_samp_s, rmse_model_samp_s, rmse_model_samp_s_c, rmse_samp_a, rmse_model_samp_a, rmse_model_samp_a_c, rmse_samp_ra, rmse_model_samp_ra, rmse_model_samp_ra_c, rmse_sec_k, rmse_model_sec_k, rmse_model_sec_k_c, rmse_sec_s, rmse_model_sec_s, rmse_model_sec_s_c, rmse_sec_a, rmse_model_sec_a, rmse_model_sec_a_c, rmse_sec_ra, rmse_model_sec_ra, rmse_model_sec_ra_c),
-
-r2 = c(r2_v_k, r2_model_v_k, r2_model_v_k_c, r2_v_s, r2_model_v_s, r2_model_v_s_c, r2_v_a, r2_model_v_a, r2_model_v_a_c, r2_v_ra, r2_model_v_ra, r2_model_v_ra_c, r2_wd_k, r2_model_wd_k, r2_model_wd_k_c, r2_wd_s, r2_model_wd_s, r2_model_wd_s_c, r2_wd_a, r2_model_wd_a, r2_model_wd_a_c, r2_wd_ra,  r2_model_wd_ra, r2_model_wd_ra_c, r2_samp_k, r2_model_samp_k, r2_model_samp_k_c, r2_samp_s, r2_model_samp_s, r2_model_samp_s_c, r2_samp_a, r2_model_samp_a, r2_model_samp_a_c, r2_samp_ra, r2_model_samp_ra, r2_model_samp_ra_c, r2_sec_k, r2_model_sec_k, r2_model_sec_k_c, r2_sec_s, r2_model_sec_s, r2_model_sec_s_c, r2_sec_a, r2_model_sec_a, r2_model_sec_a_c, r2_sec_ra, r2_model_sec_ra, r2_model_sec_ra_c), 
-
-index = c("k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance"),
-
-predictor = c("v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v",
-"v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", 
-"samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp",
-"all", "all", "all", "all", "all", "all", "all", "all", "all", "all", "all", "all"),
-
-model = c("autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord")
 
 ## Nash-Sutcliffe efficiency (NSE) 
 spezifisch für hydrologische Modelle 
 https://search.r-project.org/CRAN/refmans/hydroGOF/html/NSE.html
 
 ```{r}
+install.packages("hydroGOF")
+library(hydroGOF) # for NSE calculation with NSE() function 
 # Calculate the NSE
 ### ONLY VELOCITY AS PREDICTOR ###
 # k_index and velocity
-brt_nse_v_k <- 1 - sum((responses_v_k - xbrt_predictions_v_k)^2) / sum((responses_v_k - mean(responses_v_k))^2)
+nse_v_k <- 1 - sum((responses_v_k - brt_pred_v_k)^2) / sum((responses_v_k - mean(responses_v_k))^2)
+
+nse_v_k_test <- NSE(sim = brt_pred_v_k, obs = responses_v_k)
 
 # shannon index and velocity
 brt_nse_v_s <- 1 - sum((responses_v_s - xbrt_predictions_v_s)^2) / sum((responses_v_s - mean(responses_v_s))^2)
@@ -2084,6 +2130,23 @@ brt_nse_sec_a <- 1 - sum((responses_sec_a - xbrt_predictions_sec_a)^2) / sum((re
 # relative abundance and all predictors
 brt_nse_sec_ra <- 1 - sum((responses_sec_ra - xbrt_predictions_sec_ra)^2) / sum((responses_sec_ra - mean(responses_sec_ra))^2)
 ```
+
+bias = c(bias_v_k, bias_model_v_k, bias_model_v_k_c, bias_v_s, bias_model_v_s, bias_model_v_s_c, bias_v_a, bias_model_v_a, bias_model_v_a_c, bias_v_ra, bias_model_v_ra, bias_model_v_ra_c, bias_wd_k, bias_model_wd_k, bias_model_wd_k_c, bias_wd_s, bias_model_wd_s, bias_model_wd_s_c, bias_wd_a, bias_model_wd_a, bias_model_wd_a_c, bias_wd_ra, bias_model_wd_ra, bias_model_wd_ra_c, bias_samp_k, bias_model_samp_k, bias_model_samp_k_c, bias_samp_s, bias_model_samp_s, bias_model_samp_s_c, bias_samp_a, bias_model_samp_a, bias_model_samp_a_c, bias_samp_ra, bias_model_samp_ra, bias_model_samp_ra_c, bias_sec_k, bias_model_sec_k, bias_model_sec_k_c, bias_sec_s, bias_model_sec_s, bias_model_sec_s_c, bias_sec_a, bias_model_sec_a, bias_model_sec_a_c, bias_sec_ra, bias_model_sec_ra, bias_model_sec_ra_c),
+
+mae = c(mae_v_k, mae_model_v_k, mae_model_v_k_c, mae_v_s, mae_model_v_s, mae_model_v_s_c, mae_v_a, mae_model_v_a, mae_model_v_a_c, mae_v_ra, mae_model_v_ra, mae_model_v_ra_c, mae_wd_k, mae_model_wd_k, mae_model_wd_k_c, mae_wd_s, mae_model_wd_s, mae_model_wd_s_c, mae_wd_a, mae_model_wd_a, mae_model_wd_a_c, mae_wd_ra, mae_model_wd_ra, mae_model_wd_ra_c, mae_samp_k, mae_model_samp_k, mae_model_samp_k_c, mae_samp_s, mae_model_samp_s, mae_model_samp_s_c, mae_samp_a, mae_model_samp_a, mae_model_samp_a_c, mae_samp_ra, mae_model_samp_ra, mae_model_samp_ra_c, mae_sec_k, mae_model_sec_k, mae_model_sec_k_c, mae_sec_s, mae_model_sec_s, mae_model_sec_s_c, mae_sec_a, mae_model_sec_a, mae_model_sec_a_c, mae_sec_ra, mae_model_sec_ra, mae_model_sec_ra_c), 
+
+rmse = c(rmse_v_k, rmse_model_v_k, rmse_model_v_k_c, rmse_v_s, rmse_model_v_s, rmse_model_v_s_c, rmse_v_a, rmse_model_v_a, rmse_model_v_a_c, rmse_v_ra, rmse_model_v_ra, rmse_model_v_ra_c, rmse_wd_k, rmse_model_wd_k, rmse_model_wd_k_c, rmse_wd_s, rmse_model_wd_s, rmse_model_wd_s_c, rmse_wd_a, rmse_model_wd_a, rmse_model_wd_a_c, rmse_wd_ra, rmse_model_wd_ra, rmse_model_wd_ra_c, rmse_samp_k, rmse_model_samp_k, rmse_model_samp_k_c, rmse_samp_s, rmse_model_samp_s, rmse_model_samp_s_c, rmse_samp_a, rmse_model_samp_a, rmse_model_samp_a_c, rmse_samp_ra, rmse_model_samp_ra, rmse_model_samp_ra_c, rmse_sec_k, rmse_model_sec_k, rmse_model_sec_k_c, rmse_sec_s, rmse_model_sec_s, rmse_model_sec_s_c, rmse_sec_a, rmse_model_sec_a, rmse_model_sec_a_c, rmse_sec_ra, rmse_model_sec_ra, rmse_model_sec_ra_c),
+
+r2 = c(r2_v_k, r2_model_v_k, r2_model_v_k_c, r2_v_s, r2_model_v_s, r2_model_v_s_c, r2_v_a, r2_model_v_a, r2_model_v_a_c, r2_v_ra, r2_model_v_ra, r2_model_v_ra_c, r2_wd_k, r2_model_wd_k, r2_model_wd_k_c, r2_wd_s, r2_model_wd_s, r2_model_wd_s_c, r2_wd_a, r2_model_wd_a, r2_model_wd_a_c, r2_wd_ra,  r2_model_wd_ra, r2_model_wd_ra_c, r2_samp_k, r2_model_samp_k, r2_model_samp_k_c, r2_samp_s, r2_model_samp_s, r2_model_samp_s_c, r2_samp_a, r2_model_samp_a, r2_model_samp_a_c, r2_samp_ra, r2_model_samp_ra, r2_model_samp_ra_c, r2_sec_k, r2_model_sec_k, r2_model_sec_k_c, r2_sec_s, r2_model_sec_s, r2_model_sec_s_c, r2_sec_a, r2_model_sec_a, r2_model_sec_a_c, r2_sec_ra, r2_model_sec_ra, r2_model_sec_ra_c), 
+
+index = c("k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance"),
+
+predictor = c("v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v",
+"v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", 
+"samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp",
+"all", "all", "all", "all", "all", "all", "all", "all", "all", "all", "all", "all"),
+
+model = c("autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord")
 
 ## Write Evaluation Results 
 ```{r}
