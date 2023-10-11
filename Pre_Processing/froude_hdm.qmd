@@ -1,0 +1,620 @@
+---
+title: "froude_hdm"
+format: html
+---
+
+# Libraries
+```{r}
+#clear R environment
+rm(list = ls())
+
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("sf")
+pkgCheck("terra")
+pkgCheck("dplyr")
+pkgCheck("data.table")  # fast data.frame manipulation (used by mlr3)
+pkgCheck("readr")
+pkgCheck("sp")
+pkgCheck("raster")
+pkgCheck("Metrics")
+pkgCheck("tidyr")
+```
+
+# Rasters
+## Read rasters
+```{r}
+# GL1 ---------------------------------------------------------------------
+GL1_v_2_56_ezg <- raster("Pre_Processing/raster_files/GL1_v_2_56_ezg.tif")
+GL1_wd_2_56_ezg <- raster("Pre_Processing/raster_files/GL1_wd_2_56_ezg.tif")
+
+GL1_v_3_28 <- raster("Pre_Processing/raster_files/GL1_v_3_28.tif")
+GL1_wd_3_28 <- raster("Pre_Processing/raster_files/GL1_wd_3_28.tif")
+
+GL1_v_6_00 <- raster("Pre_Processing/raster_files/GL1_v_6_00.tif")
+GL1_wd_6_00 <- raster("Pre_Processing/raster_files/GL1_wd_6_00.tif")
+
+GL1_v_9_00 <- raster("Pre_Processing/raster_files/GL1_v_9_00.tif")
+GL1_wd_9_00 <- raster("Pre_Processing/raster_files/GL1_wd_9_00.tif")
+
+GL1_v_12_68 <- raster("Pre_Processing/raster_files/GL1_v_12_68.tif")
+GL1_wd_12_68 <- raster("Pre_Processing/raster_files/GL1_wd_12_68.tif")
+
+GL1_v_16_00 <- raster("Pre_Processing/raster_files/GL1_v_16_00.tif")
+GL1_wd_16_00 <- raster("Pre_Processing/raster_files/GL1_wd_16_00.tif")
+
+GL1_v_19_00 <- raster("Pre_Processing/raster_files/GL1_v_19_00.tif")
+GL1_wd_19_00 <- raster("Pre_Processing/raster_files/GL1_wd_19_00.tif")
+
+GL1_v_22_00 <- raster("Pre_Processing/raster_files/GL1_v_22_00.tif")
+GL1_wd_22_00 <- raster("Pre_Processing/raster_files/GL1_wd_22_00.tif")
+
+GL1_v_25_00 <- raster("Pre_Processing/raster_files/GL1_v_25_00.tif")
+GL1_wd_25_00 <- raster("Pre_Processing/raster_files/GL1_wd_25_00.tif")
+
+GL1_v_28_00 <- raster("Pre_Processing/raster_files/GL1_v_28_00.tif")
+GL1_wd_28_00 <- raster("Pre_Processing/raster_files/GL1_wd_28_00.tif")
+
+GL1_v_31_76 <- raster("Pre_Processing/raster_files/GL1_v_31_76.tif")
+GL1_wd_31_76 <- raster("Pre_Processing/raster_files/GL1_wd_31_76.tif")
+
+# GL2 ---------------------------------------------------------------------
+GL2_v_2_37_ezg <- raster("Pre_Processing/raster_files/GL2_v_2_37_ezg.tif")
+GL2_wd_2_37_ezg <- raster("Pre_Processing/raster_files/GL2_wd_2_37_ezg.tif")
+
+GL2_v_3_21 <- raster("Pre_Processing/raster_files/GL2_v_3_21.tif")
+GL2_wd_3_21 <- raster("Pre_Processing/raster_files/GL2_wd_3_21.tif")
+
+GL2_v_6_00 <- raster("Pre_Processing/raster_files/GL2_v_6_00.tif")
+GL2_wd_6_00 <- raster("Pre_Processing/raster_files/GL2_wd_6_00.tif")
+
+GL2_v_9_00 <- raster("Pre_Processing/raster_files/GL2_v_9_00.tif")
+GL2_wd_9_00 <- raster("Pre_Processing/raster_files/GL2_wd_9_00.tif")
+
+GL2_v_11_00 <- raster("Pre_Processing/raster_files/GL2_v_11_00.tif")
+GL2_wd_11_00 <- raster("Pre_Processing/raster_files/GL2_wd_11_00.tif")
+
+GL2_v_12_52 <- raster("Pre_Processing/raster_files/GL2_v_12_52.tif")
+GL2_wd_12_52 <- raster("Pre_Processing/raster_files/GL2_wd_12_52.tif")
+
+GL2_v_16_00 <- raster("Pre_Processing/raster_files/GL2_v_16_00.tif")
+GL2_wd_16_00 <- raster("Pre_Processing/raster_files/GL2_wd_16_00.tif")
+
+GL2_v_19_00 <- raster("Pre_Processing/raster_files/GL2_v_19_00.tif")
+GL2_wd_19_00 <- raster("Pre_Processing/raster_files/GL2_wd_19_00.tif")
+
+GL2_v_22_00 <- raster("Pre_Processing/raster_files/GL2_v_22_00.tif")
+GL2_wd_22_00 <- raster("Pre_Processing/raster_files/GL2_wd_22_00.tif")
+
+GL2_v_25_00 <- raster("Pre_Processing/raster_files/GL2_v_25_00.tif")
+GL2_wd_25_00 <- raster("Pre_Processing/raster_files/GL2_wd_25_00.tif")
+
+GL2_v_28_00 <- raster("Pre_Processing/raster_files/GL2_v_28_00.tif")
+GL2_wd_28_00 <- raster("Pre_Processing/raster_files/GL2_wd_28_00.tif")
+
+GL2_v_31_53 <- raster("Pre_Processing/raster_files/GL2_v_31_53.tif")
+GL2_wd_31_53 <- raster("Pre_Processing/raster_files/GL2_wd_31_53.tif")
+
+# L2 ---------------------------------------------------------------------
+L2_v_2_40 <- raster("Pre_Processing/raster_files/L2_v_2_40.tif")
+L2_wd_2_40 <- raster("Pre_Processing/raster_files/L2_wd_2_40.tif")
+
+L2_v_3_90 <- raster("Pre_Processing/raster_files/L2_v_3_90.tif")
+L2_wd_3_90 <- raster("Pre_Processing/raster_files/L2_wd_3_90.tif")
+
+L2_v_7_00 <- raster("Pre_Processing/raster_files/L2_v_7_00.tif")
+L2_wd_7_00 <- raster("Pre_Processing/raster_files/L2_wd_7_00.tif")
+
+L2_v_9_24 <- raster("Pre_Processing/raster_files/L2_v_9_24.tif")
+L2_wd_9_24 <- raster("Pre_Processing/raster_files/L2_wd_9_24.tif")
+
+L2_v_9_54_ezg <- raster("Pre_Processing/raster_files/L2_v_9_54_ezg.tif")
+L2_wd_9_54_ezg <- raster("Pre_Processing/raster_files/L2_wd_9_54_ezg.tif")
+
+L2_v_13_30 <- raster("Pre_Processing/raster_files/L2_v_13_30.tif")
+L2_wd_13_30 <- raster("Pre_Processing/raster_files/L2_wd_13_30.tif")
+
+L2_v_16_50 <- raster("Pre_Processing/raster_files/L2_v_16_50.tif")
+L2_wd_16_50 <- raster("Pre_Processing/raster_files/L2_wd_16_50.tif")
+
+L2_v_18_90 <- raster("Pre_Processing/raster_files/L2_v_18_90.tif")
+L2_wd_18_90 <- raster("Pre_Processing/raster_files/L2_wd_18_90.tif")
+
+# M1 -------------------------------------------------------------------
+M1_v_0_47 <- raster("Pre_Processing/raster_files/M1_v_0_47.tif")
+M1_wd_0_47 <- raster("Pre_Processing/raster_files/M1_wd_0_47.tif")
+
+M1_v_0_60 <- raster("Pre_Processing/raster_files/M1_v_0_60.tif")
+M1_wd_0_60 <- raster("Pre_Processing/raster_files/M1_wd_0_60.tif")
+
+M1_v_1_50_ezg <- raster("Pre_Processing/raster_files/M1_v_1_50_ezg.tif")
+M1_wd_1_50_ezg <- raster("Pre_Processing/raster_files/M1_wd_1_50_ezg.tif")
+
+M1_v_4_00 <- raster("Pre_Processing/raster_files/M1_v_4_00.tif")
+M1_wd_4_00 <- raster("Pre_Processing/raster_files/M1_wd_4_00.tif")
+
+M1_v_6_00 <- raster("Pre_Processing/raster_files/M1_v_6_00.tif")
+M1_wd_6_00 <- raster("Pre_Processing/raster_files/M1_wd_6_00.tif")
+
+M1_v_8_00 <- raster("Pre_Processing/raster_files/M1_v_8_00.tif")
+M1_wd_8_00 <- raster("Pre_Processing/raster_files/M1_wd_8_00.tif")
+
+M1_v_10_00 <- raster("Pre_Processing/raster_files/M1_v_10_00.tif")
+M1_wd_10_00 <- raster("Pre_Processing/raster_files/M1_wd_10_00.tif")
+
+M1_v_12_00 <- raster("Pre_Processing/raster_files/M1_v_12_00.tif")
+M1_wd_12_00 <- raster("Pre_Processing/raster_files/M1_wd_12_00.tif")
+
+M1_v_14_00 <- raster("Pre_Processing/raster_files/M1_v_14_00.tif")
+M1_wd_14_00 <- raster("Pre_Processing/raster_files/M1_wd_14_00.tif")
+
+M1_v_16_00 <- raster("Pre_Processing/raster_files/M1_v_16_00.tif")
+M1_wd_16_00 <- raster("Pre_Processing/raster_files/M1_wd_16_00.tif")
+
+M1_v_18_84 <- raster("Pre_Processing/raster_files/M1_v_18_84.tif")
+M1_wd_18_84 <- raster("Pre_Processing/raster_files/M1_wd_18_84.tif")
+
+M1_v_22_84 <- raster("Pre_Processing/raster_files/M1_v_22_84.tif")
+M1_wd_22_84 <- raster("Pre_Processing/raster_files/M1_wd_22_84.tif")
+
+# S1 -------------------------------------------------------------------
+S1_v_1_94_ezg <- raster("Pre_Processing/raster_files/S1_v_1_94_ezg.tif")
+S1_wd_1_94_ezg <- raster("Pre_Processing/raster_files/S1_wd_1_94_ezg.tif")
+
+S1_v_2_00 <- raster("Pre_Processing/raster_files/S1_v_2_00.tif")
+S1_wd_2_00 <- raster("Pre_Processing/raster_files/S1_wd_2_00.tif")
+
+S1_v_3_70 <- raster("Pre_Processing/raster_files/S1_v_3_70.tif")
+S1_wd_3_70 <- raster("Pre_Processing/raster_files/S1_wd_3_70.tif")
+
+S1_v_6_50 <- raster("Pre_Processing/raster_files/S1_v_6_50.tif")
+S1_wd_6_50 <- raster("Pre_Processing/raster_files/S1_wd_6_50.tif")
+
+S1_v_8_50 <- raster("Pre_Processing/raster_files/S1_v_8_50.tif")
+S1_wd_8_50 <- raster("Pre_Processing/raster_files/S1_wd_8_50.tif")
+
+S1_v_10_68 <- raster("Pre_Processing/raster_files/S1_v_10_68.tif")
+S1_wd_10_68 <- raster("Pre_Processing/raster_files/S1_wd_10_68.tif")
+
+S1_v_13_00 <- raster("Pre_Processing/raster_files/S1_v_13_00.tif")
+S1_wd_13_00 <- raster("Pre_Processing/raster_files/S1_wd_13_00.tif")
+
+S1_v_15_00 <- raster("Pre_Processing/raster_files/S1_v_15_00.tif")
+S1_wd_15_00 <- raster("Pre_Processing/raster_files/S1_wd_15_00.tif")
+
+S1_v_18_00 <- raster("Pre_Processing/raster_files/S1_v_18_00.tif")
+S1_wd_18_00 <- raster("Pre_Processing/raster_files/S1_wd_18_00.tif")
+
+S1_v_20_00 <- raster("Pre_Processing/raster_files/S1_v_20_00.tif")
+S1_wd_20_00 <- raster("Pre_Processing/raster_files/S1_wd_20_00.tif")
+
+# S2 ----------------------------------------------------------------
+S2_v_1_93_ezg <- raster("Pre_Processing/raster_files/S2_v_1_93_ezg.tif")
+S2_wd_1_93_ezg <- raster("Pre_Processing/raster_files/S2_wd_1_93_ezg.tif")
+
+S2_v_2_00 <- raster("Pre_Processing/raster_files/S2_v_2_00.tif")
+S2_wd_2_00 <- raster("Pre_Processing/raster_files/S2_wd_2_00.tif")
+
+S2_v_3_20 <- raster("Pre_Processing/raster_files/S2_v_3_20.tif")
+S2_wd_3_20 <- raster("Pre_Processing/raster_files/S2_wd_3_20.tif")
+
+S2_v_6_50 <- raster("Pre_Processing/raster_files/S2_v_6_50.tif")
+S2_wd_6_50 <- raster("Pre_Processing/raster_files/S2_wd_6_50.tif")
+
+S2_v_8_50 <- raster("Pre_Processing/raster_files/S2_v_8_50.tif")
+S2_wd_8_50 <- raster("Pre_Processing/raster_files/S2_wd_8_50.tif")
+
+S2_v_10_93 <- raster("Pre_Processing/raster_files/S2_v_10_93.tif")
+S2_wd_10_93 <- raster("Pre_Processing/raster_files/S2_wd_10_93.tif")
+
+S2_v_13_00 <- raster("Pre_Processing/raster_files/S2_v_13_00.tif")
+S2_wd_13_00 <- raster("Pre_Processing/raster_files/S2_wd_13_00.tif")
+
+S2_v_15_00 <- raster("Pre_Processing/raster_files/S2_v_15_00.tif")
+S2_wd_15_00 <- raster("Pre_Processing/raster_files/S2_wd_15_00.tif")
+
+S2_v_18_00 <- raster("Pre_Processing/raster_files/S2_v_18_00.tif")
+S2_wd_18_00 <- raster("Pre_Processing/raster_files/S2_wd_18_00.tif")
+
+S2_v_20_00 <- raster("Pre_Processing/raster_files/S2_v_20_00.tif")
+S2_wd_20_00 <- raster("Pre_Processing/raster_files/S2_wd_20_00.tif")
+
+# TH4 ---------------------------------------------------------------
+TH4_v_11_45 <- raster("Pre_Processing/raster_files/TH4_v_11_45.tif")
+TH4_wd_11_45 <- raster("Pre_Processing/raster_files/TH4_wd_11_45.tif")
+
+TH4_v_15_00 <- raster("Pre_Processing/raster_files/TH4_v_15_00.tif")
+TH4_wd_15_00 <- raster("Pre_Processing/raster_files/TH4_wd_15_00.tif")
+
+TH4_v_18_00 <- raster("Pre_Processing/raster_files/TH4_v_18_00.tif")
+TH4_wd_18_00 <- raster("Pre_Processing/raster_files/TH4_wd_18_00.tif")
+
+TH4_v_19_96 <- raster("Pre_Processing/raster_files/TH4_v_19_96.tif")
+TH4_wd_19_96 <- raster("Pre_Processing/raster_files/TH4_wd_19_96.tif")
+
+TH4_v_22_50 <- raster("Pre_Processing/raster_files/TH4_v_22_50.tif")
+TH4_wd_22_50 <- raster("Pre_Processing/raster_files/TH4_wd_22_50.tif")
+
+TH4_v_25_00 <- raster("Pre_Processing/raster_files/TH4_v_25_00.tif")
+TH4_wd_25_00 <- raster("Pre_Processing/raster_files/TH4_wd_25_00.tif")
+
+TH4_v_27_00 <- raster("Pre_Processing/raster_files/TH4_v_27_00.tif")
+TH4_wd_27_00 <- raster("Pre_Processing/raster_files/TH4_wd_27_00.tif")
+
+TH4_v_30_00 <- raster("Pre_Processing/raster_files/TH4_v_30_00.tif")
+TH4_wd_30_00 <- raster("Pre_Processing/raster_files/TH4_wd_30_00.tif")
+
+TH4_v_32_93 <- raster("Pre_Processing/raster_files/TH4_v_32_93.tif")
+TH4_wd_32_93 <- raster("Pre_Processing/raster_files/TH4_wd_32_93.tif")
+
+TH4_v_35_12_ezg <- raster("Pre_Processing/raster_files/TH4_v_35_12_ezg.tif")
+TH4_wd_35_12_ezg <- raster("Pre_Processing/raster_files/TH4_wd_35_12_ezg.tif")
+
+# VR3 --------------------------------------------------------------------
+VR3_v_2_90 <- raster("Pre_Processing/raster_files/VR3_v_2_90.tif")
+VR3_wd_2_90 <- raster("Pre_Processing/raster_files/VR3_wd_2_90.tif")
+
+VR3_v_6_00 <- raster("Pre_Processing/raster_files/VR3_v_6_00.tif")
+VR3_wd_6_00 <- raster("Pre_Processing/raster_files/VR3_wd_6_00.tif")
+
+VR3_v_9_00 <- raster("Pre_Processing/raster_files/VR3_v_9_00.tif")
+VR3_wd_9_00 <- raster("Pre_Processing/raster_files/VR3_wd_9_00.tif")
+
+VR3_v_12_00 <- raster("Pre_Processing/raster_files/VR3_v_12_00.tif")
+VR3_wd_12_00 <- raster("Pre_Processing/raster_files/VR3_wd_12_00.tif")
+
+VR3_v_15_00 <- raster("Pre_Processing/raster_files/VR3_v_15_00.tif")
+VR3_wd_15_00 <- raster("Pre_Processing/raster_files/VR3_wd_15_00.tif")
+
+VR3_v_18_80 <- raster("Pre_Processing/raster_files/VR3_v_18_80.tif")
+VR3_wd_18_80 <- raster("Pre_Processing/raster_files/VR3_wd_18_80.tif")
+
+VR3_v_21_51_ezg <- raster("Pre_Processing/raster_files/VR3_v_21_51_ezg.tif")
+VR3_wd_21_51_ezg <- raster("Pre_Processing/raster_files/VR3_wd_21_51_ezg.tif")
+
+VR3_v_22_00 <- raster("Pre_Processing/raster_files/VR3_v_22_00.tif")
+VR3_wd_22_00 <- raster("Pre_Processing/raster_files/VR3_wd_22_00.tif")
+
+VR3_v_25_00 <- raster("Pre_Processing/raster_files/VR3_v_25_00.tif")
+VR3_wd_25_00 <- raster("Pre_Processing/raster_files/VR3_wd_25_00.tif")
+
+VR3_v_28_00 <- raster("Pre_Processing/raster_files/VR3_v_28_00.tif")
+VR3_wd_28_00 <- raster("Pre_Processing/raster_files/VR3_wd_28_00.tif")
+
+VR3_v_31_00 <- raster("Pre_Processing/raster_files/VR3_v_31_00.tif")
+VR3_wd_31_00 <- raster("Pre_Processing/raster_files/VR3_wd_31_00.tif")
+
+VR3_v_34_00 <- raster("Pre_Processing/raster_files/VR3_v_34_00.tif")
+VR3_wd_34_00 <- raster("Pre_Processing/raster_files/VR3_wd_34_00.tif")
+
+VR3_v_37_00 <- raster("Pre_Processing/raster_files/VR3_v_37_00.tif")
+VR3_wd_37_00 <- raster("Pre_Processing/raster_files/VR3_wd_37_00.tif")
+
+VR3_v_40_10 <- raster("Pre_Processing/raster_files/VR3_v_40_10.tif")
+VR3_wd_40_10 <- raster("Pre_Processing/raster_files/VR3_wd_40_10.tif")
+
+VR3_v_43_00 <- raster("Pre_Processing/raster_files/VR3_v_43_00.tif")
+VR3_wd_43_00 <- raster("Pre_Processing/raster_files/VR3_wd_43_00.tif")
+
+VR3_v_46_00 <- raster("Pre_Processing/raster_files/VR3_v_46_00.tif")
+VR3_wd_46_00 <- raster("Pre_Processing/raster_files/VR3_wd_46_00.tif")
+
+VR3_v_48_00 <- raster("Pre_Processing/raster_files/VR3_v_48_00.tif")
+VR3_wd_48_00 <- raster("Pre_Processing/raster_files/VR3_wd_48_00.tif")
+
+VR3_v_50_00 <- raster("Pre_Processing/raster_files/VR3_v_50_00.tif")
+VR3_wd_50_00 <- raster("Pre_Processing/raster_files/VR3_wd_50_00.tif")
+
+VR3_v_52_90 <- raster("Pre_Processing/raster_files/VR3_v_52_90.tif")
+VR3_wd_52_90 <- raster("Pre_Processing/raster_files/VR3_wd_52_90.tif")
+```
+
+
+```{r}
+# assign coordinate system 
+crs(GL1_v_3_28) <- "EPSG: 2056"
+crs(GL1_wd_3_28) <- "EPSG: 2056"
+```
+
+# Daten laden 
+```{r}
+data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv")
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv")
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv")
+data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv")
+```
+
+# Parameter calculations
+## Froude
+### GL1
+```{r}
+GL1_f_2_56_ezg <- GL1_v_2_56_ezg/(sqrt(9.81 * GL1_wd_2_56_ezg))
+GL1_f_3_28 <- GL1_v_3_28/(sqrt(9.81 * GL1_wd_3_28))
+GL1_f_6_00 <- GL1_v_6_00/(sqrt(9.81 * GL1_wd_6_00))
+GL1_f_9_00 <- GL1_v_9_00/(sqrt(9.81 * GL1_wd_9_00))
+GL1_f_12_68 <- GL1_v_12_68/(sqrt(9.81 * GL1_wd_12_68))
+GL1_f_16_00 <- GL1_v_16_00/(sqrt(9.81 * GL1_wd_16_00))
+GL1_f_19_00 <- GL1_v_19_00/(sqrt(9.81 * GL1_wd_19_00))
+GL1_f_22_00 <- GL1_v_22_00/(sqrt(9.81 * GL1_wd_22_00))
+GL1_f_25_00 <- GL1_v_25_00/(sqrt(9.81 * GL1_wd_25_00))
+GL1_f_28_00 <- GL1_v_28_00/(sqrt(9.81 * GL1_wd_28_00))
+GL1_f_31_76 <- GL1_v_31_76/(sqrt(9.81 * GL1_wd_31_76))
+```
+
+### GL2
+```{r}
+GL2_f_2_37_ezg <- GL2_v_2_37_ezg/(sqrt(9.81 * GL2_wd_2_37_ezg))
+GL2_f_3_21 <- GL2_v_3_21/(sqrt(9.81 * GL2_wd_3_21))
+GL2_f_6_00 <- GL2_v_6_00/(sqrt(9.81 * GL2_wd_6_00))
+GL2_f_9_00 <- GL2_v_9_00/(sqrt(9.81 * GL2_wd_9_00))
+GL2_f_11_00 <- GL2_v_11_00/(sqrt(9.81 * GL2_wd_11_00))
+GL2_f_12_52 <- GL2_v_12_52/(sqrt(9.81 * GL2_wd_12_52))
+GL2_f_16_00 <- GL2_v_16_00/(sqrt(9.81 * GL2_wd_16_00))
+GL2_f_19_00 <- GL2_v_19_00/(sqrt(9.81 * GL2_wd_19_00))
+GL2_f_22_00 <- GL2_v_22_00/(sqrt(9.81 * GL2_wd_22_00))
+GL2_f_25_00 <- GL2_v_25_00/(sqrt(9.81 * GL2_wd_25_00))
+GL2_f_28_00 <- GL2_v_28_00/(sqrt(9.81 * GL2_wd_28_00))
+GL2_f_31_53 <- GL2_v_31_53/(sqrt(9.81 * GL2_wd_31_53))
+```
+
+### L2
+```{r}
+L2_f_2_40 <- L2_v_2_40/(sqrt(9.81 * L2_wd_2_40))
+L2_f_3_90 <- L2_v_3_90/(sqrt(9.81 * L2_wd_3_90))
+L2_f_7_00 <- L2_v_7_00/(sqrt(9.81 * L2_wd_7_00))
+L2_f_9_24 <- L2_v_9_24/(sqrt(9.81 * L2_wd_9_24))
+L2_f_9_54_ezg <- L2_v_9_54_ezg/(sqrt(9.81 * L2_wd_9_54_ezg))
+L2_f_13_30 <- L2_v_13_30/(sqrt(9.81 * L2_wd_13_30))
+L2_f_16_50 <- L2_v_16_50/(sqrt(9.81 * L2_wd_16_50))
+L2_f_18_90 <- L2_v_18_90/(sqrt(9.81 * L2_wd_18_90))
+```
+
+### M1
+```{r}
+M1_f_0_47 <- M1_v_0_47/(sqrt(9.81 * M1_wd_0_47))
+M1_f_0_60 <- M1_v_0_60/(sqrt(9.81 * M1_wd_0_60))
+M1_f_1_50_ezg <- M1_v_1_50_ezg/(sqrt(9.81 * M1_wd_1_50_ezg))
+M1_f_4_00 <- M1_v_4_00/(sqrt(9.81 * M1_wd_4_00))
+M1_f_6_00 <- M1_v_6_00/(sqrt(9.81 * M1_wd_6_00))
+M1_f_8_00 <- M1_v_8_00/(sqrt(9.81 * M1_wd_8_00))
+M1_f_10_00 <- M1_v_10_00/(sqrt(9.81 * M1_wd_10_00))
+M1_f_12_00 <- M1_v_12_00/(sqrt(9.81 * M1_wd_12_00))
+M1_f_14_00 <- M1_v_14_00/(sqrt(9.81 * M1_wd_14_00))
+M1_f_16_00 <- M1_v_16_00/(sqrt(9.81 * M1_wd_16_00))
+M1_f_18_84 <- M1_v_18_84/(sqrt(9.81 * M1_wd_18_84))
+M1_f_22_84 <- M1_v_22_84/(sqrt(9.81 * M1_wd_22_84))
+```
+
+### S1
+```{r}
+
+```
+
+S1_v_1_94_ezg, S1_wd_1_94_ezg
+S1_v_2_00, S1_wd_2_00
+S1_v_3_70, S1_wd_3_70
+S1_v_6_50, S1_wd_6_50
+S1_v_8_50, S1_wd_8_50
+S1_v_10_68, S1_wd_10_68
+S1_v_13_00, S1_wd_13_00
+S1_v_15_00, S1_wd_15_00
+S1_v_18_00, S1_wd_18_00
+S1_v_20_00, S1_wd_20_00
+### Dataframe
+```{r}
+# calculate from dataframe for ML models
+data_wd_f <- data_wd$velocity/(sqrt(9.81 * data_wd$wd_m))
+```
+
+## Sohlenschubspannung 
+### GL1
+```{r}
+GL1_s_2_56_ezg <- (1000*9.81*(GL1_v_2_56_ezg)^2*(1/38)^2)/((GL1_wd_2_56_ezg)^1/3)
+GL1_s_3_28 <- (1000*9.81*(GL1_v_3_28)^2*(1/38)^2)/((GL1_wd_3_28)^1/3)
+GL1_s_6_00 <- (1000*9.81*(GL1_v_6_00)^2*(1/38)^2)/((GL1_wd_6_00)^1/3)
+GL1_s_9_00 <- (1000*9.81*(GL1_v_9_00)^2*(1/38)^2)/((GL1_wd_9_00)^1/3)
+GL1_s_12_68 <- (1000*9.81*(GL1_v_12_68)^2*(1/38)^2)/((GL1_wd_12_68)^1/3)
+GL1_s_16_00 <- (1000*9.81*(GL1_v_16_00)^2*(1/38)^2)/((GL1_wd_16_00)^1/3)
+GL1_s_19_00 <- (1000*9.81*(GL1_v_19_00)^2*(1/38)^2)/((GL1_wd_19_00)^1/3)
+GL1_s_22_00 <- (1000*9.81*(GL1_v_22_00)^2*(1/38)^2)/((GL1_wd_22_00)^1/3)
+GL1_s_25_00 <- (1000*9.81*(GL1_v_25_00)^2*(1/38)^2)/((GL1_wd_25_00)^1/3)
+GL1_s_28_00 <- (1000*9.81*(GL1_v_28_00)^2*(1/38)^2)/((GL1_wd_28_00)^1/3)
+GL1_s_31_76 <- (1000*9.81*(GL1_v_31_76)^2*(1/38)^2)/((GL1_wd_31_76)^1/3)
+```
+
+### GL2
+```{r}
+GL2_s_2_37_ezg <- (1000*9.81*(GL2_v_2_37_ezg)^2*(1/38)^2)/((GL2_wd_2_37_ezg)^1/3)
+GL2_s_3_21 <- (1000*9.81*(GL2_v_3_21)^2*(1/38)^2)/((GL2_wd_3_21)^1/3)
+GL2_s_6_00 <- (1000*9.81*(GL2_v_6_00)^2*(1/38)^2)/((GL2_wd_6_00)^1/3)
+GL2_s_9_00 <- (1000*9.81*(GL2_v_9_00)^2*(1/38)^2)/((GL2_wd_9_00)^1/3)
+GL2_s_11_00 <- (1000*9.81*(GL2_v_11_00)^2*(1/38)^2)/((GL2_wd_11_00)^1/3)
+GL2_s_12_52 <- (1000*9.81*(GL2_v_12_52)^2*(1/38)^2)/((GL2_wd_12_52)^1/3)
+GL2_s_16_00 <- (1000*9.81*(GL2_v_16_00)^2*(1/38)^2)/((GL2_wd_16_00)^1/3)
+GL2_s_19_00 <- (1000*9.81*(GL2_v_19_00)^2*(1/38)^2)/((GL2_wd_19_00)^1/3)
+GL2_s_22_00 <- (1000*9.81*(GL2_v_22_00)^2*(1/38)^2)/((GL2_wd_22_00)^1/3)
+GL2_s_25_00 <- (1000*9.81*(GL2_v_25_00)^2*(1/38)^2)/((GL2_wd_25_00)^1/3)
+GL2_s_28_00 <- (1000*9.81*(GL2_v_28_00)^2*(1/38)^2)/((GL2_wd_28_00)^1/3)
+GL2_s_31_53 <- (1000*9.81*(GL2_v_31_53)^2*(1/38)^2)/((GL2_wd_31_53)^1/3)
+```
+
+### L2
+```{r}
+L2_s_2_40 <- (1000*9.81*(L2_v_2_40)^2*(1/38)^2)/((L2_wd_2_40)^1/3)
+L2_s_3_90 <- (1000*9.81*(L2_v_3_90)^2*(1/38)^2)/((L2_wd_3_90)^1/3)
+L2_s_7_00 <- (1000*9.81*(L2_v_7_00)^2*(1/38)^2)/((L2_wd_7_00)^1/3)
+L2_s_9_24 <- (1000*9.81*(L2_v_9_24)^2*(1/38)^2)/((L2_wd_9_24)^1/3)
+L2_s_9_54_ezg <- (1000*9.81*(L2_v_9_54_ezg)^2*(1/38)^2)/((L2_wd_9_54_ezg)^1/3)
+L2_s_13_30 <- (1000*9.81*(L2_v_13_30)^2*(1/38)^2)/((L2_wd_13_30)^1/3)
+L2_s_16_50 <- (1000*9.81*(L2_v_16_50)^2*(1/38)^2)/((L2_wd_16_50)^1/3)
+L2_s_18_90 <- (1000*9.81*(L2_v_18_90)^2*(1/38)^2)/((L2_wd_18_90)^1/3)
+```
+
+### M1
+```{r}
+M1_s_0_47 <- (1000*9.81*(M1_v_0_47)^2*(1/38)^2)/((M1_wd_0_47)^1/3)
+M1_s_0_60 <- (1000*9.81*(M1_v_0_60)^2*(1/38)^2)/((M1_wd_0_60)^1/3)
+M1_s_1_50_ezg <- (1000*9.81*(M1_v_1_50_ezg)^2*(1/38)^2)/((M1_wd_1_50_ezg)^1/3)
+M1_s_4_00 <- (1000*9.81*(M1_v_4_00)^2*(1/38)^2)/((M1_wd_4_00)^1/3)
+M1_s_6_00 <- (1000*9.81*(M1_v_6_00)^2*(1/38)^2)/((M1_wd_6_00)^1/3)
+M1_s_8_00 <- (1000*9.81*(M1_v_8_00)^2*(1/38)^2)/((M1_wd_8_00)^1/3)
+M1_s_10_00 <- (1000*9.81*(M1_v_10_00)^2*(1/38)^2)/((M1_wd_10_00)^1/3)
+M1_s_12_00 <- (1000*9.81*(M1_v_12_00)^2*(1/38)^2)/((M1_wd_12_00)^1/3)
+M1_s_14_00 <- (1000*9.81*(M1_v_14_00)^2*(1/38)^2)/((M1_wd_14_00)^1/3)
+M1_s_16_00 <- (1000*9.81*(M1_v_16_00)^2*(1/38)^2)/((M1_wd_16_00)^1/3)
+M1_s_18_84 <- (1000*9.81*(M1_v_18_84)^2*(1/38)^2)/((M1_wd_18_84)^1/3)
+M1_s_22_84 <- (1000*9.81*(M1_v_22_84)^2*(1/38)^2)/((M1_wd_22_84)^1/3)
+```
+
+### S1
+```{r}
+
+```
+
+S1_v_1_94_ezg, S1_wd_1_94_ezg
+S1_v_2_00, S1_wd_2_00
+S1_v_3_70, S1_wd_3_70
+S1_v_6_50, S1_wd_6_50
+S1_v_8_50, S1_wd_8_50
+S1_v_10_68, S1_wd_10_68
+S1_v_13_00, S1_wd_13_00
+S1_v_15_00, S1_wd_15_00
+S1_v_18_00, S1_wd_18_00
+S1_v_20_00, S1_wd_20_00
+### Dataframe
+```{r}
+# calculate from dataframe for ML models
+data_wd_s <- (1000*9.81*(data_wd$velocity)^2*(1/38)^2)/((data_wd$wd_m)^1/3)
+```
+
+## Stream Power
+### GL1
+```{r}
+GL1_sp_2_56_ezg <- abs(GL1_v_2_56_ezg)*GL1_s_2_56_ezg
+GL1_sp_3_28 <- abs(GL1_v_3_28)*GL1_s_3_28
+GL1_sp_6_00 <- abs(GL1_v_6_00)*GL1_s_6_00
+GL1_sp_9_00 <- abs(GL1_v_9_00)*GL1_s_9_00
+GL1_sp_12_68 <- abs(GL1_v_12_68)*GL1_s_12_68
+GL1_sp_16_00 <- abs(GL1_v_16_00)*GL1_s_16_00
+GL1_sp_19_00 <- abs(GL1_v_19_00)*GL1_s_19_00
+GL1_sp_22_00 <- abs(GL1_v_22_00)*GL1_s_22_00
+GL1_sp_25_00 <- abs(GL1_v_25_00)*GL1_s_25_00
+GL1_sp_28_00 <- abs(GL1_v_28_00)*GL1_s_28_00
+GL1_sp_31_76 <- abs(GL1_v_31_76)*GL1_s_31_76
+```
+
+### GL2
+```{r}
+GL2_sp_2_37_ezg <- abs(GL2_v_2_37_ezg)*GL2_s_2_37_ezg
+GL2_sp_3_21 <- abs(GL2_v_3_21)*GL2_s_3_21
+GL2_sp_6_00 <- abs(GL2_v_6_00)*GL2_s_6_00
+GL2_sp_9_00 <- abs(GL2_v_9_00)*GL2_s_9_00
+GL2_sp_11_00 <- abs(GL2_v_11_00)*GL2_s_11_00
+GL2_sp_12_52 <- abs(GL2_v_12_52)*GL2_s_12_52
+GL2_sp_16_00 <- abs(GL2_v_16_00)*GL2_s_16_00
+GL2_sp_19_00 <- abs(GL2_v_19_00)*GL2_s_19_00
+GL2_sp_22_00 <- abs(GL2_v_22_00)*GL2_s_22_00
+GL2_sp_25_00 <- abs(GL2_v_25_00)*GL2_s_25_00
+GL2_sp_28_00 <- abs(GL2_v_28_00)*GL2_s_28_00
+GL2_sp_31_53 <- abs(GL2_v_31_53)*GL2_s_31_53
+```
+
+### L2
+```{r}
+L2_sp_2_40 <- abs(L2_v_2_40)*L2_s_2_40
+L2_sp_3_90 <- abs(L2_v_3_90)*L2_s_3_90
+L2_sp_7_00 <- abs(L2_v_7_00)*L2_s_7_00
+L2_sp_9_24 <- abs(L2_v_9_24)*L2_s_9_24
+L2_sp_9_54_ezg <- abs(L2_v_9_54_ezg)*L2_s_9_54_ezg
+L2_sp_13_30 <- abs(L2_v_13_30)*L2_s_13_30
+L2_sp_16_50 <- abs(L2_v_16_50)*L2_s_16_50
+L2_sp_18_90 <- abs(L2_v_18_90)*L2_s_18_90
+```
+
+### M1
+```{r}
+M1_sp_0_47 <- abs(M1_v_0_47)*M1_s_0_47
+M1_sp_0_60 <- abs(M1_v_0_60)*M1_s_0_60
+M1_sp_1_50_ezg <- abs(M1_v_1_50_ezg)*M1_s_1_50_ezg
+M1_sp_4_00 <- abs(M1_v_4_00)*M1_s_4_00
+M1_sp_6_00 <- abs(M1_v_6_00)*M1_s_6_00
+M1_sp_8_00 <- abs(M1_v_8_00)*M1_s_8_00
+M1_sp_10_00 <- abs(M1_v_10_00)*M1_s_10_00
+M1_sp_12_00 <- abs(M1_v_12_00)*M1_s_12_00
+M1_sp_14_00 <- abs(M1_v_14_00)*M1_s_14_00
+M1_sp_16_00 <- abs(M1_v_16_00)*M1_s_16_00
+M1_sp_18_84 <- abs(M1_v_18_84)*M1_s_18_84
+M1_sp_22_84 <- abs(M1_v_22_84)*M1_s_22_84
+```
+
+### S1
+```{r}
+
+```
+
+S1_v_1_94_ezg, S1_wd_1_94_ezg
+S1_v_2_00, S1_wd_2_00
+S1_v_3_70, S1_wd_3_70
+S1_v_6_50, S1_wd_6_50
+S1_v_8_50, S1_wd_8_50
+S1_v_10_68, S1_wd_10_68
+S1_v_13_00, S1_wd_13_00
+S1_v_15_00, S1_wd_15_00
+S1_v_18_00, S1_wd_18_00
+S1_v_20_00, S1_wd_20_00
+
+### Dataframe
+```{r}
+# calculate from dataframe for ML models
+data_wd_sp <- abs(data_wd$velocity)*data_wd_s
+```
+
+
+# Stack rasters 
+```{r}
+
+```
+
+# Save rasters
+```{r}
+
+```
+
+
+# Build DFs
+```{r}
+data_v_add <- data_v |> 
+  mutate(froude = data_wd_f,
+         shear_stress = data_wd_s,
+         stream_power = data_wd_sp) 
+
+data_wd_add <- data_wd |> 
+  mutate(froude = data_wd_f,
+         shear_stress = data_wd_s,
+         stream_power = data_wd_sp) 
+
+data_sampling_add <- data_sampling |> 
+  mutate(froude = data_wd_f,
+         shear_stress = data_wd_s,
+         stream_power = data_wd_sp)
+
+data_section_add <- data_section |> 
+  mutate(froude = data_wd_f,
+         shear_stress = data_wd_s,
+         stream_power = data_wd_sp)
+
+write.csv(data_v_add, "Pre_Processing/abiotic_mi_sampling/lab_ml_v_add.csv", row.names = FALSE)
+write.csv(data_wd_add, "Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv", row.names = FALSE)
+write.csv(data_sampling_add, "Pre_Processing/abiotic_mi_sampling/lab_ml_sampling_add.csv", row.names = FALSE)
+write.csv(data_section_add, "Pre_Processing/abiotic_mi_sampling/lab_ml_section_add.csv", row.names = FALSE)
+```
+
+

@@ -375,18 +375,6 @@ L2_7_00 <-  basement(model_json = "hdm_models/L2/model.json",
                      discharge = 7.00,
                      strickler = 11.5)
 
-L2_7_95 <-  basement(model_json = "hdm_models/L2/model.json", 
-                     model_new = "hdm_models/L2/model_new.json",
-                     mesh_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm", 
-                     simulation_json = "hdm_models/L2/simulation.json",
-                     simulation_new = "hdm_models/L2/simulation_new.json",
-                     setup_h5 = "hdm_models/L2/setup.h5",
-                     results_h5 = "hdm_models/L2/results_L2_7_95.h5",
-                     results_xdmf = "hdm_models/L2/results_L2_7_95",
-                     results_json = "hdm_models/L2/results.json",
-                     discharge = 7.95,
-                     strickler = 11.5)
-
 L2_9_24 <-  basement(model_json = "hdm_models/L2/model.json", 
                      model_new = "hdm_models/L2/model_new.json",
                      mesh_path = "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm", 
@@ -991,18 +979,6 @@ TH4_35_12_ezg <- basement(model_json = "hdm_models/TH4/model.json",
                       results_xdmf = "hdm_models/TH4/results_TH4_35_12_ezg",
                       results_json = "hdm_models/TH4/results.json", 
                       discharge = 35.12, 
-                      strickler = 42.0)
-
-TH4_36_30 <- basement(model_json = "hdm_models/TH4/model.json",
-                      model_new = "hdm_models/TH4/model_new.json",
-                      mesh_path = "hdm_models/TH4/th4_uebersicht_computational-mesh4.2dm", 
-                      simulation_json = "hdm_models/TH4/simulation.json",
-                      simulation_new = "hdm_models/TH4/simulation_new.json",
-                      setup_h5 = "hdm_models/TH4/setup.h5",
-                      results_h5 = "hdm_models/TH4/results_TH4_36_30.h5",
-                      results_xdmf = "hdm_models/TH4/results_TH4_36_30",
-                      results_json = "hdm_models/TH4/results.json", 
-                      discharge = 36.30, 
                       strickler = 42.0)
 ```
 
