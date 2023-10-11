@@ -1446,131 +1446,151 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
 
 # Model Evaluation 
 ## Variable Importance
+ Plot variable importance
+xgb.plot.importance(importance_matrix = importance)
 ```{r}
 ### PREDICTORS: ONLY VELOCITY ###
 # w/ coordinates
-vi_v_k <- importance(rf_model_v_k)
-vi_v_s <- importance(rf_model_v_s)
-vi_v_a <- importance(rf_model_v_a)
-vi_v_ra <- importance(rf_model_v_ra)
+vi_v_k <- xgb.importance(model = xgb_v_k)
+vi_v_s <- xgb.importance(model = xgb_v_s)
+vi_v_a <- xgb.importance(model = xgb_v_a)
+vi_v_ra <- xgb.importance(model = xgb_v_ra)
 
 # w/o coordinates
-vi_v_k_c <- importance(rf_model_v_k_c)
-vi_v_s_c <- importance(rf_model_v_s_c)
-vi_v_a_c <- importance(rf_model_v_a_c)
-vi_v_ra_c <- importance(rf_model_v_ra_c)
+vi_v_k_c <- xgb.importance(model = xgb_v_k_c)
+vi_v_s_c <- xgb.importance(model = xgb_v_s_c)
+vi_v_a_c <- xgb.importance(model = xgb_v_a_c)
+vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)
 
 
 ### PREDICTORS: VELOCITY AND WD ###
 # w/ coordinates
-vi_wd_k <- importance(rf_model_wd_k)
-vi_wd_s <- importance(rf_model_wd_s)
-vi_wd_a <- importance(rf_model_wd_a)
-vi_wd_ra <- importance(rf_model_wd_ra)
+vi_wd_k <- xgb.importance(model = xgb_wd_k)
+vi_wd_s <- xgb.importance(model = xgb_wd_s)
+vi_wd_a <- xgb.importance(model = xgb_wd_a)
+vi_wd_ra <- xgb.importance(model = xgb_wd_ra)
 
 # w/o coordinates
-vi_wd_k_c <- importance(rf_model_wd_k_c)
-vi_wd_s_c <- importance(rf_model_wd_s_c)
-vi_wd_a_c <- importance(rf_model_wd_a_c)
-vi_wd_ra_c <- importance(rf_model_wd_ra_c)
+vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c)
+vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c)
+vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c)
+vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
 # w/ coordinates
-vi_samp_k <- importance(rf_model_samp_k)
-vi_samp_s <- importance(rf_model_samp_s)
-vi_samp_a <- importance(rf_model_samp_a)
-vi_samp_ra <- importance(rf_model_samp_ra)
+vi_samp_k <- xgb.importance(model = xgb_samp_k)
+vi_samp_s <- xgb.importance(model = xgb_samp_s)
+vi_samp_a <- xgb.importance(model = xgb_samp_a)
+vi_samp_ra <- xgb.importance(model = xgb_samp_ra)
 
 # w/o coordinates
-vi_samp_k_c <- importance(rf_model_samp_k_c)
-vi_samp_s_c <- importance(rf_model_samp_s_c)
-vi_samp_a_c <- importance(rf_model_samp_a_c)
-vi_samp_ra_c <- importance(rf_model_samp_ra_c)
+vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c)
+vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c)
+vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c)
+vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ###
 # w/ coordinates
-vi_sec_k <- importance(rf_model_sec_k)
-vi_sec_s <- importance(rf_model_sec_s)
-vi_sec_a <- importance(rf_model_sec_a)
-vi_sec_ra <- importance(rf_model_sec_ra)
+vi_sec_k <- xgb.importance(model = xgb_sec_k)
+vi_sec_s <- xgb.importance(model = xgb_sec_s)
+vi_sec_a <- xgb.importance(model = xgb_sec_a)
+vi_sec_ra <- xgb.importance(model = xgb_sec_ra)
 
 # w/o coordinates
-vi_sec_k_c <- importance(rf_model_sec_k_c)
-vi_sec_s_c <- importance(rf_model_sec_s_c)
-vi_sec_a_c <- importance(rf_model_sec_a_c)
-vi_sec_ra_c <- importance(rf_model_sec_ra_c)
+vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c)
+vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c)
+vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c)
+vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c)
 
 # bind results together
-vi_rf_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra)
-vi_rf_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)
-vi_rf_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra)
-vi_rf_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c)
-vi_rf_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra)
-vi_rf_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c)
-vi_rf_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
-vi_rf_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c)
+vi_brt_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra) |>
+  mutate(model = "model w/ coordinates",
+         index = c("k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+
+vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)|>
+  mutate(model = "model w/o coordinates",
+         index = c("k_index", "shannon", "abundance", "rel_abundance"),
+         Feature = "velocity")
+
+vi_brt_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra) |>
+  mutate(model = "model w/ coordinates",
+         index = c("k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+
+vi_brt_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) |>
+  mutate(model = "model w/o coordinates",
+         index = c("k_index", "k_index", "shannon", "shannon", "abundance", "abundance", "rel_abundance", "rel_abundance"))
+
+vi_brt_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra) |>
+  mutate(model = "model w/ coordinates",
+         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+
+vi_brt_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c) |>
+  mutate(model = "model w/o coordinates",
+         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+
+vi_brt_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra) |>
+  mutate(model = "model w/ coordinates",
+         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+
+vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) |>
+  mutate(model = "model w/ coordinates",
+         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
 
 # write results into .csv
-write.csv(vi_rf_model_v, "ML_model/vi_rf_model_v.csv", row.names = FALSE)
-write.csv(vi_rf_model_v_c, "ML_model/vi_rf_model_v_c.csv", row.names = FALSE)
-write.csv(vi_rf_model_wd, "ML_model/vi_rf_model_wd.csv", row.names = FALSE)
-write.csv(vi_rf_model_wd_c, "ML_model/vi_rf_model_wd_c.csv", row.names = FALSE)
-write.csv(vi_rf_model_samp, "ML_model/vi_rf_model_samp.csv", row.names = FALSE)
-write.csv(vi_rf_model_samp_c, "ML_model/vi_rf_model_samp_c.csv", row.names = FALSE)
-write.csv(vi_rf_model_sec, "ML_model/vi_rf_model_sec.csv", row.names = FALSE)
-write.csv(vi_rf_model_sec_c, "ML_model/vi_rf_model_sec_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_v, "ML_model/vi_brt_model_v.csv", row.names = FALSE)
+write.csv(vi_brt_model_v_c, "ML_model/vi_brt_model_v_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_wd, "ML_model/vi_brt_model_wd.csv", row.names = FALSE)
+write.csv(vi_brt_model_wd_c, "ML_model/vi_brt_model_wd_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_samp, "ML_model/vi_brt_model_samp.csv", row.names = FALSE)
+write.csv(vi_brt_model_samp_c, "ML_model/vi_brt_model_samp_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_sec, "ML_model/vi_brt_model_sec.csv", row.names = FALSE)
+write.csv(vi_brt_model_sec_c, "ML_model/vi_brt_model_sec_c.csv", row.names = FALSE)
 ```
 
 ```{r}
 ### PREDICTORS: ONLY VELOCITY ###
-var_imp_rf_v_k <- autotuner_rf_v_k$importance()
-var_imp_rf_v_s <- autotuner_rf_v_s$importance()
-var_imp_rf_v_a <- autotuner_rf_v_a$importance()
-var_imp_rf_v_ra <- autotuner_rf_v_ra$importance()
+vi_v_k <- autotuner_xbrt_v_k$importance()
+vi_v_s <- autotuner_xbrt_v_s$importance()
+vi_v_a <- autotuner_xbrt_v_a$importance()
+vi_rf_v_ra <- autotuner_xbrt_v_ra$importance()
 
 ### PREDICTORS: VELOCITY AND WD ###
-var_imp_rf_wd_k <- autotuner_rf_wd_k$importance()
-var_imp_rf_wd_s <- autotuner_rf_wd_s$importance()
-var_imp_rf_wd_a <- autotuner_rf_wd_a$importance()
-var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance()
+vi_wd_k <- autotuner_xbrt_wd_k$importance()
+vi_wd_s <- autotuner_xbrt_wd_s$importance()
+vi_wd_a <- autotuner_xbrt_wd_a$importance()
+vi_wd_ra <- autotuner_xbrt_wd_ra$importance()
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
-var_imp_rf_samp_k <- autotuner_rf_samp_k$importance()
-var_imp_rf_samp_s <- autotuner_rf_samp_s$importance()
-var_imp_rf_samp_a <- autotuner_rf_samp_a$importance()
-var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance()
+vi_samp_k <- autotuner_xbrt_samp_k$importance()
+vi_samp_s <- autotuner_xbrt_samp_s$importance()
+vi_samp_a <- autotuner_xbrt_samp_a$importance()
+vi_samp_ra <- autotuner_xbrt_samp_ra$importance()
 
 ### PREDICTORS: ALL PREDICTORS ###
-var_imp_rf_sec_k <- autotuner_rf_sec_k$importance()
-var_imp_rf_sec_s <- autotuner_rf_sec_s$importance()
-var_imp_rf_sec_a <- autotuner_rf_sec_a$importance()
-var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance()
+vi_sec_k <- autotuner_xbrt_sec_k$importance()
+vi_sec_s <- autotuner_xbrt_sec_s$importance()
+vi_sec_a <- autotuner_xbrt_sec_a$importance()
+vi_sec_ra <- autotuner_xbrt_sec_ra$importance()
 
 # bind results together
-vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra)
-vi_rf_wd <- rbind(var_imp_rf_wd_k, var_imp_rf_wd_s, var_imp_rf_wd_a, var_imp_rf_wd_ra)
-vi_rf_samp <- rbind(var_imp_rf_samp_k, var_imp_rf_samp_s, var_imp_rf_samp_a, var_imp_rf_samp_ra)
-vi_rf_sec <- rbind(var_imp_rf_sec_k, var_imp_rf_sec_s, var_imp_rf_sec_a, var_imp_rf_sec_ra)
+vi_v <- rbind(vi_v_k, vi_rf_v_s, vi_rf_v_a, vi_rf_v_ra) |>
+  mutate(model = "autotuner",
+         index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
+vi_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra)
+vi_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra)
+vi_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
 
 # write results into .csv
-write.csv(vi_rf_v, "ML_model/vi_rf_v.csv", row.names = FALSE)
-write.csv(vi_rf_wd, "ML_model/vi_rf_wd.csv", row.names = FALSE)
-write.csv(vi_rf_samp, "ML_model/vi_rf_samp.csv", row.names = FALSE)
-write.csv(vi_rf_sec, "ML_model/vi_rf_sec.csv", row.names = FALSE)
+write.csv(vi_v, "ML_model/vi_brt_v.csv", row.names = FALSE)
+write.csv(vi_wd, "ML_model/vi_brt_wd.csv", row.names = FALSE)
+write.csv(vi_samp, "ML_model/vi_brt_samp.csv", row.names = FALSE)
+write.csv(vi_sec, "ML_model/vi_brt_sec.csv", row.names = FALSE)
 ```
 
 
 ## Partial dependence plots
 https://stackoverflow.com/questions/66016542/partial-dependence-ale-ice-plots-xgboost-in-r
- xv <- data.matrix(subset(training_v_k, select = -k_index))  # training features
--- Create the partial dependence plot
-pdp_plot_v_k <- partial(model.xgb, pred.var = "velocity", ice = TRUE, center = TRUE, plot = TRUE, rug = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = xv, type = "regression")
--- p1xv <- partial(xgbc, pred.var = "za1", ice = TRUE, center = TRUE, plot = TRUE, rug = TRUE, alpha = 0.1, plot.engine = "ggplot2", train = xv, type = "regression")
-
--- Plot the PDP
-ggplot(pdp_plot_v_k, aes(velocity, yhat)) + 
-  # yhat ist die response variable (k-index, simpson oder shannon)
-  geom_line()
 
 ## Obs and Pred 
 ```{r}
@@ -2002,73 +2022,49 @@ bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = brt_pred_mo
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
 # k_index and sampling locations
-bias_samp_k <- bias(observados = responses_samp_k, 
-                    estimados = brt_pred_samp_k)
-bias_model_samp_k <- bias(observados = responses_samp_k, 
-                    estimados = brt_pred_model_samp_k)
-bias_model_samp_k_c <- bias(observados = responses_samp_k, 
-                    estimados = brt_pred_model_samp_k_c)
+bias_samp_k <- bias(observados = responses_samp_k, estimados = brt_pred_samp_k)
+bias_model_samp_k <- bias(observados = responses_samp_k, estimados = brt_pred_model_samp_k)
+bias_model_samp_k_c <- bias(observados = responses_samp_k, estimados = brt_pred_model_samp_k_c)
 
 # shannon index and sampling locations
-bias_samp_s <- bias(observados = responses_samp_s, 
-                    estimados = brt_pred_samp_s)
-bias_model_samp_s <- bias(observados = responses_samp_s, 
-                    estimados = brt_pred_model_samp_s)
-bias_model_samp_s_c <- bias(observados = responses_samp_s, 
-                    estimados = brt_pred_model_samp_s_c)
+bias_samp_s <- bias(observados = responses_samp_s, estimados = brt_pred_samp_s)
+bias_model_samp_s <- bias(observados = responses_samp_s, estimados = brt_pred_model_samp_s)
+bias_model_samp_s_c <- bias(observados = responses_samp_s, estimados = brt_pred_model_samp_s_c)
 
 # abundance and sampling locations
-bias_samp_a <- bias(observados = responses_samp_a, 
-                    estimados = brt_pred_samp_a)
-bias_model_samp_a <- bias(observados = responses_samp_a, 
-                    estimados = brt_pred_model_samp_a)
-bias_model_samp_a_c <- bias(observados = responses_samp_a, 
-                    estimados = brt_pred_model_samp_a_c)
+bias_samp_a <- bias(observados = responses_samp_a, estimados = brt_pred_samp_a)
+bias_model_samp_a <- bias(observados = responses_samp_a, estimados = brt_pred_model_samp_a)
+bias_model_samp_a_c <- bias(observados = responses_samp_a, estimados = brt_pred_model_samp_a_c)
 
 # relative abundance and sampling locations
-bias_samp_ra <- bias(observados = responses_samp_ra, 
-                    estimados = brt_pred_samp_ra)
-bias_model_samp_ra <- bias(observados = responses_samp_ra, 
-                    estimados = brt_pred_model_samp_ra)
-bias_model_samp_ra_c <- bias(observados = responses_samp_ra, 
-                    estimados = brt_pred_model_samp_ra_c)
+bias_samp_ra <- bias(observados = responses_samp_ra, estimados = brt_pred_samp_ra)
+bias_model_samp_ra <- bias(observados = responses_samp_ra, estimados = brt_pred_model_samp_ra)
+bias_model_samp_ra_c <- bias(observados = responses_samp_ra, estimados = brt_pred_model_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ###
 # k_index and all predictors
-bias_sec_k <- bias(observados = responses_sec_k, 
-                    estimados = brt_pred_sec_k)
-bias_model_sec_k <- bias(observados = responses_sec_k, 
-                    estimados = brt_pred_model_sec_k)
-bias_model_sec_k_c <- bias(observados = responses_sec_k, 
-                    estimados = brt_pred_model_sec_k_c)
+bias_sec_k <- bias(observados = responses_sec_k, estimados = brt_pred_sec_k)
+bias_model_sec_k <- bias(observados = responses_sec_k, estimados = brt_pred_model_sec_k)
+bias_model_sec_k_c <- bias(observados = responses_sec_k, estimados = brt_pred_model_sec_k_c)
 
 # shannon index and all predictors
-bias_sec_s <- bias(observados = responses_sec_s, 
-                    estimados = brt_pred_sec_s)
-bias_model_sec_s <- bias(observados = responses_sec_s, 
-                    estimados = brt_pred_model_sec_s)
-bias_model_sec_s_c <- bias(observados = responses_sec_s, 
-                    estimados = brt_pred_model_sec_s_c)
+bias_sec_s <- bias(observados = responses_sec_s, estimados = brt_pred_sec_s)
+bias_model_sec_s <- bias(observados = responses_sec_s, estimados = brt_pred_model_sec_s)
+bias_model_sec_s_c <- bias(observados = responses_sec_s, estimados = brt_pred_model_sec_s_c)
 
 # abundance and all predictors
-bias_sec_a <- bias(observados = responses_sec_a, 
-                    estimados = brt_pred_sec_a)
-bias_model_sec_a <- bias(observados = responses_sec_a, 
-                    estimados = brt_pred_model_sec_a)
-bias_model_sec_a_c <- bias(observados = responses_sec_a, 
-                    estimados = brt_pred_model_sec_a_c)
+bias_sec_a <- bias(observados = responses_sec_a, estimados = brt_pred_sec_a)
+bias_model_sec_a <- bias(observados = responses_sec_a, estimados = brt_pred_model_sec_a)
+bias_model_sec_a_c <- bias(observados = responses_sec_a, estimados = brt_pred_model_sec_a_c)
 
 # relative abundance and all predictors
-bias_sec_ra <- bias(observados = responses_sec_ra, 
-                    estimados = brt_pred_sec_ra)
-bias_model_sec_ra <- bias(observados = responses_sec_ra, 
-                    estimados = brt_pred_model_sec_ra)
-bias_model_sec_ra_c <- bias(observados = responses_sec_ra, 
-                    estimados = brt_pred_model_sec_ra_c)
+bias_sec_ra <- bias(observados = responses_sec_ra, estimados = brt_pred_sec_ra)
+bias_model_sec_ra <- bias(observados = responses_sec_ra,  estimados = brt_pred_model_sec_ra)
+bias_model_sec_ra_c <- bias(observados = responses_sec_ra, estimados = brt_pred_model_sec_ra_c)
 ```
 
 
-## Nash-Sutcliffe efficiency (NSE) 
+## NSE
 https://search.r-project.org/CRAN/refmans/hydroGOF/html/NSE.html
 ```{r}
 #install.packages("hydroGOF")
@@ -2185,9 +2181,8 @@ model = c("autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coor
 write.csv(metric_results, "Stat_Analysis/ml_evaluation_metrics_brt.csv", row.names = FALSE)
 ```
  
-## Extract 
-### Predict to maps ML models - here RF
-Ersetze Raster durch Raster vom MZB Sampling Tag 
+# Extract 
+## Predict to maps ML models - here RF
 ```{r}
 # read rasters containing wd and velocity 
 GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg.grd")
