@@ -728,28 +728,145 @@ data_wd_sp <- abs(data_wd$velocity)*data_wd_s
 
 
 # Stack rasters 
+## GL1
 ```{r}
 GL1_2_56_ezg <- stack(GL1_v_2_56_ezg, GL1_wd_2_56_ezg, GL1_f_2_56_ezg, GL1_s_2_56_ezg, GL1_sp_2_56_ezg) 
+names(GL1_2_56_ezg) <- c("GL1_v_2_56_ezg", "GL1_wd_2_56_ezg", "GL1_f_2_56_ezg", "GL1_s_2_56_ezg", "GL1_sp_2_56_ezg") 
 
 GL1_3_28 <- stack(GL1_v_3_28, GL1_wd_3_28, GL1_f_3_28, GL1_s_3_28, GL1_sp_3_28)
+names(GL1_3_28) <- c("GL1_v_3_28", "GL1_wd_3_28", "GL1_f_3_28", "GL1_s_3_28", "GL1_sp_3_28") 
 
 GL1_6_00 <- stack(GL1_v_6_00, GL1_wd_6_00, GL1_f_6_00, GL1_s_6_00, GL1_sp_6_00)
+names(GL1_6_00) <- c("GL1_v_6_00", "GL1_wd_6_00", "GL1_f_6_00", "GL1_s_6_00", "GL1_sp_6_00") 
 
 GL1_9_00 <- stack(GL1_v_9_00, GL1_wd_9_00, GL1_f_9_00, GL1_s_9_00, GL1_sp_9_00)
+names(GL1_9_00) <- c("GL1_v_9_00", "GL1_wd_9_00", "GL1_f_9_00", "GL1_s_9_00", "GL1_sp_9_00")
 
 GL1_12_68 <- stack(GL1_v_12_68, GL1_wd_12_68, GL1_f_12_68, GL1_s_12_68, GL1_sp_12_68)
+names(GL1_12_68) <- c("GL1_v_12_68", "GL1_wd_12_68", "GL1_f_12_68", "GL1_s_12_68", "GL1_sp_12_68")
 
 GL1_16_00 <- stack(GL1_v_16_00, GL1_wd_16_00, GL1_f_16_00, GL1_s_16_00, GL1_sp_16_00)
+names(GL1_16_00) <- c("GL1_v_16_00", "GL1_wd_16_00", "GL1_f_16_00", "GL1_s_16_00", "GL1_sp_16_00")
 
 GL1_19_00 <- stack(GL1_v_19_00, GL1_wd_19_00, GL1_f_19_00, GL1_s_19_00, GL1_sp_19_00)
+names(GL1_19_00) <- c("GL1_v_19_00", "GL1_wd_19_00", "GL1_f_19_00", "GL1_s_19_00", "GL1_sp_19_00")
 
 GL1_22_00 <- stack(GL1_v_22_00, GL1_wd_22_00, GL1_f_22_00, GL1_s_22_00, GL1_sp_22_00)
+names(GL1_22_00) <- c("GL1_v_22_00", "GL1_wd_22_00", "GL1_f_22_00", "GL1_s_22_00", "GL1_sp_22_00")
 
 GL1_25_00 <- stack(GL1_v_25_00, GL1_wd_25_00, GL1_f_25_00, GL1_s_25_00, GL1_sp_25_00)
+names(GL1_25_00) <- c("GL1_v_25_00", "GL1_wd_25_00", "GL1_f_25_00", "GL1_s_25_00", "GL1_sp_25_00")
 
 GL1_28_00 <- stack(GL1_v_28_00, GL1_wd_28_00, GL1_f_28_00, GL1_s_28_00, GL1_sp_28_00)
+names(GL1_28_00) <- c("GL1_v_28_00", "GL1_wd_28_00", "GL1_f_28_00", "GL1_s_28_00", "GL1_sp_28_00")
 
 GL1_31_76 <- stack(GL1_v_31_76, GL1_wd_31_76, GL1_f_31_76, GL1_s_31_76, GL1_sp_31_76)
+names(GL1_31_76) <- c("GL1_v_31_76", "GL1_wd_31_76", "GL1_f_31_76", "GL1_s_31_76", "GL1_sp_31_76")
+```
+
+## GL2
+```{r}
+GL2_2_37_ezg <- stack(GL2_v_2_37_ezg, GL2_wd_2_37_ezg, GL2_f_2_37_ezg, GL2_s_2_37_ezg, GL2_sp_2_37_ezg) 
+names(GL2_2_37_ezg) <- c("GL2_v_2_37_ezg", "GL2_wd_2_37_ezg", "GL2_f_2_37_ezg", "GL2_s_2_37_ezg", "GL2_sp_2_37_ezg") 
+
+GL2_3_21 <- stack(GL2_v_3_21, GL2_wd_3_21, GL2_f_3_21, GL2_s_3_21, GL2_sp_3_21) 
+names(GL2_3_21) <- c("GL2_v_3_21", "GL2_wd_3_21", "GL2_f_3_21", "GL2_s_3_21", "GL2_sp_3_21") 
+
+GL2_6_00 <- stack(GL2_v_6_00, GL2_wd_6_00, GL2_f_6_00, GL2_s_6_00, GL2_sp_6_00) 
+names(GL2_6_00) <- c("GL2_v_6_00", "GL2_wd_6_00", "GL2_f_6_00", "GL2_s_6_00", "GL2_sp_6_00")
+
+GL2_9_00 <- stack(GL2_v_9_00, GL2_wd_9_00, GL2_f_9_00, GL2_s_9_00, GL2_sp_9_00) 
+names(GL2_9_00) <- c("GL2_v_9_00", "GL2_wd_9_00", "GL2_f_9_00", "GL2_s_9_00", "GL2_sp_9_00") 
+
+GL2_11_00 <- stack(GL2_v_11_00, GL2_wd_11_00, GL2_f_11_00, GL2_s_11_00, GL2_sp_11_00) 
+names(GL2_11_00) <- c("GL2_v_11_00", "GL2_wd_11_00", "GL2_f_11_00", "GL2_s_11_00", "GL2_sp_11_00") 
+
+GL2_12_52 <- stack(GL2_v_12_52, GL2_wd_12_52, GL2_f_12_52, GL2_s_12_52, GL2_sp_12_52) 
+names(GL2_12_52) <- c("GL2_v_12_52", "GL2_wd_12_52", "GL2_f_12_52", "GL2_s_12_52", "GL2_sp_12_52") 
+
+GL2_16_00 <- stack(GL2_v_16_00, GL2_wd_16_00, GL2_f_16_00, GL2_s_16_00, GL2_sp_16_00) 
+names(GL2_16_00) <- c("GL2_v_16_00", "GL2_wd_16_00", "GL2_f_16_00", "GL2_s_16_00", "GL2_sp_16_00") 
+
+GL2_19_00 <- stack(GL2_v_19_00, GL2_wd_19_00, GL2_f_19_00, GL2_s_19_00, GL2_sp_19_00) 
+names(GL2_19_00) <- c("GL2_v_19_00", "GL2_wd_19_00", "GL2_f_19_00", "GL2_s_19_00", "GL2_sp_19_00") 
+
+GL2_22_00 <- stack(GL2_v_22_00, GL2_wd_22_00, GL2_f_22_00, GL2_s_22_00, GL2_sp_22_00) 
+names(GL2_22_00) <- c("GL2_v_22_00", "GL2_wd_22_00", "GL2_f_22_00", "GL2_s_22_00", "GL2_sp_22_00") 
+
+GL2_25_00 <- stack(GL2_v_25_00, GL2_wd_25_00, GL2_f_25_00, GL2_s_25_00, GL2_sp_25_00) 
+names(GL2_25_00) <- c("GL2_v_25_00", "GL2_wd_25_00", "GL2_f_25_00", "GL2_s_25_00", "GL2_sp_25_00") 
+
+GL2_28_00 <- stack(GL2_v_28_00, GL2_wd_28_00, GL2_f_28_00, GL2_s_28_00, GL2_sp_28_00) 
+names(GL2_28_00) <- c("GL2_v_28_00", "GL2_wd_28_00", "GL2_f_28_00", "GL2_s_28_00", "GL2_sp_28_00") 
+
+GL2_31_53 <- stack(GL2_v_31_53, GL2_wd_31_53, GL2_f_31_53, GL2_s_31_53, GL2_sp_31_53) 
+names(GL2_31_53) <- c("GL2_v_31_53", "GL2_wd_31_53", "GL2_f_31_53", "GL2_s_31_53", "GL2_sp_31_53") 
+```
+
+## L2
+```{r}
+L2_2_40 <- stack(L2_v_2_40, L2_wd_2_40, L2_f_2_40, L2_s_2_40, L2_sp_2_40) 
+names(L2_2_40) <- c("L2_v_2_40", "L2_wd_2_40", "L2_f_2_40", "L2_s_2_40", "L2_sp_2_40")
+
+L2_3_90 <- stack(L2_v_3_90, L2_wd_3_90, L2_f_3_90, L2_s_3_90, L2_sp_3_90) 
+names(L2_3_90) <- c("L2_v_3_90", "L2_wd_3_90", "L2_f_3_90", "L2_s_3_90", "L2_sp_3_90")
+
+L2_7_00 <- stack(L2_v_7_00, L2_wd_7_00, L2_f_7_00, L2_s_7_00, L2_sp_7_00) 
+names(L2_7_00) <- c("L2_v_7_00", "L2_wd_7_00", "L2_f_7_00", "L2_s_7_00", "L2_sp_7_00")
+
+L2_9_24 <- stack(L2_v_9_24, L2_wd_9_24, L2_f_9_24, L2_s_9_24, L2_sp_9_24) 
+names(L2_9_24) <- c("L2_v_9_24", "L2_wd_9_24", "L2_f_9_24", "L2_s_9_24", "L2_sp_9_24")
+
+L2_9_54_ezg <- stack(L2_v_9_54_ezg, L2_wd_9_54_ezg, L2_f_9_54_ezg, L2_s_9_54_ezg, L2_sp_9_54_ezg) 
+names(L2_9_54_ezg) <- c("L2_v_9_54_ezg", "L2_wd_9_54_ezg", "L2_f_9_54_ezg", "L2_s_9_54_ezg", "L2_sp_9_54_ezg")
+
+L2_13_30 <- stack(L2_v_13_30, L2_wd_13_30, L2_f_13_30, L2_s_13_30, L2_sp_13_30) 
+names(L2_13_30) <- c("L2_v_13_30", "L2_wd_13_30", "L2_f_13_30", "L2_s_13_30", "L2_sp_13_30")
+
+L2_16_50 <- stack(L2_v_16_50, L2_wd_16_50, L2_f_16_50, L2_s_16_50, L2_sp_16_50) 
+names(L2_16_50) <- c("L2_v_16_50", "L2_wd_16_50", "L2_f_16_50", "L2_s_16_50", "L2_sp_16_50")
+
+L2_18_90 <- stack(L2_v_18_90, L2_wd_18_90, L2_f_18_90, L2_s_18_90, L2_sp_18_90) 
+names(L2_18_90) <- c("L2_v_18_90", "L2_wd_18_90", "L2_f_18_90", "L2_s_18_90", "L2_sp_18_90")
+```
+
+## M1 
+```{r}
+M1_0_47 <- stack(M1_v_0_47, M1_wd_0_47, M1_f_0_47, M1_s_0_47, M1_sp_0_47) 
+names(M1_0_47) <- c("M1_v_0_47", "M1_wd_0_47", "M1_f_0_47", "M1_s_0_47", "M1_sp_0_47")
+
+M1_0_60 <- stack(M1_v_0_60, M1_wd_0_60, M1_f_0_60, M1_s_0_60, M1_sp_0_60) 
+names(M1_0_60) <- c("M1_v_0_60", "M1_wd_0_60", "M1_f_0_60", "M1_s_0_60", "M1_sp_0_60")
+
+M1_1_50_ezg <- stack(M1_v_1_50_ezg, M1_wd_1_50_ezg, M1_f_1_50_ezg, M1_s_1_50_ezg, M1_sp_1_50_ezg) 
+names(M1_1_50_ezg) <- c("M1_v_1_50_ezg", "M1_wd_1_50_ezg", "M1_f_1_50_ezg", "M1_s_1_50_ezg", "M1_sp_1_50_ezg")
+
+M1_4_00 <- stack(M1_v_4_00, M1_wd_4_00, M1_f_4_00, M1_s_4_00, M1_sp_4_00) 
+names(M1_4_00) <- c("M1_v_4_00", "M1_wd_4_00", "M1_f_4_00", "M1_s_4_00", "M1_sp_4_00")
+
+M1_6_00 <- stack(M1_v_6_00, M1_wd_6_00, M1_f_6_00, M1_s_6_00, M1_sp_6_00) 
+names(M1_6_00) <- c("M1_v_6_00", "M1_wd_6_00", "M1_f_6_00", "M1_s_6_00", "M1_sp_6_00")
+
+M1_8_00 <- stack(M1_v_8_00, M1_wd_8_00, M1_f_8_00, M1_s_8_00, M1_sp_8_00) 
+names(M1_8_00) <- c("M1_v_8_00", "M1_wd_8_00", "M1_f_8_00", "M1_s_8_00", "M1_sp_8_00")
+
+M1_10_00 <- stack(M1_v_10_00, M1_wd_10_00, M1_f_10_00, M1_s_10_00, M1_sp_10_00) 
+names(M1_10_00) <- c("M1_v_10_00", "M1_wd_10_00", "M1_f_10_00", "M1_s_10_00", "M1_sp_10_00")
+
+M1_12_00 <- stack(M1_v_12_00, M1_wd_12_00, M1_f_12_00, M1_s_12_00, M1_sp_12_00) 
+names(M1_12_00) <- c("M1_v_12_00", "M1_wd_12_00", "M1_f_12_00", "M1_s_12_00", "M1_sp_12_00")
+
+M1_14_00 <- stack(M1_v_14_00, M1_wd_14_00, M1_f_14_00, M1_s_14_00, M1_sp_14_00) 
+names(M1_14_00) <- c("M1_v_14_00", "M1_wd_14_00", "M1_f_14_00", "M1_s_14_00", "M1_sp_14_00")
+
+M1_16_00 <- stack(M1_v_16_00, M1_wd_16_00, M1_f_16_00, M1_s_16_00, M1_sp_16_00) 
+names(M1_16_00) <- c("M1_v_16_00", "M1_wd_16_00", "M1_f_16_00", "M1_s_16_00", "M1_sp_16_00")
+
+M1_18_84 <- stack(M1_v_18_84, M1_wd_18_84, M1_f_18_84, M1_s_18_84, M1_sp_18_84) 
+names(M1_18_84) <- c("M1_v_18_84", "M1_wd_18_84", "M1_f_18_84", "M1_s_18_84", "M1_sp_18_84")
+
+M1_22_84 <- stack(M1_v_22_84, M1_wd_22_84, M1_f_22_84, M1_s_22_84, M1_sp_22_84) 
+names(M1_22_84) <- c("M1_v_22_84", "M1_wd_22_84", "M1_f_22_84", "M1_s_22_84", "M1_sp_22_84")
 ```
 
 # Save rasters
@@ -812,6 +929,132 @@ writeRaster(GL1_s_31_76, "Pre_Processing/raster_files/GL1_s_31_76.tif", format =
 writeRaster(GL1_sp_31_76, "Pre_Processing/raster_files/GL1_sp_31_76.tif", format = "GTiff", overwrite = TRUE)
 writeRaster(GL1_31_76, "Pre_Processing/rasters_stacked/GL1_31_76_add.grd", overwrite = TRUE)
 ```
+
+## GL2
+```{r}
+writeRaster(GL2_f_2_37_ezg, "Pre_Processing/raster_files/GL2_f_2_37_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_2_37_ezg, "Pre_Processing/raster_files/GL2_s_2_37_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_2_37_ezg, "Pre_Processing/raster_files/GL2_sp_2_37_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_2_37_ezg, "Pre_Processing/rasters_stacked/GL2_2_37_ezg_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_3_21, "Pre_Processing/raster_files/GL2_f_3_21.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_3_21, "Pre_Processing/raster_files/GL2_s_3_21.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_3_21, "Pre_Processing/raster_files/GL2_sp_3_21.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_3_21, "Pre_Processing/rasters_stacked/GL2_3_21_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_6_00, "Pre_Processing/raster_files/GL2_f_6_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_6_00, "Pre_Processing/raster_files/GL2_s_6_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_6_00, "Pre_Processing/raster_files/GL2_sp_6_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_6_00, "Pre_Processing/rasters_stacked/GL2_6_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_9_00, "Pre_Processing/raster_files/GL2_f_9_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_9_00, "Pre_Processing/raster_files/GL2_s_9_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_9_00, "Pre_Processing/raster_files/GL2_sp_9_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_9_00, "Pre_Processing/rasters_stacked/GL2_9_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_11_00, "Pre_Processing/raster_files/GL2_f_11_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_11_00, "Pre_Processing/raster_files/GL2_s_11_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_11_00, "Pre_Processing/raster_files/GL2_sp_11_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_11_00, "Pre_Processing/rasters_stacked/GL2_11_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_12_52, "Pre_Processing/raster_files/GL2_f_12_52.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_12_52, "Pre_Processing/raster_files/GL2_s_12_52.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_12_52, "Pre_Processing/raster_files/GL2_sp_12_52.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_12_52, "Pre_Processing/rasters_stacked/GL2_12_52_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_16_00, "Pre_Processing/raster_files/GL2_f_16_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_16_00, "Pre_Processing/raster_files/GL2_s_16_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_16_00, "Pre_Processing/raster_files/GL2_sp_16_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_16_00, "Pre_Processing/rasters_stacked/GL2_16_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_19_00, "Pre_Processing/raster_files/GL2_f_19_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_19_00, "Pre_Processing/raster_files/GL2_s_19_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_19_00, "Pre_Processing/raster_files/GL2_sp_19_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_19_00, "Pre_Processing/rasters_stacked/GL2_19_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_22_00, "Pre_Processing/raster_files/GL2_f_22_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_22_00, "Pre_Processing/raster_files/GL2_s_22_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_22_00, "Pre_Processing/raster_files/GL2_sp_22_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_22_00, "Pre_Processing/rasters_stacked/GL2_22_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_25_00, "Pre_Processing/raster_files/GL2_f_25_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_25_00, "Pre_Processing/raster_files/GL2_s_25_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_25_00, "Pre_Processing/raster_files/GL2_sp_25_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_25_00, "Pre_Processing/rasters_stacked/GL2_25_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_28_00, "Pre_Processing/raster_files/GL2_f_28_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_28_00, "Pre_Processing/raster_files/GL2_s_28_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_28_00, "Pre_Processing/raster_files/GL2_sp_28_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_28_00, "Pre_Processing/rasters_stacked/GL2_28_00_add.grd", overwrite = TRUE)
+
+writeRaster(GL2_f_31_53, "Pre_Processing/raster_files/GL2_f_31_53.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_s_31_53, "Pre_Processing/raster_files/GL2_s_31_53.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_sp_31_53, "Pre_Processing/raster_files/GL2_sp_31_53.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_31_53, "Pre_Processing/rasters_stacked/GL2_31_53_add.grd", overwrite = TRUE)
+```
+
+## L2
+```{r}
+writeRaster(L2_f_2_40, "Pre_Processing/raster_files/L2_f_2_40.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_2_40, "Pre_Processing/raster_files/L2_s_2_40.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_2_40, "Pre_Processing/raster_files/L2_sp_2_40.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_2_40, "Pre_Processing/rasters_stacked/L2_2_40_add.grd", overwrite = TRUE)
+
+writeRaster(L2_f_3_90, "Pre_Processing/raster_files/L2_f_3_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_3_90, "Pre_Processing/raster_files/L2_s_3_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_3_90, "Pre_Processing/raster_files/L2_sp_3_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_3_90, "Pre_Processing/rasters_stacked/L2_3_90_add.grd", overwrite = TRUE)
+
+writeRaster(L2_f_7_00, "Pre_Processing/raster_files/L2_f_7_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_7_00, "Pre_Processing/raster_files/L2_s_7_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_7_00, "Pre_Processing/raster_files/L2_sp_7_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_7_00, "Pre_Processing/rasters_stacked/L2_7_00_add.grd", overwrite = TRUE)
+
+writeRaster(L2_f_9_24, "Pre_Processing/raster_files/L2_f_9_24.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_9_24, "Pre_Processing/raster_files/L2_s_9_24.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_9_24, "Pre_Processing/raster_files/L2_sp_9_24.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_9_24, "Pre_Processing/rasters_stacked/L2_9_24_add.grd", overwrite = TRUE)
+
+writeRaster(L2_f_9_54_ezg, "Pre_Processing/raster_files/L2_f_9_54_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_9_54_ezg, "Pre_Processing/raster_files/L2_s_9_54_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_9_54_ezg, "Pre_Processing/raster_files/L2_sp_9_54_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_9_54_ezg, "Pre_Processing/rasters_stacked/L2_9_54_ezg_add.grd", overwrite = TRUE)
+
+writeRaster(L2_f_13_30, "Pre_Processing/raster_files/L2_f_13_30.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_13_30, "Pre_Processing/raster_files/L2_s_13_30.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_13_30, "Pre_Processing/raster_files/L2_sp_13_30.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_13_30, "Pre_Processing/rasters_stacked/L2_13_30_add.grd", overwrite = TRUE)
+
+writeRaster(L2_f_16_50, "Pre_Processing/raster_files/L2_f_16_50.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_16_50, "Pre_Processing/raster_files/L2_s_16_50.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_16_50, "Pre_Processing/raster_files/L2_sp_16_50.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_16_50, "Pre_Processing/rasters_stacked/L2_16_50_add.grd", overwrite = TRUE)
+
+writeRaster(L2_f_18_90, "Pre_Processing/raster_files/L2_f_18_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_18_90, "Pre_Processing/raster_files/L2_s_18_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_18_90, "Pre_Processing/raster_files/L2_sp_18_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_18_90, "Pre_Processing/rasters_stacked/L2_18_90_add.grd", overwrite = TRUE)
+```
+
+## M1
+```{r}
+writeRaster(L2_f_18_90, "Pre_Processing/raster_files/L2_f_18_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_s_18_90, "Pre_Processing/raster_files/L2_s_18_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_sp_18_90, "Pre_Processing/raster_files/L2_sp_18_90.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_18_90, "Pre_Processing/rasters_stacked/L2_18_90_add.grd", overwrite = TRUE)
+```
+M1_f_0_47 <- M1_v_0_47/(sqrt(9.81 * M1_wd_0_47))
+M1_f_0_60 <- M1_v_0_60/(sqrt(9.81 * M1_wd_0_60))
+M1_f_1_50_ezg <- M1_v_1_50_ezg/(sqrt(9.81 * M1_wd_1_50_ezg))
+M1_f_4_00 <- M1_v_4_00/(sqrt(9.81 * M1_wd_4_00))
+M1_f_6_00 <- M1_v_6_00/(sqrt(9.81 * M1_wd_6_00))
+M1_f_8_00 <- M1_v_8_00/(sqrt(9.81 * M1_wd_8_00))
+M1_f_10_00 <- M1_v_10_00/(sqrt(9.81 * M1_wd_10_00))
+M1_f_12_00 <- M1_v_12_00/(sqrt(9.81 * M1_wd_12_00))
+M1_f_14_00 <- M1_v_14_00/(sqrt(9.81 * M1_wd_14_00))
+M1_f_16_00 <- M1_v_16_00/(sqrt(9.81 * M1_wd_16_00))
+M1_f_18_84 <- M1_v_18_84/(sqrt(9.81 * M1_wd_18_84))
+M1_f_22_84 <- M1_v_22_84/(sqrt(9.81 * M1_wd_22_84))
 
 # Build DFs
 ```{r}
