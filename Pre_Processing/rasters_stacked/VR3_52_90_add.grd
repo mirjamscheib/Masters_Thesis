@@ -1,0 +1,26 @@
+[general]
+creator=R package 'raster'
+created=2023-10-12 14:24:56
+[data]
+datatype=FLT4S
+byteorder=little
+nbands=5
+bandorder=BIL
+minvalue=0:0:0:0:0
+maxvalue=10.4940004348755:6.90299987792969:12.5741139782378:31611.6279308447:331732.437253407
+nodatavalue=-3.4e+38
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=VR3_v_52_90:VR3_wd_52_90:VR3_f_52_90:VR3_s_52_90:VR3_sp_52_90
+[georeference]
+nrows=1084
+ncols=1946
+xmin=2737203.1223338
+ymin=1182740.70866286
+xmax=2738176.1223338
+ymax=1183282.70866286
+projection=NA
+wkt=
