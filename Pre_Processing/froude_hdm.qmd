@@ -869,6 +869,22 @@ M1_22_84 <- stack(M1_v_22_84, M1_wd_22_84, M1_f_22_84, M1_s_22_84, M1_sp_22_84)
 names(M1_22_84) <- c("M1_v_22_84", "M1_wd_22_84", "M1_f_22_84", "M1_s_22_84", "M1_sp_22_84")
 ```
 
+## S1
+```{r}
+M1_22_84 <- stack(M1_v_22_84, M1_wd_22_84, M1_f_22_84, M1_s_22_84, M1_sp_22_84) 
+names(M1_22_84) <- c("M1_v_22_84", "M1_wd_22_84", "M1_f_22_84", "M1_s_22_84", "M1_sp_22_84")
+```
+S1_f_1_94_ezg <- S1_v_1_94_ezg/(sqrt(9.81 * S1_wd_1_94_ezg))
+S1_f_2_00 <- S1_v_2_00/(sqrt(9.81 * S1_wd_2_00))
+S1_f_3_70 <- S1_v_3_70/(sqrt(9.81 * S1_wd_3_70))
+S1_f_6_50 <- S1_v_6_50/(sqrt(9.81 * S1_wd_6_50))
+S1_f_8_50 <- S1_v_8_50/(sqrt(9.81 * S1_wd_8_50))
+S1_f_10_68 <- S1_v_10_68/(sqrt(9.81 * S1_wd_10_68))
+S1_f_13_00 <- S1_v_13_00/(sqrt(9.81 * S1_wd_13_00))
+S1_f_15_00 <- S1_v_15_00/(sqrt(9.81 * S1_wd_15_00))
+S1_f_18_00 <- S1_v_18_00/(sqrt(9.81 * S1_wd_18_00))
+S1_f_20_00 <- S1_v_20_00/(sqrt(9.81 * S1_wd_20_00))
+
 # Save rasters
 ## GL1
 ```{r}
@@ -1038,23 +1054,84 @@ writeRaster(L2_18_90, "Pre_Processing/rasters_stacked/L2_18_90_add.grd", overwri
 
 ## M1
 ```{r}
-writeRaster(L2_f_18_90, "Pre_Processing/raster_files/L2_f_18_90.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_s_18_90, "Pre_Processing/raster_files/L2_s_18_90.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_sp_18_90, "Pre_Processing/raster_files/L2_sp_18_90.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_18_90, "Pre_Processing/rasters_stacked/L2_18_90_add.grd", overwrite = TRUE)
+writeRaster(M1_f_0_47, "Pre_Processing/raster_files/M1_f_0_47.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_0_47, "Pre_Processing/raster_files/M1_s_0_47.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_0_47, "Pre_Processing/raster_files/M1_sp_0_47.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_0_47, "Pre_Processing/rasters_stacked/M1_0_47_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_0_60, "Pre_Processing/raster_files/M1_f_0_60.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_0_60, "Pre_Processing/raster_files/M1_s_0_60.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_0_60, "Pre_Processing/raster_files/M1_sp_0_60.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_0_60, "Pre_Processing/rasters_stacked/M1_0_60_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_1_50_ezg, "Pre_Processing/raster_files/M1_f_1_50_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_1_50_ezg, "Pre_Processing/raster_files/M1_s_1_50_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_1_50_ezg, "Pre_Processing/raster_files/M1_sp_1_50_ezg.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_1_50_ezg, "Pre_Processing/rasters_stacked/M1_1_50_ezg_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_4_00, "Pre_Processing/raster_files/M1_f_4_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_4_00, "Pre_Processing/raster_files/M1_s_4_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_4_00, "Pre_Processing/raster_files/M1_sp_4_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_4_00, "Pre_Processing/rasters_stacked/M1_4_00_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_6_00, "Pre_Processing/raster_files/M1_f_6_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_6_00, "Pre_Processing/raster_files/M1_s_6_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_6_00, "Pre_Processing/raster_files/M1_sp_6_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_6_00, "Pre_Processing/rasters_stacked/M1_6_00_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_8_00, "Pre_Processing/raster_files/M1_f_8_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_8_00, "Pre_Processing/raster_files/M1_s_8_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_8_00, "Pre_Processing/raster_files/M1_sp_8_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_8_00, "Pre_Processing/rasters_stacked/M1_8_00_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_10_00, "Pre_Processing/raster_files/M1_f_10_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_10_00, "Pre_Processing/raster_files/M1_s_10_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_10_00, "Pre_Processing/raster_files/M1_sp_10_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_10_00, "Pre_Processing/rasters_stacked/M1_10_00_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_12_00, "Pre_Processing/raster_files/M1_f_12_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_12_00, "Pre_Processing/raster_files/M1_s_12_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_12_00, "Pre_Processing/raster_files/M1_sp_12_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_12_00, "Pre_Processing/rasters_stacked/M1_12_00_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_14_00, "Pre_Processing/raster_files/M1_f_14_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_14_00, "Pre_Processing/raster_files/M1_s_14_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_14_00, "Pre_Processing/raster_files/M1_sp_14_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_14_00, "Pre_Processing/rasters_stacked/M1_14_00_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_16_00, "Pre_Processing/raster_files/M1_f_16_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_16_00, "Pre_Processing/raster_files/M1_s_16_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_16_00, "Pre_Processing/raster_files/M1_sp_16_00.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_16_00, "Pre_Processing/rasters_stacked/M1_16_00_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_18_84, "Pre_Processing/raster_files/M1_f_18_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_18_84, "Pre_Processing/raster_files/M1_s_18_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_18_84, "Pre_Processing/raster_files/M1_sp_18_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_18_84, "Pre_Processing/rasters_stacked/M1_18_84_add.grd", overwrite = TRUE)
+
+writeRaster(M1_f_22_84, "Pre_Processing/raster_files/M1_f_22_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_22_84, "Pre_Processing/raster_files/M1_s_22_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_22_84, "Pre_Processing/raster_files/M1_sp_22_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_22_84, "Pre_Processing/rasters_stacked/M1_22_84_add.grd", overwrite = TRUE)
 ```
-M1_f_0_47 <- M1_v_0_47/(sqrt(9.81 * M1_wd_0_47))
-M1_f_0_60 <- M1_v_0_60/(sqrt(9.81 * M1_wd_0_60))
-M1_f_1_50_ezg <- M1_v_1_50_ezg/(sqrt(9.81 * M1_wd_1_50_ezg))
-M1_f_4_00 <- M1_v_4_00/(sqrt(9.81 * M1_wd_4_00))
-M1_f_6_00 <- M1_v_6_00/(sqrt(9.81 * M1_wd_6_00))
-M1_f_8_00 <- M1_v_8_00/(sqrt(9.81 * M1_wd_8_00))
-M1_f_10_00 <- M1_v_10_00/(sqrt(9.81 * M1_wd_10_00))
-M1_f_12_00 <- M1_v_12_00/(sqrt(9.81 * M1_wd_12_00))
-M1_f_14_00 <- M1_v_14_00/(sqrt(9.81 * M1_wd_14_00))
-M1_f_16_00 <- M1_v_16_00/(sqrt(9.81 * M1_wd_16_00))
-M1_f_18_84 <- M1_v_18_84/(sqrt(9.81 * M1_wd_18_84))
-M1_f_22_84 <- M1_v_22_84/(sqrt(9.81 * M1_wd_22_84))
+
+## S1
+```{r}
+writeRaster(M1_f_22_84, "Pre_Processing/raster_files/M1_f_22_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_s_22_84, "Pre_Processing/raster_files/M1_s_22_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_sp_22_84, "Pre_Processing/raster_files/M1_sp_22_84.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_22_84, "Pre_Processing/rasters_stacked/M1_22_84_add.grd", overwrite = TRUE)
+```
+S1_f_1_94_ezg <- S1_v_1_94_ezg/(sqrt(9.81 * S1_wd_1_94_ezg))
+S1_f_2_00 <- S1_v_2_00/(sqrt(9.81 * S1_wd_2_00))
+S1_f_3_70 <- S1_v_3_70/(sqrt(9.81 * S1_wd_3_70))
+S1_f_6_50 <- S1_v_6_50/(sqrt(9.81 * S1_wd_6_50))
+S1_f_8_50 <- S1_v_8_50/(sqrt(9.81 * S1_wd_8_50))
+S1_f_10_68 <- S1_v_10_68/(sqrt(9.81 * S1_wd_10_68))
+S1_f_13_00 <- S1_v_13_00/(sqrt(9.81 * S1_wd_13_00))
+S1_f_15_00 <- S1_v_15_00/(sqrt(9.81 * S1_wd_15_00))
+S1_f_18_00 <- S1_v_18_00/(sqrt(9.81 * S1_wd_18_00))
+S1_f_20_00 <- S1_v_20_00/(sqrt(9.81 * S1_wd_20_00))
 
 # Build DFs
 ```{r}
