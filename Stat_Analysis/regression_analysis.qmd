@@ -26,80 +26,567 @@ pkgCheck("sp")
 pkgCheck("raster")
 pkgCheck("Metrics")
 pkgCheck("tidyr")
+pkgCheck("ggplot2")
 ```
 
 vlt. zwischenschritt einbauen, Resultate vergleichen nur mit gemessenen wd und simulierten wd ein ML modell (welche Fehler macht das Modell, weil wir ihm nur simuliere Werte zum predicten geben anstatt)
 
 Regressionsanalyse wd, v zwischen gemessen und simuliert, ich muss schon quantifizieren wie die abweichung zwischen input daten und simulierten daten sind. 
 
-# Regression v / wd obs vs. measured
+# Evaluation HDM Results
 ## Load rasters
-Ersetze Raster durch Raster vom MZB Sampling Tag 
 ```{r}
 # read rasters containing wd and velocity 
-GL1_samp <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
-GL2_samp <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
-L2_samp <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
-M1_samp <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
-S1_samp <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
-S2_samp <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
-TH4_samp <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
-VR3_samp <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg_add.grd")
+GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg_add.grd")
+L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg_add.grd")
+M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg_add.grd")
+S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg_add.grd")
+S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg_add.grd")
+TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg_add.grd")
+VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg_add.grd")
 
 # rename raster 
-names(GL1_samp) <- c("hydr_velocity", "hydr_wd_cm")  # Replace with your desired new names
-names(GL2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(L2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(M1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(S1_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(S2_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(TH4_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-names(VR3_samp) <- c("velocity", "wd_cm")  # Replace with your desired new names
-
-# assign coordinate system 
-crs(GL1_samp) <- "EPSG: 2056"
-crs(GL2_samp) <- "EPSG: 2056"
-crs(L2_samp) <- "EPSG: 2056"
-crs(M1_samp) <- "EPSG: 2056"
-crs(S1_samp) <- "EPSG: 2056"
-crs(S2_samp) <- "EPSG: 2056"
-crs(TH4_samp) <- "EPSG: 2056"
-crs(VR3_samp) <- "EPSG: 2056"
+names(GL1_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")  
+names(GL2_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")  
+names(L2_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")  
+names(M1_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")  
+names(S1_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")  
+names(S2_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")  
+names(TH4_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")  
+names(VR3_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")
 ```
 
 ## Extract v / wd Information 
 ```{r}
 # load data 
-data_extr <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
+data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv")
 
-# extract and prep df containing x, y, observed velocity + observed wd
-extract_var <- data_extr |>
-  filter(Reach_Untersuchungsstelle == "GL1" |
-         Reach_Untersuchungsstelle == "GL2" |       
-         Reach_Untersuchungsstelle == "L2" |
-         Reach_Untersuchungsstelle == "M1" |
-         Reach_Untersuchungsstelle == "S1" |
-         Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
-         Reach_Untersuchungsstelle == "VR3") |>
-  dplyr::select(x, y, wd_cm, velocity)
+# read all raster results (one time flow velocity classes and one time for habitat suitability)
+# prep extraction data 
+## GL1
+coord_GL1 <- data |>
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(x, y) 
 
-data_GL1 <- extract(GL1_samp, extract_var)
+GL1 <- data |>
+  subset(Reach_Untersuchungsstelle == "GL1") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
+
+## GL2
+coord_GL2 <- data |>
+  subset(Reach_Untersuchungsstelle == "GL2") |>
+  dplyr::select(x, y) 
+
+GL2 <- data |>
+  subset(Reach_Untersuchungsstelle == "GL2") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
+
+## L2
+coord_L2 <- data |>
+  subset(Reach_Untersuchungsstelle == "L2") |>
+  dplyr::select(x, y) 
+
+L2 <- data |>
+  subset(Reach_Untersuchungsstelle == "L2") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
+
+## M1
+coord_M1 <- data |>
+  subset(Reach_Untersuchungsstelle == "M1") |>
+  dplyr::select(x, y) 
+
+M1 <- data |>
+  subset(Reach_Untersuchungsstelle == "M1") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
+
+## S1
+coord_S1 <- data |>
+  subset(Reach_Untersuchungsstelle == "S1") |>
+  dplyr::select(x, y) 
+
+S1 <- data |>
+  subset(Reach_Untersuchungsstelle == "S1") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
+
+## S2
+coord_S2 <- data |>
+  subset(Reach_Untersuchungsstelle == "S2") |>
+  dplyr::select(x, y) 
+
+S2 <- data |>
+  subset(Reach_Untersuchungsstelle == "S2") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
+
+## TH4
+coord_TH4 <- data |>
+  subset(Reach_Untersuchungsstelle == "TH4") |>
+  dplyr::select(x, y) 
+
+TH4 <- data |>
+  subset(Reach_Untersuchungsstelle == "TH4") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
+
+## VR3
+coord_VR3 <- data |>
+  subset(Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(x, y) 
+
+VR3 <- data |>
+  subset(Reach_Untersuchungsstelle == "VR3") |>
+  dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
 ```
 
-# ML Regression 
+## Extract Results
 ```{r}
-# load data
-ml_regr <- read_delim("Stat_Analysis/ml_regr_analysis.csv") 
+# extract raster information for regression analysis
+### GL1 ###
+regr_GL1 <- raster::extract(GL1_ezg, coord_GL1) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(GL1)
 
-# regr. analysis
-ggplot(ml_regr, aes(obs_shannon, rf_pred_shannon_v, col = Reach_Untersuchungsstelle)) +
+### GL2 ###
+regr_GL2 <- raster::extract(GL2_ezg, coord_GL2) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(GL2) 
+
+### L2 ### 
+regr_L2 <- raster::extract(L2_ezg, coord_L2) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(L2) 
+
+### M1 ###
+regr_M1 <- raster::extract(M1_ezg, coord_M1) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(M1)
+
+### S1 ###
+regr_S1 <- raster::extract(S1_ezg, coord_S1) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(S1) 
+
+### S2 ###
+regr_S2 <- raster::extract(S2_ezg, coord_S2) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(S2)
+
+### TH4 ###
+regr_TH4 <- raster::extract(TH4_ezg, coord_TH4) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(TH4) 
+
+### VR3 ###
+regr_VR3 <- raster::extract(VR3_ezg, coord_VR3) |>
+  as.data.frame() |>
+  rename(v_raster = velocity,
+         wd_m_raster = wd_cm,
+         froude_raster = froude,
+         shear_raster = shear_stress,
+         stream_raster = stream_power) |>
+  cbind(VR3)
+
+### Combine into one dataframe ### 
+regr_hdm <- rbind(regr_GL1, regr_GL2, regr_L2, regr_M1, regr_S1, regr_S2, regr_TH4, regr_VR3)
+
+### Write .csv file ### 
+write.csv(regr_hdm, "Stat_Analysis/regr_analysis_hdm.csv", row.names = FALSE)
+```
+
+# RMSE & MAE
+```{r}
+# load data 
+data_hdm <- read_delim("Stat_Analysis/regr_analysis_hdm.csv") |>
+  na.omit()
+
+# prep extraction data 
+## GL1
+GL1 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "GL1") 
+
+## GL2
+GL2 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "GL2") 
+
+## L2
+L2 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "L2") 
+
+## M1
+M1 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "M1") 
+
+## S1
+S1 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "S1") 
+
+## S2
+S2 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "S2") 
+
+## TH4
+TH4 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "TH4") 
+
+## VR3
+VR3 <- data_hdm |>
+  subset(Reach_Untersuchungsstelle == "VR3") 
+```
+
+### RMSE
+```{r}
+## GL1 
+rmse_v_GL1 <- rmse(actual = GL1$velocity, predicted = GL1$v_raster)
+rmse_wd_GL1 <- rmse(actual = GL1$wd_m, predicted = GL1$wd_m_raster)
+rmse_f_GL1 <- rmse(actual = GL1$froude, predicted = GL1$froude_raster)
+rmse_s_GL1 <- rmse(actual = GL1$shear_stress, predicted = GL1$shear_raster)
+rmse_sp_GL1 <- rmse(actual = GL1$stream_power, predicted = GL1$stream_raster)
+
+## GL2 
+rmse_v_GL2 <- rmse(actual = GL2$velocity, predicted = GL2$v_raster)
+rmse_wd_GL2 <- rmse(actual = GL2$wd_m, predicted = GL2$wd_m_raster)
+rmse_f_GL2 <- rmse(actual = GL2$froude, predicted = GL2$froude_raster)
+rmse_s_GL2 <- rmse(actual = GL2$shear_stress, predicted = GL2$shear_raster)
+rmse_sp_GL2 <- rmse(actual = GL2$stream_power, predicted = GL2$stream_raster)
+
+## L2 
+rmse_v_L2 <- rmse(actual = L2$velocity, predicted = L2$v_raster)
+rmse_wd_L2 <- rmse(actual = L2$wd_m, predicted = L2$wd_m_raster)
+rmse_f_L2 <- rmse(actual = L2$froude, predicted = L2$froude_raster)
+rmse_s_L2 <- rmse(actual = L2$shear_stress, predicted = L2$shear_raster)
+rmse_sp_L2 <- rmse(actual = L2$stream_power, predicted = L2$stream_raster)
+
+## M1 
+rmse_v_M1 <- rmse(actual = M1$velocity, predicted = M1$v_raster)
+rmse_wd_M1 <- rmse(actual = M1$wd_m, predicted = M1$wd_m_raster)
+rmse_f_M1 <- rmse(actual = M1$froude, predicted = M1$froude_raster)
+rmse_s_M1 <- rmse(actual = M1$shear_stress, predicted = M1$shear_raster)
+rmse_sp_M1 <- rmse(actual = M1$stream_power, predicted = M1$stream_raster)
+
+## S1
+rmse_v_S1 <- rmse(actual = S1$velocity, predicted = S1$v_raster)
+rmse_wd_S1 <- rmse(actual = S1$wd_m, predicted = S1$wd_m_raster)
+rmse_f_S1 <- rmse(actual = S1$froude, predicted = S1$froude_raster)
+rmse_s_S1 <- rmse(actual = S1$shear_stress, predicted = S1$shear_raster)
+rmse_sp_S1 <- rmse(actual = S1$stream_power, predicted = S1$stream_raster)
+
+## S2
+rmse_v_S2 <- rmse(actual = S2$velocity, predicted = S2$v_raster)
+rmse_wd_S2 <- rmse(actual = S2$wd_m, predicted = S2$wd_m_raster)
+rmse_f_S2 <- rmse(actual = S2$froude, predicted = S2$froude_raster)
+rmse_s_S2 <- rmse(actual = S2$shear_stress, predicted = S2$shear_raster)
+rmse_sp_S2 <- rmse(actual = S2$stream_power, predicted = S2$stream_raster)
+
+## TH4
+rmse_v_TH4 <- rmse(actual = TH4$velocity, predicted = TH4$v_raster)
+rmse_wd_TH4 <- rmse(actual = TH4$wd_m, predicted = TH4$wd_m_raster)
+rmse_f_TH4 <- rmse(actual = TH4$froude, predicted = TH4$froude_raster)
+rmse_s_TH4 <- rmse(actual = TH4$shear_stress, predicted = TH4$shear_raster)
+rmse_sp_TH4 <- rmse(actual = TH4$stream_power, predicted = TH4$stream_raster)
+
+## VR3
+rmse_v_VR3 <- rmse(actual = VR3$velocity, predicted = VR3$v_raster)
+rmse_wd_VR3 <- rmse(actual = VR3$wd_m, predicted = VR3$wd_m_raster)
+rmse_f_VR3 <- rmse(actual = VR3$froude, predicted = VR3$froude_raster)
+rmse_s_VR3 <- rmse(actual = VR3$shear_stress, predicted = VR3$shear_raster)
+rmse_sp_VR3 <- rmse(actual = VR3$stream_power, predicted = VR3$stream_raster)
+
+## ALL
+rmse_v <- rmse(actual = data_hdm$velocity, predicted = data_hdm$v_raster)
+rmse_wd <- rmse(actual = data_hdm$wd_m, predicted = data_hdm$wd_m_raster)
+rmse_f <- rmse(actual = data_hdm$froude, predicted = data_hdm$froude_raster)
+rmse_s <- rmse(actual = data_hdm$shear_stress, predicted = data_hdm$shear_raster)
+rmse_sp <- rmse(actual = data_hdm$stream_power, predicted = data_hdm$stream_raster)
+```
+
+### MAE
+```{r}
+## GL1 
+mae_v_GL1 <- mae(actual = GL1$velocity, predicted = GL1$v_raster)
+mae_wd_GL1 <- mae(actual = GL1$wd_m, predicted = GL1$wd_m_raster)
+mae_f_GL1 <- mae(actual = GL1$froude, predicted = GL1$froude_raster)
+mae_s_GL1 <- mae(actual = GL1$shear_stress, predicted = GL1$shear_raster)
+mae_sp_GL1 <- mae(actual = GL1$stream_power, predicted = GL1$stream_raster)
+
+## GL2 
+mae_v_GL2 <- mae(actual = GL2$velocity, predicted = GL2$v_raster)
+mae_wd_GL2 <- mae(actual = GL2$wd_m, predicted = GL2$wd_m_raster)
+mae_f_GL2 <- mae(actual = GL2$froude, predicted = GL2$froude_raster)
+mae_s_GL2 <- mae(actual = GL2$shear_stress, predicted = GL2$shear_raster)
+mae_sp_GL2 <- mae(actual = GL2$stream_power, predicted = GL2$stream_raster)
+
+## L2 
+mae_v_L2 <- mae(actual = L2$velocity, predicted = L2$v_raster)
+mae_wd_L2 <- mae(actual = L2$wd_m, predicted = L2$wd_m_raster)
+mae_f_L2 <- mae(actual = L2$froude, predicted = L2$froude_raster)
+mae_s_L2 <- mae(actual = L2$shear_stress, predicted = L2$shear_raster)
+mae_sp_L2 <- mae(actual = L2$stream_power, predicted = L2$stream_raster)
+
+## M1 
+mae_v_M1 <- mae(actual = M1$velocity, predicted = M1$v_raster)
+mae_wd_M1 <- mae(actual = M1$wd_m, predicted = M1$wd_m_raster)
+mae_f_M1 <- mae(actual = M1$froude, predicted = M1$froude_raster)
+mae_s_M1 <- mae(actual = M1$shear_stress, predicted = M1$shear_raster)
+mae_sp_M1 <- mae(actual = M1$stream_power, predicted = M1$stream_raster)
+
+## S1
+mae_v_S1 <- mae(actual = S1$velocity, predicted = S1$v_raster)
+mae_wd_S1 <- mae(actual = S1$wd_m, predicted = S1$wd_m_raster)
+mae_f_S1 <- mae(actual = S1$froude, predicted = S1$froude_raster)
+mae_s_S1 <- mae(actual = S1$shear_stress, predicted = S1$shear_raster)
+mae_sp_S1 <- mae(actual = S1$stream_power, predicted = S1$stream_raster)
+
+## S2
+mae_v_S2 <- mae(actual = S2$velocity, predicted = S2$v_raster)
+mae_wd_S2 <- mae(actual = S2$wd_m, predicted = S2$wd_m_raster)
+mae_f_S2 <- mae(actual = S2$froude, predicted = S2$froude_raster)
+mae_s_S2 <- mae(actual = S2$shear_stress, predicted = S2$shear_raster)
+mae_sp_S2 <- mae(actual = S2$stream_power, predicted = S2$stream_raster)
+
+## TH4
+mae_v_TH4 <- mae(actual = TH4$velocity, predicted = TH4$v_raster)
+mae_wd_TH4 <- mae(actual = TH4$wd_m, predicted = TH4$wd_m_raster)
+mae_f_TH4 <- mae(actual = TH4$froude, predicted = TH4$froude_raster)
+mae_s_TH4 <- mae(actual = TH4$shear_stress, predicted = TH4$shear_raster)
+mae_sp_TH4 <- mae(actual = TH4$stream_power, predicted = TH4$stream_raster)
+
+## VR3
+mae_v_VR3 <- mae(actual = VR3$velocity, predicted = VR3$v_raster)
+mae_wd_VR3 <- mae(actual = VR3$wd_m, predicted = VR3$wd_m_raster)
+mae_f_VR3 <- mae(actual = VR3$froude, predicted = VR3$froude_raster)
+mae_s_VR3 <- mae(actual = VR3$shear_stress, predicted = VR3$shear_raster)
+mae_sp_VR3 <- mae(actual = VR3$stream_power, predicted = VR3$stream_raster)
+
+## ALL
+mae_v <- mae(actual = data_hdm$velocity, predicted = data_hdm$v_raster)
+mae_wd <- mae(actual = data_hdm$wd_m, predicted = data_hdm$wd_m_raster)
+mae_f <- mae(actual = data_hdm$froude, predicted = data_hdm$froude_raster)
+mae_s <- mae(actual = data_hdm$shear_stress, predicted = data_hdm$shear_raster)
+mae_sp <- mae(actual = data_hdm$stream_power, predicted = data_hdm$stream_raster)
+```
+
+# Regr. Analysis
+## Models
+lm_p_value = c(),
+```{r}
+## GL1 
+regr_v_GL1 <- lm(v_raster ~ velocity, data = GL1)
+summary(regr_v_GL1)
+
+regr_wd_GL1 <- lm(wd_m_raster ~ wd_m, data = GL1)
+summary(regr_wd_GL1)
+
+regr_f_GL1 <- lm(froude_raster ~ froude, data = GL1)
+summary(regr_f_GL1)
+
+regr_s_GL1 <- lm(shear_raster ~ shear_stress, data = GL1)
+summary(regr_s_GL1)
+
+regr_sp_GL1 <- lm(stream_raster ~ stream_power, data = GL1)
+summary(regr_sp_GL1)
+
+## GL2
+regr_v_GL2 <- lm(v_raster ~ velocity, data = GL2)
+summary(regr_v_GL2)
+
+regr_wd_GL2 <- lm(wd_m_raster ~ wd_m, data = GL2)
+summary(regr_wd_GL2)
+
+regr_f_GL2 <- lm(froude_raster ~ froude, data = GL2)
+summary(regr_f_GL2)
+
+regr_s_GL2 <- lm(shear_raster ~ shear_stress, data = GL2)
+summary(regr_s_GL2)
+
+regr_sp_GL2 <- lm(stream_raster ~ stream_power, data = GL2)
+summary(regr_sp_GL2)
+
+## L2
+regr_v_L2 <- lm(v_raster ~ velocity, data = L2)
+summary(regr_v_L2)
+
+regr_wd_L2 <- lm(wd_m_raster ~ wd_m, data = L2)
+summary(regr_wd_L2)
+
+regr_f_L2 <- lm(froude_raster ~ froude, data = L2)
+summary(regr_f_L2)
+
+regr_s_L2 <- lm(shear_raster ~ shear_stress, data = L2)
+summary(regr_s_L2)
+
+regr_sp_L2 <- lm(stream_raster ~ stream_power, data = L2)
+summary(regr_sp_L2)
+
+## M1
+regr_v_M1 <- lm(v_raster ~ velocity, data = M1)
+summary(regr_v_M1)
+
+regr_wd_M1 <- lm(wd_m_raster ~ wd_m, data = M1)
+summary(regr_wd_M1)
+
+regr_f_M1 <- lm(froude_raster ~ froude, data = M1)
+summary(regr_f_M1)
+
+regr_s_M1 <- lm(shear_raster ~ shear_stress, data = M1)
+summary(regr_s_M1)
+
+regr_sp_M1 <- lm(stream_raster ~ stream_power, data = M1)
+summary(regr_sp_M1)
+
+## S1
+regr_v_S1 <- lm(v_raster ~ velocity, data = S1)
+summary(regr_v_S1)
+
+regr_wd_S1 <- lm(wd_m_raster ~ wd_m, data = S1)
+summary(regr_wd_S1)
+
+regr_f_S1 <- lm(froude_raster ~ froude, data = S1)
+summary(regr_f_S1)
+
+regr_s_S1 <- lm(shear_raster ~ shear_stress, data = S1)
+summary(regr_s_S1)
+
+regr_sp_S1 <- lm(stream_raster ~ stream_power, data = S1)
+summary(regr_sp_S1)
+
+## S2
+regr_v_S2 <- lm(v_raster ~ velocity, data = S2)
+summary(regr_v_S2)
+
+regr_wd_S2 <- lm(wd_m_raster ~ wd_m, data = S2)
+summary(regr_wd_S2)
+
+regr_f_S2 <- lm(froude_raster ~ froude, data = S2)
+summary(regr_f_S2)
+
+regr_s_S2 <- lm(shear_raster ~ shear_stress, data = S2)
+summary(regr_s_S2)
+
+regr_sp_S2 <- lm(stream_raster ~ stream_power, data = S2)
+summary(regr_sp_S2)
+
+## TH4
+regr_v_TH4 <- lm(v_raster ~ velocity, data = TH4)
+summary(regr_v_TH4)
+
+regr_wd_TH4 <- lm(wd_m_raster ~ wd_m, data = TH4)
+summary(regr_wd_TH4)
+
+regr_f_TH4 <- lm(froude_raster ~ froude, data = TH4)
+summary(regr_f_TH4)
+
+regr_s_TH4 <- lm(shear_raster ~ shear_stress, data = TH4)
+summary(regr_s_TH4)
+
+regr_sp_TH4 <- lm(stream_raster ~ stream_power, data = TH4)
+summary(regr_sp_TH4)
+
+## VR3
+regr_v_VR3 <- lm(v_raster ~ velocity, data = VR3)
+summary(regr_v_VR3)
+
+regr_wd_VR3 <- lm(wd_m_raster ~ wd_m, data = VR3)
+summary(regr_wd_VR3)
+
+regr_f_VR3 <- lm(froude_raster ~ froude, data = VR3)
+summary(regr_f_VR3)
+
+regr_s_VR3 <- lm(shear_raster ~ shear_stress, data = VR3)
+summary(regr_s_VR3)
+
+regr_sp_VR3 <- lm(stream_raster ~ stream_power, data = VR3)
+sum_regr <- summary(regr_sp_VR3)
+p_sp_VR3 <- sum_regr$coefficients["stream_power", "Pr(>|t|)"]
+
+## ALL
+regr_v <- lm(v_raster ~ velocity, data = data_hdm)
+summary(regr_v)
+
+regr_wd <- lm(wd_m_raster ~ wd_m, data = data_hdm)
+summary(regr_wd)
+
+regr_f <- lm(froude_raster ~ froude, data = data_hdm)
+summary(regr_f)
+
+regr_s <- lm(shear_raster ~ shear_stress, data = data_hdm)
+summary(regr_s)
+
+regr_sp <- lm(stream_raster ~ stream_power, data = data_hdm)
+sum_regr <- summary(regr_sp)
+p_sp <- sum_regr$coefficients["stream_power", "Pr(>|t|)"]
+```
+
+## Plots
+```{r}
+ggplot(data_hdm, aes(velocity, v_raster)) +
   geom_point() +
-  geom_line()
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(data_hdm, aes(wd_m, wd_m_raster)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(data_hdm, aes(froude, froude_raster)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(data_hdm, aes(shear_stress, shear_raster)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(data_hdm, aes(stream_power, stream_raster)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# plot(data_hdm$velocity, data_hdm$v_raster)
 ```
 
-# HSC Regression 
+
+# Create dataframe
 ```{r}
-
+results_hdm <- data.frame(rmse = c(rmse_v_GL1, rmse_wd_GL1, rmse_f_GL1, rmse_s_GL1, rmse_sp_GL1, rmse_v_GL2, rmse_wd_GL2, rmse_f_GL2, rmse_s_GL2, rmse_sp_GL2, rmse_v_L2, rmse_wd_L2, rmse_f_L2, rmse_s_L2, rmse_sp_L2, rmse_v_M1, rmse_wd_M1, rmse_f_M1, rmse_s_M1, rmse_sp_M1, rmse_v_S1, rmse_wd_S1, rmse_f_S1, rmse_s_S1, rmse_sp_S1, rmse_v_S2, rmse_wd_S2, rmse_f_S2, rmse_s_S2, rmse_sp_S2, rmse_v_TH4, rmse_wd_TH4, rmse_f_TH4, rmse_s_TH4, rmse_sp_TH4, rmse_v_VR3, rmse_wd_VR3, rmse_f_VR3, rmse_s_VR3, rmse_sp_VR3),
+           mae = c(mae_v_GL1, mae_wd_GL1, mae_f_GL1, mae_s_GL1, mae_sp_GL1, mae_v_GL2, mae_wd_GL2, mae_f_GL2, mae_s_GL2, mae_sp_GL2, mae_v_L2, mae_wd_L2, mae_f_L2, mae_s_L2, mae_sp_L2, mae_v_M1, mae_wd_M1, mae_f_M1, mae_s_M1, mae_sp_M1, mae_v_S1, mae_wd_S1, mae_f_S1, mae_s_S1, mae_sp_S1, mae_v_S2, mae_wd_S2, mae_f_S2, mae_s_S2, mae_sp_S2, mae_v_TH4, mae_wd_TH4, mae_f_TH4, mae_s_TH4, mae_sp_TH4, mae_v_VR3, mae_wd_VR3, mae_f_VR3, mae_s_VR3, mae_sp_VR3),
+           section = c("GL1", "GL1", "GL1", "GL1", "GL1", "GL2", "GL2", "GL2", "GL2", "GL2", "L2", "L2", "L2", "L2", "L2", "M1", "M1", "M1", "M1", "M1", "S1", "S1", "S1", "S1", "S1", "S2", "S2", "S2", "S2", "S2", "TH4", "TH4", "TH4", "TH4", "TH4", "VR3", "VR3", "VR3", "VR3", "VR3"),
+           variable = c("velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power"))
 ```
+
 

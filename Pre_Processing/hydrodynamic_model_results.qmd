@@ -1040,24 +1040,4 @@ VR3_stacked_52_90 <- stack_raster(v_path = "raster_files/VR3_v_52_90.tif",
                                 stack_path = "rasters_stacked/VR3_52_90.grd")
 ```
 
-# Tests
-```{r}
-GL1 <- stack("rasters_stacked/GL1_2_56_ezg.grd") # ok
-GL2 <- stack("rasters_stacked/GL2_2_37_ezg.grd") # ok
-L2 <- stack("rasters_stacked/L2_9_54_ezg.grd") # ok
-M1 <- stack("rasters_stacked/M1_1_50_ezg.grd") # ok
-S1 <- stack("rasters_stacked/S1_1_94_ezg.grd") # ok 
-S2 <- stack("rasters_stacked/S2_1_93_ezg.grd") # ok
-TH4 <- stack("rasters_stacked/TH4_35_12_ezg.grd") # ok 
-VR3 <- stack("rasters_stacked/VR3_21_51_ezg.grd") # ok
-
-plot(GL1)
-plot(GL2)
-plot(L2)
-plot(M1)
-plot(S1) 
-plot(S2)
-plot(TH4)
-plot(VR3)
-```
 
