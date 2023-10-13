@@ -57,7 +57,7 @@ names(TH4_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power
 names(VR3_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power")
 ```
 
-## Extract v / wd Information 
+## Load data 
 ```{r}
 # load data 
 data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv")
@@ -137,7 +137,7 @@ VR3 <- data |>
   dplyr::select(-shannon, -abundance, -k_index, -rel_abundance)
 ```
 
-## Extract Results
+## Extract information 
 ```{r}
 # extract raster information for regression analysis
 ### GL1 ###
@@ -401,154 +401,259 @@ mae_sp <- mae(actual = data_hdm$stream_power, predicted = data_hdm$stream_raster
 
 # Regr. Analysis
 ## Models
-lm_p_value = c(),
 ```{r}
 ## GL1 
 regr_v_GL1 <- lm(v_raster ~ velocity, data = GL1)
-summary(regr_v_GL1)
+sum_v_GL1 <- summary(regr_v_GL1)
+p_v_GL1 <- sum_v_GL1$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_GL1 <- lm(wd_m_raster ~ wd_m, data = GL1)
-summary(regr_wd_GL1)
+sum_wd_GL1 <- summary(regr_wd_GL1)
+p_wd_GL1 <- sum_wd_GL1$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_GL1 <- lm(froude_raster ~ froude, data = GL1)
-summary(regr_f_GL1)
+sum_f_GL1 <- summary(regr_f_GL1)
+p_f_GL1 <- sum_f_GL1$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_GL1 <- lm(shear_raster ~ shear_stress, data = GL1)
-summary(regr_s_GL1)
+sum_s_GL1 <- summary(regr_s_GL1)
+p_s_GL1 <- sum_s_GL1$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_GL1 <- lm(stream_raster ~ stream_power, data = GL1)
-summary(regr_sp_GL1)
+sum_sp_GL1 <- summary(regr_sp_GL1)
+p_sp_GL1 <- sum_sp_GL1$coefficients["stream_power", "Pr(>|t|)"]
 
 ## GL2
 regr_v_GL2 <- lm(v_raster ~ velocity, data = GL2)
-summary(regr_v_GL2)
+sum_v_GL2 <- summary(regr_v_GL2)
+p_v_GL2 <- sum_v_GL2$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_GL2 <- lm(wd_m_raster ~ wd_m, data = GL2)
-summary(regr_wd_GL2)
+sum_wd_GL2 <- summary(regr_wd_GL2)
+p_wd_GL2 <- sum_wd_GL2$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_GL2 <- lm(froude_raster ~ froude, data = GL2)
-summary(regr_f_GL2)
+sum_f_GL2 <- summary(regr_f_GL2)
+p_f_GL2 <- sum_f_GL2$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_GL2 <- lm(shear_raster ~ shear_stress, data = GL2)
-summary(regr_s_GL2)
+sum_s_GL2 <- summary(regr_s_GL2)
+p_s_GL2 <- sum_s_GL2$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_GL2 <- lm(stream_raster ~ stream_power, data = GL2)
-summary(regr_sp_GL2)
+sum_sp_GL2 <- summary(regr_sp_GL2)
+p_sp_GL2 <- sum_sp_GL2$coefficients["stream_power", "Pr(>|t|)"]
 
 ## L2
 regr_v_L2 <- lm(v_raster ~ velocity, data = L2)
-summary(regr_v_L2)
+sum_v_L2 <- summary(regr_v_L2)
+p_v_L2 <- sum_v_L2$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_L2 <- lm(wd_m_raster ~ wd_m, data = L2)
-summary(regr_wd_L2)
+sum_wd_L2 <- summary(regr_wd_L2)
+p_wd_L2 <- sum_wd_L2$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_L2 <- lm(froude_raster ~ froude, data = L2)
-summary(regr_f_L2)
+sum_f_L2 <- summary(regr_f_L2)
+p_f_L2 <- sum_f_L2$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_L2 <- lm(shear_raster ~ shear_stress, data = L2)
-summary(regr_s_L2)
+sum_s_L2 <- summary(regr_s_L2)
+p_s_L2 <- sum_s_L2$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_L2 <- lm(stream_raster ~ stream_power, data = L2)
-summary(regr_sp_L2)
+sum_sp_L2 <- summary(regr_sp_L2)
+p_sp_L2 <- sum_sp_L2$coefficients["stream_power", "Pr(>|t|)"]
 
 ## M1
 regr_v_M1 <- lm(v_raster ~ velocity, data = M1)
-summary(regr_v_M1)
+sum_v_M1 <- summary(regr_v_M1)
+p_v_M1 <- sum_v_M1$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_M1 <- lm(wd_m_raster ~ wd_m, data = M1)
-summary(regr_wd_M1)
+sum_wd_M1 <- summary(regr_wd_M1)
+p_wd_M1 <- sum_wd_M1$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_M1 <- lm(froude_raster ~ froude, data = M1)
-summary(regr_f_M1)
+sum_f_M1 <- summary(regr_f_M1)
+p_f_M1 <- sum_f_M1$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_M1 <- lm(shear_raster ~ shear_stress, data = M1)
-summary(regr_s_M1)
+sum_s_M1 <- summary(regr_s_M1)
+p_s_M1 <- sum_s_M1$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_M1 <- lm(stream_raster ~ stream_power, data = M1)
-summary(regr_sp_M1)
+sum_sp_M1 <- summary(regr_sp_M1)
+p_sp_M1 <- sum_sp_M1$coefficients["stream_power", "Pr(>|t|)"]
 
 ## S1
 regr_v_S1 <- lm(v_raster ~ velocity, data = S1)
-summary(regr_v_S1)
+sum_v_S1 <- summary(regr_v_S1)
+p_v_S1 <- sum_v_S1$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_S1 <- lm(wd_m_raster ~ wd_m, data = S1)
-summary(regr_wd_S1)
+sum_wd_S1 <- summary(regr_wd_S1)
+p_wd_S1 <- sum_wd_S1$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_S1 <- lm(froude_raster ~ froude, data = S1)
-summary(regr_f_S1)
+sum_f_S1 <- summary(regr_f_S1)
+p_f_S1 <- sum_f_S1$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_S1 <- lm(shear_raster ~ shear_stress, data = S1)
-summary(regr_s_S1)
+sum_s_S1 <- summary(regr_s_S1)
+p_s_S1 <- sum_s_S1$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_S1 <- lm(stream_raster ~ stream_power, data = S1)
-summary(regr_sp_S1)
+sum_sp_S1 <- summary(regr_sp_S1)
+p_sp_S1 <- sum_sp_S1$coefficients["stream_power", "Pr(>|t|)"]
 
 ## S2
 regr_v_S2 <- lm(v_raster ~ velocity, data = S2)
-summary(regr_v_S2)
+sum_v_S2 <- summary(regr_v_S2)
+p_v_S2 <- sum_v_S2$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_S2 <- lm(wd_m_raster ~ wd_m, data = S2)
-summary(regr_wd_S2)
+sum_wd_S2 <- summary(regr_wd_S2)
+p_wd_S2 <- sum_wd_S2$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_S2 <- lm(froude_raster ~ froude, data = S2)
-summary(regr_f_S2)
+sum_f_S2 <- summary(regr_f_S2)
+p_f_S2 <- sum_f_S2$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_S2 <- lm(shear_raster ~ shear_stress, data = S2)
-summary(regr_s_S2)
+sum_s_S2 <- summary(regr_s_S2)
+p_s_S2 <- sum_s_S2$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_S2 <- lm(stream_raster ~ stream_power, data = S2)
-summary(regr_sp_S2)
+sum_sp_S2 <- summary(regr_sp_S2)
+p_sp_S2 <- sum_sp_S2$coefficients["stream_power", "Pr(>|t|)"]
 
 ## TH4
 regr_v_TH4 <- lm(v_raster ~ velocity, data = TH4)
-summary(regr_v_TH4)
+sum_v_TH4 <- summary(regr_v_TH4)
+p_v_TH4 <- sum_v_TH4$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_TH4 <- lm(wd_m_raster ~ wd_m, data = TH4)
-summary(regr_wd_TH4)
+sum_wd_TH4 <- summary(regr_wd_TH4)
+p_wd_TH4 <- sum_wd_TH4$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_TH4 <- lm(froude_raster ~ froude, data = TH4)
-summary(regr_f_TH4)
+sum_f_TH4 <- summary(regr_f_TH4)
+p_f_TH4 <- sum_f_TH4$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_TH4 <- lm(shear_raster ~ shear_stress, data = TH4)
-summary(regr_s_TH4)
+sum_s_TH4 <- summary(regr_s_TH4)
+p_s_TH4 <- sum_s_TH4$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_TH4 <- lm(stream_raster ~ stream_power, data = TH4)
-summary(regr_sp_TH4)
+sum_sp_TH4 <- summary(regr_sp_TH4)
+p_sp_TH4 <- sum_sp_TH4$coefficients["stream_power", "Pr(>|t|)"]
 
 ## VR3
 regr_v_VR3 <- lm(v_raster ~ velocity, data = VR3)
-summary(regr_v_VR3)
+sum_v_VR3 <- summary(regr_v_VR3)
+p_v_VR3 <- sum_v_VR3$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd_VR3 <- lm(wd_m_raster ~ wd_m, data = VR3)
-summary(regr_wd_VR3)
+sum_wd_VR3 <- summary(regr_wd_VR3)
+p_wd_VR3 <- sum_wd_VR3$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f_VR3 <- lm(froude_raster ~ froude, data = VR3)
-summary(regr_f_VR3)
+sum_f_VR3 <- summary(regr_f_VR3)
+p_f_VR3 <- sum_f_VR3$coefficients["froude", "Pr(>|t|)"]
 
 regr_s_VR3 <- lm(shear_raster ~ shear_stress, data = VR3)
-summary(regr_s_VR3)
+sum_s_VR3 <- summary(regr_s_VR3)
+p_s_VR3 <- sum_s_VR3$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp_VR3 <- lm(stream_raster ~ stream_power, data = VR3)
-sum_regr <- summary(regr_sp_VR3)
-p_sp_VR3 <- sum_regr$coefficients["stream_power", "Pr(>|t|)"]
+sum_sp_VR3 <- summary(regr_sp_VR3)
+p_sp_VR3 <- sum_sp_VR3$coefficients["stream_power", "Pr(>|t|)"]
 
 ## ALL
 regr_v <- lm(v_raster ~ velocity, data = data_hdm)
-summary(regr_v)
+sum_v <- summary(regr_v)
+p_v <- sum_v$coefficients["velocity", "Pr(>|t|)"]
 
 regr_wd <- lm(wd_m_raster ~ wd_m, data = data_hdm)
-summary(regr_wd)
+sum_wd <- summary(regr_wd)
+p_wd <- sum_wd$coefficients["wd_m", "Pr(>|t|)"]
 
 regr_f <- lm(froude_raster ~ froude, data = data_hdm)
-summary(regr_f)
+sum_f <- summary(regr_f)
+p_f <- sum_f$coefficients["froude", "Pr(>|t|)"]
 
 regr_s <- lm(shear_raster ~ shear_stress, data = data_hdm)
-summary(regr_s)
+sum_s <- summary(regr_s)
+p_s <- sum_s$coefficients["shear_stress", "Pr(>|t|)"]
 
 regr_sp <- lm(stream_raster ~ stream_power, data = data_hdm)
-sum_regr <- summary(regr_sp)
-p_sp <- sum_regr$coefficients["stream_power", "Pr(>|t|)"]
+sum_sp <- summary(regr_sp)
+p_sp <- sum_sp$coefficients["stream_power", "Pr(>|t|)"]
 ```
+
+## Stat. Analysis
+```{r}
+# Modellvoraussetzungen prüfen - residualplot 
+par(mfrow=c(2, 2))
+plot(regr_v_GL1)
+plot(regr_wd_GL1)
+plot(regr_f_GL1)
+plot(regr_s_GL1)
+plot(regr_sp_GL1)
+
+plot(regr_v_GL2)
+plot(regr_wd_GL2)
+plot(regr_f_GL2)
+plot(regr_s_GL2)
+plot(regr_sp_GL2)
+
+plot(regr_v_L2)
+plot(regr_wd_L2)
+plot(regr_f_L2)
+plot(regr_s_L2)
+plot(regr_sp_L2)
+
+plot(regr_v_M1)
+plot(regr_wd_M1)
+plot(regr_f_M1)
+plot(regr_s_M1)
+plot(regr_sp_M1)
+
+plot(regr_v_S1)
+plot(regr_wd_S1)
+plot(regr_f_S1)
+plot(regr_s_S1)
+plot(regr_sp_S1)
+
+plot(regr_v_S2)
+plot(regr_wd_S2)
+plot(regr_f_S2)
+plot(regr_s_S2)
+plot(regr_sp_S2)
+
+plot(regr_v_TH4)
+plot(regr_wd_TH4)
+plot(regr_f_TH4)
+plot(regr_s_TH4)
+plot(regr_sp_TH4)
+
+plot(regr_v_VR3)
+plot(regr_wd_VR3)
+plot(regr_f_VR3)
+plot(regr_s_VR3)
+plot(regr_sp_VR3)
+
+plot(regr_v) # OK
+plot(regr_wd) # Residuen nicht normalverteilt, sonst OK
+plot(regr_f) # OK
+plot(regr_s) # Residien nicht normalverteilt, Linearität fraglich
+plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
+
+# Normalverteilung Residuen starke abweichung 
+# Linearität nicht gegeben aufgrund Bananenform oben links
+```
+
 
 ## Plots
 ```{r}
@@ -583,10 +688,16 @@ ggplot(data_hdm, aes(stream_power, stream_raster)) +
 
 # Create dataframe
 ```{r}
-results_hdm <- data.frame(rmse = c(rmse_v_GL1, rmse_wd_GL1, rmse_f_GL1, rmse_s_GL1, rmse_sp_GL1, rmse_v_GL2, rmse_wd_GL2, rmse_f_GL2, rmse_s_GL2, rmse_sp_GL2, rmse_v_L2, rmse_wd_L2, rmse_f_L2, rmse_s_L2, rmse_sp_L2, rmse_v_M1, rmse_wd_M1, rmse_f_M1, rmse_s_M1, rmse_sp_M1, rmse_v_S1, rmse_wd_S1, rmse_f_S1, rmse_s_S1, rmse_sp_S1, rmse_v_S2, rmse_wd_S2, rmse_f_S2, rmse_s_S2, rmse_sp_S2, rmse_v_TH4, rmse_wd_TH4, rmse_f_TH4, rmse_s_TH4, rmse_sp_TH4, rmse_v_VR3, rmse_wd_VR3, rmse_f_VR3, rmse_s_VR3, rmse_sp_VR3),
+results_hdm <- data.frame(lm_p_value = c(p_v_GL1, p_wd_GL1, p_f_GL1, p_s_GL1, p_sp_GL1, p_v_GL2, p_wd_GL2, p_f_GL2, p_s_GL2, p_sp_GL2, p_v_L2, p_wd_L2, p_f_L2, p_s_L2, p_sp_L2, p_v_M1, p_wd_M1, p_f_M1, p_s_M1, p_sp_M1, p_v_S1, p_wd_S1, p_f_S1, p_s_S1, p_sp_S1, p_v_S2, p_wd_S2, p_f_S2, p_s_S2, p_sp_S2, "p_v_TH4", "p_wd_TH4", "p_f_TH4", "p_s_TH4", "p_sp_TH4", p_v_VR3, p_wd_VR3, p_f_VR3, p_s_VR3, p_sp_VR3),
+                          
+  rmse = c(rmse_v_GL1, rmse_wd_GL1, rmse_f_GL1, rmse_s_GL1, rmse_sp_GL1, rmse_v_GL2, rmse_wd_GL2, rmse_f_GL2, rmse_s_GL2, rmse_sp_GL2, rmse_v_L2, rmse_wd_L2, rmse_f_L2, rmse_s_L2, rmse_sp_L2, rmse_v_M1, rmse_wd_M1, rmse_f_M1, rmse_s_M1, rmse_sp_M1, rmse_v_S1, rmse_wd_S1, rmse_f_S1, rmse_s_S1, rmse_sp_S1, rmse_v_S2, rmse_wd_S2, rmse_f_S2, rmse_s_S2, rmse_sp_S2, rmse_v_TH4, rmse_wd_TH4, rmse_f_TH4, rmse_s_TH4, rmse_sp_TH4, rmse_v_VR3, rmse_wd_VR3, rmse_f_VR3, rmse_s_VR3, rmse_sp_VR3),
+  
            mae = c(mae_v_GL1, mae_wd_GL1, mae_f_GL1, mae_s_GL1, mae_sp_GL1, mae_v_GL2, mae_wd_GL2, mae_f_GL2, mae_s_GL2, mae_sp_GL2, mae_v_L2, mae_wd_L2, mae_f_L2, mae_s_L2, mae_sp_L2, mae_v_M1, mae_wd_M1, mae_f_M1, mae_s_M1, mae_sp_M1, mae_v_S1, mae_wd_S1, mae_f_S1, mae_s_S1, mae_sp_S1, mae_v_S2, mae_wd_S2, mae_f_S2, mae_s_S2, mae_sp_S2, mae_v_TH4, mae_wd_TH4, mae_f_TH4, mae_s_TH4, mae_sp_TH4, mae_v_VR3, mae_wd_VR3, mae_f_VR3, mae_s_VR3, mae_sp_VR3),
            section = c("GL1", "GL1", "GL1", "GL1", "GL1", "GL2", "GL2", "GL2", "GL2", "GL2", "L2", "L2", "L2", "L2", "L2", "M1", "M1", "M1", "M1", "M1", "S1", "S1", "S1", "S1", "S1", "S2", "S2", "S2", "S2", "S2", "TH4", "TH4", "TH4", "TH4", "TH4", "VR3", "VR3", "VR3", "VR3", "VR3"),
            variable = c("velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power"))
+
+# write .csv file 
+write.csv(results_hdm, "Stat_Analysis/results_hdm_mi_metrics.csv", row.names = FALSE)
 ```
 
 
