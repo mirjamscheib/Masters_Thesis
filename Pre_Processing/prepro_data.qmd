@@ -24,9 +24,6 @@ pkgCheck("tidyr")
 pkgCheck("tidyverse")
 pkgCheck("stringr")
 pkgCheck("writexl")
-
-# set working directory 
-#setwd("Pre_Processing")
 ```
 
 # Load Data

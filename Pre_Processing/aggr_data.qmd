@@ -24,9 +24,6 @@ pkgCheck("tidyr")
 pkgCheck("tidyverse")
 pkgCheck("stringr")
 pkgCheck("writexl")
-
-# set working directory 
-#setwd("Pre_Processing")
 ```
 
 # Load data
@@ -36,56 +33,97 @@ data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv")
 
 # Aggregate 
 ```{r}
-# clog_6_class = mean(clog_6_class)
-# clog_3_class = mean(clog_3_class)
-# sub_type 
+# calculate and extract the most occuring characters per river section 
+sub_type <- data |>
+  group_by(Reach_Untersuchungsstelle) |>
+  summarise(counts_sub = table(sub_type),
+            max_sub = max(counts_sub),
+            most_sub = names(counts_sub[counts_sub == max_sub])) |>
+  dplyr::select(-counts_sub, -max_sub)
 
-data_aggr <- data |>
+clog_3 <- data |>
+  group_by(Reach_Untersuchungsstelle) |>
+  summarise(counts_clog_3 = table(clog_3_class),
+            max_clog_3 = max(counts_clog_3),
+            most_clog_3 = names(counts_clog_3[counts_clog_3 ==
+                                                      max_clog_3])) |>
+  dplyr::select(-counts_clog_3, -max_clog_3)
+
+clog_6 <- data |>
+  group_by(Reach_Untersuchungsstelle) |>
+  summarise(counts_clog_6 = table(clog_6_class),
+            max_clog_6 = max(counts_clog_6),
+            most_clog_6 = names(counts_clog_6[counts_clog_6 ==
+                                                      max_clog_6])) |>
+  dplyr::select(-counts_clog_6, -max_clog_6)
+
+# calculate mean value for each variable
+data_aggr_mean <- data |>
   group_by(Reach_Untersuchungsstelle) |>
   summarise(dist_w = mean(dist_w, na.rm = TRUE),
-            dist_w_sd = sd(dist_w, na.rm = TRUE),
             velocity = mean(velocity, na.rm = TRUE),
-            velocity_sd = sd(velocity, na.rm = TRUE),
             cat_velocity = mean(cat_velocity, na.rm = TRUE),
-            cat_velocity_sd = sd(cat_velocity, na.rm = TRUE),
             wd_m = mean(wd_m, na.rm = TRUE),
-            wd_m_sd = sd(wd_m, na.rm = TRUE),
             cat_water_depth = mean(Category_Water_depth, na.rm = TRUE),
-            cat_water_depth_sd = sd(Category_Water_depth, na.rm = TRUE),
             alg_cover = mean(alg_cover, na.rm = TRUE),
-            alg_cover_sd = sd(alg_cover, na.rm = TRUE),
             moos_cover = mean(moos_cover, na.rm = TRUE),
-            moos_cover_sd = sd(moos_cover, na.rm = TRUE),
             cpom_cover = mean(cpom_cover, na.rm = TRUE),
-            cpom_cover_sd = sd(cpom_cover, na.rm = TRUE),
             pH_before = mean(pH_before, na.rm = TRUE),
-            pH_before_sd = sd(pH_before, na.rm = TRUE),
             pH_during = mean(pH_during, na.rm = TRUE),
-            pH_during_sd = sd(pH_during, na.rm = TRUE),
             pH_after = mean(pH_after, na.rm = TRUE),
-            pH_after_sd = sd(pH_after, na.rm = TRUE),
             conduct_before = mean(conduct_before, na.rm = TRUE),
-            conduct_before_sd = sd(conduct_before, na.rm = TRUE),
             conduct_during = mean(conduct_during, na.rm = TRUE),
-            conduct_during_sd = sd(conduct_during, na.rm = TRUE),
             conduct_after = mean(conduct_after, na.rm = TRUE),
-            conduct_after_sd = sd(conduct_after, na.rm = TRUE),
             ox_before = mean(ox_before, na.rm = TRUE),
-            ox_before_sd = sd(ox_before, na.rm = TRUE),
             ox_during = mean(ox_during, na.rm = TRUE),
-            ox_during_sd = sd(ox_during, na.rm = TRUE),
             ox_after = mean(ox_after, na.rm = TRUE),
-            ox_after_sd = sd(ox_after, na.rm = TRUE),
             ox_sat_before = mean(ox_sat_before, na.rm = TRUE),
-            ox_sat_before_sd = sd(ox_sat_before, na.rm = TRUE),
             ox_sat_during = mean(ox_sat_during, na.rm = TRUE),
-            ox_sat_during_sd = sd(ox_sat_during, na.rm = TRUE),
             ox_sat_after = mean(ox_sat_after, na.rm = TRUE),
-            ox_sat_after_sd = sd(ox_sat_after, na.rm = TRUE))
+            k_index = mean(k_index),
+            shannon = mean(shannon),
+            abundance = mean(abundance),
+            rel_abundance = mean(rel_abundance))
+
+
+# calculate standard deviation for each variable
+data_aggr_sd <- data |>
+  group_by(Reach_Untersuchungsstelle) |>
+  summarise(dist_w_sd = sd(dist_w, na.rm = TRUE),
+            velocity_sd = sd(velocity, na.rm = TRUE),
+            cat_velocity_sd = sd(cat_velocity, na.rm = TRUE),
+            wd_m_sd = sd(wd_m, na.rm = TRUE),
+            cat_water_depth_sd = sd(Category_Water_depth, na.rm = TRUE),
+            alg_cover_sd = sd(alg_cover, na.rm = TRUE),
+            moos_cover_sd = sd(moos_cover, na.rm = TRUE),
+            cpom_cover_sd = sd(cpom_cover, na.rm = TRUE),
+            pH_before_sd = sd(pH_before, na.rm = TRUE),
+            pH_during_sd = sd(pH_during, na.rm = TRUE),
+            pH_after_sd = sd(pH_after, na.rm = TRUE),
+            conduct_before_sd = sd(conduct_before, na.rm = TRUE),
+            conduct_during_sd = sd(conduct_during, na.rm = TRUE),
+            conduct_after_sd = sd(conduct_after, na.rm = TRUE),
+            ox_before_sd = sd(ox_before, na.rm = TRUE),
+            ox_during_sd = sd(ox_during, na.rm = TRUE),
+            ox_after_sd = sd(ox_after, na.rm = TRUE),
+            ox_sat_before_sd = sd(ox_sat_before, na.rm = TRUE),
+            ox_sat_during_sd = sd(ox_sat_during, na.rm = TRUE),
+            ox_sat_after_sd = sd(ox_sat_after, na.rm = TRUE),
+            k_index_sd = sd(k_index),
+            shannon_sd = sd(shannon),
+            abundance_sd = sd(abundance),
+            rel_abundance_sd = sd(rel_abundance))
+
+# Combine mean and sd dataframes together 
+data_aggr <- data_aggr_mean |>
+  full_join(data_aggr_sd, by = "Reach_Untersuchungsstelle") |>
+  full_join(sub_type, by = "Reach_Untersuchungsstelle") |>
+  full_join(clog_3, by = "Reach_Untersuchungsstelle") |>
+  full_join(clog_6, by = "Reach_Untersuchungsstelle") 
 ```
 
 # Save data
 ```{r}
-write.csv(data_aggr, "Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv")
+write.csv(data_aggr, "Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv", row.names = FALSE)
 ```
 
