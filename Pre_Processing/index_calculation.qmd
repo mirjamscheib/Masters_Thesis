@@ -133,7 +133,7 @@ lab_ml_model_v <- lab_new |>
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, x, y, shannon, abundance, k_index, rel_abundance) |>
-  rename(velocity = `Flow_velocity_v60_cm/s`) |>
+  dplyr::rename(velocity = `Flow_velocity_v60_cm/s`) |>
   mutate(x = as.numeric(x),
          y = as.numeric(y),
          velocity = velocity/100)
@@ -145,7 +145,7 @@ lab_ml_model_wd_v <- lab_new |>
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, shannon, abundance, k_index, rel_abundance) |>
-  rename(velocity = `Flow_velocity_v60_cm/s`,
+  dplyr::rename(velocity = `Flow_velocity_v60_cm/s`,
          wd_m = Water_depth_cm) |>
   mutate(x = as.numeric(x),
          y = as.numeric(y),
@@ -167,7 +167,7 @@ lab_ml_model_sampling <- lab_new |>
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, z, `DIstance_Wasseranschlaglinie_m`, `Category_Flow_velocity_5_Bewohnbarkeits-klasse`, Clogging_3_Klassen, Clogging_6_Klassen, Substrate_type, `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`, `Moos_cover_Deckungsgrad_6_Kategorien_0-5`, `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`, shannon, abundance, k_index, rel_abundance) |>
-  rename(velocity = `Flow_velocity_v60_cm/s`,
+  dplyr::rename(velocity = `Flow_velocity_v60_cm/s`,
          wd_m = Water_depth_cm,
          cat_velocity = `Category_Flow_velocity_5_Bewohnbarkeits-klasse`,
          dist_w = DIstance_Wasseranschlaglinie_m,
@@ -209,7 +209,7 @@ lab_ml_model_section <- lab_new |>
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
   dplyr::select(-Transect, -Sampling_point, -Abiotic_measured_by.x, -Abiotic_measured_by.y, -River.x, -`RTK-GPS_Nr`, -`MZB_kick-net_taken_by`, -Varia, -Varia_before, -Varia_during, -Varia_after, -Gauging_station, -Sampling_site, -join_key) |>
-  rename(date = Date_of_survey.x,
+  dplyr::rename(date = Date_of_survey.x,
          time = Time_of_survey,
          velocity = `Flow_velocity_v60_cm/s`,
          wd_m = Water_depth_cm,
@@ -249,11 +249,40 @@ lab_ml_model_section <- lab_new |>
          y = as.numeric(y),
          velocity = velocity/100,
          wd_m = wd_m/100)
+```
 
+```{r}
+clog_3_int <- c("none" = 0, "strong" = 2, "slight-medium" = 1)
+clog_6_int <- c("none" = 0, "none-light" = 1, "none-slight" = 2, "slight" = 3, "slight-medium" = 4, "medium-strong" = 5, "strong" = 6)
+sub_int <- c("< 2.5 mm" = 0, "25 mm > x > 2.5 mm" = 1, "250 mm > x > 25 mm" = 2, "> 250 mm" = 3)
+hydr_type <- c("2a" = 1, "2b" = 2, "3a" = 3, "3b" = 4)
+hydr_int <- c("Hydropeaking" = 1, "Residual flow" = 2, "Natural/near-natural" = 3)
+
+data_sampling <- lab_ml_model_sampling |>
+  mutate(clog_3_class_int = ifelse(clog_3_class %in% names(clog_3_int), 
+                                   clog_3_int[clog_3_class], NA),
+         clog_6_class_int = ifelse(clog_6_class %in% names(clog_6_int), 
+                                   clog_6_int[clog_6_class], NA),
+         sub_type_int = ifelse(sub_type %in% names(sub_int), 
+                                   sub_int[sub_type], NA)) 
+
+
+data_section <- lab_ml_model_section |>
+    mutate(clog_3_class_int = ifelse(clog_3_class %in% names(clog_3_int), 
+                                   clog_3_int[clog_3_class], NA),
+         clog_6_class_int = ifelse(clog_6_class %in% names(clog_6_int), 
+                                   clog_6_int[clog_6_class], NA),
+         sub_type_int = ifelse(sub_type %in% names(sub_int), 
+                                   sub_int[sub_type], NA),
+         hydr_type_int = ifelse(Hydropeaking_river_type %in%
+                                  names(hydr_type), 
+                                   hydr_type[Hydropeaking_river_type], NA),
+         hydr_int = ifelse(Hydrokeaking_residual_flow_natural_near_natural
+                           %in% names(hydr_int), hydr_int[Hydrokeaking_residual_flow_natural_near_natural], NA)) 
 
 # write results into new .csv file 
-write_xlsx(lab_ml_model_sampling,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_sampling.xlsx") 
-write_xlsx(lab_ml_model_section,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_section.xlsx")
+write_xlsx(data_sampling,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_sampling.xlsx") 
+write_xlsx(data_section,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_section.xlsx")
 ```
 
 
