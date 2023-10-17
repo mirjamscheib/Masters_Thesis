@@ -295,7 +295,7 @@ crs(VR3_q) <- "EPSG: 2056"
 ## Load Data
 ```{r}
 # load data 
-data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") |>
+data <- read_delim("Pre_Processing/abiotic_mi_sampling/Abiotic_MI_Field.csv") |>
   mutate(Reach_Untersuchungsstelle = as.factor(Reach_Untersuchungsstelle), # convert character variables into categorical variables (factors with levels) for ML algorithm 
          velocity = velocity/100,  # convert cm/s in to m/s (to have the same units as the hdms)
          wd_cm = wd_cm/100) # convert cm in to m (to have the same units as the hdms)
@@ -303,74 +303,74 @@ data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") |>
 # read all raster results (one time flow velocity classes and one time for habitat suitability)
 # prep extraction data 
 ## GL1
-coord_GL1 <- data_wd |>
+coord_GL1 <- data |>
   subset(Reach_Untersuchungsstelle == "GL1") |>
   dplyr::select(x, y) 
 
-GL1 <- data_wd |>
+GL1 <- data |>
   subset(Reach_Untersuchungsstelle == "GL1") |>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## GL2
-coord_GL2 <- data_wd |>
+coord_GL2 <- data |>
   subset(Reach_Untersuchungsstelle == "GL2") |>
   dplyr::select(x, y) 
 
-GL2 <- data_wd |>
+GL2 <- data |>
   subset(Reach_Untersuchungsstelle == "GL2")|>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## L2
-coord_L2 <- data_wd |>
+coord_L2 <- data |>
   subset(Reach_Untersuchungsstelle == "L2") |>
   dplyr::select(x, y) 
 
-L2 <- data_wd |>
+L2 <- data |>
   subset(Reach_Untersuchungsstelle == "L2")|>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## M1
-coord_M1 <- data_wd |>
+coord_M1 <- data |>
   subset(Reach_Untersuchungsstelle == "M1") |>
   dplyr::select(x, y) 
 
-M1 <- data_wd |>
+M1 <- data |>
   subset(Reach_Untersuchungsstelle == "M1")|>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## S1
-coord_S1 <- data_wd |>
+coord_S1 <- data |>
   subset(Reach_Untersuchungsstelle == "S1") |>
   dplyr::select(x, y) 
 
-S1 <- data_wd |>
+S1 <- data |>
   subset(Reach_Untersuchungsstelle == "S1")|>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## S2
-coord_S2 <- data_wd |>
+coord_S2 <- data |>
   subset(Reach_Untersuchungsstelle == "S2") |>
   dplyr::select(x, y) 
 
-S2 <- data_wd |>
+S2 <- data |>
   subset(Reach_Untersuchungsstelle == "S2")|>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## TH4
-coord_TH4 <- data_wd |>
+coord_TH4 <- data |>
   subset(Reach_Untersuchungsstelle == "TH4") |>
   dplyr::select(x, y) 
 
-TH4 <- data_wd |>
+TH4 <- data |>
   subset(Reach_Untersuchungsstelle == "TH4")|>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 
 ## VR3
-coord_VR3 <- data_wd |>
+coord_VR3 <- data |>
   subset(Reach_Untersuchungsstelle == "VR3") |>
   dplyr::select(x, y) 
 
-VR3 <- data_wd |>
+VR3 <- data |>
   subset(Reach_Untersuchungsstelle == "VR3")|>
   dplyr::select(Reach_Untersuchungsstelle, velocity, wd_cm)
 ```
