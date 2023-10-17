@@ -49,35 +49,11 @@ pkgCheck("tidyr")
 data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv")
 data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv")
 
-clog_3_int <- c("none" = 0, "strong" = 2, "slight-medium" = 1)
-clog_6_int <- c("none" = 0, "none-light" = 1, "none-slight" = 2, "slight" = 3, "slight-medium" = 4, "medium-strong" = 5, "strong" = 6)
-sub_int <- c("< 2.5 mm" = 0, "25 mm > x > 2.5 mm" = 1, "250 mm > x > 25 mm" = 2, "> 250 mm" = 3)
-
-data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
-  mutate(clog_3_class_int = ifelse(clog_3_class %in% names(clog_3_int), 
-                                   clog_3_int[clog_3_class], NA),
-         clog_6_class_int = ifelse(clog_6_class %in% names(clog_6_int), 
-                                   clog_6_int[clog_6_class], NA),
-         sub_type_int = ifelse(sub_type %in% names(sub_int), 
-                                   sub_int[sub_type], NA)) |>
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling_add.csv") |>
   dplyr::select(-clog_3_class, -clog_6_class, -sub_type)
 
-hydr_type <- c("2a" = 1, "2b" = 2, "3a" = 3, "3b" = 4)
-hydr_int <- c("Hydropeaking" = 1, "Residual flow" = 2, "Natural/near-natural" = 3)
-
-data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
-    mutate(clog_3_class_int = ifelse(clog_3_class %in% names(clog_3_int), 
-                                   clog_3_int[clog_3_class], NA),
-         clog_6_class_int = ifelse(clog_6_class %in% names(clog_6_int), 
-                                   clog_6_int[clog_6_class], NA),
-         sub_type_int = ifelse(sub_type %in% names(sub_int), 
-                                   sub_int[sub_type], NA),
-         hydr_type_int = ifelse(Hydropeaking_river_type %in%
-                                  names(hydr_type), 
-                                   hydr_type[Hydropeaking_river_type], NA),
-         hydr_int = ifelse(Hydrokeaking_residual_flow_natural_near_natural
-                           %in% names(hydr_int), hydr_int[Hydrokeaking_residual_flow_natural_near_natural], NA)) |>
-  dplyr::select(-Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -Category_Water_depth, -date, -time, -time_before, -time_during, -time_after, -clog_3_class, -clog_6_class, -sub_type, -hydr_type_int, -ox_sat_after, -ox_sat_before, -ox_sat_during, -Number_Taxa, -EPT_Taxa)
+data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section_add.csv") |>
+    dplyr::select(-Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -Category_Water_depth, -date, -time, -time_before, -time_during, -time_after, -clog_3_class, -clog_6_class, -sub_type, -ox_sat_after, -ox_sat_before, -ox_sat_during, -Number_Taxa, -EPT_Taxa)
 ```
 
 ```{r}
@@ -1247,113 +1223,241 @@ rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c
 ### PREDICTORS: ONLY VELOCITY ###
 # w/ coordinates
 vi_v_k <- importance(rf_model_v_k)
+vi_rel_v_k <- vi_v_k/sum(vi_v_k)
+
 vi_v_s <- importance(rf_model_v_s)
+vi_rel_v_s <- vi_v_s/sum(vi_v_s)
+
 vi_v_a <- importance(rf_model_v_a)
+vi_rel_v_a <- vi_v_a/sum(vi_v_a)
+
 vi_v_ra <- importance(rf_model_v_ra)
+vi_rel_v_ra <- vi_v_ra/sum(vi_v_ra)
 
 # w/o coordinates
 vi_v_k_c <- importance(rf_model_v_k_c)
+vi_rel_v_k_c <- vi_v_k_c/sum(vi_v_k_c)
+
 vi_v_s_c <- importance(rf_model_v_s_c)
+vi_rel_v_s_c <- vi_v_s_c/sum(vi_v_s_c)
+
 vi_v_a_c <- importance(rf_model_v_a_c)
+vi_rel_v_a_c <- vi_v_a_c/sum(vi_v_a_c)
+
 vi_v_ra_c <- importance(rf_model_v_ra_c)
+vi_rel_v_ra_c <- vi_v_ra_c/sum(vi_v_ra_c)
 
 
 ### PREDICTORS: VELOCITY AND WD ###
 # w/ coordinates
 vi_wd_k <- importance(rf_model_wd_k)
+vi_rel_wd_k <- vi_wd_k/sum(vi_wd_k)
+
 vi_wd_s <- importance(rf_model_wd_s)
+vi_rel_wd_s <- vi_wd_s/sum(vi_wd_s)
+
 vi_wd_a <- importance(rf_model_wd_a)
+vi_rel_wd_a <- vi_wd_a/sum(vi_wd_a)
+
 vi_wd_ra <- importance(rf_model_wd_ra)
+vi_rel_wd_ra <- vi_wd_ra/sum(vi_wd_ra)
 
 # w/o coordinates
 vi_wd_k_c <- importance(rf_model_wd_k_c)
+vi_rel_wd_k_c <- vi_wd_k_c/sum(vi_wd_k_c)
+
 vi_wd_s_c <- importance(rf_model_wd_s_c)
+vi_rel_wd_s_c <- vi_wd_s_c/sum(vi_wd_s_c)
+
 vi_wd_a_c <- importance(rf_model_wd_a_c)
+vi_rel_wd_a_c <- vi_wd_a_c/sum(vi_wd_a_c)
+
 vi_wd_ra_c <- importance(rf_model_wd_ra_c)
+vi_rel_wd_ra_c <- vi_wd_ra_c/sum(vi_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
 # w/ coordinates
 vi_samp_k <- importance(rf_model_samp_k)
+vi_rel_samp_k <- vi_samp_k/sum(vi_samp_k)
+
 vi_samp_s <- importance(rf_model_samp_s)
+vi_rel_samp_s <- vi_samp_s/sum(vi_samp_s)
+
 vi_samp_a <- importance(rf_model_samp_a)
+vi_rel_samp_a <- vi_samp_a/sum(vi_samp_a)
+
 vi_samp_ra <- importance(rf_model_samp_ra)
+vi_rel_samp_ra <- vi_samp_ra/sum(vi_samp_ra)
 
 # w/o coordinates
 vi_samp_k_c <- importance(rf_model_samp_k_c)
+vi_rel_samp_k_c <- vi_samp_k_c/sum(vi_samp_k_c)
+
 vi_samp_s_c <- importance(rf_model_samp_s_c)
+vi_rel_samp_s_c <- vi_samp_s_c/sum(vi_samp_s_c)
+
 vi_samp_a_c <- importance(rf_model_samp_a_c)
+vi_rel_samp_a_c <- vi_samp_a_c/sum(vi_samp_a_c)
+
 vi_samp_ra_c <- importance(rf_model_samp_ra_c)
+vi_rel_samp_ra_c <- vi_samp_ra_c/sum(vi_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ###
 # w/ coordinates
 vi_sec_k <- importance(rf_model_sec_k)
+vi_rel_sec_k <- vi_sec_k/sum(vi_sec_k)
+
 vi_sec_s <- importance(rf_model_sec_s)
+vi_rel_sec_s <- vi_sec_s/sum(vi_sec_s)
+
 vi_sec_a <- importance(rf_model_sec_a)
+vi_rel_sec_a <- vi_sec_a/sum(vi_sec_a)
+
 vi_sec_ra <- importance(rf_model_sec_ra)
+vi_rel_sec_ra <- vi_sec_ra/sum(vi_sec_ra)
 
 # w/o coordinates
 vi_sec_k_c <- importance(rf_model_sec_k_c)
+vi_rel_sec_k_c <- vi_sec_k_c/sum(vi_sec_k_c)
+
 vi_sec_s_c <- importance(rf_model_sec_s_c)
+vi_rel_sec_s_c <- vi_sec_s_c/sum(vi_sec_s_c)
+
 vi_sec_a_c <- importance(rf_model_sec_a_c)
+vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c)
+
 vi_sec_ra_c <- importance(rf_model_sec_ra_c)
+vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c)
 
 # bind results together
 vi_rf_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra)
+vi_rel_rf_model_v <- rbind(vi_rel_v_k, vi_rel_v_s, vi_rel_v_a, vi_rel_v_ra)
+
 vi_rf_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)
+vi_rel_rf_model_v_c <- rbind(vi_rel_v_k_c, vi_rel_v_s_c, vi_rel_v_a_c, vi_rel_v_ra_c)
+
 vi_rf_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra)
+vi_rel_rf_model_wd <- rbind(vi_rel_wd_k, vi_rel_wd_s, vi_rel_wd_a, vi_rel_wd_ra)
+
 vi_rf_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c)
+vi_rel_rf_model_wd_c <- rbind(vi_rel_wd_k_c, vi_rel_wd_s_c, vi_rel_wd_a_c, vi_rel_wd_ra_c)
+
 vi_rf_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra)
+vi_rel_rf_model_samp <- rbind(vi_rel_samp_k, vi_rel_samp_s, vi_rel_samp_a, vi_rel_samp_ra)
+
 vi_rf_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c)
+vi_rel_rf_model_samp_c <- rbind(vi_rel_samp_k_c, vi_rel_samp_s_c, vi_rel_samp_a_c, vi_rel_samp_ra_c)
+
 vi_rf_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
+vi_rel_rf_model_sec <- rbind(vi_rel_sec_k, vi_rel_sec_s, vi_rel_sec_a, vi_rel_sec_ra)
+
 vi_rf_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c)
+vi_rel_rf_model_sec_c <- rbind(vi_rel_sec_k_c, vi_rel_sec_s_c, vi_rel_sec_a_c, vi_rel_sec_ra_c)
 
 # write results into .csv
-write.csv(vi_rf_model_v, "ML_model/vi_rf_model_v.csv", row.names = FALSE)
-write.csv(vi_rf_model_v_c, "ML_model/vi_rf_model_v_c.csv", row.names = FALSE)
-write.csv(vi_rf_model_wd, "ML_model/vi_rf_model_wd.csv", row.names = FALSE)
-write.csv(vi_rf_model_wd_c, "ML_model/vi_rf_model_wd_c.csv", row.names = FALSE)
-write.csv(vi_rf_model_samp, "ML_model/vi_rf_model_samp.csv", row.names = FALSE)
-write.csv(vi_rf_model_samp_c, "ML_model/vi_rf_model_samp_c.csv", row.names = FALSE)
-write.csv(vi_rf_model_sec, "ML_model/vi_rf_model_sec.csv", row.names = FALSE)
-write.csv(vi_rf_model_sec_c, "ML_model/vi_rf_model_sec_c.csv", row.names = FALSE)
+write.csv(vi_rf_model_v, "ML_model/vi_rf_model_v_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_v, "ML_model/vi_rel_rf_model_v_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_model_v_c, "ML_model/vi_rf_model_v_c_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_v_c, "ML_model/vi_rel_rf_model_v_c_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_model_wd, "ML_model/vi_rf_model_wd_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_wd, "ML_model/vi_rel_rf_model_wd_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_model_wd_c, "ML_model/vi_rf_model_wd_c_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_wd_c, "ML_model/vi_rel_rf_model_wd_c_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_model_samp, "ML_model/vi_rf_model_samp_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_samp, "ML_model/vi_rel_rf_model_samp_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_model_samp_c, "ML_model/vi_rf_model_samp_c_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_samp_c, "ML_model/vi_rel_rf_model_samp_c_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_model_sec, "ML_model/vi_rf_model_sec_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_sec, "ML_model/vi_rel_rf_model_sec_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_model_sec_c, "ML_model/vi_rf_model_sec_c_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_sec_c, "ML_model/vi_rel_rf_model_sec_c_add.csv", row.names = FALSE)
 ```
 
 ```{r}
 ### PREDICTORS: ONLY VELOCITY ###
 var_imp_rf_v_k <- autotuner_rf_v_k$importance()
+var_rel_imp_rf_v_k <- var_imp_rf_v_k/sum(var_imp_rf_v_k)
+
 var_imp_rf_v_s <- autotuner_rf_v_s$importance()
+var_rel_imp_rf_v_s <- var_imp_rf_v_s/sum(var_imp_rf_v_s)
+
 var_imp_rf_v_a <- autotuner_rf_v_a$importance()
+var_rel_imp_rf_v_a <- var_imp_rf_v_a/sum(var_imp_rf_v_a)
+
 var_imp_rf_v_ra <- autotuner_rf_v_ra$importance()
+var_rel_imp_rf_v_ra <- var_imp_rf_v_ra/sum(var_imp_rf_v_ra)
 
 ### PREDICTORS: VELOCITY AND WD ###
 var_imp_rf_wd_k <- autotuner_rf_wd_k$importance()
+var_rel_imp_rf_wd_k <- var_imp_rf_wd_k/sum(var_imp_rf_wd_k)
+
 var_imp_rf_wd_s <- autotuner_rf_wd_s$importance()
+var_rel_imp_rf_wd_s <- var_imp_rf_wd_s/sum(var_imp_rf_wd_s)
+
 var_imp_rf_wd_a <- autotuner_rf_wd_a$importance()
+var_rel_imp_rf_wd_a <- var_imp_rf_wd_a/sum(var_imp_rf_wd_a)
+
 var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance()
+var_rel_imp_rf_wd_ra <- var_imp_rf_wd_ra/sum(var_imp_rf_wd_ra)
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
 var_imp_rf_samp_k <- autotuner_rf_samp_k$importance()
+var_rel_imp_rf_samp_k <- var_imp_rf_samp_k/sum(var_imp_rf_samp_k)
+
 var_imp_rf_samp_s <- autotuner_rf_samp_s$importance()
+var_rel_imp_rf_samp_s <- var_imp_rf_samp_s/sum(var_imp_rf_samp_s)
+
 var_imp_rf_samp_a <- autotuner_rf_samp_a$importance()
+var_rel_imp_rf_samp_a <- var_imp_rf_samp_a/sum(var_imp_rf_samp_a)
+
 var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance()
+var_rel_imp_rf_samp_ra <- var_imp_rf_samp_ra/sum(var_imp_rf_samp_ra)
 
 ### PREDICTORS: ALL PREDICTORS ###
 var_imp_rf_sec_k <- autotuner_rf_sec_k$importance()
+var_rel_imp_rf_sec_k <- var_imp_rf_sec_k/sum(var_imp_rf_sec_k)
+
 var_imp_rf_sec_s <- autotuner_rf_sec_s$importance()
+var_rel_imp_rf_sec_s <- var_imp_rf_sec_s/sum(var_imp_rf_sec_s)
+
 var_imp_rf_sec_a <- autotuner_rf_sec_a$importance()
+var_rel_imp_rf_sec_a <- var_imp_rf_sec_a/sum(var_imp_rf_sec_a)
+
 var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance()
+var_rel_imp_rf_sec_ra <- var_imp_rf_sec_ra/sum(var_imp_rf_sec_ra)
 
 # bind results together
 vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra)
+vi_rel_rf_v <- rbind(var_rel_imp_rf_v_k, var_rel_imp_rf_v_s, var_rel_imp_rf_v_a, var_rel_imp_rf_v_ra)
+
 vi_rf_wd <- rbind(var_imp_rf_wd_k, var_imp_rf_wd_s, var_imp_rf_wd_a, var_imp_rf_wd_ra)
+vi_rel_rf_wd <- rbind(var_rel_imp_rf_wd_k, var_rel_imp_rf_wd_s, var_rel_imp_rf_wd_a, var_rel_imp_rf_wd_ra)
+
 vi_rf_samp <- rbind(var_imp_rf_samp_k, var_imp_rf_samp_s, var_imp_rf_samp_a, var_imp_rf_samp_ra)
+vi_rel_rf_samp <- rbind(var_rel_imp_rf_samp_k, var_rel_imp_rf_samp_s, var_rel_imp_rf_samp_a, var_rel_imp_rf_samp_ra)
+
 vi_rf_sec <- rbind(var_imp_rf_sec_k, var_imp_rf_sec_s, var_imp_rf_sec_a, var_imp_rf_sec_ra)
+vi_rel_rf_sec <- rbind(var_rel_imp_rf_sec_k, var_rel_imp_rf_sec_s, var_rel_imp_rf_sec_a, var_rel_imp_rf_sec_ra)
 
 # write results into .csv
-write.csv(vi_rf_v, "ML_model/vi_rf_v.csv", row.names = FALSE)
-write.csv(vi_rf_wd, "ML_model/vi_rf_wd.csv", row.names = FALSE)
-write.csv(vi_rf_samp, "ML_model/vi_rf_samp.csv", row.names = FALSE)
-write.csv(vi_rf_sec, "ML_model/vi_rf_sec.csv", row.names = FALSE)
+write.csv(vi_rf_v, "ML_model/vi_rf_v_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_v, "ML_model/vi_rel_rf_v_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_wd, "ML_model/vi_rf_wd_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_wd, "ML_model/vi_rel_rf_wd_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_samp, "ML_model/vi_rf_samp_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_samp, "ML_model/vi_rel_rf_samp_add.csv", row.names = FALSE)
+
+write.csv(vi_rf_sec, "ML_model/vi_rf_sec_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_sec, "ML_model/vi_rel_rf_sec_add.csv", row.names = FALSE)
 ```
 
 ## - Partial dependence plots
@@ -2034,357 +2138,177 @@ bias_model_v_ra_c <- bias(observados = responses_v_ra, estimados = rf_pred_model
 bias_wd_k <- bias(observados = responses_wd_k, estimados = rf_predictions_wd_k)
 bias_model_wd_k <- bias(observados = responses_wd_k, estimados = rf_pred_model_wd_k)
 bias_model_wd_k_c <- bias(observados = responses_wd_k, estimados = rf_pred_model_wd_k_c)
-#------------------------------------------------------------------------
 
 # shannon index and velocity + wd
-diff_wd_s <- rf_predictions_wd_s - responses_wd_s
-diff_model_wd_s <- rf_pred_model_wd_s - responses_wd_s
-diff_model_wd_s_c <- rf_pred_model_wd_s_c - responses_wd_s
-
-# shannon index and velocity + wd
-bias_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_wd_s)
-bias_model_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s)
-bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s_c)
+bias_wd_s <- bias(observados = responses_wd_s, estimados = rf_predictions_wd_s)
+bias_model_wd_s <- bias(observados = responses_wd_s, estimados = rf_pred_model_wd_s)
+bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = rf_pred_model_wd_s_c)
 
 # abundance and velocity + wd
-bias_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_wd_a)
-bias_model_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a)
-bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a_c)
+bias_wd_a <- bias(observados = responses_wd_a, estimados = rf_predictions_wd_a)
+bias_model_wd_a <- bias(observados = responses_wd_a, estimados = rf_pred_model_wd_a)
+bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = rf_pred_model_wd_a_c)
 
 # relative abundance and velocity + wd
-bias_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_wd_ra)
-bias_model_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra)
-bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra_c)
+bias_wd_ra <- bias(observados = responses_wd_ra, estimados = rf_predictions_wd_ra)
+bias_model_wd_ra <- bias(observados = responses_wd_ra, estimados = rf_pred_model_wd_ra)
+bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = rf_pred_model_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ###
 # k_index and sampling locations
 bias_samp_k <- bias(observados = responses_samp_k, 
-                    estimados = brt_pred_samp_k)
+                    estimados = rf_predictions_samp_k)
 bias_model_samp_k <- bias(observados = responses_samp_k, 
-                    estimados = brt_pred_model_samp_k)
+                    estimados = rf_pred_model_samp_k)
 bias_model_samp_k_c <- bias(observados = responses_samp_k, 
-                    estimados = brt_pred_model_samp_k_c)
+                    estimados = rf_pred_model_samp_k_c)
 
 # shannon index and sampling locations
 bias_samp_s <- bias(observados = responses_samp_s, 
-                    estimados = brt_pred_samp_s)
+                    estimados = rf_predictions_samp_s)
 bias_model_samp_s <- bias(observados = responses_samp_s, 
-                    estimados = brt_pred_model_samp_s)
+                    estimados = rf_pred_model_samp_s)
 bias_model_samp_s_c <- bias(observados = responses_samp_s, 
-                    estimados = brt_pred_model_samp_s_c)
+                    estimados = rf_pred_model_samp_s_c)
 
 # abundance and sampling locations
 bias_samp_a <- bias(observados = responses_samp_a, 
-                    estimados = brt_pred_samp_a)
+                    estimados = rf_predictions_samp_a)
 bias_model_samp_a <- bias(observados = responses_samp_a, 
-                    estimados = brt_pred_model_samp_a)
+                    estimados = rf_pred_model_samp_a)
 bias_model_samp_a_c <- bias(observados = responses_samp_a, 
-                    estimados = brt_pred_model_samp_a_c)
+                    estimados = rf_pred_model_samp_a_c)
 
 # relative abundance and sampling locations
 bias_samp_ra <- bias(observados = responses_samp_ra, 
-                    estimados = brt_pred_samp_ra)
+                    estimados = rf_predictions_samp_ra)
 bias_model_samp_ra <- bias(observados = responses_samp_ra, 
-                    estimados = brt_pred_model_samp_ra)
+                    estimados = rf_pred_model_samp_ra)
 bias_model_samp_ra_c <- bias(observados = responses_samp_ra, 
-                    estimados = brt_pred_model_samp_ra_c)
+                    estimados = rf_pred_model_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ###
 # k_index and all predictors
 bias_sec_k <- bias(observados = responses_sec_k, 
-                    estimados = brt_pred_sec_k)
+                    estimados = rf_predictions_sec_k)
 bias_model_sec_k <- bias(observados = responses_sec_k, 
-                    estimados = brt_pred_model_sec_k)
+                    estimados = rf_pred_model_sec_k)
 bias_model_sec_k_c <- bias(observados = responses_sec_k, 
-                    estimados = brt_pred_model_sec_k_c)
+                    estimados = rf_pred_model_sec_k_c)
 
 # shannon index and all predictors
 bias_sec_s <- bias(observados = responses_sec_s, 
-                    estimados = brt_pred_sec_s)
+                    estimados = rf_predictions_sec_s)
 bias_model_sec_s <- bias(observados = responses_sec_s, 
-                    estimados = brt_pred_model_sec_s)
+                    estimados = rf_pred_model_sec_s)
 bias_model_sec_s_c <- bias(observados = responses_sec_s, 
-                    estimados = brt_pred_model_sec_s_c)
+                    estimados = rf_pred_model_sec_s_c)
 
 # abundance and all predictors
 bias_sec_a <- bias(observados = responses_sec_a, 
-                    estimados = brt_pred_sec_a)
+                    estimados = rf_predictions_sec_a)
 bias_model_sec_a <- bias(observados = responses_sec_a, 
-                    estimados = brt_pred_model_sec_a)
+                    estimados = rf_pred_model_sec_a)
 bias_model_sec_a_c <- bias(observados = responses_sec_a, 
-                    estimados = brt_pred_model_sec_a_c)
+                    estimados = rf_pred_model_sec_a_c)
 
 # relative abundance and all predictors
 bias_sec_ra <- bias(observados = responses_sec_ra, 
-                    estimados = brt_pred_sec_ra)
+                    estimados = rf_predictions_sec_ra)
 bias_model_sec_ra <- bias(observados = responses_sec_ra, 
-                    estimados = brt_pred_model_sec_ra)
+                    estimados = rf_pred_model_sec_ra)
 bias_model_sec_ra_c <- bias(observados = responses_sec_ra, 
-                    estimados = brt_pred_model_sec_ra_c)
-
-
-# abundance and velocity + wd
-diff_wd_a <- rf_predictions_wd_a - responses_wd_a
-diff_model_wd_a <- rf_pred_model_wd_a - responses_wd_a
-diff_model_wd_a_c <- rf_pred_model_wd_a_c - responses_wd_a
-
-# relative abundance and velocity + wd
-diff_wd_ra <- rf_predictions_wd_ra - responses_wd_ra
-diff_model_wd_ra <- rf_pred_model_wd_ra - responses_wd_ra
-diff_model_wd_ra_c <- rf_pred_model_wd_ra_c - responses_wd_ra
-
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
-diff_samp_k <- rf_predictions_samp_k - responses_samp_k
-diff_model_samp_k <- rf_pred_model_samp_k - responses_samp_k
-diff_model_samp_k_c <- rf_pred_model_samp_k_c - responses_samp_k
-
-# shannon index and sampling locations
-diff_samp_s <- rf_predictions_samp_s - responses_samp_s
-diff_model_samp_s <- rf_pred_model_samp_s - responses_samp_s
-diff_model_samp_s_c <- rf_pred_model_samp_s_c - responses_samp_s
-
-# abundance and sampling locations
-diff_samp_a <- rf_predictions_samp_a - responses_samp_a
-diff_model_samp_a <- rf_pred_model_samp_a - responses_samp_a
-diff_model_samp_a_c <- rf_pred_model_samp_a_c - responses_samp_a
-
-# relative abundance and sampling locations
-diff_samp_ra <- rf_predictions_samp_ra - responses_samp_ra
-diff_model_samp_ra <- rf_pred_model_samp_ra - responses_samp_ra
-diff_model_samp_ra_c <- rf_pred_model_samp_ra_c - responses_samp_ra
-
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
-diff_sec_k <- rf_predictions_sec_k - responses_sec_k
-diff_model_sec_k <- rf_pred_model_sec_k - responses_sec_k
-diff_model_sec_k_c <- rf_pred_model_sec_k_c - responses_sec_k
-
-# shannon index and all predictors
-diff_sec_s <- rf_predictions_sec_s - responses_sec_s
-diff_model_sec_s <- rf_pred_model_sec_s - responses_sec_s
-diff_model_sec_s_c <- rf_pred_model_sec_s_c - responses_sec_s
-
-# abundance and all predictors
-diff_sec_a <- rf_predictions_sec_a - responses_sec_a
-diff_model_sec_a <- rf_pred_model_sec_a - responses_sec_a
-diff_model_sec_a_c <- rf_pred_model_sec_a_c - responses_sec_a
-
-# relative abundance and all predictors
-diff_sec_ra <- rf_predictions_sec_ra - responses_sec_ra
-diff_model_sec_ra <- rf_pred_model_sec_ra - responses_sec_ra
-diff_model_sec_ra_c <- rf_pred_model_sec_ra_c - responses_sec_ra
-```
-
-
-```{r}
-# Calculate the mean of the differences (bias)
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-bias_v_k <- mean(diff_v_k)
-bias_model_v_k <- mean(diff_model_v_k)
-bias_model_v_k_c <- mean(diff_model_v_k_c)
-
-# shannon index and velocity
-bias_v_s <- mean(diff_v_s)
-bias_model_v_s <- mean(diff_model_v_s)
-bias_model_v_s_c <- mean(diff_model_v_s_c)
-
-# abundance and velocity
-bias_v_a <- mean(diff_v_a)
-bias_model_v_a <- mean(diff_model_v_a)
-bias_model_v_a_c <- mean(diff_model_v_a_c)
-
-# relative abundance and velocity
-bias_v_ra <- mean(diff_v_ra)
-bias_model_v_ra <- mean(diff_model_v_ra)
-bias_model_v_ra_c <- mean(diff_model_v_ra_c)
-
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-bias_wd_k <- mean(diff_wd_k)
-bias_model_wd_k <- mean(diff_model_wd_k)
-bias_model_wd_k_c <- mean(diff_model_wd_k_c)
-
-# shannon index and velocity + wd
-bias_wd_s <- mean(diff_wd_s)
-bias_model_wd_s <- mean(diff_model_wd_s)
-bias_model_wd_s_c <- mean(diff_model_wd_s_c)
-
-# abundance and velocity + wd
-bias_wd_a <- mean(diff_wd_a)
-bias_model_wd_a <- mean(diff_model_wd_a)
-bias_model_wd_a_c <- mean(diff_model_wd_a_c)
-
-# relative abundance and velocity + wd
-bias_wd_ra <- mean(diff_wd_ra)
-bias_model_wd_ra <- mean(diff_model_wd_ra)
-bias_model_wd_ra_c <- mean(diff_model_wd_ra_c)
-
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
-bias_samp_k <- mean(diff_samp_k)
-bias_model_samp_k <- mean(diff_model_samp_k)
-bias_model_samp_k_c <- mean(diff_model_samp_k_c)
-
-# shannon index and sampling locations
-bias_samp_s <- mean(diff_samp_s)
-bias_model_samp_s <- mean(diff_model_samp_s)
-bias_model_samp_s_c <- mean(diff_model_samp_s_c)
-
-# abundance and sampling locations
-bias_samp_a <- mean(diff_samp_a)
-bias_model_samp_a <- mean(diff_model_samp_a)
-bias_model_samp_a_c <- mean(diff_model_samp_a_c)
-
-# relative abundance and sampling locations
-bias_samp_ra <- mean(diff_samp_ra)
-bias_model_samp_ra <- mean(diff_model_samp_ra)
-bias_model_samp_ra_c <- mean(diff_model_samp_ra_c)
-
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
-bias_sec_k <- mean(diff_sec_k)
-bias_model_sec_k <- mean(diff_model_sec_k)
-bias_model_sec_k_c <- mean(diff_model_sec_k_c)
-
-# shannon index and all predictors
-bias_sec_s <- mean(diff_sec_s)
-bias_model_sec_s <- mean(diff_model_sec_s)
-bias_model_sec_s_c <- mean(diff_model_sec_s_c)
-
-# abundance and all predictors
-bias_sec_a <- mean(diff_sec_a)
-bias_model_sec_a <- mean(diff_model_sec_a)
-bias_model_sec_a_c <- mean(diff_model_sec_a_c)
-
-# relative abundance and all predictors
-bias_sec_ra <- mean(diff_sec_ra)
-bias_model_sec_ra <- mean(diff_model_sec_ra)
-bias_model_sec_ra_c <- mean(diff_model_sec_ra_c)
+                    estimados = rf_pred_model_sec_ra_c)
 ```
 
 ## Nash-Sutcliffe efficiency (NSE) 
 ```{r}
+#install.packages("hydroGOF")
+library(hydroGOF) # for NSE calculation with NSE() function 
 # Calculate the NSE
 ### ONLY VELOCITY AS PREDICTOR ###
 # k_index and velocity
-nse_v_k <- 1 - sum((responses_v_k - rf_predictions_v_k)^2) / sum((responses_v_k - mean(responses_v_k))^2)
-
-nse_model_v_k <- 1 - sum((responses_v_k - rf_pred_model_v_k)^2) / sum((responses_v_k - mean(responses_v_k))^2)
-
-nse_model_v_k_c <- 1 - sum((responses_v_k - rf_pred_model_v_k_c)^2) / sum((responses_v_k - mean(responses_v_k))^2)
+nse_v_k <- NSE(sim = rf_predictions_v_k, obs = responses_v_k)
+nse_model_v_k <- NSE(sim = rf_pred_model_v_k, obs = responses_v_k)
+nse_model_v_k_c <- NSE(sim = rf_pred_model_v_k_c, obs = responses_v_k)
 
 # shannon index and velocity
-nse_v_s <- 1 - sum((responses_v_s - rf_predictions_v_s)^2) / sum((responses_v_s - mean(responses_v_s))^2)
-
-nse_model_v_s <- 1 - sum((responses_v_s - rf_pred_model_v_s)^2) / sum((responses_v_s - mean(responses_v_s))^2)
-
-nse_model_v_s_c <- 1 - sum((responses_v_s - rf_pred_model_v_s_c)^2) / sum((responses_v_s - mean(responses_v_s))^2)
+nse_v_s <- NSE(sim = rf_predictions_v_s, obs = responses_v_s)
+nse_model_v_s <- NSE(sim = rf_pred_model_v_s, obs = responses_v_s)
+nse_model_v_s_c <- NSE(sim = rf_pred_model_v_s_c, obs = responses_v_s)
 
 # abundance and velocity
-nse_v_a <- 1 - sum((responses_v_a - rf_predictions_v_a)^2) / sum((responses_v_a - mean(responses_v_a))^2)
-
-nse_model_v_a <- 1 - sum((responses_v_a - rf_pred_model_v_a)^2) / sum((responses_v_a - mean(responses_v_a))^2)
-
-nse_model_v_a_c <- 1 - sum((responses_v_a - rf_pred_model_v_a_c)^2) / sum((responses_v_a - mean(responses_v_a))^2)
+nse_v_a <- NSE(sim = rf_predictions_v_a, obs = responses_v_a)
+nse_model_v_a <- NSE(sim = rf_pred_model_v_a, obs = responses_v_a)
+nse_model_v_a_c <- NSE(sim = rf_pred_model_v_a_c, obs = responses_v_a)
 
 # relative abundance and velocity
-nse_v_ra <- 1 - sum((responses_v_ra - rf_predictions_v_ra)^2) / sum((responses_v_ra - mean(responses_v_ra))^2)
-
-nse_model_v_ra <- 1 - sum((responses_v_ra - rf_pred_model_v_ra)^2) / sum((responses_v_ra - mean(responses_v_ra))^2)
-
-nse_model_v_ra_c <- 1 - sum((responses_v_ra - rf_pred_model_v_ra_c)^2) / sum((responses_v_ra - mean(responses_v_ra))^2)
+nse_v_ra <- NSE(sim = rf_predictions_v_ra, obs = responses_v_ra)
+nse_model_v_ra <- NSE(sim = rf_pred_model_v_ra, obs = responses_v_ra)
+nse_model_v_ra_c <- NSE(sim = rf_pred_model_v_ra_c, obs = responses_v_ra)
 
 ### VELOCITY + WD AS PREDICTORS ###
 # k_index and velocity + wd
-nse_wd_k <- 1 - sum((responses_wd_k - rf_predictions_wd_k)^2) / sum((responses_wd_k - mean(responses_wd_k))^2)
-
-nse_model_wd_k <- 1 - sum((responses_wd_k - rf_pred_model_wd_k)^2) / sum((responses_wd_k - mean(responses_wd_k))^2)
-
-nse_model_wd_k_c <- 1 - sum((responses_wd_k - rf_pred_model_wd_k_c)^2) / sum((responses_wd_k - mean(responses_wd_k))^2)
+nse_wd_k <- NSE(sim = rf_predictions_wd_k, obs = responses_wd_k)
+nse_model_wd_k <- NSE(sim = rf_pred_model_wd_k, obs = responses_wd_k)
+nse_model_wd_k_c <- NSE(sim = rf_pred_model_wd_k_c, obs = responses_wd_k)
 
 # shannon index and velocity + wd
-nse_wd_s <- 1 - sum((responses_wd_s - rf_predictions_wd_s)^2) / sum((responses_wd_s - mean(responses_wd_s))^2)
-
-nse_model_wd_s <- 1 - sum((responses_wd_s - rf_pred_model_wd_s)^2) / sum((responses_wd_s - mean(responses_wd_s))^2)
-
-nse_model_wd_s_c <- 1 - sum((responses_wd_s - rf_pred_model_wd_s_c)^2) / sum((responses_wd_s - mean(responses_wd_s))^2)
+nse_wd_s <- NSE(sim = rf_predictions_wd_s, obs = responses_wd_s)
+nse_model_wd_s <- NSE(sim = rf_pred_model_wd_s, obs = responses_wd_s)
+nse_model_wd_s_c <- NSE(sim = rf_pred_model_wd_s_c, obs = responses_wd_s)
 
 # abundance and velocity + wd
-nse_wd_a <- 1 - sum((responses_wd_a - rf_predictions_wd_a)^2) / sum((responses_wd_a - mean(responses_wd_a))^2)
-
-nse_model_wd_a <- 1 - sum((responses_wd_a - rf_pred_model_wd_a)^2) / sum((responses_wd_a - mean(responses_wd_a))^2)
-
-nse_model_wd_a_c <- 1 - sum((responses_wd_a - rf_pred_model_wd_a_c)^2) / sum((responses_wd_a - mean(responses_wd_a))^2)
+nse_wd_a <- NSE(sim = rf_predictions_wd_a, obs = responses_wd_a)
+nse_model_wd_a <- NSE(sim = rf_pred_model_wd_a, obs = responses_wd_a)
+nse_model_wd_a_c <- NSE(sim = rf_pred_model_wd_a_c, obs = responses_wd_a)
 
 # relative abundance and velocity + wd
-nse_wd_ra <- 1 - sum((responses_wd_ra - rf_predictions_wd_ra)^2) / sum((responses_wd_ra - mean(responses_wd_ra))^2)
+nse_wd_ra <- NSE(sim = rf_predictions_wd_ra, obs = responses_wd_ra)
+nse_model_wd_ra <- NSE(sim = rf_pred_model_wd_ra, obs = responses_wd_ra)
+nse_model_wd_ra_c <- NSE(sim = rf_pred_model_wd_ra_c, obs = responses_wd_ra)
 
-nse_model_wd_ra <- 1 - sum((responses_wd_ra - rf_pred_model_wd_ra)^2) / sum((responses_wd_ra - mean(responses_wd_ra))^2)
-
-nse_model_wd_ra_c <- 1 - sum((responses_wd_ra - rf_pred_model_wd_ra_c)^2) / sum((responses_wd_ra - mean(responses_wd_ra))^2)
-```
-
-```{r}
-# Calculate the NSE
 ### PREDICTORS: SAMPLING LOCATIONS ###
 # k_index and sampling locations
-nse_samp_k <- 1 - sum((responses_samp_k - rf_predictions_samp_k)^2) / sum((responses_samp_k - mean(responses_samp_k))^2)
-
-nse_model_samp_k <- 1 - sum((responses_samp_k - rf_pred_model_samp_k)^2) / sum((responses_samp_k - mean(responses_samp_k))^2)
-
-nse_model_samp_k_c <- 1 - sum((responses_samp_k - rf_pred_model_samp_k_c)^2) / sum((responses_samp_k - mean(responses_samp_k))^2)
+nse_samp_k <- NSE(sim = rf_predictions_samp_k, obs = responses_samp_k)
+nse_model_samp_k <- NSE(sim = rf_pred_model_samp_k, obs = responses_samp_k)
+nse_model_samp_k_c <- NSE(sim = rf_pred_model_samp_k_c, obs = responses_samp_k)
 
 # shannon index and sampling locations
-nse_samp_s <- 1 - sum((responses_samp_s - rf_predictions_samp_s)^2) / sum((responses_samp_s - mean(responses_samp_s))^2)
-
-nse_model_samp_s <- 1 - sum((responses_samp_s - rf_pred_model_samp_s)^2) / sum((responses_samp_s - mean(responses_samp_s))^2)
-
-nse_model_samp_s_c <- 1 - sum((responses_samp_s - rf_pred_model_samp_s_c)^2) / sum((responses_samp_s - mean(responses_samp_s))^2)
+nse_samp_s <- NSE(sim = rf_predictions_samp_s, obs = responses_samp_s)
+nse_model_samp_s <- NSE(sim = rf_pred_model_samp_s, obs = responses_samp_s)
+nse_model_samp_s_c <- NSE(sim = rf_pred_model_samp_s_c, obs = responses_samp_s)
 
 # abundance and sampling locations
-nse_samp_a <- 1 - sum((responses_samp_a - rf_predictions_samp_a)^2) / sum((responses_samp_a - mean(responses_samp_a))^2)
-
-nse_model_samp_a <- 1 - sum((responses_samp_a - rf_pred_model_samp_a)^2) / sum((responses_samp_a - mean(responses_samp_a))^2)
-
-nse_model_samp_a_c <- 1 - sum((responses_samp_a - rf_pred_model_samp_a_c)^2) / sum((responses_samp_a - mean(responses_samp_a))^2)
+nse_samp_a <- NSE(sim = rf_predictions_samp_a, obs = responses_samp_a)
+nse_model_samp_a <- NSE(sim = rf_pred_model_samp_a, obs = responses_samp_a)
+nse_model_samp_a_c <- NSE(sim = rf_pred_model_samp_a_c, obs = responses_samp_a)
 
 # relative abundance and sampling locations
-nse_samp_ra <- 1 - sum((responses_samp_ra - rf_predictions_samp_ra)^2) / sum((responses_samp_ra - mean(responses_samp_ra))^2)
-
-nse_model_samp_ra <- 1 - sum((responses_samp_ra - rf_pred_model_samp_ra)^2) / sum((responses_samp_ra - mean(responses_samp_ra))^2)
-
-nse_model_samp_ra_c <- 1 - sum((responses_samp_ra - rf_pred_model_samp_ra_c)^2) / sum((responses_samp_ra - mean(responses_samp_ra))^2)
+nse_samp_ra <- NSE(sim = rf_predictions_samp_ra, obs = responses_samp_ra)
+nse_model_samp_ra <- NSE(sim = rf_pred_model_samp_ra, obs = responses_samp_ra)
+nse_model_samp_ra_c <- NSE(sim = rf_pred_model_samp_ra_c, obs = responses_samp_ra)
 
 ### PREDICTORS: ALL PREDICTORS ###
 # k_index and all predictors
-nse_sec_k <- 1 - sum((responses_sec_k - rf_predictions_sec_k)^2) / sum((responses_sec_k - mean(responses_sec_k))^2)
-
-nse_model_sec_k <- 1 - sum((responses_sec_k - rf_pred_model_sec_k)^2) / sum((responses_sec_k - mean(responses_sec_k))^2)
-
-nse_model_sec_k_c <- 1 - sum((responses_sec_k - rf_pred_model_sec_k_c)^2) / sum((responses_sec_k - mean(responses_sec_k))^2)
+nse_sec_k <- NSE(sim = rf_predictions_sec_k, obs = responses_sec_k)
+nse_model_sec_k <- NSE(sim = rf_pred_model_sec_k, obs = responses_sec_k)
+nse_model_sec_k_c <- NSE(sim = rf_pred_model_sec_k_c, obs = responses_sec_k)
 
 # shannon index and all predictors
-nse_sec_s <- 1 - sum((responses_sec_s - rf_predictions_sec_s)^2) / sum((responses_sec_s - mean(responses_sec_s))^2)
-
-nse_model_sec_s <- 1 - sum((responses_sec_s - rf_pred_model_sec_s)^2) / sum((responses_sec_s - mean(responses_sec_s))^2)
-
-nse_model_sec_s_c <- 1 - sum((responses_sec_s - rf_pred_model_sec_s_c)^2) / sum((responses_sec_s - mean(responses_sec_s))^2)
+nse_sec_s <- NSE(sim = rf_predictions_sec_s, obs = responses_sec_s)
+nse_model_sec_s <- NSE(sim = rf_pred_model_sec_s, obs = responses_sec_s)
+nse_model_sec_s_c <- NSE(sim = rf_pred_model_sec_s_c, obs = responses_sec_s)
 
 # abundance and all predictors
-nse_sec_a <- 1 - sum((responses_sec_a - rf_predictions_sec_a)^2) / sum((responses_sec_a - mean(responses_sec_a))^2)
-
-nse_model_sec_a <- 1 - sum((responses_sec_a - rf_pred_model_sec_a)^2) / sum((responses_sec_a - mean(responses_sec_a))^2)
-
-nse_model_sec_a_c <- 1 - sum((responses_sec_a - rf_pred_model_sec_a_c)^2) / sum((responses_sec_a - mean(responses_sec_a))^2)
+nse_sec_a <- NSE(sim = rf_predictions_sec_a, obs = responses_sec_a)
+nse_model_sec_a <- NSE(sim = rf_pred_model_sec_a, obs = responses_sec_a)
+nse_model_sec_a_c <- NSE(sim = rf_pred_model_sec_a_c, obs = responses_sec_a)
 
 # relative abundance and all predictors
-nse_sec_ra <- 1 - sum((responses_sec_ra - rf_predictions_sec_ra)^2) / sum((responses_sec_ra - mean(responses_sec_ra))^2)
-
-nse_model_sec_ra <- 1 - sum((responses_sec_ra - rf_pred_model_sec_ra)^2) / sum((responses_sec_ra - mean(responses_sec_ra))^2)
-
-nse_model_sec_ra_c <- 1 - sum((responses_sec_ra - rf_pred_model_sec_ra_c)^2) / sum((responses_sec_ra - mean(responses_sec_ra))^2)
+nse_sec_ra <- NSE(sim = rf_predictions_sec_ra, obs = responses_sec_ra)
+nse_model_sec_ra <- NSE(sim = rf_pred_model_sec_ra, obs = responses_sec_ra)
+nse_model_sec_ra_c <- NSE(sim = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
 ```
 
 ## Write Evaluation Results 
