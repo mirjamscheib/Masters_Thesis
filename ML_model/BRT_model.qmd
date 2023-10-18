@@ -439,90 +439,156 @@ test_sec_ra_c <- test_section |>
 ```
 
 # Boosted Regression Tree
-## Hyperparameter tuning
+## Hyperparameter tuning 
+```{r}
+# convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# With k_index as response
+data_v_k_sp <-  st_as_sf(training_v_k, coords =  c("x", "y"))
+st_crs(data_v_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_v_s_sp <-  st_as_sf(training_v_s, coords =  c("x", "y"))
+st_crs(data_v_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_v_a_sp <-  st_as_sf(training_v_a, coords =  c("x", "y"))
+st_crs(data_v_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_v_ra_sp <-  st_as_sf(training_v_ra, coords =  c("x", "y"))
+st_crs(data_v_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: VELOCITY + WD ### -----------------------------------------------
+# With k_index as response
+data_wd_k_sp <-  st_as_sf(training_wd_k, coords =  c("x", "y"))
+st_crs(data_wd_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_wd_s_sp <-  st_as_sf(training_wd_s, coords =  c("x", "y"))
+st_crs(data_wd_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_wd_a_sp <-  st_as_sf(training_wd_a, coords =  c("x", "y"))
+st_crs(data_wd_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_wd_ra_sp <-  st_as_sf(training_wd_ra, coords =  c("x", "y"))
+st_crs(data_wd_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: SAMPLING LOCATIONS ### ------------------------------------------
+# With k_index as response
+data_samp_k_sp <-  st_as_sf(training_samp_k, coords =  c("x", "y"))
+st_crs(data_samp_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_samp_s_sp <-  st_as_sf(training_samp_s, coords =  c("x", "y"))
+st_crs(data_samp_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_samp_a_sp <-  st_as_sf(training_samp_a, coords =  c("x", "y"))
+st_crs(data_samp_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_samp_ra_sp <-  st_as_sf(training_samp_ra, coords =  c("x", "y"))
+st_crs(data_samp_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: ALL POSSIBLE PREDICTORS ### -------------------------------------
+# With k_index as response
+data_sec_k_sp <-  st_as_sf(training_sec_k, coords =  c("x", "y"))
+st_crs(data_sec_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_sec_s_sp <-  st_as_sf(training_sec_s, coords =  c("x", "y"))
+st_crs(data_sec_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_sec_a_sp <-  st_as_sf(training_sec_a, coords =  c("x", "y"))
+st_crs(data_sec_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
+st_crs(data_sec_ra_sp) <- "EPSG: 2056"
+```
+
 ### Create Task & Learner
 ```{r}
-# VELOCITY AS PREDICTOR
-# for k_index and velocity 
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# With k_index as response
 task_xbrt_v_k <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp,
-  id = "velocity", target = "k_index")
+  id = "velocity_k_index", target = "k_index")
 
-# for shannon index and velocity 
+# With shannon index as response
 task_xbrt_v_s <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp,
-  id = "velocity", target = "shannon")
+  id = "velocity_shannon", target = "shannon")
 
-# for abundance and velocity 
+# With abundance as response 
 task_xbrt_v_a <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp,
-  id = "velocity", target = "abundance")
+  id = "velocity_abundance", target = "abundance")
 
-# for relative abundance and velocity 
+# With rel_abundance as response 
 task_xbrt_v_ra <- mlr3spatiotempcv::as_task_regr_st(data_v_ra_sp,
-  id = "velocity", target = "rel_abundance")
+  id = "velocity_rel_abundance", target = "rel_abundance")
 
-# VELOCITY + WD AS PREDICTORS
-# for k_index and velocity + wd
+### PREDICTOR: VELOCITY + WD ### -----------------------------------------------
+# With k_index as response
 task_xbrt_wd_k <- mlr3spatiotempcv::as_task_regr_st(data_wd_k_sp,
-  id = "water_depth", target = "k_index")
+  id = "water_depth_k_index", target = "k_index")
 
-# for shannon index and velocity + wd
+# With shannon index as response
 task_xbrt_wd_s <- mlr3spatiotempcv::as_task_regr_st(data_wd_s_sp,
-  id = "water_depth", target = "shannon")
+  id = "water_depth_shannon", target = "shannon")
 
-# for abundance and velocity + wd
+# With abundance as response
 task_xbrt_wd_a <- mlr3spatiotempcv::as_task_regr_st(data_wd_a_sp,
-  id = "water_depth", target = "abundance")
+  id = "water_depth_abundance", target = "abundance")
 
-# for relative abundance and velocity + wd
+# With rel_abundance as response
 task_xbrt_wd_ra <- mlr3spatiotempcv::as_task_regr_st(data_wd_ra_sp,
-  id = "water_depth", target = "rel_abundance")
+  id = "water_depth_rel_abundance", target = "rel_abundance")
 
-# PREDICTORS: SAMPLING LOCATIONS
-# for k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### -----------------------------------------
+# With k_index as response
 task_xbrt_samp_k <- mlr3spatiotempcv::as_task_regr_st(data_samp_k_sp,
-  id = "sampling", target = "k_index")
+  id = "sampling_k_index", target = "k_index")
 
-# for shannon index and sampling locations
+# With shannon index as response
 task_xbrt_samp_s <- mlr3spatiotempcv::as_task_regr_st(data_samp_s_sp,
-  id = "sampling", target = "shannon")
+  id = "sampling_shannon", target = "shannon")
 
-# for abundance and sampling locations
+# With abundance as response
 task_xbrt_samp_a <- mlr3spatiotempcv::as_task_regr_st(data_samp_a_sp,
-  id = "sampling", target = "abundance")
+  id = "sampling_abundance", target = "abundance")
 
-# for relative abundance and sampling locations
+# With rel_abundance as response
 task_xbrt_samp_ra <- mlr3spatiotempcv::as_task_regr_st(data_samp_ra_sp,
-  id = "sampling", target = "rel_abundance")
+  id = "sampling_rel_abundance", target = "rel_abundance")
 
-# PREDICTORS: ALL PREDICTORS
-# for k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### ---------------------------------------------
+# With k_index as response
 task_xbrt_sec_k <- mlr3spatiotempcv::as_task_regr_st(data_sec_k_sp,
-  id = "section", target = "k_index")
+  id = "section_k_index", target = "k_index")
 
-# for shannon index and all predictors
+# With shannon index as response
 task_xbrt_sec_s <- mlr3spatiotempcv::as_task_regr_st(data_sec_s_sp,
-  id = "section", target = "shannon")
+  id = "section_shannon", target = "shannon")
 
-# for abundance and all predictors
+# With abundance as response
 task_xbrt_sec_a <- mlr3spatiotempcv::as_task_regr_st(data_sec_a_sp,
-  id = "section", target = "abundance")
+  id = "section_abundance", target = "abundance")
 
-# for relative abundance and all predictors
+# With rel_abundance as response
 task_xbrt_sec_ra <- mlr3spatiotempcv::as_task_regr_st(data_sec_ra_sp,
-  id = "section", target = "rel_abundance")
-```
+  id = "section_rel_abundance", target = "rel_abundance")
 
-
-```{r}
+### LEARNER ### ----------------------------------------------------------------
 # learner for random forest valid for all models
 lrn_xbrt <- lrn("regr.xgboost", predict_type = "response")
-
-# performance estimation level
-# perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100)
 ```
 
-### Specify search space
+### Specify Search Space
 ```{r}
-# specifying the search space
+# specifying the search space for all response variables and predictors 
 search_space_xbrt <- paradox::ps(
   eta = p_dbl(lower = 0.01, upper = 1.0), # learning rate
   nrounds = p_int(lower = 100, upper = 1000),
@@ -531,452 +597,451 @@ search_space_xbrt <- paradox::ps(
 )
 ```
 
-### Hyperparameter tuning 
+### Specify Autotuner  
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 autotuner_xbrt_v_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# shannon index and velocity
+# With shannon index as response
 autotuner_xbrt_v_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# abundance and velocity
+# With abundance as response
 autotuner_xbrt_v_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# relative abundance and velocity
+# With rel_abundance as response
 autotuner_xbrt_v_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 autotuner_xbrt_wd_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# shannon index and velocity + wd
+# With shannon index as response
 autotuner_xbrt_wd_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# abundance and velocity + wd
+# With abundance as response
 autotuner_xbrt_wd_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 autotuner_xbrt_wd_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
-```
 
-```{r}
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 autotuner_xbrt_samp_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# shannon index and sampling locations
+# With shannon index as response
 autotuner_xbrt_samp_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# abundance and sampling locations
+# With abundance as response
 autotuner_xbrt_samp_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 autotuner_xbrt_samp_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 autotuner_xbrt_sec_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# shannon index and all predictors
+# With shannon index as response
 autotuner_xbrt_sec_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# abundance and all predictors
+# With abundance as response
 autotuner_xbrt_sec_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
+  learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# relative abundance and all predictors
+# With rel_abundance as response
 autotuner_xbrt_sec_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt,
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning example: folds = 10, repeats = 50)
+  learner = lrn_xbrt, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning 
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 ```
 
+### Train Autotuner
 ```{r}
-# hyperparameter tuning
+# set seed to obtain the same results with each run
 set.seed(0412022)
 
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# With k_index as response
 autotuner_xbrt_v_k$train(task_xbrt_v_k)
 
-# shannon index and velocity
+# With shannon index as response
 autotuner_xbrt_v_s$train(task_xbrt_v_s)
 
-# abundance and velocity
+# With abundance as response
 autotuner_xbrt_v_a$train(task_xbrt_v_a)
 
-# relative abundance and velocity
+# With rel_abundance as response
 autotuner_xbrt_v_ra$train(task_xbrt_v_ra)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### --------------------------------------------
+# With k_index as response
 autotuner_xbrt_wd_k$train(task_xbrt_wd_k)
 
-# shannon index and velocity + wd
+# With shannon index as response
 autotuner_xbrt_wd_s$train(task_xbrt_wd_s)
 
-# abundance and velocity + wd
+# With abundance as response
 autotuner_xbrt_wd_a$train(task_xbrt_wd_a)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 autotuner_xbrt_wd_ra$train(task_xbrt_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
+# With k_index as response
 autotuner_xbrt_samp_k$train(task_xbrt_samp_k)
 
-# shannon index and sampling locations
+# With shannon index as response
 autotuner_xbrt_samp_s$train(task_xbrt_samp_s)
 
-# abundance and sampling locations
+# With abundance as response
 autotuner_xbrt_samp_a$train(task_xbrt_samp_a)
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 autotuner_xbrt_samp_ra$train(task_xbrt_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### -------------------------------------------
+# With k_index as response
 autotuner_xbrt_sec_k$train(task_xbrt_sec_k)
 
-# shannon index and all predictors
+# With shannon index as response
 autotuner_xbrt_sec_s$train(task_xbrt_sec_s)
 
-# abundance and all predictors
+# With abundance as response
 autotuner_xbrt_sec_a$train(task_xbrt_sec_a)
 
-# relative abundance and all predictors
+# With rel_abundance as response
 autotuner_xbrt_sec_ra$train(task_xbrt_sec_ra)
 ```
 
-
+### Tuned Hyperparameters
 ```{r}
-# read the results 
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 autotuner_xbrt_v_k$tuning_result
 
-# shannon index and velocity
+# With shannon index as response
 autotuner_xbrt_v_s$tuning_result
 
-# abundance and velocity
+# With abundance as response
 autotuner_xbrt_v_a$tuning_result
 
-# relative abundance and velocity
+# With rel_abundance as response
 autotuner_xbrt_v_ra$tuning_result
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 autotuner_xbrt_wd_k$tuning_result
 
-# shannon index and velocity + wd
+# With shannon index as response
 autotuner_xbrt_wd_s$tuning_result
 
-# abundance and velocity + wd
+# With abundance as response
 autotuner_xbrt_wd_a$tuning_result
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 autotuner_xbrt_wd_ra$tuning_result
 
-### SAMPLING LOCATIONS AS PREDICTORS ###
-# k_index 
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 autotuner_xbrt_samp_k$tuning_result
 
-# shannon index 
+# With shannon index as response
 autotuner_xbrt_samp_s$tuning_result
 
-# abundance 
+# With abundance as response 
 autotuner_xbrt_samp_a$tuning_result
 
-# relative abundance
+# With rel_abundance as response
 autotuner_xbrt_samp_ra$tuning_result
 
-### ALL PREDICTORS AS PREDICTORS ###
-# k_index 
+### PREDICTORS: ALL PREDICTORS ### -------------------------------------------
+# With k_index as response
 autotuner_xbrt_sec_k$tuning_result
 
-# shannon index 
+# With shannon index as response
 autotuner_xbrt_sec_s$tuning_result
 
-# abundance 
+# With abundance as response
 autotuner_xbrt_sec_a$tuning_result
 
-# relative abundance 
+# With rel_abundance as response
 autotuner_xbrt_sec_ra$tuning_result
 ```
 
 # XGBOOST models 
+## Specify Matrix
+### Training Sets
 ```{r}
-# make training data
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity 
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 trainx_v_k <- model.matrix(k_index ~ ., data = training_v_k)
 trainx_v_k_c <- model.matrix(k_index ~ ., data = training_v_k_c)
 
-# shannon index and velocity 
+# With shannon index as response
 trainx_v_s <- model.matrix(shannon ~ ., data = training_v_s)
 trainx_v_s_c <- model.matrix(shannon ~ ., data = training_v_s_c)
 
-# abundance and velocity 
+# With abundance as response 
 trainx_v_a <- model.matrix(abundance ~ ., data = training_v_a)
 trainx_v_a_c <- model.matrix(abundance ~ ., data = training_v_a_c)
 
-# relative abundance and velocity 
+# With rel_abundance as response 
 trainx_v_ra <- model.matrix(rel_abundance ~ ., data = training_v_ra)
 trainx_v_ra_c <- model.matrix(rel_abundance ~ ., data = training_v_ra_c)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### --------------------------------------------
+# With k_index as response
 trainx_wd_k <- model.matrix(k_index ~ ., data = training_wd_k)
 trainx_wd_k_c <- model.matrix(k_index ~ ., data = training_wd_k_c)
 
-# shannon index and velocity + wd
+# With shannon index as response
 trainx_wd_s <- model.matrix(shannon ~ ., data = training_wd_s)
 trainx_wd_s_c <- model.matrix(shannon ~ ., data = training_wd_s_c)
 
-# abundance and velocity + wd
+# With abundance as response
 trainx_wd_a <- model.matrix(abundance ~ ., data = training_wd_a)
 trainx_wd_a_c <- model.matrix(abundance ~ ., data = training_wd_a_c)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 trainx_wd_ra <- model.matrix(rel_abundance ~ ., data = training_wd_ra)
 trainx_wd_ra_c <- model.matrix(rel_abundance ~ ., data = training_wd_ra_c)
 
-### SAMPLING LOCATIONS AS PREDICTORS ###
-# k_index 
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 trainx_samp_k <- model.matrix(k_index ~ ., data = training_samp_k)
 trainx_samp_k_c <- model.matrix(k_index ~ ., data = training_samp_k_c)
 
-# shannon index
+# With shannon index as response
 trainx_samp_s <- model.matrix(shannon ~ ., data = training_samp_s)
 trainx_samp_s_c <- model.matrix(shannon ~ ., data = training_samp_s_c)
 
-# abundance
+# With abundance as response
 trainx_samp_a <- model.matrix(abundance ~ ., data = training_samp_a)
 trainx_samp_a_c <- model.matrix(abundance ~ ., data = training_samp_a_c)
 
-# relative abundance
+# With rel_abundance as response
 trainx_samp_ra <- model.matrix(rel_abundance ~ ., data = training_samp_ra)
 trainx_samp_ra_c <- model.matrix(rel_abundance ~ ., data = training_samp_ra_c)
 
-### ALL PREDICTORS AS PREDICTORS ###
-# k_index 
+### PREDICTORS: ALL PREDICTORS ### -------------------------------------------
+# With k_index as response
 trainx_sec_k <- model.matrix(k_index ~ ., data = training_sec_k)
 trainx_sec_k_c <- model.matrix(k_index ~ ., data = training_sec_k_c)
 
-# shannon index
+# With shannon index as response
 trainx_sec_s <- model.matrix(shannon ~ ., data = training_sec_s)
 trainx_sec_s_c <- model.matrix(shannon ~ ., data = training_sec_s_c)
 
-# abundance
+# With abundance as response
 trainx_sec_a <- model.matrix(abundance ~ ., data = training_sec_a)
 trainx_sec_a_c <- model.matrix(abundance ~ ., data = training_sec_a_c)
 
-# relative abundance
+# With rel_abundance as response
 trainx_sec_ra <- model.matrix(rel_abundance ~ ., data = training_sec_ra)
 trainx_sec_ra_c <- model.matrix(rel_abundance ~ ., data = training_sec_ra_c)
 ```
 
+### Test Sets
 ```{r}
-# make testing dataset
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 testx_v_k <- model.matrix(k_index ~ ., data = test_v_k)
 testx_v_k_c <- model.matrix(k_index ~ ., data = test_v_k_c)
 testx_v_k_c <- as.matrix(testx_v_k_c[ ,-1])
 
-# shannon index and velocity
+# With shannon index as response
 testx_v_s <- model.matrix(shannon ~ ., data = test_v_s)
 testx_v_s_c <- model.matrix(shannon ~ ., data = test_v_s_c)
 testx_v_s_c <- as.matrix(testx_v_s_c[ ,-1])
 
-# abundance and velocity
+# With abundance as response
 testx_v_a <- model.matrix(abundance ~ ., data = test_v_a)
 testx_v_a_c <- model.matrix(abundance ~ ., data = test_v_a_c)
 testx_v_a_c <- as.matrix(testx_v_a_c[ ,-1])
 
-# relative abundance and velocity
+# With rel_abundance as response
 testx_v_ra <- model.matrix(rel_abundance ~ ., data = test_v_ra)
 testx_v_ra_c <- model.matrix(rel_abundance ~ ., data = test_v_ra_c)
 testx_v_ra_c <- as.matrix(testx_v_ra_c[ ,-1])
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 testx_wd_k <- model.matrix(k_index ~ ., data = test_wd_k)
 testx_wd_k_c <- model.matrix(k_index ~ ., data = test_wd_k_c)
 
-# shannon index and velocity + wd
+# With shannon index as response
 testx_wd_s <- model.matrix(shannon ~ ., data = test_wd_s)
 testx_wd_s_c <- model.matrix(shannon ~ ., data = test_wd_s_c)
 
-# abundance and velocity + wd
+# With abundance as response
 testx_wd_a <- model.matrix(abundance ~ ., data = test_wd_a)
 testx_wd_a_c <- model.matrix(abundance ~ ., data = test_wd_a_c)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 testx_wd_ra <- model.matrix(rel_abundance ~ ., data = test_wd_ra)
 testx_wd_ra_c <- model.matrix(rel_abundance ~ ., data = test_wd_ra_c)
 
-### SAMPLING LOCATIONS AS PREDICTORS ###
-# k_index 
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 testx_samp_k <- model.matrix(k_index ~ ., data = test_samp_k)
 testx_samp_k_c <- model.matrix(k_index ~ ., data = test_samp_k_c)
 
-# shannon index 
+# With shannon index as response
 testx_samp_s <- model.matrix(shannon ~ ., data = test_samp_s)
 testx_samp_s_c <- model.matrix(shannon ~ ., data = test_samp_s_c)
 
-# abundance
+# With abundance as response
 testx_samp_a <- model.matrix(abundance ~ ., data = test_samp_a)
 testx_samp_a_c <- model.matrix(abundance ~ ., data = test_samp_a_c)
 
-# relative abundance 
+# With rel_abundance as response
 testx_samp_ra <- model.matrix(rel_abundance ~ ., data = test_samp_ra)
 testx_samp_ra_c <- model.matrix(rel_abundance ~ ., data = test_samp_ra_c)
 
-### ALL PREDICTORS AS PREDICTORS ###
-# k_index 
+### PREDICTORS: ALL PREDICTORS ###
+# With k_index as response
 testx_sec_k <- model.matrix(k_index ~ ., data = test_sec_k)
 testx_sec_k_c <- model.matrix(k_index ~ ., data = test_sec_k_c)
 
-# shannon index 
+# With shannon index as response
 testx_sec_s <- model.matrix(shannon ~ ., data = test_sec_s)
 testx_sec_s_c <- model.matrix(shannon ~ ., data = test_sec_s_c)
 
-# abundance
+# With abundance as response
 testx_sec_a <- model.matrix(abundance ~ ., data = test_sec_a)
 testx_sec_a_c <- model.matrix(abundance ~ ., data = test_sec_a_c)
 
-# relative abundance 
+# With rel_abundance as response
 testx_sec_ra <- model.matrix(rel_abundance ~ ., data = test_sec_ra)
 testx_sec_ra_c <- model.matrix(rel_abundance ~ ., data = test_sec_ra_c)
 ```
 
-#### w/ coordinates
+## XGBOOST w/ coordinates
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.01283661     296         5 0.5009958          <list[7]> <list[4]> 0.1630065
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
+#          eta nrounds max_depth subsample 
+#1: 0.01838576     922         3 0.6312782          
 xgb_v_k <- xgboost(data = data.matrix(trainx_v_k[ ,-1]),
                      label = as.numeric(as.character(training_v_k$k_index)),
-                     eta = 0.01283661,
-                     max_depth = 5,
-                     nrounds = 296,
-                     subsample = 0.5009958,
+                     eta = 0.01838576,
+                     max_depth = 3,
+                     nrounds = 922,
+                     subsample = 0.6312782,
                      objective = "reg:linear")
 
-# shannon index and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.06108969     117         4 0.6531705          <list[7]> <list[4]> 0.6763711
+# With shannon index as response
+#          eta nrounds max_depth subsample 
+#1: 0.06108969     117         4 0.6531705          
 xgb_v_s <- xgboost(data = data.matrix(trainx_v_s[ ,-1]),
                      label = as.numeric(as.character(training_v_s$shannon)),
                      eta = 0.06108969,
@@ -985,9 +1050,9 @@ xgb_v_s <- xgboost(data = data.matrix(trainx_v_s[ ,-1]),
                      subsample = 0.6531705,
                      objective = "reg:linear")
 
-# abundance and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.06943808     314         4 0.7209312          <list[7]> <list[4]>  834.9091
+# With abundance as response
+#          eta nrounds max_depth subsample 
+#1: 0.06943808     314         4 0.7209312          
 xgb_v_a <- xgboost(data = data.matrix(trainx_v_a[ ,-1]),
                      label = as.numeric(as.character(training_v_a$abundance)),
                      eta = 0.06943808,
@@ -996,9 +1061,9 @@ xgb_v_a <- xgboost(data = data.matrix(trainx_v_a[ ,-1]),
                      subsample = 0.7209312,
                      objective = "reg:linear")
 
-# relative abundance and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.01598317     563         5 0.6270098          <list[7]> <list[4]> 0.2066936
+# With rel_abundance as response
+#          eta nrounds max_depth subsample 
+#1: 0.01598317     563         5 0.6270098          
 xgb_v_ra <- xgboost(data = data.matrix(trainx_v_ra[ ,-1]),
                      label = as.numeric(as.character(training_v_ra$rel_abundance)),
                      eta = 0.01598317,
@@ -1007,10 +1072,10 @@ xgb_v_ra <- xgboost(data = data.matrix(trainx_v_ra[ ,-1]),
                      subsample = 0.6270098,
                      objective = "reg:linear")
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.04028586     240        10 0.5747886          <list[7]> <list[4]> 0.1654667
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+#          eta nrounds max_depth subsample 
+#1: 0.04028586     240        10 0.5747886          
 xgb_wd_k <- xgboost(data = data.matrix(trainx_wd_k[ ,-1]),
                      label = as.numeric(as.character(training_wd_k$k_index)),
                      eta = 0.04028586,
@@ -1019,9 +1084,9 @@ xgb_wd_k <- xgboost(data = data.matrix(trainx_wd_k[ ,-1]),
                      subsample = 0.5747886,
                      objective = "reg:linear")
 
-# shannon index and velocity + wd
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1752399     158         3  0.688202          <list[7]> <list[4]> 0.7945673
+# With shannon index as response
+#         eta nrounds max_depth subsample 
+#1: 0.1752399     158         3  0.688202          
 xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
                      label = as.numeric(as.character(training_wd_s$shannon)),
                      eta = 0.1752399,
@@ -1030,9 +1095,9 @@ xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
                      subsample = 0.688202,
                      objective = "reg:linear")
 
-# abundance and velocity + wd
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.3762802     382        10 0.6743872          <list[7]> <list[4]>  914.5866
+# With abundance as response
+#         eta nrounds max_depth subsample 
+#1: 0.3762802     382        10 0.6743872          
 xgb_wd_a <- xgboost(data = data.matrix(trainx_wd_a[ ,-1]),
                      label = as.numeric(as.character(training_wd_a$abundance)),
                      eta = 0.3762802,
@@ -1041,9 +1106,9 @@ xgb_wd_a <- xgboost(data = data.matrix(trainx_wd_a[ ,-1]),
                      subsample = 0.6743872,
                      objective = "reg:linear")
 
-# relative abundance and velocity + wd
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1137246     134         9 0.7207366          <list[7]> <list[4]> 0.2189141
+# With rel_abundance as response
+#         eta nrounds max_depth subsample 
+#1: 0.1137246     134         9 0.7207366          
 xgb_wd_ra <- xgboost(data = data.matrix(trainx_wd_ra[ ,-1]),
                      label = as.numeric(as.character(training_wd_ra$rel_abundance)),
                      eta = 0.1137246,
@@ -1051,13 +1116,11 @@ xgb_wd_ra <- xgboost(data = data.matrix(trainx_wd_ra[ ,-1]),
                      nrounds = 134,
                      subsample = 0.7207366,
                      objective = "reg:linear")
-```
 
-```{r}
-### SAMPLING LOCATIONS AS PREDICTOR ###
-# k_index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.5116662     430         6  0.711504          <list[7]> <list[4]> 0.1693897
+### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
+# With k_index as response 
+#         eta nrounds max_depth subsample 
+#1: 0.5116662     430         6  0.711504         
 xgb_samp_k <- xgboost(data = data.matrix(trainx_samp_k[ ,-1]),
                      label = as.numeric(as.character(training_samp_k$k_index)),
                      eta = 0.5116662,
@@ -1066,9 +1129,9 @@ xgb_samp_k <- xgboost(data = data.matrix(trainx_samp_k[ ,-1]),
                      subsample = 0.711504,
                      objective = "reg:linear")
 
-# shannon index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.2133212     254         6 0.7400811          <list[7]> <list[4]> 0.6545868
+# With shannon index as response
+#         eta nrounds max_depth subsample 
+#1: 0.2133212     254         6 0.7400811          
 xgb_samp_s <- xgboost(data = data.matrix(trainx_samp_s[ ,-1]),
                      label = as.numeric(as.character(training_samp_s$shannon)),
                      eta = 0.2133212,
@@ -1077,9 +1140,9 @@ xgb_samp_s <- xgboost(data = data.matrix(trainx_samp_s[ ,-1]),
                      subsample = 0.7400811,
                      objective = "reg:linear")
 
-# abundance 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1064909     907         7  0.682056          <list[7]> <list[4]>  722.4885
+# With abundance as response
+#         eta nrounds max_depth subsample 
+#1: 0.1064909     907         7  0.682056          
 xgb_samp_a <- xgboost(data = data.matrix(trainx_samp_a[ ,-1]),
                      label = as.numeric(as.character(training_samp_a$abundance)),
                      eta = 0.1064909,
@@ -1088,9 +1151,9 @@ xgb_samp_a <- xgboost(data = data.matrix(trainx_samp_a[ ,-1]),
                      subsample = 0.682056,
                      objective = "reg:linear")
 
-# relative abundance 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.3418959     720         9 0.5849629          <list[7]> <list[4]> 0.1656296
+# With rel_abundance as response 
+#         eta nrounds max_depth subsample 
+#1: 0.3418959     720         9 0.5849629         
 xgb_samp_ra <- xgboost(data = data.matrix(trainx_samp_ra[ ,-1]),
                      label = as.numeric(as.character(training_samp_ra$rel_abundance)),
                      eta = 0.3418959,
@@ -1099,69 +1162,69 @@ xgb_samp_ra <- xgboost(data = data.matrix(trainx_samp_ra[ ,-1]),
                      subsample = 0.5849629,
                      objective = "reg:linear")
 
-### ALL PREDICTORS AS PREDICTORS ###
-# k_index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain  regr.rmse
-#1: 0.1491419     632         4 0.6766699          <list[7]> <list[4]> 0.05606613
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+#         eta nrounds max_depth subsample 
+#1: 0.1778204     298         6 0.7470277          
 xgb_sec_k <- xgboost(data = data.matrix(trainx_sec_k[ ,-1]),
                      label = as.numeric(as.character(training_sec_k$k_index)),
-                     eta = 0.1491419,
-                     max_depth = 4,
-                     nrounds = 632,
-                     subsample = 0.6766699,
+                     eta = 0.1778204,
+                     max_depth = 6,
+                     nrounds = 298,
+                     subsample = 0.7470277,
                      objective = "reg:linear")
 
-# shannon index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.6579862     395         7 0.5944408          <list[7]> <list[4]> 0.5819935
+# With shannon index as response 
+#          eta nrounds max_depth subsample 
+#1: 0.08938969     852         8 0.7014117      
 xgb_sec_s <- xgboost(data = data.matrix(trainx_sec_s[ ,-1]),
                      label = as.numeric(as.character(training_sec_s$shannon)),
-                     eta = 0.6579862,
-                     max_depth = 7,
-                     nrounds = 395,
-                     subsample = 0.5944408,
+                     eta = 0.08938969,
+                     max_depth = 8,
+                     nrounds = 852,
+                     subsample = 0.7014117,
                      objective = "reg:linear")
 
-# abundance 
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.05285859     829         8 0.5501588          <list[7]> <list[4]>   600.826
+# With abundance as response
+#          eta nrounds max_depth subsample 
+#1: 0.01939534     116         9 0.5686971          
 xgb_sec_a <- xgboost(data = data.matrix(trainx_sec_a[ ,-1]),
                      label = as.numeric(as.character(training_sec_a$abundance)),
-                     eta = 0.05285859,
-                     max_depth = 8,
-                     nrounds = 829,
-                     subsample = 0.5501588,
+                     eta = 0.01939534,
+                     max_depth = 9,
+                     nrounds = 116,
+                     subsample = 0.5686971,
                      objective = "reg:linear")
 
-# relative abundance 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1752429     820         7 0.6342627          <list[7]> <list[4]> 0.1597584
+# With rel_abundance as response 
+#         eta nrounds max_depth subsample 
+#1: 0.4232864     918         8  0.730986          
 xgb_sec_ra <- xgboost(data = data.matrix(trainx_sec_ra[ ,-1]),
                      label = as.numeric(as.character(training_sec_ra$rel_abundance)),
-                     eta = 0.1752429,
-                     max_depth = 7,
-                     nrounds = 820,
-                     subsample = 0.6342627,
+                     eta = 0.4232864,
+                     max_depth = 8,
+                     nrounds = 918,
+                     subsample = 0.730986,
                      objective = "reg:linear")
 ```
 
-#### w/o coordinates
+## XGBOOST w/o coordinates
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.01283661     296         5 0.5009958          <list[7]> <list[4]> 0.1630065
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
+#          eta nrounds max_depth subsample 
+#1: 0.01838576     922         3 0.6312782 
 xgb_v_k_c <- xgboost(data = data.matrix(trainx_v_k_c[ ,-1]),
                      label = as.numeric(as.character(training_v_k_c$k_index)),
-                     eta = 0.01283661,
-                     max_depth = 5,
-                     nrounds = 296,
-                     subsample = 0.5009958,
+                     eta = 0.01838576,
+                     max_depth = 3,
+                     nrounds = 922,
+                     subsample = 0.6312782,
                      objective = "reg:linear")
 
-# shannon index and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.06108969     117         4 0.6531705          <list[7]> <list[4]> 0.6763711
+# With shannon index as response
+#          eta nrounds max_depth subsample 
+#1: 0.06108969     117         4 0.6531705 
 xgb_v_s_c <- xgboost(data = data.matrix(trainx_v_s_c[ ,-1]),
                      label = as.numeric(as.character(training_v_s_c$shannon)),
                      eta = 0.06108969,
@@ -1170,9 +1233,9 @@ xgb_v_s_c <- xgboost(data = data.matrix(trainx_v_s_c[ ,-1]),
                      subsample = 0.6531705,
                      objective = "reg:linear")
 
-# abundance and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.06943808     314         4 0.7209312          <list[7]> <list[4]>  834.9091
+# With abundance as response
+#          eta nrounds max_depth subsample 
+#1: 0.06943808     314         4 0.7209312
 xgb_v_a_c <- xgboost(data = data.matrix(trainx_v_a_c[ ,-1]),
                      label = as.numeric(as.character(training_v_a_c$abundance)),
                      eta = 0.06943808,
@@ -1181,9 +1244,9 @@ xgb_v_a_c <- xgboost(data = data.matrix(trainx_v_a_c[ ,-1]),
                      subsample = 0.7209312,
                      objective = "reg:linear")
 
-# relative abundance and velocity
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.01598317     563         5 0.6270098          <list[7]> <list[4]> 0.2066936
+# With rel_abundance as response
+#          eta nrounds max_depth subsample 
+#1: 0.01598317     563         5 0.6270098 
 xgb_v_ra_c <- xgboost(data = data.matrix(trainx_v_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_v_ra_c$rel_abundance)),
                      eta = 0.01598317,
@@ -1192,10 +1255,10 @@ xgb_v_ra_c <- xgboost(data = data.matrix(trainx_v_ra_c[ ,-1]),
                      subsample = 0.6270098,
                      objective = "reg:linear")
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.04028586     240        10 0.5747886          <list[7]> <list[4]> 0.1654667
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+#          eta nrounds max_depth subsample 
+#1: 0.04028586     240        10 0.5747886 
 xgb_wd_k_c <- xgboost(data = data.matrix(trainx_wd_k_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_k_c$k_index)),
                      eta = 0.04028586,
@@ -1204,9 +1267,9 @@ xgb_wd_k_c <- xgboost(data = data.matrix(trainx_wd_k_c[ ,-1]),
                      subsample = 0.5747886,
                      objective = "reg:linear")
 
-# shannon index and velocity + wd
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1752399     158         3  0.688202          <list[7]> <list[4]> 0.7945673
+# With shannon index as response
+#         eta nrounds max_depth subsample 
+#1: 0.1752399     158         3  0.688202 
 xgb_wd_s_c <- xgboost(data = data.matrix(trainx_wd_s_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_s_c$shannon)),
                      eta = 0.1752399,
@@ -1215,9 +1278,9 @@ xgb_wd_s_c <- xgboost(data = data.matrix(trainx_wd_s_c[ ,-1]),
                      subsample = 0.688202,
                      objective = "reg:linear")
 
-# abundance and velocity + wd
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.3762802     382        10 0.6743872          <list[7]> <list[4]>  914.5866
+# With abundance as response
+#         eta nrounds max_depth subsample 
+#1: 0.3762802     382        10 0.6743872
 xgb_wd_a_c <- xgboost(data = data.matrix(trainx_wd_a_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_a_c$abundance)),
                      eta = 0.3762802,
@@ -1226,9 +1289,9 @@ xgb_wd_a_c <- xgboost(data = data.matrix(trainx_wd_a_c[ ,-1]),
                      subsample = 0.6743872,
                      objective = "reg:linear")
 
-# relative abundance and velocity + wd
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1137246     134         9 0.7207366          <list[7]> <list[4]> 0.2189141
+# With rel_abundance as response
+#         eta nrounds max_depth subsample 
+#1: 0.1137246     134         9 0.7207366
 xgb_wd_ra_c <- xgboost(data = data.matrix(trainx_wd_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_ra_c$rel_abundance)),
                      eta = 0.1137246,
@@ -1236,13 +1299,12 @@ xgb_wd_ra_c <- xgboost(data = data.matrix(trainx_wd_ra_c[ ,-1]),
                      nrounds = 134,
                      subsample = 0.7207366,
                      objective = "reg:linear")
-```
 
-```{r}
-### SAMPLING LOCATIONS AS PREDICTOR ###
-# k_index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.5116662     430         6  0.711504          <list[7]> <list[4]> 0.1693897
+
+### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
+# With k_index as response 
+#         eta nrounds max_depth subsample 
+#1: 0.5116662     430         6  0.711504 
 xgb_samp_k_c <- xgboost(data = data.matrix(trainx_samp_k_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_k_c$k_index)),
                      eta = 0.5116662,
@@ -1251,9 +1313,9 @@ xgb_samp_k_c <- xgboost(data = data.matrix(trainx_samp_k_c[ ,-1]),
                      subsample = 0.711504,
                      objective = "reg:linear")
 
-# shannon index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.2133212     254         6 0.7400811          <list[7]> <list[4]> 0.6545868
+# With shannon index as response
+#         eta nrounds max_depth subsample 
+#1: 0.2133212     254         6 0.7400811
 xgb_samp_s_c <- xgboost(data = data.matrix(trainx_samp_s_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_s_c$shannon)),
                      eta = 0.2133212,
@@ -1262,9 +1324,9 @@ xgb_samp_s_c <- xgboost(data = data.matrix(trainx_samp_s_c[ ,-1]),
                      subsample = 0.7400811,
                      objective = "reg:linear")
 
-# abundance 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1064909     907         7  0.682056          <list[7]> <list[4]>  722.4885
+# With abundance as response
+#         eta nrounds max_depth subsample 
+#1: 0.1064909     907         7  0.682056 
 xgb_samp_a_c <- xgboost(data = data.matrix(trainx_samp_a_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_a_c$abundance)),
                      eta = 0.1064909,
@@ -1273,9 +1335,9 @@ xgb_samp_a_c <- xgboost(data = data.matrix(trainx_samp_a_c[ ,-1]),
                      subsample = 0.682056,
                      objective = "reg:linear")
 
-# relative abundance 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.3418959     720         9 0.5849629          <list[7]> <list[4]> 0.1656296
+# With rel_abundance as response 
+#         eta nrounds max_depth subsample 
+#1: 0.3418959     720         9 0.5849629 
 xgb_samp_ra_c <- xgboost(data = data.matrix(trainx_samp_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_ra_c$rel_abundance)),
                      eta = 0.3418959,
@@ -1284,49 +1346,49 @@ xgb_samp_ra_c <- xgboost(data = data.matrix(trainx_samp_ra_c[ ,-1]),
                      subsample = 0.5849629,
                      objective = "reg:linear")
 
-### ALL PREDICTORS AS PREDICTORS ###
-# k_index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain  regr.rmse
-#1: 0.1491419     632         4 0.6766699          <list[7]> <list[4]> 0.05606613
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+#         eta nrounds max_depth subsample 
+#1: 0.1778204     298         6 0.7470277
 xgb_sec_k_c <- xgboost(data = data.matrix(trainx_sec_k_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_k_c$k_index)),
-                     eta = 0.1491419,
-                     max_depth = 4,
-                     nrounds = 632,
-                     subsample = 0.6766699,
+                     eta = 0.1778204,
+                     max_depth = 6,
+                     nrounds = 298,
+                     subsample = 0.7470277,
                      objective = "reg:linear")
 
-# shannon index 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.6579862     395         7 0.5944408          <list[7]> <list[4]> 0.5819935
+# With shannon index as response 
+#          eta nrounds max_depth subsample 
+#1: 0.08938969     852         8 0.7014117   
 xgb_sec_s_c <- xgboost(data = data.matrix(trainx_sec_s_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_s_c$shannon)),
-                     eta = 0.6579862,
-                     max_depth = 7,
-                     nrounds = 395,
-                     subsample = 0.5944408,
+                     eta = 0.08938969,
+                     max_depth = 8,
+                     nrounds = 852,
+                     subsample = 0.7014117,
                      objective = "reg:linear")
 
-# abundance 
-#          eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.05285859     829         8 0.5501588          <list[7]> <list[4]>   600.826
+# With abundance as response
+#          eta nrounds max_depth subsample 
+#1: 0.01939534     116         9 0.5686971  
 xgb_sec_a_c <- xgboost(data = data.matrix(trainx_sec_a_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_a_c$abundance)),
-                     eta = 0.05285859,
-                     max_depth = 8,
-                     nrounds = 829,
-                     subsample = 0.5501588,
+                     eta = 0.01939534,
+                     max_depth = 9,
+                     nrounds = 116,
+                     subsample = 0.5686971,
                      objective = "reg:linear")
 
-# relative abundance 
-#         eta nrounds max_depth subsample learner_param_vals  x_domain regr.rmse
-#1: 0.1752429     820         7 0.6342627          <list[7]> <list[4]> 0.1597584
+# With rel_abundance as response 
+#         eta nrounds max_depth subsample 
+#1: 0.4232864     918         8  0.730986
 xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_ra_c$rel_abundance)),
-                     eta = 0.1752429,
-                     max_depth = 7,
-                     nrounds = 820,
-                     subsample = 0.6342627,
+                     eta = 0.4232864,
+                     max_depth = 8,
+                     nrounds = 918,
+                     subsample = 0.730986,
                      objective = "reg:linear")
 ```
 

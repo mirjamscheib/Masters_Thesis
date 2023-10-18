@@ -159,36 +159,36 @@ test_section <- data_section |>
 ### PREDICTOR: VELOCITY ### ----------------------------------------------------
 # With k_index as response 
 training_v_k <- training_v |>
-  dplyr::select(k_index, velocity, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance)
 
 # With shannon index as response 
 training_v_s <- training_v |>
-  dplyr::select(shannon, velocity, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance)
 
 # With abundance as response 
 training_v_a <- training_v |>
-  dplyr::select(abundance, velocity, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance)
 
 # With relative abundance as response  
 training_v_ra <- training_v |>
-  dplyr::select(rel_abundance, velocity, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index)
 
 ### PREDICTOR: VELOCITY AND WD ### ---------------------------------------------
 # With k_index as response 
 training_wd_k <- training_wd |>
-  dplyr::select(k_index, velocity, wd_m, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance)
 
 # With shannon index as response 
 training_wd_s <- training_wd |>
-  dplyr::select(shannon, velocity, wd_m, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance)
 
 # With abundance index as response 
 training_wd_a <- training_wd |>
-  dplyr::select(abundance, velocity, wd_m, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance)
 
 # With relative abundance index as response 
 training_wd_ra <- training_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index)
 
 ### PREDICTOR: SAMPLING LOCATIONS ### ------------------------------------------
 # With k_index as response 
@@ -230,36 +230,36 @@ training_sec_ra <- training_section |>
 ### PREDICTOR: VELOCITY ### --------------------------------------
 # With k_index as response 
 training_v_k_c <- training_v |>
-  dplyr::select(k_index, velocity)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance, -x, -y)
 
 # With shannon index as response
 training_v_s_c <- training_v |>
-  dplyr::select(shannon, velocity)
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance, -x, -y)
 
 # With abundance as response
 training_v_a_c <- training_v |>
-  dplyr::select(abundance, velocity)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance, -x, -y)
 
 # With rel_abundance as response
 training_v_ra_c <- training_v |>
-  dplyr::select(rel_abundance, velocity)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index, -x, -y)
 
 ### PREDICTOR: VELOCITY AND WD ### ----------------------------------
 # With k_index as response 
 training_wd_k_c <- training_wd |>
-  dplyr::select(k_index, velocity, wd_m)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance, -x, -y)
 
 # With shannon index as response 
 training_wd_s_c <- training_wd |>
-  dplyr::select(shannon, velocity, wd_m)
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance, -x, -y)
 
 # With abundance as response 
 training_wd_a_c <- training_wd |>
-  dplyr::select(abundance, velocity, wd_m)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance, -x, -y)
 
 # With rel_abundance as response 
 training_wd_ra_c <- training_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index, -x, -y)
 
 ### PREDICTOR: SAMPLING LOCATIONS ### --------------------------------
 # With k_index as response 
@@ -301,36 +301,36 @@ training_sec_ra_c <- training_section |>
 ### PREDICTOR: VELOCITY ### ------------------------------------------
 # With k_index as response
 test_v_k <- test_v |>
-  dplyr::select(k_index, velocity, x, y) 
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance)
 
 # With shannon index as response
 test_v_s <- test_v |>
-  dplyr::select(shannon, velocity, x, y) 
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance)
 
 # With abundance as response 
 test_v_a <- test_v |>
-  dplyr::select(abundance, velocity, x, y) 
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance)
 
 # With relative abundance as response 
 test_v_ra <- test_v |>
-  dplyr::select(rel_abundance, velocity, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index)
 
 ### PREDICTOR: VELOCITY + WD ### -----------------------------------
 # With k_index as response 
 test_wd_k <- test_wd |>
-  dplyr::select(k_index, velocity, wd_m, x, y) 
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance)
 
 # With shannon index as response 
 test_wd_s <- test_wd |>
-  dplyr::select(shannon, velocity, wd_m, x, y) 
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance)
 
 # With abundance as response 
 test_wd_a <- test_wd |>
-  dplyr::select(abundance, velocity, wd_m, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance)
 
 # With relative abundance as response 
 test_wd_ra <- test_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m, x, y)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index)
 
 ### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------
 # With k_index as response 
@@ -372,36 +372,36 @@ test_sec_ra <- test_section |>
 ### PREDICTOR: VELOCITY ### --------------------------------------
 # With k_index as response
 test_v_k_c <- test_v |>
-  dplyr::select(k_index, velocity)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance, -x, -y)
 
 # With shannon index as response
 test_v_s_c <- test_v |>
-  dplyr::select(shannon, velocity) 
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance, -x, -y) 
 
 # With abundance as response
 test_v_a_c <- test_v |>
-  dplyr::select(abundance, velocity) 
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance, -x, -y) 
 
 # With rel_abundance as response
 test_v_ra_c <- test_v |>
-  dplyr::select(rel_abundance, velocity)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index, -x, -y)
 
 ### PREDICTOR: VELOCITY + WD ### -----------------------------------
 # With k_index as response 
 test_wd_k_c <- test_wd |>
-  dplyr::select(k_index, velocity, wd_m) 
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -rel_abundance, -x, -y) 
 
 # With shannon index as response 
 test_wd_s_c <- test_wd |>
-  dplyr::select(shannon, velocity, wd_m)
+  dplyr::select(-Reach_Untersuchungsstelle, -k_index, -abundance, -rel_abundance, -x, -y)
 
 # With abundance as response 
 test_wd_a_c <- test_wd |>
-  dplyr::select(abundance, velocity, wd_m)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -k_index, -rel_abundance, -x, -y)
 
 # With rel_abundance as response 
 test_wd_ra_c <- test_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m)
+  dplyr::select(-Reach_Untersuchungsstelle, -shannon, -abundance, -k_index, -x, -y)
 
 ### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------
 # With k_index as response 
@@ -440,509 +440,554 @@ test_sec_ra_c <- test_section |>
 
 # Random Forest 
 ## Hyperparameter tuning 
+```{r}
+# convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# With k_index as response
+data_v_k_sp <-  st_as_sf(training_v_k, coords =  c("x", "y"))
+st_crs(data_v_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_v_s_sp <-  st_as_sf(training_v_s, coords =  c("x", "y"))
+st_crs(data_v_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_v_a_sp <-  st_as_sf(training_v_a, coords =  c("x", "y"))
+st_crs(data_v_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_v_ra_sp <-  st_as_sf(training_v_ra, coords =  c("x", "y"))
+st_crs(data_v_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: VELOCITY + WD ### -----------------------------------------------
+# With k_index as response
+data_wd_k_sp <-  st_as_sf(training_wd_k, coords =  c("x", "y"))
+st_crs(data_wd_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_wd_s_sp <-  st_as_sf(training_wd_s, coords =  c("x", "y"))
+st_crs(data_wd_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_wd_a_sp <-  st_as_sf(training_wd_a, coords =  c("x", "y"))
+st_crs(data_wd_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_wd_ra_sp <-  st_as_sf(training_wd_ra, coords =  c("x", "y"))
+st_crs(data_wd_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: SAMPLING LOCATIONS ### ------------------------------------------
+# With k_index as response
+data_samp_k_sp <-  st_as_sf(training_samp_k, coords =  c("x", "y"))
+st_crs(data_samp_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_samp_s_sp <-  st_as_sf(training_samp_s, coords =  c("x", "y"))
+st_crs(data_samp_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_samp_a_sp <-  st_as_sf(training_samp_a, coords =  c("x", "y"))
+st_crs(data_samp_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_samp_ra_sp <-  st_as_sf(training_samp_ra, coords =  c("x", "y"))
+st_crs(data_samp_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: ALL POSSIBLE PREDICTORS ### -------------------------------------
+# With k_index as response
+data_sec_k_sp <-  st_as_sf(training_sec_k, coords =  c("x", "y"))
+st_crs(data_sec_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_sec_s_sp <-  st_as_sf(training_sec_s, coords =  c("x", "y"))
+st_crs(data_sec_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_sec_a_sp <-  st_as_sf(training_sec_a, coords =  c("x", "y"))
+st_crs(data_sec_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
+st_crs(data_sec_ra_sp) <- "EPSG: 2056"
+```
+
 ### Create Task & Learner
 ```{r}
-### ONLY VELOCITY AS PREDICTOR (& x, y for spatial hyperparameter tuning) ###
-# create task for k_index and velocity
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# TASK with k_index as response
 task_rf_v_k <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp,
-  id = "velocity", target = "k_index")
+  id = "velocity_k_index", target = "k_index")
 
-# create task for shannon index and velocity
+# TASK with shannon index as response
 task_rf_v_s <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp,
-  id = "velocity", target = "shannon")
+  id = "velocity_shannon", target = "shannon")
 
-# create task for abundance and velocity
+# TASK with abundance as response
 task_rf_v_a <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp,
-  id = "velocity", target = "abundance")
+  id = "velocity_abundance", target = "abundance")
 
-# create task for relative abundance and velocity
+# TASK with rel_abundance as response
 task_rf_v_ra <- mlr3spatiotempcv::as_task_regr_st(data_v_ra_sp,
-  id = "velocity", target = "rel_abundance")
+  id = "velocity_rel_abundance", target = "rel_abundance")
 
-### VELOCITY + WD AS PREDICTORS (& x, y for spatial hyperparameter tuning) ###
-# create task for k_index and velocity + wd
+### PREDICTOR: VELOCITY + WD ### -----------------------------------------------
+# TASK with k_index as response
 task_rf_wd_k <- mlr3spatiotempcv::as_task_regr_st(data_wd_k_sp,
-  id = "velocity", target = "k_index")
+  id = "wd_k_index", target = "k_index")
 
-# create task for shannon index and velocity + wd
+# TASK with shannon index as response
 task_rf_wd_s <- mlr3spatiotempcv::as_task_regr_st(data_wd_s_sp,
-  id = "velocity", target = "shannon")
+  id = "wd_shannon", target = "shannon")
 
-# create task for abundance and velocity + wd
+# TASK with abundance as response
 task_rf_wd_a <- mlr3spatiotempcv::as_task_regr_st(data_wd_a_sp,
-  id = "velocity", target = "abundance")
+  id = "wd_abundance", target = "abundance")
 
-# create task for relative abundance and velocity + wd
+# TASK with rel_abundance as response
 task_rf_wd_ra <- mlr3spatiotempcv::as_task_regr_st(data_wd_ra_sp,
-  id = "velocity", target = "rel_abundance")
+  id = "wd_rel_abundance", target = "rel_abundance")
 
-### PREDICTORS: SAMPLING LOCATIONS (& x, y for spatial hyperparameter tuning) ###
-# create task for k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### -----------------------------------------
+# TASK with k_index as response
 task_rf_samp_k <- mlr3spatiotempcv::as_task_regr_st(data_samp_k_sp,
-  id = "sampling", target = "k_index")
+  id = "sampling_k_index", target = "k_index")
 
-# create task for shannon index and sampling locations
+# TASK with shannon index as response
 task_rf_samp_s <- mlr3spatiotempcv::as_task_regr_st(data_samp_s_sp,
-  id = "sampling", target = "shannon")
+  id = "sampling_shannon", target = "shannon")
 
-# create task for abundance and sampling locations
+# TASK with abundance as response
 task_rf_samp_a <- mlr3spatiotempcv::as_task_regr_st(data_samp_a_sp,
-  id = "sampling", target = "abundance")
+  id = "sampling_abundance", target = "abundance")
 
-# create task for relative abundance and sampling locations
+# TASK with rel_abundance as response
 task_rf_samp_ra <- mlr3spatiotempcv::as_task_regr_st(data_samp_ra_sp,
-  id = "sampling", target = "rel_abundance")
+  id = "sampling_rel_abundance", target = "rel_abundance")
 
-### PREDICTORS: ALL PREDICTORS (& x, y for spatial hyperparameter tuning) ###
-# create task for k_index and all predictors 
+### PREDICTORS: ALL PREDICTORS ### ---------------------------------------------
+# TASK with k_index as response
 task_rf_sec_k <- mlr3spatiotempcv::as_task_regr_st(data_sec_k_sp,
-  id = "section", target = "k_index")
+  id = "section_k_index", target = "k_index")
 
-# create task for shannon index and all predictors 
+# TASK with shannon index as response 
 task_rf_sec_s <- mlr3spatiotempcv::as_task_regr_st(data_sec_s_sp,
-  id = "section", target = "shannon")
+  id = "section_shannon", target = "shannon")
 
-# create task for abundance and all predictors 
+# TASK with abundance as response
 task_rf_sec_a <- mlr3spatiotempcv::as_task_regr_st(data_sec_a_sp,
-  id = "section", target = "abundance")
+  id = "section_abundance", target = "abundance")
 
-# create task for relative abundance and all predictors 
+# TASK with rel_abundance as response
 task_rf_sec_ra <- mlr3spatiotempcv::as_task_regr_st(data_sec_ra_sp,
-  id = "section", target = "rel_abundance")
-```
+  id = "section_rel_abundance", target = "rel_abundance")
 
-
-```{r}
-### LEARNER ###
-# create learner for a random forest model from the ranger package
-# for k_index, shannon index and abundance + velocity + wd valid
+### LEARNER ### ---------------------------------------------------------------
+# learner for a random forest model from the ranger package
 lrn_rf <- lrn("regr.ranger", predict_type = "response", importance = "permutation")
-
-# performance estimation level
-# perf_level <- mlr3::rsmp("repeated_spcv_coords", folds = 5, repeats = 100) # wo brauche ich das??
 ```
 
-### Specify search space
+### Specify Search Space
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# specifying the search space for k_index and velocity
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# specify the search space for k_index as response
 search_space_v_k <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_k$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for shannon index and velocity
+# specify the search space for shannon index as response
 search_space_v_s <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_s$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for abundance and velocity
+# specify the search space for abundance as response
 search_space_v_a <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_a$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for relative abundance and velocity
+# specify the search space for rel_abundance as response
 search_space_v_ra <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_v_ra$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
-```
 
-
-```{r}
-### VELOCITY + WD AS PREDICTORS ###
-# specifying the search space for k_index and velocity + wd
+### PREDICTOR: VELOCITY + WD ### -----------------------------------------------
+# specify the search space for k_index as response
 search_space_wd_k <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_k$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for shannon index and velocity + wd
+# specify the search space for shannon index as response
 search_space_wd_s <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_s$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for abundance and velocity + wd
+# specify the search space for abundance as response
 search_space_wd_a <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_a$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for relative abundance and velocity + wd
+# specify the search space for rel_abundance as response
 search_space_wd_ra <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_wd_ra$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# num.trees noch suchen? 
-```
 
-```{r}
-### PREDICTORS: SAMPLING LOCATIONS ###
-# specifying the search space for k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### -----------------------------------------
+# specify the search space for k_index as response
 search_space_samp_k <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_k$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for shannon index and sampling locations
+# specify the search space for shannon index as response
 search_space_samp_s <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_s$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for abundance and sampling locations
+# specify the search space for abundance as response
 search_space_samp_a <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_a$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for relative abundance and sampling locations
+# specify the search space for rel_abundance as response
 search_space_samp_ra <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_samp_ra$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# num.trees noch suchen? 
-```
-
-```{r}
-### PREDICTORS: ALL PREDICTORS ###
-# specifying the search space for k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### ---------------------------------------------
+# specify the search space for k_index as response
 search_space_sec_k <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_k$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for shannon index and all predictors
+# specify the search space for shannon index as response
 search_space_sec_s <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_s$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for abundance and all predictors
+# specify the search space for abundance as response
 search_space_sec_a <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_a$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
 
-# specifying the search space for relative abundance and all predictors
+# specify the search space for rel_abundance as response
 search_space_sec_ra <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_ra$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
-
-# num.trees noch suchen? 
 ```
 
 
-### Hyperparameter tuning 
+### Specify Autotuner  
 resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning # gibt kein richtig, falsch, je mehr folds desto mehr modelle müssen trainiert werden
 ```{r}
-### VELOCITY AS PREDICTOR ###
-# with k_index and velocity 
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# With k_index as response
 autotuner_rf_v_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning  (rechenintensiver), 5 ist relativ üblich 
+  learner = lrn_rf, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning  
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_v_k, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with shannon index and velocity 
+# With shannon index as response 
 autotuner_rf_v_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_v_s, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with abundance and velocity 
+# With abundance as response
 autotuner_rf_v_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations
   search_space = search_space_v_a, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with relative abundance and velocity 
+# With rel_abundance as response
 autotuner_rf_v_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations
   search_space = search_space_v_ra, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
-```
 
-
-```{r}
-### VELOCITY AND WD AS PREDICTORS ###
-# with k_index and velocity + wd
+### PREDICTORS: VELOCITY AND WD ### --------------------------------------------
+# With k_index as response
 autotuner_rf_wd_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_wd_k, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with shannon index and velocity + wd
+# With shannon index as response
 autotuner_rf_wd_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_wd_s, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with abundance and velocity + wd
+# With abundance as response
 autotuner_rf_wd_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_wd_a, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with relative abundance and velocity + wd
+# With rel_abundance as response
 autotuner_rf_wd_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_wd_ra, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
-```
 
-```{r}
-### PREDICTORS: SAMPLING LOCATION ###
-# with k_index and sampling location
+### PREDICTORS: SAMPLING LOCATION ### ------------------------------------------
+# With k_index as response
 autotuner_rf_samp_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations
   search_space = search_space_samp_k, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with shannon index and sampling location
+# With shannon index as response
 autotuner_rf_samp_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_samp_s, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with abundance and sampling location
+# With abundance as response
 autotuner_rf_samp_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_samp_a, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with relative abundance and sampling location
+# With rel_abundance as response
 autotuner_rf_samp_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations
   search_space = search_space_samp_ra, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
-```
 
-```{r}
-### PREDICTORS: ALL PREDICTORS ###
-# with k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### ---------------------------------------------
+# With k_index as response
 autotuner_rf_sec_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_sec_k, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with shannon index and all predictors
+# With shannon index as response
 autotuner_rf_sec_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_sec_s, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with abundance and all predictors
+# With abundance as response
 autotuner_rf_sec_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_sec_a, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# with relative abundance and all predictors
+# With rel_abundance as response
 autotuner_rf_sec_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_rf,
+  learner = lrn_rf, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations / run 50 models
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
   search_space = search_space_sec_ra, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 ```
 
-
+### Train Autotuner
 ```{r}
 # set seed to obtain the same results with each run
 set.seed(0412022)
 
-# hyperparameter tuning
-### VELOCITY AS PREDICTOR ###
-# k_index and velocity 
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# With k_index as response
 autotuner_rf_v_k$train(task_rf_v_k)
 
-# shannon index and velocity 
+# With shannon index as response
 autotuner_rf_v_s$train(task_rf_v_s)
 
-# abundance and velocity 
+# With abundance as response
 autotuner_rf_v_a$train(task_rf_v_a)
 
-# relative abundance and velocity 
+# With rel_abundance as response 
 autotuner_rf_v_ra$train(task_rf_v_ra)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ----------------------------------------------
+# With k_index as response
 autotuner_rf_wd_k$train(task_rf_wd_k)
 
-# shannon index and velocity + wd 
+# With shannon index as response
 autotuner_rf_wd_s$train(task_rf_wd_s)
 
-# abundance and velocity + wd
+# With abundance as response
 autotuner_rf_wd_a$train(task_rf_wd_a)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 autotuner_rf_wd_ra$train(task_rf_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATION ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATION ### ------------------------------------------
+# With k_index as response
 autotuner_rf_samp_k$train(task_rf_samp_k)
 
-# shannon index and sampling locations 
+# With shannon index as response 
 autotuner_rf_samp_s$train(task_rf_samp_s)
 
-# abundance and sampling locations
+# With abundance as response
 autotuner_rf_samp_a$train(task_rf_samp_a)
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 autotuner_rf_samp_ra$train(task_rf_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### ---------------------------------------------
+# With k_index as response
 autotuner_rf_sec_k$train(task_rf_sec_k)
 
-# shannon index and all predictors 
+# With shannon index as response 
 autotuner_rf_sec_s$train(task_rf_sec_s)
 
-# abundance and all predictors
+# With abundance as response
 autotuner_rf_sec_a$train(task_rf_sec_a)
 
-# relative abundance and all predictors
+# With rel_abundance as response
 autotuner_rf_sec_ra$train(task_rf_sec_ra)
 ```
 
+### Tuned Hyperparameters
 ```{r}
-# read the results 
-### VELOCITY AS PREDICTOR ###
-# for k_index and velocity
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 autotuner_rf_v_k$tuning_result
 
-# for shannon index and velocity
+# With shannon index as response
 autotuner_rf_v_s$tuning_result
 
-# for abundance and velocity
+# With abundance as response
 autotuner_rf_v_a$tuning_result
 
-# for relative abundance and velocity
+# With rel_abundance as response
 autotuner_rf_v_ra$tuning_result
 
-### VELOCITY + WD AS PREDICTORS ###
-# for k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 autotuner_rf_wd_k$tuning_result
 
-# for shannon index and velocity + wd
+# With shannon index as response
 autotuner_rf_wd_s$tuning_result
 
-# for abundance and velocity + wd
+# With abundance as response
 autotuner_rf_wd_a$tuning_result
 
-# for relative abundance and velocity + wd
+# With rel_abundance as response
 autotuner_rf_wd_ra$tuning_result
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# for k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 autotuner_rf_samp_k$tuning_result
 
-# for shannon index and sampling locations
+# With shannon index as response
 autotuner_rf_samp_s$tuning_result
 
-# for abundance and sampling locations
+# With abundance as response
 autotuner_rf_samp_a$tuning_result
 
-# for relative abundance and sampling locations
+# With rel_abundance as response
 autotuner_rf_samp_ra$tuning_result
 
-### PREDICTORS: ALL PREDICTORS ###
-# for k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 autotuner_rf_sec_k$tuning_result
 
-# for shannon index and all predictors
+# With shannon index as response
 autotuner_rf_sec_s$tuning_result
 
-# for abundance and all predictors
+# With abundance as response
 autotuner_rf_sec_a$tuning_result
 
-# for relative abundance and all predictors
+# With rel_abundance as response
 autotuner_rf_sec_ra$tuning_result
 ```
+
 
 # Ranger Models 
 ## w/ coordinates 
