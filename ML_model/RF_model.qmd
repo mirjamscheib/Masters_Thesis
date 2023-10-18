@@ -36,27 +36,33 @@ pkgCheck("gbm")
 pkgCheck("xgboost")
 pkgCheck("caret") # for cohen's kappa calculation 
 pkgCheck("pdp")
-pkgCheck("gbm")
 pkgCheck("Metrics")
 pkgCheck("modEvA")
 pkgCheck("tidyr")
+pkgCheck("Fgmutils") # for bias calculation (bias() function)
+pkgCheck("hydroGOF") # for NSE calculation with NSE() function 
 ```
-
 
 # Load & prepare data 
 ```{r}
-# Load data containing only v, and v + wd explanatory variables
-data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv")
-data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv")
+# Load data containing velocity as predictor variable 
+data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") 
 
-data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling_add.csv") |>
+# Load data containing velocity and wd as predictors 
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
+
+# Load data containing all variables measured at each sampling locations and remove all other "chr" variables
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
   dplyr::select(-clog_3_class, -clog_6_class, -sub_type)
 
-data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section_add.csv") |>
-    dplyr::select(-Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -Category_Water_depth, -date, -time, -time_before, -time_during, -time_after, -clog_3_class, -clog_6_class, -sub_type, -ox_sat_after, -ox_sat_before, -ox_sat_during, -Number_Taxa, -EPT_Taxa)
+# Load data containing all variables measured at each river section and remove all other "chr" variables
+# Additionally, remove ox_sat columns, as they contain NA values
+data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
+  dplyr::select(-clog_3_class, -clog_6_class, -sub_type, -Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -date, -time, -time_before, -time_during, -time_after, -Category_Water_depth, -Number_Taxa, -EPT_Taxa, -ox_sat_after, -ox_sat_before, -ox_sat_during)
 ```
-
+    
 ```{r}
+### TRAINING SETS ###
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
 # training set containing velocity 
 training_v <- data_v |>
@@ -102,7 +108,7 @@ training_section <- data_section |>
          Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
          Reach_Untersuchungsstelle != "VR3")
 
-# w/ hydr. models 
+### TEST SETS ###
 # test set containing velocity 
 test_v <- data_v |>
   filter(Reach_Untersuchungsstelle == "GL1" |
@@ -148,314 +154,292 @@ test_section <- data_section |>
          Reach_Untersuchungsstelle == "VR3")
 ```
 
-### Training Sets w/ coordinates
+## Training Sets w/ coordinates
 ```{r}
-# Prep data to model 
-# TRAINING SETS
-### PREDICTOR: VELOCITY ###
-# With k_index as response variable & velocity 
+### PREDICTOR: VELOCITY ### ----------------------------------------------------
+# With k_index as response 
 training_v_k <- training_v |>
   dplyr::select(k_index, velocity, x, y)
 
-# With shannon index as response variable & velocity 
+# With shannon index as response 
 training_v_s <- training_v |>
   dplyr::select(shannon, velocity, x, y)
 
-# With abundance as response variable & velocity 
+# With abundance as response 
 training_v_a <- training_v |>
   dplyr::select(abundance, velocity, x, y)
 
-# With relative abundance as response variable & velocity 
+# With relative abundance as response  
 training_v_ra <- training_v |>
   dplyr::select(rel_abundance, velocity, x, y)
-```
 
-```{r}
-### PREDICTOR: VELOCITY AND WD ###
-# With k_index as response variable & velocity + wd
+### PREDICTOR: VELOCITY AND WD ### ---------------------------------------------
+# With k_index as response 
 training_wd_k <- training_wd |>
   dplyr::select(k_index, velocity, wd_m, x, y)
 
-# With shannon index as response variable & velocity + wd
+# With shannon index as response 
 training_wd_s <- training_wd |>
   dplyr::select(shannon, velocity, wd_m, x, y)
 
-# With abundance index as response variable & velocity + wd
+# With abundance index as response 
 training_wd_a <- training_wd |>
   dplyr::select(abundance, velocity, wd_m, x, y)
 
-# With relative abundance index as response variable & velocity + wd
+# With relative abundance index as response 
 training_wd_ra <- training_wd |>
   dplyr::select(rel_abundance, velocity, wd_m, x, y)
-```
 
-```{r}
-### PREDICTOR: SAMPLING LOCATIONS ###
-# With k_index as response variable & sampling location 
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+### PREDICTOR: SAMPLING LOCATIONS ### ------------------------------------------
+# With k_index as response 
 training_samp_k <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With shannon index as response variable & sampling location 
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With shannon index as response 
 training_samp_s <- training_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With abundance index as response variable & sampling location 
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With abundance index as response 
 training_samp_a <- training_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With relative abundance index as response variable & sampling location
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With relative abundance index as response 
 training_samp_ra <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index)
-```
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
 
-```{r}
-### PREDICTOR: ALL POSSIBLE PREDICTORS ###
-# With k_index as response variable & all predictors
-# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+### PREDICTOR: ALL POSSIBLE PREDICTORS ### -------------------------------------
+# With k_index as response 
 training_sec_k <- training_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With shannon index as response variable & all predictors 
-# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With shannon index as response 
 training_sec_s <- training_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With abundance index as response variable & all predictors 
-# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With abundance index as response 
 training_sec_a <- training_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With relative abundance index as response variable & all predictors 
-# -ox_sat, -date_time, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With relative abundance index as response 
 training_sec_ra <- training_section |>
-  dplyr::select(-shannon, -abundance, -k_index)
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
 ```
 
-### Training Sets w/o coordinates
+## Training Sets w/o coordinates
 ```{r}
-# w/o coordinates
+### PREDICTOR: VELOCITY ### --------------------------------------
+# With k_index as response 
 training_v_k_c <- training_v |>
   dplyr::select(k_index, velocity)
 
-# w/o coordinates
+# With shannon index as response
 training_v_s_c <- training_v |>
   dplyr::select(shannon, velocity)
 
-# w/o coordinates
+# With abundance as response
 training_v_a_c <- training_v |>
   dplyr::select(abundance, velocity)
 
-# w/o coordinates
+# With rel_abundance as response
 training_v_ra_c <- training_v |>
   dplyr::select(rel_abundance, velocity)
 
-# w/o coordinates
+### PREDICTOR: VELOCITY AND WD ### ----------------------------------
+# With k_index as response 
 training_wd_k_c <- training_wd |>
   dplyr::select(k_index, velocity, wd_m)
 
-# w/o coordinates
+# With shannon index as response 
 training_wd_s_c <- training_wd |>
   dplyr::select(shannon, velocity, wd_m)
 
-# w/o coordinates
+# With abundance as response 
 training_wd_a_c <- training_wd |>
   dplyr::select(abundance, velocity, wd_m)
 
-# w/o coordinates
+# With rel_abundance as response 
 training_wd_ra_c <- training_wd |>
   dplyr::select(rel_abundance, velocity, wd_m)
 
-# w/o coordinates
+### PREDICTOR: SAMPLING LOCATIONS ### --------------------------------
+# With k_index as response 
 training_samp_k_c <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With shannon index as response 
 training_samp_s_c <- training_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With abundance as response 
 training_samp_a_c <- training_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With rel_abundance as response 
 training_samp_ra_c <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+### PREDICTOR: ALL POSSIBLE PREDICTORS ### ----------------------------------
+# With k_index as response 
 training_sec_k_c <- training_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With shannon index as response 
 training_sec_s_c <- training_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With abundance as response 
 training_sec_a_c <- training_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With rel_abundance as response 
 training_sec_ra_c <- training_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
 ```
 
-### Test Sets w/ coordinates
+## Test Sets w/ coordinates
 ```{r}
-# TEST SETS
-### PREDICTOR: VELOCITY ###
-# With k_index as response variable & velocity
+### PREDICTOR: VELOCITY ### ------------------------------------------
+# With k_index as response
 test_v_k <- test_v |>
   dplyr::select(k_index, velocity, x, y) 
 
-# With shannon index as response variable & velocity
+# With shannon index as response
 test_v_s <- test_v |>
   dplyr::select(shannon, velocity, x, y) 
 
-# With abundance as response variable & velocity
+# With abundance as response 
 test_v_a <- test_v |>
   dplyr::select(abundance, velocity, x, y) 
 
-# With relative abundance as response variable & velocity
+# With relative abundance as response 
 test_v_ra <- test_v |>
   dplyr::select(rel_abundance, velocity, x, y)
-```
 
-```{r}
-### PREDICTOR: VELOCITY + WD ###
-# With k_index as response variable & velocity + wd
+### PREDICTOR: VELOCITY + WD ### -----------------------------------
+# With k_index as response 
 test_wd_k <- test_wd |>
   dplyr::select(k_index, velocity, wd_m, x, y) 
 
-# With shannon index as response variable & velocity + wd
+# With shannon index as response 
 test_wd_s <- test_wd |>
   dplyr::select(shannon, velocity, wd_m, x, y) 
 
-# With abundance as response variable & velocity + wd
+# With abundance as response 
 test_wd_a <- test_wd |>
   dplyr::select(abundance, velocity, wd_m, x, y)
 
-# With relative abundance as response variable & velocity + wd
+# With relative abundance as response 
 test_wd_ra <- test_wd |>
   dplyr::select(rel_abundance, velocity, wd_m, x, y)
-```
 
-```{r}
-### PREDICTOR: SAMPLING LOCATIONS ###
-# With k_index as response variable & sampling location 
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------
+# With k_index as response 
 test_samp_k <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance) 
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle) 
 
-# With shannon index as response variable & sampling location 
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With shannon index as response 
 test_samp_s <- test_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With abundance index as response variable & sampling location 
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With abundance index as response
 test_samp_a <- test_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With relative abundance index as response variable & sampling location 
-# -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With relative abundance index as response 
 test_samp_ra <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index)
-```
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
 
-```{r}
-### PREDICTOR: ALL POSSIBLE PREDICTORS ###
-# With k_index as response variable & all predictors
-# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+### PREDICTOR: ALL POSSIBLE PREDICTORS ### -----------------------------------
+# With k_index as response 
 test_sec_k <- test_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With shannon index as response variable & all predictors 
-# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With shannon index as response 
 test_sec_s <- test_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With abundance index as response variable & all predictors 
-# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With abundance index as response 
 test_sec_a <- test_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
 
-# With relative abundance index as response variable & all predictors 
-# -ox_sat, -Reach_Untersuchungsstelle, -clog_3_class, -clog_6_class, -sub_type
+# With relative abundance index as response 
 test_sec_ra <- test_section |>
-  dplyr::select(-shannon, -abundance, -k_index)
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
 ```
 
-### Test Sets w/o coordinates
+## Test Sets w/o coordinates
 ```{r}
-# w/o coordinates
+### PREDICTOR: VELOCITY ### --------------------------------------
+# With k_index as response
 test_v_k_c <- test_v |>
   dplyr::select(k_index, velocity)
 
-# w/o coordinates
+# With shannon index as response
 test_v_s_c <- test_v |>
   dplyr::select(shannon, velocity) 
 
-# w/o coordinates
+# With abundance as response
 test_v_a_c <- test_v |>
   dplyr::select(abundance, velocity) 
 
-# w/o coordinates
+# With rel_abundance as response
 test_v_ra_c <- test_v |>
   dplyr::select(rel_abundance, velocity)
 
-# w/o coordinates
+### PREDICTOR: VELOCITY + WD ### -----------------------------------
+# With k_index as response 
 test_wd_k_c <- test_wd |>
   dplyr::select(k_index, velocity, wd_m) 
 
-# w/o coordinates
+# With shannon index as response 
 test_wd_s_c <- test_wd |>
   dplyr::select(shannon, velocity, wd_m)
 
-# w/o coordinates
+# With abundance as response 
 test_wd_a_c <- test_wd |>
   dplyr::select(abundance, velocity, wd_m)
 
-# w/o coordinates
+# With rel_abundance as response 
 test_wd_ra_c <- test_wd |>
   dplyr::select(rel_abundance, velocity, wd_m)
 
-# w/o coordinates
+### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------
+# With k_index as response 
 test_samp_k_c <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y) 
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle) 
 
-# w/o coordinates
+# With shannon index as response 
 test_samp_s_c <- test_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With abundance as response 
 test_samp_a_c <- test_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With rel_abundance as response 
 test_samp_ra_c <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+### PREDICTOR: ALL POSSIBLE PREDICTORS ### -----------------------------------
+# With k_index as response 
 test_sec_k_c <- test_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y)
+  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With shannon index as response
 test_sec_s_c <- test_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y)
+  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With abundance as response
 test_sec_a_c <- test_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y)
+  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
 
-# w/o coordinates
+# With rel_abundance as response
 test_sec_ra_c <- test_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y)
+  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
 ```
 
-
+# Random Forest 
+## Hyperparameter tuning 
 ```{r}
 # convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning
 ### PREDICTOR: VELOCITY ###
@@ -527,9 +511,6 @@ data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
 st_crs(data_sec_ra_sp) <- "EPSG: 2056"
 ```
 
-
-# Random Forest 
-## Hyperparameter tuning 
 ### Create Task & Learner
 ```{r}
 ### ONLY VELOCITY AS PREDICTOR (& x, y for spatial hyperparameter tuning) ###
@@ -2110,7 +2091,6 @@ mae_model_sec_ra_c <- mae(actual = responses_sec_ra, predicted = rf_pred_model_s
 
 ## Bias 
 ```{r}
-library(Fgmutils) # for bias calculation (bias() function)
 # Calculate the differences between predicted and actual values
 ### ONLY VELOCITY AS PREDICTOR ###
 # k_index and velocity
@@ -2223,8 +2203,6 @@ bias_model_sec_ra_c <- bias(observados = responses_sec_ra,
 
 ## Nash-Sutcliffe efficiency (NSE) 
 ```{r}
-#install.packages("hydroGOF")
-library(hydroGOF) # for NSE calculation with NSE() function 
 # Calculate the NSE
 ### ONLY VELOCITY AS PREDICTOR ###
 # k_index and velocity
