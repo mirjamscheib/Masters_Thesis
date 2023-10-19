@@ -1393,15 +1393,18 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
 ```
 
 
-# ! Model Evaluation 
-## Variable Importance
+# Model Evaluation 
+## ! Variable Importance
 Gain is the improvement in accuracy brought by a feature to the branches it is on. The idea is that before adding a new split on a feature X to the branch there were some wrongly classified elements; after adding the split on this feature, there are two new branches, and each of these branches is more accurate (one branch saying if your observation is on this branch then it should be classified as 1, and the other branch saying the exact opposite).
 
 https://xgboost.readthedocs.io/en/stable/R-package/discoverYourData.html
 ```{r}
-### PREDICTORS: ONLY VELOCITY ###
+### PREDICTORS: VELOCITY ### -------------------------------------------------
 # w/ coordinates
-vi_v_k <- xgb.importance(model = xgb_v_k)
+vi_v_k <- xgb.importance(model = xgb_v_k) |>
+  dplyr::select(-Cover, -Frequency) |>
+  transpose()
+
 vi_v_s <- xgb.importance(model = xgb_v_s)
 vi_v_a <- xgb.importance(model = xgb_v_a)
 vi_v_ra <- xgb.importance(model = xgb_v_ra)
@@ -1413,7 +1416,7 @@ vi_v_a_c <- xgb.importance(model = xgb_v_a_c)
 vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)
 
 
-### PREDICTORS: VELOCITY AND WD ###
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/ coordinates
 vi_wd_k <- xgb.importance(model = xgb_wd_k)
 vi_wd_s <- xgb.importance(model = xgb_wd_s)
@@ -1426,7 +1429,7 @@ vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c)
 vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c)
 vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # w/ coordinates
 vi_samp_k <- xgb.importance(model = xgb_samp_k)
 vi_samp_s <- xgb.importance(model = xgb_samp_s)
@@ -1439,7 +1442,7 @@ vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c)
 vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c)
 vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ###
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/ coordinates
 vi_sec_k <- xgb.importance(model = xgb_sec_k)
 vi_sec_s <- xgb.importance(model = xgb_sec_s)
@@ -1452,7 +1455,7 @@ vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c)
 vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c)
 vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c)
 
-# bind results together
+# bind results together -------------------------------------------------------
 vi_brt_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra) |>
   mutate(model = "model w/ coordinates",
          index = c("k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
@@ -1486,15 +1489,15 @@ vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) |>
   mutate(model = "model w/ coordinates",
          index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
 
-# write results into .csv
-write.csv(vi_brt_model_v, "ML_model/vi_brt_model_v.csv", row.names = FALSE)
-write.csv(vi_brt_model_v_c, "ML_model/vi_brt_model_v_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_wd, "ML_model/vi_brt_model_wd.csv", row.names = FALSE)
-write.csv(vi_brt_model_wd_c, "ML_model/vi_brt_model_wd_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_samp, "ML_model/vi_brt_model_samp.csv", row.names = FALSE)
-write.csv(vi_brt_model_samp_c, "ML_model/vi_brt_model_samp_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_sec, "ML_model/vi_brt_model_sec.csv", row.names = FALSE)
-write.csv(vi_brt_model_sec_c, "ML_model/vi_brt_model_sec_c.csv", row.names = FALSE)
+# write results into .csv ----------------------------------------------------
+write.csv(vi_brt_model_v, "ML_model/var_imp/vi_brt_model_v.csv", row.names = FALSE)
+write.csv(vi_brt_model_v_c, "ML_model/var_imp/vi_brt_model_v_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_wd, "ML_model/var_imp/vi_brt_model_wd.csv", row.names = FALSE)
+write.csv(vi_brt_model_wd_c, "ML_model/var_imp/vi_brt_model_wd_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_samp, "ML_model/var_imp/vi_brt_model_samp.csv", row.names = FALSE)
+write.csv(vi_brt_model_samp_c, "ML_model/var_imp/vi_brt_model_samp_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_sec, "ML_model/var_imp/vi_brt_model_sec.csv", row.names = FALSE)
+write.csv(vi_brt_model_sec_c, "ML_model/var_imp/vi_brt_model_sec_c.csv", row.names = FALSE)
 ```
 
 ```{r}
@@ -1542,7 +1545,7 @@ write.csv(vi_sec, "ML_model/vi_brt_sec.csv", row.names = FALSE)
 ```
 
 
-## Partial dependence plots
+## ! Partial dependence plots
 https://stackoverflow.com/questions/66016542/partial-dependence-ale-ice-plots-xgboost-in-r
 ```{r}
 ### k_index -------------------------------------------------------------
@@ -1653,141 +1656,140 @@ pdp_model_sp_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "stream_power") 
 
 ## Obs and Pred 
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### OBSERVED VALUES ### ------------------------------------------------------
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 responses_v_k <- test_v_k$k_index
 
-# shannon index and velocity
+# With shannon index as response
 responses_v_s <- test_v_s$shannon
 
-# abundance and velocity
+# With abundance as response
 responses_v_a <- test_v_a$abundance
 
-# relative abundance and velocity
+# With rel_abundance as response
 responses_v_ra <- test_v_ra$rel_abundance
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 responses_wd_k <- test_wd_k$k_index
 
-# shannon index and velocity + wd
+# With shannon index as response
 responses_wd_s <- test_wd_s$shannon
 
-# abundance and velocity + wd
+# With abundance as response
 responses_wd_a <- test_wd_a$abundance
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 responses_wd_ra <- test_wd_ra$rel_abundance
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
+# With k_index as response
 responses_samp_k <- test_samp_k$k_index
 
-# shannon index and sampling locations
+# With shannon index as response
 responses_samp_s <- test_samp_s$shannon
 
-# abundance and sampling locations
+# With abundance as response
 responses_samp_a <- test_samp_a$abundance
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 responses_samp_ra <- test_samp_ra$rel_abundance
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 responses_sec_k <- test_sec_k$k_index
 
-# shannon index and all predictors
+# With shannon index as response
 responses_sec_s <- test_sec_s$shannon
 
-# abundance and all predictors
+# With abundance as response
 responses_sec_a <- test_sec_a$abundance
 
-# relative abundance and all predictors
+# With rel_abundance as response
 responses_sec_ra <- test_sec_ra$rel_abundance
-```
 
-```{r}
-# Get predictions from the XGBoost model
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity 
+### PREDICTED VALUES ### ------------------------------------------------------
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 brt_pred_v_k <- predict(autotuner_xbrt_v_k, newdata = test_v_k)
 brt_pred_model_v_k <- predict(xgb_v_k, newdata = testx_v_k[ ,-1])
 brt_pred_model_v_k_c <- predict(xgb_v_k_c, newdata = testx_v_k_c)
 
-# shannon index and velocity 
+# With shannon index as response
 brt_pred_v_s <- predict(autotuner_xbrt_v_s, newdata = test_v_s)
 brt_pred_model_v_s <- predict(xgb_v_s, newdata = testx_v_s[ ,-1])
 brt_pred_model_v_s_c <- predict(xgb_v_s_c, newdata = testx_v_s_c[ ,-1])
 
-# abundance and velocity 
+# With abundance as response 
 brt_pred_v_a <- predict(autotuner_xbrt_v_a, newdata = test_v_a)
 brt_pred_model_v_a <- predict(xgb_v_a, newdata = testx_v_a[ ,-1])
 brt_pred_model_v_a_c <- predict(xgb_v_a_c, newdata = testx_v_a_c[ ,-1])
 
-# relative abundance and velocity 
+# With rel_abundance as response
 brt_pred_v_ra <- predict(autotuner_xbrt_v_ra, newdata = test_v_ra)
 brt_pred_model_v_ra <- predict(xgb_v_ra, newdata = testx_v_ra[ ,-1])
 brt_pred_model_v_ra_c <- predict(xgb_v_ra_c, newdata = testx_v_ra_c[ ,-1])
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 brt_pred_wd_k <- predict(autotuner_xbrt_wd_k, newdata = test_wd_k)
 brt_pred_model_wd_k <- predict(xgb_wd_k, newdata = testx_wd_k[ ,-1])
 brt_pred_model_wd_k_c <- predict(xgb_wd_k_c, newdata = testx_wd_k_c[ ,-1])
 
-# shannon index and velocity + wd
+# With shannon index as response
 brt_pred_wd_s <- predict(autotuner_xbrt_wd_s, newdata = test_wd_s)
 brt_pred_model_wd_s <- predict(xgb_wd_s, newdata = testx_wd_s[ ,-1])
 brt_pred_model_wd_s_c <- predict(xgb_wd_s_c, newdata = testx_wd_s_c[ ,-1])
 
-# abundance and velocity + wd
+# With abundance as response
 brt_pred_wd_a <- predict(autotuner_xbrt_wd_a, newdata = test_wd_a)
 brt_pred_model_wd_a <- predict(xgb_wd_a, newdata = testx_wd_a[ ,-1])
 brt_pred_model_wd_a_c <- predict(xgb_wd_a_c, newdata = testx_wd_a_c[ ,-1])
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 brt_pred_wd_ra <- predict(autotuner_xbrt_wd_ra, newdata = test_wd_ra)
 brt_pred_model_wd_ra <- predict(xgb_wd_ra, newdata = testx_wd_ra[ ,-1])
 brt_pred_model_wd_ra_c <- predict(xgb_wd_ra_c, newdata = testx_wd_ra_c[ ,-1])
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 brt_pred_samp_k <- predict(autotuner_xbrt_samp_k, newdata = test_samp_k)
 brt_pred_model_samp_k <- predict(xgb_samp_k, newdata = testx_samp_k[ ,-1])
 brt_pred_model_samp_k_c <- predict(xgb_samp_k_c, newdata = testx_samp_k_c[ ,-1])
 
-# shannon index and sampling locations
+# With shannon index as response
 brt_pred_samp_s <- predict(autotuner_xbrt_samp_s, newdata = test_samp_s)
 brt_pred_model_samp_s <- predict(xgb_samp_s, newdata = testx_samp_s[ ,-1])
 brt_pred_model_samp_s_c <- predict(xgb_samp_s_c, newdata = testx_samp_s_c[ ,-1])
 
-# abundance and sampling locations
+# With abundance as response
 brt_pred_samp_a <- predict(autotuner_xbrt_samp_a, newdata = test_samp_a)
 brt_pred_model_samp_a <- predict(xgb_samp_a, newdata = testx_samp_a[ ,-1])
 brt_pred_model_samp_a_c <- predict(xgb_samp_a_c, newdata = testx_samp_a_c[ ,-1])
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 brt_pred_samp_ra <- predict(autotuner_xbrt_samp_ra, newdata = test_samp_ra)
 brt_pred_model_samp_ra <- predict(xgb_samp_ra, newdata = testx_samp_ra[ ,-1])
 brt_pred_model_samp_ra_c <- predict(xgb_samp_ra_c, newdata = testx_samp_ra_c[ ,-1])
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 brt_pred_sec_k <- predict(autotuner_xbrt_sec_k, newdata = test_sec_k)
 brt_pred_model_sec_k <- predict(xgb_sec_k, newdata = testx_sec_k[ ,-1])
 brt_pred_model_sec_k_c <- predict(xgb_sec_k_c, newdata = testx_sec_k_c[ ,-1])
 
-# shannon index and all predictors
+# With shannon index as response
 brt_pred_sec_s <- predict(autotuner_xbrt_sec_s, newdata = test_sec_s)
 brt_pred_model_sec_s <- predict(xgb_sec_s, newdata = testx_sec_s[ ,-1])
 brt_pred_model_sec_s_c <- predict(xgb_sec_s_c, newdata = testx_sec_s_c[ ,-1])
 
-# abundance and all predictors
+# With abundance as response
 brt_pred_sec_a <- predict(autotuner_xbrt_sec_a, newdata = test_sec_a)
 brt_pred_model_sec_a <- predict(xgb_sec_a, newdata = testx_sec_a[ ,-1])
 brt_pred_model_sec_a_c <- predict(xgb_sec_a_c, newdata = testx_sec_a_c[ ,-1])
 
-# relative abundance and all predictors
+# With rel_abundance as response
 brt_pred_sec_ra <- predict(autotuner_xbrt_sec_ra, newdata = test_sec_ra)
 brt_pred_model_sec_ra <- predict(xgb_sec_ra, newdata = testx_sec_ra[ ,-1])
 brt_pred_model_sec_ra_c <- predict(xgb_sec_ra_c, newdata = testx_sec_ra_c[ ,-1])
@@ -1795,87 +1797,86 @@ brt_pred_model_sec_ra_c <- predict(xgb_sec_ra_c, newdata = testx_sec_ra_c[ ,-1])
 
 ## Deviance explained (R2)
 ```{r}
-# Calculate R-squared
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity 
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response 
 r2_v_k <- R2(pred = brt_pred_v_k, obs = responses_v_k)
 r2_model_v_k <- R2(pred = brt_pred_model_v_k, obs = responses_v_k)
 r2_model_v_k_c <- R2(pred = brt_pred_model_v_k_c, obs = responses_v_k)
 
-# shannon index and velocity 
+# With shannon index as response 
 r2_v_s <- R2(pred = brt_pred_v_s, obs = responses_v_s)
 r2_model_v_s <- R2(pred = brt_pred_model_v_s, obs = responses_v_s)
 r2_model_v_s_c <- R2(pred = brt_pred_model_v_s_c, obs = responses_v_s)
 
-# abundance and velocity 
+# With abundance as response
 r2_v_a <- R2(pred = brt_pred_v_a, obs = responses_v_a)
 r2_model_v_a <- R2(pred = brt_pred_model_v_a, obs = responses_v_a)
 r2_model_v_a_c <- R2(pred = brt_pred_model_v_a_c, obs = responses_v_a)
 
-# relative abundance and velocity 
+# With rel_abundance as response 
 r2_v_ra <- R2(pred = brt_pred_v_ra, obs = responses_v_ra)
 r2_model_v_ra <- R2(pred = brt_pred_model_v_ra, obs = responses_v_ra)
 r2_model_v_ra_c <- R2(pred = brt_pred_model_v_ra_c, obs = responses_v_ra)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 r2_wd_k <- R2(pred = brt_pred_wd_k, obs = responses_wd_k)
 r2_model_wd_k <- R2(pred = brt_pred_model_wd_k, obs = responses_wd_k)
 r2_model_wd_k_c <- R2(pred = brt_pred_model_wd_k_c, obs = responses_wd_k)
 
-# shannon index and velocity + wd 
+# With shannon index as response
 r2_wd_s <- R2(pred = brt_pred_wd_s, obs = responses_wd_s)
 r2_model_wd_s <- R2(pred = brt_pred_model_wd_s, obs = responses_wd_s)
 r2_model_wd_s_c <- R2(pred = brt_pred_model_wd_s_c, obs = responses_wd_s)
 
-# abundance and velocity + wd 
+# With abundance as response
 r2_wd_a <- R2(pred = brt_pred_wd_a, obs = responses_wd_a)
 r2_model_wd_a <- R2(pred = brt_pred_model_wd_a, obs = responses_wd_a)
 r2_model_wd_a_c <- R2(pred = brt_pred_model_wd_a_c, obs = responses_wd_a)
 
-# relative abundance and velocity + wd 
+# With rel_abundance as response 
 r2_wd_ra <- R2(pred = brt_pred_wd_ra, obs = responses_wd_ra)
 r2_model_wd_ra <- R2(pred = brt_pred_model_wd_ra, obs = responses_wd_ra)
 r2_model_wd_ra_c <- R2(pred = brt_pred_model_wd_ra_c, obs = responses_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 r2_samp_k <- R2(pred = brt_pred_samp_k, obs = responses_samp_k)
 r2_model_samp_k <- R2(pred = brt_pred_model_samp_k, obs = responses_samp_k)
 r2_model_samp_k_c <- R2(pred = brt_pred_model_samp_k_c, obs = responses_samp_k)
 
-# shannon index and sampling locations 
+# With shannon index as response
 r2_samp_s <- R2(pred = brt_pred_samp_s, obs = responses_samp_s)
 r2_model_samp_s <- R2(pred = brt_pred_model_samp_s, obs = responses_samp_s)
 r2_model_samp_s_c <- R2(pred = brt_pred_model_samp_s_c, obs = responses_samp_s)
 
-# abundance and sampling locations 
+# With abundance as response 
 r2_samp_a <- R2(pred = brt_pred_samp_a, obs = responses_samp_a)
 r2_model_samp_a <- R2(pred = brt_pred_model_samp_a, obs = responses_samp_a)
 r2_model_samp_a_c <- R2(pred = brt_pred_model_samp_a_c, obs = responses_samp_a)
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 r2_samp_ra <- R2(pred = brt_pred_samp_ra, obs = responses_samp_ra)
 r2_model_samp_ra <- R2(pred = brt_pred_model_samp_ra, obs = responses_samp_ra)
 r2_model_samp_ra_c <- R2(pred = brt_pred_model_samp_ra_c, obs = responses_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 r2_sec_k <- R2(pred = brt_pred_sec_k, obs = responses_sec_k)
 r2_model_sec_k <- R2(pred = brt_pred_model_sec_k, obs = responses_sec_k)
 r2_model_sec_k_c <- R2(pred = brt_pred_model_sec_k_c, obs = responses_sec_k)
 
-# shannon index and all predictors 
+# With shannon index as response 
 r2_sec_s <- R2(pred = brt_pred_sec_s, obs = responses_sec_s)
 r2_model_sec_s <- R2(pred = brt_pred_model_sec_s, obs = responses_sec_s)
 r2_model_sec_s_c <- R2(pred = brt_pred_model_sec_s_c, obs = responses_sec_s)
 
-# abundance and all predictors
+# With abundance as response
 r2_sec_a <- R2(pred = brt_pred_sec_a, obs = responses_sec_a)
 r2_model_sec_a <- R2(pred = brt_pred_model_sec_a, obs = responses_sec_a)
 r2_model_sec_a_c <- R2(pred = brt_pred_model_sec_a_c, obs = responses_sec_a)
 
-# relative abundance and all predictors 
+# With rel_abundance as response
 r2_sec_ra <- R2(pred = brt_pred_sec_ra, obs = responses_sec_ra)
 r2_model_sec_ra <- R2(pred = brt_pred_model_sec_ra, obs = responses_sec_ra)
 r2_model_sec_ra_c <- R2(pred = brt_pred_model_sec_ra_c, obs = responses_sec_ra)
@@ -1883,332 +1884,324 @@ r2_model_sec_ra_c <- R2(pred = brt_pred_model_sec_ra_c, obs = responses_sec_ra)
 
 ## RMSE & MAE
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-rmse_v_k <- rmse(actual = responses_v_k, predicted = brt_pred_v_k)
-rmse_model_v_k <- rmse(actual = responses_v_k, predicted = brt_pred_model_v_k)
-rmse_model_v_k_c <- rmse(actual = responses_v_k, predicted = brt_pred_model_v_k_c)
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
+rmse_v_k <- Metrics::rmse(actual = responses_v_k, predicted = brt_pred_v_k)
+rmse_model_v_k <- Metrics::rmse(actual = responses_v_k, predicted = brt_pred_model_v_k)
+rmse_model_v_k_c <- Metrics::rmse(actual = responses_v_k, predicted = brt_pred_model_v_k_c)
 
-mae_v_k <- mae(actual = responses_v_k, predicted = brt_pred_v_k)
-mae_model_v_k <- mae(actual = responses_v_k, predicted = brt_pred_model_v_k)
-mae_model_v_k_c <- mae(actual = responses_v_k, predicted = brt_pred_model_v_k_c)
+mae_v_k <- Metrics::mae(actual = responses_v_k, predicted = brt_pred_v_k)
+mae_model_v_k <- Metrics::mae(actual = responses_v_k, predicted = brt_pred_model_v_k)
+mae_model_v_k_c <- Metrics::mae(actual = responses_v_k, predicted = brt_pred_model_v_k_c)
 
-# shannon index and velocity
-rmse_v_s <- rmse(actual = responses_v_s, predicted = brt_pred_v_s)
-rmse_model_v_s <- rmse(actual = responses_v_s, predicted = brt_pred_model_v_s)
-rmse_model_v_s_c <- rmse(actual = responses_v_s, predicted = brt_pred_model_v_s_c)
+# With shannon index as response
+rmse_v_s <- Metrics::rmse(actual = responses_v_s, predicted = brt_pred_v_s)
+rmse_model_v_s <- Metrics::rmse(actual = responses_v_s, predicted = brt_pred_model_v_s)
+rmse_model_v_s_c <- Metrics::rmse(actual = responses_v_s, predicted = brt_pred_model_v_s_c)
 
-mae_v_s <- mae(actual = responses_v_s, predicted = brt_pred_v_s)
-mae_model_v_s <- mae(actual = responses_v_s, predicted = brt_pred_model_v_s)
-mae_model_v_s_c <- mae(actual = responses_v_s, predicted = brt_pred_model_v_s_c)
+mae_v_s <- Metrics::mae(actual = responses_v_s, predicted = brt_pred_v_s)
+mae_model_v_s <- Metrics::mae(actual = responses_v_s, predicted = brt_pred_model_v_s)
+mae_model_v_s_c <- Metrics::mae(actual = responses_v_s, predicted = brt_pred_model_v_s_c)
 
-# abundance and velocity
-rmse_v_a <- rmse(actual = responses_v_a, predicted = brt_pred_v_a)
-rmse_model_v_a <- rmse(actual = responses_v_a, predicted = brt_pred_model_v_a)
-rmse_model_v_a_c <- rmse(actual = responses_v_a, predicted = brt_pred_model_v_a_c)
+# With abundance as response
+rmse_v_a <- Metrics::rmse(actual = responses_v_a, predicted = brt_pred_v_a)
+rmse_model_v_a <- Metrics::rmse(actual = responses_v_a, predicted = brt_pred_model_v_a)
+rmse_model_v_a_c <- Metrics::rmse(actual = responses_v_a, predicted = brt_pred_model_v_a_c)
 
-mae_v_a <- mae(actual = responses_v_a, predicted = brt_pred_v_a)
-mae_model_v_a <- mae(actual = responses_v_a, predicted = brt_pred_model_v_a)
-mae_model_v_a_c <- mae(actual = responses_v_a, predicted = brt_pred_model_v_a_c)
+mae_v_a <- Metrics::mae(actual = responses_v_a, predicted = brt_pred_v_a)
+mae_model_v_a <- Metrics::mae(actual = responses_v_a, predicted = brt_pred_model_v_a)
+mae_model_v_a_c <- Metrics::mae(actual = responses_v_a, predicted = brt_pred_model_v_a_c)
 
-# relative abundance and velocity
-rmse_v_ra <- rmse(actual = responses_v_ra, predicted = brt_pred_v_ra)
-rmse_model_v_ra <- rmse(actual = responses_v_ra, predicted = brt_pred_model_v_ra)
-rmse_model_v_ra_c <- rmse(actual = responses_v_ra, predicted = brt_pred_model_v_ra_c)
+# With rel_abundance as response
+rmse_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = brt_pred_v_ra)
+rmse_model_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = brt_pred_model_v_ra)
+rmse_model_v_ra_c <- Metrics::rmse(actual = responses_v_ra, predicted = brt_pred_model_v_ra_c)
 
-mae_v_ra <- mae(actual = responses_v_ra, predicted = brt_pred_v_ra)
-mae_model_v_ra <- mae(actual = responses_v_ra, predicted = brt_pred_model_v_ra)
-mae_model_v_ra_c <- mae(actual = responses_v_ra, predicted = brt_pred_model_v_ra_c)
+mae_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = brt_pred_v_ra)
+mae_model_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = brt_pred_model_v_ra)
+mae_model_v_ra_c <- Metrics::mae(actual = responses_v_ra, predicted = brt_pred_model_v_ra_c)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-rmse_wd_k <- rmse(actual = responses_wd_k, predicted = brt_pred_wd_k)
-rmse_model_wd_k <- rmse(actual = responses_wd_k, predicted = brt_pred_model_wd_k)
-rmse_model_wd_k_c <- rmse(actual = responses_wd_k, predicted = brt_pred_model_wd_k_c)
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+rmse_wd_k <- Metrics::rmse(actual = responses_wd_k, predicted = brt_pred_wd_k)
+rmse_model_wd_k <- Metrics::rmse(actual = responses_wd_k, predicted = brt_pred_model_wd_k)
+rmse_model_wd_k_c <- Metrics::rmse(actual = responses_wd_k, predicted = brt_pred_model_wd_k_c)
 
-mae_wd_k <- mae(actual = responses_wd_k, predicted = brt_pred_wd_k)
-mae_model_wd_k <- mae(actual = responses_wd_k, predicted = brt_pred_model_wd_k)
-mae_model_wd_k_c <- mae(actual = responses_wd_k, predicted = brt_pred_model_wd_k_c)
+mae_wd_k <- Metrics::mae(actual = responses_wd_k, predicted = brt_pred_wd_k)
+mae_model_wd_k <- Metrics::mae(actual = responses_wd_k, predicted = brt_pred_model_wd_k)
+mae_model_wd_k_c <- Metrics::mae(actual = responses_wd_k, predicted = brt_pred_model_wd_k_c)
 
-# shannon index and velocity + wd
-rmse_wd_s <- rmse(actual = responses_wd_s, predicted = brt_pred_wd_s)
-rmse_model_wd_s <- rmse(actual = responses_wd_s, predicted = brt_pred_model_wd_s)
-rmse_model_wd_s_c <- rmse(actual = responses_wd_s, predicted = brt_pred_model_wd_s_c)
+# With shannon index as response
+rmse_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = brt_pred_wd_s)
+rmse_model_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = brt_pred_model_wd_s)
+rmse_model_wd_s_c <- Metrics::rmse(actual = responses_wd_s, predicted = brt_pred_model_wd_s_c)
 
-mae_wd_s <- mae(actual = responses_wd_s, predicted = brt_pred_wd_s)
-mae_model_wd_s <- mae(actual = responses_wd_s, predicted = brt_pred_model_wd_s)
-mae_model_wd_s_c <- mae(actual = responses_wd_s, predicted = brt_pred_model_wd_s_c)
+mae_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = brt_pred_wd_s)
+mae_model_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = brt_pred_model_wd_s)
+mae_model_wd_s_c <- Metrics::mae(actual = responses_wd_s, predicted = brt_pred_model_wd_s_c)
 
-# abundance and velocity + wd
-rmse_wd_a <- rmse(actual = responses_wd_a, predicted = brt_pred_wd_a)
-rmse_model_wd_a <- rmse(actual = responses_wd_a, predicted = brt_pred_model_wd_a)
-rmse_model_wd_a_c <- rmse(actual = responses_wd_a, predicted = brt_pred_model_wd_a_c)
+# With abundance as response
+rmse_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = brt_pred_wd_a)
+rmse_model_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = brt_pred_model_wd_a)
+rmse_model_wd_a_c <- Metrics::rmse(actual = responses_wd_a, predicted = brt_pred_model_wd_a_c)
 
-mae_wd_a <- mae(actual = responses_wd_a, predicted = brt_pred_wd_a)
-mae_model_wd_a <- mae(actual = responses_wd_a, predicted = brt_pred_model_wd_a)
-mae_model_wd_a_c <- mae(actual = responses_wd_a, predicted = brt_pred_model_wd_a_c)
+mae_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = brt_pred_wd_a)
+mae_model_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = brt_pred_model_wd_a)
+mae_model_wd_a_c <- Metrics::mae(actual = responses_wd_a, predicted = brt_pred_model_wd_a_c)
 
-# relative abundance and velocity + wd
-rmse_wd_ra <- rmse(actual = responses_wd_ra, predicted = brt_pred_wd_ra)
-rmse_model_wd_ra <- rmse(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra)
-rmse_model_wd_ra_c <- rmse(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra_c)
+# With rel_abundance as response
+rmse_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = brt_pred_wd_ra)
+rmse_model_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra)
+rmse_model_wd_ra_c <- Metrics::rmse(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra_c)
 
-mae_wd_ra <- mae(actual = responses_wd_ra, predicted = brt_pred_wd_ra)
-mae_model_wd_ra <- mae(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra)
-mae_model_wd_ra_c <- mae(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra_c)
+mae_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = brt_pred_wd_ra)
+mae_model_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra)
+mae_model_wd_ra_c <- Metrics::mae(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra_c)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
-rmse_samp_k <- rmse(actual = responses_samp_k, predicted = brt_pred_samp_k)
-rmse_model_samp_k <- rmse(actual = responses_samp_k, predicted = brt_pred_model_samp_k)
-rmse_model_samp_k_c <- rmse(actual = responses_samp_k, predicted = brt_pred_model_samp_k_c)
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
+rmse_samp_k <- Metrics::rmse(actual = responses_samp_k, predicted = brt_pred_samp_k)
+rmse_model_samp_k <- Metrics::rmse(actual = responses_samp_k, predicted = brt_pred_model_samp_k)
+rmse_model_samp_k_c <- Metrics::rmse(actual = responses_samp_k, predicted = brt_pred_model_samp_k_c)
 
-mae_samp_k <- mae(actual = responses_samp_k, predicted = brt_pred_samp_k)
-mae_model_samp_k <- mae(actual = responses_samp_k, predicted = brt_pred_model_samp_k)
-mae_model_samp_k_c <- mae(actual = responses_samp_k, predicted = brt_pred_model_samp_k_c)
+mae_samp_k <- Metrics::mae(actual = responses_samp_k, predicted = brt_pred_samp_k)
+mae_model_samp_k <- Metrics::mae(actual = responses_samp_k, predicted = brt_pred_model_samp_k)
+mae_model_samp_k_c <- Metrics::mae(actual = responses_samp_k, predicted = brt_pred_model_samp_k_c)
 
-# shannon index and sampling locations
-rmse_samp_s <- rmse(actual = responses_samp_s, predicted = brt_pred_samp_s)
-rmse_model_samp_s <- rmse(actual = responses_samp_s, predicted = brt_pred_model_samp_s)
-rmse_model_samp_s_c <- rmse(actual = responses_samp_s, predicted = brt_pred_model_samp_s_c)
+# With shannon index as response
+rmse_samp_s <- Metrics::rmse(actual = responses_samp_s, predicted = brt_pred_samp_s)
+rmse_model_samp_s <- Metrics::rmse(actual = responses_samp_s, predicted = brt_pred_model_samp_s)
+rmse_model_samp_s_c <- Metrics::rmse(actual = responses_samp_s, predicted = brt_pred_model_samp_s_c)
 
-mae_samp_s <- mae(actual = responses_samp_s, predicted = brt_pred_samp_s)
-mae_model_samp_s <- mae(actual = responses_samp_s, predicted = brt_pred_model_samp_s)
-mae_model_samp_s_c <- mae(actual = responses_samp_s, predicted = brt_pred_model_samp_s_c)
+mae_samp_s <- Metrics::mae(actual = responses_samp_s, predicted = brt_pred_samp_s)
+mae_model_samp_s <- Metrics::mae(actual = responses_samp_s, predicted = brt_pred_model_samp_s)
+mae_model_samp_s_c <- Metrics::mae(actual = responses_samp_s, predicted = brt_pred_model_samp_s_c)
 
-# abundance and sampling locations
-rmse_samp_a <- rmse(actual = responses_samp_a, predicted = brt_pred_samp_a)
-rmse_model_samp_a <- rmse(actual = responses_samp_a, predicted = brt_pred_model_samp_a)
-rmse_model_samp_a_c <- rmse(actual = responses_samp_a, predicted = brt_pred_model_samp_a_c)
+# With abundance as response
+rmse_samp_a <- Metrics::rmse(actual = responses_samp_a, predicted = brt_pred_samp_a)
+rmse_model_samp_a <- Metrics::rmse(actual = responses_samp_a, predicted = brt_pred_model_samp_a)
+rmse_model_samp_a_c <- Metrics::rmse(actual = responses_samp_a, predicted = brt_pred_model_samp_a_c)
 
-mae_samp_a <- mae(actual = responses_samp_a, predicted = brt_pred_samp_a)
-mae_model_samp_a <- mae(actual = responses_samp_a, predicted = brt_pred_model_samp_a)
-mae_model_samp_a_c <- mae(actual = responses_samp_a, predicted = brt_pred_model_samp_a_c)
+mae_samp_a <- Metrics::mae(actual = responses_samp_a, predicted = brt_pred_samp_a)
+mae_model_samp_a <- Metrics::mae(actual = responses_samp_a, predicted = brt_pred_model_samp_a)
+mae_model_samp_a_c <- Metrics::mae(actual = responses_samp_a, predicted = brt_pred_model_samp_a_c)
 
-# relative abundance and sampling locations
-rmse_samp_ra <- rmse(actual = responses_samp_ra, predicted = brt_pred_samp_ra)
-rmse_model_samp_ra <- rmse(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra)
-rmse_model_samp_ra_c <- rmse(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra_c)
+# With rel_abundance as response
+rmse_samp_ra <- Metrics::rmse(actual = responses_samp_ra, predicted = brt_pred_samp_ra)
+rmse_model_samp_ra <- Metrics::rmse(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra)
+rmse_model_samp_ra_c <- Metrics::rmse(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra_c)
 
-mae_samp_ra <- mae(actual = responses_samp_ra, predicted = brt_pred_samp_ra)
-mae_model_samp_ra <- mae(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra)
-mae_model_samp_ra_c <- mae(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra_c)
+mae_samp_ra <- Metrics::mae(actual = responses_samp_ra, predicted = brt_pred_samp_ra)
+mae_model_samp_ra <- Metrics::mae(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra)
+mae_model_samp_ra_c <- Metrics::mae(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
-rmse_sec_k <- rmse(actual = responses_sec_k, predicted = brt_pred_sec_k)
-rmse_model_sec_k <- rmse(actual = responses_sec_k, predicted = brt_pred_model_sec_k)
-rmse_model_sec_k_c <- rmse(actual = responses_sec_k, predicted = brt_pred_model_sec_k_c)
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+rmse_sec_k <- Metrics::rmse(actual = responses_sec_k, predicted = brt_pred_sec_k)
+rmse_model_sec_k <- Metrics::rmse(actual = responses_sec_k, predicted = brt_pred_model_sec_k)
+rmse_model_sec_k_c <- Metrics::rmse(actual = responses_sec_k, predicted = brt_pred_model_sec_k_c)
 
-mae_sec_k <- mae(actual = responses_sec_k, predicted = brt_pred_sec_k)
-mae_model_sec_k <- mae(actual = responses_sec_k, predicted = brt_pred_model_sec_k)
-mae_model_sec_k_c <- mae(actual = responses_sec_k, predicted = brt_pred_model_sec_k_c)
+mae_sec_k <- Metrics::mae(actual = responses_sec_k, predicted = brt_pred_sec_k)
+mae_model_sec_k <- Metrics::mae(actual = responses_sec_k, predicted = brt_pred_model_sec_k)
+mae_model_sec_k_c <- Metrics::mae(actual = responses_sec_k, predicted = brt_pred_model_sec_k_c)
 
-# shannon index and all predictors
-rmse_sec_s <- rmse(actual = responses_sec_s, predicted = brt_pred_sec_s)
-rmse_model_sec_s <- rmse(actual = responses_sec_s, predicted = brt_pred_model_sec_s)
-rmse_model_sec_s_c <- rmse(actual = responses_sec_s, predicted = brt_pred_model_sec_s_c)
+# With shannon index as response
+rmse_sec_s <- Metrics::rmse(actual = responses_sec_s, predicted = brt_pred_sec_s)
+rmse_model_sec_s <- Metrics::rmse(actual = responses_sec_s, predicted = brt_pred_model_sec_s)
+rmse_model_sec_s_c <- Metrics::rmse(actual = responses_sec_s, predicted = brt_pred_model_sec_s_c)
 
-mae_sec_s <- mae(actual = responses_sec_s, predicted = brt_pred_sec_s)
-mae_model_sec_s <- mae(actual = responses_sec_s, predicted = brt_pred_model_sec_s)
-mae_model_sec_s_c <- mae(actual = responses_sec_s, predicted = brt_pred_model_sec_s_c)
+mae_sec_s <- Metrics::mae(actual = responses_sec_s, predicted = brt_pred_sec_s)
+mae_model_sec_s <- Metrics::mae(actual = responses_sec_s, predicted = brt_pred_model_sec_s)
+mae_model_sec_s_c <- Metrics::mae(actual = responses_sec_s, predicted = brt_pred_model_sec_s_c)
 
-# abundance and all predictors
-rmse_sec_a <- rmse(actual = responses_sec_a, predicted = brt_pred_sec_a)
-rmse_model_sec_a <- rmse(actual = responses_sec_a, predicted = brt_pred_model_sec_a)
-rmse_model_sec_a_c <- rmse(actual = responses_sec_a, predicted = brt_pred_model_sec_a_c)
+# With abundance as response
+rmse_sec_a <- Metrics::rmse(actual = responses_sec_a, predicted = brt_pred_sec_a)
+rmse_model_sec_a <- Metrics::rmse(actual = responses_sec_a, predicted = brt_pred_model_sec_a)
+rmse_model_sec_a_c <- Metrics::rmse(actual = responses_sec_a, predicted = brt_pred_model_sec_a_c)
 
-mae_sec_a <- mae(actual = responses_sec_a, predicted = brt_pred_sec_a)
-mae_model_sec_a <- mae(actual = responses_sec_a, predicted = brt_pred_model_sec_a)
-mae_model_sec_a_c <- mae(actual = responses_sec_a, predicted = brt_pred_model_sec_a_c)
+mae_sec_a <- Metrics::mae(actual = responses_sec_a, predicted = brt_pred_sec_a)
+mae_model_sec_a <- Metrics::mae(actual = responses_sec_a, predicted = brt_pred_model_sec_a)
+mae_model_sec_a_c <- Metrics::mae(actual = responses_sec_a, predicted = brt_pred_model_sec_a_c)
 
-# relative abundance and all predictors
-rmse_sec_ra <- rmse(actual = responses_sec_ra, predicted = brt_pred_sec_ra)
-rmse_model_sec_ra <- rmse(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra)
-rmse_model_sec_ra_c <- rmse(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra_c)
+# With rel_abundance as response
+rmse_sec_ra <- Metrics::rmse(actual = responses_sec_ra, predicted = brt_pred_sec_ra)
+rmse_model_sec_ra <- Metrics::rmse(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra)
+rmse_model_sec_ra_c <- Metrics::rmse(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra_c)
 
-mae_sec_ra <- mae(actual = responses_sec_ra, predicted = brt_pred_sec_ra)
-mae_model_sec_ra <- mae(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra)
-mae_model_sec_ra_c <- mae(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra_c)
+mae_sec_ra <- Metrics::mae(actual = responses_sec_ra, predicted = brt_pred_sec_ra)
+mae_model_sec_ra <- Metrics::mae(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra)
+mae_model_sec_ra_c <- Metrics::mae(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra_c)
 ```
 
 ## Bias
 ```{r}
-# install.packages("Fgmutils")
-library(Fgmutils) # for bias calculation (bias() function)
-
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index 
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 bias_v_k <- bias(observados = responses_v_k, estimados = brt_pred_v_k)
 bias_model_v_k <- bias(observados = responses_v_k, estimados = brt_pred_model_v_k)
 bias_model_v_k_c <- bias(observados = responses_v_k, estimados = brt_pred_model_v_k_c)
 
-# shannon index and velocity
+# With shannon index as response
 bias_v_s <- bias(observados = responses_v_s, estimados = brt_pred_v_s)
 bias_model_v_s <- bias(observados = responses_v_s, estimados = brt_pred_model_v_s)
 bias_model_v_s_c <- bias(observados = responses_v_s, estimados = brt_pred_model_v_s_c)
 
-# abundance and velocity
+# With abundance as response
 bias_v_a <- bias(observados = responses_v_a, estimados = brt_pred_v_a)
 bias_model_v_a <- bias(observados = responses_v_a, estimados = brt_pred_model_v_a)
 bias_model_v_a_c <- bias(observados = responses_v_a, estimados = brt_pred_model_v_a_c)
 
-# relative abundance and velocity
+# With rel_abundance as response
 bias_v_ra <- bias(observados = responses_v_ra, estimados = brt_pred_v_ra)
 bias_model_v_ra <- bias(observados = responses_v_ra, estimados = brt_pred_model_v_ra)
 bias_model_v_ra_c <- bias(observados = responses_v_ra, estimados = brt_pred_model_v_ra_c)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 bias_wd_k <- bias(observados = responses_wd_k, estimados = brt_pred_wd_k)
 bias_model_wd_k <- bias(observados = responses_wd_k, estimados = brt_pred_model_wd_k)
 bias_model_wd_k_c <- bias(observados = responses_wd_k, estimados = brt_pred_model_wd_k_c)
 
-# shannon index and velocity + wd
+# With shannon index as response
 bias_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_wd_s)
 bias_model_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s)
 bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s_c)
 
-# abundance and velocity + wd
+# With abundance as response
 bias_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_wd_a)
 bias_model_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a)
 bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a_c)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 bias_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_wd_ra)
 bias_model_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra)
 bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra_c)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 bias_samp_k <- bias(observados = responses_samp_k, estimados = brt_pred_samp_k)
 bias_model_samp_k <- bias(observados = responses_samp_k, estimados = brt_pred_model_samp_k)
 bias_model_samp_k_c <- bias(observados = responses_samp_k, estimados = brt_pred_model_samp_k_c)
 
-# shannon index and sampling locations
+# With shannon index as response
 bias_samp_s <- bias(observados = responses_samp_s, estimados = brt_pred_samp_s)
 bias_model_samp_s <- bias(observados = responses_samp_s, estimados = brt_pred_model_samp_s)
 bias_model_samp_s_c <- bias(observados = responses_samp_s, estimados = brt_pred_model_samp_s_c)
 
-# abundance and sampling locations
+# With abundance as response
 bias_samp_a <- bias(observados = responses_samp_a, estimados = brt_pred_samp_a)
 bias_model_samp_a <- bias(observados = responses_samp_a, estimados = brt_pred_model_samp_a)
 bias_model_samp_a_c <- bias(observados = responses_samp_a, estimados = brt_pred_model_samp_a_c)
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 bias_samp_ra <- bias(observados = responses_samp_ra, estimados = brt_pred_samp_ra)
 bias_model_samp_ra <- bias(observados = responses_samp_ra, estimados = brt_pred_model_samp_ra)
 bias_model_samp_ra_c <- bias(observados = responses_samp_ra, estimados = brt_pred_model_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 bias_sec_k <- bias(observados = responses_sec_k, estimados = brt_pred_sec_k)
 bias_model_sec_k <- bias(observados = responses_sec_k, estimados = brt_pred_model_sec_k)
 bias_model_sec_k_c <- bias(observados = responses_sec_k, estimados = brt_pred_model_sec_k_c)
 
-# shannon index and all predictors
+# With shannon index as response
 bias_sec_s <- bias(observados = responses_sec_s, estimados = brt_pred_sec_s)
 bias_model_sec_s <- bias(observados = responses_sec_s, estimados = brt_pred_model_sec_s)
 bias_model_sec_s_c <- bias(observados = responses_sec_s, estimados = brt_pred_model_sec_s_c)
 
-# abundance and all predictors
+# With abundance as response
 bias_sec_a <- bias(observados = responses_sec_a, estimados = brt_pred_sec_a)
 bias_model_sec_a <- bias(observados = responses_sec_a, estimados = brt_pred_model_sec_a)
 bias_model_sec_a_c <- bias(observados = responses_sec_a, estimados = brt_pred_model_sec_a_c)
 
-# relative abundance and all predictors
+# With rel_abundance as response
 bias_sec_ra <- bias(observados = responses_sec_ra, estimados = brt_pred_sec_ra)
 bias_model_sec_ra <- bias(observados = responses_sec_ra,  estimados = brt_pred_model_sec_ra)
 bias_model_sec_ra_c <- bias(observados = responses_sec_ra, estimados = brt_pred_model_sec_ra_c)
 ```
 
-
-## NSE
-https://search.r-project.org/CRAN/refmans/hydroGOF/html/NSE.html
+## Nash-Sutcliffe efficiency (NSE) 
 ```{r}
-#install.packages("hydroGOF")
-library(hydroGOF) # for NSE calculation with NSE() function 
-# Calculate the NSE
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 nse_v_k <- NSE(sim = brt_pred_v_k, obs = responses_v_k)
 nse_model_v_k <- NSE(sim = brt_pred_model_v_k, obs = responses_v_k)
 nse_model_v_k_c <- NSE(sim = brt_pred_model_v_k_c, obs = responses_v_k)
 
-# shannon index and velocity
+# With shannon index as response
 nse_v_s <- NSE(sim = brt_pred_v_s, obs = responses_v_s)
 nse_model_v_s <- NSE(sim = brt_pred_model_v_s, obs = responses_v_s)
 nse_model_v_s_c <- NSE(sim = brt_pred_model_v_s_c, obs = responses_v_s)
 
-# abundance and velocity
+# With abundance as response
 nse_v_a <- NSE(sim = brt_pred_v_a, obs = responses_v_a)
 nse_model_v_a <- NSE(sim = brt_pred_model_v_a, obs = responses_v_a)
 nse_model_v_a_c <- NSE(sim = brt_pred_model_v_a_c, obs = responses_v_a)
 
-# relative abundance and velocity
+# With rel_abundance as response
 nse_v_ra <- NSE(sim = brt_pred_v_ra, obs = responses_v_ra)
 nse_model_v_ra <- NSE(sim = brt_pred_model_v_ra, obs = responses_v_ra)
 nse_model_v_ra_c <- NSE(sim = brt_pred_model_v_ra_c, obs = responses_v_ra)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 nse_wd_k <- NSE(sim = brt_pred_wd_k, obs = responses_wd_k)
 nse_model_wd_k <- NSE(sim = brt_pred_model_wd_k, obs = responses_wd_k)
 nse_model_wd_k_c <- NSE(sim = brt_pred_model_wd_k_c, obs = responses_wd_k)
 
-# shannon index and velocity + wd
+# With shannon index as response
 nse_wd_s <- NSE(sim = brt_pred_wd_s, obs = responses_wd_s)
 nse_model_wd_s <- NSE(sim = brt_pred_model_wd_s, obs = responses_wd_s)
 nse_model_wd_s_c <- NSE(sim = brt_pred_model_wd_s_c, obs = responses_wd_s)
 
-# abundance and velocity + wd
+# With abundance as response
 nse_wd_a <- NSE(sim = brt_pred_wd_a, obs = responses_wd_a)
 nse_model_wd_a <- NSE(sim = brt_pred_model_wd_a, obs = responses_wd_a)
 nse_model_wd_a_c <- NSE(sim = brt_pred_model_wd_a_c, obs = responses_wd_a)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 nse_wd_ra <- NSE(sim = brt_pred_wd_ra, obs = responses_wd_ra)
 nse_model_wd_ra <- NSE(sim = brt_pred_model_wd_ra, obs = responses_wd_ra)
 nse_model_wd_ra_c <- NSE(sim = brt_pred_model_wd_ra_c, obs = responses_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 nse_samp_k <- NSE(sim = brt_pred_samp_k, obs = responses_samp_k)
 nse_model_samp_k <- NSE(sim = brt_pred_model_samp_k, obs = responses_samp_k)
 nse_model_samp_k_c <- NSE(sim = brt_pred_model_samp_k_c, obs = responses_samp_k)
 
-# shannon index and sampling locations
+# With shannon index as response
 nse_samp_s <- NSE(sim = brt_pred_samp_s, obs = responses_samp_s)
 nse_model_samp_s <- NSE(sim = brt_pred_model_samp_s, obs = responses_samp_s)
 nse_model_samp_s_c <- NSE(sim = brt_pred_model_samp_s_c, obs = responses_samp_s)
 
-# abundance and sampling locations
+# With abundance as response
 nse_samp_a <- NSE(sim = brt_pred_samp_a, obs = responses_samp_a)
 nse_model_samp_a <- NSE(sim = brt_pred_model_samp_a, obs = responses_samp_a)
 nse_model_samp_a_c <- NSE(sim = brt_pred_model_samp_a_c, obs = responses_samp_a)
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 nse_samp_ra <- NSE(sim = brt_pred_samp_ra, obs = responses_samp_ra)
 nse_model_samp_ra <- NSE(sim = brt_pred_model_samp_ra, obs = responses_samp_ra)
 nse_model_samp_ra_c <- NSE(sim = brt_pred_model_samp_ra_c, obs = responses_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 nse_sec_k <- NSE(sim = brt_pred_sec_k, obs = responses_sec_k)
 nse_model_sec_k <- NSE(sim = brt_pred_model_sec_k, obs = responses_sec_k)
 nse_model_sec_k_c <- NSE(sim = brt_pred_model_sec_k_c, obs = responses_sec_k)
 
-# shannon index and all predictors
+# With shannon index as response
 nse_sec_s <- NSE(sim = brt_pred_sec_s, obs = responses_sec_s)
 nse_model_sec_s <- NSE(sim = brt_pred_model_sec_s, obs = responses_sec_s)
 nse_model_sec_s_c <- NSE(sim = brt_pred_model_sec_s_c, obs = responses_sec_s)
 
-# abundance and all predictors
+# With abundance as response
 nse_sec_a <- NSE(sim = brt_pred_sec_a, obs = responses_sec_a)
 nse_model_sec_a <- NSE(sim = brt_pred_model_sec_a, obs = responses_sec_a)
 nse_model_sec_a_c <- NSE(sim = brt_pred_model_sec_a_c, obs = responses_sec_a)
 
-# relative abundance and all predictors
+# With rel_abundance as response
 nse_sec_ra <- NSE(sim = brt_pred_sec_ra, obs = responses_sec_ra)
 nse_model_sec_ra <- NSE(sim = brt_pred_model_sec_ra, obs = responses_sec_ra)
 nse_model_sec_ra_c <- NSE(sim = brt_pred_model_sec_ra_c, obs = responses_sec_ra)
