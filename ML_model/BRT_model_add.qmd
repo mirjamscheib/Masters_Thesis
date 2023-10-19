@@ -878,7 +878,7 @@ autotuner_xbrt_sec_a$tuning_result
 autotuner_xbrt_sec_ra$tuning_result
 ```
 
-# XGBOOST models 
+# Xgboost models 
 ## Specify Matrix
 ### Training Sets
 ```{r}
@@ -1026,7 +1026,7 @@ testx_sec_ra <- model.matrix(rel_abundance ~ ., data = test_sec_ra)
 testx_sec_ra_c <- model.matrix(rel_abundance ~ ., data = test_sec_ra_c)
 ```
 
-## XGBOOST w/ coordinates
+## Xgboost w/ coordinates
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
@@ -1209,7 +1209,7 @@ xgb_sec_ra <- xgboost(data = data.matrix(trainx_sec_ra[ ,-1]),
                      objective = "reg:linear")
 ```
 
-## XGBOOST w/o coordinates
+## Xgboost w/o coordinates
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
@@ -1392,7 +1392,7 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
                      objective = "reg:linear")
 ```
 
-# Model Evaluation 
+# ! Model Evaluation 
 ## Variable Importance
 Gain is the improvement in accuracy brought by a feature to the branches it is on. The idea is that before adding a new split on a feature X to the branch there were some wrongly classified elements; after adding the split on this feature, there are two new branches, and each of these branches is more accurate (one branch saying if your observation is on this branch then it should be classified as 1, and the other branch saying the exact opposite).
 

@@ -988,193 +988,186 @@ autotuner_rf_sec_a$tuning_result
 autotuner_rf_sec_ra$tuning_result
 ```
 
-## Make models 
-### w/ coordinates 
+# Ranger Models 
+## Ranger w/ coordinates 
 ```{r}
-# Create and train the random forest model with only velocity
-# VELOCITY AS PREDICTOR
-# for k_index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2059293            10          <list[4]> <list[3]> 0.1413796
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2059293            10                  
 rf_model_v_k <- ranger(formula = k_index ~., data = training_v_k, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10, importance = "impurity")
 
-# for shannon index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2426534             7          <list[4]> <list[3]> 0.5703676
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2426534             7                   
 rf_model_v_s <- ranger(formula = shannon ~., data = training_v_s, mtry = 1, sample.fraction = 0.2426534, min.node.size = 7, importance = "impurity")
 
-# for abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.3763677             9          <list[4]> <list[3]>  741.6989
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3763677             9                 
 rf_model_v_a <- ranger(formula = abundance ~., data = training_v_a, mtry = 1, sample.fraction = 0.3763677, min.node.size = 9, importance = "impurity")
 
-# for relative abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[5]> <list[3]> 0.2023601
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2451874             9                   
 rf_model_v_ra <- ranger(formula = rel_abundance ~., data = training_v_ra, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
 
-# Create and train the random forest model with velocity + wd
-# VELOCITY + WD AS PREDICTORS 
-# for k_index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[4]> <list[3]> 0.1371224
-rf_model_wd_k <- ranger(formula = k_index ~., data = training_wd_k, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+#  mtry sample.fraction min.node.size 
+#1:  1       0.2051194             4                 
+rf_model_wd_k <- ranger(formula = k_index ~., data = training_wd_k, mtry = 1, sample.fraction = 0.2051194, min.node.size = 4, importance = "impurity")
 
-# for shannon index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2019869             6          <list[4]> <list[3]> 0.5556115
-rf_model_wd_s <- ranger(formula = shannon ~., data = training_wd_s, mtry = 1, sample.fraction = 0.2019869, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2068668             5                   
+rf_model_wd_s <- ranger(formula = shannon ~., data = training_wd_s, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
 
-# for abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2068668             5          <list[4]> <list[3]>  730.9148
-rf_model_wd_a <- ranger(formula = abundance ~., data = training_wd_a, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2247722             6                    
+rf_model_wd_a <- ranger(formula = abundance ~., data = training_wd_a, mtry = 1, sample.fraction = 0.2247722, min.node.size = 6, importance = "impurity")
 
-# for relative abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2172103             9          <list[5]> <list[3]> 0.1853219
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2172103             9                   
 rf_model_wd_ra <- ranger(formula = rel_abundance ~., data = training_wd_ra, mtry = 1, sample.fraction = 0.2172103, min.node.size = 9, importance = "impurity")
 
-# Create and train the random forest model with sampling locations
-# SAMPLING LOCATIONS AS PREDICTORS 
-# for k_index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.4889214             9          <list[5]> <list[3]> 0.1445254
-rf_model_samp_k <- ranger(formula = k_index ~., data = training_samp_k, mtry = 1, sample.fraction = 0.4889214, min.node.size = 9, importance = "impurity")
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3387031             5                  
+rf_model_samp_k <- ranger(formula = k_index ~., data = training_samp_k, mtry = 1, sample.fraction = 0.3387031, min.node.size = 5, importance = "impurity")
 
-# for shannon index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7329741             6          <list[5]> <list[3]> 0.6053854
-rf_model_samp_s <- ranger(formula = shannon ~., data = training_samp_s, mtry = 4, sample.fraction = 0.7329741, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    8       0.3110138             4                   
+rf_model_samp_s <- ranger(formula = shannon ~., data = training_samp_s, mtry = 8, sample.fraction = 0.3110138, min.node.size = 4, importance = "impurity")
 
-# for abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7439564             1          <list[5]> <list[3]>  789.2746
-rf_model_samp_a <- ranger(formula = abundance ~., data = training_samp_a, mtry = 4, sample.fraction = 0.7439564, min.node.size = 1, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    6       0.7228589             2                  
+rf_model_samp_a <- ranger(formula = abundance ~., data = training_samp_a, mtry = 6, sample.fraction = 0.7228589, min.node.size = 2, importance = "impurity")
 
-# for relative abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    2         0.52377             8          <list[5]> <list[3]> 0.1930686
-rf_model_samp_ra <- ranger(formula = rel_abundance ~., data = training_samp_ra, mtry = 2, sample.fraction = 0.52377, min.node.size = 8, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    9       0.8202065             2                    
+rf_model_samp_ra <- ranger(formula = rel_abundance ~., data = training_samp_ra, mtry = 9, sample.fraction = 0.8202065, min.node.size = 2, importance = "impurity")
 
-# Create and train the random forest model with all predictors possible
-# WITH ALL PREDICTORS 
-# for k_index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   27       0.8202065             2          <list[5]> <list[3]> 0.0533179
-rf_model_sec_k <- ranger(formula = k_index ~., data = training_sec_k, mtry = 27, sample.fraction = 0.8202065, min.node.size = 2, importance = "impurity")
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2253738             7                  
+rf_model_sec_k <- ranger(formula = k_index ~., data = training_sec_k, mtry = 4, sample.fraction = 0.2253738, min.node.size = 7, importance = "impurity")
 
-# for shannon index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   35       0.8171567             6          <list[5]> <list[3]> 0.6060034
-rf_model_sec_s <- ranger(formula = shannon ~., data = training_sec_s, mtry = 35, sample.fraction = 0.8171567, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3062136             4                  
+rf_model_sec_s <- ranger(formula = shannon ~., data = training_sec_s, mtry = 1, sample.fraction = 0.3062136, min.node.size = 4, importance = "impurity")
 
-# for abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   36       0.7833582             2          <list[5]> <list[3]>  635.7558
-rf_model_sec_a <- ranger(formula = abundance ~., data = training_sec_a, mtry = 36, sample.fraction = 0.7833582, min.node.size = 2, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.4203471            10                   
+rf_model_sec_a <- ranger(formula = abundance ~., data = training_sec_a, mtry = 1, sample.fraction = 0.4203471, min.node.size = 10, importance = "impurity")
 
-# for relative abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   16       0.3304285             6          <list[5]> <list[3]> 0.1867454
-rf_model_sec_ra <- ranger(formula = rel_abundance ~., data = training_sec_ra, mtry = 16, sample.fraction = 0.3304285, min.node.size = 6, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.8692302             8                   
+rf_model_sec_ra <- ranger(formula = rel_abundance ~., data = training_sec_ra, mtry = 1, sample.fraction = 0.8692302, min.node.size = 8, importance = "impurity")
 ```
 
-### w/o coordinates 
+## Ranger w/o coordinates 
 ```{r}
-# Create and train the random forest model with only velocity
-# VELOCITY AS PREDICTOR
-# for k_index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2059293            10          <list[4]> <list[3]> 0.1413796
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2059293            10                  
 rf_model_v_k_c <- ranger(formula = k_index ~., data = training_v_k_c, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10, importance = "impurity")
 
-# for shannon index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2426534             7          <list[4]> <list[3]> 0.5703676
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2426534             7                   
 rf_model_v_s_c <- ranger(formula = shannon ~., data = training_v_s_c, mtry = 1, sample.fraction = 0.2426534, min.node.size = 7, importance = "impurity")
 
-# for abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.3763677             9          <list[4]> <list[3]>  741.6989
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3763677             9                 
 rf_model_v_a_c <- ranger(formula = abundance ~., data = training_v_a_c, mtry = 1, sample.fraction = 0.3763677, min.node.size = 9, importance = "impurity")
 
-# for relative abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[5]> <list[3]> 0.2023601
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2451874             9                   
 rf_model_v_ra_c <- ranger(formula = rel_abundance ~., data = training_v_ra_c, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
 
-# Create and train the random forest model with velocity + wd
-# VELOCITY + WD AS PREDICTORS 
-# for k_index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[4]> <list[3]> 0.1371224
-rf_model_wd_k_c <- ranger(formula = k_index ~., data = training_wd_k_c, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+#  mtry sample.fraction min.node.size 
+#1:  1       0.2051194             4                 
+rf_model_wd_k_c <- ranger(formula = k_index ~., data = training_wd_k_c, mtry = 1, sample.fraction = 0.2051194, min.node.size = 4, importance = "impurity")
 
-# for shannon index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2019869             6          <list[4]> <list[3]> 0.5556115
-rf_model_wd_s_c <- ranger(formula = shannon ~., data = training_wd_s_c, mtry = 1, sample.fraction = 0.2019869, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2068668             5                   
+rf_model_wd_s_c <- ranger(formula = shannon ~., data = training_wd_s_c, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
 
-# for abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2068668             5          <list[4]> <list[3]>  730.9148
-rf_model_wd_a_c <- ranger(formula = abundance ~., data = training_wd_a_c, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2247722             6                    
+rf_model_wd_a_c <- ranger(formula = abundance ~., data = training_wd_a_c, mtry = 1, sample.fraction = 0.2247722, min.node.size = 6, importance = "impurity")
 
-# for relative abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2172103             9          <list[5]> <list[3]> 0.1853219
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2172103             9                   
 rf_model_wd_ra_c <- ranger(formula = rel_abundance ~., data = training_wd_ra_c, mtry = 1, sample.fraction = 0.2172103, min.node.size = 9, importance = "impurity")
 
-# Create and train the random forest model with sampling locations
-# SAMPLING LOCATIONS AS PREDICTORS 
-# for k_index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.4889214             9          <list[5]> <list[3]> 0.1445254
-rf_model_samp_k_c <- ranger(formula = k_index ~., data = training_samp_k_c, mtry = 1, sample.fraction = 0.4889214, min.node.size = 9, importance = "impurity")
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3387031             5                  
+rf_model_samp_k_c <- ranger(formula = k_index ~., data = training_samp_k_c, mtry = 1, sample.fraction = 0.3387031, min.node.size = 5, importance = "impurity")
 
-# for shannon index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7329741             6          <list[5]> <list[3]> 0.6053854
-rf_model_samp_s_c <- ranger(formula = shannon ~., data = training_samp_s_c, mtry = 4, sample.fraction = 0.7329741, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    8       0.3110138             4                   
+rf_model_samp_s_c <- ranger(formula = shannon ~., data = training_samp_s_c, mtry = 8, sample.fraction = 0.3110138, min.node.size = 4, importance = "impurity")
 
-# for abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7439564             1          <list[5]> <list[3]>  789.2746
-rf_model_samp_a_c <- ranger(formula = abundance ~., data = training_samp_a_c, mtry = 4, sample.fraction = 0.7439564, min.node.size = 1, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    6       0.7228589             2                  
+rf_model_samp_a_c <- ranger(formula = abundance ~., data = training_samp_a_c, mtry = 6, sample.fraction = 0.7228589, min.node.size = 2, importance = "impurity")
 
-# for relative abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    2         0.52377             8          <list[5]> <list[3]> 0.1930686
-rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra_c, mtry = 2, sample.fraction = 0.52377, min.node.size = 8, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    9       0.8202065             2                    
+rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra_c, mtry = 9, sample.fraction = 0.8202065, min.node.size = 2, importance = "impurity")
 
-# Create and train the random forest model with all predictors possible
-# WITH ALL PREDICTORS 
-# for k_index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   27       0.8202065             2          <list[5]> <list[3]> 0.0533179
-rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 27, sample.fraction = 0.8202065, min.node.size = 2, importance = "impurity")
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2253738             7                  
+rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 4, sample.fraction = 0.2253738, min.node.size = 7, importance = "impurity")
 
-# for shannon index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   35       0.8171567             6          <list[5]> <list[3]> 0.6060034
-rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 27, sample.fraction = 0.8171567, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3062136             4                  
+rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 1, sample.fraction = 0.3062136, min.node.size = 4, importance = "impurity")
 
-# for abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   36       0.7833582             2          <list[5]> <list[3]>  635.7558
-rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 27, sample.fraction = 0.7833582, min.node.size = 2, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.4203471            10                   
+rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 1, sample.fraction = 0.4203471, min.node.size = 10, importance = "impurity")
 
-# for relative abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   16       0.3304285             6          <list[5]> <list[3]> 0.1867454
-rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 16, sample.fraction = 0.3304285, min.node.size = 6, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.8692302             8                   
+rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 1, sample.fraction = 0.8692302, min.node.size = 8, importance = "impurity")
 ```
 
 # Model Evaluation 
 ## Variable Importance
 ```{r}
-### PREDICTORS: ONLY VELOCITY ###
+### VARIABLE IMPORTANCE FROM RANGER MODELS ### --------------------------------
+### PREDICTOR: ONLY VELOCITY ### ----------------------------------------------
 # w/ coordinates
 vi_v_k <- importance(rf_model_v_k)
 vi_rel_v_k <- vi_v_k/sum(vi_v_k)
@@ -1202,7 +1195,7 @@ vi_v_ra_c <- importance(rf_model_v_ra_c)
 vi_rel_v_ra_c <- vi_v_ra_c/sum(vi_v_ra_c)
 
 
-### PREDICTORS: VELOCITY AND WD ###
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/ coordinates
 vi_wd_k <- importance(rf_model_wd_k)
 vi_rel_wd_k <- vi_wd_k/sum(vi_wd_k)
@@ -1229,7 +1222,7 @@ vi_rel_wd_a_c <- vi_wd_a_c/sum(vi_wd_a_c)
 vi_wd_ra_c <- importance(rf_model_wd_ra_c)
 vi_rel_wd_ra_c <- vi_wd_ra_c/sum(vi_wd_ra_c)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # w/ coordinates
 vi_samp_k <- importance(rf_model_samp_k)
 vi_rel_samp_k <- vi_samp_k/sum(vi_samp_k)
@@ -1256,7 +1249,7 @@ vi_rel_samp_a_c <- vi_samp_a_c/sum(vi_samp_a_c)
 vi_samp_ra_c <- importance(rf_model_samp_ra_c)
 vi_rel_samp_ra_c <- vi_samp_ra_c/sum(vi_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ###
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/ coordinates
 vi_sec_k <- importance(rf_model_sec_k)
 vi_rel_sec_k <- vi_sec_k/sum(vi_sec_k)
@@ -1283,7 +1276,7 @@ vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c)
 vi_sec_ra_c <- importance(rf_model_sec_ra_c)
 vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c)
 
-# bind results together
+# bind results together ------------------------------------------------------
 vi_rf_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra)
 vi_rel_rf_model_v <- rbind(vi_rel_v_k, vi_rel_v_s, vi_rel_v_a, vi_rel_v_ra)
 
@@ -1308,34 +1301,33 @@ vi_rel_rf_model_sec <- rbind(vi_rel_sec_k, vi_rel_sec_s, vi_rel_sec_a, vi_rel_se
 vi_rf_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c)
 vi_rel_rf_model_sec_c <- rbind(vi_rel_sec_k_c, vi_rel_sec_s_c, vi_rel_sec_a_c, vi_rel_sec_ra_c)
 
-# write results into .csv
-write.csv(vi_rf_model_v, "ML_model/vi_rf_model_v_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_v, "ML_model/vi_rel_rf_model_v_add.csv", row.names = FALSE)
+# write results into .csv ------------------------------------------------------
+write.csv(vi_rf_model_v, "ML_model/var_imp/vi_rf_model_v.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_v, "ML_model/var_imp/vi_rel_rf_model_v.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_v_c, "ML_model/vi_rf_model_v_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_v_c, "ML_model/vi_rel_rf_model_v_c_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_v_c, "ML_model/var_imp/vi_rf_model_v_woc.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_v_c, "ML_model/var_imp/vi_rel_rf_model_v_woc.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_wd, "ML_model/vi_rf_model_wd_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_wd, "ML_model/vi_rel_rf_model_wd_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_wd, "ML_model/var_imp/vi_rf_model_wd.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_wd, "ML_model/var_imp/vi_rel_rf_model_wd.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_wd_c, "ML_model/vi_rf_model_wd_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_wd_c, "ML_model/vi_rel_rf_model_wd_c_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_wd_c, "ML_model/var_imp/vi_rf_model_wd_woc.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_wd_c, "ML_model/var_imp/vi_rel_rf_model_wd_woc.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_samp, "ML_model/vi_rf_model_samp_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_samp, "ML_model/vi_rel_rf_model_samp_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_samp, "ML_model/var_imp/vi_rf_model_samp.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_samp, "ML_model/var_imp/vi_rel_rf_model_samp.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_samp_c, "ML_model/vi_rf_model_samp_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_samp_c, "ML_model/vi_rel_rf_model_samp_c_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_samp_c, "ML_model/var_imp/vi_rf_model_samp_woc.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_samp_c, "ML_model/var_imp/vi_rel_rf_model_samp_woc.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_sec, "ML_model/vi_rf_model_sec_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_sec, "ML_model/vi_rel_rf_model_sec_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_sec, "ML_model/var_imp/vi_rf_model_sec.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_sec, "ML_model/var_imp/vi_rel_rf_model_sec.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_sec_c, "ML_model/vi_rf_model_sec_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_sec_c, "ML_model/vi_rel_rf_model_sec_c_add.csv", row.names = FALSE)
-```
+write.csv(vi_rf_model_sec_c, "ML_model/var_imp/vi_rf_model_sec_woc.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_sec_c, "ML_model/var_imp/vi_rel_rf_model_sec_woc.csv", row.names = FALSE)
 
-```{r}
-### PREDICTORS: ONLY VELOCITY ###
+### VARIABLE IMPORTANCE FROM AUTOTUNER ### ------------------------------------
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
 var_imp_rf_v_k <- autotuner_rf_v_k$importance()
 var_rel_imp_rf_v_k <- var_imp_rf_v_k/sum(var_imp_rf_v_k)
 
@@ -1348,7 +1340,7 @@ var_rel_imp_rf_v_a <- var_imp_rf_v_a/sum(var_imp_rf_v_a)
 var_imp_rf_v_ra <- autotuner_rf_v_ra$importance()
 var_rel_imp_rf_v_ra <- var_imp_rf_v_ra/sum(var_imp_rf_v_ra)
 
-### PREDICTORS: VELOCITY AND WD ###
+### PREDICTORS: VELOCITY AND WD ### -------------------------------------------
 var_imp_rf_wd_k <- autotuner_rf_wd_k$importance()
 var_rel_imp_rf_wd_k <- var_imp_rf_wd_k/sum(var_imp_rf_wd_k)
 
@@ -1361,7 +1353,7 @@ var_rel_imp_rf_wd_a <- var_imp_rf_wd_a/sum(var_imp_rf_wd_a)
 var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance()
 var_rel_imp_rf_wd_ra <- var_imp_rf_wd_ra/sum(var_imp_rf_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 var_imp_rf_samp_k <- autotuner_rf_samp_k$importance()
 var_rel_imp_rf_samp_k <- var_imp_rf_samp_k/sum(var_imp_rf_samp_k)
 
@@ -1374,7 +1366,7 @@ var_rel_imp_rf_samp_a <- var_imp_rf_samp_a/sum(var_imp_rf_samp_a)
 var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance()
 var_rel_imp_rf_samp_ra <- var_imp_rf_samp_ra/sum(var_imp_rf_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 var_imp_rf_sec_k <- autotuner_rf_sec_k$importance()
 var_rel_imp_rf_sec_k <- var_imp_rf_sec_k/sum(var_imp_rf_sec_k)
 
@@ -1387,7 +1379,7 @@ var_rel_imp_rf_sec_a <- var_imp_rf_sec_a/sum(var_imp_rf_sec_a)
 var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance()
 var_rel_imp_rf_sec_ra <- var_imp_rf_sec_ra/sum(var_imp_rf_sec_ra)
 
-# bind results together
+# bind results together -------------------------------------------------------
 vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra)
 vi_rel_rf_v <- rbind(var_rel_imp_rf_v_k, var_rel_imp_rf_v_s, var_rel_imp_rf_v_a, var_rel_imp_rf_v_ra)
 
@@ -1400,185 +1392,1463 @@ vi_rel_rf_samp <- rbind(var_rel_imp_rf_samp_k, var_rel_imp_rf_samp_s, var_rel_im
 vi_rf_sec <- rbind(var_imp_rf_sec_k, var_imp_rf_sec_s, var_imp_rf_sec_a, var_imp_rf_sec_ra)
 vi_rel_rf_sec <- rbind(var_rel_imp_rf_sec_k, var_rel_imp_rf_sec_s, var_rel_imp_rf_sec_a, var_rel_imp_rf_sec_ra)
 
-# write results into .csv
-write.csv(vi_rf_v, "ML_model/vi_rf_v_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_v, "ML_model/vi_rel_rf_v_add.csv", row.names = FALSE)
+# write results into .csv -----------------------------------------------------
+write.csv(vi_rf_v, "ML_model/var_imp/vi_rf_v.csv", row.names = FALSE)
+write.csv(vi_rel_rf_v, "ML_model/var_imp/vi_rel_rf_v.csv", row.names = FALSE)
 
-write.csv(vi_rf_wd, "ML_model/vi_rf_wd_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_wd, "ML_model/vi_rel_rf_wd_add.csv", row.names = FALSE)
+write.csv(vi_rf_wd, "ML_model/var_imp/vi_rf_wd.csv", row.names = FALSE)
+write.csv(vi_rel_rf_wd, "ML_model/var_imp/vi_rel_rf_wd.csv", row.names = FALSE)
 
-write.csv(vi_rf_samp, "ML_model/vi_rf_samp_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_samp, "ML_model/vi_rel_rf_samp_add.csv", row.names = FALSE)
+write.csv(vi_rf_samp, "ML_model/var_imp/vi_rf_samp.csv", row.names = FALSE)
+write.csv(vi_rel_rf_samp, "ML_model/var_imp/vi_rel_rf_samp.csv", row.names = FALSE)
 
-write.csv(vi_rf_sec, "ML_model/vi_rf_sec_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_sec, "ML_model/vi_rel_rf_sec_add.csv", row.names = FALSE)
+write.csv(vi_rf_sec, "ML_model/var_imp/vi_rf_sec.csv", row.names = FALSE)
+write.csv(vi_rel_rf_sec, "ML_model/var_imp/vi_rel_rf_sec.csv", row.names = FALSE)
 ```
 
-## - Partial dependence plots
+## ! Partial dependence plots
+### Data extraction 
 ```{r}
-# Create DFs for PDPs
-### PREDICTOR: VELOCITY ###
-### k_index
-#pdp_v_k <- partial(autotuner_rf_v_k, pred.var = c("velocity"))
-pdp_model_v_k <- partial(rf_model_v_k, pred.var = "velocity") |>
-  mutate(model = "ranger")
-pdp_model_v_k_c <- partial(rf_model_v_k_c, pred.var = "velocity") |>
-  mutate(model = "ranger w/o coordinates")
+### PREDICTOR: VELOCITY ### -------------------------------------------------
+# With k_index as response --------------------------------------------------
+### velocity
+#pdp_v_k <- pdp::partial(model, pred.var = "velocity")
+pdp_model_v_k <- pdp::partial(rf_model_v_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
 
-pdp_v_k <- rbind(pdp_model_v_k, pdp_model_v_k_c)
+### x/y
+pdp_model_x_v_k <- pdp::partial(rf_model_v_k, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_v_k <- pdp::partial(rf_model_v_k, pred.var = "y") |>
+  mutate(predictors = "y")
 
-### shannon index
+# With shannon index as response ----------------------------------------------
+### velocity 
 # pdp_v_s <- partial(autotuner_rf_v_s, pred.var = c("velocity"))
-pdp_model_v_s <- partial(rf_model_v_s, pred.var = "velocity") |>
-  mutate(model = "ranger")
-pdp_model_v_s_c <- partial(rf_model_v_s_c, pred.var = "velocity") |>
-  mutate(model = "ranger w/o coordinates")
+pdp_model_v_s <- pdp::partial(rf_model_v_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
 
-pdp_v_s <- rbind(pdp_model_v_s, pdp_model_v_s_c)
+### x/y
+pdp_model_x_v_s <- pdp::partial(rf_model_v_s, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_v_s <- pdp::partial(rf_model_v_s, pred.var = "y") |>
+  mutate(predictors = "y")
 
-### abundance
+# With abundance as response --------------------------------------------------
+### velocity 
 # pdp_v_a <- partial(autotuner_rf_v_a, pred.var = c("velocity"))
-pdp_model_v_a <- partial(rf_model_v_a, pred.var = "velocity") |>
-  mutate(model = "ranger")
-pdp_model_v_a_c <- partial(rf_model_v_a_c, pred.var = "velocity") |>
-  mutate(model = "ranger w/o coordinates")
+pdp_model_v_a <- pdp::partial(rf_model_v_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
 
-pdp_v_a <- rbind(pdp_model_v_a, pdp_model_v_a_c)
+### x/y
+pdp_model_x_v_a <- pdp::partial(rf_model_v_a, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_v_a <- pdp::partial(rf_model_v_a, pred.var = "y") |>
+  mutate(predictors = "y")
 
-### relative abundance
+# With rel_abundance as response ----------------------------------------------
+### velocity 
 # pdp_v_ra <- partial(autotuner_rf_v_ra, pred.var = c("velocity"))
-pdp_model_v_ra <- partial(rf_model_v_ra, pred.var = "velocity") |>
-  mutate(model = "ranger")
-pdp_model_v_ra_c <- partial(rf_model_v_ra_c, pred.var = "velocity") |>
-  mutate(model = "ranger w/o coordinates")
+pdp_model_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
 
-pdp_v_ra <- rbind(pdp_model_v_ra, pdp_model_v_ra_c)
+### x/y
+pdp_model_x_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### PREDICTORS: VELOCITY + WD ### --------------------------------------------
+# With k_index as response ---------------------------------------------------
+### velocity 
+#pdp_v_k <- pdp::partial(model, pred.var = "velocity")
+pdp_model_v_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x/y
+pdp_model_x_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "y") |>
+  mutate(predictors = "y")
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+# pdp_v_s <- partial(autotuner_rf_v_s, pred.var = c("velocity"))
+pdp_model_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m
+pdp_model_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x/y
+pdp_model_x_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "y") |>
+  mutate(predictors = "y")
+
+# With abundance as response --------------------------------------------------
+### velocity 
+# pdp_v_a <- partial(autotuner_rf_v_a, pred.var = c("velocity"))
+pdp_model_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x/y
+pdp_model_x_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "y") |>
+  mutate(predictors = "y")
+
+# With rel_abundance as response ---------------------------------------------
+### velocity
+# pdp_v_ra <- partial(autotuner_rf_v_ra, pred.var = c("velocity"))
+pdp_model_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x/y
+pdp_model_x_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
+# With k_index as response ---------------------------------------------------
+### velocity 
+#pdp_v_k <- pdp::partial(model, pred.var = "velocity")
+pdp_model_v_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type
+pdp_model_sub_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_clog_3_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+# pdp_v_s <- partial(autotuner_rf_v_s, pred.var = c("velocity"))
+pdp_model_v_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover
+pdp_model_cc_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_clog_3_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+# With abundance as response --------------------------------------------------
+### velocity 
+# pdp_v_a <- partial(autotuner_rf_v_a, pred.var = c("velocity"))
+pdp_model_v_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_clog_3_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+# With rel_abundance as response ----------------------------------------------
+### velocity 
+# pdp_v_ra <- partial(autotuner_rf_v_ra, pred.var = c("velocity"))
+pdp_model_v_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y
+pdp_model_x_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type
+pdp_model_sub_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_clog_3_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response ----------------------------------------------------
+### velocity 
+#pdp_v_k <- pdp::partial(model, pred.var = "velocity")
+pdp_model_v_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover
+pdp_model_ac_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### pH_before
+pdp_model_phb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+pdp_model_phb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+
+### pH_during
+pdp_model_phd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+pdp_model_phd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+
+### pH_after
+pdp_model_pha_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+pdp_model_pha_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+
+### conduct_before
+pdp_model_cb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+pdp_model_cb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+
+### conduct_during
+pdp_model_cd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+pdp_model_cd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+
+### conduct_after
+pdp_model_ca_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+pdp_model_ca_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+
+### ox_before
+pdp_model_ob_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+pdp_model_ob_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+
+### ox_during
+pdp_model_od_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+pdp_model_od_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+
+### ox_after
+pdp_model_oa_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+pdp_model_oa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+
+### turb_before
+pdp_model_tb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+pdp_model_tb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+
+### turb_during
+pdp_model_td_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+pdp_model_td_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+
+### turb_after
+pdp_model_ta_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+pdp_model_ta_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+
+### temp_before
+pdp_model_teb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+pdp_model_teb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+
+### temp_during
+pdp_model_ted_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+pdp_model_ted_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+
+### temp_after
+pdp_model_tea_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+pdp_model_tea_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+
+### q_before
+pdp_model_qb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+pdp_model_qb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+
+### q_during
+pdp_model_qd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+pdp_model_qd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+
+### q_after
+pdp_model_qa_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+pdp_model_qa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+
+### gaug_before
+pdp_model_gb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+pdp_model_gb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+
+### gaug_during
+pdp_model_gd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+pdp_model_gd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+
+### gaug_after
+pdp_model_ga_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+pdp_model_ga_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+# pdp_v_s <- partial(autotuner_rf_v_s, pred.var = c("velocity"))
+pdp_model_v_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y
+pdp_model_x_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v
+pdp_model_cv_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_clog_3_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### pH_before
+pdp_model_phb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+pdp_model_phb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+
+### pH_during
+pdp_model_phd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+pdp_model_phd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+
+### pH_after
+pdp_model_pha_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+pdp_model_pha_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+
+### conduct_before
+pdp_model_cb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+pdp_model_cb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+
+### conduct_during
+pdp_model_cd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+pdp_model_cd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+
+### conduct_after
+pdp_model_ca_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+pdp_model_ca_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+
+### ox_before
+pdp_model_ob_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+pdp_model_ob_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+
+### ox_during
+pdp_model_od_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+pdp_model_od_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+
+### ox_after
+pdp_model_oa_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+pdp_model_oa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+
+### turb_before
+pdp_model_tb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+pdp_model_tb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+
+### turb_during
+pdp_model_td_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+pdp_model_td_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+
+### turb_after
+pdp_model_ta_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+pdp_model_ta_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+
+### temp_before
+pdp_model_teb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+pdp_model_teb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+
+### temp_during
+pdp_model_ted_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+pdp_model_ted_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+
+### temp_after
+pdp_model_tea_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+pdp_model_tea_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+
+### q_before
+pdp_model_qb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+pdp_model_qb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+
+### q_during
+pdp_model_qd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+pdp_model_qd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+
+### q_after
+pdp_model_qa_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+pdp_model_qa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+
+### gaug_before
+pdp_model_gb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+pdp_model_gb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+
+### gaug_during
+pdp_model_gd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+pdp_model_gd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+
+### gaug_after
+pdp_model_ga_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+pdp_model_ga_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+
+### abundance --------------------------------------------------------
+### velocity ---------------------------------------------------------
+# pdp_v_a <- partial(autotuner_rf_v_a, pred.var = c("velocity"))
+pdp_model_v_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m -----------------------------------------------------------
+pdp_model_wd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### froude -----------------------------------------------------------
+pdp_model_f_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "froude") |>
+  mutate(predictors = "froude")
+pdp_model_f_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "froude") |>
+  mutate(predictors = "froude_c")
+
+### shear stress ------------------------------------------------------
+pdp_model_s_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress")
+pdp_model_s_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress_c")
+
+### stream power -------------------------------------------------------
+pdp_model_sp_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power")
+pdp_model_sp_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power_c")
+
+### x / y --------------------------------------------------------
+pdp_model_x_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z --------------------------------------------------------
+pdp_model_z_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w --------------------------------------------------------
+pdp_model_dist_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v --------------------------------------------------------
+pdp_model_cv_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover ------------------------------------------------------
+pdp_model_ac_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover ------------------------------------------------------
+pdp_model_mc_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover ------------------------------------------------------
+pdp_model_cc_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 ------------------------------------------------------
+pdp_model_clog_3_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 ------------------------------------------------------
+pdp_model_clog_6_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type ------------------------------------------------------
+pdp_model_sub_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_clog_3_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### relative abundance ------------------------------------------------
+### velocity -----------------------------------------------------------
+# pdp_v_ra <- partial(autotuner_rf_v_ra, pred.var = c("velocity"))
+pdp_model_v_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m -----------------------------------------------------------
+pdp_model_wd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### froude -----------------------------------------------------------
+pdp_model_f_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "froude") |>
+  mutate(predictors = "froude")
+pdp_model_f_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "froude") |>
+  mutate(predictors = "froude_c")
+
+### shear stress -------------------------------------------------------
+pdp_model_s_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress")
+pdp_model_s_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress_c")
+
+### stream power ------------------------------------------------------
+pdp_model_sp_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power")
+pdp_model_sp_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power_c")
+
+### x / y --------------------------------------------------------
+pdp_model_x_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z --------------------------------------------------------
+pdp_model_z_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w --------------------------------------------------------
+pdp_model_dist_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v --------------------------------------------------------
+pdp_model_cv_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover ------------------------------------------------------
+pdp_model_ac_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover ------------------------------------------------------
+pdp_model_mc_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover ------------------------------------------------------
+pdp_model_cc_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 ------------------------------------------------------
+pdp_model_clog_3_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 ------------------------------------------------------
+pdp_model_clog_6_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type ------------------------------------------------------
+pdp_model_sub_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_clog_3_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
 ```
 
 ```{r}
-ggplot(pdp_v_k, aes(velocity, yhat)) + 
-  # yhat ist die response variable (k-index, simpson oder shannon)
-  facet_wrap(~model, scales = "free_x") + 
-  geom_line() + 
-  labs(
-    x = "Velocity (m/s)",
-    y = "k-index"
-  ) +
-  theme_minimal() 
-
-ggplot(pdp_v_s, aes(velocity, yhat)) + 
-  # yhat ist die response variable (k-index, simpson oder shannon)
-  facet_wrap(~model, scales = "free_x") + 
-  geom_line() + 
-  labs(
-    x = "Velocity (m/s)",
-    y = "Shannon Index"
-  ) +
-  theme_minimal() 
-
-ggplot(pdp_v_a, aes(velocity, yhat)) + 
-  # yhat ist die response variable (k-index, simpson oder shannon)
-  facet_wrap(~model, scales = "free_x") + 
-  geom_line() + 
-  labs(
-    x = "Velocity (m/s)",
-    y = "Absolute Abundance"
-  ) +
-  theme_minimal() 
-
-ggplot(pdp_v_ra, aes(velocity, yhat)) + 
-  # yhat ist die response variable (k-index, simpson oder shannon)
-  facet_wrap(~model, scales = "free_x") + 
-  geom_line() + 
-  labs(
-    x = "Velocity (m/s)",
-    y = "Relative Abundance"
-  ) +
-  theme_minimal() 
+importance(rf_model_sec_ra)
 ```
 
+### Plots
+```{r}
+### PREDICTOR VELOCITY ####
+## K_INDEX ##
+p_v_k <- ggplot(pdp_model_v_k, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "k-index",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+p_v_k_c <- ggplot(pdp_model_v_k_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "k-index",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_v_k.png", plot = p_v_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_v_k_c.png", plot = p_v_k_c, width = 6, height = 4)
+
+## SHANNON INDEX ##
+p_s_k <- ggplot(pdp_model_v_s, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+p_s_k_c <- ggplot(pdp_model_v_s_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_s_k.png", plot = p_s_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_s_k_c.png", plot = p_s_k_c, width = 6, height = 4)
+
+## ABUNDANCE ##
+p_a_k <- ggplot(pdp_model_v_a, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+p_a_k_c <- ggplot(pdp_model_v_a_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_a_k.png", plot = p_a_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_a_k_c.png", plot = p_a_k_c, width = 6, height = 4)
+
+## REL ABUNDANCE ##
+pdp_ra_k <- ggplot(pdp_model_v_ra, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+pdp_ra_k_c <- ggplot(pdp_model_v_ra_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ra_k.png", plot = p_ra_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_ra_k_c.png", plot = p_ra_k_c, width = 6, height = 4)
+```
+
+
+```{r}
+### PREDICTOR VELOCITY ####
+## K_INDEX ##
+p_v_k <- ggplot(pdp_model_v_k, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "k-index",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+p_v_k_c <- ggplot(pdp_model_v_k_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "k-index",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_v_k.png", plot = p_v_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_v_k_c.png", plot = p_v_k_c, width = 6, height = 4)
+
+## SHANNON INDEX ##
+p_s_k <- ggplot(pdp_model_v_s, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+p_s_k_c <- ggplot(pdp_model_v_s_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_s_k.png", plot = p_s_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_s_k_c.png", plot = p_s_k_c, width = 6, height = 4)
+
+## ABUNDANCE ##
+p_a_k <- ggplot(pdp_model_v_a, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+p_a_k_c <- ggplot(pdp_model_v_a_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_a_k.png", plot = p_a_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_a_k_c.png", plot = p_a_k_c, width = 6, height = 4)
+
+## REL ABUNDANCE ##
+pdp_ra_k <- ggplot(pdp_model_v_ra, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+pdp_ra_k_c <- ggplot(pdp_model_v_ra_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ra_k.png", plot = p_ra_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_ra_k_c.png", plot = p_ra_k_c, width = 6, height = 4)
+```
 
 ```{r}
 ### PREDICTOR: VELOCITY AND WD ###
 ### k_index
 # pdp_wd_k <- partial(autotuner_rf_wd_k, pred.var = c("velocity"))
-pdp_model_wd_k <- partial(rf_model_wd_k, pred.var = "velocity")
-pdp_model_wd_k_c <- partial(rf_model_wd_k_c, pred.var = "velocity")
+pdp_model_wd_k <- pdp::partial(rf_model_wd_k, pred.var = c("velocity", "wd_m"))
+pdp_model_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = c("velocity", "wd_m")) 
 
 ### shannon index
 # pdp_wd_s <- partial(autotuner_rf_wd_s, pred.var = c("velocity"))
-pdp_model_wd_s <- partial(rf_model_wd_s, pred.var = "velocity")
-pdp_model_wd_s_c <- partial(rf_model_wd_s_c, pred.var = "velocity")
+pdp_model_wd_s <- pdp::partial(rf_model_wd_s, pred.var = c("velocity", "wd_m"))
+pdp_model_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = c("velocity", "wd_m"))
 
 ### abundance
 # pdp_wd_a <- partial(autotuner_rf_wd_a, pred.var = c("velocity"))
-pdp_model_wd_a <- partial(rf_model_wd_a, pred.var = "velocity")
-pdp_model_wd_a_c <- partial(rf_model_wd_a_c, pred.var = "velocity")
+pdp_model_wd_a <- pdp::partial(rf_model_wd_a, pred.var = c("velocity", "wd_m"))
+pdp_model_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = c("velocity", "wd_m"))
 
 ### relative abundance
 # pdp_wd_ra <- partial(autotuner_rf_wd_ra, pred.var = c("velocity"))
-pdp_model_wd_ra <- partial(rf_model_wd_ra, pred.var = "velocity")
-pdp_model_wd_ra_c <- partial(rf_model_wd_ra_c, pred.var = "velocity")
+pdp_model_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = c("velocity", "wd_m"))
+pdp_model_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = c("velocity", "wd_m"))
 ```
+
+```{r}
+### PREDICTOR VELOCITY ####
+## K_INDEX ##
+p_wd_k <- ggplot(pdp_model_wd_k, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "k-index",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+p_wd_k_c <- ggplot(pdp_model_wd_k_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "k-index",
+    title = "Ranger Model wit Coordinates"
+  ) +
+  theme_minimal()
+
+p_wd_v_k <- ggplot(pdp_model_wd_k, aes(wd_m, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "k-index",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+p_wd_v_k_c <- ggplot(pdp_model_wd_k_c, aes(wd_m, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "k-index",
+    title = "Ranger Model wit Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_wd_k.png", plot = p_wd_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_wd_k_c.png", plot = p_wd_k_c, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_wd_v_k.png", plot = p_wd_v_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_wd_v_k_c.png", plot = p_wd_v_k_c, width = 6, height = 4)
+
+## SHANNON INDEX ##
+p_s_k <- ggplot(pdp_model_wd_s, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+p_wd_s_c <- ggplot(pdp_model_wd_s_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_s_k.png", plot = p_s_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_s_k_c.png", plot = p_s_k_c, width = 6, height = 4)
+
+## ABUNDANCE ##
+p_a_k <- ggplot(pdp_model_v_a, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+p_a_k_c <- ggplot(pdp_model_v_a_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_a_k.png", plot = p_a_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_a_k_c.png", plot = p_a_k_c, width = 6, height = 4)
+
+## REL ABUNDANCE ##
+pdp_ra_k <- ggplot(pdp_model_v_ra, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance",
+    title = "Ranger Model without Coordinates"
+  ) +
+  theme_minimal() 
+
+pdp_ra_k_c <- ggplot(pdp_model_v_ra_c, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance",
+    title = "Ranger Model with Coordinates"
+  ) +
+  theme_minimal() 
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ra_k.png", plot = p_ra_k, width = 6, height = 4)
+ggsave("ML_model/plots/pdp_ra_k_c.png", plot = p_ra_k_c, width = 6, height = 4)
+```
+
 
 ```{r}
 ### PREDICTOR: SAMPLING LOCATIONS ###
 ### k_index
 # pdp_samp_k <- partial(autotuner_rf_samp_k, pred.var = c("velocity"))
-pdp_model_samp_k <- partial(rf_model_samp_k, pred.var = c("velocity"))
-pdp_model_samp_k_c <- partial(rf_model_samp_k_c, pred.var = "velocity")
+pdp_model_samp_k <- pdp::partial(rf_model_samp_k, pred.var = c("velocity"))
+pdp_model_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "velocity")
 
 ### shannon index
 # pdp_samp_s <- partial(autotuner_rf_samp_s, pred.var = c("velocity"))
-pdp_model_samp_s <- partial(rf_model_samp_s, pred.var = "velocity")
-pdp_model_samp_s_c <- partial(rf_model_samp_s_c, pred.var = "velocity")
+pdp_model_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "velocity")
+pdp_model_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "velocity")
 
 ### abundance
 # pdp_samp_a <- partial(autotuner_rf_samp_a, pred.var = c("velocity"))
-pdp_model_samp_a <- partial(rf_model_samp_a, pred.var = "velocity")
-pdp_model_samp_a_c <- partial(rf_model_samp_a_c, pred.var = "velocity")
+pdp_model_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "velocity")
+pdp_model_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "velocity")
 
 ### relative abundance
 # pdp_samp_ra <- partial(autotuner_rf_samp_ra, pred.var = c("velocity"))
-pdp_model_samp_ra <- partial(rf_model_samp_ra, pred.var = "velocity")
+pdp_model_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "velocity")
 
-pdp_model_samp_ra_c_v <- partial(rf_model_samp_ra_c, pred.var = "velocity") |>
+pdp_model_samp_ra_c_v <- pdp::partial(rf_model_samp_ra_c, pred.var = "velocity") |>
   mutate(var_name = "velocity",
          var_val = velocity) |>
   dplyr::select(-velocity)
 
-pdp_model_samp_ra_c_wd <- partial(rf_model_samp_ra_c, pred.var = "wd_m") |>
+pdp_model_samp_ra_c_wd <- pdp::partial(rf_model_samp_ra_c, pred.var = "wd_m") |>
   mutate(var_name = "wd_m",
          var_val = wd_m) |>
   dplyr::select(-wd_m)
 
-pdp_model_samp_ra_c_reach <- partial(rf_model_samp_ra_c, pred.var = "Reach_Untersuchungsstelle") |>
+pdp_model_samp_ra_c_reach <- pdp::partial(rf_model_samp_ra_c, pred.var = "Reach_Untersuchungsstelle") |>
   mutate(var_name = "Reach_Untersuchungsstelle",
          var_val = Reach_Untersuchungsstelle) |>
   dplyr::select(-Reach_Untersuchungsstelle)
 
-pdp_model_samp_ra_c_z <- partial(rf_model_samp_ra_c, pred.var = "z") |>
+pdp_model_samp_ra_c_z <- pdp::partial(rf_model_samp_ra_c, pred.var = "z") |>
   mutate(var_name = "z",
          var_val = z) |>
   dplyr::select(-z)
 
-pdp_model_samp_ra_c_dw <- partial(rf_model_samp_ra_c, pred.var = "dist_w") |>
+pdp_model_samp_ra_c_dw <- pdp::partial(rf_model_samp_ra_c, pred.var = "dist_w") |>
   mutate(var_name = "dist_w",
          var_val = dist_w) |>
   dplyr::select(-dist_w)
 
-pdp_model_samp_ra_c_cv <- partial(rf_model_samp_ra_c, pred.var = "cat_velocity") |>
+pdp_model_samp_ra_c_cv <- pdp::partial(rf_model_samp_ra_c, pred.var = "cat_velocity") |>
   mutate(var_name = "cat_velocity",
          var_val = cat_velocity) |>
   dplyr::select(-cat_velocity)
 
-pdp_model_samp_ra_c_ac <- partial(rf_model_samp_ra_c, pred.var = "alg_cover") |>
+pdp_model_samp_ra_c_ac <- pdp::partial(rf_model_samp_ra_c, pred.var = "alg_cover") |>
   mutate(var_name = "alg_cover",
          var_val = alg_cover) |>
   dplyr::select(-alg_cover)
 
 
-pdp_model_samp_ra_c_mc <- partial(rf_model_samp_ra_c, pred.var = "moos_cover") |>
+pdp_model_samp_ra_c_mc <- pdp::partial(rf_model_samp_ra_c, pred.var = "moos_cover") |>
   mutate(var_name = "moos_cover",
          var_val = moos_cover) |>
   dplyr::select(-moos_cover)
@@ -1590,60 +2860,60 @@ pdp_all <- rbind(pdp_model_samp_ra_c_v, pdp_model_samp_ra_c_wd, pdp_model_samp_r
 ### PREDICTOR: SAMPLING LOCATIONS ###
 ### k_index
 # pdp_sec_k <- partial(autotuner_rf_sec_k, pred.var = c("velocity"))
-pdp_model_sec_k <- partial(rf_model_sec_k, pred.var = c("velocity"))
-pdp_model_sec_k_c <- partial(rf_model_sec_k_c, pred.var = "velocity")
+pdp_model_sec_k <- pdp::partial(rf_model_sec_k, pred.var = c("velocity"))
+pdp_model_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "velocity")
 
 ### shannon index
 # pdp_sec_s <- partial(autotuner_rf_sec_s, pred.var = c("velocity"))
-pdp_model_sec_s <- partial(rf_model_sec_s, pred.var = "velocity")
-pdp_model_sec_s_c <- partial(rf_model_sec_s_c, pred.var = "velocity")
+pdp_model_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "velocity")
+pdp_model_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "velocity")
 
 ### abundance
 # pdp_sec_a <- partial(autotuner_rf_sec_a, pred.var = c("velocity"))
-pdp_model_sec_a <- partial(rf_model_sec_a, pred.var = "velocity")
-pdp_model_sec_a_c <- partial(rf_model_sec_a_c, pred.var = "velocity")
+pdp_model_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "velocity")
+pdp_model_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "velocity")
 
 ### relative abundance
 # pdp_sec_ra <- partial(autotuner_rf_sec_ra, pred.var = c("velocity"))
-pdp_model_sec_ra <- partial(rf_model_sec_ra, pred.var = "velocity")
+pdp_model_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "velocity")
 
-pdp_model_sec_ra_c_v <- partial(rf_model_sec_ra_c, pred.var = "velocity") |>
+pdp_model_sec_ra_c_v <- pdp::partial(rf_model_sec_ra_c, pred.var = "velocity") |>
   mutate(var_name = "velocity",
          var_val = velocity) |>
   dplyr::select(-velocity)
 
-pdp_model_sec_ra_c_wd <- partial(rf_model_sec_ra_c, pred.var = "wd_m") |>
+pdp_model_sec_ra_c_wd <- pdp::partial(rf_model_sec_ra_c, pred.var = "wd_m") |>
   mutate(var_name = "wd_m",
          var_val = wd_m) |>
   dplyr::select(-wd_m)
 
-pdp_model_sec_ra_c_reach <- partial(rf_model_sec_ra_c, pred.var = "Reach_Untersuchungsstelle") |>
+pdp_model_sec_ra_c_reach <- pdp::partial(rf_model_sec_ra_c, pred.var = "Reach_Untersuchungsstelle") |>
   mutate(var_name = "Reach_Untersuchungsstelle",
          var_val = Reach_Untersuchungsstelle) |>
   dplyr::select(-Reach_Untersuchungsstelle)
 
-pdp_model_sec_ra_c_z <- partial(rf_model_sec_ra_c, pred.var = "z") |>
+pdp_model_sec_ra_c_z <- pdp::partial(rf_model_sec_ra_c, pred.var = "z") |>
   mutate(var_name = "z",
          var_val = z) |>
   dplyr::select(-z)
 
-pdp_model_sec_ra_c_dw <- partial(rf_model_sec_ra_c, pred.var = "dist_w") |>
+pdp_model_sec_ra_c_dw <- pdp::partial(rf_model_sec_ra_c, pred.var = "dist_w") |>
   mutate(var_name = "dist_w",
          var_val = dist_w) |>
   dplyr::select(-dist_w)
 
-pdp_model_sec_ra_c_cv <- partial(rf_model_sec_ra_c, pred.var = "cat_velocity") |>
+pdp_model_sec_ra_c_cv <- pdp::partial(rf_model_sec_ra_c, pred.var = "cat_velocity") |>
   mutate(var_name = "cat_velocity",
          var_val = cat_velocity) |>
   dplyr::select(-cat_velocity)
 
-pdp_model_sec_ra_c_ac <- partial(rf_model_sec_ra_c, pred.var = "alg_cover") |>
+pdp_model_sec_ra_c_ac <- pdp::partial(rf_model_sec_ra_c, pred.var = "alg_cover") |>
   mutate(var_name = "alg_cover",
          var_val = alg_cover) |>
   dplyr::select(-alg_cover)
 
 
-pdp_model_sec_ra_c_mc <- partial(rf_model_sec_ra_c, pred.var = "moos_cover") |>
+pdp_model_sec_ra_c_mc <- pdp::partial(rf_model_sec_ra_c, pred.var = "moos_cover") |>
   mutate(var_name = "moos_cover",
          var_val = moos_cover) |>
   dplyr::select(-moos_cover)
@@ -1652,7 +2922,7 @@ pdp_all <- rbind(pdp_model_sec_ra_c_v, pdp_model_sec_ra_c_wd, pdp_model_sec_ra_c
 ```
 
 ```{r}
-pdp_wd_k <- partial(autotuner_rf_v_k, pred.var = "velocity") |>
+pdp_wd_k <- pdp::partial(autotuner_rf_v_k, pred.var = "velocity") |>
   mutate(var_name = "velocity",
          var_val = velocity) |>
   dplyr::select(-velocity)
@@ -1678,228 +2948,227 @@ ggplot(pdp_all, aes(var_val, yhat)) +
 
 ## Obs and Pred
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### PREDICTED VALUES ### ------------------------------------------------------
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 rf_predictions_v_k <- predict(autotuner_rf_v_k, newdata = test_v_k)
 rf_pred_model_v_k <- predict(rf_model_v_k, data = test_v_k)$predictions
 rf_pred_model_v_k_c <- predict(rf_model_v_k_c, data = test_v_k_c)$predictions
 
-# shannon index and velocity
+# With shannon index as response
 rf_predictions_v_s <- predict(autotuner_rf_v_s, newdata = test_v_s)
 rf_pred_model_v_s <- predict(rf_model_v_s, data = test_v_s)$predictions
 rf_pred_model_v_s_c <- predict(rf_model_v_s_c, data = test_v_s_c)$predictions
 
-# abundance and velocity
+# With abundance as response
 rf_predictions_v_a <- predict(autotuner_rf_v_a, newdata = test_v_a)
 rf_pred_model_v_a <- predict(rf_model_v_a, data = test_v_a)$predictions
 rf_pred_model_v_a_c <- predict(rf_model_v_a_c, data = test_v_a_c)$predictions
 
-# relative abundance and velocity
+# With rel_abundance as response
 rf_predictions_v_ra <- predict(autotuner_rf_v_ra, newdata = test_v_ra)
 rf_pred_model_v_ra <- predict(rf_model_v_ra, data = test_v_ra)$predictions
 rf_pred_model_v_ra_c <- predict(rf_model_v_ra_c, data = test_v_ra_c)$predictions
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 rf_predictions_wd_k <- predict(autotuner_rf_wd_k, newdata = test_wd_k)
 rf_pred_model_wd_k <- predict(rf_model_wd_k, data = test_wd_k)$predictions
 rf_pred_model_wd_k_c <- predict(rf_model_wd_k_c, data = test_wd_k_c)$predictions
 
-# shannon index and velocity + wd
+# With shannon index as response
 rf_predictions_wd_s <- predict(autotuner_rf_wd_s, newdata = test_wd_s)
 rf_pred_model_wd_s <- predict(rf_model_wd_s, data = test_wd_s)$predictions
 rf_pred_model_wd_s_c <- predict(rf_model_wd_s_c, data = test_wd_s_c)$predictions
 
-# abundance and velocity + wd
+# With abundance as response
 rf_predictions_wd_a <- predict(autotuner_rf_wd_a, newdata = test_wd_a)
 rf_pred_model_wd_a <- predict(rf_model_wd_a, data = test_wd_a)$predictions
 rf_pred_model_wd_a_c <- predict(rf_model_wd_a_c, data = test_wd_a_c)$predictions
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 rf_predictions_wd_ra <- predict(autotuner_rf_wd_ra, newdata = test_wd_ra)
 rf_pred_model_wd_ra <- predict(rf_model_wd_ra, data = test_wd_ra)$predictions
 rf_pred_model_wd_ra_c <- predict(rf_model_wd_ra_c, data = test_wd_ra_c)$predictions
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 rf_predictions_samp_k <- predict(autotuner_rf_samp_k, newdata = test_samp_k)
 rf_pred_model_samp_k <- predict(rf_model_samp_k, data = test_samp_k)$predictions
 rf_pred_model_samp_k_c <- predict(rf_model_samp_k_c, data = test_samp_k_c)$predictions
 
-# shannon index and sampling locations
+# With shannon index as response
 rf_predictions_samp_s <- predict(autotuner_rf_samp_s, newdata = test_samp_s)
 rf_pred_model_samp_s <- predict(rf_model_samp_s, data = test_samp_s)$predictions
 rf_pred_model_samp_s_c <- predict(rf_model_samp_s_c, data = test_samp_s_c)$predictions
 
-# abundance and sampling locations
+# With abundance as response
 rf_predictions_samp_a <- predict(autotuner_rf_samp_a, newdata = test_samp_a)
 rf_pred_model_samp_a <- predict(rf_model_samp_a, data = test_samp_a)$predictions
 rf_pred_model_samp_a_c <- predict(rf_model_samp_a_c, data = test_samp_a_c)$predictions
 
-# abundance and sampling locations
+# With rel_abundance as response
 rf_predictions_samp_ra <- predict(autotuner_rf_samp_ra, newdata = test_samp_ra)
 rf_pred_model_samp_ra <- predict(rf_model_samp_ra, data = test_samp_ra)$predictions
 rf_pred_model_samp_ra_c <- predict(rf_model_samp_ra_c, data = test_samp_ra_c)$predictions
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 rf_predictions_sec_k <- predict(autotuner_rf_sec_k, newdata = test_sec_k)
 rf_pred_model_sec_k <- predict(rf_model_sec_k, data = test_sec_k)$predictions
 rf_pred_model_sec_k_c <- predict(rf_model_sec_k_c, data = test_sec_k_c)$predictions
 
-# shannon index and all predictors
+# With shannon index as response
 rf_predictions_sec_s <- predict(autotuner_rf_sec_s, newdata = test_sec_s)
 rf_pred_model_sec_s <- predict(rf_model_sec_s, data = test_sec_s)$predictions
 rf_pred_model_sec_s_c <- predict(rf_model_sec_s_c, data = test_sec_s_c)$predictions
 
-# abundance and all predictors
+# With abundance as response
 rf_predictions_sec_a <- predict(autotuner_rf_sec_a, newdata = test_sec_a)
 rf_pred_model_sec_a <- predict(rf_model_sec_a, data = test_sec_a)$predictions
 rf_pred_model_sec_a_c <- predict(rf_model_sec_a_c, data = test_sec_a_c)$predictions
 
-# abundance and all predictors
+# With rel_abundance as response
 rf_predictions_sec_ra <- predict(autotuner_rf_sec_ra, newdata = test_sec_ra)
 rf_pred_model_sec_ra <- predict(rf_model_sec_ra, data = test_sec_ra)$predictions
 rf_pred_model_sec_ra_c <- predict(rf_model_sec_ra_c, data = test_sec_ra_c)$predictions
-```
 
-```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### OBSERVED VALUES ### -------------------------------------------------------
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 responses_v_k <- test_v_k$k_index
 
-# shannon index and velocity
+# With shannon index as response
 responses_v_s <- test_v_s$shannon
 
-# abundance and velocity
+# With abundance as response
 responses_v_a <- test_v_a$abundance
 
-# relative abundance and velocity
+# With rel_abundance as response
 responses_v_ra <- test_v_ra$rel_abundance
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 responses_wd_k <- test_wd_k$k_index
 
-# shannon index and velocity + wd
+# With shannon index as response
 responses_wd_s <- test_wd_s$shannon
 
-# abundance and velocity + wd
+# With abundance as response
 responses_wd_a <- test_wd_a$abundance
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 responses_wd_ra <- test_wd_ra$rel_abundance
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 responses_samp_k <- test_samp_k$k_index
 
-# shannon index and sampling locations
+# With shannon index as response
 responses_samp_s <- test_samp_s$shannon
 
-# abundance and sampling locations
+# With abundance as response
 responses_samp_a <- test_samp_a$abundance
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 responses_samp_ra <- test_samp_ra$rel_abundance
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 responses_sec_k <- test_sec_k$k_index
 
-# shannon index and all predictors
+# With shannon index as response
 responses_sec_s <- test_sec_s$shannon
 
-# abundance and all predictors
+# With abundance as response
 responses_sec_a <- test_sec_a$abundance
 
-# relative abundance and all predictors
+# With rel_abundance as response
 responses_sec_ra <- test_sec_ra$rel_abundance
 ```
 
 ## Deviance explained (R2)
 ```{r}
-# Calculate R-squared
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity 
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# With k_index as response
 r2_v_k <- R2(pred = rf_predictions_v_k, obs = responses_v_k)
 r2_model_v_k <- R2(pred = rf_pred_model_v_k, obs = responses_v_k)
 r2_model_v_k_c <- R2(pred = rf_pred_model_v_k_c, obs = responses_v_k)
 
-# shannon index and velocity 
+# With shannon index as response 
 r2_v_s <- R2(pred = rf_predictions_v_s, obs = responses_v_s)
 r2_model_v_s <- R2(pred = rf_pred_model_v_s, obs = responses_v_s)
 r2_model_v_s_c <- R2(pred = rf_pred_model_v_s_c, obs = responses_v_s)
 
-# abundance and velocity 
+# With abundance as response
 r2_v_a <- R2(pred = rf_predictions_v_a, obs = responses_v_a)
 r2_model_v_a <- R2(pred = rf_pred_model_v_a, obs = responses_v_a)
 r2_model_v_a_c <- R2(pred = rf_pred_model_v_a_c, obs = responses_v_a)
 
-# relative abundance and velocity 
+# With rel_abundance as response 
 r2_v_ra <- R2(pred = rf_predictions_v_ra, obs = responses_v_ra)
 r2_model_v_ra <- R2(pred = rf_pred_model_v_ra, obs = responses_v_ra)
 r2_model_v_ra_c <- R2(pred = rf_pred_model_v_ra_c, obs = responses_v_ra)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 r2_wd_k <- R2(pred = rf_predictions_wd_k, obs = responses_wd_k)
 r2_model_wd_k <- R2(pred = rf_pred_model_wd_k, obs = responses_wd_k)
 r2_model_wd_k_c <- R2(pred = rf_pred_model_wd_k_c, obs = responses_wd_k)
 
-# shannon index and velocity + wd 
+# With shannon index as response
 r2_wd_s <- R2(pred = rf_predictions_wd_s, obs = responses_wd_s)
 r2_model_wd_s <- R2(pred = rf_pred_model_wd_s, obs = responses_wd_s)
 r2_model_wd_s_c <- R2(pred = rf_pred_model_wd_s_c, obs = responses_wd_s)
 
-# abundance and velocity + wd 
+# With abundance as response
 r2_wd_a <- R2(pred = rf_predictions_wd_a, obs = responses_wd_a)
 r2_model_wd_a <- R2(pred = rf_pred_model_wd_a, obs = responses_wd_a)
 r2_model_wd_a_c <- R2(pred = rf_pred_model_wd_a_c, obs = responses_wd_a)
 
-# relative abundance and velocity + wd 
+# With rel_abundance as response
 r2_wd_ra <- R2(pred = rf_predictions_wd_ra, obs = responses_wd_ra)
 r2_model_wd_ra <- R2(pred = rf_pred_model_wd_ra, obs = responses_wd_ra)
 r2_model_wd_ra_c <- R2(pred = rf_pred_model_wd_ra_c, obs = responses_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 r2_samp_k <- R2(pred = rf_predictions_samp_k, obs = responses_samp_k)
 r2_model_samp_k <- R2(pred = rf_pred_model_samp_k, obs = responses_samp_k)
 r2_model_samp_k_c <- R2(pred = rf_pred_model_samp_k_c, obs = responses_samp_k)
 
-# shannon index and sampling locations
+# With shannon index as response
 r2_samp_s <- R2(pred = rf_predictions_samp_s, obs = responses_samp_s)
 r2_model_samp_s <- R2(pred = rf_pred_model_samp_s, obs = responses_samp_s)
 r2_model_samp_s_c <- R2(pred = rf_pred_model_samp_s_c, obs = responses_samp_s)
 
-# abundance and sampling locations
+# With abundance as response
 r2_samp_a <- R2(pred = rf_predictions_samp_a, obs = responses_samp_a)
 r2_model_samp_a <- R2(pred = rf_pred_model_samp_a, obs = responses_samp_a)
 r2_model_samp_a_c <- R2(pred = rf_pred_model_samp_a_c, obs = responses_samp_a)
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 r2_samp_ra <- R2(pred = rf_predictions_samp_ra, obs = responses_samp_ra)
 r2_model_samp_ra <- R2(pred = rf_pred_model_samp_ra, obs = responses_samp_ra)
 r2_model_samp_ra_c <- R2(pred = rf_pred_model_samp_ra_c, obs = responses_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 r2_sec_k <- R2(pred = rf_predictions_sec_k, obs = responses_sec_k)
 r2_model_sec_k <- R2(pred = rf_pred_model_sec_k, obs = responses_sec_k)
 r2_model_sec_k_c <- R2(pred = rf_pred_model_sec_k_c, obs = responses_sec_k)
 
-# shannon index and all predictors
+# With shannon index as response
 r2_sec_s <- R2(pred = rf_predictions_sec_s, obs = responses_sec_s)
 r2_model_sec_s <- R2(pred = rf_pred_model_sec_s, obs = responses_sec_s)
 r2_model_sec_s_c <- R2(pred = rf_pred_model_sec_s_c, obs = responses_sec_s)
 
-# abundance and all predictors
+# With abundance as response
 r2_sec_a <- R2(pred = rf_predictions_sec_a, obs = responses_sec_a)
 r2_model_sec_a <- R2(pred = rf_pred_model_sec_a, obs = responses_sec_a)
 r2_model_sec_a_c <- R2(pred = rf_pred_model_sec_a_c, obs = responses_sec_a)
 
-# relative abundance and all predictors
+# With rel_abundance as response
 r2_sec_ra <- R2(pred = rf_predictions_sec_ra, obs = responses_sec_ra)
 r2_model_sec_ra <- R2(pred = rf_pred_model_sec_ra, obs = responses_sec_ra)
 r2_model_sec_ra_c <- R2(pred = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
@@ -1907,356 +3176,324 @@ r2_model_sec_ra_c <- R2(pred = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
 
 ## RMSE & MAE
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
-rmse_v_k <- rmse(actual = responses_v_k, predicted = rf_predictions_v_k)
-rmse_model_v_k <- rmse(actual = responses_v_k, predicted = rf_pred_model_v_k)
-rmse_model_v_k_c <- rmse(actual = responses_v_k, predicted = rf_pred_model_v_k_c)
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
+rmse_v_k <- Metrics::rmse(actual = responses_v_k, predicted = rf_predictions_v_k)
+rmse_model_v_k <- Metrics::rmse(actual = responses_v_k, predicted = rf_pred_model_v_k)
+rmse_model_v_k_c <- Metrics::rmse(actual = responses_v_k, predicted = rf_pred_model_v_k_c)
 
-mae_v_k <- mae(actual = responses_v_k, predicted = rf_predictions_v_k)
-mae_model_v_k <- mae(actual = responses_v_k, predicted = rf_pred_model_v_k)
-mae_model_v_k_c <- mae(actual = responses_v_k, predicted = rf_pred_model_v_k_c)
+mae_v_k <- Metrics::mae(actual = responses_v_k, predicted = rf_predictions_v_k)
+mae_model_v_k <- Metrics::mae(actual = responses_v_k, predicted = rf_pred_model_v_k)
+mae_model_v_k_c <- Metrics::mae(actual = responses_v_k, predicted = rf_pred_model_v_k_c)
 
-# shannon index and velocity
-rmse_v_s <- rmse(actual = responses_v_s, predicted = rf_predictions_v_s)
-rmse_model_v_s <- rmse(actual = responses_v_s, predicted = rf_pred_model_v_s)
-rmse_model_v_s_c <- rmse(actual = responses_v_s, predicted = rf_pred_model_v_s_c)
+# With shannon index as response
+rmse_v_s <- Metrics::rmse(actual = responses_v_s, predicted = rf_predictions_v_s)
+rmse_model_v_s <- Metrics::rmse(actual = responses_v_s, predicted = rf_pred_model_v_s)
+rmse_model_v_s_c <- Metrics::rmse(actual = responses_v_s, predicted = rf_pred_model_v_s_c)
 
-mae_v_s <- mae(actual = responses_v_s, predicted = rf_predictions_v_s)
-mae_model_v_s <- mae(actual = responses_v_s, predicted = rf_pred_model_v_s)
-mae_model_v_s_c <- mae(actual = responses_v_s, predicted = rf_pred_model_v_s_c)
+mae_v_s <- Metrics::mae(actual = responses_v_s, predicted = rf_predictions_v_s)
+mae_model_v_s <- Metrics::mae(actual = responses_v_s, predicted = rf_pred_model_v_s)
+mae_model_v_s_c <- Metrics::mae(actual = responses_v_s, predicted = rf_pred_model_v_s_c)
 
-# abundance and velocity
-rmse_v_a <- rmse(actual = responses_v_a, predicted = rf_predictions_v_a)
-rmse_model_v_a <- rmse(actual = responses_v_a, predicted = rf_pred_model_v_a)
-rmse_model_v_a_c <- rmse(actual = responses_v_a, predicted = rf_pred_model_v_a_c)
+# With abundance as response
+rmse_v_a <- Metrics::rmse(actual = responses_v_a, predicted = rf_predictions_v_a)
+rmse_model_v_a <- Metrics::rmse(actual = responses_v_a, predicted = rf_pred_model_v_a)
+rmse_model_v_a_c <- Metrics::rmse(actual = responses_v_a, predicted = rf_pred_model_v_a_c)
 
-mae_v_a <- mae(actual = responses_v_a, predicted = rf_predictions_v_a)
-mae_model_v_a <- mae(actual = responses_v_a, predicted = rf_pred_model_v_a)
-mae_model_v_a_c <- mae(actual = responses_v_a, predicted = rf_pred_model_v_a_c)
+mae_v_a <- Metrics::mae(actual = responses_v_a, predicted = rf_predictions_v_a)
+mae_model_v_a <- Metrics::mae(actual = responses_v_a, predicted = rf_pred_model_v_a)
+mae_model_v_a_c <- Metrics::mae(actual = responses_v_a, predicted = rf_pred_model_v_a_c)
 
-# relative abundance and velocity
-rmse_v_ra <- rmse(actual = responses_v_ra, predicted = rf_predictions_v_ra)
-rmse_model_v_ra <- rmse(actual = responses_v_ra, predicted = rf_pred_model_v_ra)
-rmse_model_v_ra_c <- rmse(actual = responses_v_ra, predicted = rf_pred_model_v_ra_c)
+# With rel_abundance as response
+rmse_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = rf_predictions_v_ra)
+rmse_model_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = rf_pred_model_v_ra)
+rmse_model_v_ra_c <- Metrics::rmse(actual = responses_v_ra, predicted = rf_pred_model_v_ra_c)
 
-mae_v_ra <- mae(actual = responses_v_ra, predicted = rf_predictions_v_ra)
-mae_model_v_ra <- mae(actual = responses_v_ra, predicted = rf_pred_model_v_ra)
-mae_model_v_ra_c <- mae(actual = responses_v_ra, predicted = rf_pred_model_v_ra_c)
-```
+mae_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = rf_predictions_v_ra)
+mae_model_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = rf_pred_model_v_ra)
+mae_model_v_ra_c <- Metrics::mae(actual = responses_v_ra, predicted = rf_pred_model_v_ra_c)
 
-```{r}
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
-rmse_wd_k <- rmse(actual = responses_wd_k, predicted = rf_predictions_wd_k)
-rmse_model_wd_k <- rmse(actual = responses_wd_k, predicted = rf_pred_model_wd_k)
-rmse_model_wd_k_c <- rmse(actual = responses_wd_k, predicted = rf_pred_model_wd_k_c)
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+rmse_wd_k <- Metrics::rmse(actual = responses_wd_k, predicted = rf_predictions_wd_k)
+rmse_model_wd_k <- Metrics::rmse(actual = responses_wd_k, predicted = rf_pred_model_wd_k)
+rmse_model_wd_k_c <- Metrics::rmse(actual = responses_wd_k, predicted = rf_pred_model_wd_k_c)
 
-mae_wd_k <- mae(actual = responses_wd_k, predicted = rf_predictions_wd_k)
-mae_model_wd_k <- mae(actual = responses_wd_k, predicted = rf_pred_model_wd_k)
-mae_model_wd_k_c <- mae(actual = responses_wd_k, predicted = rf_pred_model_wd_k_c)
+mae_wd_k <- Metrics::mae(actual = responses_wd_k, predicted = rf_predictions_wd_k)
+mae_model_wd_k <- Metrics::mae(actual = responses_wd_k, predicted = rf_pred_model_wd_k)
+mae_model_wd_k_c <- Metrics::mae(actual = responses_wd_k, predicted = rf_pred_model_wd_k_c)
 
-# shannon index and velocity + wd
-rmse_wd_s <- rmse(actual = responses_wd_s, predicted = rf_predictions_wd_s)
-rmse_model_wd_s <- rmse(actual = responses_wd_s, predicted = rf_pred_model_wd_s)
-rmse_model_wd_s_c <- rmse(actual = responses_wd_s, predicted = rf_pred_model_wd_s_c)
+# With shannon index as response
+rmse_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = rf_predictions_wd_s)
+rmse_model_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = rf_pred_model_wd_s)
+rmse_model_wd_s_c <- Metrics::rmse(actual = responses_wd_s, predicted = rf_pred_model_wd_s_c)
 
-mae_wd_s <- mae(actual = responses_wd_s, predicted = rf_predictions_wd_s)
-mae_model_wd_s <- mae(actual = responses_wd_s, predicted = rf_pred_model_wd_s)
-mae_model_wd_s_c <- mae(actual = responses_wd_s, predicted = rf_pred_model_wd_s_c)
+mae_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = rf_predictions_wd_s)
+mae_model_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = rf_pred_model_wd_s)
+mae_model_wd_s_c <- Metrics::mae(actual = responses_wd_s, predicted = rf_pred_model_wd_s_c)
 
-# abundance and velocity + wd
-rmse_wd_a <- rmse(actual = responses_wd_a, predicted = rf_predictions_wd_a)
-rmse_model_wd_a <- rmse(actual = responses_wd_a, predicted = rf_pred_model_wd_a)
-rmse_model_wd_a_c <- rmse(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
+# With abundance as response
+rmse_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = rf_predictions_wd_a)
+rmse_model_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = rf_pred_model_wd_a)
+rmse_model_wd_a_c <- Metrics::rmse(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
 
-mae_wd_a <- mae(actual = responses_wd_a, predicted = rf_predictions_wd_a)
-mae_model_wd_a <- mae(actual = responses_wd_a, predicted = rf_pred_model_wd_a)
-mae_model_wd_a_c <- mae(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
+mae_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = rf_predictions_wd_a)
+mae_model_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = rf_pred_model_wd_a)
+mae_model_wd_a_c <- Metrics::mae(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
 
-# relative abundance and velocity + wd
-rmse_wd_ra <- rmse(actual = responses_wd_ra, predicted = rf_predictions_wd_ra)
-rmse_model_wd_ra <- rmse(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra)
-rmse_model_wd_ra_c <- rmse(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
+# With rel_abundance as response
+rmse_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = rf_predictions_wd_ra)
+rmse_model_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra)
+rmse_model_wd_ra_c <- Metrics::rmse(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
 
-mae_wd_ra <- mae(actual = responses_wd_ra, predicted = rf_predictions_wd_ra)
-mae_model_wd_ra <- mae(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra)
-mae_model_wd_ra_c <- mae(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
-```
+mae_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = rf_predictions_wd_ra)
+mae_model_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra)
+mae_model_wd_ra_c <- Metrics::mae(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
 
-```{r}
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
-rmse_samp_k <- rmse(actual = responses_samp_k, predicted = rf_predictions_samp_k)
-rmse_model_samp_k <- rmse(actual = responses_samp_k, predicted = rf_pred_model_samp_k)
-rmse_model_samp_k_c <- rmse(actual = responses_samp_k, predicted = rf_pred_model_samp_k_c)
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
+rmse_samp_k <- Metrics::rmse(actual = responses_samp_k, predicted = rf_predictions_samp_k)
+rmse_model_samp_k <- Metrics::rmse(actual = responses_samp_k, predicted = rf_pred_model_samp_k)
+rmse_model_samp_k_c <- Metrics::rmse(actual = responses_samp_k, predicted = rf_pred_model_samp_k_c)
 
-mae_samp_k <- mae(actual = responses_samp_k, predicted = rf_predictions_samp_k)
-mae_model_samp_k <- mae(actual = responses_samp_k, predicted = rf_pred_model_samp_k)
-mae_model_samp_k_c <- mae(actual = responses_samp_k, predicted = rf_pred_model_samp_k_c)
+mae_samp_k <- Metrics::mae(actual = responses_samp_k, predicted = rf_predictions_samp_k)
+mae_model_samp_k <- Metrics::mae(actual = responses_samp_k, predicted = rf_pred_model_samp_k)
+mae_model_samp_k_c <- Metrics::mae(actual = responses_samp_k, predicted = rf_pred_model_samp_k_c)
 
-# shannon index and sampling locations
-rmse_samp_s <- rmse(actual = responses_samp_s, predicted = rf_predictions_samp_s)
-rmse_model_samp_s <- rmse(actual = responses_samp_s, predicted = rf_pred_model_samp_s)
-rmse_model_samp_s_c <- rmse(actual = responses_samp_s, predicted = rf_pred_model_samp_s_c)
+# With shannon index as response
+rmse_samp_s <- Metrics::rmse(actual = responses_samp_s, predicted = rf_predictions_samp_s)
+rmse_model_samp_s <- Metrics::rmse(actual = responses_samp_s, predicted = rf_pred_model_samp_s)
+rmse_model_samp_s_c <- Metrics::rmse(actual = responses_samp_s, predicted = rf_pred_model_samp_s_c)
 
-mae_samp_s <- mae(actual = responses_samp_s, predicted = rf_predictions_samp_s)
-mae_model_samp_s <- mae(actual = responses_samp_s, predicted = rf_pred_model_samp_s)
-mae_model_samp_s_c <- mae(actual = responses_samp_s, predicted = rf_pred_model_samp_s_c)
+mae_samp_s <- Metrics::mae(actual = responses_samp_s, predicted = rf_predictions_samp_s)
+mae_model_samp_s <- Metrics::mae(actual = responses_samp_s, predicted = rf_pred_model_samp_s)
+mae_model_samp_s_c <- Metrics::mae(actual = responses_samp_s, predicted = rf_pred_model_samp_s_c)
 
-# abundance and sampling locations
-rmse_samp_a <- rmse(actual = responses_samp_a, predicted = rf_predictions_samp_a)
-rmse_model_samp_a <- rmse(actual = responses_samp_a, predicted = rf_pred_model_samp_a)
-rmse_model_samp_a_c <- rmse(actual = responses_samp_a, predicted = rf_pred_model_samp_a_c)
+# With abundance as response
+rmse_samp_a <- Metrics::rmse(actual = responses_samp_a, predicted = rf_predictions_samp_a)
+rmse_model_samp_a <- Metrics::rmse(actual = responses_samp_a, predicted = rf_pred_model_samp_a)
+rmse_model_samp_a_c <- Metrics::rmse(actual = responses_samp_a, predicted = rf_pred_model_samp_a_c)
 
-mae_samp_a <- mae(actual = responses_samp_a, predicted = rf_predictions_samp_a)
-mae_model_samp_a <- mae(actual = responses_samp_a, predicted = rf_pred_model_samp_a)
-mae_model_samp_a_c <- mae(actual = responses_samp_a, predicted = rf_pred_model_samp_a_c)
+mae_samp_a <- Metrics::mae(actual = responses_samp_a, predicted = rf_predictions_samp_a)
+mae_model_samp_a <- Metrics::mae(actual = responses_samp_a, predicted = rf_pred_model_samp_a)
+mae_model_samp_a_c <- Metrics::mae(actual = responses_samp_a, predicted = rf_pred_model_samp_a_c)
 
-# relative abundance and sampling locations
-rmse_samp_ra <- rmse(actual = responses_samp_ra, predicted = rf_predictions_samp_ra)
-rmse_model_samp_ra <- rmse(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra)
-rmse_model_samp_ra_c <- rmse(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra_c)
+# With rel_abundance as response
+rmse_samp_ra <- Metrics::rmse(actual = responses_samp_ra, predicted = rf_predictions_samp_ra)
+rmse_model_samp_ra <- Metrics::rmse(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra)
+rmse_model_samp_ra_c <- Metrics::rmse(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra_c)
 
-mae_samp_ra <- mae(actual = responses_samp_ra, predicted = rf_predictions_samp_ra)
-mae_model_samp_ra <- mae(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra)
-mae_model_samp_ra_c <- mae(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra_c)
-```
+mae_samp_ra <- Metrics::mae(actual = responses_samp_ra, predicted = rf_predictions_samp_ra)
+mae_model_samp_ra <- Metrics::mae(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra)
+mae_model_samp_ra_c <- Metrics::mae(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra_c)
 
-```{r}
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
-rmse_sec_k <- rmse(actual = responses_sec_k, predicted = rf_predictions_sec_k)
-rmse_model_sec_k <- rmse(actual = responses_sec_k, predicted = rf_pred_model_sec_k)
-rmse_model_sec_k_c <- rmse(actual = responses_sec_k, predicted = rf_pred_model_sec_k_c)
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+rmse_sec_k <- Metrics::rmse(actual = responses_sec_k, predicted = rf_predictions_sec_k)
+rmse_model_sec_k <- Metrics::rmse(actual = responses_sec_k, predicted = rf_pred_model_sec_k)
+rmse_model_sec_k_c <- Metrics::rmse(actual = responses_sec_k, predicted = rf_pred_model_sec_k_c)
 
-mae_sec_k <- mae(actual = responses_sec_k, predicted = rf_predictions_sec_k)
-mae_model_sec_k <- mae(actual = responses_sec_k, predicted = rf_pred_model_sec_k)
-mae_model_sec_k_c <- mae(actual = responses_sec_k, predicted = rf_pred_model_sec_k_c)
+mae_sec_k <- Metrics::mae(actual = responses_sec_k, predicted = rf_predictions_sec_k)
+mae_model_sec_k <- Metrics::mae(actual = responses_sec_k, predicted = rf_pred_model_sec_k)
+mae_model_sec_k_c <- Metrics::mae(actual = responses_sec_k, predicted = rf_pred_model_sec_k_c)
 
-# shannon index and all predictors
-rmse_sec_s <- rmse(actual = responses_sec_s, predicted = rf_predictions_sec_s)
-rmse_model_sec_s <- rmse(actual = responses_sec_s, predicted = rf_pred_model_sec_s)
-rmse_model_sec_s_c <- rmse(actual = responses_sec_s, predicted = rf_pred_model_sec_s_c)
+# With shannon index as response
+rmse_sec_s <- Metrics::rmse(actual = responses_sec_s, predicted = rf_predictions_sec_s)
+rmse_model_sec_s <- Metrics::rmse(actual = responses_sec_s, predicted = rf_pred_model_sec_s)
+rmse_model_sec_s_c <- Metrics::rmse(actual = responses_sec_s, predicted = rf_pred_model_sec_s_c)
 
-mae_sec_s <- mae(actual = responses_sec_s, predicted = rf_predictions_sec_s)
-mae_model_sec_s <- mae(actual = responses_sec_s, predicted = rf_pred_model_sec_s)
-mae_model_sec_s_c <- mae(actual = responses_sec_s, predicted = rf_pred_model_sec_s_c)
+mae_sec_s <- Metrics::mae(actual = responses_sec_s, predicted = rf_predictions_sec_s)
+mae_model_sec_s <- Metrics::mae(actual = responses_sec_s, predicted = rf_pred_model_sec_s)
+mae_model_sec_s_c <- Metrics::mae(actual = responses_sec_s, predicted = rf_pred_model_sec_s_c)
 
-# abundance and all predictors
-rmse_sec_a <- rmse(actual = responses_sec_a, predicted = rf_predictions_sec_a)
-rmse_model_sec_a <- rmse(actual = responses_sec_a, predicted = rf_pred_model_sec_a)
-rmse_model_sec_a_c <- rmse(actual = responses_sec_a, predicted = rf_pred_model_sec_a_c)
+# With abundance as response
+rmse_sec_a <- Metrics::rmse(actual = responses_sec_a, predicted = rf_predictions_sec_a)
+rmse_model_sec_a <- Metrics::rmse(actual = responses_sec_a, predicted = rf_pred_model_sec_a)
+rmse_model_sec_a_c <- Metrics::rmse(actual = responses_sec_a, predicted = rf_pred_model_sec_a_c)
 
-mae_sec_a <- mae(actual = responses_sec_a, predicted = rf_predictions_sec_a)
-mae_model_sec_a <- mae(actual = responses_sec_a, predicted = rf_pred_model_sec_a)
-mae_model_sec_a_c <- mae(actual = responses_sec_a, predicted = rf_pred_model_sec_a_c)
+mae_sec_a <- Metrics::mae(actual = responses_sec_a, predicted = rf_predictions_sec_a)
+mae_model_sec_a <- Metrics::mae(actual = responses_sec_a, predicted = rf_pred_model_sec_a)
+mae_model_sec_a_c <- Metrics::mae(actual = responses_sec_a, predicted = rf_pred_model_sec_a_c)
 
-# relative abundance and all predictors
-rmse_sec_ra <- rmse(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
-rmse_model_sec_ra <- rmse(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra)
-rmse_model_sec_ra_c <- rmse(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
+# With rel_abundance as response
+rmse_sec_ra <- Metrics::rmse(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
+rmse_model_sec_ra <- Metrics::rmse(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra)
+rmse_model_sec_ra_c <- Metrics::rmse(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
 
-mae_sec_ra <- mae(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
-mae_model_sec_ra <- mae(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra)
-mae_model_sec_ra_c <- mae(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
+mae_sec_ra <- Metrics::mae(actual = responses_sec_ra, predicted = rf_predictions_sec_ra)
+mae_model_sec_ra <- Metrics::mae(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra)
+mae_model_sec_ra_c <- Metrics::mae(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
 ```
 
 ## Bias 
 ```{r}
-# Calculate the differences between predicted and actual values
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### ONLY VELOCITY AS PREDICTOR ### --------------------------------------------
+# With k_index as response
 bias_v_k <- bias(observados = responses_v_k, estimados = rf_predictions_v_k)
 bias_model_v_k <- bias(observados = responses_v_k, estimados = rf_pred_model_v_k)
 bias_model_v_k_c <- bias(observados = responses_v_k, estimados = rf_pred_model_v_k_c)
 
-# shannon index and velocity
+# With shannon index as response
 bias_v_s <- bias(observados = responses_v_s, estimados = rf_predictions_v_s)
 bias_model_v_s <- bias(observados = responses_v_s, estimados = rf_pred_model_v_s)
 bias_model_v_s_c <- bias(observados = responses_v_s, estimados = rf_pred_model_v_s_c)
 
-# abundance and velocity
+# With abundance as response
 bias_v_a <- bias(observados = responses_v_a, estimados = rf_predictions_v_a)
 bias_model_v_a <- bias(observados = responses_v_a, estimados = rf_pred_model_v_a)
 bias_model_v_a_c <- bias(observados = responses_v_a, estimados = rf_pred_model_v_a_c)
 
-# relative abundance and velocity
+# With rel_abundance as response
 bias_v_ra <- bias(observados = responses_v_ra, estimados = rf_predictions_v_ra)
 bias_model_v_ra <- bias(observados = responses_v_ra, estimados = rf_pred_model_v_ra)
 bias_model_v_ra_c <- bias(observados = responses_v_ra, estimados = rf_pred_model_v_ra_c)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 bias_wd_k <- bias(observados = responses_wd_k, estimados = rf_predictions_wd_k)
 bias_model_wd_k <- bias(observados = responses_wd_k, estimados = rf_pred_model_wd_k)
 bias_model_wd_k_c <- bias(observados = responses_wd_k, estimados = rf_pred_model_wd_k_c)
 
-# shannon index and velocity + wd
+# With shannon index as response
 bias_wd_s <- bias(observados = responses_wd_s, estimados = rf_predictions_wd_s)
 bias_model_wd_s <- bias(observados = responses_wd_s, estimados = rf_pred_model_wd_s)
 bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = rf_pred_model_wd_s_c)
 
-# abundance and velocity + wd
+# With abundance as response
 bias_wd_a <- bias(observados = responses_wd_a, estimados = rf_predictions_wd_a)
 bias_model_wd_a <- bias(observados = responses_wd_a, estimados = rf_pred_model_wd_a)
 bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = rf_pred_model_wd_a_c)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 bias_wd_ra <- bias(observados = responses_wd_ra, estimados = rf_predictions_wd_ra)
 bias_model_wd_ra <- bias(observados = responses_wd_ra, estimados = rf_pred_model_wd_ra)
 bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = rf_pred_model_wd_ra_c)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
-bias_samp_k <- bias(observados = responses_samp_k, 
-                    estimados = rf_predictions_samp_k)
-bias_model_samp_k <- bias(observados = responses_samp_k, 
-                    estimados = rf_pred_model_samp_k)
-bias_model_samp_k_c <- bias(observados = responses_samp_k, 
-                    estimados = rf_pred_model_samp_k_c)
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
+bias_samp_k <- bias(observados = responses_samp_k, estimados = rf_predictions_samp_k)
+bias_model_samp_k <- bias(observados = responses_samp_k, estimados = rf_pred_model_samp_k)
+bias_model_samp_k_c <- bias(observados = responses_samp_k, estimados = rf_pred_model_samp_k_c)
 
-# shannon index and sampling locations
-bias_samp_s <- bias(observados = responses_samp_s, 
-                    estimados = rf_predictions_samp_s)
-bias_model_samp_s <- bias(observados = responses_samp_s, 
-                    estimados = rf_pred_model_samp_s)
-bias_model_samp_s_c <- bias(observados = responses_samp_s, 
-                    estimados = rf_pred_model_samp_s_c)
+# With shannon index as response
+bias_samp_s <- bias(observados = responses_samp_s, estimados = rf_predictions_samp_s)
+bias_model_samp_s <- bias(observados = responses_samp_s, estimados = rf_pred_model_samp_s)
+bias_model_samp_s_c <- bias(observados = responses_samp_s, estimados = rf_pred_model_samp_s_c)
 
-# abundance and sampling locations
-bias_samp_a <- bias(observados = responses_samp_a, 
-                    estimados = rf_predictions_samp_a)
-bias_model_samp_a <- bias(observados = responses_samp_a, 
-                    estimados = rf_pred_model_samp_a)
-bias_model_samp_a_c <- bias(observados = responses_samp_a, 
-                    estimados = rf_pred_model_samp_a_c)
+# With abundance as response
+bias_samp_a <- bias(observados = responses_samp_a, estimados = rf_predictions_samp_a)
+bias_model_samp_a <- bias(observados = responses_samp_a, estimados = rf_pred_model_samp_a)
+bias_model_samp_a_c <- bias(observados = responses_samp_a, estimados = rf_pred_model_samp_a_c)
 
-# relative abundance and sampling locations
-bias_samp_ra <- bias(observados = responses_samp_ra, 
-                    estimados = rf_predictions_samp_ra)
-bias_model_samp_ra <- bias(observados = responses_samp_ra, 
-                    estimados = rf_pred_model_samp_ra)
-bias_model_samp_ra_c <- bias(observados = responses_samp_ra, 
-                    estimados = rf_pred_model_samp_ra_c)
+# With rel_abundance as response
+bias_samp_ra <- bias(observados = responses_samp_ra, estimados = rf_predictions_samp_ra)
+bias_model_samp_ra <- bias(observados = responses_samp_ra, estimados = rf_pred_model_samp_ra)
+bias_model_samp_ra_c <- bias(observados = responses_samp_ra, estimados = rf_pred_model_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
-bias_sec_k <- bias(observados = responses_sec_k, 
-                    estimados = rf_predictions_sec_k)
-bias_model_sec_k <- bias(observados = responses_sec_k, 
-                    estimados = rf_pred_model_sec_k)
-bias_model_sec_k_c <- bias(observados = responses_sec_k, 
-                    estimados = rf_pred_model_sec_k_c)
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+bias_sec_k <- bias(observados = responses_sec_k, estimados = rf_predictions_sec_k)
+bias_model_sec_k <- bias(observados = responses_sec_k, estimados = rf_pred_model_sec_k)
+bias_model_sec_k_c <- bias(observados = responses_sec_k, estimados = rf_pred_model_sec_k_c)
 
-# shannon index and all predictors
-bias_sec_s <- bias(observados = responses_sec_s, 
-                    estimados = rf_predictions_sec_s)
-bias_model_sec_s <- bias(observados = responses_sec_s, 
-                    estimados = rf_pred_model_sec_s)
-bias_model_sec_s_c <- bias(observados = responses_sec_s, 
-                    estimados = rf_pred_model_sec_s_c)
+# With shannon index as response
+bias_sec_s <- bias(observados = responses_sec_s, estimados = rf_predictions_sec_s)
+bias_model_sec_s <- bias(observados = responses_sec_s, estimados = rf_pred_model_sec_s)
+bias_model_sec_s_c <- bias(observados = responses_sec_s, estimados = rf_pred_model_sec_s_c)
 
-# abundance and all predictors
-bias_sec_a <- bias(observados = responses_sec_a, 
-                    estimados = rf_predictions_sec_a)
-bias_model_sec_a <- bias(observados = responses_sec_a, 
-                    estimados = rf_pred_model_sec_a)
-bias_model_sec_a_c <- bias(observados = responses_sec_a, 
-                    estimados = rf_pred_model_sec_a_c)
+# With abundance as response
+bias_sec_a <- bias(observados = responses_sec_a, estimados = rf_predictions_sec_a)
+bias_model_sec_a <- bias(observados = responses_sec_a, estimados = rf_pred_model_sec_a)
+bias_model_sec_a_c <- bias(observados = responses_sec_a, estimados = rf_pred_model_sec_a_c)
 
-# relative abundance and all predictors
-bias_sec_ra <- bias(observados = responses_sec_ra, 
-                    estimados = rf_predictions_sec_ra)
-bias_model_sec_ra <- bias(observados = responses_sec_ra, 
-                    estimados = rf_pred_model_sec_ra)
-bias_model_sec_ra_c <- bias(observados = responses_sec_ra, 
-                    estimados = rf_pred_model_sec_ra_c)
+# With rel_abundance as response
+bias_sec_ra <- bias(observados = responses_sec_ra, estimados = rf_predictions_sec_ra)
+bias_model_sec_ra <- bias(observados = responses_sec_ra, estimados = rf_pred_model_sec_ra)
+bias_model_sec_ra_c <- bias(observados = responses_sec_ra, estimados = rf_pred_model_sec_ra_c)
 ```
 
 ## Nash-Sutcliffe efficiency (NSE) 
 ```{r}
-# Calculate the NSE
-### ONLY VELOCITY AS PREDICTOR ###
-# k_index and velocity
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
+# With k_index as response
 nse_v_k <- NSE(sim = rf_predictions_v_k, obs = responses_v_k)
 nse_model_v_k <- NSE(sim = rf_pred_model_v_k, obs = responses_v_k)
 nse_model_v_k_c <- NSE(sim = rf_pred_model_v_k_c, obs = responses_v_k)
 
-# shannon index and velocity
+# With shannon index as response
 nse_v_s <- NSE(sim = rf_predictions_v_s, obs = responses_v_s)
 nse_model_v_s <- NSE(sim = rf_pred_model_v_s, obs = responses_v_s)
 nse_model_v_s_c <- NSE(sim = rf_pred_model_v_s_c, obs = responses_v_s)
 
-# abundance and velocity
+# With abundance as response
 nse_v_a <- NSE(sim = rf_predictions_v_a, obs = responses_v_a)
 nse_model_v_a <- NSE(sim = rf_pred_model_v_a, obs = responses_v_a)
 nse_model_v_a_c <- NSE(sim = rf_pred_model_v_a_c, obs = responses_v_a)
 
-# relative abundance and velocity
+# With rel_abundance as response
 nse_v_ra <- NSE(sim = rf_predictions_v_ra, obs = responses_v_ra)
 nse_model_v_ra <- NSE(sim = rf_pred_model_v_ra, obs = responses_v_ra)
 nse_model_v_ra_c <- NSE(sim = rf_pred_model_v_ra_c, obs = responses_v_ra)
 
-### VELOCITY + WD AS PREDICTORS ###
-# k_index and velocity + wd
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
 nse_wd_k <- NSE(sim = rf_predictions_wd_k, obs = responses_wd_k)
 nse_model_wd_k <- NSE(sim = rf_pred_model_wd_k, obs = responses_wd_k)
 nse_model_wd_k_c <- NSE(sim = rf_pred_model_wd_k_c, obs = responses_wd_k)
 
-# shannon index and velocity + wd
+# With shannon index as response
 nse_wd_s <- NSE(sim = rf_predictions_wd_s, obs = responses_wd_s)
 nse_model_wd_s <- NSE(sim = rf_pred_model_wd_s, obs = responses_wd_s)
 nse_model_wd_s_c <- NSE(sim = rf_pred_model_wd_s_c, obs = responses_wd_s)
 
-# abundance and velocity + wd
+# With abundance as response
 nse_wd_a <- NSE(sim = rf_predictions_wd_a, obs = responses_wd_a)
 nse_model_wd_a <- NSE(sim = rf_pred_model_wd_a, obs = responses_wd_a)
 nse_model_wd_a_c <- NSE(sim = rf_pred_model_wd_a_c, obs = responses_wd_a)
 
-# relative abundance and velocity + wd
+# With rel_abundance as response
 nse_wd_ra <- NSE(sim = rf_predictions_wd_ra, obs = responses_wd_ra)
 nse_model_wd_ra <- NSE(sim = rf_pred_model_wd_ra, obs = responses_wd_ra)
 nse_model_wd_ra_c <- NSE(sim = rf_pred_model_wd_ra_c, obs = responses_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-# k_index and sampling locations
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
 nse_samp_k <- NSE(sim = rf_predictions_samp_k, obs = responses_samp_k)
 nse_model_samp_k <- NSE(sim = rf_pred_model_samp_k, obs = responses_samp_k)
 nse_model_samp_k_c <- NSE(sim = rf_pred_model_samp_k_c, obs = responses_samp_k)
 
-# shannon index and sampling locations
+# With shannon index as response
 nse_samp_s <- NSE(sim = rf_predictions_samp_s, obs = responses_samp_s)
 nse_model_samp_s <- NSE(sim = rf_pred_model_samp_s, obs = responses_samp_s)
 nse_model_samp_s_c <- NSE(sim = rf_pred_model_samp_s_c, obs = responses_samp_s)
 
-# abundance and sampling locations
+# With abundance as response
 nse_samp_a <- NSE(sim = rf_predictions_samp_a, obs = responses_samp_a)
 nse_model_samp_a <- NSE(sim = rf_pred_model_samp_a, obs = responses_samp_a)
 nse_model_samp_a_c <- NSE(sim = rf_pred_model_samp_a_c, obs = responses_samp_a)
 
-# relative abundance and sampling locations
+# With rel_abundance as response
 nse_samp_ra <- NSE(sim = rf_predictions_samp_ra, obs = responses_samp_ra)
 nse_model_samp_ra <- NSE(sim = rf_pred_model_samp_ra, obs = responses_samp_ra)
 nse_model_samp_ra_c <- NSE(sim = rf_pred_model_samp_ra_c, obs = responses_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
-# k_index and all predictors
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
 nse_sec_k <- NSE(sim = rf_predictions_sec_k, obs = responses_sec_k)
 nse_model_sec_k <- NSE(sim = rf_pred_model_sec_k, obs = responses_sec_k)
 nse_model_sec_k_c <- NSE(sim = rf_pred_model_sec_k_c, obs = responses_sec_k)
 
-# shannon index and all predictors
+# With shannon index as response
 nse_sec_s <- NSE(sim = rf_predictions_sec_s, obs = responses_sec_s)
 nse_model_sec_s <- NSE(sim = rf_pred_model_sec_s, obs = responses_sec_s)
 nse_model_sec_s_c <- NSE(sim = rf_pred_model_sec_s_c, obs = responses_sec_s)
 
-# abundance and all predictors
+# With abundance as response
 nse_sec_a <- NSE(sim = rf_predictions_sec_a, obs = responses_sec_a)
 nse_model_sec_a <- NSE(sim = rf_pred_model_sec_a, obs = responses_sec_a)
 nse_model_sec_a_c <- NSE(sim = rf_pred_model_sec_a_c, obs = responses_sec_a)
 
-# relative abundance and all predictors
+# With rel_abundance as response
 nse_sec_ra <- NSE(sim = rf_predictions_sec_ra, obs = responses_sec_ra)
 nse_model_sec_ra <- NSE(sim = rf_pred_model_sec_ra, obs = responses_sec_ra)
 nse_model_sec_ra_c <- NSE(sim = rf_pred_model_sec_ra_c, obs = responses_sec_ra)

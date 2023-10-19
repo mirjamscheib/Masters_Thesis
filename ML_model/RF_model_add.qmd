@@ -49,7 +49,7 @@ pkgCheck("hydroGOF") # for NSE calculation with NSE() function
 data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v_add.csv") 
 
 # Load data containing velocity and wd as predictors 
-data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v_add.csv") 
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv") 
 
 # Load data containing all variables measured at each sampling locations and remove all other "chr" variables
 data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling_add.csv") |>
@@ -990,192 +990,185 @@ autotuner_rf_sec_ra$tuning_result
 
 
 # Ranger Models 
-## w/ coordinates 
+## Ranger w/ coordinates 
 ```{r}
-# Create and train the random forest model with only velocity
-# VELOCITY AS PREDICTOR
-# for k_index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2059293            10          <list[4]> <list[3]> 0.1413796
-rf_model_v_k <- ranger(formula = k_index ~., data = training_v_k, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10, importance = "impurity")
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    2       0.2059293            10          
+rf_model_v_k <- ranger(formula = k_index ~., data = training_v_k, mtry = 2, sample.fraction = 0.2059293, min.node.size = 10, importance = "impurity")
 
-# for shannon index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2426534             7          <list[4]> <list[3]> 0.5703676
-rf_model_v_s <- ranger(formula = shannon ~., data = training_v_s, mtry = 1, sample.fraction = 0.2426534, min.node.size = 7, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2443021             5          
+rf_model_v_s <- ranger(formula = shannon ~., data = training_v_s, mtry = 1, sample.fraction = 0.2443021, min.node.size = 5, importance = "impurity")
 
-# for abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.3763677             9          <list[4]> <list[3]>  741.6989
-rf_model_v_a <- ranger(formula = abundance ~., data = training_v_a, mtry = 1, sample.fraction = 0.3763677, min.node.size = 9, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2741381             8         
+rf_model_v_a <- ranger(formula = abundance ~., data = training_v_a, mtry = 4, sample.fraction = 0.2741381, min.node.size = 8, importance = "impurity")
 
-# for relative abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[5]> <list[3]> 0.2023601
-rf_model_v_ra <- ranger(formula = rel_abundance ~., data = training_v_ra, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2679696             2         
+rf_model_v_ra <- ranger(formula = rel_abundance ~., data = training_v_ra, mtry = 4, sample.fraction = 0.2679696, min.node.size = 2, importance = "impurity")
 
-# Create and train the random forest model with velocity + wd
-# VELOCITY + WD AS PREDICTORS 
-# for k_index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[4]> <list[3]> 0.1371224
-rf_model_wd_k <- ranger(formula = k_index ~., data = training_wd_k, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2170115             6          
+rf_model_wd_k <- ranger(formula = k_index ~., data = training_wd_k, mtry = 4, sample.fraction = 0.2170115, min.node.size = 6, importance = "impurity")
 
-# for shannon index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2019869             6          <list[4]> <list[3]> 0.5556115
-rf_model_wd_s <- ranger(formula = shannon ~., data = training_wd_s, mtry = 1, sample.fraction = 0.2019869, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2068668             5          
+rf_model_wd_s <- ranger(formula = shannon ~., data = training_wd_s, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
 
-# for abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2068668             5          <list[4]> <list[3]>  730.9148
-rf_model_wd_a <- ranger(formula = abundance ~., data = training_wd_a, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2132617             4          
+rf_model_wd_a <- ranger(formula = abundance ~., data = training_wd_a, mtry = 4, sample.fraction = 0.2132617, min.node.size = 4, importance = "impurity")
 
-# for relative abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2172103             9          <list[5]> <list[3]> 0.1853219
-rf_model_wd_ra <- ranger(formula = rel_abundance ~., data = training_wd_ra, mtry = 1, sample.fraction = 0.2172103, min.node.size = 9, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2197985             6          
+rf_model_wd_ra <- ranger(formula = rel_abundance ~., data = training_wd_ra, mtry = 1, sample.fraction = 0.2197985, min.node.size = 6, importance = "impurity")
 
-# Create and train the random forest model with sampling locations
-# SAMPLING LOCATIONS AS PREDICTORS 
-# for k_index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.4889214             9          <list[5]> <list[3]> 0.1445254
-rf_model_samp_k <- ranger(formula = k_index ~., data = training_samp_k, mtry = 1, sample.fraction = 0.4889214, min.node.size = 9, importance = "impurity")
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3387031             5          
+rf_model_samp_k <- ranger(formula = k_index ~., data = training_samp_k, mtry = 1, sample.fraction = 0.3387031, min.node.size = 5, importance = "impurity")
 
-# for shannon index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7329741             6          <list[5]> <list[3]> 0.6053854
-rf_model_samp_s <- ranger(formula = shannon ~., data = training_samp_s, mtry = 4, sample.fraction = 0.7329741, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2275265             6          
+rf_model_samp_s <- ranger(formula = shannon ~., data = training_samp_s, mtry = 1, sample.fraction = 0.2275265, min.node.size = 6, importance = "impurity")
 
-# for abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7439564             1          <list[5]> <list[3]>  789.2746
-rf_model_samp_a <- ranger(formula = abundance ~., data = training_samp_a, mtry = 4, sample.fraction = 0.7439564, min.node.size = 1, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:   14       0.4662279             2          
+rf_model_samp_a <- ranger(formula = abundance ~., data = training_samp_a, mtry = 14, sample.fraction = 0.4662279, min.node.size = 2, importance = "impurity")
 
-# for relative abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    2         0.52377             8          <list[5]> <list[3]> 0.1930686
-rf_model_samp_ra <- ranger(formula = rel_abundance ~., data = training_samp_ra, mtry = 2, sample.fraction = 0.52377, min.node.size = 8, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    9        0.827493             7          
+rf_model_samp_ra <- ranger(formula = rel_abundance ~., data = training_samp_ra, mtry = 9, sample.fraction = 0.827493, min.node.size = 7, importance = "impurity")
 
-# Create and train the random forest model with all predictors possible
-# WITH ALL PREDICTORS 
-# for k_index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   27       0.8202065             2          <list[5]> <list[3]> 0.0533179
-rf_model_sec_k <- ranger(formula = k_index ~., data = training_sec_k, mtry = 27, sample.fraction = 0.8202065, min.node.size = 2, importance = "impurity")
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1        0.233596             2         
+rf_model_sec_k <- ranger(formula = k_index ~., data = training_sec_k, mtry = 1, sample.fraction = 0.233596, min.node.size = 2, importance = "impurity")
 
-# for shannon index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   35       0.8171567             6          <list[5]> <list[3]> 0.6060034
-rf_model_sec_s <- ranger(formula = shannon ~., data = training_sec_s, mtry = 35, sample.fraction = 0.8171567, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    5       0.2253738             7          
+rf_model_sec_s <- ranger(formula = shannon ~., data = training_sec_s, mtry = 5, sample.fraction = 0.2253738, min.node.size = 7, importance = "impurity")
 
-# for abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   36       0.7833582             2          <list[5]> <list[3]>  635.7558
-rf_model_sec_a <- ranger(formula = abundance ~., data = training_sec_a, mtry = 35, sample.fraction = 0.7833582, min.node.size = 2, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2463606             1          
+rf_model_sec_a <- ranger(formula = abundance ~., data = training_sec_a, mtry = 4, sample.fraction = 0.2463606, min.node.size = 1, importance = "impurity")
 
-# for relative abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   16       0.3304285             6          <list[5]> <list[3]> 0.1867454
-rf_model_sec_ra <- ranger(formula = rel_abundance ~., data = training_sec_ra, mtry = 16, sample.fraction = 0.3304285, min.node.size = 6, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.4203471            10          
+rf_model_sec_ra <- ranger(formula = rel_abundance ~., data = training_sec_ra, mtry = 1, sample.fraction = 0.4203471, min.node.size = 10, importance = "impurity")
 ```
 
-## w/o coordinates 
+## Ranger w/o coordinates 
 ```{r}
-# Create and train the random forest model with only velocity
-# VELOCITY AS PREDICTOR
-# for k_index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2059293            10          <list[4]> <list[3]> 0.1413796
-rf_model_v_k_c <- ranger(formula = k_index ~., data = training_v_k_c, mtry = 1, sample.fraction = 0.2059293, min.node.size = 10, importance = "impurity")
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    2       0.2059293            10 
+rf_model_v_k_c <- ranger(formula = k_index ~., data = training_v_k_c, mtry = 2, sample.fraction = 0.2059293, min.node.size = 10, importance = "impurity")
 
-# for shannon index and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2426534             7          <list[4]> <list[3]> 0.5703676
-rf_model_v_s_c <- ranger(formula = shannon ~., data = training_v_s_c, mtry = 1, sample.fraction = 0.2426534, min.node.size = 7, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2443021             5          
+rf_model_v_s_c <- ranger(formula = shannon ~., data = training_v_s_c, mtry = 1, sample.fraction = 0.2443021, min.node.size = 5, importance = "impurity")
 
-# for abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.3763677             9          <list[4]> <list[3]>  741.6989
-rf_model_v_a_c <- ranger(formula = abundance ~., data = training_v_a_c, mtry = 1, sample.fraction = 0.3763677, min.node.size = 9, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2741381             8         
+rf_model_v_a_c <- ranger(formula = abundance ~., data = training_v_a_c, mtry = 4, sample.fraction = 0.2741381, min.node.size = 8, importance = "impurity")
 
-# for relative abundance and velocity
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[5]> <list[3]> 0.2023601
-rf_model_v_ra_c <- ranger(formula = rel_abundance ~., data = training_v_ra_c, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2679696             2         
+rf_model_v_ra_c <- ranger(formula = rel_abundance ~., data = training_v_ra_c, mtry = 4, sample.fraction = 0.2679696, min.node.size = 2, importance = "impurity")
 
-# Create and train the random forest model with velocity + wd
-# VELOCITY + WD AS PREDICTORS 
-# for k_index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2451874             9          <list[4]> <list[3]> 0.1371224
-rf_model_wd_k_c <- ranger(formula = k_index ~., data = training_wd_k_c, mtry = 1, sample.fraction = 0.2451874, min.node.size = 9, importance = "impurity")
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2170115             6          
+rf_model_wd_k_c <- ranger(formula = k_index ~., data = training_wd_k_c, mtry = 4, sample.fraction = 0.2170115, min.node.size = 6, importance = "impurity")
 
-# for shannon index and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2019869             6          <list[4]> <list[3]> 0.5556115
-rf_model_wd_s_c <- ranger(formula = shannon ~., data = training_wd_s_c, mtry = 1, sample.fraction = 0.2019869, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2068668             5          
+rf_model_wd_s_c <- ranger(formula = shannon ~., data = training_wd_s_c, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
 
-# for abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2068668             5          <list[4]> <list[3]>  730.9148
-rf_model_wd_a_c <- ranger(formula = abundance ~., data = training_wd_a_c, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2132617             4          
+rf_model_wd_a_c <- ranger(formula = abundance ~., data = training_wd_a_c, mtry = 4, sample.fraction = 0.2132617, min.node.size = 4, importance = "impurity")
 
-# for relative abundance and velocity + wd
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.2172103             9          <list[5]> <list[3]> 0.1853219
-rf_model_wd_ra_c <- ranger(formula = rel_abundance ~., data = training_wd_ra_c, mtry = 1, sample.fraction = 0.2172103, min.node.size = 9, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2197985             6          
+rf_model_wd_ra_c <- ranger(formula = rel_abundance ~., data = training_wd_ra_c, mtry = 1, sample.fraction = 0.2197985, min.node.size = 6, importance = "impurity")
 
-# Create and train the random forest model with sampling locations
-# SAMPLING LOCATIONS AS PREDICTORS 
-# for k_index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    1       0.4889214             9          <list[5]> <list[3]> 0.1445254
-rf_model_samp_k_c <- ranger(formula = k_index ~., data = training_samp_k_c, mtry = 1, sample.fraction = 0.4889214, min.node.size = 9, importance = "impurity")
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.3387031             5          
+rf_model_samp_k_c <- ranger(formula = k_index ~., data = training_samp_k_c, mtry = 1, sample.fraction = 0.3387031, min.node.size = 5, importance = "impurity")
 
-# for shannon index and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7329741             6          <list[5]> <list[3]> 0.6053854
-rf_model_samp_s_c <- ranger(formula = shannon ~., data = training_samp_s_c, mtry = 4, sample.fraction = 0.7329741, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2275265             6          
+rf_model_samp_s_c <- ranger(formula = shannon ~., data = training_samp_s_c, mtry = 1, sample.fraction = 0.2275265, min.node.size = 6, importance = "impurity")
 
-# for abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    4       0.7439564             1          <list[5]> <list[3]>  789.2746
-rf_model_samp_a_c <- ranger(formula = abundance ~., data = training_samp_a_c, mtry = 4, sample.fraction = 0.7439564, min.node.size = 1, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:   14       0.4662279             2          
+rf_model_samp_a_c <- ranger(formula = abundance ~., data = training_samp_a_c, mtry = 14, sample.fraction = 0.4662279, min.node.size = 2, importance = "impurity")
 
-# for relative abundance and sampling locations
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:    2         0.52377             8          <list[5]> <list[3]> 0.1930686
-rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra_c, mtry = 2, sample.fraction = 0.52377, min.node.size = 8, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    9        0.827493             7          
+rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra_c, mtry = 9, sample.fraction = 0.827493, min.node.size = 7, importance = "impurity")
 
-# Create and train the random forest model with all predictors possible
-# WITH ALL PREDICTORS 
-# for k_index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   27       0.8202065             2          <list[5]> <list[3]> 0.0533179
-rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 27, sample.fraction = 0.8202065, min.node.size = 2, importance = "impurity")
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1        0.233596             2         
+rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 1, sample.fraction = 0.233596, min.node.size = 2, importance = "impurity")
 
-# for shannon index and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   35       0.8171567             6          <list[5]> <list[3]> 0.6060034
-rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 27, sample.fraction = 0.8171567, min.node.size = 6, importance = "impurity")
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    5       0.2253738             7          
+rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 5, sample.fraction = 0.2253738, min.node.size = 7, importance = "impurity")
 
-# for abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   36       0.7833582             2          <list[5]> <list[3]>  635.7558
-rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 27, sample.fraction = 0.7833582, min.node.size = 2, importance = "impurity")
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    4       0.2463606             1          
+rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 4, sample.fraction = 0.2463606, min.node.size = 1, importance = "impurity")
 
-# for relative abundance and all predictors
-#   mtry sample.fraction min.node.size learner_param_vals  x_domain regr.rmse
-#1:   16       0.3304285             6          <list[5]> <list[3]> 0.1867454
-rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 16, sample.fraction = 0.3304285, min.node.size = 6, importance = "impurity")
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.4203471            10          
+rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 1, sample.fraction = 0.4203471, min.node.size = 10, importance = "impurity")
 ```
 
 # Model Evaluation 
 ## Variable Importance
 ```{r}
-### PREDICTORS: ONLY VELOCITY ###
+### VARIABLE IMPORTANCE FROM RANGER MODELS ### --------------------------------
+### PREDICTOR: ONLY VELOCITY ### ----------------------------------------------
 # w/ coordinates
 vi_v_k <- importance(rf_model_v_k)
 vi_rel_v_k <- vi_v_k/sum(vi_v_k)
@@ -1203,7 +1196,7 @@ vi_v_ra_c <- importance(rf_model_v_ra_c)
 vi_rel_v_ra_c <- vi_v_ra_c/sum(vi_v_ra_c)
 
 
-### PREDICTORS: VELOCITY AND WD ###
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/ coordinates
 vi_wd_k <- importance(rf_model_wd_k)
 vi_rel_wd_k <- vi_wd_k/sum(vi_wd_k)
@@ -1230,7 +1223,7 @@ vi_rel_wd_a_c <- vi_wd_a_c/sum(vi_wd_a_c)
 vi_wd_ra_c <- importance(rf_model_wd_ra_c)
 vi_rel_wd_ra_c <- vi_wd_ra_c/sum(vi_wd_ra_c)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # w/ coordinates
 vi_samp_k <- importance(rf_model_samp_k)
 vi_rel_samp_k <- vi_samp_k/sum(vi_samp_k)
@@ -1257,7 +1250,7 @@ vi_rel_samp_a_c <- vi_samp_a_c/sum(vi_samp_a_c)
 vi_samp_ra_c <- importance(rf_model_samp_ra_c)
 vi_rel_samp_ra_c <- vi_samp_ra_c/sum(vi_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ###
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/ coordinates
 vi_sec_k <- importance(rf_model_sec_k)
 vi_rel_sec_k <- vi_sec_k/sum(vi_sec_k)
@@ -1284,7 +1277,7 @@ vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c)
 vi_sec_ra_c <- importance(rf_model_sec_ra_c)
 vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c)
 
-# bind results together
+# bind results together ------------------------------------------------------
 vi_rf_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra)
 vi_rel_rf_model_v <- rbind(vi_rel_v_k, vi_rel_v_s, vi_rel_v_a, vi_rel_v_ra)
 
@@ -1309,34 +1302,33 @@ vi_rel_rf_model_sec <- rbind(vi_rel_sec_k, vi_rel_sec_s, vi_rel_sec_a, vi_rel_se
 vi_rf_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c)
 vi_rel_rf_model_sec_c <- rbind(vi_rel_sec_k_c, vi_rel_sec_s_c, vi_rel_sec_a_c, vi_rel_sec_ra_c)
 
-# write results into .csv
-write.csv(vi_rf_model_v, "ML_model/vi_rf_model_v_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_v, "ML_model/vi_rel_rf_model_v_add.csv", row.names = FALSE)
+# write results into .csv ------------------------------------------------------
+write.csv(vi_rf_model_v, "ML_model/var_imp/vi_rf_model_v_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_v, "ML_model/var_imp/vi_rel_rf_model_v_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_v_c, "ML_model/vi_rf_model_v_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_v_c, "ML_model/vi_rel_rf_model_v_c_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_v_c, "ML_model/var_imp/vi_rf_model_v_woc_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_v_c, "ML_model/var_imp/vi_rel_rf_model_v_woc_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_wd, "ML_model/vi_rf_model_wd_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_wd, "ML_model/vi_rel_rf_model_wd_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_wd, "ML_model/var_imp/vi_rf_model_wd_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_wd, "ML_model/var_imp/vi_rel_rf_model_wd_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_wd_c, "ML_model/vi_rf_model_wd_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_wd_c, "ML_model/vi_rel_rf_model_wd_c_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_wd_c, "ML_model/var_imp/vi_rf_model_wd_woc_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_wd_c, "ML_model/var_imp/vi_rel_rf_model_wd_woc_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_samp, "ML_model/vi_rf_model_samp_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_samp, "ML_model/vi_rel_rf_model_samp_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_samp, "ML_model/var_imp/vi_rf_model_samp_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_samp, "ML_model/var_imp/vi_rel_rf_model_samp_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_samp_c, "ML_model/vi_rf_model_samp_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_samp_c, "ML_model/vi_rel_rf_model_samp_c_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_samp_c, "ML_model/var_imp/vi_rf_model_samp_woc_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_samp_c, "ML_model/var_imp/vi_rel_rf_model_samp_woc_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_sec, "ML_model/vi_rf_model_sec_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_sec, "ML_model/vi_rel_rf_model_sec_add.csv", row.names = FALSE)
+write.csv(vi_rf_model_sec, "ML_model/var_imp/vi_rf_model_sec_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_sec, "ML_model/var_imp/vi_rel_rf_model_sec_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_model_sec_c, "ML_model/vi_rf_model_sec_c_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_model_sec_c, "ML_model/vi_rel_rf_model_sec_c_add.csv", row.names = FALSE)
-```
+write.csv(vi_rf_model_sec_c, "ML_model/var_imp/vi_rf_model_sec_woc_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_sec_c, "ML_model/var_imp/vi_rel_rf_model_sec_woc_add.csv", row.names = FALSE)
 
-```{r}
-### PREDICTORS: ONLY VELOCITY ###
+### VARIABLE IMPORTANCE FROM AUTOTUNER ### ------------------------------------
+### PREDICTOR: VELOCITY ### ---------------------------------------------------
 var_imp_rf_v_k <- autotuner_rf_v_k$importance()
 var_rel_imp_rf_v_k <- var_imp_rf_v_k/sum(var_imp_rf_v_k)
 
@@ -1349,7 +1341,7 @@ var_rel_imp_rf_v_a <- var_imp_rf_v_a/sum(var_imp_rf_v_a)
 var_imp_rf_v_ra <- autotuner_rf_v_ra$importance()
 var_rel_imp_rf_v_ra <- var_imp_rf_v_ra/sum(var_imp_rf_v_ra)
 
-### PREDICTORS: VELOCITY AND WD ###
+### PREDICTORS: VELOCITY AND WD ### -------------------------------------------
 var_imp_rf_wd_k <- autotuner_rf_wd_k$importance()
 var_rel_imp_rf_wd_k <- var_imp_rf_wd_k/sum(var_imp_rf_wd_k)
 
@@ -1362,7 +1354,7 @@ var_rel_imp_rf_wd_a <- var_imp_rf_wd_a/sum(var_imp_rf_wd_a)
 var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance()
 var_rel_imp_rf_wd_ra <- var_imp_rf_wd_ra/sum(var_imp_rf_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 var_imp_rf_samp_k <- autotuner_rf_samp_k$importance()
 var_rel_imp_rf_samp_k <- var_imp_rf_samp_k/sum(var_imp_rf_samp_k)
 
@@ -1375,7 +1367,7 @@ var_rel_imp_rf_samp_a <- var_imp_rf_samp_a/sum(var_imp_rf_samp_a)
 var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance()
 var_rel_imp_rf_samp_ra <- var_imp_rf_samp_ra/sum(var_imp_rf_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ###
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 var_imp_rf_sec_k <- autotuner_rf_sec_k$importance()
 var_rel_imp_rf_sec_k <- var_imp_rf_sec_k/sum(var_imp_rf_sec_k)
 
@@ -1388,7 +1380,7 @@ var_rel_imp_rf_sec_a <- var_imp_rf_sec_a/sum(var_imp_rf_sec_a)
 var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance()
 var_rel_imp_rf_sec_ra <- var_imp_rf_sec_ra/sum(var_imp_rf_sec_ra)
 
-# bind results together
+# bind results together -------------------------------------------------------
 vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra)
 vi_rel_rf_v <- rbind(var_rel_imp_rf_v_k, var_rel_imp_rf_v_s, var_rel_imp_rf_v_a, var_rel_imp_rf_v_ra)
 
@@ -1401,21 +1393,21 @@ vi_rel_rf_samp <- rbind(var_rel_imp_rf_samp_k, var_rel_imp_rf_samp_s, var_rel_im
 vi_rf_sec <- rbind(var_imp_rf_sec_k, var_imp_rf_sec_s, var_imp_rf_sec_a, var_imp_rf_sec_ra)
 vi_rel_rf_sec <- rbind(var_rel_imp_rf_sec_k, var_rel_imp_rf_sec_s, var_rel_imp_rf_sec_a, var_rel_imp_rf_sec_ra)
 
-# write results into .csv
-write.csv(vi_rf_v, "ML_model/vi_rf_v_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_v, "ML_model/vi_rel_rf_v_add.csv", row.names = FALSE)
+# write results into .csv -----------------------------------------------------
+write.csv(vi_rf_v, "ML_model/var_imp/vi_rf_v_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_v, "ML_model/var_imp/vi_rel_rf_v_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_wd, "ML_model/vi_rf_wd_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_wd, "ML_model/vi_rel_rf_wd_add.csv", row.names = FALSE)
+write.csv(vi_rf_wd, "ML_model/var_imp/vi_rf_wd_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_wd, "ML_model/var_imp/vi_rel_rf_wd_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_samp, "ML_model/vi_rf_samp_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_samp, "ML_model/vi_rel_rf_samp_add.csv", row.names = FALSE)
+write.csv(vi_rf_samp, "ML_model/var_imp/vi_rf_samp_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_samp, "ML_model/var_imp/vi_rel_rf_samp_add.csv", row.names = FALSE)
 
-write.csv(vi_rf_sec, "ML_model/vi_rf_sec_add.csv", row.names = FALSE)
-write.csv(vi_rel_rf_sec, "ML_model/vi_rel_rf_sec_add.csv", row.names = FALSE)
+write.csv(vi_rf_sec, "ML_model/var_imp/vi_rf_sec_add.csv", row.names = FALSE)
+write.csv(vi_rel_rf_sec, "ML_model/var_imp/vi_rel_rf_sec_add.csv", row.names = FALSE)
 ```
 
-## Partial dependence plots
+## ! Partial dependence plots
 ### Velocity 
 ```{r}
 ### k_index -------------------------------------------------------------
