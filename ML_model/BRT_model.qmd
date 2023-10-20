@@ -1394,100 +1394,190 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
 
 
 # Model Evaluation 
-## ! Variable Importance
-Gain is the improvement in accuracy brought by a feature to the branches it is on. The idea is that before adding a new split on a feature X to the branch there were some wrongly classified elements; after adding the split on this feature, there are two new branches, and each of these branches is more accurate (one branch saying if your observation is on this branch then it should be classified as 1, and the other branch saying the exact opposite).
-
-https://xgboost.readthedocs.io/en/stable/R-package/discoverYourData.html
+## Variable Importance
 ```{r}
 ### PREDICTORS: VELOCITY ### -------------------------------------------------
 # w/ coordinates
 vi_v_k <- xgb.importance(model = xgb_v_k) |>
-  dplyr::select(-Cover, -Frequency) |>
-  transpose()
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
 
-vi_v_s <- xgb.importance(model = xgb_v_s)
-vi_v_a <- xgb.importance(model = xgb_v_a)
-vi_v_ra <- xgb.importance(model = xgb_v_ra)
+vi_v_s <- xgb.importance(model = xgb_v_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_v_a <- xgb.importance(model = xgb_v_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_v_ra <- xgb.importance(model = xgb_v_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_v_k_c <- xgb.importance(model = xgb_v_k_c)
-vi_v_s_c <- xgb.importance(model = xgb_v_s_c)
-vi_v_a_c <- xgb.importance(model = xgb_v_a_c)
-vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)
+vi_v_k_c <- xgb.importance(model = xgb_v_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_v_s_c <- xgb.importance(model = xgb_v_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_v_a_c <- xgb.importance(model = xgb_v_a_c)|>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)|>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
 
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/ coordinates
-vi_wd_k <- xgb.importance(model = xgb_wd_k)
-vi_wd_s <- xgb.importance(model = xgb_wd_s)
-vi_wd_a <- xgb.importance(model = xgb_wd_a)
-vi_wd_ra <- xgb.importance(model = xgb_wd_ra)
+vi_wd_k <- xgb.importance(model = xgb_wd_k) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
+
+vi_wd_s <- xgb.importance(model = xgb_wd_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_wd_a <- xgb.importance(model = xgb_wd_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_wd_ra <- xgb.importance(model = xgb_wd_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c)
-vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c)
-vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c)
-vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c)
+vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # w/ coordinates
-vi_samp_k <- xgb.importance(model = xgb_samp_k)
-vi_samp_s <- xgb.importance(model = xgb_samp_s)
-vi_samp_a <- xgb.importance(model = xgb_samp_a)
-vi_samp_ra <- xgb.importance(model = xgb_samp_ra)
+vi_samp_k <- xgb.importance(model = xgb_samp_k) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
+
+vi_samp_s <- xgb.importance(model = xgb_samp_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_samp_a <- xgb.importance(model = xgb_samp_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_samp_ra <- xgb.importance(model = xgb_samp_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c)
-vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c)
-vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c)
-vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c)
+vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/ coordinates
-vi_sec_k <- xgb.importance(model = xgb_sec_k)
-vi_sec_s <- xgb.importance(model = xgb_sec_s)
-vi_sec_a <- xgb.importance(model = xgb_sec_a)
-vi_sec_ra <- xgb.importance(model = xgb_sec_ra)
+vi_sec_k <- xgb.importance(model = xgb_sec_k) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
+
+vi_sec_s <- xgb.importance(model = xgb_sec_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_sec_a <- xgb.importance(model = xgb_sec_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_sec_ra <- xgb.importance(model = xgb_sec_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c)
-vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c)
-vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c)
-vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c)
+vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
 
 # bind results together -------------------------------------------------------
-vi_brt_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)|>
-  mutate(model = "model w/o coordinates",
-         index = c("k_index", "shannon", "abundance", "rel_abundance"),
-         Feature = "velocity")
-
-vi_brt_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) |>
-  mutate(model = "model w/o coordinates",
-         index = c("k_index", "k_index", "shannon", "shannon", "abundance", "abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c) |>
-  mutate(model = "model w/o coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+vi_brt_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra) 
+vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)
+vi_brt_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra) 
+vi_brt_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) 
+vi_brt_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra) 
+vi_brt_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c) 
+vi_brt_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
+vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) 
 
 # write results into .csv ----------------------------------------------------
 write.csv(vi_brt_model_v, "ML_model/var_imp/vi_brt_model_v.csv", row.names = FALSE)
@@ -1500,52 +1590,1515 @@ write.csv(vi_brt_model_sec, "ML_model/var_imp/vi_brt_model_sec.csv", row.names =
 write.csv(vi_brt_model_sec_c, "ML_model/var_imp/vi_brt_model_sec_c.csv", row.names = FALSE)
 ```
 
+## ! Partial dependence plots
+## Partial dependence plots
+### Data extraction & export
 ```{r}
-### PREDICTORS: ONLY VELOCITY ###
-vi_v_k <- autotuner_xbrt_v_k$importance()
-vi_v_s <- autotuner_xbrt_v_s$importance()
-vi_v_a <- autotuner_xbrt_v_a$importance()
-vi_rf_v_ra <- autotuner_xbrt_v_ra$importance()
+### PREDICTOR: VELOCITY ### -------------------------------------------------
+# With k_index as response --------------------------------------------------
+### velocity
+pdp_model_v_k <- pdp::partial(xgb_v_k, pred.var = "velocity", train = trainx_v_k[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "k_index")
 
-xgboost::xgb.importance(model = self$autotuner_xbrt_v_k)
+train_v_k_c <- as.matrix(trainx_v_k_c[ ,-1])
+colnames(train_v_k_c) <- "velocity"
+pdp_model_v_k_c <- pdp::partial(xgb_v_k_c, pred.var = "velocity", train = train_v_k_c)|>
+  mutate(predictors = "velocity_c",
+         model = "velocity w/o coordinates",
+         index = "k_index")
 
-autotuner_xbrt_v_k$importance()
-### PREDICTORS: VELOCITY AND WD ###
-vi_wd_k <- autotuner_xbrt_wd_k$importance()
-vi_wd_s <- autotuner_xbrt_wd_s$importance()
-vi_wd_a <- autotuner_xbrt_wd_a$importance()
-vi_wd_ra <- autotuner_xbrt_wd_ra$importance()
+# export data 
+write.csv(pdp_model_v_k, "ML_Model/pdp_data/pdp_v_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_k_c, "ML_Model/pdp_data/pdp_v_k_c_brt.csv", row.names = FALSE)
 
-### PREDICTORS: SAMPLING LOCATIONS ###
-vi_samp_k <- autotuner_xbrt_samp_k$importance()
-vi_samp_s <- autotuner_xbrt_samp_s$importance()
-vi_samp_a <- autotuner_xbrt_samp_a$importance()
-vi_samp_ra <- autotuner_xbrt_samp_ra$importance()
+### x/y
+pdp_model_x_v_k <- pdp::partial(xgb_v_k, pred.var = "x", train = trainx_v_k[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "k_index")
+pdp_model_y_v_k <- pdp::partial(xgb_v_k, pred.var = "y", train = trainx_v_k[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "k_index")
 
-### PREDICTORS: ALL PREDICTORS ###
-vi_sec_k <- autotuner_xbrt_sec_k$importance()
-vi_sec_s <- autotuner_xbrt_sec_s$importance()
-vi_sec_a <- autotuner_xbrt_sec_a$importance()
-vi_sec_ra <- autotuner_xbrt_sec_ra$importance()
+# export data 
+write.csv(pdp_model_x_v_k, "ML_Model/pdp_data/pdp_x_v_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_k, "ML_Model/pdp_data/pdp_y_v_k_brt.csv", row.names = FALSE)
 
-# bind results together
-vi_v <- rbind(vi_v_k, vi_rf_v_s, vi_rf_v_a, vi_rf_v_ra) |>
-  mutate(model = "autotuner",
-         index = c("k_index", "shannon", "abundance", "rel_abundance"))
+# With shannon index as response ----------------------------------------------
+### velocity 
+pdp_model_v_s <- pdp::partial(xgb_v_s, pred.var = "velocity", train = trainx_v_s[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "shannon index")
 
-vi_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra)
-vi_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra)
-vi_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
+train_v_s_c <- as.matrix(trainx_v_s_c[ ,-1])
+colnames(train_v_s_c) <- "velocity"
+pdp_model_v_s_c <- pdp::partial(xgb_v_s_c, pred.var = "velocity", train = train_v_s_c)|>
+  mutate(predictors = "velocity_c",
+         model = "velocity w/o coordinates",
+         index = "shannon index")
 
-# write results into .csv
-write.csv(vi_v, "ML_model/vi_brt_v.csv", row.names = FALSE)
-write.csv(vi_wd, "ML_model/vi_brt_wd.csv", row.names = FALSE)
-write.csv(vi_samp, "ML_model/vi_brt_samp.csv", row.names = FALSE)
-write.csv(vi_sec, "ML_model/vi_brt_sec.csv", row.names = FALSE)
+# export data 
+write.csv(pdp_model_v_s, "ML_Model/pdp_data/pdp_v_s_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_s_c, "ML_Model/pdp_data/pdp_v_s_c_brt.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_v_s <- pdp::partial(xgb_v_k, pred.var = "x", train = trainx_v_k[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "shannon index")
+pdp_model_y_v_s <- pdp::partial(xgb_v_k, pred.var = "y", train = trainx_v_k[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "shannon index")
+
+# export data 
+write.csv(pdp_model_x_v_s, "ML_Model/pdp_data/pdp_x_v_s_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_s, "ML_Model/pdp_data/pdp_y_v_s_brt.csv", row.names = FALSE)
+
+# With abundance as response --------------------------------------------------
+### velocity 
+pdp_model_v_a <- pdp::partial(xgb_v_a, pred.var = "velocity", train = trainx_v_a[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+
+train_v_a_c <- as.matrix(trainx_v_a_c[ ,-1])
+colnames(train_v_a_c) <- "velocity"
+pdp_model_v_a_c <- pdp::partial(xgb_v_a_c, pred.var = "velocity", train = train_v_a_c)|>
+  mutate(predictors = "velocity_c",
+         model = "velocity w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_v_a, "ML_Model/pdp_data/pdp_v_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_a_c, "ML_Model/pdp_data/pdp_v_a_c_brt.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_v_a <- pdp::partial(xgb_v_a, pred.var = "x", train = trainx_v_a[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+pdp_model_y_v_a <- pdp::partial(xgb_v_a, pred.var = "y", train = trainx_v_a[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_x_v_a, "ML_Model/pdp_data/pdp_x_v_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_a, "ML_Model/pdp_data/pdp_y_v_a_brt.csv", row.names = FALSE)
+
+# With rel_abundance as response ----------------------------------------------
+### velocity 
+pdp_model_v_ra <- pdp::partial(xgb_v_ra, pred.var = "velocity", train = trainx_v_ra[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+
+train_v_ra_c <- as.matrix(trainx_v_ra_c[ ,-1])
+colnames(train_v_ra_c) <- "velocity"
+pdp_model_v_ra_c <- pdp::partial(xgb_v_ra_c, pred.var = "velocity", train = train_v_ra_c)|>
+  mutate(predictors = "velocity_c",
+         model = "velocity w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_v_ra, "ML_Model/pdp_data/pdp_v_ra_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_ra_c, "ML_Model/pdp_data/pdp_v_ra_c_brt.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_v_ra <- pdp::partial(xgb_v_ra, pred.var = "x", train = trainx_v_ra[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+pdp_model_y_v_ra <- pdp::partial(xgb_v_ra, pred.var = "y", train = trainx_v_ra[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_x_v_ra, "ML_Model/pdp_data/pdp_x_v_ra_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_ra, "ML_Model/pdp_data/pdp_y_v_ra_brt.csv", row.names = FALSE)
+
+### PREDICTORS: VELOCITY + WD ### --------------------------------------------
+# With k_index as response ---------------------------------------------------
+### velocity 
+pdp_model_v_wd_k <- pdp::partial(xgb_wd_k, pred.var = "velocity", train = trainx_wd_k[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_v_wd_k_c <- pdp::partial(xgb_wd_k_c, pred.var = "velocity", train = trainx_wd_k_c[ ,-1])|>
+  mutate(predictors = "velocity_c",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_v_wd_k, "ML_Model/pdp_data/pdp_v_wd_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_k_c, "ML_Model/pdp_data/pdp_v_wd_k_c_brt.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_k <- pdp::partial(xgb_wd_k, pred.var = "wd_m", train = trainx_wd_k[ ,-1]) |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_wd_k_c <- pdp::partial(xgb_wd_k_c, pred.var = "wd_m", train = trainx_wd_k_c[ ,-1])|>
+  mutate(predictors = "wd_m_c",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_wd_k, "ML_Model/pdp_data/pdp_wd_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_wd_k_c, "ML_Model/pdp_data/pdp_wd_k_c_brt.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_k <- pdp::partial(xgb_wd_k, pred.var = "x", train = trainx_wd_k[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_y_wd_k <- pdp::partial(xgb_wd_k, pred.var = "y", train = trainx_wd_k[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_x_wd_k, "ML_Model/pdp_data/pdp_x_wd_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_k, "ML_Model/pdp_data/pdp_y_wd_k_c_brt.csv", row.names = FALSE)
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+pdp_model_v_wd_s <- pdp::partial(xgb_wd_s, pred.var = "velocity", train = trainx_wd_s[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_v_wd_s_c <- pdp::partial(xgb_wd_s_c, pred.var = "velocity", train = trainx_wd_s_c[ ,-1])|>
+  mutate(predictors = "velocity_c",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_v_wd_s, "ML_Model/pdp_data/pdp_v_wd_s_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_s_c, "ML_Model/pdp_data/pdp_v_wd_s_c_brt.csv", row.names = FALSE)
+
+### wd_m
+pdp_model_wd_s <- pdp::partial(xgb_wd_s, pred.var = "wd_m", train = trainx_wd_s[ ,-1]) |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_wd_s_c <- pdp::partial(xgb_wd_s_c, pred.var = "wd_m", train = trainx_wd_s_c[ ,-1])|>
+  mutate(predictors = "wd_m_c",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_wd_s, "ML_Model/pdp_data/pdp_wd_s_brt.csv", row.names = FALSE)
+write.csv(pdp_model_wd_s_c, "ML_Model/pdp_data/pdp_wd_s_c_brt.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_s <- pdp::partial(xgb_wd_s, pred.var = "x", train = trainx_wd_s[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_y_wd_s <- pdp::partial(xgb_wd_s, pred.var = "y", train = trainx_wd_s[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_x_wd_s, "ML_Model/pdp_data/pdp_x_wd_s_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_s, "ML_Model/pdp_data/pdp_y_wd_s_brt.csv", row.names = FALSE)
+
+# With abundance as response --------------------------------------------------
+### velocity 
+pdp_model_v_wd_a <- pdp::partial(xgb_wd_a, pred.var = "velocity", train = trainx_wd_a[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_v_wd_a_c <- pdp::partial(xgb_wd_a_c, pred.var = "velocity", train = trainx_wd_a_c[ ,-1])|>
+  mutate(predictors = "velocity_c",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_v_wd_a, "ML_Model/pdp_data/pdp_v_wd_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_a_c, "ML_Model/pdp_data/pdp_v_wd_a_c_brt.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_a <- pdp::partial(xgb_wd_a, pred.var = "wd_m", train = trainx_wd_a[ ,-1]) |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_wd_a_c <- pdp::partial(xgb_wd_a_c, pred.var = "wd_m", train = trainx_wd_a_c[ ,-1])|>
+  mutate(predictors = "wd_m_c",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_wd_a, "ML_Model/pdp_data/pdp_wd_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_wd_a_c, "ML_Model/pdp_data/pdp_wd_a_c_brt.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_a <- pdp::partial(xgb_wd_a, pred.var = "x", train = trainx_wd_a[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_y_wd_a <- pdp::partial(xgb_wd_a, pred.var = "y", train = trainx_wd_a[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_x_wd_a, "ML_Model/pdp_data/pdp_x_wd_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_a, "ML_Model/pdp_data/pdp_y_wd_a_brt.csv", row.names = FALSE)
+
+# With rel_abundance as response ---------------------------------------------
+### velocity
+pdp_model_v_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "velocity", train = trainx_wd_ra[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_v_wd_ra_c <- pdp::partial(xgb_wd_ra_c, pred.var = "velocity", train = trainx_wd_ra_c[ ,-1])|>
+  mutate(predictors = "velocity_c",
+         model = "v + wd w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_v_wd_ra, "ML_Model/pdp_data/pdp_v_wd_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_ra_c, "ML_Model/pdp_data/pdp_v_wd_a_c_brt.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "wd_m", train = trainx_wd_ra[ ,-1]) |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_wd_ra_c <- pdp::partial(xgb_wd_ra_c, pred.var = "wd_m", train = trainx_wd_ra_c[ ,-1]) |>
+  mutate(predictors = "wd_m_c",
+         model = "v + wd w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_wd_ra, "ML_Model/pdp_data/pdp_wd_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_wd_ra_c, "ML_Model/pdp_data/pdp_wd_a_c_brt.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "x", train = trainx_wd_ra[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_y_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "y", train = trainx_wd_ra[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_x_wd_ra, "ML_Model/pdp_data/pdp_x_wd_a_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_ra, "ML_Model/pdp_data/pdp_y_wd_a_brt.csv", row.names = FALSE)
+
+### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
+# With k_index as response ---------------------------------------------------
+### velocity 
+pdp_model_v_samp_k <- pdp::partial(xgb_samp_k, pred.var = "velocity", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_v_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "velocity", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_v_samp_k, "ML_Model/pdp_data/pdp_v_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_samp_k_c, "ML_Model/pdp_data/pdp_v_samp_k_c_brt.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_samp_k <- pdp::partial(xgb_samp_k_c, pred.var = "wd_m", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "wd_m",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_wd_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "wd_m", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "wd_m",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_wd_samp_k, "ML_Model/pdp_data/pdp_wd_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_wd_samp_k_c, "ML_Model/pdp_data/pdp_wd_samp_k_c_brt.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_samp_k <- pdp::partial(xgb_samp_k, pred.var = "x", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "x",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_y_samp_k <- pdp::partial(xgb_samp_k, pred.var = "y", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "y",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_x_samp_k, "ML_Model/pdp_data/pdp_x_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_samp_k, "ML_Model/pdp_data/pdp_y_samp_k_brt.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_samp_k <- pdp::partial(xgb_samp_k, pred.var = "z", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "z",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_z_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "z", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "z_c",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_z_samp_k, "ML_Model/pdp_data/pdp_z_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_z_samp_k_c, "ML_Model/pdp_data/pdp_z_samp_k_c_brt.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_samp_k <- pdp::partial(xgb_samp_k, pred.var = "dist_w", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_dist_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "dist_w", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "dist_w_c",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_dist_samp_k, "ML_Model/pdp_data/pdp_dist_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_dist_samp_k_c, "ML_Model/pdp_data/pdp_dist_samp_k_c_brt.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_samp_k <- pdp::partial(xgb_samp_k, pred.var = "cat_velocity", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_cv_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "cat_velocity", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cv_samp_k, "ML_Model/pdp_data/pdp_cv_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_cv_samp_k_c, "ML_Model/pdp_data/pdp_cv_samp_k_c_brt.csv", row.names = FALSE)
+
+### alg_cover 
+pdp_model_ac_samp_k <- pdp::partial(xgb_samp_k, pred.var = "alg_cover", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_ac_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "alg_cover", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ac_samp_k, "ML_Model/pdp_data/pdp_ac_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_ac_samp_k_c, "ML_Model/pdp_data/pdp_ac_samp_k_c_brt.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_samp_k <- pdp::partial(xgb_samp_k, pred.var = "moos_cover", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_mc_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "moos_cover", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_mc_samp_k, "ML_Model/pdp_data/pdp_mc_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_mc_samp_k_c, "ML_Model/pdp_data/pdp_mc_samp_k_c_brt.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_samp_k <- pdp::partial(xgb_samp_k, pred.var = "cpom_cover", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_cc_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "cpom_cover", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cc_samp_k, "ML_Model/pdp_data/pdp_cc_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_cc_samp_k_c, "ML_Model/pdp_data/pdp_cc_samp_k_c_brt.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_samp_k <- pdp::partial(xgb_samp_k, pred.var = "clog_3_class_int", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_clog_3_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "clog_3_class_int", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_clog_3_samp_k, "ML_Model/pdp_data/pdp_clog_3_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_samp_k_c, "ML_Model/pdp_data/pdp_clog_3_samp_k_c_brt.csv", row.names = FALSE)
+
+### clog_6
+pdp_model_clog_6_samp_k <- pdp::partial(xgb_samp_k, pred.var = "clog_6_class_int", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_clog_6_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "clog_6_class_int", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_clog_6_samp_k, "ML_Model/pdp_data/pdp_clog_6_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_samp_k_c, "ML_Model/pdp_data/pdp_clog_6_samp_k_c_brt.csv", row.names = FALSE)
+
+### sub_type
+pdp_model_sub_samp_k <- pdp::partial(xgb_samp_k, pred.var = "sub_type_int", train = trainx_samp_k[ ,-1]) |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_sub_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "sub_type_int", train = trainx_samp_k_c[ ,-1]) |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_sub_samp_k, "ML_Model/pdp_data/pdp_sub_samp_k_brt.csv", row.names = FALSE)
+write.csv(pdp_model_sub_samp_k_c, "ML_Model/pdp_data/pdp_sub_samp_k_c_brt.csv", row.names = FALSE)
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+pdp_model_v_samp_s <- pdp::partial(xgb_samp_s, pred.var = "velocity", train = trainx_samp_s[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_v_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "velocity", train = trainx_samp_s_c[ ,-1]) |>
+  mutate(predictors = "velocity",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_v_samp_s, "ML_Model/pdp_data/pdp_v_samp_s_brt.csv", row.names = FALSE)
+write.csv(pdp_model_v_samp_s_c, "ML_Model/pdp_data/pdp_v_samp_s_c_brt.csv", row.names = FALSE)
 ```
 
 
-## ! Partial dependence plots
+```{r}
+### wd_m 
+pdp_model_wd_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover
+pdp_model_cc_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+# With abundance as response --------------------------------------------------
+### velocity 
+# pdp_v_a <- partial(autotuner_rf_v_a, pred.var = c("velocity"))
+pdp_model_v_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+# With rel_abundance as response ----------------------------------------------
+### velocity 
+# pdp_v_ra <- partial(autotuner_rf_v_ra, pred.var = c("velocity"))
+pdp_model_v_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y
+pdp_model_x_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type
+pdp_model_sub_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response ----------------------------------------------------
+### velocity 
+#pdp_v_k <- pdp::partial(model, pred.var = "velocity")
+pdp_model_v_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover
+pdp_model_ac_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### pH_before
+pdp_model_phb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+pdp_model_phb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+
+### pH_during
+pdp_model_phd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+pdp_model_phd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+
+### pH_after
+pdp_model_pha_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+pdp_model_pha_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+
+### conduct_before
+pdp_model_cb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+pdp_model_cb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+
+### conduct_during
+pdp_model_cd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+pdp_model_cd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+
+### conduct_after
+pdp_model_ca_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+pdp_model_ca_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+
+### ox_before
+pdp_model_ob_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+pdp_model_ob_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+
+### ox_during
+pdp_model_od_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+pdp_model_od_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+
+### ox_after
+pdp_model_oa_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+pdp_model_oa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+
+### turb_before
+pdp_model_tb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+pdp_model_tb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+
+### turb_during
+pdp_model_td_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+pdp_model_td_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+
+### turb_after
+pdp_model_ta_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+pdp_model_ta_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+
+### temp_before
+pdp_model_teb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+pdp_model_teb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+
+### temp_during
+pdp_model_ted_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+pdp_model_ted_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+
+### temp_after
+pdp_model_tea_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+pdp_model_tea_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+
+### q_before
+pdp_model_qb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+pdp_model_qb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+
+### q_during
+pdp_model_qd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+pdp_model_qd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+
+### q_after
+pdp_model_qa_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+pdp_model_qa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+
+### gaug_before
+pdp_model_gb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+pdp_model_gb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+
+### gaug_during
+pdp_model_gd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+pdp_model_gd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+
+### gaug_after
+pdp_model_ga_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+pdp_model_ga_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+# pdp_v_s <- partial(autotuner_rf_v_s, pred.var = c("velocity"))
+pdp_model_v_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y
+pdp_model_x_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v
+pdp_model_cv_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### pH_before
+pdp_model_phb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+pdp_model_phb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+
+### pH_during
+pdp_model_phd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+pdp_model_phd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+
+### pH_after
+pdp_model_pha_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+pdp_model_pha_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+
+### conduct_before
+pdp_model_cb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+pdp_model_cb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+
+### conduct_during
+pdp_model_cd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+pdp_model_cd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+
+### conduct_after
+pdp_model_ca_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+pdp_model_ca_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+
+### ox_before
+pdp_model_ob_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+pdp_model_ob_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+
+### ox_during
+pdp_model_od_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+pdp_model_od_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+
+### ox_after
+pdp_model_oa_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+pdp_model_oa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+
+### turb_before
+pdp_model_tb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+pdp_model_tb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+
+### turb_during
+pdp_model_td_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+pdp_model_td_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+
+### turb_after
+pdp_model_ta_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+pdp_model_ta_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+
+### temp_before
+pdp_model_teb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+pdp_model_teb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+
+### temp_during
+pdp_model_ted_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+pdp_model_ted_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+
+### temp_after
+pdp_model_tea_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+pdp_model_tea_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+
+### q_before
+pdp_model_qb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+pdp_model_qb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+
+### q_during
+pdp_model_qd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+pdp_model_qd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+
+### q_after
+pdp_model_qa_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+pdp_model_qa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+
+### gaug_before
+pdp_model_gb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+pdp_model_gb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+
+### gaug_during
+pdp_model_gd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+pdp_model_gd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+
+### gaug_after
+pdp_model_ga_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+pdp_model_ga_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+
+# With abundance as response --------------------------------------------------
+### velocity 
+# pdp_v_a <- partial(autotuner_rf_v_a, pred.var = c("velocity"))
+pdp_model_v_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover
+pdp_model_cc_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### pH_before
+pdp_model_phb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+pdp_model_phb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+
+### pH_during
+pdp_model_phd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+pdp_model_phd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+
+### pH_after
+pdp_model_pha_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+pdp_model_pha_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+
+### conduct_before
+pdp_model_cb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+pdp_model_cb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+
+### conduct_during
+pdp_model_cd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+pdp_model_cd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+
+### conduct_after
+pdp_model_ca_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+pdp_model_ca_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+
+### ox_before
+pdp_model_ob_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+pdp_model_ob_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+
+### ox_during
+pdp_model_od_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+pdp_model_od_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+
+### ox_after
+pdp_model_oa_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+pdp_model_oa_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+
+### turb_before
+pdp_model_tb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+pdp_model_tb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+
+### turb_during
+pdp_model_td_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+pdp_model_td_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+
+### turb_after
+pdp_model_ta_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+pdp_model_ta_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+
+### temp_before
+pdp_model_teb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+pdp_model_teb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+
+### temp_during
+pdp_model_ted_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+pdp_model_ted_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+
+### temp_after
+pdp_model_tea_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+pdp_model_tea_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+
+### q_before
+pdp_model_qb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+pdp_model_qb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+
+### q_during
+pdp_model_qd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+pdp_model_qd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+
+### q_after
+pdp_model_qa_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+pdp_model_qa_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+
+### gaug_before
+pdp_model_gb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+pdp_model_gb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+
+### gaug_during
+pdp_model_gd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+pdp_model_gd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+
+### gaug_after
+pdp_model_ga_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+pdp_model_ga_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+
+# With relative abundance as response -----------------------------------------
+### velocity 
+# pdp_v_ra <- partial(autotuner_rf_v_ra, pred.var = c("velocity"))
+pdp_model_v_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### wd_m 
+pdp_model_wd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m")
+pdp_model_wd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m_c")
+
+### x / y 
+pdp_model_x_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "x") |>
+  mutate(predictors = "x")
+pdp_model_y_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "y") |>
+  mutate(predictors = "y")
+
+### z 
+pdp_model_z_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "z") |>
+  mutate(predictors = "z")
+pdp_model_z_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "z") |>
+  mutate(predictors = "z_c")
+
+### dist_w 
+pdp_model_dist_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w")
+pdp_model_dist_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w_c")
+
+### cat_v 
+pdp_model_cv_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity")
+pdp_model_cv_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity_c")
+
+### alg_cover 
+pdp_model_ac_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover")
+pdp_model_ac_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover_c")
+
+### moos_cover 
+pdp_model_mc_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover")
+pdp_model_mc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover_c")
+
+### cpom_cover 
+pdp_model_cc_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover")
+pdp_model_cc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover_c")
+
+### clog_3 
+pdp_model_clog_3_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class")
+pdp_model_clog_3_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class_c")
+
+### clog_6 
+pdp_model_clog_6_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class")
+pdp_model_clog_6_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class_c")
+
+### sub_type 
+pdp_model_sub_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type")
+pdp_model_sub_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type_c")
+
+### pH_before
+pdp_model_phb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+pdp_model_phb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before")
+
+### pH_during
+pdp_model_phd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+pdp_model_phd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during")
+
+### pH_after
+pdp_model_pha_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+pdp_model_pha_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after")
+
+### conduct_before
+pdp_model_cb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+pdp_model_cb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before")
+
+### conduct_during
+pdp_model_cd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+pdp_model_cd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during")
+
+### conduct_after
+pdp_model_ca_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+pdp_model_ca_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after")
+
+### ox_before
+pdp_model_ob_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+pdp_model_ob_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before")
+
+### ox_during
+pdp_model_od_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+pdp_model_od_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during")
+
+### ox_after
+pdp_model_oa_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+pdp_model_oa_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after")
+
+### turb_before
+pdp_model_tb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+pdp_model_tb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before")
+
+### turb_during
+pdp_model_td_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+pdp_model_td_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during")
+
+### turb_after
+pdp_model_ta_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+pdp_model_ta_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after")
+
+### temp_before
+pdp_model_teb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+pdp_model_teb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before")
+
+### temp_during
+pdp_model_ted_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+pdp_model_ted_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during")
+
+### temp_after
+pdp_model_tea_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+pdp_model_tea_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after")
+
+### q_before
+pdp_model_qb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+pdp_model_qb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before")
+
+### q_during
+pdp_model_qd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+pdp_model_qd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during")
+
+### q_after
+pdp_model_qa_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+pdp_model_qa_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after")
+
+### gaug_before
+pdp_model_gb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+pdp_model_gb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before")
+
+### gaug_during
+pdp_model_gd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+pdp_model_gd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during")
+
+### gaug_after
+pdp_model_ga_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+pdp_model_ga_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after")
+```
 https://stackoverflow.com/questions/66016542/partial-dependence-ale-ice-plots-xgboost-in-r
 ```{r}
 ### k_index -------------------------------------------------------------

@@ -1394,150 +1394,202 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
 
 # ! Model Evaluation 
 ## Variable Importance
-Gain is the improvement in accuracy brought by a feature to the branches it is on. The idea is that before adding a new split on a feature X to the branch there were some wrongly classified elements; after adding the split on this feature, there are two new branches, and each of these branches is more accurate (one branch saying if your observation is on this branch then it should be classified as 1, and the other branch saying the exact opposite).
-
-https://xgboost.readthedocs.io/en/stable/R-package/discoverYourData.html
+best_learner <- autotuner_xbrt_v_k$learner[[1]]
+xgb_model <- autotuner_xbrt_v_k$model
+feature_importance <- xgb.importance(model = xgb_model)
 ```{r}
-### PREDICTORS: ONLY VELOCITY ###
+### PREDICTORS: VELOCITY ### -------------------------------------------------
 # w/ coordinates
-vi_v_k <- xgb.importance(model = xgb_v_k)
-vi_v_s <- xgb.importance(model = xgb_v_s)
-vi_v_a <- xgb.importance(model = xgb_v_a)
-vi_v_ra <- xgb.importance(model = xgb_v_ra)
+vi_v_k <- xgb.importance(model = xgb_v_k) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
+
+vi_v_s <- xgb.importance(model = xgb_v_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_v_a <- xgb.importance(model = xgb_v_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_v_ra <- xgb.importance(model = xgb_v_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_v_k_c <- xgb.importance(model = xgb_v_k_c)
-vi_v_s_c <- xgb.importance(model = xgb_v_s_c)
-vi_v_a_c <- xgb.importance(model = xgb_v_a_c)
-vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)
+vi_v_k_c <- xgb.importance(model = xgb_v_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_v_s_c <- xgb.importance(model = xgb_v_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_v_a_c <- xgb.importance(model = xgb_v_a_c)|>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)|>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
 
 
-### PREDICTORS: VELOCITY AND WD ###
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/ coordinates
-vi_wd_k <- xgb.importance(model = xgb_wd_k)
-vi_wd_s <- xgb.importance(model = xgb_wd_s)
-vi_wd_a <- xgb.importance(model = xgb_wd_a)
-vi_wd_ra <- xgb.importance(model = xgb_wd_ra)
+vi_wd_k <- xgb.importance(model = xgb_wd_k) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
+
+vi_wd_s <- xgb.importance(model = xgb_wd_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_wd_a <- xgb.importance(model = xgb_wd_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_wd_ra <- xgb.importance(model = xgb_wd_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c)
-vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c)
-vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c)
-vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c)
+vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
 
-### PREDICTORS: SAMPLING LOCATIONS ###
+vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
+
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # w/ coordinates
-vi_samp_k <- xgb.importance(model = xgb_samp_k)
-vi_samp_s <- xgb.importance(model = xgb_samp_s)
-vi_samp_a <- xgb.importance(model = xgb_samp_a)
-vi_samp_ra <- xgb.importance(model = xgb_samp_ra)
+vi_samp_k <- xgb.importance(model = xgb_samp_k) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
+
+vi_samp_s <- xgb.importance(model = xgb_samp_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_samp_a <- xgb.importance(model = xgb_samp_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_samp_ra <- xgb.importance(model = xgb_samp_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c)
-vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c)
-vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c)
-vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c)
+vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
 
-### PREDICTORS: ALL PREDICTORS ###
+vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
+
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/ coordinates
-vi_sec_k <- xgb.importance(model = xgb_sec_k)
-vi_sec_s <- xgb.importance(model = xgb_sec_s)
-vi_sec_a <- xgb.importance(model = xgb_sec_a)
-vi_sec_ra <- xgb.importance(model = xgb_sec_ra)
+vi_sec_k <- xgb.importance(model = xgb_sec_k) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/ coordinates")
+
+vi_sec_s <- xgb.importance(model = xgb_sec_s) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/ coordinates")
+
+vi_sec_a <- xgb.importance(model = xgb_sec_a) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/ coordinates")
+
+vi_sec_ra <- xgb.importance(model = xgb_sec_ra) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/ coordinates")
 
 # w/o coordinates
-vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c)
-vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c)
-vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c)
-vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c)
+vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
 
-# bind results together
-vi_brt_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
 
-vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)|>
-  mutate(model = "model w/o coordinates",
-         index = c("k_index", "shannon", "abundance", "rel_abundance"),
-         Feature = "velocity")
+vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
 
-vi_brt_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
+vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
 
-vi_brt_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) |>
-  mutate(model = "model w/o coordinates",
-         index = c("k_index", "k_index", "shannon", "shannon", "abundance", "abundance", "rel_abundance", "rel_abundance"))
+# bind results together -------------------------------------------------------
+vi_brt_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra) 
+vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)
+vi_brt_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra) 
+vi_brt_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) 
+vi_brt_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra) 
+vi_brt_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c) 
+vi_brt_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
+vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) 
 
-vi_brt_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c) |>
-  mutate(model = "model w/o coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) |>
-  mutate(model = "model w/ coordinates",
-         index = c("k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance", "rel_abundance"))
-
-# write results into .csv
-write.csv(vi_brt_model_v, "ML_model/vi_brt_model_v.csv", row.names = FALSE)
-write.csv(vi_brt_model_v_c, "ML_model/vi_brt_model_v_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_wd, "ML_model/vi_brt_model_wd.csv", row.names = FALSE)
-write.csv(vi_brt_model_wd_c, "ML_model/vi_brt_model_wd_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_samp, "ML_model/vi_brt_model_samp.csv", row.names = FALSE)
-write.csv(vi_brt_model_samp_c, "ML_model/vi_brt_model_samp_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_sec, "ML_model/vi_brt_model_sec.csv", row.names = FALSE)
-write.csv(vi_brt_model_sec_c, "ML_model/vi_brt_model_sec_c.csv", row.names = FALSE)
-```
-
-```{r}
-### PREDICTORS: ONLY VELOCITY ###
-vi_v_k <- autotuner_xbrt_v_k$importance()
-vi_v_s <- autotuner_xbrt_v_s$importance()
-vi_v_a <- autotuner_xbrt_v_a$importance()
-vi_rf_v_ra <- autotuner_xbrt_v_ra$importance()
-
-xgboost::xgb.importance(model = self$autotuner_xbrt_v_k)
-
-autotuner_xbrt_v_k$importance()
-### PREDICTORS: VELOCITY AND WD ###
-vi_wd_k <- autotuner_xbrt_wd_k$importance()
-vi_wd_s <- autotuner_xbrt_wd_s$importance()
-vi_wd_a <- autotuner_xbrt_wd_a$importance()
-vi_wd_ra <- autotuner_xbrt_wd_ra$importance()
-
-### PREDICTORS: SAMPLING LOCATIONS ###
-vi_samp_k <- autotuner_xbrt_samp_k$importance()
-vi_samp_s <- autotuner_xbrt_samp_s$importance()
-vi_samp_a <- autotuner_xbrt_samp_a$importance()
-vi_samp_ra <- autotuner_xbrt_samp_ra$importance()
-
-### PREDICTORS: ALL PREDICTORS ###
-vi_sec_k <- autotuner_xbrt_sec_k$importance()
-vi_sec_s <- autotuner_xbrt_sec_s$importance()
-vi_sec_a <- autotuner_xbrt_sec_a$importance()
-vi_sec_ra <- autotuner_xbrt_sec_ra$importance()
-
-# bind results together
-vi_v <- rbind(vi_v_k, vi_rf_v_s, vi_rf_v_a, vi_rf_v_ra) |>
-  mutate(model = "autotuner",
-         index = c("k_index", "shannon", "abundance", "rel_abundance"))
-
-vi_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra)
-vi_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra)
-vi_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
-
-# write results into .csv
-write.csv(vi_v, "ML_model/vi_brt_v.csv", row.names = FALSE)
-write.csv(vi_wd, "ML_model/vi_brt_wd.csv", row.names = FALSE)
-write.csv(vi_samp, "ML_model/vi_brt_samp.csv", row.names = FALSE)
-write.csv(vi_sec, "ML_model/vi_brt_sec.csv", row.names = FALSE)
+# write results into .csv ----------------------------------------------------
+write.csv(vi_brt_model_v, "ML_model/var_imp/vi_brt_model_v_add.csv", row.names = FALSE)
+write.csv(vi_brt_model_v_c, "ML_model/var_imp/vi_brt_model_v_c_add.csv", row.names = FALSE)
+write.csv(vi_brt_model_wd, "ML_model/var_imp/vi_brt_model_wd_add.csv", row.names = FALSE)
+write.csv(vi_brt_model_wd_c, "ML_model/var_imp/vi_brt_model_wd_c_add.csv", row.names = FALSE)
+write.csv(vi_brt_model_samp, "ML_model/var_imp/vi_brt_model_samp_add.csv", row.names = FALSE)
+write.csv(vi_brt_model_samp_c, "ML_model/var_imp/vi_brt_model_samp_c_add.csv", row.names = FALSE)
+write.csv(vi_brt_model_sec, "ML_model/var_imp/vi_brt_model_sec_add.csv", row.names = FALSE)
+write.csv(vi_brt_model_sec_c, "ML_model/var_imp/vi_brt_model_sec_c_add.csv", row.names = FALSE)
 ```
 
 

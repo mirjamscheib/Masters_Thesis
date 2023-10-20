@@ -1170,112 +1170,176 @@ rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c
 ### VARIABLE IMPORTANCE FROM RANGER MODELS ### --------------------------------
 ### PREDICTOR: ONLY VELOCITY ### ----------------------------------------------
 # w/ coordinates
-vi_v_k <- importance(rf_model_v_k)
-vi_rel_v_k <- vi_v_k/sum(vi_v_k)
+vi_v_k <- importance(rf_model_v_k) |>
+  mutate(index = "k_index")
+vi_rel_v_k <- vi_v_k/sum(vi_v_k) |>
+  mutate(index = "k_index")
 
-vi_v_s <- importance(rf_model_v_s)
-vi_rel_v_s <- vi_v_s/sum(vi_v_s)
+vi_v_s <- importance(rf_model_v_s) |>
+  mutate(index = "shannon_index")
+vi_rel_v_s <- vi_v_s/sum(vi_v_s) |>
+  mutate(index = "shannon_index")
 
-vi_v_a <- importance(rf_model_v_a)
-vi_rel_v_a <- vi_v_a/sum(vi_v_a)
+vi_v_a <- importance(rf_model_v_a) |>
+  mutate(index = "abundance")
+vi_rel_v_a <- vi_v_a/sum(vi_v_a) |>
+  mutate(index = "abundance")
 
-vi_v_ra <- importance(rf_model_v_ra)
-vi_rel_v_ra <- vi_v_ra/sum(vi_v_ra)
+vi_v_ra <- importance(rf_model_v_ra) |>
+  mutate(index = "rel_abundance")
+vi_rel_v_ra <- vi_v_ra/sum(vi_v_ra) |>
+  mutate(index = "rel_abundance")
 
 # w/o coordinates
-vi_v_k_c <- importance(rf_model_v_k_c)
-vi_rel_v_k_c <- vi_v_k_c/sum(vi_v_k_c)
+vi_v_k_c <- importance(rf_model_v_k_c) |>
+  mutate(index = "k_index")
+vi_rel_v_k_c <- vi_v_k_c/sum(vi_v_k_c) |>
+  mutate(index = "k_index")
 
-vi_v_s_c <- importance(rf_model_v_s_c)
-vi_rel_v_s_c <- vi_v_s_c/sum(vi_v_s_c)
+vi_v_s_c <- importance(rf_model_v_s_c) |>
+  mutate(index = "shannon_index")
+vi_rel_v_s_c <- vi_v_s_c/sum(vi_v_s_c) |>
+  mutate(index = "shannon_index")
 
-vi_v_a_c <- importance(rf_model_v_a_c)
-vi_rel_v_a_c <- vi_v_a_c/sum(vi_v_a_c)
+vi_v_a_c <- importance(rf_model_v_a_c) |>
+  mutate(index = "abundance")
+vi_rel_v_a_c <- vi_v_a_c/sum(vi_v_a_c) |>
+  mutate(index = "abundance")
 
-vi_v_ra_c <- importance(rf_model_v_ra_c)
-vi_rel_v_ra_c <- vi_v_ra_c/sum(vi_v_ra_c)
+vi_v_ra_c <- importance(rf_model_v_ra_c) |>
+  mutate(index = "rel_abundance")
+vi_rel_v_ra_c <- vi_v_ra_c/sum(vi_v_ra_c) |>
+  mutate(index = "rel_abundance")
 
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/ coordinates
-vi_wd_k <- importance(rf_model_wd_k)
-vi_rel_wd_k <- vi_wd_k/sum(vi_wd_k)
+vi_wd_k <- importance(rf_model_wd_k) |>
+  mutate(index = "k_index")
+vi_rel_wd_k <- vi_wd_k/sum(vi_wd_k) |>
+  mutate(index = "k_index")
 
-vi_wd_s <- importance(rf_model_wd_s)
-vi_rel_wd_s <- vi_wd_s/sum(vi_wd_s)
+vi_wd_s <- importance(rf_model_wd_s) |>
+  mutate(index = "shannon_index")
+vi_rel_wd_s <- vi_wd_s/sum(vi_wd_s) |>
+  mutate(index = "shannon_index")
 
-vi_wd_a <- importance(rf_model_wd_a)
-vi_rel_wd_a <- vi_wd_a/sum(vi_wd_a)
+vi_wd_a <- importance(rf_model_wd_a) |>
+  mutate(index = "abundance")
+vi_rel_wd_a <- vi_wd_a/sum(vi_wd_a) |>
+  mutate(index = "abundance")
 
-vi_wd_ra <- importance(rf_model_wd_ra)
-vi_rel_wd_ra <- vi_wd_ra/sum(vi_wd_ra)
+vi_wd_ra <- importance(rf_model_wd_ra) |>
+  mutate(index = "rel_abundance")
+vi_rel_wd_ra <- vi_wd_ra/sum(vi_wd_ra) |>
+  mutate(index = "rel_abundance")
 
 # w/o coordinates
-vi_wd_k_c <- importance(rf_model_wd_k_c)
-vi_rel_wd_k_c <- vi_wd_k_c/sum(vi_wd_k_c)
+vi_wd_k_c <- importance(rf_model_wd_k_c) |>
+  mutate(index = "k_index")
+vi_rel_wd_k_c <- vi_wd_k_c/sum(vi_wd_k_c) |>
+  mutate(index = "k_index")
 
-vi_wd_s_c <- importance(rf_model_wd_s_c)
-vi_rel_wd_s_c <- vi_wd_s_c/sum(vi_wd_s_c)
+vi_wd_s_c <- importance(rf_model_wd_s_c) |>
+  mutate(index = "shannon_index")
+vi_rel_wd_s_c <- vi_wd_s_c/sum(vi_wd_s_c) |>
+  mutate(index = "shannon_index")
 
-vi_wd_a_c <- importance(rf_model_wd_a_c)
-vi_rel_wd_a_c <- vi_wd_a_c/sum(vi_wd_a_c)
+vi_wd_a_c <- importance(rf_model_wd_a_c) |>
+  mutate(index = "abundance")
+vi_rel_wd_a_c <- vi_wd_a_c/sum(vi_wd_a_c) |>
+  mutate(index = "abundance")
 
-vi_wd_ra_c <- importance(rf_model_wd_ra_c)
-vi_rel_wd_ra_c <- vi_wd_ra_c/sum(vi_wd_ra_c)
+vi_wd_ra_c <- importance(rf_model_wd_ra_c) |>
+  mutate(index = "rel_abundance")
+vi_rel_wd_ra_c <- vi_wd_ra_c/sum(vi_wd_ra_c) |>
+  mutate(index = "rel_abundance")
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # w/ coordinates
-vi_samp_k <- importance(rf_model_samp_k)
-vi_rel_samp_k <- vi_samp_k/sum(vi_samp_k)
+vi_samp_k <- importance(rf_model_samp_k) |>
+  mutate(index = "k_index")
+vi_rel_samp_k <- vi_samp_k/sum(vi_samp_k) |>
+  mutate(index = "k_index")
 
-vi_samp_s <- importance(rf_model_samp_s)
-vi_rel_samp_s <- vi_samp_s/sum(vi_samp_s)
+vi_samp_s <- importance(rf_model_samp_s) |>
+  mutate(index = "shannon_index")
+vi_rel_samp_s <- vi_samp_s/sum(vi_samp_s) |>
+  mutate(index = "shannon_index")
 
-vi_samp_a <- importance(rf_model_samp_a)
-vi_rel_samp_a <- vi_samp_a/sum(vi_samp_a)
+vi_samp_a <- importance(rf_model_samp_a) |>
+  mutate(index = "abundance")
+vi_rel_samp_a <- vi_samp_a/sum(vi_samp_a) |>
+  mutate(index = "abundance")
 
-vi_samp_ra <- importance(rf_model_samp_ra)
-vi_rel_samp_ra <- vi_samp_ra/sum(vi_samp_ra)
+vi_samp_ra <- importance(rf_model_samp_ra) |>
+  mutate(index = "rel_abundance")
+vi_rel_samp_ra <- vi_samp_ra/sum(vi_samp_ra) |>
+  mutate(index = "rel_abundance")
 
 # w/o coordinates
-vi_samp_k_c <- importance(rf_model_samp_k_c)
-vi_rel_samp_k_c <- vi_samp_k_c/sum(vi_samp_k_c)
+vi_samp_k_c <- importance(rf_model_samp_k_c) |>
+  mutate(index = "k_index")
+vi_rel_samp_k_c <- vi_samp_k_c/sum(vi_samp_k_c) |>
+  mutate(index = "k_index")
 
-vi_samp_s_c <- importance(rf_model_samp_s_c)
-vi_rel_samp_s_c <- vi_samp_s_c/sum(vi_samp_s_c)
+vi_samp_s_c <- importance(rf_model_samp_s_c) |>
+  mutate(index = "shannon_index")
+vi_rel_samp_s_c <- vi_samp_s_c/sum(vi_samp_s_c) |>
+  mutate(index = "shannon_index")
 
-vi_samp_a_c <- importance(rf_model_samp_a_c)
-vi_rel_samp_a_c <- vi_samp_a_c/sum(vi_samp_a_c)
+vi_samp_a_c <- importance(rf_model_samp_a_c) |>
+  mutate(index = "abundance")
+vi_rel_samp_a_c <- vi_samp_a_c/sum(vi_samp_a_c) |>
+  mutate(index = "abundance")
 
-vi_samp_ra_c <- importance(rf_model_samp_ra_c)
-vi_rel_samp_ra_c <- vi_samp_ra_c/sum(vi_samp_ra_c)
+vi_samp_ra_c <- importance(rf_model_samp_ra_c) |>
+  mutate(index = "rel_abundance")
+vi_rel_samp_ra_c <- vi_samp_ra_c/sum(vi_samp_ra_c) |>
+  mutate(index = "rel_abundance")
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/ coordinates
-vi_sec_k <- importance(rf_model_sec_k)
-vi_rel_sec_k <- vi_sec_k/sum(vi_sec_k)
+vi_sec_k <- importance(rf_model_sec_k) |>
+  mutate(index = "k_index")
+vi_rel_sec_k <- vi_sec_k/sum(vi_sec_k) |>
+  mutate(index = "k_index")
 
-vi_sec_s <- importance(rf_model_sec_s)
-vi_rel_sec_s <- vi_sec_s/sum(vi_sec_s)
+vi_sec_s <- importance(rf_model_sec_s) |>
+  mutate(index = "shannon_index")
+vi_rel_sec_s <- vi_sec_s/sum(vi_sec_s) |>
+  mutate(index = "shannon_index")
 
-vi_sec_a <- importance(rf_model_sec_a)
-vi_rel_sec_a <- vi_sec_a/sum(vi_sec_a)
+vi_sec_a <- importance(rf_model_sec_a) |>
+  mutate(index = "abundance")
+vi_rel_sec_a <- vi_sec_a/sum(vi_sec_a) |>
+  mutate(index = "abundance")
 
-vi_sec_ra <- importance(rf_model_sec_ra)
-vi_rel_sec_ra <- vi_sec_ra/sum(vi_sec_ra)
+vi_sec_ra <- importance(rf_model_sec_ra) |>
+  mutate(index = "rel_abundance")
+vi_rel_sec_ra <- vi_sec_ra/sum(vi_sec_ra) |>
+  mutate(index = "rel_abundance")
 
 # w/o coordinates
-vi_sec_k_c <- importance(rf_model_sec_k_c)
-vi_rel_sec_k_c <- vi_sec_k_c/sum(vi_sec_k_c)
+vi_sec_k_c <- importance(rf_model_sec_k_c) |>
+  mutate(index = "k_index")
+vi_rel_sec_k_c <- vi_sec_k_c/sum(vi_sec_k_c) |>
+  mutate(index = "k_index")
 
-vi_sec_s_c <- importance(rf_model_sec_s_c)
-vi_rel_sec_s_c <- vi_sec_s_c/sum(vi_sec_s_c)
+vi_sec_s_c <- importance(rf_model_sec_s_c) |>
+  mutate(index = "shannon_index")
+vi_rel_sec_s_c <- vi_sec_s_c/sum(vi_sec_s_c) |>
+  mutate(index = "shannon_index")
 
-vi_sec_a_c <- importance(rf_model_sec_a_c)
-vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c)
+vi_sec_a_c <- importance(rf_model_sec_a_c) |>
+  mutate(index = "abundance")
+vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c) |>
+  mutate(index = "abundance")
 
-vi_sec_ra_c <- importance(rf_model_sec_ra_c)
-vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c)
+vi_sec_ra_c <- importance(rf_model_sec_ra_c) |>
+  mutate(index = "rel_abundance")
+vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c) |>
+  mutate(index = "rel_abundance")
 
 # bind results together ------------------------------------------------------
 vi_rf_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra)
@@ -1329,56 +1393,88 @@ write.csv(vi_rel_rf_model_sec_c, "ML_model/var_imp/vi_rel_rf_model_sec_woc_add.c
 
 ### VARIABLE IMPORTANCE FROM AUTOTUNER ### ------------------------------------
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
-var_imp_rf_v_k <- autotuner_rf_v_k$importance()
-var_rel_imp_rf_v_k <- var_imp_rf_v_k/sum(var_imp_rf_v_k)
+var_imp_rf_v_k <- autotuner_rf_v_k$importance() |>
+  mutate(index = "k_index")
+var_rel_imp_rf_v_k <- var_imp_rf_v_k/sum(var_imp_rf_v_k) |>
+  mutate(index = "k_index")
 
-var_imp_rf_v_s <- autotuner_rf_v_s$importance()
-var_rel_imp_rf_v_s <- var_imp_rf_v_s/sum(var_imp_rf_v_s)
+var_imp_rf_v_s <- autotuner_rf_v_s$importance() |>
+  mutate(index = "shannon_index")
+var_rel_imp_rf_v_s <- var_imp_rf_v_s/sum(var_imp_rf_v_s) |>
+  mutate(index = "shannon_index")
 
-var_imp_rf_v_a <- autotuner_rf_v_a$importance()
-var_rel_imp_rf_v_a <- var_imp_rf_v_a/sum(var_imp_rf_v_a)
+var_imp_rf_v_a <- autotuner_rf_v_a$importance() |>
+  mutate(index = "abundance")
+var_rel_imp_rf_v_a <- var_imp_rf_v_a/sum(var_imp_rf_v_a) |>
+  mutate(index = "abundance")
 
-var_imp_rf_v_ra <- autotuner_rf_v_ra$importance()
-var_rel_imp_rf_v_ra <- var_imp_rf_v_ra/sum(var_imp_rf_v_ra)
+var_imp_rf_v_ra <- autotuner_rf_v_ra$importance() |>
+  mutate(index = "rel_abundance")
+var_rel_imp_rf_v_ra <- var_imp_rf_v_ra/sum(var_imp_rf_v_ra) |>
+  mutate(index = "rel_abundance")
 
 ### PREDICTORS: VELOCITY AND WD ### -------------------------------------------
-var_imp_rf_wd_k <- autotuner_rf_wd_k$importance()
-var_rel_imp_rf_wd_k <- var_imp_rf_wd_k/sum(var_imp_rf_wd_k)
+var_imp_rf_wd_k <- autotuner_rf_wd_k$importance() |>
+  mutate(index = "k_index")
+var_rel_imp_rf_wd_k <- var_imp_rf_wd_k/sum(var_imp_rf_wd_k) |>
+  mutate(index = "k_index")
 
-var_imp_rf_wd_s <- autotuner_rf_wd_s$importance()
-var_rel_imp_rf_wd_s <- var_imp_rf_wd_s/sum(var_imp_rf_wd_s)
+var_imp_rf_wd_s <- autotuner_rf_wd_s$importance() |>
+  mutate(index = "shannon_index")
+var_rel_imp_rf_wd_s <- var_imp_rf_wd_s/sum(var_imp_rf_wd_s) |>
+  mutate(index = "shannon_index")
 
-var_imp_rf_wd_a <- autotuner_rf_wd_a$importance()
-var_rel_imp_rf_wd_a <- var_imp_rf_wd_a/sum(var_imp_rf_wd_a)
+var_imp_rf_wd_a <- autotuner_rf_wd_a$importance() |>
+  mutate(index = "abundance")
+var_rel_imp_rf_wd_a <- var_imp_rf_wd_a/sum(var_imp_rf_wd_a) |>
+  mutate(index = "abundance")
 
-var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance()
-var_rel_imp_rf_wd_ra <- var_imp_rf_wd_ra/sum(var_imp_rf_wd_ra)
+var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance() |>
+  mutate(index = "rel_abundance")
+var_rel_imp_rf_wd_ra <- var_imp_rf_wd_ra/sum(var_imp_rf_wd_ra) |>
+  mutate(index = "rel_abundance")
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
-var_imp_rf_samp_k <- autotuner_rf_samp_k$importance()
-var_rel_imp_rf_samp_k <- var_imp_rf_samp_k/sum(var_imp_rf_samp_k)
+var_imp_rf_samp_k <- autotuner_rf_samp_k$importance() |>
+  mutate(index = "k_index")
+var_rel_imp_rf_samp_k <- var_imp_rf_samp_k/sum(var_imp_rf_samp_k) |>
+  mutate(index = "k_index")
 
-var_imp_rf_samp_s <- autotuner_rf_samp_s$importance()
-var_rel_imp_rf_samp_s <- var_imp_rf_samp_s/sum(var_imp_rf_samp_s)
+var_imp_rf_samp_s <- autotuner_rf_samp_s$importance() |>
+  mutate(index = "shannon_index")
+var_rel_imp_rf_samp_s <- var_imp_rf_samp_s/sum(var_imp_rf_samp_s) |>
+  mutate(index = "shannon_index")
 
-var_imp_rf_samp_a <- autotuner_rf_samp_a$importance()
-var_rel_imp_rf_samp_a <- var_imp_rf_samp_a/sum(var_imp_rf_samp_a)
+var_imp_rf_samp_a <- autotuner_rf_samp_a$importance() |>
+  mutate(index = "abundance")
+var_rel_imp_rf_samp_a <- var_imp_rf_samp_a/sum(var_imp_rf_samp_a) |>
+  mutate(index = "abundance")
 
-var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance()
-var_rel_imp_rf_samp_ra <- var_imp_rf_samp_ra/sum(var_imp_rf_samp_ra)
+var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance() |>
+  mutate(index = "rel_abundance")
+var_rel_imp_rf_samp_ra <- var_imp_rf_samp_ra/sum(var_imp_rf_samp_ra) |>
+  mutate(index = "rel_abundance")
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-var_imp_rf_sec_k <- autotuner_rf_sec_k$importance()
-var_rel_imp_rf_sec_k <- var_imp_rf_sec_k/sum(var_imp_rf_sec_k)
+var_imp_rf_sec_k <- autotuner_rf_sec_k$importance() |>
+  mutate(index = "k_index")
+var_rel_imp_rf_sec_k <- var_imp_rf_sec_k/sum(var_imp_rf_sec_k) |>
+  mutate(index = "k_index")
 
-var_imp_rf_sec_s <- autotuner_rf_sec_s$importance()
-var_rel_imp_rf_sec_s <- var_imp_rf_sec_s/sum(var_imp_rf_sec_s)
+var_imp_rf_sec_s <- autotuner_rf_sec_s$importance() |>
+  mutate(index = "shannon_index")
+var_rel_imp_rf_sec_s <- var_imp_rf_sec_s/sum(var_imp_rf_sec_s) |>
+  mutate(index = "shannon_index")
 
-var_imp_rf_sec_a <- autotuner_rf_sec_a$importance()
-var_rel_imp_rf_sec_a <- var_imp_rf_sec_a/sum(var_imp_rf_sec_a)
+var_imp_rf_sec_a <- autotuner_rf_sec_a$importance() |>
+  mutate(index = "abundance")
+var_rel_imp_rf_sec_a <- var_imp_rf_sec_a/sum(var_imp_rf_sec_a) |>
+  mutate(index = "abundance")
 
-var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance()
-var_rel_imp_rf_sec_ra <- var_imp_rf_sec_ra/sum(var_imp_rf_sec_ra)
+var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance() |>
+  mutate(index = "rel_abundance")
+var_rel_imp_rf_sec_ra <- var_imp_rf_sec_ra/sum(var_imp_rf_sec_ra) |>
+  mutate(index = "rel_abundance")
 
 # bind results together -------------------------------------------------------
 vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra)

@@ -1,0 +1,5 @@
+"Feature","Gain","index","model"
+"f0",1,"k_index","xgboost w/o coordinates"
+"f0",1,"shannon_index","xgboost w/o coordinates"
+"f0",1,"abundance","xgboost w/o coordinates"
+"f0",1,"rel_abundance","xgboost w/o coordinates"
