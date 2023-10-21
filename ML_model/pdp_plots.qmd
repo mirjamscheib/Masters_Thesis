@@ -1,0 +1,114 @@
+---
+title: "pdp_plots"
+format: html
+---
+
+## Quarto
+
+https://stackoverflow.com/questions/66016542/partial-dependence-ale-ice-plots-xgboost-in-r
+```{r}
+### k_index -------------------------------------------------------------
+### velocity -----------------------------------------------------------
+#pdp_v_k <- pdp::partial(model, pred.var = "velocity")
+pdp_model_v_k <- pdp::partial(xgb_v_k, pred.var = "velocity", train = trainx_v_k[ ,-1]) |>
+  mutate(predictors = "velocity")
+
+pdp_model_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### froude -----------------------------------------------------------
+pdp_model_f_v_k <- pdp::partial(rf_model_v_k, pred.var = "froude") |>
+  mutate(predictors = "froude")
+pdp_model_f_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "froude") |>
+  mutate(predictors = "froude_c")
+
+### shear stress -------------------------------------------------------
+pdp_model_s_v_k <- pdp::partial(rf_model_v_k, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress")
+pdp_model_s_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress_c")
+
+### stream power --------------------------------------------------------
+pdp_model_sp_v_k <- pdp::partial(rf_model_v_k, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power")
+pdp_model_sp_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power_c")
+
+### shannon index -----------------------------------------------------
+### velocity -----------------------------------------------------------
+# pdp_v_s <- partial(autotuner_rf_v_s, pred.var = c("velocity"))
+pdp_model_v_s <- pdp::partial(rf_model_v_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### froude -----------------------------------------------------------
+pdp_model_f_v_s <- pdp::partial(rf_model_v_s, pred.var = "froude") |>
+  mutate(predictors = "froude")
+pdp_model_f_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "froude") |>
+  mutate(predictors = "froude_c")
+
+### shear stress ------------------------------------------------------
+pdp_model_s_v_s <- pdp::partial(rf_model_v_s, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress")
+pdp_model_s_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress_c")
+
+### stream power ------------------------------------------------------
+pdp_model_sp_v_s <- pdp::partial(rf_model_v_s, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power")
+pdp_model_sp_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power_c")
+
+### abundance ----------------------------------------------------------
+### velocity -----------------------------------------------------------
+# pdp_v_a <- partial(autotuner_rf_v_a, pred.var = c("velocity"))
+pdp_model_v_a <- pdp::partial(rf_model_v_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### froude -----------------------------------------------------------
+pdp_model_f_v_a <- pdp::partial(rf_model_v_a, pred.var = "froude") |>
+  mutate(predictors = "froude")
+pdp_model_f_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "froude") |>
+  mutate(predictors = "froude_c")
+
+### shear stress ------------------------------------------------------
+pdp_model_s_v_a <- pdp::partial(rf_model_v_a, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress")
+pdp_model_s_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress_c")
+
+### stream power -------------------------------------------------------
+pdp_model_sp_v_a <- pdp::partial(rf_model_v_a, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power")
+pdp_model_sp_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power_c")
+
+### relative abundance -------------------------------------------------
+### velocity -----------------------------------------------------------
+# pdp_v_ra <- partial(autotuner_rf_v_ra, pred.var = c("velocity"))
+pdp_model_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity")
+pdp_model_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c")
+
+### froude -----------------------------------------------------------
+pdp_model_f_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "froude") |>
+  mutate(predictors = "froude")
+pdp_model_f_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "froude") |>
+  mutate(predictors = "froude_c")
+
+### shear stress ------------------------------------------------------
+pdp_model_s_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress")
+pdp_model_s_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress_c")
+
+### stream power -------------------------------------------------------
+pdp_model_sp_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power")
+pdp_model_sp_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power_c")
+```
