@@ -1170,176 +1170,113 @@ rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c
 ### VARIABLE IMPORTANCE FROM RANGER MODELS ### --------------------------------
 ### PREDICTOR: ONLY VELOCITY ### ----------------------------------------------
 # w/ coordinates
-vi_v_k <- importance(rf_model_v_k) |>
-  mutate(index = "k_index")
-vi_rel_v_k <- vi_v_k/sum(vi_v_k) |>
-  mutate(index = "k_index")
+vi_v_k <- importance(rf_model_v_k) 
+vi_rel_v_k <- vi_v_k/sum(vi_v_k) 
 
-vi_v_s <- importance(rf_model_v_s) |>
-  mutate(index = "shannon_index")
-vi_rel_v_s <- vi_v_s/sum(vi_v_s) |>
-  mutate(index = "shannon_index")
+vi_v_s <- importance(rf_model_v_s) 
+vi_rel_v_s <- vi_v_s/sum(vi_v_s) 
 
-vi_v_a <- importance(rf_model_v_a) |>
-  mutate(index = "abundance")
-vi_rel_v_a <- vi_v_a/sum(vi_v_a) |>
-  mutate(index = "abundance")
+vi_v_a <- importance(rf_model_v_a) 
+vi_rel_v_a <- vi_v_a/sum(vi_v_a) 
 
-vi_v_ra <- importance(rf_model_v_ra) |>
-  mutate(index = "rel_abundance")
-vi_rel_v_ra <- vi_v_ra/sum(vi_v_ra) |>
-  mutate(index = "rel_abundance")
+vi_v_ra <- importance(rf_model_v_ra) 
+vi_rel_v_ra <- vi_v_ra/sum(vi_v_ra) 
 
 # w/o coordinates
-vi_v_k_c <- importance(rf_model_v_k_c) |>
-  mutate(index = "k_index")
-vi_rel_v_k_c <- vi_v_k_c/sum(vi_v_k_c) |>
-  mutate(index = "k_index")
+vi_v_k_c <- importance(rf_model_v_k_c) 
+vi_rel_v_k_c <- vi_v_k_c/sum(vi_v_k_c) 
 
-vi_v_s_c <- importance(rf_model_v_s_c) |>
-  mutate(index = "shannon_index")
-vi_rel_v_s_c <- vi_v_s_c/sum(vi_v_s_c) |>
-  mutate(index = "shannon_index")
+vi_v_s_c <- importance(rf_model_v_s_c) 
+vi_rel_v_s_c <- vi_v_s_c/sum(vi_v_s_c) 
 
-vi_v_a_c <- importance(rf_model_v_a_c) |>
-  mutate(index = "abundance")
-vi_rel_v_a_c <- vi_v_a_c/sum(vi_v_a_c) |>
-  mutate(index = "abundance")
+vi_v_a_c <- importance(rf_model_v_a_c) 
+vi_rel_v_a_c <- vi_v_a_c/sum(vi_v_a_c) 
 
-vi_v_ra_c <- importance(rf_model_v_ra_c) |>
-  mutate(index = "rel_abundance")
-vi_rel_v_ra_c <- vi_v_ra_c/sum(vi_v_ra_c) |>
-  mutate(index = "rel_abundance")
+vi_v_ra_c <- importance(rf_model_v_ra_c) 
+vi_rel_v_ra_c <- vi_v_ra_c/sum(vi_v_ra_c) 
 
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/ coordinates
-vi_wd_k <- importance(rf_model_wd_k) |>
-  mutate(index = "k_index")
-vi_rel_wd_k <- vi_wd_k/sum(vi_wd_k) |>
-  mutate(index = "k_index")
+vi_wd_k <- importance(rf_model_wd_k) 
+vi_rel_wd_k <- vi_wd_k/sum(vi_wd_k) 
 
-vi_wd_s <- importance(rf_model_wd_s) |>
-  mutate(index = "shannon_index")
-vi_rel_wd_s <- vi_wd_s/sum(vi_wd_s) |>
-  mutate(index = "shannon_index")
+vi_wd_s <- importance(rf_model_wd_s) 
+vi_rel_wd_s <- vi_wd_s/sum(vi_wd_s) 
 
-vi_wd_a <- importance(rf_model_wd_a) |>
-  mutate(index = "abundance")
-vi_rel_wd_a <- vi_wd_a/sum(vi_wd_a) |>
-  mutate(index = "abundance")
+vi_wd_a <- importance(rf_model_wd_a) 
+vi_rel_wd_a <- vi_wd_a/sum(vi_wd_a) 
 
-vi_wd_ra <- importance(rf_model_wd_ra) |>
-  mutate(index = "rel_abundance")
-vi_rel_wd_ra <- vi_wd_ra/sum(vi_wd_ra) |>
-  mutate(index = "rel_abundance")
+vi_wd_ra <- importance(rf_model_wd_ra) 
+vi_rel_wd_ra <- vi_wd_ra/sum(vi_wd_ra) 
 
 # w/o coordinates
-vi_wd_k_c <- importance(rf_model_wd_k_c) |>
-  mutate(index = "k_index")
-vi_rel_wd_k_c <- vi_wd_k_c/sum(vi_wd_k_c) |>
-  mutate(index = "k_index")
+vi_wd_k_c <- importance(rf_model_wd_k_c) 
+vi_rel_wd_k_c <- vi_wd_k_c/sum(vi_wd_k_c) 
 
-vi_wd_s_c <- importance(rf_model_wd_s_c) |>
-  mutate(index = "shannon_index")
-vi_rel_wd_s_c <- vi_wd_s_c/sum(vi_wd_s_c) |>
-  mutate(index = "shannon_index")
+vi_wd_s_c <- importance(rf_model_wd_s_c) 
+vi_rel_wd_s_c <- vi_wd_s_c/sum(vi_wd_s_c) 
 
-vi_wd_a_c <- importance(rf_model_wd_a_c) |>
-  mutate(index = "abundance")
-vi_rel_wd_a_c <- vi_wd_a_c/sum(vi_wd_a_c) |>
-  mutate(index = "abundance")
+vi_wd_a_c <- importance(rf_model_wd_a_c) 
+vi_rel_wd_a_c <- vi_wd_a_c/sum(vi_wd_a_c) 
 
-vi_wd_ra_c <- importance(rf_model_wd_ra_c) |>
-  mutate(index = "rel_abundance")
-vi_rel_wd_ra_c <- vi_wd_ra_c/sum(vi_wd_ra_c) |>
-  mutate(index = "rel_abundance")
+vi_wd_ra_c <- importance(rf_model_wd_ra_c) 
+vi_rel_wd_ra_c <- vi_wd_ra_c/sum(vi_wd_ra_c) 
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # w/ coordinates
-vi_samp_k <- importance(rf_model_samp_k) |>
-  mutate(index = "k_index")
-vi_rel_samp_k <- vi_samp_k/sum(vi_samp_k) |>
-  mutate(index = "k_index")
+vi_samp_k <- importance(rf_model_samp_k) 
+vi_rel_samp_k <- vi_samp_k/sum(vi_samp_k) 
 
-vi_samp_s <- importance(rf_model_samp_s) |>
-  mutate(index = "shannon_index")
-vi_rel_samp_s <- vi_samp_s/sum(vi_samp_s) |>
-  mutate(index = "shannon_index")
+vi_samp_s <- importance(rf_model_samp_s)
+vi_rel_samp_s <- vi_samp_s/sum(vi_samp_s) 
 
-vi_samp_a <- importance(rf_model_samp_a) |>
-  mutate(index = "abundance")
-vi_rel_samp_a <- vi_samp_a/sum(vi_samp_a) |>
-  mutate(index = "abundance")
+vi_samp_a <- importance(rf_model_samp_a) 
+vi_rel_samp_a <- vi_samp_a/sum(vi_samp_a)
 
-vi_samp_ra <- importance(rf_model_samp_ra) |>
-  mutate(index = "rel_abundance")
-vi_rel_samp_ra <- vi_samp_ra/sum(vi_samp_ra) |>
-  mutate(index = "rel_abundance")
+vi_samp_ra <- importance(rf_model_samp_ra)
+vi_rel_samp_ra <- vi_samp_ra/sum(vi_samp_ra) 
 
 # w/o coordinates
-vi_samp_k_c <- importance(rf_model_samp_k_c) |>
-  mutate(index = "k_index")
-vi_rel_samp_k_c <- vi_samp_k_c/sum(vi_samp_k_c) |>
-  mutate(index = "k_index")
+vi_samp_k_c <- importance(rf_model_samp_k_c) 
+vi_rel_samp_k_c <- vi_samp_k_c/sum(vi_samp_k_c) 
 
-vi_samp_s_c <- importance(rf_model_samp_s_c) |>
-  mutate(index = "shannon_index")
-vi_rel_samp_s_c <- vi_samp_s_c/sum(vi_samp_s_c) |>
-  mutate(index = "shannon_index")
+vi_samp_s_c <- importance(rf_model_samp_s_c) 
+vi_rel_samp_s_c <- vi_samp_s_c/sum(vi_samp_s_c) 
 
-vi_samp_a_c <- importance(rf_model_samp_a_c) |>
-  mutate(index = "abundance")
-vi_rel_samp_a_c <- vi_samp_a_c/sum(vi_samp_a_c) |>
-  mutate(index = "abundance")
+vi_samp_a_c <- importance(rf_model_samp_a_c) 
+vi_rel_samp_a_c <- vi_samp_a_c/sum(vi_samp_a_c) 
 
-vi_samp_ra_c <- importance(rf_model_samp_ra_c) |>
-  mutate(index = "rel_abundance")
-vi_rel_samp_ra_c <- vi_samp_ra_c/sum(vi_samp_ra_c) |>
-  mutate(index = "rel_abundance")
+vi_samp_ra_c <- importance(rf_model_samp_ra_c) 
+vi_rel_samp_ra_c <- vi_samp_ra_c/sum(vi_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/ coordinates
-vi_sec_k <- importance(rf_model_sec_k) |>
-  mutate(index = "k_index")
-vi_rel_sec_k <- vi_sec_k/sum(vi_sec_k) |>
-  mutate(index = "k_index")
+vi_sec_k <- importance(rf_model_sec_k) 
+vi_rel_sec_k <- vi_sec_k/sum(vi_sec_k) 
 
-vi_sec_s <- importance(rf_model_sec_s) |>
-  mutate(index = "shannon_index")
-vi_rel_sec_s <- vi_sec_s/sum(vi_sec_s) |>
-  mutate(index = "shannon_index")
+vi_sec_s <- importance(rf_model_sec_s) 
+vi_rel_sec_s <- vi_sec_s/sum(vi_sec_s) 
 
-vi_sec_a <- importance(rf_model_sec_a) |>
-  mutate(index = "abundance")
-vi_rel_sec_a <- vi_sec_a/sum(vi_sec_a) |>
-  mutate(index = "abundance")
+vi_sec_a <- importance(rf_model_sec_a) 
+vi_rel_sec_a <- vi_sec_a/sum(vi_sec_a) 
 
-vi_sec_ra <- importance(rf_model_sec_ra) |>
-  mutate(index = "rel_abundance")
-vi_rel_sec_ra <- vi_sec_ra/sum(vi_sec_ra) |>
-  mutate(index = "rel_abundance")
+vi_sec_ra <- importance(rf_model_sec_ra) 
+vi_rel_sec_ra <- vi_sec_ra/sum(vi_sec_ra) 
 
 # w/o coordinates
-vi_sec_k_c <- importance(rf_model_sec_k_c) |>
-  mutate(index = "k_index")
-vi_rel_sec_k_c <- vi_sec_k_c/sum(vi_sec_k_c) |>
-  mutate(index = "k_index")
+vi_sec_k_c <- importance(rf_model_sec_k_c) 
+vi_rel_sec_k_c <- vi_sec_k_c/sum(vi_sec_k_c) 
 
-vi_sec_s_c <- importance(rf_model_sec_s_c) |>
-  mutate(index = "shannon_index")
-vi_rel_sec_s_c <- vi_sec_s_c/sum(vi_sec_s_c) |>
-  mutate(index = "shannon_index")
+vi_sec_s_c <- importance(rf_model_sec_s_c) 
+vi_rel_sec_s_c <- vi_sec_s_c/sum(vi_sec_s_c) 
 
-vi_sec_a_c <- importance(rf_model_sec_a_c) |>
-  mutate(index = "abundance")
-vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c) |>
-  mutate(index = "abundance")
+vi_sec_a_c <- importance(rf_model_sec_a_c) 
+vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c) 
 
-vi_sec_ra_c <- importance(rf_model_sec_ra_c) |>
-  mutate(index = "rel_abundance")
-vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c) |>
-  mutate(index = "rel_abundance")
+vi_sec_ra_c <- importance(rf_model_sec_ra_c)
+vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c) 
+
 
 # bind results together ------------------------------------------------------
 vi_rf_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra)
@@ -1393,88 +1330,56 @@ write.csv(vi_rel_rf_model_sec_c, "ML_model/var_imp/vi_rel_rf_model_sec_woc_add.c
 
 ### VARIABLE IMPORTANCE FROM AUTOTUNER ### ------------------------------------
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
-var_imp_rf_v_k <- autotuner_rf_v_k$importance() |>
-  mutate(index = "k_index")
-var_rel_imp_rf_v_k <- var_imp_rf_v_k/sum(var_imp_rf_v_k) |>
-  mutate(index = "k_index")
+var_imp_rf_v_k <- autotuner_rf_v_k$importance() 
+var_rel_imp_rf_v_k <- var_imp_rf_v_k/sum(var_imp_rf_v_k) 
 
-var_imp_rf_v_s <- autotuner_rf_v_s$importance() |>
-  mutate(index = "shannon_index")
-var_rel_imp_rf_v_s <- var_imp_rf_v_s/sum(var_imp_rf_v_s) |>
-  mutate(index = "shannon_index")
+var_imp_rf_v_s <- autotuner_rf_v_s$importance() 
+var_rel_imp_rf_v_s <- var_imp_rf_v_s/sum(var_imp_rf_v_s) 
 
-var_imp_rf_v_a <- autotuner_rf_v_a$importance() |>
-  mutate(index = "abundance")
-var_rel_imp_rf_v_a <- var_imp_rf_v_a/sum(var_imp_rf_v_a) |>
-  mutate(index = "abundance")
+var_imp_rf_v_a <- autotuner_rf_v_a$importance() 
+var_rel_imp_rf_v_a <- var_imp_rf_v_a/sum(var_imp_rf_v_a) 
 
-var_imp_rf_v_ra <- autotuner_rf_v_ra$importance() |>
-  mutate(index = "rel_abundance")
-var_rel_imp_rf_v_ra <- var_imp_rf_v_ra/sum(var_imp_rf_v_ra) |>
-  mutate(index = "rel_abundance")
+var_imp_rf_v_ra <- autotuner_rf_v_ra$importance() 
+var_rel_imp_rf_v_ra <- var_imp_rf_v_ra/sum(var_imp_rf_v_ra) 
 
 ### PREDICTORS: VELOCITY AND WD ### -------------------------------------------
-var_imp_rf_wd_k <- autotuner_rf_wd_k$importance() |>
-  mutate(index = "k_index")
-var_rel_imp_rf_wd_k <- var_imp_rf_wd_k/sum(var_imp_rf_wd_k) |>
-  mutate(index = "k_index")
+var_imp_rf_wd_k <- autotuner_rf_wd_k$importance() 
+var_rel_imp_rf_wd_k <- var_imp_rf_wd_k/sum(var_imp_rf_wd_k) 
 
-var_imp_rf_wd_s <- autotuner_rf_wd_s$importance() |>
-  mutate(index = "shannon_index")
-var_rel_imp_rf_wd_s <- var_imp_rf_wd_s/sum(var_imp_rf_wd_s) |>
-  mutate(index = "shannon_index")
+var_imp_rf_wd_s <- autotuner_rf_wd_s$importance() 
+var_rel_imp_rf_wd_s <- var_imp_rf_wd_s/sum(var_imp_rf_wd_s) 
 
-var_imp_rf_wd_a <- autotuner_rf_wd_a$importance() |>
-  mutate(index = "abundance")
-var_rel_imp_rf_wd_a <- var_imp_rf_wd_a/sum(var_imp_rf_wd_a) |>
-  mutate(index = "abundance")
+var_imp_rf_wd_a <- autotuner_rf_wd_a$importance() 
+var_rel_imp_rf_wd_a <- var_imp_rf_wd_a/sum(var_imp_rf_wd_a) 
 
-var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance() |>
-  mutate(index = "rel_abundance")
-var_rel_imp_rf_wd_ra <- var_imp_rf_wd_ra/sum(var_imp_rf_wd_ra) |>
-  mutate(index = "rel_abundance")
+var_imp_rf_wd_ra <- autotuner_rf_wd_ra$importance() 
+var_rel_imp_rf_wd_ra <- var_imp_rf_wd_ra/sum(var_imp_rf_wd_ra) 
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
-var_imp_rf_samp_k <- autotuner_rf_samp_k$importance() |>
-  mutate(index = "k_index")
-var_rel_imp_rf_samp_k <- var_imp_rf_samp_k/sum(var_imp_rf_samp_k) |>
-  mutate(index = "k_index")
+var_imp_rf_samp_k <- autotuner_rf_samp_k$importance() 
+var_rel_imp_rf_samp_k <- var_imp_rf_samp_k/sum(var_imp_rf_samp_k) 
 
-var_imp_rf_samp_s <- autotuner_rf_samp_s$importance() |>
-  mutate(index = "shannon_index")
-var_rel_imp_rf_samp_s <- var_imp_rf_samp_s/sum(var_imp_rf_samp_s) |>
-  mutate(index = "shannon_index")
+var_imp_rf_samp_s <- autotuner_rf_samp_s$importance() 
+var_rel_imp_rf_samp_s <- var_imp_rf_samp_s/sum(var_imp_rf_samp_s) 
 
-var_imp_rf_samp_a <- autotuner_rf_samp_a$importance() |>
-  mutate(index = "abundance")
-var_rel_imp_rf_samp_a <- var_imp_rf_samp_a/sum(var_imp_rf_samp_a) |>
-  mutate(index = "abundance")
+var_imp_rf_samp_a <- autotuner_rf_samp_a$importance() 
+var_rel_imp_rf_samp_a <- var_imp_rf_samp_a/sum(var_imp_rf_samp_a) 
 
-var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance() |>
-  mutate(index = "rel_abundance")
-var_rel_imp_rf_samp_ra <- var_imp_rf_samp_ra/sum(var_imp_rf_samp_ra) |>
-  mutate(index = "rel_abundance")
+var_imp_rf_samp_ra <- autotuner_rf_samp_ra$importance()
+var_rel_imp_rf_samp_ra <- var_imp_rf_samp_ra/sum(var_imp_rf_samp_ra) 
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-var_imp_rf_sec_k <- autotuner_rf_sec_k$importance() |>
-  mutate(index = "k_index")
-var_rel_imp_rf_sec_k <- var_imp_rf_sec_k/sum(var_imp_rf_sec_k) |>
-  mutate(index = "k_index")
+var_imp_rf_sec_k <- autotuner_rf_sec_k$importance() 
+var_rel_imp_rf_sec_k <- var_imp_rf_sec_k/sum(var_imp_rf_sec_k) 
 
-var_imp_rf_sec_s <- autotuner_rf_sec_s$importance() |>
-  mutate(index = "shannon_index")
-var_rel_imp_rf_sec_s <- var_imp_rf_sec_s/sum(var_imp_rf_sec_s) |>
-  mutate(index = "shannon_index")
+var_imp_rf_sec_s <- autotuner_rf_sec_s$importance() 
+var_rel_imp_rf_sec_s <- var_imp_rf_sec_s/sum(var_imp_rf_sec_s) 
 
-var_imp_rf_sec_a <- autotuner_rf_sec_a$importance() |>
-  mutate(index = "abundance")
-var_rel_imp_rf_sec_a <- var_imp_rf_sec_a/sum(var_imp_rf_sec_a) |>
-  mutate(index = "abundance")
+var_imp_rf_sec_a <- autotuner_rf_sec_a$importance() 
+var_rel_imp_rf_sec_a <- var_imp_rf_sec_a/sum(var_imp_rf_sec_a) 
 
-var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance() |>
-  mutate(index = "rel_abundance")
-var_rel_imp_rf_sec_ra <- var_imp_rf_sec_ra/sum(var_imp_rf_sec_ra) |>
-  mutate(index = "rel_abundance")
+var_imp_rf_sec_ra <- autotuner_rf_sec_ra$importance() 
+var_rel_imp_rf_sec_ra <- var_imp_rf_sec_ra/sum(var_imp_rf_sec_ra) 
 
 # bind results together -------------------------------------------------------
 vi_rf_v <- rbind(var_imp_rf_v_k, var_imp_rf_v_s, var_imp_rf_v_a, var_imp_rf_v_ra)
@@ -1503,7 +1408,3505 @@ write.csv(vi_rf_sec, "ML_model/var_imp/vi_rf_sec_add.csv", row.names = FALSE)
 write.csv(vi_rel_rf_sec, "ML_model/var_imp/vi_rel_rf_sec_add.csv", row.names = FALSE)
 ```
 
-## ! Partial dependence plots
+## Partial dependence plots
+### Data extraction & export
+```{r}
+### PREDICTOR: VELOCITY ### -------------------------------------------------
+# With k_index as response --------------------------------------------------
+### velocity
+pdp_model_v_k <- pdp::partial(rf_model_v_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "k_index")
+pdp_model_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c",
+         model = "velocity w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_v_k, "ML_Model/pdp_data/pdp_v_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_k_c, "ML_Model/pdp_data/pdp_v_k_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_v_k <- pdp::partial(rf_model_v_k, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "velocity w/ coordinates",
+         index = "k_index")
+pdp_model_f_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "velocity w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_f_v_k, "ML_Model/pdp_data/pdp_f_v_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_v_k_c, "ML_Model/pdp_data/pdp_f_v_k_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_v_k <- pdp::partial(rf_model_v_k, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/ coordinates",
+         index = "k_index")
+pdp_model_s_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_s_v_k, "ML_Model/pdp_data/pdp_s_v_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_v_k_c, "ML_Model/pdp_data/pdp_s_v_k_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_v_k <- pdp::partial(rf_model_v_k, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "velocity w/ coordinates",
+         index = "k_index")
+pdp_model_sp_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "velocity w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_sp_v_k, "ML_Model/pdp_data/pdp_sp_v_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_v_k_c, "ML_Model/pdp_data/pdp_sp_v_k_c_rf_add.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_v_k <- pdp::partial(rf_model_v_k, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "k_index")
+pdp_model_y_v_k <- pdp::partial(rf_model_v_k, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_x_v_k, "ML_Model/pdp_data/pdp_x_v_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_k, "ML_Model/pdp_data/pdp_y_v_k_rf_add.csv", row.names = FALSE)
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+pdp_model_v_s <- pdp::partial(rf_model_v_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "shannon_index")
+pdp_model_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity_c",
+         model = "velocity w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_v_s, "ML_Model/pdp_data/pdp_v_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_s_c, "ML_Model/pdp_data/pdp_v_s_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_v_s <- pdp::partial(rf_model_v_s, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "velocity w/ coordinates",
+         index = "shannon_index")
+pdp_model_f_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "velocity w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_f_v_s, "ML_Model/pdp_data/pdp_f_v_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_v_s_c, "ML_Model/pdp_data/pdp_f_v_s_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_v_s <- pdp::partial(rf_model_v_s, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/ coordinates",
+         index = "shannon_index")
+pdp_model_s_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_s_v_s, "ML_Model/pdp_data/pdp_s_v_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_v_s_c, "ML_Model/pdp_data/pdp_s_v_s_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_v_s <- pdp::partial(rf_model_v_s, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "velocity w/ coordinates",
+         index = "shannon_index")
+pdp_model_sp_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "velocity w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_sp_v_s, "ML_Model/pdp_data/pdp_sp_v_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_v_s_c, "ML_Model/pdp_data/pdp_sp_v_s_c_rf_add.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_v_s <- pdp::partial(rf_model_v_s, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "shannon_index")
+pdp_model_y_v_s <- pdp::partial(rf_model_v_s, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_x_v_s, "ML_Model/pdp_data/pdp_x_v_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_s, "ML_Model/pdp_data/pdp_y_v_s_rf_add.csv", row.names = FALSE)
+
+# With abundance as response --------------------------------------------------
+### velocity 
+pdp_model_v_a <- pdp::partial(rf_model_v_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+pdp_model_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "velocity w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_v_a, "ML_Model/pdp_data/pdp_v_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_a_c, "ML_Model/pdp_data/pdp_v_a_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_v_a <- pdp::partial(rf_model_v_a, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+pdp_model_f_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "velocity w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_f_v_a, "ML_Model/pdp_data/pdp_f_v_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_v_a_c, "ML_Model/pdp_data/pdp_f_v_a_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_v_a <- pdp::partial(rf_model_v_a, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+pdp_model_s_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_s_v_a, "ML_Model/pdp_data/pdp_s_v_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_v_a_c, "ML_Model/pdp_data/pdp_s_v_a_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_v_a <- pdp::partial(rf_model_v_a, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+pdp_model_sp_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "velocity w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_sp_v_a, "ML_Model/pdp_data/pdp_sp_v_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_v_a_c, "ML_Model/pdp_data/pdp_sp_v_a_c_rf_add.csv", row.names = FALSE)
+
+
+### x/y
+pdp_model_x_v_a <- pdp::partial(rf_model_v_a, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+pdp_model_y_v_a <- pdp::partial(rf_model_v_a, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_x_v_a, "ML_Model/pdp_data/pdp_x_v_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_a, "ML_Model/pdp_data/pdp_y_v_a_rf_add.csv", row.names = FALSE)
+
+# With rel_abundance as response ----------------------------------------------
+### velocity 
+pdp_model_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+pdp_model_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "velocity w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_v_ra, "ML_Model/pdp_data/pdp_v_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_ra_c, "ML_Model/pdp_data/pdp_v_ra_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+pdp_model_f_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "velocity w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_f_v_ra, "ML_Model/pdp_data/pdp_f_v_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_v_ra_c, "ML_Model/pdp_data/pdp_f_v_ra_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+pdp_model_s_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "velocity w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_s_v_ra, "ML_Model/pdp_data/pdp_s_v_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_v_ra_c, "ML_Model/pdp_data/pdp_s_v_ra_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+pdp_model_sp_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "velocity w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_sp_v_ra, "ML_Model/pdp_data/pdp_sp_v_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_v_ra_c, "ML_Model/pdp_data/pdp_sp_v_ra_c_rf_add.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+pdp_model_y_v_ra <- pdp::partial(rf_model_v_ra, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "velocity w/ coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_x_v_ra, "ML_Model/pdp_data/pdp_x_v_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_v_ra, "ML_Model/pdp_data/pdp_y_v_ra_rf_add.csv", row.names = FALSE)
+
+
+### PREDICTORS: VELOCITY + WD ### --------------------------------------------
+# With k_index as response ---------------------------------------------------
+### velocity 
+pdp_model_v_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_v_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_v_wd_k, "ML_Model/pdp_data/pdp_v_wd_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_k_c, "ML_Model/pdp_data/pdp_v_wd_k_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_f_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_f_wd_k, "ML_Model/pdp_data/pdp_f_wd_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_wd_k_c, "ML_Model/pdp_data/pdp_f_wd_k_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_s_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_s_wd_k, "ML_Model/pdp_data/pdp_s_wd_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_wd_k_c, "ML_Model/pdp_data/pdp_s_wd_k_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_sp_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_sp_wd_k, "ML_Model/pdp_data/pdp_sp_wd_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_wd_k_c, "ML_Model/pdp_data/pdp_sp_wd_k_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_wd_k, "ML_Model/pdp_data/pdp_wd_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_k_c, "ML_Model/pdp_data/pdp_wd_k_c_rf_add.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "k_index")
+pdp_model_y_wd_k <- pdp::partial(rf_model_wd_k, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "v + wd w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_x_wd_k, "ML_Model/pdp_data/pdp_x_wd_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_k, "ML_Model/pdp_data/pdp_y_wd_k_rf_add.csv", row.names = FALSE)
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+pdp_model_v_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_v_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_v_wd_s, "ML_Model/pdp_data/pdp_v_wd_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_s_c, "ML_Model/pdp_data/pdp_v_wd_s_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_f_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_f_wd_s, "ML_Model/pdp_data/pdp_f_wd_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_wd_s_c, "ML_Model/pdp_data/pdp_f_wd_s_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_s_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_s_wd_s, "ML_Model/pdp_data/pdp_s_wd_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_wd_s_c, "ML_Model/pdp_data/pdp_s_wd_s_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_sp_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_sp_wd_s, "ML_Model/pdp_data/pdp_sp_wd_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_wd_s_c, "ML_Model/pdp_data/pdp_sp_wd_s_c_rf_add.csv", row.names = FALSE)
+
+### wd_m
+pdp_model_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_wd_s, "ML_Model/pdp_data/pdp_wd_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_s_c, "ML_Model/pdp_data/pdp_wd_s_c_rf_add.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+pdp_model_y_wd_s <- pdp::partial(rf_model_wd_s, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "v + wd w/ coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_x_wd_s, "ML_Model/pdp_data/pdp_x_wd_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_s, "ML_Model/pdp_data/pdp_y_wd_s_rf_add.csv", row.names = FALSE)
+
+# With abundance as response --------------------------------------------------
+### velocity 
+pdp_model_v_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_v_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_v_wd_a, "ML_Model/pdp_data/pdp_v_wd_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_a_c, "ML_Model/pdp_data/pdp_v_wd_a_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_f_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_f_wd_a, "ML_Model/pdp_data/pdp_f_wd_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_wd_a_c, "ML_Model/pdp_data/pdp_f_wd_a_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_s_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_s_wd_a, "ML_Model/pdp_data/pdp_s_wd_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_wd_a_c, "ML_Model/pdp_data/pdp_s_wd_a_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_sp_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_sp_wd_a, "ML_Model/pdp_data/pdp_sp_wd_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_wd_a_c, "ML_Model/pdp_data/pdp_sp_wd_a_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_wd_a, "ML_Model/pdp_data/pdp_wd_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_a_c, "ML_Model/pdp_data/pdp_wd_a_c_rf_add.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+pdp_model_y_wd_a <- pdp::partial(rf_model_wd_a, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "v + wd w/ coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_x_wd_a, "ML_Model/pdp_data/pdp_x_wd_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_a, "ML_Model/pdp_data/pdp_y_wd_a_rf_add.csv", row.names = FALSE)
+
+# With rel_abundance as response ---------------------------------------------
+### velocity
+pdp_model_v_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_v_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "v + wd w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_v_wd_ra, "ML_Model/pdp_data/pdp_v_wd_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_ra_c, "ML_Model/pdp_data/pdp_v_wd_ra_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_f_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "v + wd w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_f_wd_ra, "ML_Model/pdp_data/pdp_f_wd_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_wd_ra_c, "ML_Model/pdp_data/pdp_f_wd_ra_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_s_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "v + wd w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_s_wd_ra, "ML_Model/pdp_data/pdp_s_wd_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_wd_ra_c, "ML_Model/pdp_data/pdp_s_wd_ra_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_sp_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "v + wd w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_sp_wd_ra, "ML_Model/pdp_data/pdp_sp_wd_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_wd_ra_c, "ML_Model/pdp_data/pdp_sp_wd_ra_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "v + wd w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_wd_ra, "ML_Model/pdp_data/pdp_wd_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_ra_c, "ML_Model/pdp_data/pdp_wd_ra_c_rf_add.csv", row.names = FALSE)
+
+### x/y
+pdp_model_x_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+pdp_model_y_wd_ra <- pdp::partial(rf_model_wd_ra, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "v + wd w/ coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_x_wd_ra, "ML_Model/pdp_data/pdp_x_wd_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_ra, "ML_Model/pdp_data/pdp_y_wd_ra_rf_add.csv", row.names = FALSE)
+
+### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
+# With k_index as response ---------------------------------------------------
+### velocity 
+pdp_model_v_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_v_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_v_samp_k, "ML_Model/pdp_data/pdp_v_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_samp_k_c, "ML_Model/pdp_data/pdp_v_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_f_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_f_samp_k, "ML_Model/pdp_data/pdp_f_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_samp_k_c, "ML_Model/pdp_data/pdp_f_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_s_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_s_samp_k, "ML_Model/pdp_data/pdp_s_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_samp_k_c, "ML_Model/pdp_data/pdp_s_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_sp_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_sp_samp_k, "ML_Model/pdp_data/pdp_sp_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_samp_k_c, "ML_Model/pdp_data/pdp_sp_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_wd_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_wd_samp_k, "ML_Model/pdp_data/pdp_wd_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_samp_k_c, "ML_Model/pdp_data/pdp_wd_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_y_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_x_samp_k, "ML_Model/pdp_data/pdp_x_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_samp_k, "ML_Model/pdp_data/pdp_y_samp_k_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_z_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_z_samp_k, "ML_Model/pdp_data/pdp_z_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_samp_k_c, "ML_Model/pdp_data/pdp_z_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_dist_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_dist_samp_k, "ML_Model/pdp_data/pdp_dist_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_samp_k_c, "ML_Model/pdp_data/pdp_dist_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_cv_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cv_samp_k, "ML_Model/pdp_data/pdp_cv_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_samp_k_c, "ML_Model/pdp_data/pdp_cv_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover 
+pdp_model_ac_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_ac_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ac_samp_k, "ML_Model/pdp_data/pdp_ac_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_samp_k_c, "ML_Model/pdp_data/pdp_ac_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_mc_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_mc_samp_k, "ML_Model/pdp_data/pdp_mc_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_samp_k_c, "ML_Model/pdp_data/pdp_mc_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_cc_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cc_samp_k, "ML_Model/pdp_data/pdp_cc_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_samp_k_c, "ML_Model/pdp_data/pdp_cc_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_clog_3_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_clog_3_samp_k, "ML_Model/pdp_data/pdp_clog_3_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_samp_k_c, "ML_Model/pdp_data/pdp_clog_3_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### clog_6 
+pdp_model_clog_6_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_clog_6_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_clog_6_samp_k, "ML_Model/pdp_data/pdp_clog_6_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_samp_k_c, "ML_Model/pdp_data/pdp_clog_6_samp_k_c_rf_add.csv", row.names = FALSE)
+
+### sub_type
+pdp_model_sub_samp_k <- pdp::partial(rf_model_samp_k, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/ coordinates",
+         index = "k_index")
+pdp_model_sub_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_sub_samp_k, "ML_Model/pdp_data/pdp_sub_samp_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_samp_k_c, "ML_Model/pdp_data/pdp_sub_samp_k_c_rf_add.csv", row.names = FALSE)
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+pdp_model_v_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_v_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_v_samp_s, "ML_Model/pdp_data/pdp_v_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_samp_s_c, "ML_Model/pdp_data/pdp_v_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_f_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_f_samp_s, "ML_Model/pdp_data/pdp_f_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_samp_s_c, "ML_Model/pdp_data/pdp_f_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_s_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_s_samp_s, "ML_Model/pdp_data/pdp_s_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_samp_s_c, "ML_Model/pdp_data/pdp_s_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_sp_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_sp_samp_s, "ML_Model/pdp_data/pdp_sp_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_samp_s_c, "ML_Model/pdp_data/pdp_sp_samp_s_c_rf_add.csv", row.names = FALSE)
+
+
+### wd_m 
+pdp_model_wd_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_wd_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_wd_samp_s, "ML_Model/pdp_data/pdp_wd_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_samp_s_c, "ML_Model/pdp_data/pdp_wd_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_y_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_x_samp_s, "ML_Model/pdp_data/pdp_x_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_samp_s, "ML_Model/pdp_data/pdp_y_samp_s_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_z_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_z_samp_s, "ML_Model/pdp_data/pdp_z_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_samp_s_c, "ML_Model/pdp_data/pdp_z_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_dist_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_dist_samp_s, "ML_Model/pdp_data/pdp_dist_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_samp_s_c, "ML_Model/pdp_data/pdp_dist_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_cv_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_cv_samp_s, "ML_Model/pdp_data/pdp_cv_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_samp_s_c, "ML_Model/pdp_data/pdp_cv_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover 
+pdp_model_ac_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_ac_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_ac_samp_s, "ML_Model/pdp_data/pdp_ac_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_samp_s_c, "ML_Model/pdp_data/pdp_ac_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_mc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_mc_samp_s, "ML_Model/pdp_data/pdp_mc_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_samp_s_c, "ML_Model/pdp_data/pdp_mc_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover
+pdp_model_cc_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_cc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_cc_samp_s, "ML_Model/pdp_data/pdp_cc_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_samp_s_c, "ML_Model/pdp_data/pdp_cc_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_clog_3_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_clog_3_samp_s, "ML_Model/pdp_data/pdp_clog_3_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_samp_s_c, "ML_Model/pdp_data/pdp_clog_3_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### clog_6 
+pdp_model_clog_6_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_clog_6_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_clog_6_samp_s, "ML_Model/pdp_data/pdp_clog_6_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_samp_s_c, "ML_Model/pdp_data/pdp_clog_6_samp_s_c_rf_add.csv", row.names = FALSE)
+
+### sub_type 
+pdp_model_sub_samp_s <- pdp::partial(rf_model_samp_s, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/ coordinates",
+         index = "shannon_index")
+pdp_model_sub_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_sub_samp_s, "ML_Model/pdp_data/pdp_sub_samp_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_samp_s_c, "ML_Model/pdp_data/pdp_sub_samp_s_c_rf_add.csv", row.names = FALSE)
+
+# With abundance as response --------------------------------------------------
+### velocity 
+pdp_model_v_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_v_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_v_samp_a, "ML_Model/pdp_data/pdp_v_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_samp_a_c, "ML_Model/pdp_data/pdp_v_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_f_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_f_samp_a, "ML_Model/pdp_data/pdp_f_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_samp_a_c, "ML_Model/pdp_data/pdp_f_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_s_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_s_samp_a, "ML_Model/pdp_data/pdp_s_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_samp_a_c, "ML_Model/pdp_data/pdp_s_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_sp_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_sp_samp_a, "ML_Model/pdp_data/pdp_sp_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_samp_a_c, "ML_Model/pdp_data/pdp_sp_samp_a_c_rf_add.csv", row.names = FALSE)
+
+
+### wd_m 
+pdp_model_wd_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_wd_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_wd_samp_a, "ML_Model/pdp_data/pdp_wd_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_samp_a_c, "ML_Model/pdp_data/pdp_wd_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_y_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_x_samp_a, "ML_Model/pdp_data/pdp_x_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_samp_a, "ML_Model/pdp_data/pdp_y_samp_a_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_z_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_z_samp_a, "ML_Model/pdp_data/pdp_z_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_samp_a_c, "ML_Model/pdp_data/pdp_z_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_dist_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_dist_samp_a, "ML_Model/pdp_data/pdp_dist_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_samp_a_c, "ML_Model/pdp_data/pdp_dist_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_cv_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_cv_samp_a, "ML_Model/pdp_data/pdp_cv_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_samp_a_c, "ML_Model/pdp_data/pdp_cv_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover 
+pdp_model_ac_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_ac_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_ac_samp_a, "ML_Model/pdp_data/pdp_ac_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_samp_a_c, "ML_Model/pdp_data/pdp_ac_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_mc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_mc_samp_a, "ML_Model/pdp_data/pdp_mc_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_samp_a_c, "ML_Model/pdp_data/pdp_mc_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_cc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_cc_samp_a, "ML_Model/pdp_data/pdp_cc_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_samp_a_c, "ML_Model/pdp_data/pdp_cc_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_clog_3_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_clog_3_samp_a, "ML_Model/pdp_data/pdp_clog_3_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_samp_a_c, "ML_Model/pdp_data/pdp_clog_3_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### clog_6 
+pdp_model_clog_6_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_clog_6_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_clog_6_samp_a, "ML_Model/pdp_data/pdp_clog_6_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_samp_a_c, "ML_Model/pdp_data/pdp_clog_6_samp_a_c_rf_add.csv", row.names = FALSE)
+
+### sub_type 
+pdp_model_sub_samp_a <- pdp::partial(rf_model_samp_a, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/ coordinates",
+         index = "abundance")
+pdp_model_sub_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_sub_samp_a, "ML_Model/pdp_data/pdp_sub_samp_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_samp_a_c, "ML_Model/pdp_data/pdp_sub_samp_a_c_rf_add.csv", row.names = FALSE)
+
+# With rel_abundance as response ----------------------------------------------
+### velocity 
+pdp_model_v_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_v_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_v_samp_ra, "ML_Model/pdp_data/pdp_v_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_samp_ra_c, "ML_Model/pdp_data/pdp_v_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_f_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_f_samp_ra, "ML_Model/pdp_data/pdp_f_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_samp_ra_c, "ML_Model/pdp_data/pdp_f_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_s_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_s_samp_ra, "ML_Model/pdp_data/pdp_s_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_samp_ra_c, "ML_Model/pdp_data/pdp_s_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_sp_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_sp_samp_ra, "ML_Model/pdp_data/pdp_sp_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_samp_ra_c, "ML_Model/pdp_data/pdp_sp_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_wd_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_wd_samp_ra, "ML_Model/pdp_data/pdp_wd_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_samp_ra_c, "ML_Model/pdp_data/pdp_wd_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_y_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_x_samp_ra, "ML_Model/pdp_data/pdp_x_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_samp_ra, "ML_Model/pdp_data/pdp_y_samp_ra_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_z_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_z_samp_ra, "ML_Model/pdp_data/pdp_z_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_samp_ra_c, "ML_Model/pdp_data/pdp_z_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_dist_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_dist_samp_ra, "ML_Model/pdp_data/pdp_dist_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_samp_ra_c, "ML_Model/pdp_data/pdp_dist_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_cv_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_cv_samp_ra, "ML_Model/pdp_data/pdp_cv_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_samp_ra_c, "ML_Model/pdp_data/pdp_cv_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover 
+pdp_model_ac_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_ac_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_ac_samp_ra, "ML_Model/pdp_data/pdp_ac_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_samp_ra_c, "ML_Model/pdp_data/pdp_ac_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_mc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_mc_samp_ra, "ML_Model/pdp_data/pdp_mc_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_samp_ra_c, "ML_Model/pdp_data/pdp_mc_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_cc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_cc_samp_ra, "ML_Model/pdp_data/pdp_cc_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_samp_ra_c, "ML_Model/pdp_data/pdp_cc_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_clog_3_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_clog_3_samp_ra, "ML_Model/pdp_data/pdp_clog_3_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_samp_ra_c, "ML_Model/pdp_data/pdp_clog_3_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### clog_6 
+pdp_model_clog_6_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_clog_6_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_clog_6_samp_ra, "ML_Model/pdp_data/pdp_clog_6_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_samp_ra_c, "ML_Model/pdp_data/pdp_clog_6_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### sub_type 
+pdp_model_sub_samp_ra <- pdp::partial(rf_model_samp_ra, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/ coordinates",
+         index = "rel_abundance")
+pdp_model_sub_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "sampling w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_sub_samp_ra, "ML_Model/pdp_data/pdp_sub_samp_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_samp_ra_c, "ML_Model/pdp_data/pdp_sub_samp_ra_c_rf_add.csv", row.names = FALSE)
+
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# With k_index as response ----------------------------------------------------
+### velocity 
+pdp_model_v_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_v_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_v_sec_k, "ML_Model/pdp_data/pdp_v_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_sec_k_c, "ML_Model/pdp_data/pdp_v_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_f_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_f_sec_k, "ML_Model/pdp_data/pdp_f_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_sec_k_c, "ML_Model/pdp_data/pdp_f_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_s_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_s_sec_k, "ML_Model/pdp_data/pdp_s_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_sec_k_c, "ML_Model/pdp_data/pdp_s_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_sp_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_sp_sec_k, "ML_Model/pdp_data/pdp_sp_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_sec_k_c, "ML_Model/pdp_data/pdp_sp_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_wd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_wd_sec_k, "ML_Model/pdp_data/pdp_wd_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_sec_k_c, "ML_Model/pdp_data/pdp_wd_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_y_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_x_sec_k, "ML_Model/pdp_data/pdp_x_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_sec_k, "ML_Model/pdp_data/pdp_y_sec_k_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_z_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_z_sec_k, "ML_Model/pdp_data/pdp_z_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_sec_k_c, "ML_Model/pdp_data/pdp_z_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_dist_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_dist_sec_k, "ML_Model/pdp_data/pdp_dist_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_sec_k_c, "ML_Model/pdp_data/pdp_dist_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_cv_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cv_sec_k, "ML_Model/pdp_data/pdp_cv_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_sec_k_c, "ML_Model/pdp_data/pdp_cv_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover
+pdp_model_ac_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_ac_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ac_sec_k, "ML_Model/pdp_data/pdp_ac_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_sec_k_c, "ML_Model/pdp_data/pdp_ac_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_mc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_mc_sec_k, "ML_Model/pdp_data/pdp_mc_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_sec_k_c, "ML_Model/pdp_data/pdp_mc_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_cc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cc_sec_k, "ML_Model/pdp_data/pdp_cc_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_sec_k_c, "ML_Model/pdp_data/pdp_cc_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_clog_3_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_clog_3_sec_k, "ML_Model/pdp_data/pdp_clog_3_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_sec_k_c, "ML_Model/pdp_data/pdp_clog_3_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### clog_6
+pdp_model_clog_6_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_clog_6_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_clog_6_sec_k, "ML_Model/pdp_data/pdp_clog_6_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_sec_k_c, "ML_Model/pdp_data/pdp_clog_6_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### sub_type 
+pdp_model_sub_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_sub_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_sub_sec_k, "ML_Model/pdp_data/pdp_sub_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_sec_k_c, "ML_Model/pdp_data/pdp_sub_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### pH_before
+pdp_model_phb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_phb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_phb_sec_k, "ML_Model/pdp_data/pdp_phb_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phb_sec_k_c, "ML_Model/pdp_data/pdp_phb_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### pH_during
+pdp_model_phd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_phd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_phd_sec_k, "ML_Model/pdp_data/pdp_phd_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phd_sec_k_c, "ML_Model/pdp_data/pdp_phd_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### pH_after
+pdp_model_pha_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_pha_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_pha_sec_k, "ML_Model/pdp_data/pdp_pha_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_pha_sec_k_c, "ML_Model/pdp_data/pdp_pha_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### conduct_before
+pdp_model_cb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_cb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cb_sec_k, "ML_Model/pdp_data/pdp_cb_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cb_sec_k_c, "ML_Model/pdp_data/pdp_cb_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### conduct_during
+pdp_model_cd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_cd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_cd_sec_k, "ML_Model/pdp_data/pdp_cd_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cd_sec_k_c, "ML_Model/pdp_data/pdp_cd_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### conduct_after
+pdp_model_ca_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_ca_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ca_sec_k, "ML_Model/pdp_data/pdp_ca_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ca_sec_k_c, "ML_Model/pdp_data/pdp_ca_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### ox_before
+pdp_model_ob_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_ob_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ob_sec_k, "ML_Model/pdp_data/pdp_ob_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ob_sec_k_c, "ML_Model/pdp_data/pdp_ob_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### ox_during
+pdp_model_od_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_od_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_od_sec_k, "ML_Model/pdp_data/pdp_od_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_od_sec_k_c, "ML_Model/pdp_data/pdp_od_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### ox_after
+pdp_model_oa_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_oa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_oa_sec_k, "ML_Model/pdp_data/pdp_oa_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_oa_sec_k_c, "ML_Model/pdp_data/pdp_oa_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### turb_before
+pdp_model_tb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_tb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_tb_sec_k, "ML_Model/pdp_data/pdp_tb_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tb_sec_k_c, "ML_Model/pdp_data/pdp_tb_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### turb_during
+pdp_model_td_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_td_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_td_sec_k, "ML_Model/pdp_data/pdp_td_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_td_sec_k_c, "ML_Model/pdp_data/pdp_td_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### turb_after
+pdp_model_ta_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_ta_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ta_sec_k, "ML_Model/pdp_data/pdp_ta_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ta_sec_k_c, "ML_Model/pdp_data/pdp_ta_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### temp_before
+pdp_model_teb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_teb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_teb_sec_k, "ML_Model/pdp_data/pdp_teb_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_teb_sec_k_c, "ML_Model/pdp_data/pdp_teb_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### temp_during
+pdp_model_ted_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_ted_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ted_sec_k, "ML_Model/pdp_data/pdp_ted_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ted_sec_k_c, "ML_Model/pdp_data/pdp_ted_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### temp_after
+pdp_model_tea_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_tea_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_tea_sec_k, "ML_Model/pdp_data/pdp_tea_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tea_sec_k_c, "ML_Model/pdp_data/pdp_tea_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### q_before
+pdp_model_qb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_qb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_qb_sec_k, "ML_Model/pdp_data/pdp_qb_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qb_sec_k_c, "ML_Model/pdp_data/pdp_qb_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### q_during
+pdp_model_qd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_qd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_qd_sec_k, "ML_Model/pdp_data/pdp_qd_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qd_sec_k_c, "ML_Model/pdp_data/pdp_qd_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### q_after
+pdp_model_qa_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_qa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_qa_sec_k, "ML_Model/pdp_data/pdp_qa_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qa_sec_k_c, "ML_Model/pdp_data/pdp_qa_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### gaug_before
+pdp_model_gb_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_gb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_gb_sec_k, "ML_Model/pdp_data/pdp_gb_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gb_sec_k_c, "ML_Model/pdp_data/pdp_gb_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### gaug_during
+pdp_model_gd_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_gd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_gd_sec_k, "ML_Model/pdp_data/pdp_gd_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gd_sec_k_c, "ML_Model/pdp_data/pdp_gd_sec_k_c_rf_add.csv", row.names = FALSE)
+
+### gaug_after
+pdp_model_ga_sec_k <- pdp::partial(rf_model_sec_k, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/ coordinates",
+         index = "k_index")
+pdp_model_ga_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_ga_sec_k, "ML_Model/pdp_data/pdp_ga_sec_k_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ga_sec_k_c, "ML_Model/pdp_data/pdp_ga_sec_k_c_rf_add.csv", row.names = FALSE)
+
+# With shannon index as response ----------------------------------------------
+### velocity 
+pdp_model_v_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_v_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_v_sec_s, "ML_Model/pdp_data/pdp_v_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_sec_s_c, "ML_Model/pdp_data/pdp_v_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_f_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_f_sec_s, "ML_Model/pdp_data/pdp_f_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_sec_s_c, "ML_Model/pdp_data/pdp_f_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_s_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_s_sec_s, "ML_Model/pdp_data/pdp_s_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_sec_s_c, "ML_Model/pdp_data/pdp_s_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_sp_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_sp_sec_s, "ML_Model/pdp_data/pdp_sp_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_sec_s_c, "ML_Model/pdp_data/pdp_sp_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_wd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_wd_sec_s, "ML_Model/pdp_data/pdp_wd_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_sec_s_c, "ML_Model/pdp_data/pdp_wd_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_y_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_x_sec_s, "ML_Model/pdp_data/pdp_x_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_sec_s, "ML_Model/pdp_data/pdp_y_sec_s_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_z_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_z_sec_s, "ML_Model/pdp_data/pdp_z_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_sec_s_c, "ML_Model/pdp_data/pdp_z_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_dist_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_dist_sec_s, "ML_Model/pdp_data/pdp_dist_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_sec_s_c, "ML_Model/pdp_data/pdp_dist_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_cv_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_cv_sec_s, "ML_Model/pdp_data/pdp_cv_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_sec_s_c, "ML_Model/pdp_data/pdp_cv_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover
+pdp_model_ac_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_ac_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_ac_sec_s, "ML_Model/pdp_data/pdp_ac_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_sec_s_c, "ML_Model/pdp_data/pdp_ac_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_mc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_mc_sec_s, "ML_Model/pdp_data/pdp_mc_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_sec_s_c, "ML_Model/pdp_data/pdp_mc_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_cc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_cc_sec_s, "ML_Model/pdp_data/pdp_cc_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_sec_s_c, "ML_Model/pdp_data/pdp_cc_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_clog_3_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_clog_3_sec_s, "ML_Model/pdp_data/pdp_clog_3_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_sec_s_c, "ML_Model/pdp_data/pdp_clog_3_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### clog_6
+pdp_model_clog_6_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_clog_6_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_clog_6_sec_s, "ML_Model/pdp_data/pdp_clog_6_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_sec_s_c, "ML_Model/pdp_data/pdp_clog_6_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### sub_type 
+pdp_model_sub_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_sub_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_sub_sec_s, "ML_Model/pdp_data/pdp_sub_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_sec_s_c, "ML_Model/pdp_data/pdp_sub_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### pH_before
+pdp_model_phb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_phb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_phb_sec_s, "ML_Model/pdp_data/pdp_phb_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phb_sec_s_c, "ML_Model/pdp_data/pdp_phb_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### pH_during
+pdp_model_phd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_phd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_phd_sec_s, "ML_Model/pdp_data/pdp_phd_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phd_sec_s_c, "ML_Model/pdp_data/pdp_phd_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### pH_after
+pdp_model_pha_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_pha_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_pha_sec_s, "ML_Model/pdp_data/pdp_pha_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_pha_sec_s_c, "ML_Model/pdp_data/pdp_pha_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### conduct_before
+pdp_model_cb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_cb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_cb_sec_s, "ML_Model/pdp_data/pdp_cb_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cb_sec_s_c, "ML_Model/pdp_data/pdp_cb_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### conduct_during
+pdp_model_cd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_cd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_cd_sec_s, "ML_Model/pdp_data/pdp_cd_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cd_sec_s_c, "ML_Model/pdp_data/pdp_cd_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### conduct_after
+pdp_model_ca_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_ca_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_ca_sec_s, "ML_Model/pdp_data/pdp_ca_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ca_sec_s_c, "ML_Model/pdp_data/pdp_ca_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### ox_before
+pdp_model_ob_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_ob_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_ob_sec_s, "ML_Model/pdp_data/pdp_ob_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ob_sec_s_c, "ML_Model/pdp_data/pdp_ob_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### ox_during
+pdp_model_od_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_od_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_od_sec_s, "ML_Model/pdp_data/pdp_od_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_od_sec_s_c, "ML_Model/pdp_data/pdp_od_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### ox_after
+pdp_model_oa_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_oa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_oa_sec_s, "ML_Model/pdp_data/pdp_oa_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_oa_sec_s_c, "ML_Model/pdp_data/pdp_oa_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### turb_before
+pdp_model_tb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_tb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_tb_sec_s, "ML_Model/pdp_data/pdp_tb_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tb_sec_s_c, "ML_Model/pdp_data/pdp_tb_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### turb_during
+pdp_model_td_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_td_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_td_sec_s, "ML_Model/pdp_data/pdp_td_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_td_sec_s_c, "ML_Model/pdp_data/pdp_td_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### turb_after
+pdp_model_ta_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_ta_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_ta_sec_s, "ML_Model/pdp_data/pdp_ta_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ta_sec_s_c, "ML_Model/pdp_data/pdp_ta_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### temp_before
+pdp_model_teb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_teb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_teb_sec_s, "ML_Model/pdp_data/pdp_teb_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_teb_sec_s_c, "ML_Model/pdp_data/pdp_teb_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### temp_during
+pdp_model_ted_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_ted_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_ted_sec_s, "ML_Model/pdp_data/pdp_ted_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ted_sec_s_c, "ML_Model/pdp_data/pdp_ted_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### temp_after
+pdp_model_tea_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_tea_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_tea_sec_s, "ML_Model/pdp_data/pdp_tea_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tea_sec_s_c, "ML_Model/pdp_data/pdp_tea_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### q_before
+pdp_model_qb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_qb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_qb_sec_s, "ML_Model/pdp_data/pdp_qb_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qb_sec_s_c, "ML_Model/pdp_data/pdp_qb_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### q_during
+pdp_model_qd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_qd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_qd_sec_s, "ML_Model/pdp_data/pdp_qd_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qd_sec_s_c, "ML_Model/pdp_data/pdp_qd_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### q_after
+pdp_model_qa_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_qa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_qa_sec_s, "ML_Model/pdp_data/pdp_qa_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qa_sec_s_c, "ML_Model/pdp_data/pdp_qa_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### gaug_before
+pdp_model_gb_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_gb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_gb_sec_s, "ML_Model/pdp_data/pdp_gb_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gb_sec_s_c, "ML_Model/pdp_data/pdp_gb_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### gaug_during
+pdp_model_gd_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_gd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_gd_sec_s, "ML_Model/pdp_data/pdp_gd_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gd_sec_s_c, "ML_Model/pdp_data/pdp_gd_sec_s_c_rf_add.csv", row.names = FALSE)
+
+### gaug_after
+pdp_model_ga_sec_s <- pdp::partial(rf_model_sec_s, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/ coordinates",
+         index = "shannon_index")
+pdp_model_ga_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/o coordinates",
+         index = "shannon_index")
+
+# export data 
+write.csv(pdp_model_ga_sec_s, "ML_Model/pdp_data/pdp_ga_sec_s_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ga_sec_s_c, "ML_Model/pdp_data/pdp_ga_sec_s_c_rf_add.csv", row.names = FALSE)
+
+# With abundance as response --------------------------------------------------
+### velocity 
+pdp_model_v_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_v_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_v_sec_a, "ML_Model/pdp_data/pdp_v_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_sec_a_c, "ML_Model/pdp_data/pdp_v_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_f_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_f_sec_a, "ML_Model/pdp_data/pdp_f_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_sec_a_c, "ML_Model/pdp_data/pdp_f_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_s_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_s_sec_a, "ML_Model/pdp_data/pdp_s_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_sec_a_c, "ML_Model/pdp_data/pdp_s_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_sp_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_sp_sec_a, "ML_Model/pdp_data/pdp_sp_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_sec_a_c, "ML_Model/pdp_data/pdp_sp_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_wd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_wd_sec_a, "ML_Model/pdp_data/pdp_wd_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_sec_a_c, "ML_Model/pdp_data/pdp_wd_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_y_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_x_sec_a, "ML_Model/pdp_data/pdp_x_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_sec_a, "ML_Model/pdp_data/pdp_y_sec_a_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_z_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_z_sec_a, "ML_Model/pdp_data/pdp_z_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_sec_a_c, "ML_Model/pdp_data/pdp_z_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_dist_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_dist_sec_a, "ML_Model/pdp_data/pdp_dist_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_sec_a_c, "ML_Model/pdp_data/pdp_dist_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_cv_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_cv_sec_a, "ML_Model/pdp_data/pdp_cv_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_sec_a_c, "ML_Model/pdp_data/pdp_cv_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover
+pdp_model_ac_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_ac_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_ac_sec_a, "ML_Model/pdp_data/pdp_ac_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_sec_a_c, "ML_Model/pdp_data/pdp_ac_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_mc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_mc_sec_a, "ML_Model/pdp_data/pdp_mc_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_sec_a_c, "ML_Model/pdp_data/pdp_mc_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_cc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_cc_sec_a, "ML_Model/pdp_data/pdp_cc_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_sec_a_c, "ML_Model/pdp_data/pdp_cc_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_clog_3_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_clog_3_sec_a, "ML_Model/pdp_data/pdp_clog_3_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_sec_a_c, "ML_Model/pdp_data/pdp_clog_3_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### clog_6
+pdp_model_clog_6_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_clog_6_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_clog_6_sec_a, "ML_Model/pdp_data/pdp_clog_6_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_sec_a_c, "ML_Model/pdp_data/pdp_clog_6_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### sub_type 
+pdp_model_sub_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_sub_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_sub_sec_a, "ML_Model/pdp_data/pdp_sub_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_sec_a_c, "ML_Model/pdp_data/pdp_sub_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### pH_before
+pdp_model_phb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_phb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_phb_sec_a, "ML_Model/pdp_data/pdp_phb_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phb_sec_a_c, "ML_Model/pdp_data/pdp_phb_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### pH_during
+pdp_model_phd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_phd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_phd_sec_a, "ML_Model/pdp_data/pdp_phd_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phd_sec_a_c, "ML_Model/pdp_data/pdp_phd_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### pH_after
+pdp_model_pha_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_pha_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_pha_sec_a, "ML_Model/pdp_data/pdp_pha_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_pha_sec_a_c, "ML_Model/pdp_data/pdp_pha_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### conduct_before
+pdp_model_cb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_cb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_cb_sec_a, "ML_Model/pdp_data/pdp_cb_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cb_sec_a_c, "ML_Model/pdp_data/pdp_cb_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### conduct_during
+pdp_model_cd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_cd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_cd_sec_a, "ML_Model/pdp_data/pdp_cd_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cd_sec_a_c, "ML_Model/pdp_data/pdp_cd_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### conduct_after
+pdp_model_ca_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_ca_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_ca_sec_a, "ML_Model/pdp_data/pdp_ca_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ca_sec_a_c, "ML_Model/pdp_data/pdp_ca_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### ox_before
+pdp_model_ob_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_ob_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_ob_sec_a, "ML_Model/pdp_data/pdp_ob_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ob_sec_a_c, "ML_Model/pdp_data/pdp_ob_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### ox_during
+pdp_model_od_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_od_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_od_sec_a, "ML_Model/pdp_data/pdp_od_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_od_sec_a_c, "ML_Model/pdp_data/pdp_od_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### ox_after
+pdp_model_oa_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_oa_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_oa_sec_a, "ML_Model/pdp_data/pdp_oa_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_oa_sec_a_c, "ML_Model/pdp_data/pdp_oa_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### turb_before
+pdp_model_tb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_tb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_tb_sec_a, "ML_Model/pdp_data/pdp_tb_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tb_sec_a_c, "ML_Model/pdp_data/pdp_tb_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### turb_during
+pdp_model_td_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_td_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_td_sec_a, "ML_Model/pdp_data/pdp_td_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_td_sec_a_c, "ML_Model/pdp_data/pdp_td_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### turb_after
+pdp_model_ta_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_ta_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_ta_sec_a, "ML_Model/pdp_data/pdp_ta_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ta_sec_a_c, "ML_Model/pdp_data/pdp_ta_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### temp_before
+pdp_model_teb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_teb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_teb_sec_a, "ML_Model/pdp_data/pdp_teb_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_teb_sec_a_c, "ML_Model/pdp_data/pdp_teb_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### temp_during
+pdp_model_ted_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_ted_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_ted_sec_a, "ML_Model/pdp_data/pdp_ted_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ted_sec_a_c, "ML_Model/pdp_data/pdp_ted_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### temp_after
+pdp_model_tea_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_tea_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_tea_sec_a, "ML_Model/pdp_data/pdp_tea_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tea_sec_a_c, "ML_Model/pdp_data/pdp_tea_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### q_before
+pdp_model_qb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_qb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_qb_sec_a, "ML_Model/pdp_data/pdp_qb_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qb_sec_a_c, "ML_Model/pdp_data/pdp_qb_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### q_during
+pdp_model_qd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_qd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_qd_sec_a, "ML_Model/pdp_data/pdp_qd_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qd_sec_a_c, "ML_Model/pdp_data/pdp_qd_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### q_after
+pdp_model_qa_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_qa_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_qa_sec_a, "ML_Model/pdp_data/pdp_qa_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qa_sec_a_c, "ML_Model/pdp_data/pdp_qa_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### gaug_before
+pdp_model_gb_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_gb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_gb_sec_a, "ML_Model/pdp_data/pdp_gb_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gb_sec_a_c, "ML_Model/pdp_data/pdp_gb_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### gaug_during
+pdp_model_gd_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_gd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_gd_sec_a, "ML_Model/pdp_data/pdp_gd_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gd_sec_a_c, "ML_Model/pdp_data/pdp_gd_sec_a_c_rf_add.csv", row.names = FALSE)
+
+### gaug_after
+pdp_model_ga_sec_a <- pdp::partial(rf_model_sec_a, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/ coordinates",
+         index = "abundance")
+pdp_model_ga_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/o coordinates",
+         index = "abundance")
+
+# export data 
+write.csv(pdp_model_ga_sec_a, "ML_Model/pdp_data/pdp_ga_sec_a_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ga_sec_a_c, "ML_Model/pdp_data/pdp_ga_sec_a_c_rf_add.csv", row.names = FALSE)
+
+# With relative abundance as response -----------------------------------------
+### velocity 
+pdp_model_v_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "velocity") |>
+  mutate(predictors = "velocity",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_v_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_v_sec_ra, "ML_Model/pdp_data/pdp_v_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_sec_ra_c, "ML_Model/pdp_data/pdp_v_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### froude
+pdp_model_f_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "froude") |>
+  mutate(predictors = "froude",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_f_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "froude")|>
+  mutate(predictors = "froude",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_f_sec_ra, "ML_Model/pdp_data/pdp_f_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_f_sec_ra_c, "ML_Model/pdp_data/pdp_f_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### shear_stress
+pdp_model_s_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "shear_stress") |>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_s_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "shear_stress")|>
+  mutate(predictors = "shear_stress",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_s_sec_ra, "ML_Model/pdp_data/pdp_s_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_s_sec_ra_c, "ML_Model/pdp_data/pdp_s_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### stream_power
+pdp_model_sp_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "stream_power") |>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_sp_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "stream_power")|>
+  mutate(predictors = "stream_power",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_sp_sec_ra, "ML_Model/pdp_data/pdp_sp_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sp_sec_ra_c, "ML_Model/pdp_data/pdp_sp_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### wd_m 
+pdp_model_wd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "wd_m") |>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_wd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_wd_sec_ra, "ML_Model/pdp_data/pdp_wd_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_sec_ra_c, "ML_Model/pdp_data/pdp_wd_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### x / y 
+pdp_model_x_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "x") |>
+  mutate(predictors = "x",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_y_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "y") |>
+  mutate(predictors = "y",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_x_sec_ra, "ML_Model/pdp_data/pdp_x_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_sec_ra, "ML_Model/pdp_data/pdp_y_sec_ra_rf_add.csv", row.names = FALSE)
+
+### z 
+pdp_model_z_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_z_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "z") |>
+  mutate(predictors = "z",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_z_sec_ra, "ML_Model/pdp_data/pdp_z_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_z_sec_ra_c, "ML_Model/pdp_data/pdp_z_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### dist_w 
+pdp_model_dist_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_dist_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "dist_w") |>
+  mutate(predictors = "dist_w",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_dist_sec_ra, "ML_Model/pdp_data/pdp_dist_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_dist_sec_ra_c, "ML_Model/pdp_data/pdp_dist_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### cat_v 
+pdp_model_cv_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_cv_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cat_velocity") |>
+  mutate(predictors = "cat_velocity",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_cv_sec_ra, "ML_Model/pdp_data/pdp_cv_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cv_sec_ra_c, "ML_Model/pdp_data/pdp_cv_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### alg_cover
+pdp_model_ac_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_ac_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "alg_cover") |>
+  mutate(predictors = "alg_cover",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_ac_sec_ra, "ML_Model/pdp_data/pdp_ac_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ac_sec_ra_c, "ML_Model/pdp_data/pdp_ac_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### moos_cover 
+pdp_model_mc_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_mc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "moos_cover") |>
+  mutate(predictors = "moos_cover",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_mc_sec_ra, "ML_Model/pdp_data/pdp_mc_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_mc_sec_ra_c, "ML_Model/pdp_data/pdp_mc_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### cpom_cover 
+pdp_model_cc_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_cc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cpom_cover") |>
+  mutate(predictors = "cpom_cover",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_cc_sec_ra, "ML_Model/pdp_data/pdp_cc_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cc_sec_ra_c, "ML_Model/pdp_data/pdp_cc_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### clog_3 
+pdp_model_clog_3_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_clog_3_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_3_class_int") |>
+  mutate(predictors = "clog_3_class",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_clog_3_sec_ra, "ML_Model/pdp_data/pdp_clog_3_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_3_sec_ra_c, "ML_Model/pdp_data/pdp_clog_3_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### clog_6
+pdp_model_clog_6_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_clog_6_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_6_class_int") |>
+  mutate(predictors = "clog_6_class",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_clog_6_sec_ra, "ML_Model/pdp_data/pdp_clog_6_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_clog_6_sec_ra_c, "ML_Model/pdp_data/pdp_clog_6_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### sub_type 
+pdp_model_sub_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_sub_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "sub_type_int") |>
+  mutate(predictors = "sub_type",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_sub_sec_ra, "ML_Model/pdp_data/pdp_sub_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_sub_sec_ra_c, "ML_Model/pdp_data/pdp_sub_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### pH_before
+pdp_model_phb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_phb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_before") |>
+  mutate(predictors = "pH_before",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_phb_sec_ra, "ML_Model/pdp_data/pdp_phb_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phb_sec_ra_c, "ML_Model/pdp_data/pdp_phb_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### pH_during
+pdp_model_phd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_phd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_during") |>
+  mutate(predictors = "pH_during",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_phd_sec_ra, "ML_Model/pdp_data/pdp_phd_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_phd_sec_ra_c, "ML_Model/pdp_data/pdp_phd_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### pH_after
+pdp_model_pha_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_pha_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_after") |>
+  mutate(predictors = "pH_after",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_pha_sec_ra, "ML_Model/pdp_data/pdp_pha_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_pha_sec_ra_c, "ML_Model/pdp_data/pdp_pha_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### conduct_before
+pdp_model_cb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_cb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_before") |>
+  mutate(predictors = "conduct_before",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_cb_sec_ra, "ML_Model/pdp_data/pdp_cb_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cb_sec_ra_c, "ML_Model/pdp_data/pdp_cb_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### conduct_during
+pdp_model_cd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_cd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_during") |>
+  mutate(predictors = "conduct_during",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_cd_sec_ra, "ML_Model/pdp_data/pdp_cd_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_cd_sec_ra_c, "ML_Model/pdp_data/pdp_cd_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### conduct_after
+pdp_model_ca_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_ca_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_after") |>
+  mutate(predictors = "conduct_after",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_ca_sec_ra, "ML_Model/pdp_data/pdp_ca_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ca_sec_ra_c, "ML_Model/pdp_data/pdp_ca_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### ox_before
+pdp_model_ob_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_ob_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_before") |>
+  mutate(predictors = "ox_before",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_ob_sec_ra, "ML_Model/pdp_data/pdp_ob_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ob_sec_ra_c, "ML_Model/pdp_data/pdp_ob_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### ox_during
+pdp_model_od_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_od_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_during") |>
+  mutate(predictors = "ox_during",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_od_sec_ra, "ML_Model/pdp_data/pdp_od_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_od_sec_ra_c, "ML_Model/pdp_data/pdp_od_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### ox_after
+pdp_model_oa_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_oa_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_after") |>
+  mutate(predictors = "ox_after",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_oa_sec_ra, "ML_Model/pdp_data/pdp_oa_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_oa_sec_ra_c, "ML_Model/pdp_data/pdp_oa_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### turb_before
+pdp_model_tb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_tb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_before") |>
+  mutate(predictors = "turb_before",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_tb_sec_ra, "ML_Model/pdp_data/pdp_tb_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tb_sec_ra_c, "ML_Model/pdp_data/pdp_tb_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### turb_during
+pdp_model_td_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_td_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_during") |>
+  mutate(predictors = "turb_during",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_td_sec_ra, "ML_Model/pdp_data/pdp_td_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_td_sec_ra_c, "ML_Model/pdp_data/pdp_td_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### turb_after
+pdp_model_ta_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_ta_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_after") |>
+  mutate(predictors = "turb_after",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_ta_sec_ra, "ML_Model/pdp_data/pdp_ta_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ta_sec_ra_c, "ML_Model/pdp_data/pdp_ta_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### temp_before
+pdp_model_teb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_teb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_before") |>
+  mutate(predictors = "temp_before",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_teb_sec_ra, "ML_Model/pdp_data/pdp_teb_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_teb_sec_ra_c, "ML_Model/pdp_data/pdp_teb_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### temp_during
+pdp_model_ted_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_ted_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_during") |>
+  mutate(predictors = "temp_during",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_ted_sec_ra, "ML_Model/pdp_data/pdp_ted_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ted_sec_ra_c, "ML_Model/pdp_data/pdp_ted_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### temp_after
+pdp_model_tea_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_tea_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_after") |>
+  mutate(predictors = "temp_after",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_tea_sec_ra, "ML_Model/pdp_data/pdp_tea_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_tea_sec_ra_c, "ML_Model/pdp_data/pdp_tea_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### q_before
+pdp_model_qb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_qb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_before") |>
+  mutate(predictors = "q_before",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_qb_sec_ra, "ML_Model/pdp_data/pdp_qb_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qb_sec_ra_c, "ML_Model/pdp_data/pdp_qb_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### q_during
+pdp_model_qd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_qd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_during") |>
+  mutate(predictors = "q_during",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_qd_sec_ra, "ML_Model/pdp_data/pdp_qd_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qd_sec_ra_c, "ML_Model/pdp_data/pdp_qd_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### q_after
+pdp_model_qa_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_qa_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_after") |>
+  mutate(predictors = "q_after",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_qa_sec_ra, "ML_Model/pdp_data/pdp_qa_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_qa_sec_ra_c, "ML_Model/pdp_data/pdp_qa_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### gaug_before
+pdp_model_gb_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_gb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_before") |>
+  mutate(predictors = "gaug_before",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_gb_sec_ra, "ML_Model/pdp_data/pdp_gb_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gb_sec_ra_c, "ML_Model/pdp_data/pdp_gb_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### gaug_during
+pdp_model_gd_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_gd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_during") |>
+  mutate(predictors = "gaug_during",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_gd_sec_ra, "ML_Model/pdp_data/pdp_gd_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_gd_sec_ra_c, "ML_Model/pdp_data/pdp_gd_sec_ra_c_rf_add.csv", row.names = FALSE)
+
+### gaug_after
+pdp_model_ga_sec_ra <- pdp::partial(rf_model_sec_ra, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/ coordinates",
+         index = "rel_abundance")
+pdp_model_ga_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_after") |>
+  mutate(predictors = "gaug_after",
+         model = "all predictors w/o coordinates",
+         index = "rel_abundance")
+
+# export data 
+write.csv(pdp_model_ga_sec_ra, "ML_Model/pdp_data/pdp_ga_sec_ra_rf_add.csv", row.names = FALSE)
+write.csv(pdp_model_ga_sec_ra_c, "ML_Model/pdp_data/pdp_ga_sec_ra_c_rf_add.csv", row.names = FALSE)
+```
 
 ## Obs and Pred
 ```{r}
