@@ -1,4 +1,4 @@
 "cpom_cover","yhat","predictors","model","index"
-1,740.852975633722,"cpom_cover","sampling w/o coordinates","abundance"
-2,1670.57360486631,"cpom_cover","sampling w/o coordinates","abundance"
-3,1670.58428686636,"cpom_cover","sampling w/o coordinates","abundance"
+1,740.852975633722,"cpom_cover","all predictors w/o coordinates","abundance"
+2,1670.57360486631,"cpom_cover","all predictors w/o coordinates","abundance"
+3,1670.58428686636,"cpom_cover","all predictors w/o coordinates","abundance"
