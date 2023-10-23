@@ -4816,170 +4816,156 @@ Ersetze Raster durch Raster vom MZB Sampling Tag
 ```{r}
 # read rasters containing wd and velocity 
 GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg.grd")
-GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+#GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
 
 GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg.grd")
-GL2_q <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+#GL2_q <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
 
 L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg.grd")
-L2_q <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+#L2_q <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
 
 M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg.grd")
-M1_q <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
+#M1_q <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
 
 S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg.grd")
-S1_q <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
+#S1_q <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
 
 S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg.grd")
-S2_q <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
+#S2_q <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
 
 TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg.grd")
-TH4_q <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
+#TH4_q <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
 
 VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg.grd")
-VR3_q <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+#VR3_q <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
 
 # rename rasters in stacks for extraction 
 names(GL1_ezg) <- c("velocity", "wd_m")  
-names(GL1_q) <- c("velocity", "wd_m") 
+#names(GL1_q) <- c("velocity", "wd_m") 
 
 names(GL2_ezg) <- c("velocity", "wd_m") 
-names(GL2_q) <- c("velocity", "wd_m")
+#names(GL2_q) <- c("velocity", "wd_m")
 
 names(L2_ezg) <- c("velocity", "wd_m")
-names(L2_q) <- c("velocity", "wd_m")
+#names(L2_q) <- c("velocity", "wd_m")
 
 names(M1_ezg) <- c("velocity", "wd_m") 
-names(M1_q) <- c("velocity", "wd_m") 
+#names(M1_q) <- c("velocity", "wd_m") 
 
 names(S1_ezg) <- c("velocity", "wd_m")  
-names(S1_q) <- c("velocity", "wd_m")  
+#names(S1_q) <- c("velocity", "wd_m")  
 
 names(S2_ezg) <- c("velocity", "wd_m") 
-names(S2_q) <- c("velocity", "wd_m") 
+#names(S2_q) <- c("velocity", "wd_m") 
 
 names(TH4_ezg) <- c("velocity", "wd_m") 
-names(TH4_q) <- c("velocity", "wd_m") 
+#names(TH4_q) <- c("velocity", "wd_m") 
 
 names(VR3_ezg) <- c("velocity", "wd_m")
-names(VR3_q) <- c("velocity", "wd_m") 
+#names(VR3_q) <- c("velocity", "wd_m") 
 
 # assign coordinate system 
 crs(GL1_ezg) <- "EPSG: 2056"
-crs(GL1_q) <- "EPSG: 2056"
+#crs(GL1_q) <- "EPSG: 2056"
 
 crs(GL2_ezg) <- "EPSG: 2056"
-crs(GL2_q) <- "EPSG: 2056"
+#crs(GL2_q) <- "EPSG: 2056"
 
 crs(L2_ezg) <- "EPSG: 2056"
-crs(L2_q) <- "EPSG: 2056"
+#crs(L2_q) <- "EPSG: 2056"
 
 crs(M1_ezg) <- "EPSG: 2056"
-crs(M1_q) <- "EPSG: 2056"
+#crs(M1_q) <- "EPSG: 2056"
 
 crs(S1_ezg) <- "EPSG: 2056"
-crs(S1_q) <- "EPSG: 2056"
+#crs(S1_q) <- "EPSG: 2056"
 
 crs(S2_ezg) <- "EPSG: 2056"
-crs(S2_q) <- "EPSG: 2056"
+#crs(S2_q) <- "EPSG: 2056"
 
 crs(TH4_ezg) <- "EPSG: 2056"
-crs(TH4_q) <- "EPSG: 2056"
+#crs(TH4_q) <- "EPSG: 2056"
 
 crs(VR3_ezg) <- "EPSG: 2056"
-crs(VR3_q) <- "EPSG: 2056"
+#crs(VR3_q) <- "EPSG: 2056"
 ```
 
 ### Predict Models to Maps 
+#### Autotuner 
 ```{r}
 # predict ML model to rasters with velocity and wd 
-# GL1 - all indices with velocity and wd as predictors
+# GL1 - predictors: v + wd ----------------------------------------------------
 GL1_ezg_rf_wd_k <- terra::predict(GL1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-GL1_q_rf_wd_k <- terra::predict(GL1_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-
 GL1_ezg_rf_wd_s <- terra::predict(GL1_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-GL1_q_rf_wd_s <- terra::predict(GL1_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-
 GL1_ezg_rf_wd_a <- terra::predict(GL1_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-GL1_q_rf_wd_a <- terra::predict(GL1_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-
 GL1_ezg_rf_wd_ra <- terra::predict(GL1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
-GL1_q_rf_wd_ra <- terra::predict(GL1_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
 
-# GL1 - all indices with only velocity as predictor
+#GL1_q_rf_wd_k <- terra::predict(GL1_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
+#GL1_q_rf_wd_s <- terra::predict(GL1_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
+#GL1_q_rf_wd_a <- terra::predict(GL1_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
+#GL1_q_rf_wd_ra <- terra::predict(GL1_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+
+# GL1 - predictor: velocity ---------------------------------------------------
 GL1_ezg_rf_v_k <- terra::predict(GL1_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-GL1_q_rf_v_k <- terra::predict(GL1_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-
 GL1_ezg_rf_v_s <- terra::predict(GL1_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-GL1_q_rf_v_s <- terra::predict(GL1_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-
 GL1_ezg_rf_v_a <- terra::predict(GL1_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-GL1_q_rf_v_a <- terra::predict(GL1_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-
 GL1_ezg_rf_v_ra <- terra::predict(GL1_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
-GL1_q_rf_v_ra <- terra::predict(GL1_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
-```
 
+#GL1_q_rf_v_k <- terra::predict(GL1_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+#GL1_q_rf_v_s <- terra::predict(GL1_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+#GL1_q_rf_v_a <- terra::predict(GL1_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+#GL1_q_rf_v_ra <- terra::predict(GL1_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
 
-```{r}
-# GL2 - all indices with velocity and wd as predictors 
-GL2_ezg_rf_wd_k <- terra::predict(GL2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-GL2_q_rf_wd_k <- terra::predict(GL2_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
+# GL2 - predictors: v + wd ----------------------------------------------------
+GL2_ezg_wd_k <- terra::predict(GL2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
+GL2_ezg_wd_s <- terra::predict(GL2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
+GL2_ezg_wd_a <- terra::predict(GL2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
+GL2_ezg_wd_ra <- terra::predict(GL2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
 
-GL2_ezg_rf_wd_s <- terra::predict(GL2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-GL2_q_rf_wd_s <- terra::predict(GL2_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
+#GL2_q_wd_k <- terra::predict(GL2_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
+#GL2_q_wd_s <- terra::predict(GL2_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
+#GL2_q_wd_a <- terra::predict(GL2_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
+#GL2_q_wd_ra <- terra::predict(GL2_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
 
-GL2_ezg_rf_wd_a <- terra::predict(GL2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-GL2_q_rf_wd_a <- terra::predict(GL2_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
+# GL2 - predictor: velocity ---------------------------------------------------
+GL2_ezg_v_k <- terra::predict(GL2_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+GL2_ezg_v_s <- terra::predict(GL2_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+GL2_ezg_v_a <- terra::predict(GL2_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+GL2_ezg_v_ra <- terra::predict(GL2_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
 
-GL2_ezg_rf_wd_ra <- terra::predict(GL2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
-GL2_q_rf_wd_ra <- terra::predict(GL2_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+#GL2_q_v_k <- terra::predict(GL2_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+#GL2_q_v_s <- terra::predict(GL2_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+#GL2_q_v_a <- terra::predict(GL2_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+#GL2_q_v_ra <- terra::predict(GL2_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
 
-# GL2 - all indices with only velocity predictor
-GL2_ezg_rf_v_k <- terra::predict(GL2_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-GL2_q_rf_v_k <- terra::predict(GL2_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+# L2 - predictors: v + wd -----------------------------------------------------
+L2_ezg_wd_k <- terra::predict(L2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
+L2_ezg_wd_s <- terra::predict(L2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
+L2_ezg_wd_a <- terra::predict(L2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
+L2_ezg_wd_ra <- terra::predict(L2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
 
-GL2_ezg_rf_v_s <- terra::predict(GL2_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-GL2_q_rf_v_s <- terra::predict(GL2_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+#L2_q_wd_k <- terra::predict(L2_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
+#L2_q_wd_s <- terra::predict(L2_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
+#L2_q_wd_a <- terra::predict(L2_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
+#L2_q_wd_ra <- terra::predict(L2_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
 
-GL2_ezg_rf_v_a <- terra::predict(GL2_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-GL2_q_rf_v_a <- terra::predict(GL2_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+# L2 - predictor: velocity ----------------------------------------------------
+L2_ezg_v_k <- terra::predict(L2_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+L2_ezg_v_s <- terra::predict(L2_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+L2_ezg_v_a <- terra::predict(L2_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+L2_ezg_v_ra <- terra::predict(L2_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
 
-GL2_ezg_rf_v_ra <- terra::predict(GL2_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
-GL2_q_rf_v_ra <- terra::predict(GL2_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
-
-# L2 - all indices with velocity and wd as predictors 
-L2_ezg_rf_wd_k <- terra::predict(L2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-L2_q_rf_wd_k <- terra::predict(L2_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-
-L2_ezg_rf_wd_s <- terra::predict(L2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-L2_q_rf_wd_s <- terra::predict(L2_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-
-L2_ezg_rf_wd_a <- terra::predict(L2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-L2_q_rf_wd_a <- terra::predict(L2_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-
-L2_ezg_rf_wd_ra <- terra::predict(L2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
-L2_q_rf_wd_ra <- terra::predict(L2_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
-
-# L2 - all indices with only velocity as predictor
-L2_ezg_rf_v_k <- terra::predict(L2_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-L2_q_rf_v_k <- terra::predict(L2_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-
-L2_ezg_rf_v_s <- terra::predict(L2_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-L2_q_rf_v_s <- terra::predict(L2_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-
-L2_ezg_rf_v_a <- terra::predict(L2_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-L2_q_rf_v_a <- terra::predict(L2_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-
-L2_ezg_rf_v_ra <- terra::predict(L2_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
-L2_q_rf_v_ra <- terra::predict(L2_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+#L2_q_v_k <- terra::predict(L2_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
+#L2_q_v_s <- terra::predict(L2_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
+#L2_q_v_a <- terra::predict(L2_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+#L2_q_v_ra <- terra::predict(L2_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
 
 # M1  - all indices with velocity and wd as predictors 
-M1_ezg_rf_wd_k <- terra::predict(M1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-M1_q_rf_wd_k <- terra::predict(M1_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
+M1_ezg_wd_k <- terra::predict(M1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
+M1_q_wd_k <- terra::predict(M1_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
 
-M1_ezg_rf_wd_s <- terra::predict(M1_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
-M1_ezg_rf_wd_a <- terra::predict(M1_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
+M1_ezg_wd_s <- terra::predict(M1_samp, model = autotuner_rf_wd_s, fun = predict, index = 2)
+M1_ezg_wd_a <- terra::predict(M1_samp, model = autotuner_rf_wd_a, fun = predict, index = 2)
 
 # M1  - all indices with only velocity as predictor
 M1_ezg_rf_v_k <- terra::predict(M1_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
@@ -5025,6 +5011,11 @@ VR3_ezg_rf_wd_a <- terra::predict(VR3_samp, model = autotuner_rf_wd_a, fun = pre
 VR3_ezg_rf_v_k <- terra::predict(VR3_samp, model = autotuner_rf_v_k, fun = predict, index = "velocity")
 VR3_ezg_rf_v_s <- terra::predict(VR3_samp, model = autotuner_rf_v_s, fun = predict, index = "velocity")
 VR3_ezg_rf_v_a <- terra::predict(VR3_samp, model = autotuner_rf_v_a, fun = predict, index = "velocity")
+```
+
+#### Ranger w/coordinates
+```{r}
+
 ```
 
 ```{r}
