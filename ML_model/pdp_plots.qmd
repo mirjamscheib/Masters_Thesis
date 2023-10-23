@@ -2815,7 +2815,6 @@ ga_sec_ra_c_brt <- read.delim("ML_Model/pdp_data/pdp_ga_sec_ra_c_brt.csv")
 ```
 
 ## BRT added
-froude, shear_stress, stream_power
 ```{r}
 ### PREDICTOR: VELOCITY ### -------------------------------------------------
 # With k_index as response --------------------------------------------------
