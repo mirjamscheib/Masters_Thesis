@@ -1763,7 +1763,7 @@ pdp_model_y_wd_k <- pdp::partial(xgb_wd_k, pred.var = "y", train = trainx_wd_k[ 
 
 # export data 
 write.csv(pdp_model_x_wd_k, "ML_Model/pdp_data/pdp_x_wd_k_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_wd_k, "ML_Model/pdp_data/pdp_y_wd_k_c_brt.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_k, "ML_Model/pdp_data/pdp_y_wd_k_brt.csv", row.names = FALSE)
 
 # With shannon index as response ----------------------------------------------
 ### velocity 
