@@ -1199,7 +1199,7 @@ xgb_sec_a <- xgboost(data = data.matrix(trainx_sec_a[ ,-1]),
 # With rel_abundance as response 
 #         eta nrounds max_depth subsample 
 #1: 0.4186722     348         7 0.5187091                      
-xgb_sec_ra <- xgboost(data = data.matrix(trainx_sec_ra),
+xgb_sec_ra <- xgboost(data = data.matrix(trainx_sec_ra[ ,-1]),
                       label = as.numeric(as.character(training_sec_ra$rel_abundance)),
                      eta = 0.4186722,
                      max_depth = 7,
@@ -1383,7 +1383,7 @@ xgb_sec_a_c <- xgboost(data = data.matrix(trainx_sec_a_c[ ,-1]),
 # With rel_abundance as response 
 #         eta nrounds max_depth subsample 
 #1: 0.4186722     348         7 0.5187091                      
-xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c),
+xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
                       label = as.numeric(as.character(training_sec_ra_c$rel_abundance)),
                      eta = 0.4186722,
                      max_depth = 7,
