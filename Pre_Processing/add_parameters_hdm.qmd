@@ -1465,6 +1465,8 @@ writeRaster(VR3_52_90, "Pre_Processing/rasters_stacked/VR3_52_90_add.grd", overw
 
 # Build & save dataframes
 ```{r}
+data_section_new <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv")
+
 data_v_add <- data_v |> 
   mutate(froude = data_wd_f,
          shear_stress = data_wd_s,
@@ -1480,7 +1482,7 @@ data_sampling_add <- data_sampling |>
          shear_stress = data_wd_s,
          stream_power = data_wd_sp)
 
-data_section_add <- data_section |> 
+data_section_add <- data_section_new |> 
   mutate(froude = data_wd_f,
          shear_stress = data_wd_s,
          stream_power = data_wd_sp)
