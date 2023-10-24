@@ -5492,52 +5492,68 @@ write.csv(metric_results, "Stat_Analysis/ml_evaluation_metrics_rf_add.csv", row.
 ```{r}
 # read rasters containing wd and velocity 
 GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg_add.grd")
+GL1_v_ezg <- dropLayer(GL1_ezg, i = 2)
 #GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28_add.grd")
 
 GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg_add.grd")
+GL2_v_ezg <- dropLayer(GL2_ezg, i = 2)
 #GL2_q <- stack("Pre_Processing/rasters_stacked/GL2_3_21_add.grd")
 
 L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg_add.grd")
+L2_v_ezg <- dropLayer(L2_ezg, i = 2)
 #L2_q <- stack("Pre_Processing/rasters_stacked/L2_2_40_add.grd")
 
 M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg_add.grd")
+M1_v_ezg <- dropLayer(M1_ezg, i = 2)
 #M1_q <- stack("Pre_Processing/rasters_stacked/M1_0_47_add.grd")
 
 S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg_add.grd")
+S1_v_ezg <- dropLayer(S1_ezg, i = 2)
 #S1_q <- stack("Pre_Processing/rasters_stacked/S1_2_00_add.grd")
 
 S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg_add.grd")
+S2_v_ezg <- dropLayer(S2_ezg, i = 2)
 #S2_q <- stack("Pre_Processing/rasters_stacked/S2_2_00_add.grd")
 
 TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg_add.grd")
+TH4_v_ezg <- dropLayer(TH4_ezg, i = 2)
 #TH4_q <- stack("Pre_Processing/rasters_stacked/TH4_11_45_add.grd")
 
 VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg_add.grd")
+VR3_v_ezg <- dropLayer(VR3_ezg, i = 2)
 #VR3_q <- stack("Pre_Processing/rasters_stacked/VR3_2_90_add.grd")
 
 # rename rasters in stacks for extraction 
-names(GL1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")  
+names(GL1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(GL1_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(GL1_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
-names(GL2_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(GL2_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(GL2_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(GL2_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
 
 names(L2_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(L2_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(L2_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
 
 names(M1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(M1_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(M1_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
-names(S1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")  
+names(S1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(S1_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(S1_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")  
 
 names(S2_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(S2_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(S2_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
-names(TH4_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(TH4_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(TH4_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(TH4_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
 names(VR3_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(VR3_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
 #names(VR3_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
 # assign coordinate system 
@@ -5571,180 +5587,180 @@ crs(VR3_ezg) <- "EPSG: 2056"
 ```{r}
 # predict ML model to rasters with velocity and wd 
 # GL1 - predictors: v + wd ----------------------------------------------------
-GL1_ezg_wd_k <- terra::predict(GL1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-GL1_ezg_wd_s <- terra::predict(GL1_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-GL1_ezg_wd_a <- terra::predict(GL1_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-GL1_ezg_wd_ra <- terra::predict(GL1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+GL1_ezg_wd_k <- terra::predict(GL1_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+GL1_ezg_wd_s <- terra::predict(GL1_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+GL1_ezg_wd_a <- terra::predict(GL1_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+GL1_ezg_wd_ra <- terra::predict(GL1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#GL1_q_wd_k <- terra::predict(GL1_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#GL1_q_wd_s <- terra::predict(GL1_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#GL1_q_wd_a <- terra::predict(GL1_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#GL1_q_wd_ra <- terra::predict(GL1_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#GL1_q_wd_k <- terra::predict(GL1_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#GL1_q_wd_s <- terra::predict(GL1_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#GL1_q_wd_a <- terra::predict(GL1_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#GL1_q_wd_ra <- terra::predict(GL1_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # GL1 - predictor: velocity ---------------------------------------------------
-GL1_ezg_v_k <- terra::predict(GL1_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-GL1_ezg_v_s <- terra::predict(GL1_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-GL1_ezg_v_a <- terra::predict(GL1_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-GL1_ezg_v_ra <- terra::predict(GL1_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+GL1_ezg_v_k <- terra::predict(GL1_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+GL1_ezg_v_s <- terra::predict(GL1_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+GL1_ezg_v_a <- terra::predict(GL1_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+GL1_ezg_v_ra <- terra::predict(GL1_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#GL1_q_v_k <- terra::predict(GL1_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#GL1_q_v_s <- terra::predict(GL1_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#GL1_q_v_a <- terra::predict(GL1_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#GL1_q_v_ra <- terra::predict(GL1_q, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+#GL1_q_v_k <- terra::predict(GL1_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#GL1_q_v_s <- terra::predict(GL1_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#GL1_q_v_a <- terra::predict(GL1_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#GL1_q_v_ra <- terra::predict(GL1_v_q, model = autotuner_rf_v_ra, fun = predict, index c(1:4))
 
 # GL2 - predictors: v + wd ----------------------------------------------------
-GL2_ezg_wd_k <- terra::predict(GL2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-GL2_ezg_wd_s <- terra::predict(GL2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-GL2_ezg_wd_a <- terra::predict(GL2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-GL2_ezg_wd_ra <- terra::predict(GL2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+GL2_ezg_wd_k <- terra::predict(GL2_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+GL2_ezg_wd_s <- terra::predict(GL2_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+GL2_ezg_wd_a <- terra::predict(GL2_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+GL2_ezg_wd_ra <- terra::predict(GL2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#GL2_q_wd_k <- terra::predict(GL2_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#GL2_q_wd_s <- terra::predict(GL2_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#GL2_q_wd_a <- terra::predict(GL2_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#GL2_q_wd_ra <- terra::predict(GL2_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#GL2_q_wd_k <- terra::predict(GL2_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#GL2_q_wd_s <- terra::predict(GL2_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#GL2_q_wd_a <- terra::predict(GL2_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#GL2_q_wd_ra <- terra::predict(GL2_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # GL2 - predictor: velocity ---------------------------------------------------
-GL2_ezg_v_k <- terra::predict(GL2_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-GL2_ezg_v_s <- terra::predict(GL2_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-GL2_ezg_v_a <- terra::predict(GL2_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-GL2_ezg_v_ra <- terra::predict(GL2_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+GL2_ezg_v_k <- terra::predict(GL2_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+GL2_ezg_v_s <- terra::predict(GL2_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+GL2_ezg_v_a <- terra::predict(GL2_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+GL2_ezg_v_ra <- terra::predict(GL2_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#GL2_q_v_k <- terra::predict(GL2_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#GL2_q_v_s <- terra::predict(GL2_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#GL2_q_v_a <- terra::predict(GL2_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#GL2_q_v_ra <- terra::predict(GL2_q, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+#GL2_q_v_k <- terra::predict(GL2_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#GL2_q_v_s <- terra::predict(GL2_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#GL2_q_v_a <- terra::predict(GL2_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#GL2_q_v_ra <- terra::predict(GL2_v_q, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
 # L2 - predictors: v + wd -----------------------------------------------------
-L2_ezg_wd_k <- terra::predict(L2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-L2_ezg_wd_s <- terra::predict(L2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-L2_ezg_wd_a <- terra::predict(L2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-L2_ezg_wd_ra <- terra::predict(L2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+L2_ezg_wd_k <- terra::predict(L2_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+L2_ezg_wd_s <- terra::predict(L2_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+L2_ezg_wd_a <- terra::predict(L2_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+L2_ezg_wd_ra <- terra::predict(L2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#L2_q_wd_k <- terra::predict(L2_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#L2_q_wd_s <- terra::predict(L2_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#L2_q_wd_a <- terra::predict(L2_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#L2_q_wd_ra <- terra::predict(L2_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#L2_q_wd_k <- terra::predict(L2_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#L2_q_wd_s <- terra::predict(L2_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#L2_q_wd_a <- terra::predict(L2_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#L2_q_wd_ra <- terra::predict(L2_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # L2 - predictor: velocity ----------------------------------------------------
-L2_ezg_v_k <- terra::predict(L2_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-L2_ezg_v_s <- terra::predict(L2_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-L2_ezg_v_a <- terra::predict(L2_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-L2_ezg_v_ra <- terra::predict(L2_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+L2_ezg_v_k <- terra::predict(L2_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+L2_ezg_v_s <- terra::predict(L2_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+L2_ezg_v_a <- terra::predict(L2_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+L2_ezg_v_ra <- terra::predict(L2_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#L2_q_v_k <- terra::predict(L2_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#L2_q_v_s <- terra::predict(L2_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#L2_q_v_a <- terra::predict(L2_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#L2_q_v_ra <- terra::predict(L2_q, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+#L2_q_v_k <- terra::predict(L2_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#L2_q_v_s <- terra::predict(L2_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#L2_q_v_a <- terra::predict(L2_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#L2_q_v_ra <- terra::predict(L2_v_q, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
 # M1  - predictors: v + wd -----------------------------------------------------
-M1_ezg_wd_k <- terra::predict(M1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-M1_ezg_wd_s <- terra::predict(M1_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-M1_ezg_wd_a <- terra::predict(M1_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-M1_ezg_wd_ra <- terra::predict(M1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+M1_ezg_wd_k <- terra::predict(M1_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+M1_ezg_wd_s <- terra::predict(M1_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+M1_ezg_wd_a <- terra::predict(M1_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+M1_ezg_wd_ra <- terra::predict(M1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#M1_q_wd_k <- terra::predict(M1_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#M1_q_wd_s <- terra::predict(M1_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#M1_q_wd_a <- terra::predict(M1_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#M1_q_wd_ra <- terra::predict(M1_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#M1_q_wd_k <- terra::predict(M1_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#M1_q_wd_s <- terra::predict(M1_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#M1_q_wd_a <- terra::predict(M1_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#M1_q_wd_ra <- terra::predict(M1_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # M1  - predictor: velocity ---------------------------------------------------
-M1_ezg_v_k <- terra::predict(M1_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-M1_ezg_v_s <- terra::predict(M1_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-M1_ezg_v_a <- terra::predict(M1_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-M1_ezg_v_ra <- terra::predict(M1_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+M1_ezg_v_k <- terra::predict(M1_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+M1_ezg_v_s <- terra::predict(M1_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+M1_ezg_v_a <- terra::predict(M1_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+M1_ezg_v_ra <- terra::predict(M1_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#M1_q_v_k <- terra::predict(M1_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#M1_q_v_s <- terra::predict(M1_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#M1_q_v_a <- terra::predict(M1_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#M1_q_v_ra <- terra::predict(M1_q, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+#M1_q_v_k <- terra::predict(M1_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#M1_q_v_s <- terra::predict(M1_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#M1_q_v_a <- terra::predict(M1_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#M1_q_v_ra <- terra::predict(M1_v_q, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
 # S1  - predictors: v + wd ----------------------------------------------------
-S1_ezg_wd_k <- terra::predict(S1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-S1_ezg_wd_s <- terra::predict(S1_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-S1_ezg_wd_a <- terra::predict(S1_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-S1_ezg_wd_ra <- terra::predict(S1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+S1_ezg_wd_k <- terra::predict(S1_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+S1_ezg_wd_s <- terra::predict(S1_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+S1_ezg_wd_a <- terra::predict(S1_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+S1_ezg_wd_ra <- terra::predict(S1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#S1_q_wd_k <- terra::predict(S1_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#S1_q_wd_s <- terra::predict(S1_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#S1_q_wd_a <- terra::predict(S1_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#S1_q_wd_ra <- terra::predict(S1_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#S1_q_wd_k <- terra::predict(S1_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#S1_q_wd_s <- terra::predict(S1_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#S1_q_wd_a <- terra::predict(S1_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#S1_q_wd_ra <- terra::predict(S1_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # S1  - predictor: velocity ---------------------------------------------------
-S1_ezg_v_k <- terra::predict(S1_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-S1_ezg_v_s <- terra::predict(S1_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-S1_ezg_v_a <- terra::predict(S1_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-S1_ezg_v_ra <- terra::predict(S1_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+S1_ezg_v_k <- terra::predict(S1_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+S1_ezg_v_s <- terra::predict(S1_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+S1_ezg_v_a <- terra::predict(S1_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+S1_ezg_v_ra <- terra::predict(S1_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#S1_q_v_k <- terra::predict(S1_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#S1_q_v_s <- terra::predict(S1_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#S1_q_v_a <- terra::predict(S1_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#S1_q_v_ra <- terra::predict(S1_q, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+#S1_q_v_k <- terra::predict(S1_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#S1_q_v_s <- terra::predict(S1_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#S1_q_v_a <- terra::predict(S1_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#S1_q_v_ra <- terra::predict(S1_v_q, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
 # S2  - predictors: v + wd ----------------------------------------------------
-S2_ezg_wd_k <- terra::predict(S2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-S2_ezg_wd_s <- terra::predict(S2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-S2_ezg_wd_a <- terra::predict(S2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-S2_ezg_wd_ra <- terra::predict(S2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+S2_ezg_wd_k <- terra::predict(S2_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+S2_ezg_wd_s <- terra::predict(S2_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+S2_ezg_wd_a <- terra::predict(S2_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+S2_ezg_wd_ra <- terra::predict(S2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#S2_q_wd_k <- terra::predict(S2_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#S2_q_wd_s <- terra::predict(S2_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#S2_q_wd_a <- terra::predict(S2_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#S2_q_wd_ra <- terra::predict(S2_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#S2_q_wd_k <- terra::predict(S2_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#S2_q_wd_s <- terra::predict(S2_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#S2_q_wd_a <- terra::predict(S2_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#S2_q_wd_ra <- terra::predict(S2_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # S2  - predictor: velocity ---------------------------------------------------
-S2_ezg_v_k <- terra::predict(S2_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-S2_ezg_v_s <- terra::predict(S2_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-S2_ezg_v_a <- terra::predict(S2_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-S2_ezg_v_ra <- terra::predict(S2_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+S2_ezg_v_k <- terra::predict(S2_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+S2_ezg_v_s <- terra::predict(S2_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+S2_ezg_v_a <- terra::predict(S2_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+S2_ezg_v_ra <- terra::predict(S2_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#S2_q_v_k <- terra::predict(S2_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#S2_q_v_s <- terra::predict(S2_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#S2_q_v_a <- terra::predict(S2_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#S2_q_v_ra <- terra::predict(S2_q, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+#S2_q_v_k <- terra::predict(S2_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#S2_q_v_s <- terra::predict(S2_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#S2_q_v_a <- terra::predict(S2_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#S2_q_v_ra <- terra::predict(S2_v_q, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
 # TH4  - predictors: v + wd ---------------------------------------------------
-TH4_ezg_wd_k <- terra::predict(TH4_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-TH4_ezg_wd_s <- terra::predict(TH4_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-TH4_ezg_wd_a <- terra::predict(TH4_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-TH4_ezg_wd_ra <- terra::predict(TH4_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+TH4_ezg_wd_k <- terra::predict(TH4_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+TH4_ezg_wd_s <- terra::predict(TH4_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+TH4_ezg_wd_a <- terra::predict(TH4_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+TH4_ezg_wd_ra <- terra::predict(TH4_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#TH4_q_wd_k <- terra::predict(TH4_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#TH4_q_wd_s <- terra::predict(TH4_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#TH4_q_wd_a <- terra::predict(TH4_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#TH4_q_wd_ra <- terra::predict(TH4_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#TH4_q_wd_k <- terra::predict(TH4_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#TH4_q_wd_s <- terra::predict(TH4_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#TH4_q_wd_a <- terra::predict(TH4_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#TH4_q_wd_ra <- terra::predict(TH4_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # TH4  - predictor: velocity --------------------------------------------------
-TH4_ezg_v_k <- terra::predict(TH4_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-TH4_ezg_v_s <- terra::predict(TH4_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-TH4_ezg_v_a <- terra::predict(TH4_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-TH4_ezg_v_ra <- terra::predict(TH4_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+TH4_ezg_v_k <- terra::predict(TH4_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+TH4_ezg_v_s <- terra::predict(TH4_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+TH4_ezg_v_a <- terra::predict(TH4_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+TH4_ezg_v_ra <- terra::predict(TH4_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#TH4_q_v_k <- terra::predict(TH4_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#TH4_q_v_s <- terra::predict(TH4_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#TH4_q_v_a <- terra::predict(TH4_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#TH4_q_v_ra <- terra::predict(TH4_q, model = autotuner_rf_v_ra, fun = predict, index = "c("velocity", "froude", "shear_stress", "stream_power"))
+#TH4_q_v_k <- terra::predict(TH4_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#TH4_q_v_s <- terra::predict(TH4_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#TH4_q_v_a <- terra::predict(TH4_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#TH4_q_v_ra <- terra::predict(TH4_v_q, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
 # VR3  - predictors: v + wd ---------------------------------------------------
-VR3_ezg_wd_k <- terra::predict(VR3_ezg, model = autotuner_rf_wd_k, fun = predict, index = 5)
-VR3_ezg_wd_s <- terra::predict(VR3_ezg, model = autotuner_rf_wd_s, fun = predict, index = 5)
-VR3_ezg_wd_a <- terra::predict(VR3_ezg, model = autotuner_rf_wd_a, fun = predict, index = 5)
-VR3_ezg_wd_ra <- terra::predict(VR3_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+VR3_ezg_wd_k <- terra::predict(VR3_ezg, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+VR3_ezg_wd_s <- terra::predict(VR3_ezg, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+VR3_ezg_wd_a <- terra::predict(VR3_ezg, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+VR3_ezg_wd_ra <- terra::predict(VR3_ezg, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
-#VR3_q_wd_k <- terra::predict(VR3_q, model = autotuner_rf_wd_k, fun = predict, index = 5)
-#VR3_q_wd_s <- terra::predict(VR3_q, model = autotuner_rf_wd_s, fun = predict, index = 5)
-#VR3_q_wd_a <- terra::predict(VR3_q, model = autotuner_rf_wd_a, fun = predict, index = 5)
-#VR3_q_wd_ra <- terra::predict(VR3_q, model = autotuner_rf_wd_ra, fun = predict, index = 5)
+#VR3_q_wd_k <- terra::predict(VR3_q, model = autotuner_rf_wd_k, fun = predict, index = c(1:5))
+#VR3_q_wd_s <- terra::predict(VR3_q, model = autotuner_rf_wd_s, fun = predict, index = c(1:5))
+#VR3_q_wd_a <- terra::predict(VR3_q, model = autotuner_rf_wd_a, fun = predict, index = c(1:5))
+#VR3_q_wd_ra <- terra::predict(VR3_q, model = autotuner_rf_wd_ra, fun = predict, index = c(1:5))
 
 # VR3  - predictor: velocity --------------------------------------------------
-VR3_ezg_v_k <- terra::predict(VR3_ezg, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-VR3_ezg_v_s <- terra::predict(VR3_ezg, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-VR3_ezg_v_a <- terra::predict(VR3_ezg, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-VR3_ezg_v_ra <- terra::predict(VR3_ezg, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+VR3_ezg_v_k <- terra::predict(VR3_v_ezg, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+VR3_ezg_v_s <- terra::predict(VR3_v_ezg, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+VR3_ezg_v_a <- terra::predict(VR3_v_ezg, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+VR3_ezg_v_ra <- terra::predict(VR3_v_ezg, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 
-#VR3_q_v_k <- terra::predict(VR3_q, model = autotuner_rf_v_k, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#VR3_q_v_s <- terra::predict(VR3_q, model = autotuner_rf_v_s, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#VR3_q_v_a <- terra::predict(VR3_q, model = autotuner_rf_v_a, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
-#VR3_q_v_ra <- terra::predict(VR3_q, model = autotuner_rf_v_ra, fun = predict, index = c("velocity", "froude", "shear_stress", "stream_power"))
+#VR3_q_v_k <- terra::predict(VR3_v_q, model = autotuner_rf_v_k, fun = predict, index = c(1:4))
+#VR3_q_v_s <- terra::predict(VR3_v_q, model = autotuner_rf_v_s, fun = predict, index = c(1:4))
+#VR3_q_v_a <- terra::predict(VR3_v_q, model = autotuner_rf_v_a, fun = predict, index = c(1:4))
+#VR3_q_v_ra <- terra::predict(VR3_v_q, model = autotuner_rf_v_ra, fun = predict, index = c(1:4))
 ```
 
 ### Ranger w/o coordinates
@@ -5768,21 +5784,21 @@ GL1_ezg_m2_wd_ra <- raster::predict(GL1_ezg, rf_model_wd_ra_c, type='response', 
 #GL1_q_m2_wd_ra <- raster::predict(GL1_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # GL1 - predictor: velocity ---------------------------------------------------
-GL1_ezg_m2_v_k <- raster::predict(GL1_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL1_ezg_m2_v_k <- raster::predict(GL1_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL1_ezg_m2_v_s <- raster::predict(GL1_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL1_ezg_m2_v_s <- raster::predict(GL1_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL1_ezg_m2_v_a <- raster::predict(GL1_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL1_ezg_m2_v_a <- raster::predict(GL1_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL1_ezg_m2_v_ra <- raster::predict(GL1_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL1_ezg_m2_v_ra <- raster::predict(GL1_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL1_q_m2_v_k <- raster::predict(GL1_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL1_q_m2_v_k <- raster::predict(GL1_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL1_q_m2_v_s <- raster::predict(GL1_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL1_q_m2_v_s <- raster::predict(GL1_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL1_q_m2_v_a <- raster::predict(GL1_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL1_q_m2_v_a <- raster::predict(GL1_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL1_q_m2_v_ra <- raster::predict(GL1_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL1_q_m2_v_ra <- raster::predict(GL1_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # GL2 - predictors: v + wd ----------------------------------------------------
 GL2_ezg_m2_wd_k <- raster::predict(GL2_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -5802,21 +5818,21 @@ GL2_ezg_m2_wd_ra <- raster::predict(GL2_ezg, rf_model_wd_ra_c, type='response', 
 #GL2_q_m2_wd_ra <- raster::predict(GL2_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # GL2 - predictor: velocity ---------------------------------------------------
-GL2_ezg_m2_v_k <- raster::predict(GL2_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL2_ezg_m2_v_k <- raster::predict(GL2_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL2_ezg_m2_v_s <- raster::predict(GL2_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL2_ezg_m2_v_s <- raster::predict(GL2_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL2_ezg_m2_v_a <- raster::predict(GL2_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL2_ezg_m2_v_a <- raster::predict(GL2_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL2_ezg_m2_v_ra <- raster::predict(GL2_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL2_ezg_m2_v_ra <- raster::predict(GL2_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL2_q_m2_v_k <- raster::predict(GL2_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL2_q_m2_v_k <- raster::predict(GL2_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL2_q_m2_v_s <- raster::predict(GL2_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL2_q_m2_v_s <- raster::predict(GL2_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL2_q_m2_v_a <- raster::predict(GL2_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL2_q_m2_v_a <- raster::predict(GL2_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL2_q_m2_v_ra <- raster::predict(GL2_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#GL2_q_m2_v_ra <- raster::predict(GL2_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # L2 - predictors: v + wd -----------------------------------------------------
 L2_ezg_m2_wd_k <- raster::predict(L2_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -5837,22 +5853,22 @@ L2_ezg_m2_wd_ra <- raster::predict(L2_ezg, rf_model_wd_ra_c, type='response', pr
 #L2_q_m2_wd_ra <- raster::predict(L2_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # L2 - predictor: velocity ----------------------------------------------------
-L2_ezg_m2_v_k <- raster::predict(L2_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+L2_ezg_m2_v_k <- raster::predict(L2_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-L2_ezg_m2_v_s <- raster::predict(L2_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+L2_ezg_m2_v_s <- raster::predict(L2_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-L2_ezg_m2_v_a <- raster::predict(L2_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+L2_ezg_m2_v_a <- raster::predict(L2_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-L2_ezg_m2_v_ra <- raster::predict(L2_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+L2_ezg_m2_v_ra <- raster::predict(L2_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 
-#L2_q_m2_v_k <- raster::predict(L2_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#L2_q_m2_v_k <- raster::predict(L2_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#L2_q_m2_v_s <- raster::predict(L2_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#L2_q_m2_v_s <- raster::predict(L2_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#L2_q_m2_v_a <- raster::predict(L2_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#L2_q_m2_v_a <- raster::predict(L2_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#L2_q_m2_v_ra <- raster::predict(L2_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#L2_q_m2_v_ra <- raster::predict(L2_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # M1  - predictors: v + wd -----------------------------------------------------
 M1_ezg_m2_wd_k <- raster::predict(M1_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -5872,22 +5888,22 @@ M1_ezg_m2_wd_ra <- raster::predict(M1_ezg, rf_model_wd_ra_c, type='response', pr
 #M1_q_m2_wd_ra <- raster::predict(M1_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # M1  - predictor: velocity ---------------------------------------------------
-M1_ezg_m2_v_k <- raster::predict(M1_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+M1_ezg_m2_v_k <- raster::predict(M1_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-M1_ezg_m2_v_s <- raster::predict(M1_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+M1_ezg_m2_v_s <- raster::predict(M1_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-M1_ezg_m2_v_a <- raster::predict(M1_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+M1_ezg_m2_v_a <- raster::predict(M1_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-M1_ezg_m2_v_ra <- raster::predict(M1_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+M1_ezg_m2_v_ra <- raster::predict(M1_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 
-#M1_q_m2_v_k <- raster::predict(M1_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#M1_q_m2_v_k <- raster::predict(M1_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#M1_q_m2_v_s <- raster::predict(M1_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#M1_q_m2_v_s <- raster::predict(M1_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#M1_q_m2_v_a <- raster::predict(M1_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#M1_q_m2_v_a <- raster::predict(M1_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#M1_q_m2_v_ra <- raster::predict(M1_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#M1_q_m2_v_ra <- raster::predict(M1_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S1  - predictors: v + wd ----------------------------------------------------
 S1_ezg_m2_wd_k <- raster::predict(S1_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -5907,21 +5923,21 @@ S1_ezg_m2_wd_ra <- raster::predict(S1_ezg, rf_model_wd_ra_c, type='response', pr
 #S1_q_m2_wd_ra <- raster::predict(S1_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S1  - predictor: velocity ---------------------------------------------------
-S1_ezg_m2_v_k <- raster::predict(S1_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S1_ezg_m2_v_k <- raster::predict(S1_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S1_ezg_m2_v_s <- raster::predict(S1_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S1_ezg_m2_v_s <- raster::predict(S1_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S1_ezg_m2_v_a <- raster::predict(S1_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S1_ezg_m2_v_a <- raster::predict(S1_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S1_ezg_m2_v_ra <- raster::predict(S1_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S1_ezg_m2_v_ra <- raster::predict(S1_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S1_q_m2_v_k <- raster::predict(S1_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S1_q_m2_v_k <- raster::predict(S1_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S1_q_m2_v_s <- raster::predict(S1_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S1_q_m2_v_s <- raster::predict(S1_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S1_q_m2_v_a <- raster::predict(S1_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S1_q_m2_v_a <- raster::predict(S1_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S1_q_m2_v_ra <- raster::predict(S1_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S1_q_m2_v_ra <- raster::predict(S1_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S2  - predictors: v + wd ----------------------------------------------------
 S2_ezg_m2_wd_k <- raster::predict(S2_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -5941,21 +5957,21 @@ S2_ezg_m2_wd_ra <- raster::predict(S2_ezg, rf_model_wd_ra_c, type='response', pr
 #S2_q_m2_wd_ra <- raster::predict(S2_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S2  - predictor: velocity ---------------------------------------------------
-S2_ezg_m2_v_k <- raster::predict(S2_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S2_ezg_m2_v_k <- raster::predict(S2_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S2_ezg_m2_v_s <- raster::predict(S2_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S2_ezg_m2_v_s <- raster::predict(S2_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S2_ezg_m2_v_a <- raster::predict(S2_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S2_ezg_m2_v_a <- raster::predict(S2_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S2_ezg_m2_v_ra <- raster::predict(S2_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+S2_ezg_m2_v_ra <- raster::predict(S2_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S2_q_m2_v_k <- raster::predict(S2_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S2_q_m2_v_k <- raster::predict(S2_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S2_q_m2_v_s <- raster::predict(S2_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S2_q_m2_v_s <- raster::predict(S2_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S2_q_m2_v_a <- raster::predict(S2_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S2_q_m2_v_a <- raster::predict(S2_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S2_q_m2_v_ra <- raster::predict(S2_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#S2_q_m2_v_ra <- raster::predict(S2_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # TH4  - predictors: v + wd ---------------------------------------------------
 TH4_ezg_m2_wd_k <- raster::predict(TH4_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -5975,21 +5991,21 @@ TH4_ezg_m2_wd_ra <- raster::predict(TH4_ezg, rf_model_wd_ra_c, type='response', 
 #TH4_q_m2_wd_ra <- raster::predict(TH4_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # TH4  - predictor: velocity --------------------------------------------------
-TH4_ezg_m2_v_k <- raster::predict(TH4_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+TH4_ezg_m2_v_k <- raster::predict(TH4_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-TH4_ezg_m2_v_s <- raster::predict(TH4_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+TH4_ezg_m2_v_s <- raster::predict(TH4_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-TH4_ezg_m2_v_a <- raster::predict(TH4_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+TH4_ezg_m2_v_a <- raster::predict(TH4_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-TH4_ezg_m2_v_ra <- raster::predict(TH4_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+TH4_ezg_m2_v_ra <- raster::predict(TH4_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#TH4_q_m2_v_k <- raster::predict(TH4_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#TH4_q_m2_v_k <- raster::predict(TH4_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#TH4_q_m2_v_s <- raster::predict(TH4_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#TH4_q_m2_v_s <- raster::predict(TH4_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#TH4_q_m2_v_a <- raster::predict(TH4_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#TH4_q_m2_v_a <- raster::predict(TH4_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#TH4_q_m2_v_ra <- raster::predict(TH4_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#TH4_q_m2_v_ra <- raster::predict(TH4_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # VR3  - predictors: v + wd ---------------------------------------------------
 VR3_ezg_m2_wd_k <- raster::predict(VR3_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -6009,21 +6025,21 @@ VR3_ezg_m2_wd_ra <- raster::predict(VR3_ezg, rf_model_wd_ra_c, type='response', 
 #VR3_q_m2_wd_ra <- raster::predict(VR3_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # VR3  - predictor: velocity --------------------------------------------------
-VR3_ezg_m2_v_k <- raster::predict(VR3_ezg, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+VR3_ezg_m2_v_k <- raster::predict(VR3_v_ezg, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-VR3_ezg_m2_v_s <- raster::predict(VR3_ezg, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+VR3_ezg_m2_v_s <- raster::predict(VR3_v_ezg, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-VR3_ezg_m2_v_a <- raster::predict(VR3_ezg, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+VR3_ezg_m2_v_a <- raster::predict(VR3_v_ezg, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-VR3_ezg_m2_v_ra <- raster::predict(VR3_ezg, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+VR3_ezg_m2_v_ra <- raster::predict(VR3_v_ezg, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#VR3_q_m2_v_k <- raster::predict(VR3_q, rf_model_v_k_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#VR3_q_m2_v_k <- raster::predict(VR3_v_q, rf_model_v_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#VR3_q_m2_v_s <- raster::predict(VR3_q, rf_model_v_s_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#VR3_q_m2_v_s <- raster::predict(VR3_v_q, rf_model_v_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#VR3_q_m2_v_a <- raster::predict(VR3_q, rf_model_v_a_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#VR3_q_m2_v_a <- raster::predict(VR3_v_q, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#VR3_q_m2_v_ra <- raster::predict(VR3_q, rf_model_v_ra_c, index = c("velocity", "froude", "shear_stress", "stream_power"), type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+#VR3_q_m2_v_ra <- raster::predict(VR3_v_q, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 ```
 
 ### Read data

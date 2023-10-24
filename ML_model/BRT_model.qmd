@@ -5619,7 +5619,7 @@ regr_VR3_v_a <- raster::extract(VR3_ezg_v_a, coord_VR3)
 regr_VR3_v_ra <- raster::extract(VR3_ezg_v_ra, coord_VR3)
 ```
 
-### Ranger w/o coordinates 
+### Xgboost w/o coordinates 
 ```{r}
 # extract raster information for regression analysis later
 # GL1 -------------------------------------------------------------------------
