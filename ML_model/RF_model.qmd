@@ -4811,8 +4811,7 @@ write.csv(metric_results, "Stat_Analysis/ml_evaluation_metrics_rf.csv", row.name
 ```
  
 # Extract 
-### Predict to maps ML models - here RF
-Ersetze Raster durch Raster vom MZB Sampling Tag 
+## Read rasters
 ```{r}
 # read rasters containing wd and velocity 
 GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg.grd")
@@ -4890,8 +4889,8 @@ crs(VR3_ezg) <- "EPSG: 2056"
 #crs(VR3_q) <- "EPSG: 2056"
 ```
 
-### Predict Models to Maps 
-#### Autotuner 
+## Predict Models to Maps 
+### Autotuner 
 ```{r}
 # predict ML model to rasters with velocity and wd 
 # GL1 - predictors: v + wd ----------------------------------------------------
@@ -5071,186 +5070,286 @@ VR3_ezg_v_ra <- terra::predict(VR3_ezg, model = autotuner_rf_v_ra, fun = predict
 #VR3_q_v_ra <- terra::predict(VR3_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
 ```
 
-#### Ranger w/coordinates
+### Ranger w/o coordinates
 ```{r}
 # predict ML model to rasters with velocity and wd 
 # GL1 - predictors: v + wd ----------------------------------------------------
-GL1_ezg_m1_wd_k <- terra::predict(GL1_ezg, model = rf_model_wd_k, fun = predict, index = 2)
-GL1_ezg_m1_wd_s <- terra::predict(GL1_ezg, model = rf_model_wd_s, fun = predict, index = 2)
-GL1_ezg_m1_wd_a <- terra::predict(GL1_ezg, model = rf_model_wd_a, fun = predict, index = 2)
-GL1_ezg_m1_wd_ra <- terra::predict(GL1_ezg, model = rf_model_wd_ra, fun = predict, index = 2)
+GL1_ezg_m2_wd_k <- raster::predict(GL1_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL1_q_m1_wd_k <- terra::predict(GL1_q, model = rf_model_wd_k, fun = predict, index = 2)
-#GL1_q_m1_wd_s <- terra::predict(GL1_q, model = rf_model_wd_s, fun = predict, index = 2)
-#GL1_q_m1_wd_a <- terra::predict(GL1_q, model = rf_model_wd_a, fun = predict, index = 2)
-#GL1_q_m1_wd_ra <- terra::predict(GL1_q, model = rf_model_wd_ra, fun = predict, index = 2)
+GL1_ezg_m2_wd_s <- raster::predict(GL1_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_ezg_m2_wd_a <- raster::predict(GL1_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_ezg_m2_wd_ra <- raster::predict(GL1_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_wd_k <- raster::predict(GL1_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_wd_s <- raster::predict(GL1_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_wd_a <- raster::predict(GL1_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_wd_ra <- raster::predict(GL1_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # GL1 - predictor: velocity ---------------------------------------------------
-GL1_ezg_m1_v_k <- terra::predict(GL1_ezg, model = rf_model_v_k, fun = predict, index = "velocity")
-GL1_ezg_m1_v_s <- terra::predict(GL1_ezg, model = rf_model_v_s, fun = predict, index = "velocity")
-GL1_ezg_m1_v_a <- terra::predict(GL1_ezg, model = rf_model_v_a, fun = predict, index = "velocity")
-GL1_ezg_m1_v_ra <- terra::predict(GL1_ezg, model = rf_model_v_ra, fun = predict, index = "velocity")
+GL1_ezg_m2_v_k <- raster::predict(GL1_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL1_q_m1_v_k <- terra::predict(GL1_q, model = rf_model_v_k, fun = predict, index = "velocity")
-#GL1_q_m1_v_s <- terra::predict(GL1_q, model = rf_model_v_s, fun = predict, index = "velocity")
-#GL1_q_m1_v_a <- terra::predict(GL1_q, model = rf_model_v_a, fun = predict, index = "velocity")
-#GL1_q_m1_v_ra <- terra::predict(GL1_q, model = rf_model_v_ra, fun = predict, index = "velocity")
+GL1_ezg_m2_v_s <- raster::predict(GL1_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_ezg_m2_v_a <- raster::predict(GL1_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_ezg_m2_v_ra <- raster::predict(GL1_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_v_k <- raster::predict(GL1_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_v_s <- raster::predict(GL1_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_v_a <- raster::predict(GL1_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL1_q_m2_v_ra <- raster::predict(GL1_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # GL2 - predictors: v + wd ----------------------------------------------------
-GL2_ezg_m1_wd_k <- terra::predict(GL2_ezg, model = rf_model_wd_k, fun = predict, index = 2)
-GL2_ezg_m1_wd_s <- terra::predict(GL2_ezg, model = rf_model_wd_s, fun = predict, index = 2)
-GL2_ezg_m1_wd_a <- terra::predict(GL2_ezg, model = rf_model_wd_a, fun = predict, index = 2)
-GL2_ezg_m1_wd_ra <- terra::predict(GL2_ezg, model = rf_model_wd_ra, fun = predict, index = 2)
+GL2_ezg_m2_wd_k <- raster::predict(GL2_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL2_q_m1_wd_k <- terra::predict(GL2_q, model = rf_model_wd_k, fun = predict, index = 2)
-#GL2_q_m1_wd_s <- terra::predict(GL2_q, model = rf_model_wd_s, fun = predict, index = 2)
-#GL2_q_m1_wd_a <- terra::predict(GL2_q, model = rf_model_wd_a, fun = predict, index = 2)
-#GL2_q_m1_wd_ra <- terra::predict(GL2_q, model = rf_model_wd_ra, fun = predict, index = 2)
+GL2_ezg_m2_wd_s <- raster::predict(GL2_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_ezg_m2_wd_a <- raster::predict(GL2_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_ezg_m2_wd_ra <- raster::predict(GL2_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_wd_k <- raster::predict(GL2_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_wd_s <- raster::predict(GL2_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_wd_a <- raster::predict(GL2_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_wd_ra <- raster::predict(GL2_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # GL2 - predictor: velocity ---------------------------------------------------
-GL2_ezg_m1_v_k <- terra::predict(GL2_ezg, model = rf_model_v_k, fun = predict, index = "velocity")
-GL2_ezg_m1_v_s <- terra::predict(GL2_ezg, model = rf_model_v_s, fun = predict, index = "velocity")
-GL2_ezg_m1_v_a <- terra::predict(GL2_ezg, model = rf_model_v_a, fun = predict, index = "velocity")
-GL2_ezg_m1_v_ra <- terra::predict(GL2_ezg, model = rf_model_v_ra, fun = predict, index = "velocity")
+GL2_ezg_m2_v_k <- raster::predict(GL2_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#GL2_q_m1_v_k <- terra::predict(GL2_q, model = rf_model_v_k, fun = predict, index = "velocity")
-#GL2_q_m1_v_s <- terra::predict(GL2_q, model = rf_model_v_s, fun = predict, index = "velocity")
-#GL2_q_m1_v_a <- terra::predict(GL2_q, model = rf_model_v_a, fun = predict, index = "velocity")
-#GL2_q_m1_v_ra <- terra::predict(GL2_q, model = rf_model_v_ra, fun = predict, index = "velocity")
+GL2_ezg_m2_v_s <- raster::predict(GL2_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_ezg_m2_v_a <- raster::predict(GL2_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_ezg_m2_v_ra <- raster::predict(GL2_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_v_k <- raster::predict(GL2_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_v_s <- raster::predict(GL2_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_v_a <- raster::predict(GL2_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#GL2_q_m2_v_ra <- raster::predict(GL2_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # L2 - predictors: v + wd -----------------------------------------------------
-L2_ezg_m1_wd_k <- terra::predict(L2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-L2_ezg_m1_wd_s <- terra::predict(L2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-L2_ezg_m1_wd_a <- terra::predict(L2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-L2_ezg_m1_wd_ra <- terra::predict(L2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+L2_ezg_m2_wd_k <- raster::predict(L2_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#L2_q_m1_wd_k <- terra::predict(L2_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-#L2_q_m1_wd_s <- terra::predict(L2_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-#L2_q_m1_wd_a <- terra::predict(L2_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-#L2_q_m1_wd_ra <- terra::predict(L2_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+L2_ezg_m2_wd_s <- raster::predict(L2_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_ezg_m2_wd_a <- raster::predict(L2_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_ezg_m2_wd_ra <- raster::predict(L2_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+
+#L2_q_m2_wd_k <- raster::predict(L2_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#L2_q_m2_wd_s <- raster::predict(L2_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#L2_q_m2_wd_a <- raster::predict(L2_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#L2_q_m2_wd_ra <- raster::predict(L2_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # L2 - predictor: velocity ----------------------------------------------------
-L2_ezg_m1_v_k <- terra::predict(L2_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-L2_ezg_m1_v_s <- terra::predict(L2_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-L2_ezg_m1_v_a <- terra::predict(L2_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-L2_ezg_m1_v_ra <- terra::predict(L2_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+L2_ezg_m2_v_k <- raster::predict(L2_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#L2_q_m1_v_k <- terra::predict(L2_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-#L2_q_m1_v_s <- terra::predict(L2_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-#L2_q_m1_v_a <- terra::predict(L2_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-#L2_q_m1_v_ra <- terra::predict(L2_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+L2_ezg_m2_v_s <- raster::predict(L2_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_ezg_m2_v_a <- raster::predict(L2_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_ezg_m2_v_ra <- raster::predict(L2_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+
+#L2_q_m2_v_k <- raster::predict(L2_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#L2_q_m2_v_s <- raster::predict(L2_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#L2_q_m2_v_a <- raster::predict(L2_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#L2_q_m2_v_ra <- raster::predict(L2_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # M1  - predictors: v + wd -----------------------------------------------------
-M1_ezg_m1_wd_k <- terra::predict(M1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-M1_ezg_m1_wd_s <- terra::predict(M1_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-M1_ezg_m1_wd_a <- terra::predict(M1_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-M1_ezg_m1_wd_ra <- terra::predict(M1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+M1_ezg_m2_wd_k <- raster::predict(M1_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#M1_q_m1_wd_k <- terra::predict(M1_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-#M1_q_m1_wd_s <- terra::predict(M1_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-#M1_q_m1_wd_a <- terra::predict(M1_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-#M1_q_m1_wd_ra <- terra::predict(M1_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+M1_ezg_m2_wd_s <- raster::predict(M1_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_ezg_m2_wd_a <- raster::predict(M1_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_ezg_m2_wd_ra <- raster::predict(M1_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#M1_q_m2_wd_k <- raster::predict(M1_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#M1_q_m2_wd_s <- raster::predict(M1_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#M1_q_m2_wd_a <- raster::predict(M1_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#M1_q_m2_wd_ra <- raster::predict(M1_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # M1  - predictor: velocity ---------------------------------------------------
-M1_ezg_m1_v_k <- terra::predict(M1_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-M1_ezg_m1_v_s <- terra::predict(M1_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-M1_ezg_m1_v_a <- terra::predict(M1_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-M1_ezg_m1_v_ra <- terra::predict(M1_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+M1_ezg_m2_v_k <- raster::predict(M1_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#M1_q_m1_v_k <- terra::predict(M1_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-#M1_q_m1_v_s <- terra::predict(M1_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-#M1_q_m1_v_a <- terra::predict(M1_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-#M1_q_m1_v_ra <- terra::predict(M1_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+M1_ezg_m2_v_s <- raster::predict(M1_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_ezg_m2_v_a <- raster::predict(M1_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_ezg_m2_v_ra <- raster::predict(M1_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+
+#M1_q_m2_v_k <- raster::predict(M1_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#M1_q_m2_v_s <- raster::predict(M1_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#M1_q_m2_v_a <- raster::predict(M1_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#M1_q_m2_v_ra <- raster::predict(M1_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S1  - predictors: v + wd ----------------------------------------------------
-S1_ezg_m1_wd_k <- terra::predict(S1_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-S1_ezg_m1_wd_s <- terra::predict(S1_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-S1_ezg_m1_wd_a <- terra::predict(S1_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-S1_ezg_m1_wd_ra <- terra::predict(S1_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+S1_ezg_m2_wd_k <- raster::predict(S1_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S1_q_m1_wd_k <- terra::predict(S1_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-#S1_q_m1_wd_s <- terra::predict(S1_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-#S1_q_m1_wd_a <- terra::predict(S1_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-#S1_q_m1_wd_ra <- terra::predict(S1_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+S1_ezg_m2_wd_s <- raster::predict(S1_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_ezg_m2_wd_a <- raster::predict(S1_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_ezg_m2_wd_ra <- raster::predict(S1_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_wd_k <- raster::predict(S1_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_wd_s <- raster::predict(S1_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_wd_a <- raster::predict(S1_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_wd_ra <- raster::predict(S1_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S1  - predictor: velocity ---------------------------------------------------
-S1_ezg_m1_v_k <- terra::predict(S1_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-S1_ezg_m1_v_s <- terra::predict(S1_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-S1_ezg_m1_v_a <- terra::predict(S1_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-S1_ezg_m1_v_ra <- terra::predict(S1_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+S1_ezg_m2_v_k <- raster::predict(S1_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S1_q_m1_v_k <- terra::predict(S1_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-#S1_q_m1_v_s <- terra::predict(S1_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-#S1_q_m1_v_a <- terra::predict(S1_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-#S1_q_m1_v_ra <- terra::predict(S1_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+S1_ezg_m2_v_s <- raster::predict(S1_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_ezg_m2_v_a <- raster::predict(S1_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_ezg_m2_v_ra <- raster::predict(S1_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_v_k <- raster::predict(S1_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_v_s <- raster::predict(S1_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_v_a <- raster::predict(S1_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S1_q_m2_v_ra <- raster::predict(S1_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S2  - predictors: v + wd ----------------------------------------------------
-S2_ezg_m1_wd_k <- terra::predict(S2_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-S2_ezg_m1_wd_s <- terra::predict(S2_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-S2_ezg_m1_wd_a <- terra::predict(S2_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-S2_ezg_m1_wd_ra <- terra::predict(S2_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+S2_ezg_m2_wd_k <- raster::predict(S2_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S2_q_m1_wd_k <- terra::predict(S2_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-#S2_q_m1_wd_s <- terra::predict(S2_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-#S2_q_m1_wd_a <- terra::predict(S2_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-#S2_q_m1_wd_ra <- terra::predict(S2_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+S2_ezg_m2_wd_s <- raster::predict(S2_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_ezg_m2_wd_a <- raster::predict(S2_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_ezg_m2_wd_ra <- raster::predict(S2_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_wd_k <- raster::predict(S2_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_wd_s <- raster::predict(S2_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_wd_a <- raster::predict(S2_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_wd_ra <- raster::predict(S2_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # S2  - predictor: velocity ---------------------------------------------------
-S2_ezg_m1_v_k <- terra::predict(S2_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-S2_ezg_m1_v_s <- terra::predict(S2_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-S2_ezg_m1_v_a <- terra::predict(S2_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-S2_ezg_m1_v_ra <- terra::predict(S2_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+S2_ezg_m2_v_k <- raster::predict(S2_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#S2_q_m1_v_k <- terra::predict(S2_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-#S2_q_m1_v_s <- terra::predict(S2_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-#S2_q_m1_v_a <- terra::predict(S2_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-#S2_q_m1_v_ra <- terra::predict(S2_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+S2_ezg_m2_v_s <- raster::predict(S2_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_ezg_m2_v_a <- raster::predict(S2_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_ezg_m2_v_ra <- raster::predict(S2_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_v_k <- raster::predict(S2_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_v_s <- raster::predict(S2_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_v_a <- raster::predict(S2_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#S2_q_m2_v_ra <- raster::predict(S2_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # TH4  - predictors: v + wd ---------------------------------------------------
-TH4_ezg_m1_wd_k <- terra::predict(TH4_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-TH4_ezg_m1_wd_s <- terra::predict(TH4_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-TH4_ezg_m1_wd_a <- terra::predict(TH4_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-TH4_ezg_m1_wd_ra <- terra::predict(TH4_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+TH4_ezg_m2_wd_k <- raster::predict(TH4_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#TH4_q_m1_wd_k <- terra::predict(TH4_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-#TH4_q_m1_wd_s <- terra::predict(TH4_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-#TH4_q_m1_wd_a <- terra::predict(TH4_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-#TH4_q_m1_wd_ra <- terra::predict(TH4_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+TH4_ezg_m2_wd_s <- raster::predict(TH4_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_ezg_m2_wd_a <- raster::predict(TH4_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_ezg_m2_wd_ra <- raster::predict(TH4_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_wd_k <- raster::predict(TH4_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_wd_s <- raster::predict(TH4_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_wd_a <- raster::predict(TH4_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_wd_ra <- raster::predict(TH4_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # TH4  - predictor: velocity --------------------------------------------------
-TH4_ezg_m1_v_k <- terra::predict(TH4_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-TH4_ezg_m1_v_s <- terra::predict(TH4_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-TH4_ezg_m1_v_a <- terra::predict(TH4_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-TH4_ezg_m1_v_ra <- terra::predict(TH4_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+TH4_ezg_m2_v_k <- raster::predict(TH4_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#TH4_q_m1_v_k <- terra::predict(TH4_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-#TH4_q_m1_v_s <- terra::predict(TH4_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-#TH4_q_m1_v_a <- terra::predict(TH4_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-#TH4_q_m1_v_ra <- terra::predict(TH4_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+TH4_ezg_m2_v_s <- raster::predict(TH4_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_ezg_m2_v_a <- raster::predict(TH4_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_ezg_m2_v_ra <- raster::predict(TH4_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_v_k <- raster::predict(TH4_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_v_s <- raster::predict(TH4_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_v_a <- raster::predict(TH4_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#TH4_q_m2_v_ra <- raster::predict(TH4_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # VR3  - predictors: v + wd ---------------------------------------------------
-VR3_ezg_m1_wd_k <- terra::predict(VR3_ezg, model = autotuner_rf_wd_k, fun = predict, index = 2)
-VR3_ezg_m1_wd_s <- terra::predict(VR3_ezg, model = autotuner_rf_wd_s, fun = predict, index = 2)
-VR3_ezg_m1_wd_a <- terra::predict(VR3_ezg, model = autotuner_rf_wd_a, fun = predict, index = 2)
-VR3_ezg_m1_wd_ra <- terra::predict(VR3_ezg, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+VR3_ezg_m2_wd_k <- raster::predict(VR3_ezg, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#VR3_q_m1_wd_k <- terra::predict(VR3_q, model = autotuner_rf_wd_k, fun = predict, index = 2)
-#VR3_q_m1_wd_s <- terra::predict(VR3_q, model = autotuner_rf_wd_s, fun = predict, index = 2)
-#VR3_q_m1_wd_a <- terra::predict(VR3_q, model = autotuner_rf_wd_a, fun = predict, index = 2)
-#VR3_q_m1_wd_ra <- terra::predict(VR3_q, model = autotuner_rf_wd_ra, fun = predict, index = 2)
+VR3_ezg_m2_wd_s <- raster::predict(VR3_ezg, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_ezg_m2_wd_a <- raster::predict(VR3_ezg, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_ezg_m2_wd_ra <- raster::predict(VR3_ezg, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_wd_k <- raster::predict(VR3_q, rf_model_wd_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_wd_s <- raster::predict(VR3_q, rf_model_wd_s_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_wd_a <- raster::predict(VR3_q, rf_model_wd_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_wd_ra <- raster::predict(VR3_q, rf_model_wd_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 # VR3  - predictor: velocity --------------------------------------------------
-VR3_ezg_m1_v_k <- terra::predict(VR3_ezg, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-VR3_ezg_m1_v_s <- terra::predict(VR3_ezg, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-VR3_ezg_m1_v_a <- terra::predict(VR3_ezg, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-VR3_ezg_m1_v_ra <- terra::predict(VR3_ezg, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+VR3_ezg_m2_v_k <- raster::predict(VR3_ezg, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-#VR3_q_m1_v_k <- terra::predict(VR3_q, model = autotuner_rf_v_k, fun = predict, index = "velocity")
-#VR3_q_m1_v_s <- terra::predict(VR3_q, model = autotuner_rf_v_s, fun = predict, index = "velocity")
-#VR3_q_m1_v_a <- terra::predict(VR3_q, model = autotuner_rf_v_a, fun = predict, index = "velocity")
-#VR3_q_m1_v_ra <- terra::predict(VR3_q, model = autotuner_rf_v_ra, fun = predict, index = "velocity")
+VR3_ezg_m2_v_s <- raster::predict(VR3_ezg, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_ezg_m2_v_a <- raster::predict(VR3_ezg, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_ezg_m2_v_ra <- raster::predict(VR3_ezg, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_v_k <- raster::predict(VR3_q, rf_model_v_k_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_v_s <- raster::predict(VR3_q, rf_model_v_s_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_v_a <- raster::predict(VR3_q, rf_model_v_a_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+#VR3_q_m2_v_ra <- raster::predict(VR3_q, rf_model_v_ra_c, index = "velocity", type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 ```
 
+### Read data
 ```{r}
 # read all raster results (one time flow velocity classes and one time for habitat suitability)
 # prep extraction data 
@@ -5319,190 +5418,387 @@ VR3 <- test_wd |>
   subset(Reach_Untersuchungsstelle == "VR3")
 ```
 
-### Extract Results
+## Extract Results
+### Autotuner 
 ```{r}
 # extract raster information for regression analysis later
-# GL1 
-regr_rf_data_GL1_wd_k <- raster::extract(GL1_ezg_wd_k, coord_GL1) 
-regr_rf_data_GL1_wd_s <- raster::extract(GL1_ezg_wd_s, coord_GL1) 
-regr_rf_data_GL1_wd_a <- raster::extract(GL1_ezg_wd_a, coord_GL1) 
+# GL1 -------------------------------------------------------------------------
+regr_GL1_wd_k <- raster::extract(GL1_ezg_wd_k, coord_GL1) 
+regr_GL1_wd_s <- raster::extract(GL1_ezg_wd_s, coord_GL1) 
+regr_GL1_wd_a <- raster::extract(GL1_ezg_wd_a, coord_GL1) 
+regr_GL1_wd_ra <- raster::extract(GL1_ezg_wd_ra, coord_GL1) 
 
-regr_rf_data_GL1_v_k <- raster::extract(GL1_ezg_v_k, coord_GL1) 
-regr_rf_data_GL1_v_s <- raster::extract(GL1_ezg_v_s, coord_GL1) 
-regr_rf_data_GL1_v_a <- raster::extract(GL1_ezg_v_a, coord_GL1) 
+regr_GL1_v_k <- raster::extract(GL1_ezg_v_k, coord_GL1) 
+regr_GL1_v_s <- raster::extract(GL1_ezg_v_s, coord_GL1) 
+regr_GL1_v_a <- raster::extract(GL1_ezg_v_a, coord_GL1) 
+regr_GL1_v_ra <- raster::extract(GL1_ezg_v_ra, coord_GL1)
 
-# GL2
-regr_rf_data_GL2_wd_k <- raster::extract(GL2_ezg_wd_k, coord_GL2) 
-regr_rf_data_GL2_wd_s <- raster::extract(GL2_ezg_wd_s, coord_GL2) 
-regr_rf_data_GL2_wd_a <- raster::extract(GL2_ezg_wd_a, coord_GL2) 
+# GL2 -------------------------------------------------------------------------
+regr_GL2_wd_k <- raster::extract(GL2_ezg_wd_k, coord_GL2) 
+regr_GL2_wd_s <- raster::extract(GL2_ezg_wd_s, coord_GL2) 
+regr_GL2_wd_a <- raster::extract(GL2_ezg_wd_a, coord_GL2) 
+regr_GL2_wd_ra <- raster::extract(GL2_ezg_wd_ra, coord_GL2)
 
-regr_rf_data_GL2_v_k <- raster::extract(GL2_ezg_v_k, coord_GL2) 
-regr_rf_data_GL2_v_s <- raster::extract(GL2_ezg_v_s, coord_GL2) 
-regr_rf_data_GL2_v_a <- raster::extract(GL2_ezg_v_a, coord_GL2)
+regr_GL2_v_k <- raster::extract(GL2_ezg_v_k, coord_GL2) 
+regr_GL2_v_s <- raster::extract(GL2_ezg_v_s, coord_GL2) 
+regr_GL2_v_a <- raster::extract(GL2_ezg_v_a, coord_GL2)
+regr_GL2_v_ra <- raster::extract(GL2_ezg_v_ra, coord_GL2)
 
-# L2
-regr_rf_data_L2_wd_k <- raster::extract(L2_ezg_wd_k, coord_L2) 
-regr_rf_data_L2_wd_s <- raster::extract(L2_ezg_wd_s, coord_L2) 
-regr_rf_data_L2_wd_a <- raster::extract(L2_ezg_wd_a, coord_L2) 
+# L2 --------------------------------------------------------------------------
+regr_L2_wd_k <- raster::extract(L2_ezg_wd_k, coord_L2) 
+regr_L2_wd_s <- raster::extract(L2_ezg_wd_s, coord_L2) 
+regr_L2_wd_a <- raster::extract(L2_ezg_wd_a, coord_L2) 
+regr_L2_wd_ra <- raster::extract(L2_ezg_wd_ra, coord_L2) 
 
-regr_rf_data_L2_v_k <- raster::extract(L2_ezg_v_k, coord_L2) 
-regr_rf_data_L2_v_s <- raster::extract(L2_ezg_v_s, coord_L2) 
-regr_rf_data_L2_v_a <- raster::extract(L2_ezg_v_a, coord_L2)
+regr_L2_v_k <- raster::extract(L2_ezg_v_k, coord_L2) 
+regr_L2_v_s <- raster::extract(L2_ezg_v_s, coord_L2) 
+regr_L2_v_a <- raster::extract(L2_ezg_v_a, coord_L2)
+regr_L2_v_ra <- raster::extract(L2_ezg_v_ra, coord_L2)
 
+# M1 --------------------------------------------------------------------------
+regr_M1_wd_k <- raster::extract(M1_ezg_wd_k, coord_M1) 
+regr_M1_wd_s <- raster::extract(M1_ezg_wd_s, coord_M1) 
+regr_M1_wd_a <- raster::extract(M1_ezg_wd_a, coord_M1) 
+regr_M1_wd_ra <- raster::extract(M1_ezg_wd_ra, coord_M1) 
 
-# M1
-regr_rf_data_M1_wd_k <- raster::extract(M1_ezg_wd_k, coord_M1) 
-regr_rf_data_M1_wd_s <- raster::extract(M1_ezg_wd_s, coord_M1) 
-regr_rf_data_M1_wd_a <- raster::extract(M1_ezg_wd_a, coord_M1) 
+regr_M1_v_k <- raster::extract(M1_ezg_v_k, coord_M1) 
+regr_M1_v_s <- raster::extract(M1_ezg_v_s, coord_M1) 
+regr_M1_v_a <- raster::extract(M1_ezg_v_a, coord_M1)
+regr_M1_v_ra <- raster::extract(M1_ezg_v_ra, coord_M1)
 
-regr_rf_data_M1_v_k <- raster::extract(M1_ezg_v_k, coord_M1) 
-regr_rf_data_M1_v_s <- raster::extract(M1_ezg_v_s, coord_M1) 
-regr_rf_data_M1_v_a <- raster::extract(M1_ezg_v_a, coord_M1)
+# S1 --------------------------------------------------------------------------
+regr_S1_wd_k <- raster::extract(S1_ezg_wd_k, coord_S1) 
+regr_S1_wd_s <- raster::extract(S1_ezg_wd_s, coord_S1) 
+regr_S1_wd_a <- raster::extract(S1_ezg_wd_a, coord_S1) 
+regr_S1_wd_ra <- raster::extract(S1_ezg_wd_ra, coord_S1) 
 
+regr_S1_v_k <- raster::extract(S1_ezg_v_k, coord_S1) 
+regr_S1_v_s <- raster::extract(S1_ezg_v_s, coord_S1) 
+regr_S1_v_a <- raster::extract(S1_ezg_v_a, coord_S1)
+regr_S1_v_ra <- raster::extract(S1_ezg_v_ra, coord_S1)
 
-# S1
-regr_rf_data_S1_wd_k <- raster::extract(S1_ezg_wd_k, coord_S1) 
-regr_rf_data_S1_wd_s <- raster::extract(S1_ezg_wd_s, coord_S1) 
-regr_rf_data_S1_wd_a <- raster::extract(S1_ezg_wd_a, coord_S1) 
+# S2 --------------------------------------------------------------------------
+regr_S2_wd_k <- raster::extract(S2_ezg_wd_k, coord_S2) 
+regr_S2_wd_s <- raster::extract(S2_ezg_wd_s, coord_S2) 
+regr_S2_wd_a <- raster::extract(S2_ezg_wd_a, coord_S2) 
+regr_S2_wd_ra <- raster::extract(S2_ezg_wd_ra, coord_S2)
 
-regr_rf_data_S1_v_k <- raster::extract(S1_ezg_v_k, coord_S1) 
-regr_rf_data_S1_v_s <- raster::extract(S1_ezg_v_s, coord_S1) 
-regr_rf_data_S1_v_a <- raster::extract(S1_ezg_v_a, coord_S1)
+regr_S2_v_k <- raster::extract(S2_ezg_v_k, coord_S2) 
+regr_S2_v_s <- raster::extract(S2_ezg_v_s, coord_S2) 
+regr_S2_v_a <- raster::extract(S2_ezg_v_a, coord_S2)
+regr_S2_v_ra <- raster::extract(S2_ezg_v_ra, coord_S2)
 
-# S2
-regr_rf_data_S2_wd_k <- raster::extract(S2_ezg_wd_k, coord_S2) 
-regr_rf_data_S2_wd_s <- raster::extract(S2_ezg_wd_s, coord_S2) 
-regr_rf_data_S2_wd_a <- raster::extract(S2_ezg_wd_a, coord_S2) 
+# TH4 -------------------------------------------------------------------------
+regr_TH4_wd_k <- raster::extract(TH4_ezg_wd_k, coord_TH4) 
+regr_TH4_wd_s <- raster::extract(TH4_ezg_wd_s, coord_TH4) 
+regr_TH4_wd_a <- raster::extract(TH4_ezg_wd_a, coord_TH4) 
+regr_TH4_wd_ra <- raster::extract(TH4_ezg_wd_ra, coord_TH4) 
 
-regr_rf_data_S2_v_k <- raster::extract(S2_ezg_v_k, coord_S2) 
-regr_rf_data_S2_v_s <- raster::extract(S2_ezg_v_s, coord_S2) 
-regr_rf_data_S2_v_a <- raster::extract(S2_ezg_v_a, coord_S2)
+regr_TH4_v_k <- raster::extract(TH4_ezg_v_k, coord_TH4) 
+regr_TH4_v_s <- raster::extract(TH4_ezg_v_s, coord_TH4) 
+regr_TH4_v_a <- raster::extract(TH4_ezg_v_a, coord_TH4)
+regr_TH4_v_ra <- raster::extract(TH4_ezg_v_ra, coord_TH4)
 
-# TH4
-regr_rf_data_TH4_wd_k <- raster::extract(TH4_ezg_wd_k, coord_TH4) 
-regr_rf_data_TH4_wd_s <- raster::extract(TH4_ezg_wd_s, coord_TH4) 
-regr_rf_data_TH4_wd_a <- raster::extract(TH4_ezg_wd_a, coord_TH4) 
+# VR3 -------------------------------------------------------------------------
+regr_VR3_wd_k <- raster::extract(VR3_ezg_wd_k, coord_VR3) 
+regr_VR3_wd_s <- raster::extract(VR3_ezg_wd_s, coord_VR3) 
+regr_VR3_wd_a <- raster::extract(VR3_ezg_wd_a, coord_VR3) 
+regr_VR3_wd_ra <- raster::extract(VR3_ezg_wd_ra, coord_VR3)
 
-regr_rf_data_TH4_v_k <- raster::extract(TH4_ezg_v_k, coord_TH4) 
-regr_rf_data_TH4_v_s <- raster::extract(TH4_ezg_v_s, coord_TH4) 
-regr_rf_data_TH4_v_a <- raster::extract(TH4_ezg_v_a, coord_TH4)
-
-# VR3
-regr_rf_data_VR3_wd_k <- raster::extract(VR3_ezg_wd_k, coord_VR3) 
-regr_rf_data_VR3_wd_s <- raster::extract(VR3_ezg_wd_s, coord_VR3) 
-regr_rf_data_VR3_wd_a <- raster::extract(VR3_ezg_wd_a, coord_VR3) 
-
-regr_rf_data_VR3_v_k <- raster::extract(VR3_ezg_v_k, coord_VR3) 
-regr_rf_data_VR3_v_s <- raster::extract(VR3_ezg_v_s, coord_VR3) 
-regr_rf_data_VR3_v_a <- raster::extract(VR3_ezg_v_a, coord_VR3)
+regr_VR3_v_k <- raster::extract(VR3_ezg_v_k, coord_VR3) 
+regr_VR3_v_s <- raster::extract(VR3_ezg_v_s, coord_VR3) 
+regr_VR3_v_a <- raster::extract(VR3_ezg_v_a, coord_VR3)
+regr_VR3_v_ra <- raster::extract(VR3_ezg_v_ra, coord_VR3)
 ```
 
-### Combine into DF
+### Ranger w/o coordinates 
+```{r}
+# extract raster information for regression analysis later
+# GL1 -------------------------------------------------------------------------
+regr_m2_GL1_wd_k <- raster::extract(GL1_ezg_m2_wd_k, coord_GL1) 
+regr_m2_GL1_wd_s <- raster::extract(GL1_ezg_m2_wd_s, coord_GL1) 
+regr_m2_GL1_wd_a <- raster::extract(GL1_ezg_m2_wd_a, coord_GL1) 
+regr_m2_GL1_wd_ra <- raster::extract(GL1_ezg_m2_wd_ra, coord_GL1) 
+
+regr_m2_GL1_v_k <- raster::extract(GL1_ezg_m2_v_k, coord_GL1) 
+regr_m2_GL1_v_s <- raster::extract(GL1_ezg_m2_v_s, coord_GL1) 
+regr_m2_GL1_v_a <- raster::extract(GL1_ezg_m2_v_a, coord_GL1) 
+regr_m2_GL1_v_ra <- raster::extract(GL1_ezg_m2_v_ra, coord_GL1)
+
+# GL2 -------------------------------------------------------------------------
+regr_m2_GL2_wd_k <- raster::extract(GL2_ezg_m2_wd_k, coord_GL2) 
+regr_m2_GL2_wd_s <- raster::extract(GL2_ezg_m2_wd_s, coord_GL2) 
+regr_m2_GL2_wd_a <- raster::extract(GL2_ezg_m2_wd_a, coord_GL2) 
+regr_m2_GL2_wd_ra <- raster::extract(GL2_ezg_m2_wd_ra, coord_GL2)
+
+regr_m2_GL2_v_k <- raster::extract(GL2_ezg_m2_v_k, coord_GL2) 
+regr_m2_GL2_v_s <- raster::extract(GL2_ezg_m2_v_s, coord_GL2) 
+regr_m2_GL2_v_a <- raster::extract(GL2_ezg_m2_v_a, coord_GL2)
+regr_m2_GL2_v_ra <- raster::extract(GL2_ezg_m2_v_ra, coord_GL2)
+
+# L2 --------------------------------------------------------------------------
+regr_m2_L2_wd_k <- raster::extract(L2_ezg_m2_wd_k, coord_L2) 
+regr_m2_L2_wd_s <- raster::extract(L2_ezg_m2_wd_s, coord_L2) 
+regr_m2_L2_wd_a <- raster::extract(L2_ezg_m2_wd_a, coord_L2) 
+regr_m2_L2_wd_ra <- raster::extract(L2_ezg_m2_wd_ra, coord_L2) 
+
+regr_m2_L2_v_k <- raster::extract(L2_ezg_m2_v_k, coord_L2) 
+regr_m2_L2_v_s <- raster::extract(L2_ezg_m2_v_s, coord_L2) 
+regr_m2_L2_v_a <- raster::extract(L2_ezg_m2_v_a, coord_L2)
+regr_m2_L2_v_ra <- raster::extract(L2_ezg_m2_v_ra, coord_L2)
+
+# M1 --------------------------------------------------------------------------
+regr_m2_M1_wd_k <- raster::extract(M1_ezg_m2_wd_k, coord_M1) 
+regr_m2_M1_wd_s <- raster::extract(M1_ezg_m2_wd_s, coord_M1) 
+regr_m2_M1_wd_a <- raster::extract(M1_ezg_m2_wd_a, coord_M1) 
+regr_m2_M1_wd_ra <- raster::extract(M1_ezg_m2_wd_ra, coord_M1) 
+
+regr_m2_M1_v_k <- raster::extract(M1_ezg_m2_v_k, coord_M1) 
+regr_m2_M1_v_s <- raster::extract(M1_ezg_m2_v_s, coord_M1) 
+regr_m2_M1_v_a <- raster::extract(M1_ezg_m2_v_a, coord_M1)
+regr_m2_M1_v_ra <- raster::extract(M1_ezg_m2_v_ra, coord_M1)
+
+# S1 --------------------------------------------------------------------------
+regr_m2_S1_wd_k <- raster::extract(S1_ezg_m2_wd_k, coord_S1) 
+regr_m2_S1_wd_s <- raster::extract(S1_ezg_m2_wd_s, coord_S1) 
+regr_m2_S1_wd_a <- raster::extract(S1_ezg_m2_wd_a, coord_S1) 
+regr_m2_S1_wd_ra <- raster::extract(S1_ezg_m2_wd_ra, coord_S1) 
+
+regr_m2_S1_v_k <- raster::extract(S1_ezg_m2_v_k, coord_S1) 
+regr_m2_S1_v_s <- raster::extract(S1_ezg_m2_v_s, coord_S1) 
+regr_m2_S1_v_a <- raster::extract(S1_ezg_m2_v_a, coord_S1)
+regr_m2_S1_v_ra <- raster::extract(S1_ezg_m2_v_ra, coord_S1)
+
+# S2 --------------------------------------------------------------------------
+regr_m2_S2_wd_k <- raster::extract(S2_ezg_m2_wd_k, coord_S2) 
+regr_m2_S2_wd_s <- raster::extract(S2_ezg_m2_wd_s, coord_S2) 
+regr_m2_S2_wd_a <- raster::extract(S2_ezg_m2_wd_a, coord_S2) 
+regr_m2_S2_wd_ra <- raster::extract(S2_ezg_m2_wd_ra, coord_S2)
+
+regr_m2_S2_v_k <- raster::extract(S2_ezg_m2_v_k, coord_S2) 
+regr_m2_S2_v_s <- raster::extract(S2_ezg_m2_v_s, coord_S2) 
+regr_m2_S2_v_a <- raster::extract(S2_ezg_m2_v_a, coord_S2)
+regr_m2_S2_v_ra <- raster::extract(S2_ezg_m2_v_ra, coord_S2)
+
+# TH4 -------------------------------------------------------------------------
+regr_m2_TH4_wd_k <- raster::extract(TH4_ezg_m2_wd_k, coord_TH4) 
+regr_m2_TH4_wd_s <- raster::extract(TH4_ezg_m2_wd_s, coord_TH4) 
+regr_m2_TH4_wd_a <- raster::extract(TH4_ezg_m2_wd_a, coord_TH4) 
+regr_m2_TH4_wd_ra <- raster::extract(TH4_ezg_m2_wd_ra, coord_TH4) 
+
+regr_m2_TH4_v_k <- raster::extract(TH4_ezg_m2_v_k, coord_TH4) 
+regr_m2_TH4_v_s <- raster::extract(TH4_ezg_m2_v_s, coord_TH4) 
+regr_m2_TH4_v_a <- raster::extract(TH4_ezg_m2_v_a, coord_TH4)
+regr_m2_TH4_v_ra <- raster::extract(TH4_ezg_m2_v_ra, coord_TH4)
+
+# VR3 -------------------------------------------------------------------------
+regr_m2_VR3_wd_k <- raster::extract(VR3_ezg_m2_wd_k, coord_VR3) 
+regr_m2_VR3_wd_s <- raster::extract(VR3_ezg_m2_wd_s, coord_VR3) 
+regr_m2_VR3_wd_a <- raster::extract(VR3_ezg_m2_wd_a, coord_VR3) 
+regr_m2_VR3_wd_ra <- raster::extract(VR3_ezg_m2_wd_ra, coord_VR3)
+
+regr_m2_VR3_v_k <- raster::extract(VR3_ezg_m2_v_k, coord_VR3) 
+regr_m2_VR3_v_s <- raster::extract(VR3_ezg_m2_v_s, coord_VR3) 
+regr_m2_VR3_v_a <- raster::extract(VR3_ezg_m2_v_a, coord_VR3)
+regr_m2_VR3_v_ra <- raster::extract(VR3_ezg_m2_v_ra, coord_VR3)
+```
+
+## Combine into DF
 ```{r}
 # combine all results into dataframe
-# GL1
-data_GL1 <- cbind(regr_rf_data_GL1_wd_k, regr_rf_data_GL1_wd_s, regr_rf_data_GL1_wd_a, regr_rf_data_GL1_v_k, regr_rf_data_GL1_v_s, regr_rf_data_GL1_v_a, GL1) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_GL1_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_GL1_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_GL1_wd_a,
-         rf_pred_k_index_v = regr_rf_data_GL1_v_k,
-         rf_pred_shannon_v = regr_rf_data_GL1_v_s,
-         rf_pred_abundance_v = regr_rf_data_GL1_v_a,
+# GL1 -------------------------------------------------------------------------
+data_GL1 <- cbind(regr_GL1_wd_k, regr_GL1_wd_s, regr_GL1_wd_a, regr_GL1_wd_ra, regr_GL1_v_k, regr_GL1_v_s, regr_GL1_v_a, regr_GL1_v_ra, regr_m2_GL1_wd_k, regr_m2_GL1_wd_s, regr_m2_GL1_wd_a, regr_m2_GL1_wd_ra, regr_m2_GL1_v_k, regr_m2_GL1_v_s, regr_m2_GL1_v_a, regr_m2_GL1_v_ra, GL1) |>
+  dplyr::rename(auto_k_index_wd = regr_GL1_wd_k,
+         auto_shannon_wd = regr_GL1_wd_s,
+         auto_abundance_wd = regr_GL1_wd_a,
+         auto_rel_abundance_wd = regr_GL1_wd_ra,
+         auto_k_index_v = regr_GL1_v_k,
+         auto_shannon_v = regr_GL1_v_s,
+         auto_abundance_v = regr_GL1_v_a,
+         auto_rel_abundance_v = regr_GL1_v_ra,
+         m2_k_index_wd = regr_m2_GL1_wd_k,
+         m2_shannon_wd = regr_m2_GL1_wd_s,
+         m2_abundance_wd = regr_m2_GL1_wd_a,
+         m2_rel_abundance_wd = regr_m2_GL1_wd_ra,
+         m2_k_index_v = regr_m2_GL1_v_k,
+         m2_shannon_v = regr_m2_GL1_v_s,
+         m2_abundance_v = regr_m2_GL1_v_a,
+         m2_rel_abundance_v = regr_m2_GL1_v_ra,
          obs_k_index = k_index,
          obs_shannon = shannon,
-         obs_abundance = abundance)
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
 
-# GL2
-data_GL2 <- cbind(regr_rf_data_GL2_wd_k, regr_rf_data_GL2_wd_s, regr_rf_data_GL2_wd_a, regr_rf_data_GL2_v_k, regr_rf_data_GL2_v_s, regr_rf_data_GL2_v_a, GL2) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_GL2_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_GL2_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_GL2_wd_a,
-         rf_pred_k_index_v = regr_rf_data_GL2_v_k,
-         rf_pred_shannon_v = regr_rf_data_GL2_v_s,
-         rf_pred_abundance_v = regr_rf_data_GL2_v_a,
+# GL2 -------------------------------------------------------------------------
+data_GL2 <- cbind(regr_GL2_wd_k, regr_GL2_wd_s, regr_GL2_wd_a, regr_GL2_wd_ra, regr_GL2_v_k, regr_GL2_v_s, regr_GL2_v_a, regr_GL2_v_ra, regr_m2_GL2_wd_k, regr_m2_GL2_wd_s, regr_m2_GL2_wd_a, regr_m2_GL2_wd_ra, regr_m2_GL2_v_k, regr_m2_GL2_v_s, regr_m2_GL2_v_a, regr_m2_GL2_v_ra, GL2) |>
+  dplyr::rename(auto_k_index_wd = regr_GL2_wd_k,
+         auto_shannon_wd = regr_GL2_wd_s,
+         auto_abundance_wd = regr_GL2_wd_a,
+         auto_rel_abundance_wd = regr_GL2_wd_ra,
+         auto_k_index_v = regr_GL2_v_k,
+         auto_shannon_v = regr_GL2_v_s,
+         auto_abundance_v = regr_GL2_v_a,
+         auto_rel_abundance_v = regr_GL2_v_ra,
+         m2_k_index_wd = regr_m2_GL2_wd_k,
+         m2_shannon_wd = regr_m2_GL2_wd_s,
+         m2_abundance_wd = regr_m2_GL2_wd_a,
+         m2_rel_abundance_wd = regr_m2_GL2_wd_ra,
+         m2_k_index_v = regr_m2_GL2_v_k,
+         m2_shannon_v = regr_m2_GL2_v_s,
+         m2_abundance_v = regr_m2_GL2_v_a,
+         m2_rel_abundance_v = regr_m2_GL2_v_ra,
          obs_k_index = k_index,
          obs_shannon = shannon,
-         obs_abundance = abundance)
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
 
-# L2
-data_L2 <- cbind(regr_rf_data_L2_wd_k, regr_rf_data_L2_wd_s, regr_rf_data_L2_wd_a, regr_rf_data_L2_v_k, regr_rf_data_L2_v_s, regr_rf_data_L2_v_a, L2) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_L2_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_L2_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_L2_wd_a,
-         rf_pred_k_index_v = regr_rf_data_L2_v_k,
-         rf_pred_shannon_v = regr_rf_data_L2_v_s,
-         rf_pred_abundance_v = regr_rf_data_L2_v_a,
+# L2 --------------------------------------------------------------------------
+data_L2 <- cbind(regr_L2_wd_k, regr_L2_wd_s, regr_L2_wd_a, regr_L2_wd_ra, regr_L2_v_k, regr_L2_v_s, regr_L2_v_a, regr_L2_v_ra, regr_m2_L2_wd_k, regr_m2_L2_wd_s, regr_m2_L2_wd_a, regr_m2_L2_wd_ra, regr_m2_L2_v_k, regr_m2_L2_v_s, regr_m2_L2_v_a, regr_m2_L2_v_ra, L2) |>
+  dplyr::rename(auto_k_index_wd = regr_L2_wd_k,
+         auto_shannon_wd = regr_L2_wd_s,
+         auto_abundance_wd = regr_L2_wd_a,
+         auto_rel_abundance_wd = regr_L2_wd_ra,
+         auto_k_index_v = regr_L2_v_k,
+         auto_shannon_v = regr_L2_v_s,
+         auto_abundance_v = regr_L2_v_a,
+         auto_rel_abundance_v = regr_L2_v_ra,
+         m2_k_index_wd = regr_m2_L2_wd_k,
+         m2_shannon_wd = regr_m2_L2_wd_s,
+         m2_abundance_wd = regr_m2_L2_wd_a,
+         m2_rel_abundance_wd = regr_m2_L2_wd_ra,
+         m2_k_index_v = regr_m2_L2_v_k,
+         m2_shannon_v = regr_m2_L2_v_s,
+         m2_abundance_v = regr_m2_L2_v_a,
+         m2_rel_abundance_v = regr_m2_L2_v_ra,
          obs_k_index = k_index,
          obs_shannon = shannon,
-         obs_abundance = abundance)
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
 
-# M1
-data_M1 <- cbind(regr_rf_data_M1_wd_k, regr_rf_data_M1_wd_s, regr_rf_data_M1_wd_a, regr_rf_data_M1_v_k, regr_rf_data_M1_v_s, regr_rf_data_M1_v_a, M1) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_M1_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_M1_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_M1_wd_a,
-         rf_pred_k_index_v = regr_rf_data_M1_v_k,
-         rf_pred_shannon_v = regr_rf_data_M1_v_s,
-         rf_pred_abundance_v = regr_rf_data_M1_v_a,
+# M1 --------------------------------------------------------------------------
+data_M1 <- cbind(regr_M1_wd_k, regr_M1_wd_s, regr_M1_wd_a, regr_M1_wd_ra, regr_M1_v_k, regr_M1_v_s, regr_M1_v_a, regr_M1_v_ra, regr_m2_M1_wd_k, regr_m2_M1_wd_s, regr_m2_M1_wd_a, regr_m2_M1_wd_ra, regr_m2_M1_v_k, regr_m2_M1_v_s, regr_m2_M1_v_a, regr_m2_M1_v_ra, M1) |>
+  dplyr::rename(auto_k_index_wd = regr_M1_wd_k,
+         auto_shannon_wd = regr_M1_wd_s,
+         auto_abundance_wd = regr_M1_wd_a,
+         auto_rel_abundance_wd = regr_M1_wd_ra,
+         auto_k_index_v = regr_M1_v_k,
+         auto_shannon_v = regr_M1_v_s,
+         auto_abundance_v = regr_M1_v_a,
+         auto_rel_abundance_v = regr_M1_v_ra,
+         m2_k_index_wd = regr_m2_M1_wd_k,
+         m2_shannon_wd = regr_m2_M1_wd_s,
+         m2_abundance_wd = regr_m2_M1_wd_a,
+         m2_rel_abundance_wd = regr_m2_M1_wd_ra,
+         m2_k_index_v = regr_m2_M1_v_k,
+         m2_shannon_v = regr_m2_M1_v_s,
+         m2_abundance_v = regr_m2_M1_v_a,
+         m2_rel_abundance_v = regr_m2_M1_v_ra,
          obs_k_index = k_index,
          obs_shannon = shannon,
-         obs_abundance = abundance)
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
 
-# S1
-data_S1 <- cbind(regr_rf_data_S1_wd_k, regr_rf_data_S1_wd_s, regr_rf_data_S1_wd_a, regr_rf_data_S1_v_k, regr_rf_data_S1_v_s, regr_rf_data_S1_v_a, S1) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_S1_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_S1_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_S1_wd_a,
-         rf_pred_k_index_v = regr_rf_data_S1_v_k,
-         rf_pred_shannon_v = regr_rf_data_S1_v_s,
-         rf_pred_abundance_v = regr_rf_data_S1_v_a,
+# S1 --------------------------------------------------------------------------
+data_S1 <- cbind(regr_S1_wd_k, regr_S1_wd_s, regr_S1_wd_a, regr_S1_wd_ra, regr_S1_v_k, regr_S1_v_s, regr_S1_v_a, regr_S1_v_ra, regr_m2_S1_wd_k, regr_m2_S1_wd_s, regr_m2_S1_wd_a, regr_m2_S1_wd_ra, regr_m2_S1_v_k, regr_m2_S1_v_s, regr_m2_S1_v_a, regr_m2_S1_v_ra, S1) |>
+  dplyr::rename(auto_k_index_wd = regr_S1_wd_k,
+         auto_shannon_wd = regr_S1_wd_s,
+         auto_abundance_wd = regr_S1_wd_a,
+         auto_rel_abundance_wd = regr_S1_wd_ra,
+         auto_k_index_v = regr_S1_v_k,
+         auto_shannon_v = regr_S1_v_s,
+         auto_abundance_v = regr_S1_v_a,
+         auto_rel_abundance_v = regr_S1_v_ra,
+         m2_k_index_wd = regr_m2_S1_wd_k,
+         m2_shannon_wd = regr_m2_S1_wd_s,
+         m2_abundance_wd = regr_m2_S1_wd_a,
+         m2_rel_abundance_wd = regr_m2_S1_wd_ra,
+         m2_k_index_v = regr_m2_S1_v_k,
+         m2_shannon_v = regr_m2_S1_v_s,
+         m2_abundance_v = regr_m2_S1_v_a,
+         m2_rel_abundance_v = regr_m2_S1_v_ra,
          obs_k_index = k_index,
          obs_shannon = shannon,
-         obs_abundance = abundance)
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
 
-# S2
-data_S2 <- cbind(regr_rf_data_S2_wd_k, regr_rf_data_S2_wd_s, regr_rf_data_S2_wd_a, regr_rf_data_S2_v_k, regr_rf_data_S2_v_s, regr_rf_data_S2_v_a, S2) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_S2_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_S2_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_S2_wd_a,
-         rf_pred_k_index_v = regr_rf_data_S2_v_k,
-         rf_pred_shannon_v = regr_rf_data_S2_v_s,
-         rf_pred_abundance_v = regr_rf_data_S2_v_a,
+# S2 --------------------------------------------------------------------------
+data_S2 <- cbind(regr_S2_wd_k, regr_S2_wd_s, regr_S2_wd_a, regr_S2_wd_ra, regr_S2_v_k, regr_S2_v_s, regr_S2_v_a, regr_S2_v_ra, regr_m2_S2_wd_k, regr_m2_S2_wd_s, regr_m2_S2_wd_a, regr_m2_S2_wd_ra, regr_m2_S2_v_k, regr_m2_S2_v_s, regr_m2_S2_v_a, regr_m2_S2_v_ra, S2) |>
+  dplyr::rename(auto_k_index_wd = regr_S2_wd_k,
+         auto_shannon_wd = regr_S2_wd_s,
+         auto_abundance_wd = regr_S2_wd_a,
+         auto_rel_abundance_wd = regr_S2_wd_ra,
+         auto_k_index_v = regr_S2_v_k,
+         auto_shannon_v = regr_S2_v_s,
+         auto_abundance_v = regr_S2_v_a,
+         auto_rel_abundance_v = regr_S2_v_ra,
+         m2_k_index_wd = regr_m2_S2_wd_k,
+         m2_shannon_wd = regr_m2_S2_wd_s,
+         m2_abundance_wd = regr_m2_S2_wd_a,
+         m2_rel_abundance_wd = regr_m2_S2_wd_ra,
+         m2_k_index_v = regr_m2_S2_v_k,
+         m2_shannon_v = regr_m2_S2_v_s,
+         m2_abundance_v = regr_m2_S2_v_a,
+         m2_rel_abundance_v = regr_m2_S2_v_ra,
          obs_k_index = k_index,
          obs_shannon = shannon,
-         obs_abundance = abundance)
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
 
-# TH4
-data_TH4 <- cbind(regr_rf_data_TH4_wd_k, regr_rf_data_TH4_wd_s, regr_rf_data_TH4_wd_a, regr_rf_data_TH4_v_k, regr_rf_data_TH4_v_s, regr_rf_data_TH4_v_a, TH4) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_TH4_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_TH4_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_TH4_wd_a,
-         rf_pred_k_index_v = regr_rf_data_TH4_v_k,
-         rf_pred_shannon_v = regr_rf_data_TH4_v_s,
-         rf_pred_abundance_v = regr_rf_data_TH4_v_a,
-         obs_k_index = k_index,
-         obs_shannon = shannon,
-         obs_abundance = abundance)
 
-# VR3
-data_VR3 <- cbind(regr_rf_data_VR3_wd_k, regr_rf_data_VR3_wd_s, regr_rf_data_VR3_wd_a, regr_rf_data_VR3_v_k, regr_rf_data_VR3_v_s, regr_rf_data_VR3_v_a, VR3) |>
-  rename(rf_pred_k_index_2 = regr_rf_data_VR3_wd_k,
-         rf_pred_shannon_2 = regr_rf_data_VR3_wd_s,
-         rf_pred_abundance_2 = regr_rf_data_VR3_wd_a,
-         rf_pred_k_index_v = regr_rf_data_VR3_v_k,
-         rf_pred_shannon_v = regr_rf_data_VR3_v_s,
-         rf_pred_abundance_v = regr_rf_data_VR3_v_a,
+# TH4 -------------------------------------------------------------------------
+data_TH4 <- cbind(regr_TH4_wd_k, regr_TH4_wd_s, regr_TH4_wd_a, regr_TH4_wd_ra, regr_TH4_v_k, regr_TH4_v_s, regr_TH4_v_a, regr_TH4_v_ra, regr_m2_TH4_wd_k, regr_m2_TH4_wd_s, regr_m2_TH4_wd_a, regr_m2_TH4_wd_ra, regr_m2_TH4_v_k, regr_m2_TH4_v_s, regr_m2_TH4_v_a, regr_m2_TH4_v_ra, TH4) |>
+  dplyr::rename(auto_k_index_wd = regr_TH4_wd_k,
+         auto_shannon_wd = regr_TH4_wd_s,
+         auto_abundance_wd = regr_TH4_wd_a,
+         auto_rel_abundance_wd = regr_TH4_wd_ra,
+         auto_k_index_v = regr_TH4_v_k,
+         auto_shannon_v = regr_TH4_v_s,
+         auto_abundance_v = regr_TH4_v_a,
+         auto_rel_abundance_v = regr_TH4_v_ra,
+         m2_k_index_wd = regr_m2_TH4_wd_k,
+         m2_shannon_wd = regr_m2_TH4_wd_s,
+         m2_abundance_wd = regr_m2_TH4_wd_a,
+         m2_rel_abundance_wd = regr_m2_TH4_wd_ra,
+         m2_k_index_v = regr_m2_TH4_v_k,
+         m2_shannon_v = regr_m2_TH4_v_s,
+         m2_abundance_v = regr_m2_TH4_v_a,
+         m2_rel_abundance_v = regr_m2_TH4_v_ra,
          obs_k_index = k_index,
          obs_shannon = shannon,
-         obs_abundance = abundance) 
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
+
+
+# VR3 -------------------------------------------------------------------------
+data_VR3 <- cbind(regr_VR3_wd_k, regr_VR3_wd_s, regr_VR3_wd_a, regr_VR3_wd_ra, regr_VR3_v_k, regr_VR3_v_s, regr_VR3_v_a, regr_VR3_v_ra, regr_m2_VR3_wd_k, regr_m2_VR3_wd_s, regr_m2_VR3_wd_a, regr_m2_VR3_wd_ra, regr_m2_VR3_v_k, regr_m2_VR3_v_s, regr_m2_VR3_v_a, regr_m2_VR3_v_ra, VR3) |>
+  dplyr::rename(auto_k_index_wd = regr_VR3_wd_k,
+         auto_shannon_wd = regr_VR3_wd_s,
+         auto_abundance_wd = regr_VR3_wd_a,
+         auto_rel_abundance_wd = regr_VR3_wd_ra,
+         auto_k_index_v = regr_VR3_v_k,
+         auto_shannon_v = regr_VR3_v_s,
+         auto_abundance_v = regr_VR3_v_a,
+         auto_rel_abundance_v = regr_VR3_v_ra,
+         m2_k_index_wd = regr_m2_VR3_wd_k,
+         m2_shannon_wd = regr_m2_VR3_wd_s,
+         m2_abundance_wd = regr_m2_VR3_wd_a,
+         m2_rel_abundance_wd = regr_m2_VR3_wd_ra,
+         m2_k_index_v = regr_m2_VR3_v_k,
+         m2_shannon_v = regr_m2_VR3_v_s,
+         m2_abundance_v = regr_m2_VR3_v_a,
+         m2_rel_abundance_v = regr_m2_VR3_v_ra,
+         obs_k_index = k_index,
+         obs_shannon = shannon,
+         obs_abundance = abundance,
+         obs_rel_abundance = rel_abundance)
 ```
 
-### Results from Extraction 
+## Results from Extraction 
 ```{r}
 # bind results together 
 # data_TH4 fehlt noch
 regr_analysis <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, data_TH4, data_VR3)
 
 # export to .csv file
-write.csv(regr_analysis, "Stat_Analysis/ml_regr_analysis_rf.csv", row.names = FALSE)
+write.csv(regr_analysis, "Stat_Analysis/stat_analysis_data/regr_analysis_rf.csv", row.names = FALSE)
 ```
