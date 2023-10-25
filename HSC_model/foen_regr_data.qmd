@@ -390,5 +390,5 @@ data_VR3 <- cbind(regr_data_VR3, univariate_VR3) |>
 results <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, data_TH4, data_VR3)
 
 # export results to .csv dataframe
-write.csv(results, "Stat_Analysis/hsc_regr_analysis.csv", row.names = FALSE)
+write.csv(results, "Stat_Analysis/stat_analysis_data/hsc_regr_analysis.csv", row.names = FALSE)
 ```

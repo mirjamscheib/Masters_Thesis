@@ -1086,7 +1086,7 @@ xgb_wd_k <- xgboost(data = data.matrix(trainx_wd_k[ ,-1]),
 
 # With shannon index as response
 #         eta nrounds max_depth subsample 
-#1: 0.1752399     158         3  0.688202          
+#1: 0.1752399     158         3  0.688202           
 xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
                      label = as.numeric(as.character(training_wd_s$shannon)),
                      eta = 0.1752399,
@@ -1097,7 +1097,7 @@ xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
 
 # With abundance as response
 #         eta nrounds max_depth subsample 
-#1: 0.3762802     382        10 0.6743872          
+#1: 0.3762802     382        10 0.6743872           
 xgb_wd_a <- xgboost(data = data.matrix(trainx_wd_a[ ,-1]),
                      label = as.numeric(as.character(training_wd_a$abundance)),
                      eta = 0.3762802,
@@ -1153,7 +1153,7 @@ xgb_samp_a <- xgboost(data = data.matrix(trainx_samp_a[ ,-1]),
 
 # With rel_abundance as response 
 #         eta nrounds max_depth subsample 
-#1: 0.3418959     720         9 0.5849629         
+#1: 0.3418959     720         9 0.5849629        
 xgb_samp_ra <- xgboost(data = data.matrix(trainx_samp_ra[ ,-1]),
                      label = as.numeric(as.character(training_samp_ra$rel_abundance)),
                      eta = 0.3418959,
@@ -1176,7 +1176,7 @@ xgb_sec_k <- xgboost(data = data.matrix(trainx_sec_k[ ,-1]),
 
 # With shannon index as response 
 #        eta nrounds max_depth subsample 
-#1: 0.4971499     170        10 0.7408772                       
+#1: 0.4971499     170        10 0.7408772                      
 xgb_sec_s <- xgboost(data = data.matrix(trainx_sec_s[ ,-1]),
                      label = as.numeric(as.character(training_sec_s$shannon)),
                      eta = 0.4971499,
