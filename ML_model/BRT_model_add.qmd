@@ -1166,46 +1166,46 @@ xgb_samp_ra <- xgboost(data = data.matrix(trainx_samp_ra[ ,-1]),
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #         eta nrounds max_depth subsample 
-#1: 0.8963767     336         9 0.6946889            
+#1: 0.6384141     846         5 0.5295119             
 xgb_sec_k <- xgboost(data = data.matrix(trainx_sec_k[ ,-1]),
                      label = as.numeric(as.character(training_sec_k$k_index)),
-                     eta = 0.8963767,
-                     max_depth = 9,
-                     nrounds = 336,
-                     subsample = 0.6946889,
+                     eta = 0.6384141,
+                     max_depth = 5,
+                     nrounds = 846,
+                     subsample = 0.5295119,
                      objective = "reg:linear")
 
 # With shannon index as response 
 #         eta nrounds max_depth subsample 
-#1: 0.5390005     122         6 0.5618456              
+#1: 0.1060275     584         3 0.6024684              
 xgb_sec_s <- xgboost(data = data.matrix(trainx_sec_s[ ,-1]),
                      label = as.numeric(as.character(training_sec_s$shannon)),
-                     eta = 0.5390005,
-                     max_depth = 6,
-                     nrounds = 122,
-                     subsample = 0.5618456,
+                     eta = 0.1060275,
+                     max_depth = 3,
+                     nrounds = 584,
+                     subsample = 0.6024684,
                      objective = "reg:linear")
 
 # With abundance as response
 #         eta nrounds max_depth subsample 
-#1: 0.4810083     506        10  0.553183                
+#1: 0.396339     188        10 0.5991595                
 xgb_sec_a <- xgboost(data = data.matrix(trainx_sec_a[ ,-1]),
                      label = as.numeric(as.character(training_sec_a$abundance)),
-                     eta = 0.4810083,
+                     eta = 0.396339,
                      max_depth = 10,
-                     nrounds = 506,
-                     subsample = 0.553183,
+                     nrounds = 188,
+                     subsample = 0.5991595,
                      objective = "reg:linear")
 
 # With rel_abundance as response 
 #        eta nrounds max_depth subsample 
-#1: 0.120015     277         9  0.544253               
+#1: 0.7864366     240         8 0.5590043               
 xgb_sec_ra <- xgboost(data = data.matrix(trainx_sec_ra[ ,-1]),
                      label = as.numeric(as.character(training_sec_ra$rel_abundance)),
-                     eta = 0.120015,
-                     max_depth = 9,
-                     nrounds = 277,
-                     subsample = 0.544253,
+                     eta = 0.7864366,
+                     max_depth = 8,
+                     nrounds = 240,
+                     subsample = 0.5590043,
                      objective = "reg:linear")
 ```
 
@@ -1349,54 +1349,51 @@ xgb_samp_ra_c <- xgboost(data = data.matrix(trainx_samp_ra_c[ ,-1]),
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #         eta nrounds max_depth subsample 
-#1: 0.8963767     336         9 0.6946889            
+#1: 0.6384141     846         5 0.5295119             
 xgb_sec_k_c <- xgboost(data = data.matrix(trainx_sec_k_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_k_c$k_index)),
-                     eta = 0.8963767,
-                     max_depth = 9,
-                     nrounds = 336,
-                     subsample = 0.6946889,
+                     eta = 0.6384141,
+                     max_depth = 5,
+                     nrounds = 846,
+                     subsample = 0.5295119,
                      objective = "reg:linear")
 
 # With shannon index as response 
 #         eta nrounds max_depth subsample 
-#1: 0.5390005     122         6 0.5618456              
+#1: 0.1060275     584         3 0.6024684              
 xgb_sec_s_c <- xgboost(data = data.matrix(trainx_sec_s_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_s_c$shannon)),
-                     eta = 0.5390005,
-                     max_depth = 6,
-                     nrounds = 122,
-                     subsample = 0.5618456,
+                     eta = 0.1060275,
+                     max_depth = 3,
+                     nrounds = 584,
+                     subsample = 0.6024684,
                      objective = "reg:linear")
 
 # With abundance as response
 #         eta nrounds max_depth subsample 
-#1: 0.4810083     506        10  0.553183                
+#1: 0.396339     188        10 0.5991595                
 xgb_sec_a_c <- xgboost(data = data.matrix(trainx_sec_a_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_a_c$abundance)),
-                     eta = 0.4810083,
+                     eta = 0.396339,
                      max_depth = 10,
-                     nrounds = 506,
-                     subsample = 0.553183,
+                     nrounds = 188,
+                     subsample = 0.5991595,
                      objective = "reg:linear")
 
 # With rel_abundance as response 
 #        eta nrounds max_depth subsample 
-#1: 0.120015     277         9  0.544253               
+#1: 0.7864366     240         8 0.5590043               
 xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_ra_c$rel_abundance)),
-                     eta = 0.120015,
-                     max_depth = 9,
-                     nrounds = 277,
-                     subsample = 0.544253,
+                     eta = 0.7864366,
+                     max_depth = 8,
+                     nrounds = 240,
+                     subsample = 0.5590043,
                      objective = "reg:linear")
 ```
 
-# ! Model Evaluation 
+# Model Evaluation 
 ## Variable Importance
-best_learner <- autotuner_xbrt_v_k$learner[[1]]
-xgb_model <- autotuner_xbrt_v_k$model
-feature_importance <- xgb.importance(model = xgb_model)
 ```{r}
 ### PREDICTORS: VELOCITY ### -------------------------------------------------
 # w/ coordinates
@@ -5771,180 +5768,180 @@ crs(VR3_ezg) <- "EPSG: 2056"
 ```{r}
 # predict ML model to rasters with velocity and wd 
 # GL1 - predictors: v + wd ----------------------------------------------------
-GL1_ezg_wd_k <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-GL1_ezg_wd_s <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-GL1_ezg_wd_a <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-GL1_ezg_wd_ra <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+GL1_ezg_wd_k <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+GL1_ezg_wd_s <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+GL1_ezg_wd_a <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+GL1_ezg_wd_ra <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#GL1_q_wd_k <- terra::predict(GL1_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#GL1_q_wd_s <- terra::predict(GL1_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#GL1_q_wd_a <- terra::predict(GL1_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#GL1_q_wd_ra <- terra::predict(GL1_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#GL1_q_wd_k <- terra::predict(GL1_q, model = autotuner_xbrt_wd_k, fun = predict)
+#GL1_q_wd_s <- terra::predict(GL1_q, model = autotuner_xbrt_wd_s, fun = predict)
+#GL1_q_wd_a <- terra::predict(GL1_q, model = autotuner_xbrt_wd_a, fun = predict)
+#GL1_q_wd_ra <- terra::predict(GL1_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # GL1 - predictor: velocity ---------------------------------------------------
-GL1_ezg_v_k <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-GL1_ezg_v_s <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-GL1_ezg_v_a <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-GL1_ezg_v_ra <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+GL1_ezg_v_k <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+GL1_ezg_v_s <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+GL1_ezg_v_a <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+GL1_ezg_v_ra <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#GL1_q_v_k <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#GL1_q_v_s <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#GL1_q_v_a <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#GL1_q_v_ra <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_ra, fun = predict, index 4)
+#GL1_q_v_k <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#GL1_q_v_s <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#GL1_q_v_a <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#GL1_q_v_ra <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 
 # GL2 - predictors: v + wd ----------------------------------------------------
-GL2_ezg_wd_k <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-GL2_ezg_wd_s <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-GL2_ezg_wd_a <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-GL2_ezg_wd_ra <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+GL2_ezg_wd_k <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+GL2_ezg_wd_s <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+GL2_ezg_wd_a <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+GL2_ezg_wd_ra <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#GL2_q_wd_k <- terra::predict(GL2_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#GL2_q_wd_s <- terra::predict(GL2_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#GL2_q_wd_a <- terra::predict(GL2_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#GL2_q_wd_ra <- terra::predict(GL2_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#GL2_q_wd_k <- terra::predict(GL2_q, model = autotuner_xbrt_wd_k, fun = predict)
+#GL2_q_wd_s <- terra::predict(GL2_q, model = autotuner_xbrt_wd_s, fun = predict)
+#GL2_q_wd_a <- terra::predict(GL2_q, model = autotuner_xbrt_wd_a, fun = predict)
+#GL2_q_wd_ra <- terra::predict(GL2_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # GL2 - predictor: velocity ---------------------------------------------------
-GL2_ezg_v_k <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-GL2_ezg_v_s <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-GL2_ezg_v_a <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-GL2_ezg_v_ra <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+GL2_ezg_v_k <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+GL2_ezg_v_s <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+GL2_ezg_v_a <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+GL2_ezg_v_ra <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#GL2_q_v_k <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#GL2_q_v_s <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#GL2_q_v_a <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#GL2_q_v_ra <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+#GL2_q_v_k <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#GL2_q_v_s <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#GL2_q_v_a <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#GL2_q_v_ra <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 
 # L2 - predictors: v + wd -----------------------------------------------------
-L2_ezg_wd_k <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-L2_ezg_wd_s <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-L2_ezg_wd_a <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-L2_ezg_wd_ra <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+L2_ezg_wd_k <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+L2_ezg_wd_s <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+L2_ezg_wd_a <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+L2_ezg_wd_ra <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#L2_q_wd_k <- terra::predict(L2_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#L2_q_wd_s <- terra::predict(L2_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#L2_q_wd_a <- terra::predict(L2_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#L2_q_wd_ra <- terra::predict(L2_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#L2_q_wd_k <- terra::predict(L2_q, model = autotuner_xbrt_wd_k, fun = predict)
+#L2_q_wd_s <- terra::predict(L2_q, model = autotuner_xbrt_wd_s, fun = predict)
+#L2_q_wd_a <- terra::predict(L2_q, model = autotuner_xbrt_wd_a, fun = predict)
+#L2_q_wd_ra <- terra::predict(L2_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # L2 - predictor: velocity ----------------------------------------------------
-L2_ezg_v_k <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-L2_ezg_v_s <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-L2_ezg_v_a <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-L2_ezg_v_ra <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+L2_ezg_v_k <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+L2_ezg_v_s <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+L2_ezg_v_a <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+L2_ezg_v_ra <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#L2_q_v_k <- terra::predict(L2_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#L2_q_v_s <- terra::predict(L2_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#L2_q_v_a <- terra::predict(L2_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#L2_q_v_ra <- terra::predict(L2_v_q, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+#L2_q_v_k <- terra::predict(L2_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#L2_q_v_s <- terra::predict(L2_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#L2_q_v_a <- terra::predict(L2_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#L2_q_v_ra <- terra::predict(L2_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 
 # M1  - predictors: v + wd -----------------------------------------------------
-M1_ezg_wd_k <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-M1_ezg_wd_s <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-M1_ezg_wd_a <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-M1_ezg_wd_ra <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+M1_ezg_wd_k <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+M1_ezg_wd_s <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+M1_ezg_wd_a <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+M1_ezg_wd_ra <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#M1_q_wd_k <- terra::predict(M1_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#M1_q_wd_s <- terra::predict(M1_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#M1_q_wd_a <- terra::predict(M1_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#M1_q_wd_ra <- terra::predict(M1_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#M1_q_wd_k <- terra::predict(M1_q, model = autotuner_xbrt_wd_k, fun = predict)
+#M1_q_wd_s <- terra::predict(M1_q, model = autotuner_xbrt_wd_s, fun = predict)
+#M1_q_wd_a <- terra::predict(M1_q, model = autotuner_xbrt_wd_a, fun = predict)
+#M1_q_wd_ra <- terra::predict(M1_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # M1  - predictor: velocity ---------------------------------------------------
-M1_ezg_v_k <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-M1_ezg_v_s <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-M1_ezg_v_a <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-M1_ezg_v_ra <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+M1_ezg_v_k <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+M1_ezg_v_s <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+M1_ezg_v_a <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+M1_ezg_v_ra <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#M1_q_v_k <- terra::predict(M1_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#M1_q_v_s <- terra::predict(M1_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#M1_q_v_a <- terra::predict(M1_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#M1_q_v_ra <- terra::predict(M1_v_q, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+#M1_q_v_k <- terra::predict(M1_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#M1_q_v_s <- terra::predict(M1_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#M1_q_v_a <- terra::predict(M1_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#M1_q_v_ra <- terra::predict(M1_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 
 # S1  - predictors: v + wd ----------------------------------------------------
-S1_ezg_wd_k <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-S1_ezg_wd_s <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-S1_ezg_wd_a <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-S1_ezg_wd_ra <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+S1_ezg_wd_k <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+S1_ezg_wd_s <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+S1_ezg_wd_a <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+S1_ezg_wd_ra <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#S1_q_wd_k <- terra::predict(S1_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#S1_q_wd_s <- terra::predict(S1_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#S1_q_wd_a <- terra::predict(S1_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#S1_q_wd_ra <- terra::predict(S1_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#S1_q_wd_k <- terra::predict(S1_q, model = autotuner_xbrt_wd_k, fun = predict)
+#S1_q_wd_s <- terra::predict(S1_q, model = autotuner_xbrt_wd_s, fun = predict)
+#S1_q_wd_a <- terra::predict(S1_q, model = autotuner_xbrt_wd_a, fun = predict)
+#S1_q_wd_ra <- terra::predict(S1_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # S1  - predictor: velocity ---------------------------------------------------
-S1_ezg_v_k <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-S1_ezg_v_s <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-S1_ezg_v_a <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-S1_ezg_v_ra <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+S1_ezg_v_k <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+S1_ezg_v_s <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+S1_ezg_v_a <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+S1_ezg_v_ra <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#S1_q_v_k <- terra::predict(S1_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#S1_q_v_s <- terra::predict(S1_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#S1_q_v_a <- terra::predict(S1_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#S1_q_v_ra <- terra::predict(S1_v_q, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+#S1_q_v_k <- terra::predict(S1_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#S1_q_v_s <- terra::predict(S1_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#S1_q_v_a <- terra::predict(S1_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#S1_q_v_ra <- terra::predict(S1_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 
 # S2  - predictors: v + wd ----------------------------------------------------
-S2_ezg_wd_k <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-S2_ezg_wd_s <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-S2_ezg_wd_a <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-S2_ezg_wd_ra <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+S2_ezg_wd_k <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+S2_ezg_wd_s <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+S2_ezg_wd_a <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+S2_ezg_wd_ra <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#S2_q_wd_k <- terra::predict(S2_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#S2_q_wd_s <- terra::predict(S2_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#S2_q_wd_a <- terra::predict(S2_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#S2_q_wd_ra <- terra::predict(S2_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#S2_q_wd_k <- terra::predict(S2_q, model = autotuner_xbrt_wd_k, fun = predict)
+#S2_q_wd_s <- terra::predict(S2_q, model = autotuner_xbrt_wd_s, fun = predict)
+#S2_q_wd_a <- terra::predict(S2_q, model = autotuner_xbrt_wd_a, fun = predict)
+#S2_q_wd_ra <- terra::predict(S2_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # S2  - predictor: velocity ---------------------------------------------------
-S2_ezg_v_k <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-S2_ezg_v_s <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-S2_ezg_v_a <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-S2_ezg_v_ra <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+S2_ezg_v_k <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+S2_ezg_v_s <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+S2_ezg_v_a <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+S2_ezg_v_ra <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#S2_q_v_k <- terra::predict(S2_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#S2_q_v_s <- terra::predict(S2_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#S2_q_v_a <- terra::predict(S2_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#S2_q_v_ra <- terra::predict(S2_v_q, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+#S2_q_v_k <- terra::predict(S2_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#S2_q_v_s <- terra::predict(S2_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#S2_q_v_a <- terra::predict(S2_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#S2_q_v_ra <- terra::predict(S2_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 
 # TH4  - predictors: v + wd ---------------------------------------------------
-TH4_ezg_wd_k <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-TH4_ezg_wd_s <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-TH4_ezg_wd_a <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-TH4_ezg_wd_ra <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+TH4_ezg_wd_k <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+TH4_ezg_wd_s <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+TH4_ezg_wd_a <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+TH4_ezg_wd_ra <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#TH4_q_wd_k <- terra::predict(TH4_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#TH4_q_wd_s <- terra::predict(TH4_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#TH4_q_wd_a <- terra::predict(TH4_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#TH4_q_wd_ra <- terra::predict(TH4_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#TH4_q_wd_k <- terra::predict(TH4_q, model = autotuner_xbrt_wd_k, fun = predict)
+#TH4_q_wd_s <- terra::predict(TH4_q, model = autotuner_xbrt_wd_s, fun = predict)
+#TH4_q_wd_a <- terra::predict(TH4_q, model = autotuner_xbrt_wd_a, fun = predict)
+#TH4_q_wd_ra <- terra::predict(TH4_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # TH4  - predictor: velocity --------------------------------------------------
-TH4_ezg_v_k <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-TH4_ezg_v_s <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-TH4_ezg_v_a <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-TH4_ezg_v_ra <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+TH4_ezg_v_k <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+TH4_ezg_v_s <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+TH4_ezg_v_a <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+TH4_ezg_v_ra <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#TH4_q_v_k <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#TH4_q_v_s <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#TH4_q_v_a <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#TH4_q_v_ra <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+#TH4_q_v_k <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#TH4_q_v_s <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#TH4_q_v_a <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#TH4_q_v_ra <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 
 # VR3  - predictors: v + wd ---------------------------------------------------
-VR3_ezg_wd_k <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-VR3_ezg_wd_s <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-VR3_ezg_wd_a <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-VR3_ezg_wd_ra <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+VR3_ezg_wd_k <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_k, fun = predict)
+VR3_ezg_wd_s <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_s, fun = predict)
+VR3_ezg_wd_a <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_a, fun = predict)
+VR3_ezg_wd_ra <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
 
-#VR3_q_wd_k <- terra::predict(VR3_q, model = autotuner_xbrt_wd_k, fun = predict, index = 5)
-#VR3_q_wd_s <- terra::predict(VR3_q, model = autotuner_xbrt_wd_s, fun = predict, index = 5)
-#VR3_q_wd_a <- terra::predict(VR3_q, model = autotuner_xbrt_wd_a, fun = predict, index = 5)
-#VR3_q_wd_ra <- terra::predict(VR3_q, model = autotuner_xbrt_wd_ra, fun = predict, index = 5)
+#VR3_q_wd_k <- terra::predict(VR3_q, model = autotuner_xbrt_wd_k, fun = predict)
+#VR3_q_wd_s <- terra::predict(VR3_q, model = autotuner_xbrt_wd_s, fun = predict)
+#VR3_q_wd_a <- terra::predict(VR3_q, model = autotuner_xbrt_wd_a, fun = predict)
+#VR3_q_wd_ra <- terra::predict(VR3_q, model = autotuner_xbrt_wd_ra, fun = predict)
 
 # VR3  - predictor: velocity --------------------------------------------------
-VR3_ezg_v_k <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-VR3_ezg_v_s <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-VR3_ezg_v_a <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-VR3_ezg_v_ra <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+VR3_ezg_v_k <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
+VR3_ezg_v_s <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
+VR3_ezg_v_a <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
+VR3_ezg_v_ra <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
 
-#VR3_q_v_k <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_k, fun = predict, index = 4)
-#VR3_q_v_s <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_s, fun = predict, index = 4)
-#VR3_q_v_a <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_a, fun = predict, index = 4)
-#VR3_q_v_ra <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_ra, fun = predict, index = 4)
+#VR3_q_v_k <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_k, fun = predict)
+#VR3_q_v_s <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_s, fun = predict)
+#VR3_q_v_a <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_a, fun = predict)
+#VR3_q_v_ra <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_ra, fun = predict)
 ```
 
 ### Xgboost w/o coordinates
