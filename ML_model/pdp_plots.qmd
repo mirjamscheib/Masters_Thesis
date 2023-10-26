@@ -3748,7 +3748,9 @@ p_v_k_c_rf <- ggplot(v_k_c_rf, aes(velocity, yhat)) +
     y = "k-index",
     title = "Ranger Model without Coordinates"
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
 # save the plots 
 ggsave("ML_model/plots/pdp_v_k_rf.png", plot = p_v_k_rf, width = 6, height = 4)
