@@ -2146,8 +2146,8 @@ pdp_model_v_wd_ra_c <- pdp::partial(xgb_wd_ra_c, pred.var = "velocity", train = 
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_v_wd_ra, "ML_Model/pdp_data/pdp_v_wd_a_brt_add.csv", row.names = FALSE)
-write.csv(pdp_model_v_wd_ra_c, "ML_Model/pdp_data/pdp_v_wd_a_c_brt_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_ra, "ML_Model/pdp_data/pdp_v_wd_ra_brt_add.csv", row.names = FALSE)
+write.csv(pdp_model_v_wd_ra_c, "ML_Model/pdp_data/pdp_v_wd_ra_c_brt_add.csv", row.names = FALSE)
 
 ### froude
 pdp_model_f_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "froude", train = trainx_wd_ra[ ,-1]) |>
@@ -2202,8 +2202,8 @@ pdp_model_wd_ra_c <- pdp::partial(xgb_wd_ra_c, pred.var = "wd_m", train = trainx
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_wd_ra, "ML_Model/pdp_data/pdp_wd_a_brt_add.csv", row.names = FALSE)
-write.csv(pdp_model_wd_ra_c, "ML_Model/pdp_data/pdp_wd_a_c_brt_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_ra, "ML_Model/pdp_data/pdp_wd_ra_brt_add.csv", row.names = FALSE)
+write.csv(pdp_model_wd_ra_c, "ML_Model/pdp_data/pdp_wd_ra_c_brt_add.csv", row.names = FALSE)
 
 ### x/y
 pdp_model_x_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "x", train = trainx_wd_ra[ ,-1]) |>
@@ -2216,8 +2216,8 @@ pdp_model_y_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "y", train = trainx_wd_r
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_x_wd_ra, "ML_Model/pdp_data/pdp_x_wd_a_brt_add.csv", row.names = FALSE)
-write.csv(pdp_model_y_wd_ra, "ML_Model/pdp_data/pdp_y_wd_a_brt_add.csv", row.names = FALSE)
+write.csv(pdp_model_x_wd_ra, "ML_Model/pdp_data/pdp_x_wd_ra_brt_add.csv", row.names = FALSE)
+write.csv(pdp_model_y_wd_ra, "ML_Model/pdp_data/pdp_y_wd_ra_brt_add.csv", row.names = FALSE)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
 # With k_index as response ---------------------------------------------------
