@@ -10474,6 +10474,81 @@ p_wd_s_c_brt_add <- ggplot(wd_s_c_brt_add, aes(x = wd_m, y = yhat)) +
 ggsave("ML_model/plots/pdp_wd_s_brt_add.png", plot = p_wd_s_brt_add, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_wd_s_c_brt_add.png", plot = p_wd_s_c_brt_add, width = 6, height = 5)
 
+### froude 
+p_f_wd_s_brt_add <- ggplot(f_wd_s_brt_add, aes(froude, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Froude",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_f_wd_s_c_brt_add <- ggplot(f_wd_s_c_brt_add, aes(froude, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Froude",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_f_wd_s_brt_add.png", plot = p_f_wd_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_f_wd_s_c_brt_add.png", plot = p_f_wd_s_c_brt_add, width = 6, height = 5)
+
+### shear_stress 
+p_s_wd_s_brt_add <- ggplot(s_wd_s_brt_add, aes(shear_stress, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Shear Stress",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_s_wd_s_c_brt_add <- ggplot(s_wd_s_c_brt_add, aes(shear_stress, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Shear Stress",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_s_wd_s_brt_add.png", plot = p_s_wd_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_s_wd_s_c_brt_add.png", plot = p_s_wd_s_c_brt_add, width = 6, height = 5)
+
+### stream_power 
+p_sp_wd_s_brt_add <- ggplot(sp_wd_s_brt_add, aes(stream_power, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Stream Power",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_sp_wd_s_c_brt_add <- ggplot(sp_wd_s_c_brt_add, aes(stream_power, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Stream Power",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_sp_wd_s_brt_add.png", plot = p_sp_wd_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_sp_wd_s_c_brt_add.png", plot = p_sp_wd_s_c_brt_add, width = 6, height = 5)
+
 ### x/y
 p_x_v_s_brt_add <- ggplot(x_v_s_brt_add, aes(x, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
@@ -10568,6 +10643,80 @@ p_wd_a_c_brt_add <- ggplot(wd_a_c_brt_add, aes(x = wd_m, y = yhat)) +
 ggsave("ML_model/plots/pdp_wd_a_brt_add.png", plot = p_wd_a_brt_add, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_wd_a_c_brt_add.png", plot = p_wd_a_c_brt_add, width = 6, height = 5)
 
+### froude 
+p_f_wd_a_brt_add <- ggplot(f_wd_a_brt_add, aes(froude, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Froude",
+    y = "Absolute Abundance",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_f_wd_a_c_brt_add <- ggplot(f_wd_a_c_brt_add, aes(froude, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Froude",
+    y = "Absolute Abundance",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_f_wd_a_brt_add.png", plot = p_f_wd_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_f_wd_a_c_brt_add.png", plot = p_f_wd_a_c_brt_add, width = 6, height = 5)
+
+### shear_stress 
+p_s_wd_a_brt_add <- ggplot(s_wd_a_brt_add, aes(shear_stress, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Shear Stress",
+    y = "Absolute Abundance",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_s_wd_a_c_brt_add <- ggplot(s_wd_a_c_brt_add, aes(shear_stress, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Shear Stress",
+    y = "Absolute Abundance",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_s_wd_a_brt_add.png", plot = p_s_wd_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_s_wd_a_c_brt_add.png", plot = p_s_wd_a_c_brt_add, width = 6, height = 5)
+
+### stream_power 
+p_sp_wd_a_brt_add <- ggplot(sp_wd_a_brt_add, aes(stream_power, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Stream Power",
+    y = "Absolute Abundance",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_sp_wd_a_c_brt_add <- ggplot(sp_wd_a_c_brt_add, aes(stream_power, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Stream Power",
+    y = "Absolute Abundance",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_sp_wd_a_brt_add.png", plot = p_sp_wd_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_sp_wd_a_c_brt_add.png", plot = p_sp_wd_a_c_brt_add, width = 6, height = 5)
 
 ### x/y
 p_x_v_a_brt_add <- ggplot(x_v_a_brt_add, aes(x, yhat)) + 
@@ -10663,6 +10812,80 @@ p_wd_ra_c_brt_add <- ggplot(wd_ra_c_brt_add, aes(x = wd_m, y = yhat)) +
 ggsave("ML_model/plots/pdp_wd_ra_brt_add.png", plot = p_wd_ra_brt_add, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_wd_ra_c_brt_add.png", plot = p_wd_ra_c_brt_add, width = 6, height = 5)
 
+### froude 
+p_f_wd_ra_brt_add <- ggplot(f_wd_ra_brt_add, aes(froude, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Froude",
+    y = "Relative Abundance",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_f_wd_ra_c_brt_add <- ggplot(f_wd_ra_c_brt_add, aes(froude, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Froude",
+    y = "Relative Abundance",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_f_wd_ra_brt_add.png", plot = p_f_wd_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_f_wd_ra_c_brt_add.png", plot = p_f_wd_ra_c_brt_add, width = 6, height = 5)
+
+### shear_stress 
+p_s_wd_ra_brt_add <- ggplot(s_wd_ra_brt_add, aes(shear_stress, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Shear Stress",
+    y = "Relative Abundance",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_s_wd_ra_c_brt_add <- ggplot(s_wd_ra_c_brt_add, aes(shear_stress, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Shear Stress",
+    y = "Relative Abundance",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_s_wd_ra_brt_add.png", plot = p_s_wd_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_s_wd_ra_c_brt_add.png", plot = p_s_wd_ra_c_brt_add, width = 6, height = 5)
+
+### stream_power 
+p_sp_wd_ra_brt_add <- ggplot(sp_wd_ra_brt_add, aes(stream_power, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Stream Power",
+    y = "Relative Abundance",
+    title = "Xgboost Model with Coordinates"
+  ) +
+  theme_minimal()
+
+p_sp_wd_ra_c_brt_add <- ggplot(sp_wd_ra_c_brt_add, aes(stream_power, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Stream Power",
+    y = "Relative Abundance",
+    title = "Xgboost Model without Coordinates"
+  ) +
+  theme_minimal()
+
+# save the plots 
+ggsave("ML_model/plots/pdp_sp_wd_ra_brt_add.png", plot = p_sp_wd_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_sp_wd_ra_c_brt_add.png", plot = p_sp_wd_ra_c_brt_add, width = 6, height = 5)
 
 ### x/y
 p_x_v_ra_brt_add <- ggplot(x_v_ra_brt_add, aes(x, yhat)) + 
