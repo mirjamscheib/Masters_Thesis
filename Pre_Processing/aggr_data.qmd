@@ -28,62 +28,132 @@ pkgCheck("writexl")
 
 # Load data
 ```{r}
-data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv")
+env_gis <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.csv")
+env_field <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_field.csv")
+data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_univariate.csv")
 ```
 
+# Clean data
+## Environmental GIS/R
+```{r}
+# rename all columns into R friendly language
+env_gis <- env_gis |>
+  dplyr::rename(river = River,
+                river_type = `River type`,
+                hyd_peak_resid_natural = `Hydropeaking, residual flow, natural/near-natural`,
+                reach = `Study site (Untersuchungsstelle)`,
+                catchment_KW_outlet_km2 = `Catchment at KW-outlet [km²]`,
+                catchment_study_site_km2 = `Catchment size from study site [km²]`,
+                unaffected_mean_flow_KW_outlet_m3s = `Unaffected Mean Flow at KW-outlet [m³/s]`,
+                unaffected_mean_flow_study_site_m3s = `Unaffected Mean Flow at study site [m³/s]`,
+                disch_from_FGT_m3s = `Discharge from FGT [m³/s]`,
+                ibch_q_regime = IBCHQREGIM,
+                ecomorph_class = `Ecomorphological Class`,
+                strahler_order = `Strahler order`,
+                altitude_KW_mabsl = `Altitude KW [m.a.s.l.]`,
+                altitude_study_site_mabsl = `Altitude study site [m.a.s.l.]`,
+                dist_study_site_kw_km = `Distance of study site to KW [km]`,
+                nr_tributaries = `Number of tributaries [nr]`,
+                dist_betw_study_sites_uptream_m = `(Upstream) Distance between consecutive study areas [m]`,
+                tributaries_nr_per_km = `Number of tributaries [nr/km]`,
+                long_slope_study_site_mean_percentile = `Longitudinal Slope (mean) at study site [‰]`,
+                trans_slope_study_site_mean_percentile = `Transversal Slope (mean) at study site [‰]`,
+                trans_slope_study_site_sd_percentile = `Transversal Slope (st.dev.) at study site [‰]`,
+                galcier_cover_perc = `Glacier Cover [%]`,
+                agricultural_areas_perc = `Agricultural Areas [%] - Sum of a, o, v, h`,
+                settlement_areas_perc = `Settlement areas [%]`,
+                nr_inhabitants = `Number of inhabitants`,
+                domestic_wastewater_q = `Domestic wastewater discharge`,
+                geology = Geology,
+                biogeo = BIOGEO,
+                mean_diff_total_n_kg_ha_a = `Mean diffuse total nitrogen [kg/ha a]`,
+                mean_diff_total_p_kg_ha_a = `Mean diffuse total phosphor [kg/ha a]`)
+```
+
+## Environmental Field
+```{r}
+# rename all columns into R friendly language 
+env_field <- env_field |>
+  dplyr::rename(river = River,
+                reach = `Reach (Untersuchungsstelle)`,
+                flow_regime = `Flow regime`,
+                date_mzb_sampling = `Date of MZB-Sampling`,
+                field_screen_id = `Field-Screening identification`,
+                lab_id = `Laboratory identification`,
+                wd_cm_mean = `Water depth [cm] MEAN`,
+                wd_cm_median = `Water depth [cm] MEDIAN`,
+                wd_cm_sd = `Water depth [cm] SD`,
+                vel_cm_s_mean = `Flow velocity [v60, cm/s] MEAN`,
+                vel_cm_s_median = `Flow velocity [v60, cm/s] MEDIAN`,
+                vel_cm_s_sd = `Flow velocity [v60, cm/s] SD`,
+                dist_we_m_mean = `Distance to water edge [m] MEAN`,
+                dist_we_m_median = `Distance to water edge [m] MEDIAN`,
+                dist_we_m_sd = `Distance to water edge [m] SD`,
+                clog_3_mean = `Clogging (1-3) MEAN`,
+                clog_3_median = `Clogging (1-3) MEDIAN`,
+                clog_3_sd = `Clogging (1-3) SD`,
+                nr_sub_types = `Number of substrate types`,
+                mobile_blocks_above_250mm_perc = `mobile blocks > 250 mm in %`,
+                nat_art_surfaces_above_250mm_perc = `natural and artificial surfaces  > 250 mm in %`,
+                larg_min_sed_250_25mm_perc = `larger mineral sediments 250 mm > x > 25 mm in %`,
+                gravel_25_2mm_perc = `gravel 25 mm > x > 2.5 mm in %`,
+                sand_silt_below_2mm_perc = `sand and silt < 2.5 mm in %`,
+                alg_cover_3_mean = `Algae cover (1-3) MEAN`,
+                alg_cover_3_median = `Algae cover (1-3) MEDIAN`,
+                alg_cover_3_sd = `Algae cover (1-3) SD`,
+                moos_cover_3_mean = `Moos cover (1-3) MEAN`,
+                moos_cover_3_median = `Moos cover (1-3) MEDIAN`,
+                moos_cover_3_sd = `Moos cover (1-3) SD`,
+                cpom_cover_3_mean = `CPOM cover (1-3) MEAN`,
+                cpom_cover_3_median = `CPOM cover (1-3) MEDIAN`,
+                cpom_cover_3_sd = `CPOM cover (1-3) SD`,
+                conduct_ys_cm_mean = `Conductivity [μs/cm] MEAN`,
+                conduct_ys_cm_median = `Conductivity [μs/cm] MEDIAN`,
+                conduct_ys_cm_sd = `Conductivity [μs/cm] SD`,
+                wtemp_c_mean = `Water T [°C] MEAN `,
+                wtemp_c_median = `Water T [°C] MEDIAN`,
+                wtemp_c_sd = `Water T [°C] SD`,
+                ox_mgl_mean = `Oxygen [mg/l] MEAN `,
+                ox_mgl_median = `Oxygen [mg/l] MEDIAN`,
+                ox_mgl_sd = `Oxygen [mg/l] SD`,
+                pH_mean = `pH [-] MEAN `,
+                pH_median = `pH [-] MEDIAN `,
+                pH_sd = `pH [-] SD `,
+                turb_ntu_mean = `Turbidity [NTU] MEAN `,
+                turb_ntu_median = `Turbidity [NTU] MEDIAN `,
+                turb_ntu_sd = `Turbidity [NTU] SD`,
+                cat_vel_5_mean = `Category Flow velocity (5 Bewohnbarkeits-klasse) MEAN`,
+                cat_vel_5_median = `Category Flow velocity (5 Bewohnbarkeits-klasse) MEDIAN`,
+                cat_vel_5_sd = `Category Flow velocity (5 Bewohnbarkeits-klasse) SD`,
+                cat_sub_5_mean = `Category substrate (5 Bewohnbarkeits-klasse) MEAN`,
+                cat_sub_5_median = `Category substrate (5 Bewohnbarkeits-klasse) MEDIAN`,
+                cat_sub_5_sd = `Category substrate (5 Bewohnbarkeits-klasse) SD`)
+```
+
+## Combine data
+```{r}
+# combine field and GIS data with a full join
+env_joined <- full_join(env_field, env_gis, by = "reach", relationship = "many-to-many")
+```
+
+                
 # Aggregate 
 ```{r}
-# calculate and extract the most occuring characters per river section 
-sub_type <- data |>
-  group_by(Reach_Untersuchungsstelle) |>
-  summarise(counts_sub = table(sub_type),
-            max_sub = max(counts_sub),
-            most_sub = names(counts_sub[counts_sub == max_sub])) |>
-  dplyr::select(-counts_sub, -max_sub)
-
-clog_3 <- data |>
-  group_by(Reach_Untersuchungsstelle) |>
-  summarise(counts_clog_3 = table(clog_3_class),
-            max_clog_3 = max(counts_clog_3),
-            most_clog_3 = names(counts_clog_3[counts_clog_3 ==
-                                                      max_clog_3])) |>
-  dplyr::select(-counts_clog_3, -max_clog_3)
-
-clog_6 <- data |>
-  group_by(Reach_Untersuchungsstelle) |>
-  summarise(counts_clog_6 = table(clog_6_class),
-            max_clog_6 = max(counts_clog_6),
-            most_clog_6 = names(counts_clog_6[counts_clog_6 ==
-                                                      max_clog_6])) |>
-  dplyr::select(-counts_clog_6, -max_clog_6)
-
 # calculate mean value for each variable
 data_aggr_mean <- data |>
   group_by(Reach_Untersuchungsstelle) |>
-  summarise(dist_w = mean(dist_w, na.rm = TRUE),
-            velocity = mean(velocity, na.rm = TRUE),
-            cat_velocity = mean(cat_velocity, na.rm = TRUE),
-            wd_m = mean(wd_m, na.rm = TRUE),
-            cat_water_depth = mean(Category_Water_depth, na.rm = TRUE),
-            alg_cover = mean(alg_cover, na.rm = TRUE),
-            moos_cover = mean(moos_cover, na.rm = TRUE),
-            cpom_cover = mean(cpom_cover, na.rm = TRUE),
-            pH_before = mean(pH_before, na.rm = TRUE),
-            pH_during = mean(pH_during, na.rm = TRUE),
-            pH_after = mean(pH_after, na.rm = TRUE),
-            conduct_before = mean(conduct_before, na.rm = TRUE),
-            conduct_during = mean(conduct_during, na.rm = TRUE),
-            conduct_after = mean(conduct_after, na.rm = TRUE),
-            ox_before = mean(ox_before, na.rm = TRUE),
-            ox_during = mean(ox_during, na.rm = TRUE),
-            ox_after = mean(ox_after, na.rm = TRUE),
-            ox_sat_before = mean(ox_sat_before, na.rm = TRUE),
-            ox_sat_during = mean(ox_sat_during, na.rm = TRUE),
-            ox_sat_after = mean(ox_sat_after, na.rm = TRUE),
-            k_index = mean(k_index),
-            shannon = mean(shannon),
-            abundance = mean(abundance),
-            rel_abundance = mean(rel_abundance))
+  summarise(k_index_mean = mean(k_index),
+            k_index_median = median(k_index),
+            k_index_sd = sd(k_index),
+            shannon_mean = mean(shannon),
+            shannon_median = median(shannon),
+            shannon_sd = sd(shannon),
+            abundance_mean = mean(abundance),
+            abundance_median = median(abundance),
+            abundance_sd = sd(abundance),
+            rel_abundance_mean = mean(rel_abundance),
+            rel_abundance_median = median(rel_abundance),
+            rel_abundance_sd = sd(rel_abundance))
 
 
 # calculate standard deviation for each variable
