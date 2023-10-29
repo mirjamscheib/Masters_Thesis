@@ -30,7 +30,7 @@ pkgCheck("writexl")
 ```{r}
 env_gis <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.csv")
 env_field <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_field.csv")
-data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_univariate.csv")
+data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv")
 ```
 
 # Clean data
@@ -68,6 +68,10 @@ env_gis <- env_gis |>
                 biogeo = BIOGEO,
                 mean_diff_total_n_kg_ha_a = `Mean diffuse total nitrogen [kg/ha a]`,
                 mean_diff_total_p_kg_ha_a = `Mean diffuse total phosphor [kg/ha a]`)
+
+# select only rows with relevant information 
+# below row 131 there are information in rows, which cannot be used
+env_gis <- env_gis[c(1:131), ]
 ```
 
 ## Environmental Field
@@ -128,20 +132,24 @@ env_field <- env_field |>
                 cat_sub_5_mean = `Category substrate (5 Bewohnbarkeits-klasse) MEAN`,
                 cat_sub_5_median = `Category substrate (5 Bewohnbarkeits-klasse) MEDIAN`,
                 cat_sub_5_sd = `Category substrate (5 Bewohnbarkeits-klasse) SD`)
+
+# select only rows with relevant information 
+# below row 131 there are information in rows, which cannot be used
+env_field <- env_field[c(1:54), ]
 ```
 
-## Combine data
+## Combine environmental data
 ```{r}
 # combine field and GIS data with a full join
 env_joined <- full_join(env_field, env_gis, by = "reach", relationship = "many-to-many")
 ```
-
                 
-# Aggregate 
+# Aggregate MZB data
 ```{r}
 # calculate mean value for each variable
-data_aggr_mean <- data |>
-  group_by(Reach_Untersuchungsstelle) |>
+data_aggr <- data |>
+  dplyr::rename(reach = Reach_Untersuchungsstelle) |>
+  group_by(reach) |>
   summarise(k_index_mean = mean(k_index),
             k_index_median = median(k_index),
             k_index_sd = sd(k_index),
@@ -154,46 +162,15 @@ data_aggr_mean <- data |>
             rel_abundance_mean = mean(rel_abundance),
             rel_abundance_median = median(rel_abundance),
             rel_abundance_sd = sd(rel_abundance))
+```
 
-
-# calculate standard deviation for each variable
-data_aggr_sd <- data |>
-  group_by(Reach_Untersuchungsstelle) |>
-  summarise(dist_w_sd = sd(dist_w, na.rm = TRUE),
-            velocity_sd = sd(velocity, na.rm = TRUE),
-            cat_velocity_sd = sd(cat_velocity, na.rm = TRUE),
-            wd_m_sd = sd(wd_m, na.rm = TRUE),
-            cat_water_depth_sd = sd(Category_Water_depth, na.rm = TRUE),
-            alg_cover_sd = sd(alg_cover, na.rm = TRUE),
-            moos_cover_sd = sd(moos_cover, na.rm = TRUE),
-            cpom_cover_sd = sd(cpom_cover, na.rm = TRUE),
-            pH_before_sd = sd(pH_before, na.rm = TRUE),
-            pH_during_sd = sd(pH_during, na.rm = TRUE),
-            pH_after_sd = sd(pH_after, na.rm = TRUE),
-            conduct_before_sd = sd(conduct_before, na.rm = TRUE),
-            conduct_during_sd = sd(conduct_during, na.rm = TRUE),
-            conduct_after_sd = sd(conduct_after, na.rm = TRUE),
-            ox_before_sd = sd(ox_before, na.rm = TRUE),
-            ox_during_sd = sd(ox_during, na.rm = TRUE),
-            ox_after_sd = sd(ox_after, na.rm = TRUE),
-            ox_sat_before_sd = sd(ox_sat_before, na.rm = TRUE),
-            ox_sat_during_sd = sd(ox_sat_during, na.rm = TRUE),
-            ox_sat_after_sd = sd(ox_sat_after, na.rm = TRUE),
-            k_index_sd = sd(k_index),
-            shannon_sd = sd(shannon),
-            abundance_sd = sd(abundance),
-            rel_abundance_sd = sd(rel_abundance))
-
-# Combine mean and sd dataframes together 
-data_aggr <- data_aggr_mean |>
-  full_join(data_aggr_sd, by = "Reach_Untersuchungsstelle") |>
-  full_join(sub_type, by = "Reach_Untersuchungsstelle") |>
-  full_join(clog_3, by = "Reach_Untersuchungsstelle") |>
-  full_join(clog_6, by = "Reach_Untersuchungsstelle") 
+## Combine environmental and MZB data
+```{r}
+data_end <- full_join(env_joined, data_aggr, by = "reach")
 ```
 
 # Save data
 ```{r}
-write.csv(data_aggr, "Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv", row.names = FALSE)
+write.csv(data_end, "Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv", row.names = FALSE)
 ```
 

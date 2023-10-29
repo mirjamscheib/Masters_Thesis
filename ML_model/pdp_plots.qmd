@@ -3723,7 +3723,7 @@ ga_sec_ra_c_brt_add <- read.delim("ML_Model/pdp_data/pdp_ga_sec_ra_c_brt_add.csv
 
 # Plots
 ## RF normal 
-### Predictor: Velocity
+### ok - Predictor: Velocity
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response ----------------------------------------------------
@@ -3733,9 +3733,7 @@ p_v_k_rf <- ggplot(v_k_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3746,9 +3744,7 @@ p_v_k_c_rf <- ggplot(v_k_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3764,9 +3760,7 @@ p_x_v_k_rf <- ggplot(x_v_k_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3777,9 +3771,7 @@ p_y_v_k_rf <- ggplot(y_v_k_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3796,9 +3788,7 @@ p_v_s_rf <- ggplot(v_s_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3809,9 +3799,7 @@ p_v_s_c_rf <- ggplot(v_s_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3827,9 +3815,7 @@ p_x_v_s_rf <- ggplot(x_v_s_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3840,9 +3826,7 @@ p_y_v_s_rf <- ggplot(y_v_s_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3859,9 +3843,7 @@ p_v_a_rf <- ggplot(v_a_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3872,9 +3854,7 @@ p_v_a_c_rf <- ggplot(v_a_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3890,9 +3870,7 @@ p_x_v_a_rf <- ggplot(x_v_a_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3903,9 +3881,7 @@ p_y_v_a_rf <- ggplot(y_v_a_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3922,9 +3898,7 @@ p_v_ra_rf <- ggplot(v_ra_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3935,9 +3909,7 @@ p_v_ra_c_rf <- ggplot(v_ra_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3953,9 +3925,7 @@ p_x_v_ra_rf <- ggplot(x_v_ra_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3966,9 +3936,7 @@ p_y_v_ra_rf <- ggplot(y_v_ra_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -3979,7 +3947,7 @@ ggsave("ML_model/plots/pdp_x_v_ra_rf.png", plot = p_x_v_ra_rf, width = 6, height
 ggsave("ML_model/plots/pdp_y_v_ra_rf.png", plot = p_y_v_ra_rf, width = 6, height = 5)
 ```
 
-### Predictors: V + WD
+### ok - Predictors: V + WD
 ```{r}
 ### PREDICTOR: V + WD ### ---------------------------------------------------
 # With k_index as response ----------------------------------------------------
@@ -3989,9 +3957,7 @@ p_v_wd_k_rf <- ggplot(v_wd_k_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4002,9 +3968,7 @@ p_v_wd_k_c_rf <- ggplot(v_wd_k_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4020,9 +3984,7 @@ p_wd_k_rf <- ggplot(wd_k_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4033,9 +3995,7 @@ p_wd_k_c_rf <- ggplot(wd_k_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4051,9 +4011,7 @@ p_x_wd_k_rf <- ggplot(x_wd_k_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4064,9 +4022,7 @@ p_y_wd_k_rf <- ggplot(y_wd_k_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4083,9 +4039,7 @@ p_v_s_rf <- ggplot(v_s_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4096,9 +4050,7 @@ p_v_s_c_rf <- ggplot(v_s_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4114,9 +4066,7 @@ p_wd_s_rf <- ggplot(wd_s_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4127,9 +4077,7 @@ p_wd_s_c_rf <- ggplot(wd_s_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4146,9 +4094,7 @@ p_x_v_s_rf <- ggplot(x_v_s_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4159,9 +4105,7 @@ p_y_v_s_rf <- ggplot(y_v_s_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4178,9 +4122,7 @@ p_v_a_rf <- ggplot(v_a_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4191,9 +4133,7 @@ p_v_a_c_rf <- ggplot(v_a_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4209,9 +4149,7 @@ p_wd_a_rf <- ggplot(wd_a_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4222,9 +4160,7 @@ p_wd_a_c_rf <- ggplot(wd_a_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4234,16 +4170,13 @@ p_wd_a_c_rf <- ggplot(wd_a_c_rf, aes(x = wd_m, y = yhat)) +
 ggsave("ML_model/plots/pdp_wd_a_rf.png", plot = p_wd_a_rf, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_wd_a_c_rf.png", plot = p_wd_a_c_rf, width = 6, height = 5)
 
-
 ### x/y
 p_x_v_a_rf <- ggplot(x_v_a_rf, aes(x, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4254,9 +4187,7 @@ p_y_v_a_rf <- ggplot(y_v_a_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4273,9 +4204,7 @@ p_v_ra_rf <- ggplot(v_ra_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4286,9 +4215,7 @@ p_v_ra_c_rf <- ggplot(v_ra_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4304,9 +4231,7 @@ p_wd_ra_rf <- ggplot(wd_ra_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4317,9 +4242,7 @@ p_wd_ra_c_rf <- ggplot(wd_ra_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4329,16 +4252,13 @@ p_wd_ra_c_rf <- ggplot(wd_ra_c_rf, aes(x = wd_m, y = yhat)) +
 ggsave("ML_model/plots/pdp_wd_ra_rf.png", plot = p_wd_ra_rf, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_wd_ra_c_rf.png", plot = p_wd_ra_c_rf, width = 6, height = 5)
 
-
 ### x/y
 p_x_v_ra_rf <- ggplot(x_v_ra_rf, aes(x, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4349,9 +4269,7 @@ p_y_v_ra_rf <- ggplot(y_v_ra_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4362,7 +4280,7 @@ ggsave("ML_model/plots/pdp_x_v_ra_rf.png", plot = p_x_v_ra_rf, width = 6, height
 ggsave("ML_model/plots/pdp_y_v_ra_rf.png", plot = p_y_v_ra_rf, width = 6, height = 5)
 ```
 
-### Predictors: Sampling Locations
+### ok - Predictors: Sampling Locations
 ```{r}
 ### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------------
 # With k_index as response ----------------------------------------------------
@@ -4372,9 +4290,7 @@ p_v_samp_k_rf <- ggplot(v_samp_k_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4385,9 +4301,7 @@ p_v_samp_k_c_rf <- ggplot(v_samp_k_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4403,9 +4317,7 @@ p_wd_samp_k_rf <- ggplot(wd_samp_k_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4416,9 +4328,7 @@ p_wd_samp_k_c_rf <- ggplot(wd_samp_k_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4434,9 +4344,7 @@ p_x_samp_k_rf <- ggplot(x_samp_k_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4447,9 +4355,7 @@ p_y_samp_k_rf <- ggplot(y_samp_k_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4465,9 +4371,7 @@ p_z_samp_k_rf <- ggplot(z_samp_k_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4478,9 +4382,7 @@ p_z_samp_k_c_rf <- ggplot(z_samp_k_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4496,9 +4398,7 @@ p_dist_samp_k_rf <- ggplot(dist_samp_k_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4509,9 +4409,7 @@ p_dist_samp_k_c_rf <- ggplot(dist_samp_k_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4527,9 +4425,7 @@ p_cv_samp_k_rf <- ggplot(cv_samp_k_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4540,9 +4436,7 @@ p_cv_samp_k_c_rf <- ggplot(cv_samp_k_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4558,9 +4452,7 @@ p_ac_samp_k_rf <- ggplot(ac_samp_k_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4571,9 +4463,7 @@ p_ac_samp_k_c_rf <- ggplot(ac_samp_k_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4589,9 +4479,7 @@ p_mc_samp_k_rf <- ggplot(mc_samp_k_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4602,9 +4490,7 @@ p_mc_samp_k_c_rf <- ggplot(mc_samp_k_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4620,9 +4506,7 @@ p_cc_samp_k_rf <- ggplot(cc_samp_k_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4633,9 +4517,7 @@ p_cc_samp_k_c_rf <- ggplot(cc_samp_k_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4651,9 +4533,7 @@ p_clog_3_samp_k_rf <- ggplot(clog_3_samp_k_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4664,9 +4544,7 @@ p_clog_3_samp_k_c_rf <- ggplot(clog_3_samp_k_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4682,9 +4560,7 @@ p_clog_6_samp_k_rf <- ggplot(clog_6_samp_k_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4695,9 +4571,7 @@ p_clog_6_samp_k_c_rf <- ggplot(clog_6_samp_k_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4713,9 +4587,7 @@ p_sub_samp_k_rf <- ggplot(sub_samp_k_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4726,9 +4598,7 @@ p_sub_samp_k_c_rf <- ggplot(sub_samp_k_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4745,9 +4615,7 @@ p_v_samp_s_rf <- ggplot(v_samp_s_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4758,9 +4626,7 @@ p_v_samp_s_c_rf <- ggplot(v_samp_s_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4776,9 +4642,7 @@ p_wd_samp_s_rf <- ggplot(wd_samp_s_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4789,9 +4653,7 @@ p_wd_samp_s_c_rf <- ggplot(wd_samp_s_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4808,9 +4670,7 @@ p_x_samp_s_rf <- ggplot(x_samp_s_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4821,9 +4681,7 @@ p_y_samp_s_rf <- ggplot(y_samp_s_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4839,9 +4697,7 @@ p_z_samp_s_rf <- ggplot(z_samp_s_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4852,9 +4708,7 @@ p_z_samp_s_c_rf <- ggplot(z_samp_s_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4870,9 +4724,7 @@ p_dist_samp_s_rf <- ggplot(dist_samp_s_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4883,9 +4735,7 @@ p_dist_samp_s_c_rf <- ggplot(dist_samp_s_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4901,9 +4751,7 @@ p_cv_samp_s_rf <- ggplot(cv_samp_s_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4914,9 +4762,7 @@ p_cv_samp_s_c_rf <- ggplot(cv_samp_s_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4932,9 +4778,7 @@ p_ac_samp_s_rf <- ggplot(ac_samp_s_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4945,9 +4789,7 @@ p_ac_samp_s_c_rf <- ggplot(ac_samp_s_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4963,9 +4805,7 @@ p_mc_samp_s_rf <- ggplot(mc_samp_s_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4976,9 +4816,7 @@ p_mc_samp_s_c_rf <- ggplot(mc_samp_s_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -4994,9 +4832,7 @@ p_cc_samp_s_rf <- ggplot(cc_samp_s_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5007,9 +4843,7 @@ p_cc_samp_s_c_rf <- ggplot(cc_samp_s_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5025,9 +4859,7 @@ p_clog_3_samp_s_rf <- ggplot(clog_3_samp_s_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5038,9 +4870,7 @@ p_clog_3_samp_s_c_rf <- ggplot(clog_3_samp_s_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5056,9 +4886,7 @@ p_clog_6_samp_s_rf <- ggplot(clog_6_samp_s_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5069,9 +4897,7 @@ p_clog_6_samp_s_c_rf <- ggplot(clog_6_samp_s_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5087,9 +4913,7 @@ p_sub_samp_s_rf <- ggplot(sub_samp_s_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5100,9 +4924,7 @@ p_sub_samp_s_c_rf <- ggplot(sub_samp_s_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5120,9 +4942,7 @@ p_v_samp_a_rf <- ggplot(v_samp_a_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5133,9 +4953,7 @@ p_v_samp_a_c_rf <- ggplot(v_samp_a_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5151,9 +4969,7 @@ p_wd_samp_a_rf <- ggplot(wd_samp_a_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5164,9 +4980,7 @@ p_wd_samp_a_c_rf <- ggplot(wd_samp_a_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5183,9 +4997,7 @@ p_x_samp_a_rf <- ggplot(x_samp_a_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5196,9 +5008,7 @@ p_y_samp_a_rf <- ggplot(y_samp_a_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5214,9 +5024,7 @@ p_z_samp_a_rf <- ggplot(z_samp_a_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5227,9 +5035,7 @@ p_z_samp_a_c_rf <- ggplot(z_samp_a_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5245,9 +5051,7 @@ p_dist_samp_a_rf <- ggplot(dist_samp_a_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5258,9 +5062,7 @@ p_dist_samp_a_c_rf <- ggplot(dist_samp_a_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5276,9 +5078,7 @@ p_cv_samp_a_rf <- ggplot(cv_samp_a_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5289,9 +5089,7 @@ p_cv_samp_a_c_rf <- ggplot(cv_samp_a_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5307,9 +5105,7 @@ p_ac_samp_a_rf <- ggplot(ac_samp_a_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5320,9 +5116,7 @@ p_ac_samp_a_c_rf <- ggplot(ac_samp_a_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5338,9 +5132,7 @@ p_mc_samp_a_rf <- ggplot(mc_samp_a_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5351,9 +5143,7 @@ p_mc_samp_a_c_rf <- ggplot(mc_samp_a_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5369,9 +5159,7 @@ p_cc_samp_a_rf <- ggplot(cc_samp_a_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5382,9 +5170,7 @@ p_cc_samp_a_c_rf <- ggplot(cc_samp_a_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5400,9 +5186,7 @@ p_clog_3_samp_a_rf <- ggplot(clog_3_samp_a_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5413,9 +5197,7 @@ p_clog_3_samp_a_c_rf <- ggplot(clog_3_samp_a_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5431,9 +5213,7 @@ p_clog_6_samp_a_rf <- ggplot(clog_6_samp_a_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5444,9 +5224,7 @@ p_clog_6_samp_a_c_rf <- ggplot(clog_6_samp_a_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5462,9 +5240,7 @@ p_sub_samp_a_rf <- ggplot(sub_samp_a_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5475,9 +5251,7 @@ p_sub_samp_a_c_rf <- ggplot(sub_samp_a_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5495,9 +5269,7 @@ p_v_samp_ra_rf <- ggplot(v_samp_ra_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5508,9 +5280,7 @@ p_v_samp_ra_c_rf <- ggplot(v_samp_ra_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5526,9 +5296,7 @@ p_wd_samp_ra_rf <- ggplot(wd_samp_ra_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5539,9 +5307,7 @@ p_wd_samp_ra_c_rf <- ggplot(wd_samp_ra_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5558,9 +5324,7 @@ p_x_samp_ra_rf <- ggplot(x_samp_ra_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5571,9 +5335,7 @@ p_y_samp_ra_rf <- ggplot(y_samp_ra_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5589,9 +5351,7 @@ p_z_samp_ra_rf <- ggplot(z_samp_ra_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5602,9 +5362,7 @@ p_z_samp_ra_c_rf <- ggplot(z_samp_ra_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5620,9 +5378,7 @@ p_dist_samp_ra_rf <- ggplot(dist_samp_ra_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5633,9 +5389,7 @@ p_dist_samp_ra_c_rf <- ggplot(dist_samp_ra_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5651,9 +5405,7 @@ p_cv_samp_ra_rf <- ggplot(cv_samp_ra_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5664,9 +5416,7 @@ p_cv_samp_ra_c_rf <- ggplot(cv_samp_ra_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5682,9 +5432,7 @@ p_ac_samp_ra_rf <- ggplot(ac_samp_ra_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5695,9 +5443,7 @@ p_ac_samp_ra_c_rf <- ggplot(ac_samp_ra_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5713,9 +5459,7 @@ p_mc_samp_ra_rf <- ggplot(mc_samp_ra_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5726,9 +5470,7 @@ p_mc_samp_ra_c_rf <- ggplot(mc_samp_ra_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5744,9 +5486,7 @@ p_cc_samp_ra_rf <- ggplot(cc_samp_ra_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5757,9 +5497,7 @@ p_cc_samp_ra_c_rf <- ggplot(cc_samp_ra_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5775,9 +5513,7 @@ p_clog_3_samp_ra_rf <- ggplot(clog_3_samp_ra_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5788,9 +5524,7 @@ p_clog_3_samp_ra_c_rf <- ggplot(clog_3_samp_ra_rf, aes(clog_3_class_int, yhat)) 
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5806,9 +5540,7 @@ p_clog_6_samp_ra_rf <- ggplot(clog_6_samp_ra_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5819,9 +5551,7 @@ p_clog_6_samp_ra_c_rf <- ggplot(clog_6_samp_ra_rf, aes(clog_6_class_int, yhat)) 
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5837,9 +5567,7 @@ p_sub_samp_ra_rf <- ggplot(sub_samp_ra_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5850,9 +5578,7 @@ p_sub_samp_ra_c_rf <- ggplot(sub_samp_ra_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: Sampling Locations"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -14266,6 +13992,1409 @@ p_y_v_ra_brt_add <- ggplot(y_v_ra_brt_add, aes(y, yhat)) +
 # save the plots 
 ggsave("ML_model/plots/pdp_x_v_ra_brt_add.png", plot = p_x_v_ra_brt_add, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_y_v_ra_brt_add.png", plot = p_y_v_ra_brt_add, width = 6, height = 5)
+```
+
+### Predictors: Sampling Locations
+```{r}
+### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------------
+# With k_index as response ----------------------------------------------------
+### velocity 
+p_v_samp_k_brt_add <- ggplot(v_samp_k_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_v_samp_k_c_brt_add <- ggplot(v_samp_k_c_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_v_samp_k_brt_add.png", plot = p_v_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_v_samp_k_c_brt_add.png", plot = p_v_samp_k_c_brt_add, width = 6, height = 5)
+
+### wd_m 
+p_wd_samp_k_brt_add <- ggplot(wd_samp_k_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_wd_samp_k_c_brt_add <- ggplot(wd_samp_k_c_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_wd_samp_k_brt_add.png", plot = p_wd_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_wd_samp_k_c_brt_add.png", plot = p_wd_samp_k_c_brt_add, width = 6, height = 5)
+
+### x/y
+p_x_samp_k_brt_add <- ggplot(x_samp_k_brt_add, aes(x, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "X Coordinate (CH1903+/LV95)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_y_samp_k_brt_add <- ggplot(y_samp_k_brt_add, aes(y, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Y Coordinate (CH1903+/LV95)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_x_samp_k_brt_add.png", plot = p_x_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_y_samp_k_brt_add.png", plot = p_y_samp_k_brt_add, width = 6, height = 5)
+
+### z 
+p_z_samp_k_brt_add <- ggplot(z_samp_k_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_z_samp_k_c_brt_add <- ggplot(z_samp_k_c_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_z_samp_k_brt_add.png", plot = p_z_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_z_samp_k_c_brt_add.png", plot = p_z_samp_k_c_brt_add, width = 6, height = 5)
+
+### dist_w 
+p_dist_samp_k_brt_add <- ggplot(dist_samp_k_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_dist_samp_k_c_brt_add <- ggplot(dist_samp_k_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_dist_samp_k_brt_add.png", plot = p_dist_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_dist_samp_k_c_brt_add.png", plot = p_dist_samp_k_c_brt_add, width = 6, height = 5)
+
+### cat_v
+p_cv_samp_k_brt_add <- ggplot(cv_samp_k_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cv_samp_k_c_brt_add <- ggplot(cv_samp_k_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cv_samp_k_brt_add.png", plot = p_cv_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cv_samp_k_c_brt_add.png", plot = p_cv_samp_k_c_brt_add, width = 6, height = 5)
+
+### alg_cover 
+p_ac_samp_k_brt_add <- ggplot(ac_samp_k_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ac_samp_k_c_brt_add <- ggplot(ac_samp_k_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ac_samp_k_brt_add.png", plot = p_ac_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ac_samp_k_c_brt_add.png", plot = p_ac_samp_k_c_brt_add, width = 6, height = 5)
+
+### moos_cover
+p_mc_samp_k_brt_add <- ggplot(mc_samp_k_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_mc_samp_k_c_brt_add <- ggplot(mc_samp_k_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_mc_samp_k_brt_add.png", plot = p_mc_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_mc_samp_k_c_brt_add.png", plot = p_mc_samp_k_c_brt_add, width = 6, height = 5)
+
+### cpom_cover 
+p_cc_samp_k_brt_add <- ggplot(cc_samp_k_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cc_samp_k_c_brt_add <- ggplot(cc_samp_k_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cc_samp_k_brt_add.png", plot = p_cc_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cc_samp_k_c_brt_add.png", plot = p_cc_samp_k_c_brt_add, width = 6, height = 5)
+
+### clog_3 
+p_clog_3_samp_k_brt_add <- ggplot(clog_3_samp_k_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_3_samp_k_c_brt_add <- ggplot(clog_3_samp_k_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_3_samp_k_brt_add.png", plot = p_clog_3_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_3_samp_k_c_brt_add.png", plot = p_clog_3_samp_k_c_brt_add, width = 6, height = 5)
+
+### clog_6 
+p_clog_6_samp_k_brt_add <- ggplot(clog_6_samp_k_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_6_samp_k_c_brt_add <- ggplot(clog_6_samp_k_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_6_samp_k_brt_add.png", plot = p_clog_6_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_6_samp_k_c_brt_add.png", plot = p_clog_6_samp_k_c_brt_add, width = 6, height = 5)
+
+### sub_type
+p_sub_samp_k_brt_add <- ggplot(sub_samp_k_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "K-Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_sub_samp_k_c_brt_add <- ggplot(sub_samp_k_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "K-Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_sub_samp_k_brt_add.png", plot = p_sub_samp_k_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_sub_samp_k_c_brt_add.png", plot = p_sub_samp_k_c_brt_add, width = 6, height = 5)
+
+# With shannon index as response ----------------------------------------------
+### velocity
+p_v_samp_s_brt_add <- ggplot(v_samp_s_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_v_samp_s_c_brt_add <- ggplot(v_samp_s_c_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_v_samp_s_brt_add.png", plot = p_v_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_v_samp_s_c_brt_add.png", plot = p_v_samp_s_c_brt_add, width = 6, height = 5)
+
+### wd_m 
+p_wd_samp_s_brt_add <- ggplot(wd_samp_s_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_wd_samp_s_c_brt_add <- ggplot(wd_samp_s_c_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_wd_samp_s_brt_add.png", plot = p_wd_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_wd_samp_s_c_brt_add.png", plot = p_wd_samp_s_c_brt_add, width = 6, height = 5)
+
+
+### x/y
+p_x_samp_s_brt_add <- ggplot(x_samp_s_brt_add, aes(x, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "X Coordinate (CH1903+/LV95)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_y_samp_s_brt_add <- ggplot(y_samp_s_brt_add, aes(y, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Y Coordinate (CH1903+/LV95)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_x_samp_s_brt_add.png", plot = p_x_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_y_samp_s_brt_add.png", plot = p_y_samp_s_brt_add, width = 6, height = 5)
+
+### z 
+p_z_samp_s_brt_add <- ggplot(z_samp_s_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_z_samp_s_c_brt_add <- ggplot(z_samp_s_c_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_z_samp_s_brt_add.png", plot = p_z_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_z_samp_s_c_brt_add.png", plot = p_z_samp_s_c_brt_add, width = 6, height = 5)
+
+### dist_w 
+p_dist_samp_s_brt_add <- ggplot(dist_samp_s_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_dist_samp_s_c_brt_add <- ggplot(dist_samp_s_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_dist_samp_s_brt_add.png", plot = p_dist_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_dist_samp_s_c_brt_add.png", plot = p_dist_samp_s_c_brt_add, width = 6, height = 5)
+
+### cat_v
+p_cv_samp_s_brt_add <- ggplot(cv_samp_s_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cv_samp_s_c_brt_add <- ggplot(cv_samp_s_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cv_samp_s_brt_add.png", plot = p_cv_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cv_samp_s_c_brt_add.png", plot = p_cv_samp_s_c_brt_add, width = 6, height = 5)
+
+### alg_cover 
+p_ac_samp_s_brt_add <- ggplot(ac_samp_s_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ac_samp_s_c_brt_add <- ggplot(ac_samp_s_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ac_samp_s_brt_add.png", plot = p_ac_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ac_samp_s_c_brt_add.png", plot = p_ac_samp_s_c_brt_add, width = 6, height = 5)
+
+### moos_cover
+p_mc_samp_s_brt_add <- ggplot(mc_samp_s_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_mc_samp_s_c_brt_add <- ggplot(mc_samp_s_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_mc_samp_s_brt_add.png", plot = p_mc_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_mc_samp_s_c_brt_add.png", plot = p_mc_samp_s_c_brt_add, width = 6, height = 5)
+
+### cpom_cover 
+p_cc_samp_s_brt_add <- ggplot(cc_samp_s_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cc_samp_s_c_brt_add <- ggplot(cc_samp_s_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cc_samp_s_brt_add.png", plot = p_cc_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cc_samp_s_c_brt_add.png", plot = p_cc_samp_s_c_brt_add, width = 6, height = 5)
+
+### clog_3 
+p_clog_3_samp_s_brt_add <- ggplot(clog_3_samp_s_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_3_samp_s_c_brt_add <- ggplot(clog_3_samp_s_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_3_samp_s_brt_add.png", plot = p_clog_3_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_3_samp_s_c_brt_add.png", plot = p_clog_3_samp_s_c_brt_add, width = 6, height = 5)
+
+### clog_6 
+p_clog_6_samp_s_brt_add <- ggplot(clog_6_samp_s_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_6_samp_s_c_brt_add <- ggplot(clog_6_samp_s_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_6_samp_s_brt_add.png", plot = p_clog_6_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_6_samp_s_c_brt_add.png", plot = p_clog_6_samp_s_c_brt_add, width = 6, height = 5)
+
+### sub_type
+p_sub_samp_s_brt_add <- ggplot(sub_samp_s_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "Shannon Index",
+    title = "Xgboost Model with Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_sub_samp_s_c_brt_add <- ggplot(sub_samp_s_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "Shannon Index",
+    title = "Xgboost Model without Coordinates",
+    subtitle = "Predictors: Sampling Locations"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_sub_samp_s_brt_add.png", plot = p_sub_samp_s_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_sub_samp_s_c_brt_add.png", plot = p_sub_samp_s_c_brt_add, width = 6, height = 5)
+
+
+# With abundance as response --------------------------------------------------
+### velocity
+p_v_samp_a_brt_add <- ggplot(v_samp_a_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_v_samp_a_c_brt_add <- ggplot(v_samp_a_c_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_v_samp_a_brt_add.png", plot = p_v_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_v_samp_a_c_brt_add.png", plot = p_v_samp_a_c_brt_add, width = 6, height = 5)
+
+### wd_m 
+p_wd_samp_a_brt_add <- ggplot(wd_samp_a_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_wd_samp_a_c_brt_add <- ggplot(wd_samp_a_c_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_wd_samp_a_brt_add.png", plot = p_wd_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_wd_samp_a_c_brt_add.png", plot = p_wd_samp_a_c_brt_add, width = 6, height = 5)
+
+### x/y
+p_x_samp_a_brt_add <- ggplot(x_samp_a_brt_add, aes(x, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "X Coordinate (CH1903+/LV95)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_y_samp_a_brt_add <- ggplot(y_samp_a_brt_add, aes(y, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Y Coordinate (CH1903+/LV95)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_x_samp_a_brt_add.png", plot = p_x_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_y_samp_a_brt_add.png", plot = p_y_samp_a_brt_add, width = 6, height = 5)
+
+### z 
+p_z_samp_a_brt_add <- ggplot(z_samp_a_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_z_samp_a_c_brt_add <- ggplot(z_samp_a_c_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_z_samp_a_brt_add.png", plot = p_z_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_z_samp_a_c_brt_add.png", plot = p_z_samp_a_c_brt_add, width = 6, height = 5)
+
+### dist_w 
+p_dist_samp_a_brt_add <- ggplot(dist_samp_a_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_dist_samp_a_c_brt_add <- ggplot(dist_samp_a_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_dist_samp_a_brt_add.png", plot = p_dist_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_dist_samp_a_c_brt_add.png", plot = p_dist_samp_a_c_brt_add, width = 6, height = 5)
+
+### cat_v
+p_cv_samp_a_brt_add <- ggplot(cv_samp_a_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cv_samp_a_c_brt_add <- ggplot(cv_samp_a_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cv_samp_a_brt_add.png", plot = p_cv_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cv_samp_a_c_brt_add.png", plot = p_cv_samp_a_c_brt_add, width = 6, height = 5)
+
+### alg_cover 
+p_ac_samp_a_brt_add <- ggplot(ac_samp_a_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ac_samp_a_c_brt_add <- ggplot(ac_samp_a_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ac_samp_a_brt_add.png", plot = p_ac_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ac_samp_a_c_brt_add.png", plot = p_ac_samp_a_c_brt_add, width = 6, height = 5)
+
+### moos_cover
+p_mc_samp_a_brt_add <- ggplot(mc_samp_a_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_mc_samp_a_c_brt_add <- ggplot(mc_samp_a_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_mc_samp_a_brt_add.png", plot = p_mc_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_mc_samp_a_c_brt_add.png", plot = p_mc_samp_a_c_brt_add, width = 6, height = 5)
+
+### cpom_cover 
+p_cc_samp_a_brt_add <- ggplot(cc_samp_a_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cc_samp_a_c_brt_add <- ggplot(cc_samp_a_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cc_samp_a_brt_add.png", plot = p_cc_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cc_samp_a_c_brt_add.png", plot = p_cc_samp_a_c_brt_add, width = 6, height = 5)
+
+### clog_3 
+p_clog_3_samp_a_brt_add <- ggplot(clog_3_samp_a_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_3_samp_a_c_brt_add <- ggplot(clog_3_samp_a_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_3_samp_a_brt_add.png", plot = p_clog_3_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_3_samp_a_c_brt_add.png", plot = p_clog_3_samp_a_c_brt_add, width = 6, height = 5)
+
+### clog_6 
+p_clog_6_samp_a_brt_add <- ggplot(clog_6_samp_a_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_6_samp_a_c_brt_add <- ggplot(clog_6_samp_a_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_6_samp_a_brt_add.png", plot = p_clog_6_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_6_samp_a_c_brt_add.png", plot = p_clog_6_samp_a_c_brt_add, width = 6, height = 5)
+
+### sub_type
+p_sub_samp_a_brt_add <- ggplot(sub_samp_a_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_sub_samp_a_c_brt_add <- ggplot(sub_samp_a_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_sub_samp_a_brt_add.png", plot = p_sub_samp_a_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_sub_samp_a_c_brt_add.png", plot = p_sub_samp_a_c_brt_add, width = 6, height = 5)
+
+
+# With rel_abundance as response --------------------------------------------------
+### velocity
+p_v_samp_ra_brt_add <- ggplot(v_samp_ra_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_v_samp_ra_c_brt_add <- ggplot(v_samp_ra_c_brt_add, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_v_samp_ra_brt_add.png", plot = p_v_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_v_samp_ra_c_brt_add.png", plot = p_v_samp_ra_c_brt_add, width = 6, height = 5)
+
+### wd_m 
+p_wd_samp_ra_brt_add <- ggplot(wd_samp_ra_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_wd_samp_ra_c_brt_add <- ggplot(wd_samp_ra_c_brt_add, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_wd_samp_ra_brt_add.png", plot = p_wd_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_wd_samp_ra_c_brt_add.png", plot = p_wd_samp_ra_c_brt_add, width = 6, height = 5)
+
+### x/y
+p_x_samp_ra_brt_add <- ggplot(x_samp_ra_brt_add, aes(x, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "X Coordinate (CH1903+/LV95)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_y_samp_ra_brt_add <- ggplot(y_samp_ra_brt_add, aes(y, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Y Coordinate (CH1903+/LV95)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_x_samp_ra_brt_add.png", plot = p_x_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_y_samp_ra_brt_add.png", plot = p_y_samp_ra_brt_add, width = 6, height = 5)
+
+### z 
+p_z_samp_ra_brt_add <- ggplot(z_samp_ra_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_z_samp_ra_c_brt_add <- ggplot(z_samp_ra_c_brt_add, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate (CH1903+/LV95)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_z_samp_ra_brt_add.png", plot = p_z_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_z_samp_ra_c_brt_add.png", plot = p_z_samp_ra_c_brt_add, width = 6, height = 5)
+
+### dist_w 
+p_dist_samp_ra_brt_add <- ggplot(dist_samp_ra_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_dist_samp_ra_c_brt_add <- ggplot(dist_samp_ra_brt_add, aes(dist_w, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Distance Waterline (m)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_dist_samp_ra_brt_add.png", plot = p_dist_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_dist_samp_ra_c_brt_add.png", plot = p_dist_samp_ra_c_brt_add, width = 6, height = 5)
+
+### cat_v
+p_cv_samp_ra_brt_add <- ggplot(cv_samp_ra_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cv_samp_ra_c_brt_add <- ggplot(cv_samp_ra_brt_add, aes(cat_velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Category Velocity Class (1-5)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cv_samp_ra_brt_add.png", plot = p_cv_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cv_samp_ra_c_brt_add.png", plot = p_cv_samp_ra_c_brt_add, width = 6, height = 5)
+
+### alg_cover 
+p_ac_samp_ra_brt_add <- ggplot(ac_samp_ra_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ac_samp_ra_c_brt_add <- ggplot(ac_samp_ra_brt_add, aes(alg_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Algea Cover Class (1-5)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ac_samp_ra_brt_add.png", plot = p_ac_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ac_samp_ra_c_brt_add.png", plot = p_ac_samp_ra_c_brt_add, width = 6, height = 5)
+
+### moos_cover
+p_mc_samp_ra_brt_add <- ggplot(mc_samp_ra_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_mc_samp_ra_c_brt_add <- ggplot(mc_samp_ra_brt_add, aes(moos_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Moos Cover Class (0-3)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_mc_samp_ra_brt_add.png", plot = p_mc_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_mc_samp_ra_c_brt_add.png", plot = p_mc_samp_ra_c_brt_add, width = 6, height = 5)
+
+### cpom_cover 
+p_cc_samp_ra_brt_add <- ggplot(cc_samp_ra_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cc_samp_ra_c_brt_add <- ggplot(cc_samp_ra_brt_add, aes(cpom_cover, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "CPOM Cover Class (1-3)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cc_samp_ra_brt_add.png", plot = p_cc_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cc_samp_ra_c_brt_add.png", plot = p_cc_samp_ra_c_brt_add, width = 6, height = 5)
+
+### clog_3 
+p_clog_3_samp_ra_brt_add <- ggplot(clog_3_samp_ra_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_3_samp_ra_c_brt_add <- ggplot(clog_3_samp_ra_brt_add, aes(clog_3_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 3 Class (0-2)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_3_samp_ra_brt_add.png", plot = p_clog_3_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_3_samp_ra_c_brt_add.png", plot = p_clog_3_samp_ra_c_brt_add, width = 6, height = 5)
+
+### clog_6 
+p_clog_6_samp_ra_brt_add <- ggplot(clog_6_samp_ra_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_clog_6_samp_ra_c_brt_add <- ggplot(clog_6_samp_ra_brt_add, aes(clog_6_class_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Clogging 6 Class (0-6)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_clog_6_samp_ra_brt_add.png", plot = p_clog_6_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_clog_6_samp_ra_c_brt_add.png", plot = p_clog_6_samp_ra_c_brt_add, width = 6, height = 5)
+
+### sub_type
+p_sub_samp_ra_brt_add <- ggplot(sub_samp_ra_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_sub_samp_ra_c_brt_add <- ggplot(sub_samp_ra_brt_add, aes(sub_type_int, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Substrate Type (0-3)",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_sub_samp_ra_brt_add.png", plot = p_sub_samp_ra_brt_add, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_sub_samp_ra_c_brt_add.png", plot = p_sub_samp_ra_c_brt_add, width = 6, height = 5)
 ```
 
 ## All models 
