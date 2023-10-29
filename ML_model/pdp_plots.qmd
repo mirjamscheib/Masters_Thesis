@@ -5589,7 +5589,7 @@ ggsave("ML_model/plots/pdp_sub_samp_ra_rf.png", plot = p_sub_samp_ra_rf, width =
 ggsave("ML_model/plots/pdp_sub_samp_ra_c_rf.png", plot = p_sub_samp_ra_c_rf, width = 6, height = 5)
 ```
 
-### ! Predictors: All Predictors
+### ok - Predictors: All Predictors
 ```{r}
 ### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------------
 # With k_index as response ----------------------------------------------------
@@ -5599,9 +5599,7 @@ p_v_sec_k_rf <- ggplot(v_sec_k_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5612,9 +5610,7 @@ p_v_sec_k_c_rf <- ggplot(v_sec_k_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5630,9 +5626,7 @@ p_wd_sec_k_rf <- ggplot(wd_sec_k_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5643,9 +5637,7 @@ p_wd_sec_k_c_rf <- ggplot(wd_sec_k_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5661,9 +5653,7 @@ p_x_sec_k_rf <- ggplot(x_sec_k_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5674,9 +5664,7 @@ p_y_sec_k_rf <- ggplot(y_sec_k_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5692,9 +5680,7 @@ p_z_sec_k_rf <- ggplot(z_sec_k_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5705,9 +5691,7 @@ p_z_sec_k_c_rf <- ggplot(z_sec_k_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5723,9 +5707,7 @@ p_dist_sec_k_rf <- ggplot(dist_sec_k_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5736,9 +5718,7 @@ p_dist_sec_k_c_rf <- ggplot(dist_sec_k_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5754,9 +5734,7 @@ p_cv_sec_k_rf <- ggplot(cv_sec_k_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5767,9 +5745,7 @@ p_cv_sec_k_c_rf <- ggplot(cv_sec_k_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5785,9 +5761,7 @@ p_ac_sec_k_rf <- ggplot(ac_sec_k_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5798,9 +5772,7 @@ p_ac_sec_k_c_rf <- ggplot(ac_sec_k_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5816,9 +5788,7 @@ p_mc_sec_k_rf <- ggplot(mc_sec_k_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5829,9 +5799,7 @@ p_mc_sec_k_c_rf <- ggplot(mc_sec_k_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5847,9 +5815,7 @@ p_cc_sec_k_rf <- ggplot(cc_sec_k_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5860,9 +5826,7 @@ p_cc_sec_k_c_rf <- ggplot(cc_sec_k_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5878,9 +5842,7 @@ p_clog_3_sec_k_rf <- ggplot(clog_3_sec_k_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5891,9 +5853,7 @@ p_clog_3_sec_k_c_rf <- ggplot(clog_3_sec_k_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5909,9 +5869,7 @@ p_clog_6_sec_k_rf <- ggplot(clog_6_sec_k_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5922,9 +5880,7 @@ p_clog_6_sec_k_c_rf <- ggplot(clog_6_sec_k_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5940,9 +5896,7 @@ p_sub_sec_k_rf <- ggplot(sub_sec_k_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5953,9 +5907,7 @@ p_sub_sec_k_c_rf <- ggplot(sub_sec_k_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5971,9 +5923,7 @@ p_phb_sec_k_rf <- ggplot(phb_sec_k_rf, aes(pH_before, yhat)) +
   geom_line() + 
   labs(
     x = "pH before Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -5984,9 +5934,7 @@ p_phb_sec_k_c_rf <- ggplot(phb_sec_k_rf, aes(pH_before, yhat)) +
   geom_line() + 
   labs(
     x = "pH before Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6002,9 +5950,7 @@ p_phd_sec_k_rf <- ggplot(phd_sec_k_rf, aes(pH_during, yhat)) +
   geom_line() + 
   labs(
     x = "pH during Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6015,9 +5961,7 @@ p_phd_sec_k_c_rf <- ggplot(phd_sec_k_rf, aes(pH_during, yhat)) +
   geom_line() + 
   labs(
     x = "pH during Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6033,9 +5977,7 @@ p_pha_sec_k_rf <- ggplot(pha_sec_k_rf, aes(pH_after, yhat)) +
   geom_line() + 
   labs(
     x = "pH after Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6046,9 +5988,7 @@ p_pha_sec_k_c_rf <- ggplot(pha_sec_k_rf, aes(pH_after, yhat)) +
   geom_line() + 
   labs(
     x = "pH after Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6064,9 +6004,7 @@ p_cb_sec_k_rf <- ggplot(cb_sec_k_rf, aes(conduct_before, yhat)) +
   geom_line() + 
   labs(
     x = "Conduction before Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6077,9 +6015,7 @@ p_cb_sec_k_c_rf <- ggplot(cb_sec_k_rf, aes(conduct_before, yhat)) +
   geom_line() + 
   labs(
     x = "Conduction before Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6095,9 +6031,7 @@ p_cd_sec_k_rf <- ggplot(cd_sec_k_rf, aes(conduct_during, yhat)) +
   geom_line() + 
   labs(
     x = "Conduction during Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6108,9 +6042,7 @@ p_cd_sec_k_c_rf <- ggplot(cd_sec_k_rf, aes(conduct_during, yhat)) +
   geom_line() + 
   labs(
     x = "Conduction during Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6126,9 +6058,7 @@ p_ca_sec_k_rf <- ggplot(ca_sec_k_rf, aes(conduct_after, yhat)) +
   geom_line() + 
   labs(
     x = "Conduction after Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6139,9 +6069,7 @@ p_ca_sec_k_c_rf <- ggplot(ca_sec_k_rf, aes(conduct_after, yhat)) +
   geom_line() + 
   labs(
     x = "Conduction after Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6157,9 +6085,7 @@ p_ob_sec_k_rf <- ggplot(ob_sec_k_rf, aes(ox_before, yhat)) +
   geom_line() + 
   labs(
     x = "Oxygen before Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6170,9 +6096,7 @@ p_ob_sec_k_c_rf <- ggplot(ob_sec_k_rf, aes(ox_before, yhat)) +
   geom_line() + 
   labs(
     x = "Oxygen before Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6188,9 +6112,7 @@ p_od_sec_k_rf <- ggplot(od_sec_k_rf, aes(ox_during, yhat)) +
   geom_line() + 
   labs(
     x = "Oxygen during Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6201,9 +6123,7 @@ p_od_sec_k_c_rf <- ggplot(od_sec_k_rf, aes(ox_during, yhat)) +
   geom_line() + 
   labs(
     x = "Oxygen during Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6219,9 +6139,7 @@ p_oa_sec_k_rf <- ggplot(oa_sec_k_rf, aes(ox_after, yhat)) +
   geom_line() + 
   labs(
     x = "Oxygen after Sampling",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6232,9 +6150,7 @@ p_oa_sec_k_c_rf <- ggplot(oa_sec_k_rf, aes(ox_after, yhat)) +
   geom_line() + 
   labs(
     x = "Oxygen after Sampling",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6245,53 +6161,328 @@ ggsave("ML_model/plots/pdp_oa_sec_k_rf.png", plot = p_oa_sec_k_rf, width = 6, he
 ggsave("ML_model/plots/pdp_oa_sec_k_c_rf.png", plot = p_oa_sec_k_c_rf, width = 6, height = 5)
 
 ### turb_before
-tb_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_tb_sec_k_rf.csv")
-tb_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_tb_sec_k_c_rf.csv")
+p_tb_sec_k_rf <- ggplot(tb_sec_k_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tb_sec_k_c_rf <- ggplot(tb_sec_k_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tb_sec_k_rf.png", plot = p_tb_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tb_sec_k_c_rf.png", plot = p_tb_sec_k_c_rf, width = 6, height = 5)
 
 ### turb_during
-td_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_td_sec_k_rf.csv")
-td_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_td_sec_k_c_rf.csv")
+p_td_sec_k_rf <- ggplot(td_sec_k_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_td_sec_k_c_rf <- ggplot(td_sec_k_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_td_sec_k_rf.png", plot = p_td_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_td_sec_k_c_rf.png", plot = p_td_sec_k_c_rf, width = 6, height = 5)
 
 ### turb_after
-ta_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_ta_sec_k_rf.csv")
-ta_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_ta_sec_k_c_rf.csv")
+p_ta_sec_k_rf <- ggplot(ta_sec_k_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ta_sec_k_c_rf <- ggplot(ta_sec_k_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ta_sec_k_rf.png", plot = p_ta_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ta_sec_k_c_rf.png", plot = p_ta_sec_k_c_rf, width = 6, height = 5)
 
 ### temp_before
-teb_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_teb_sec_k_rf.csv")
-teb_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_teb_sec_k_c_rf.csv")
+p_teb_sec_k_rf <- ggplot(teb_sec_k_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_teb_sec_k_c_rf <- ggplot(teb_sec_k_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_teb_sec_k_rf.png", plot = p_teb_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_teb_sec_k_c_rf.png", plot = p_teb_sec_k_c_rf, width = 6, height = 5)
 
 ### temp_during
-ted_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_ted_sec_k_rf.csv")
-ted_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_ted_sec_k_c_rf.csv")
+p_ted_sec_k_rf <- ggplot(ted_sec_k_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ted_sec_k_c_rf <- ggplot(ted_sec_k_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ted_sec_k_rf.png", plot = p_ted_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ted_sec_k_c_rf.png", plot = p_ted_sec_k_c_rf, width = 6, height = 5)
 
 ### temp_after
-tea_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_tea_sec_k_rf.csv")
-tea_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_tea_sec_k_c_rf.csv")
+p_tea_sec_k_rf <- ggplot(tea_sec_k_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tea_sec_k_c_rf <- ggplot(tea_sec_k_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tea_sec_k_rf.png", plot = p_tea_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tea_sec_k_c_rf.png", plot = p_tea_sec_k_c_rf, width = 6, height = 5)
 
 ### q_before
-qb_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_qb_sec_k_rf.csv")
-qb_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_qb_sec_k_c_rf.csv")
+p_qb_sec_k_rf <- ggplot(qb_sec_k_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qb_sec_k_c_rf <- ggplot(qb_sec_k_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qb_sec_k_rf.png", plot = p_qb_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qb_sec_k_c_rf.png", plot = p_qb_sec_k_c_rf, width = 6, height = 5)
 
 ### q_during
-qd_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_qd_sec_k_rf.csv")
-qd_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_qd_sec_k_c_rf.csv")
+p_qd_sec_k_rf <- ggplot(qd_sec_k_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qd_sec_k_c_rf <- ggplot(qd_sec_k_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qd_sec_k_rf.png", plot = p_qd_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qd_sec_k_c_rf.png", plot = p_qd_sec_k_c_rf, width = 6, height = 5)
 
 ### q_after
-qa_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_qa_sec_k_rf.csv")
-qa_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_qa_sec_k_c_rf.csv")
+p_qa_sec_k_rf <- ggplot(qa_sec_k_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qa_sec_k_c_rf <- ggplot(qa_sec_k_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qa_sec_k_rf.png", plot = p_qa_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qa_sec_k_c_rf.png", plot = p_qa_sec_k_c_rf, width = 6, height = 5)
 
 ### gaug_before
-gb_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_gb_sec_k_rf.csv")
-gb_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_gb_sec_k_c_rf.csv")
+p_gb_sec_k_rf <- ggplot(gb_sec_k_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gb_sec_k_c_rf <- ggplot(gb_sec_k_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gb_sec_k_rf.png", plot = p_gb_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gb_sec_k_c_rf.png", plot = p_gb_sec_k_c_rf, width = 6, height = 5)
 
 ### gaug_during
-gd_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_gd_sec_k_rf.csv")
-gd_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_gd_sec_k_c_rf.csv")
+p_gd_sec_k_rf <- ggplot(gd_sec_k_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gd_sec_k_c_rf <- ggplot(gd_sec_k_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gd_sec_k_rf.png", plot = p_gd_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gd_sec_k_c_rf.png", plot = p_gd_sec_k_c_rf, width = 6, height = 5)
 
 ### gaug_after
-ga_sec_k_rf <- read_delim("ML_Model/pdp_data/pdp_ga_sec_k_rf.csv")
-ga_sec_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_ga_sec_k_c_rf.csv")
+p_ga_sec_k_rf <- ggplot(ga_sec_k_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
+p_ga_sec_k_c_rf <- ggplot(ga_sec_k_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ga_sec_k_rf.png", plot = p_ga_sec_k_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ga_sec_k_c_rf.png", plot = p_ga_sec_k_c_rf, width = 6, height = 5)
 
 # With shannon index as response ----------------------------------------------
 ### velocity
@@ -6300,9 +6491,7 @@ p_v_sec_s_rf <- ggplot(v_sec_s_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6313,9 +6502,7 @@ p_v_sec_s_c_rf <- ggplot(v_sec_s_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6331,9 +6518,7 @@ p_wd_sec_s_rf <- ggplot(wd_sec_s_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6344,9 +6529,7 @@ p_wd_sec_s_c_rf <- ggplot(wd_sec_s_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6363,9 +6546,7 @@ p_x_sec_s_rf <- ggplot(x_sec_s_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6376,9 +6557,7 @@ p_y_sec_s_rf <- ggplot(y_sec_s_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6394,9 +6573,7 @@ p_z_sec_s_rf <- ggplot(z_sec_s_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6407,9 +6584,7 @@ p_z_sec_s_c_rf <- ggplot(z_sec_s_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6425,9 +6600,7 @@ p_dist_sec_s_rf <- ggplot(dist_sec_s_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6438,9 +6611,7 @@ p_dist_sec_s_c_rf <- ggplot(dist_sec_s_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6456,9 +6627,7 @@ p_cv_sec_s_rf <- ggplot(cv_sec_s_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6469,9 +6638,7 @@ p_cv_sec_s_c_rf <- ggplot(cv_sec_s_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6487,9 +6654,7 @@ p_ac_sec_s_rf <- ggplot(ac_sec_s_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6500,9 +6665,7 @@ p_ac_sec_s_c_rf <- ggplot(ac_sec_s_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6518,9 +6681,7 @@ p_mc_sec_s_rf <- ggplot(mc_sec_s_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6531,9 +6692,7 @@ p_mc_sec_s_c_rf <- ggplot(mc_sec_s_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6549,9 +6708,7 @@ p_cc_sec_s_rf <- ggplot(cc_sec_s_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6562,9 +6719,7 @@ p_cc_sec_s_c_rf <- ggplot(cc_sec_s_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6580,9 +6735,7 @@ p_clog_3_sec_s_rf <- ggplot(clog_3_sec_s_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6593,9 +6746,7 @@ p_clog_3_sec_s_c_rf <- ggplot(clog_3_sec_s_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6611,9 +6762,7 @@ p_clog_6_sec_s_rf <- ggplot(clog_6_sec_s_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6624,9 +6773,7 @@ p_clog_6_sec_s_c_rf <- ggplot(clog_6_sec_s_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6642,9 +6789,7 @@ p_sub_sec_s_rf <- ggplot(sub_sec_s_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6655,9 +6800,7 @@ p_sub_sec_s_c_rf <- ggplot(sub_sec_s_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6667,6 +6810,572 @@ p_sub_sec_s_c_rf <- ggplot(sub_sec_s_rf, aes(sub_type_int, yhat)) +
 ggsave("ML_model/plots/pdp_sub_sec_s_rf.png", plot = p_sub_sec_s_rf, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_sub_sec_s_c_rf.png", plot = p_sub_sec_s_c_rf, width = 6, height = 5)
 
+### pH_before
+p_phb_sec_s_rf <- ggplot(phb_sec_s_rf, aes(pH_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_phb_sec_s_c_rf <- ggplot(phb_sec_s_rf, aes(pH_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_phb_sec_s_rf.png", plot = p_phb_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_phb_sec_s_c_rf.png", plot = p_phb_sec_s_c_rf, width = 6, height = 5)
+
+### pH_during
+p_phd_sec_s_rf <- ggplot(phd_sec_s_rf, aes(pH_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_phd_sec_s_c_rf <- ggplot(phd_sec_s_rf, aes(pH_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_phd_sec_s_rf.png", plot = p_phd_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_phd_sec_s_c_rf.png", plot = p_phd_sec_s_c_rf, width = 6, height = 5)
+
+### pH_after
+p_pha_sec_s_rf <- ggplot(pha_sec_s_rf, aes(pH_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_pha_sec_s_c_rf <- ggplot(pha_sec_s_rf, aes(pH_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_pha_sec_s_rf.png", plot = p_pha_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_pha_sec_s_c_rf.png", plot = p_pha_sec_s_c_rf, width = 6, height = 5)
+
+### conduct_before
+p_cb_sec_s_rf <- ggplot(cb_sec_s_rf, aes(conduct_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cb_sec_s_c_rf <- ggplot(cb_sec_s_rf, aes(conduct_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cb_sec_s_rf.png", plot = p_cb_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cb_sec_s_c_rf.png", plot = p_cb_sec_s_c_rf, width = 6, height = 5)
+
+### conduct_during
+p_cd_sec_s_rf <- ggplot(cd_sec_s_rf, aes(conduct_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cd_sec_s_c_rf <- ggplot(cd_sec_s_rf, aes(conduct_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cd_sec_s_rf.png", plot = p_cd_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cd_sec_s_c_rf.png", plot = p_cd_sec_s_c_rf, width = 6, height = 5)
+
+### conduct_after
+p_ca_sec_s_rf <- ggplot(ca_sec_s_rf, aes(conduct_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ca_sec_s_c_rf <- ggplot(ca_sec_s_rf, aes(conduct_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ca_sec_s_rf.png", plot = p_ca_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ca_sec_s_c_rf.png", plot = p_ca_sec_s_c_rf, width = 6, height = 5)
+
+### ox_before
+p_ob_sec_s_rf <- ggplot(ob_sec_s_rf, aes(ox_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ob_sec_s_c_rf <- ggplot(ob_sec_s_rf, aes(ox_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ob_sec_s_rf.png", plot = p_ob_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ob_sec_s_c_rf.png", plot = p_ob_sec_s_c_rf, width = 6, height = 5)
+
+### ox_during
+p_od_sec_s_rf <- ggplot(od_sec_s_rf, aes(ox_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_od_sec_s_c_rf <- ggplot(od_sec_s_rf, aes(ox_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_od_sec_s_rf.png", plot = p_od_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_od_sec_s_c_rf.png", plot = p_od_sec_s_c_rf, width = 6, height = 5)
+
+### ox_after
+p_oa_sec_s_rf <- ggplot(oa_sec_s_rf, aes(ox_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_oa_sec_s_c_rf <- ggplot(oa_sec_s_rf, aes(ox_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_oa_sec_s_rf.png", plot = p_oa_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_oa_sec_s_c_rf.png", plot = p_oa_sec_s_c_rf, width = 6, height = 5)
+
+### turb_before
+p_tb_sec_s_rf <- ggplot(tb_sec_s_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tb_sec_s_c_rf <- ggplot(tb_sec_s_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tb_sec_s_rf.png", plot = p_tb_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tb_sec_s_c_rf.png", plot = p_tb_sec_s_c_rf, width = 6, height = 5)
+
+### turb_during
+p_td_sec_s_rf <- ggplot(td_sec_s_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_td_sec_s_c_rf <- ggplot(td_sec_s_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_td_sec_s_rf.png", plot = p_td_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_td_sec_s_c_rf.png", plot = p_td_sec_s_c_rf, width = 6, height = 5)
+
+### turb_after
+p_ta_sec_s_rf <- ggplot(ta_sec_s_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ta_sec_s_c_rf <- ggplot(ta_sec_s_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ta_sec_s_rf.png", plot = p_ta_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ta_sec_s_c_rf.png", plot = p_ta_sec_s_c_rf, width = 6, height = 5)
+
+### temp_before
+p_teb_sec_s_rf <- ggplot(teb_sec_s_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_teb_sec_s_c_rf <- ggplot(teb_sec_s_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_teb_sec_s_rf.png", plot = p_teb_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_teb_sec_s_c_rf.png", plot = p_teb_sec_s_c_rf, width = 6, height = 5)
+
+### temp_during
+p_ted_sec_s_rf <- ggplot(ted_sec_s_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ted_sec_s_c_rf <- ggplot(ted_sec_s_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ted_sec_s_rf.png", plot = p_ted_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ted_sec_s_c_rf.png", plot = p_ted_sec_s_c_rf, width = 6, height = 5)
+
+### temp_after
+p_tea_sec_s_rf <- ggplot(tea_sec_s_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tea_sec_s_c_rf <- ggplot(tea_sec_s_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tea_sec_s_rf.png", plot = p_tea_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tea_sec_s_c_rf.png", plot = p_tea_sec_s_c_rf, width = 6, height = 5)
+
+### q_before
+p_qb_sec_s_rf <- ggplot(qb_sec_s_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qb_sec_s_c_rf <- ggplot(qb_sec_s_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qb_sec_s_rf.png", plot = p_qb_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qb_sec_s_c_rf.png", plot = p_qb_sec_s_c_rf, width = 6, height = 5)
+
+### q_during
+p_qd_sec_s_rf <- ggplot(qd_sec_s_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qd_sec_s_c_rf <- ggplot(qd_sec_s_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qd_sec_s_rf.png", plot = p_qd_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qd_sec_s_c_rf.png", plot = p_qd_sec_s_c_rf, width = 6, height = 5)
+
+### q_after
+p_qa_sec_s_rf <- ggplot(qa_sec_s_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qa_sec_s_c_rf <- ggplot(qa_sec_s_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qa_sec_s_rf.png", plot = p_qa_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qa_sec_s_c_rf.png", plot = p_qa_sec_s_c_rf, width = 6, height = 5)
+
+### gaug_before
+p_gb_sec_s_rf <- ggplot(gb_sec_s_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gb_sec_s_c_rf <- ggplot(gb_sec_s_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gb_sec_s_rf.png", plot = p_gb_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gb_sec_s_c_rf.png", plot = p_gb_sec_s_c_rf, width = 6, height = 5)
+
+### gaug_during
+p_gd_sec_s_rf <- ggplot(gd_sec_s_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gd_sec_s_c_rf <- ggplot(gd_sec_s_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gd_sec_s_rf.png", plot = p_gd_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gd_sec_s_c_rf.png", plot = p_gd_sec_s_c_rf, width = 6, height = 5)
+
+### gaug_after
+p_ga_sec_s_rf <- ggplot(ga_sec_s_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ga_sec_s_c_rf <- ggplot(ga_sec_s_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "Shannon Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ga_sec_s_rf.png", plot = p_ga_sec_s_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ga_sec_s_c_rf.png", plot = p_ga_sec_s_c_rf, width = 6, height = 5)
 
 # With abundance as response --------------------------------------------------
 ### velocity
@@ -6675,9 +7384,7 @@ p_v_sec_a_rf <- ggplot(v_sec_a_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6688,9 +7395,7 @@ p_v_sec_a_c_rf <- ggplot(v_sec_a_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6706,9 +7411,7 @@ p_wd_sec_a_rf <- ggplot(wd_sec_a_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6719,9 +7422,7 @@ p_wd_sec_a_c_rf <- ggplot(wd_sec_a_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6738,9 +7439,7 @@ p_x_sec_a_rf <- ggplot(x_sec_a_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6751,9 +7450,7 @@ p_y_sec_a_rf <- ggplot(y_sec_a_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6769,9 +7466,7 @@ p_z_sec_a_rf <- ggplot(z_sec_a_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6782,9 +7477,7 @@ p_z_sec_a_c_rf <- ggplot(z_sec_a_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6800,9 +7493,7 @@ p_dist_sec_a_rf <- ggplot(dist_sec_a_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6813,9 +7504,7 @@ p_dist_sec_a_c_rf <- ggplot(dist_sec_a_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6831,9 +7520,7 @@ p_cv_sec_a_rf <- ggplot(cv_sec_a_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6844,9 +7531,7 @@ p_cv_sec_a_c_rf <- ggplot(cv_sec_a_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6862,9 +7547,7 @@ p_ac_sec_a_rf <- ggplot(ac_sec_a_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6875,9 +7558,7 @@ p_ac_sec_a_c_rf <- ggplot(ac_sec_a_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6893,9 +7574,7 @@ p_mc_sec_a_rf <- ggplot(mc_sec_a_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6906,9 +7585,7 @@ p_mc_sec_a_c_rf <- ggplot(mc_sec_a_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6924,9 +7601,7 @@ p_cc_sec_a_rf <- ggplot(cc_sec_a_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6937,9 +7612,7 @@ p_cc_sec_a_c_rf <- ggplot(cc_sec_a_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6955,9 +7628,7 @@ p_clog_3_sec_a_rf <- ggplot(clog_3_sec_a_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6968,9 +7639,7 @@ p_clog_3_sec_a_c_rf <- ggplot(clog_3_sec_a_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6986,9 +7655,7 @@ p_clog_6_sec_a_rf <- ggplot(clog_6_sec_a_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -6999,9 +7666,7 @@ p_clog_6_sec_a_c_rf <- ggplot(clog_6_sec_a_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7017,9 +7682,7 @@ p_sub_sec_a_rf <- ggplot(sub_sec_a_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7030,9 +7693,7 @@ p_sub_sec_a_c_rf <- ggplot(sub_sec_a_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7042,6 +7703,572 @@ p_sub_sec_a_c_rf <- ggplot(sub_sec_a_rf, aes(sub_type_int, yhat)) +
 ggsave("ML_model/plots/pdp_sub_sec_a_rf.png", plot = p_sub_sec_a_rf, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_sub_sec_a_c_rf.png", plot = p_sub_sec_a_c_rf, width = 6, height = 5)
 
+### pH_before
+p_phb_sec_a_rf <- ggplot(phb_sec_a_rf, aes(pH_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_phb_sec_a_c_rf <- ggplot(phb_sec_a_rf, aes(pH_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_phb_sec_a_rf.png", plot = p_phb_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_phb_sec_a_c_rf.png", plot = p_phb_sec_a_c_rf, width = 6, height = 5)
+
+### pH_during
+p_phd_sec_a_rf <- ggplot(phd_sec_a_rf, aes(pH_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_phd_sec_a_c_rf <- ggplot(phd_sec_a_rf, aes(pH_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_phd_sec_a_rf.png", plot = p_phd_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_phd_sec_a_c_rf.png", plot = p_phd_sec_a_c_rf, width = 6, height = 5)
+
+### pH_after
+p_pha_sec_a_rf <- ggplot(pha_sec_a_rf, aes(pH_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_pha_sec_a_c_rf <- ggplot(pha_sec_a_rf, aes(pH_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_pha_sec_a_rf.png", plot = p_pha_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_pha_sec_a_c_rf.png", plot = p_pha_sec_a_c_rf, width = 6, height = 5)
+
+### conduct_before
+p_cb_sec_a_rf <- ggplot(cb_sec_a_rf, aes(conduct_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cb_sec_a_c_rf <- ggplot(cb_sec_a_rf, aes(conduct_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cb_sec_a_rf.png", plot = p_cb_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cb_sec_a_c_rf.png", plot = p_cb_sec_a_c_rf, width = 6, height = 5)
+
+### conduct_during
+p_cd_sec_a_rf <- ggplot(cd_sec_a_rf, aes(conduct_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cd_sec_a_c_rf <- ggplot(cd_sec_a_rf, aes(conduct_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cd_sec_a_rf.png", plot = p_cd_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cd_sec_a_c_rf.png", plot = p_cd_sec_a_c_rf, width = 6, height = 5)
+
+### conduct_after
+p_ca_sec_a_rf <- ggplot(ca_sec_a_rf, aes(conduct_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ca_sec_a_c_rf <- ggplot(ca_sec_a_rf, aes(conduct_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ca_sec_a_rf.png", plot = p_ca_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ca_sec_a_c_rf.png", plot = p_ca_sec_a_c_rf, width = 6, height = 5)
+
+### ox_before
+p_ob_sec_a_rf <- ggplot(ob_sec_a_rf, aes(ox_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ob_sec_a_c_rf <- ggplot(ob_sec_a_rf, aes(ox_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ob_sec_a_rf.png", plot = p_ob_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ob_sec_a_c_rf.png", plot = p_ob_sec_a_c_rf, width = 6, height = 5)
+
+### ox_during
+p_od_sec_a_rf <- ggplot(od_sec_a_rf, aes(ox_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_od_sec_a_c_rf <- ggplot(od_sec_a_rf, aes(ox_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_od_sec_a_rf.png", plot = p_od_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_od_sec_a_c_rf.png", plot = p_od_sec_a_c_rf, width = 6, height = 5)
+
+### ox_after
+p_oa_sec_a_rf <- ggplot(oa_sec_a_rf, aes(ox_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_oa_sec_a_c_rf <- ggplot(oa_sec_a_rf, aes(ox_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_oa_sec_a_rf.png", plot = p_oa_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_oa_sec_a_c_rf.png", plot = p_oa_sec_a_c_rf, width = 6, height = 5)
+
+### turb_before
+p_tb_sec_a_rf <- ggplot(tb_sec_a_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tb_sec_a_c_rf <- ggplot(tb_sec_a_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tb_sec_a_rf.png", plot = p_tb_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tb_sec_a_c_rf.png", plot = p_tb_sec_a_c_rf, width = 6, height = 5)
+
+### turb_during
+p_td_sec_a_rf <- ggplot(td_sec_a_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_td_sec_a_c_rf <- ggplot(td_sec_a_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_td_sec_a_rf.png", plot = p_td_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_td_sec_a_c_rf.png", plot = p_td_sec_a_c_rf, width = 6, height = 5)
+
+### turb_after
+p_ta_sec_a_rf <- ggplot(ta_sec_a_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ta_sec_a_c_rf <- ggplot(ta_sec_a_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ta_sec_a_rf.png", plot = p_ta_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ta_sec_a_c_rf.png", plot = p_ta_sec_a_c_rf, width = 6, height = 5)
+
+### temp_before
+p_teb_sec_a_rf <- ggplot(teb_sec_a_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_teb_sec_a_c_rf <- ggplot(teb_sec_a_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_teb_sec_a_rf.png", plot = p_teb_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_teb_sec_a_c_rf.png", plot = p_teb_sec_a_c_rf, width = 6, height = 5)
+
+### temp_during
+p_ted_sec_a_rf <- ggplot(ted_sec_a_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ted_sec_a_c_rf <- ggplot(ted_sec_a_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ted_sec_a_rf.png", plot = p_ted_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ted_sec_a_c_rf.png", plot = p_ted_sec_a_c_rf, width = 6, height = 5)
+
+### temp_after
+p_tea_sec_a_rf <- ggplot(tea_sec_a_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tea_sec_a_c_rf <- ggplot(tea_sec_a_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tea_sec_a_rf.png", plot = p_tea_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tea_sec_a_c_rf.png", plot = p_tea_sec_a_c_rf, width = 6, height = 5)
+
+### q_before
+p_qb_sec_a_rf <- ggplot(qb_sec_a_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qb_sec_a_c_rf <- ggplot(qb_sec_a_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qb_sec_a_rf.png", plot = p_qb_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qb_sec_a_c_rf.png", plot = p_qb_sec_a_c_rf, width = 6, height = 5)
+
+### q_during
+p_qd_sec_a_rf <- ggplot(qd_sec_a_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qd_sec_a_c_rf <- ggplot(qd_sec_a_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qd_sec_a_rf.png", plot = p_qd_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qd_sec_a_c_rf.png", plot = p_qd_sec_a_c_rf, width = 6, height = 5)
+
+### q_after
+p_qa_sec_a_rf <- ggplot(qa_sec_a_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qa_sec_a_c_rf <- ggplot(qa_sec_a_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qa_sec_a_rf.png", plot = p_qa_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qa_sec_a_c_rf.png", plot = p_qa_sec_a_c_rf, width = 6, height = 5)
+
+### gaug_before
+p_gb_sec_a_rf <- ggplot(gb_sec_a_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gb_sec_a_c_rf <- ggplot(gb_sec_a_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gb_sec_a_rf.png", plot = p_gb_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gb_sec_a_c_rf.png", plot = p_gb_sec_a_c_rf, width = 6, height = 5)
+
+### gaug_during
+p_gd_sec_a_rf <- ggplot(gd_sec_a_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gd_sec_a_c_rf <- ggplot(gd_sec_a_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gd_sec_a_rf.png", plot = p_gd_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gd_sec_a_c_rf.png", plot = p_gd_sec_a_c_rf, width = 6, height = 5)
+
+### gaug_after
+p_ga_sec_a_rf <- ggplot(ga_sec_a_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ga_sec_a_c_rf <- ggplot(ga_sec_a_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "Absolute Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ga_sec_a_rf.png", plot = p_ga_sec_a_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ga_sec_a_c_rf.png", plot = p_ga_sec_a_c_rf, width = 6, height = 5)
 
 # With rel_abundance as response --------------------------------------------------
 ### velocity
@@ -7050,9 +8277,7 @@ p_v_sec_ra_rf <- ggplot(v_sec_ra_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7063,9 +8288,7 @@ p_v_sec_ra_c_rf <- ggplot(v_sec_ra_c_rf, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7081,9 +8304,7 @@ p_wd_sec_ra_rf <- ggplot(wd_sec_ra_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7094,9 +8315,7 @@ p_wd_sec_ra_c_rf <- ggplot(wd_sec_ra_c_rf, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7113,9 +8332,7 @@ p_x_sec_ra_rf <- ggplot(x_sec_ra_rf, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7126,9 +8343,7 @@ p_y_sec_ra_rf <- ggplot(y_sec_ra_rf, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7144,9 +8359,7 @@ p_z_sec_ra_rf <- ggplot(z_sec_ra_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7157,9 +8370,7 @@ p_z_sec_ra_c_rf <- ggplot(z_sec_ra_c_rf, aes(z, yhat)) +
   geom_line() + 
   labs(
     x = "Z Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7175,9 +8386,7 @@ p_dist_sec_ra_rf <- ggplot(dist_sec_ra_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7188,9 +8397,7 @@ p_dist_sec_ra_c_rf <- ggplot(dist_sec_ra_rf, aes(dist_w, yhat)) +
   geom_line() + 
   labs(
     x = "Distance Waterline (m)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7206,9 +8413,7 @@ p_cv_sec_ra_rf <- ggplot(cv_sec_ra_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7219,9 +8424,7 @@ p_cv_sec_ra_c_rf <- ggplot(cv_sec_ra_rf, aes(cat_velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Category Velocity Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7237,9 +8440,7 @@ p_ac_sec_ra_rf <- ggplot(ac_sec_ra_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7250,9 +8451,7 @@ p_ac_sec_ra_c_rf <- ggplot(ac_sec_ra_rf, aes(alg_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Algea Cover Class (1-5)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7268,9 +8467,7 @@ p_mc_sec_ra_rf <- ggplot(mc_sec_ra_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7281,9 +8478,7 @@ p_mc_sec_ra_c_rf <- ggplot(mc_sec_ra_rf, aes(moos_cover, yhat)) +
   geom_line() + 
   labs(
     x = "Moos Cover Class (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7299,9 +8494,7 @@ p_cc_sec_ra_rf <- ggplot(cc_sec_ra_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7312,9 +8505,7 @@ p_cc_sec_ra_c_rf <- ggplot(cc_sec_ra_rf, aes(cpom_cover, yhat)) +
   geom_line() + 
   labs(
     x = "CPOM Cover Class (1-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7330,9 +8521,7 @@ p_clog_3_sec_ra_rf <- ggplot(clog_3_sec_ra_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7343,9 +8532,7 @@ p_clog_3_sec_ra_c_rf <- ggplot(clog_3_sec_ra_rf, aes(clog_3_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 3 Class (0-2)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7361,9 +8548,7 @@ p_clog_6_sec_ra_rf <- ggplot(clog_6_sec_ra_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7374,9 +8559,7 @@ p_clog_6_sec_ra_c_rf <- ggplot(clog_6_sec_ra_rf, aes(clog_6_class_int, yhat)) +
   geom_line() + 
   labs(
     x = "Clogging 6 Class (0-6)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7392,9 +8575,7 @@ p_sub_sec_ra_rf <- ggplot(sub_sec_ra_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7405,9 +8586,7 @@ p_sub_sec_ra_c_rf <- ggplot(sub_sec_ra_rf, aes(sub_type_int, yhat)) +
   geom_line() + 
   labs(
     x = "Substrate Type (0-3)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictors: All Predictors"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7416,6 +8595,573 @@ p_sub_sec_ra_c_rf <- ggplot(sub_sec_ra_rf, aes(sub_type_int, yhat)) +
 # save the plots 
 ggsave("ML_model/plots/pdp_sub_sec_ra_rf.png", plot = p_sub_sec_ra_rf, width = 6, height = 5)
 ggsave("ML_model/plots/pdp_sub_sec_ra_c_rf.png", plot = p_sub_sec_ra_c_rf, width = 6, height = 5)
+
+### pH_before
+p_phb_sec_ra_rf <- ggplot(phb_sec_ra_rf, aes(pH_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_phb_sec_ra_c_rf <- ggplot(phb_sec_ra_rf, aes(pH_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_phb_sec_ra_rf.png", plot = p_phb_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_phb_sec_ra_c_rf.png", plot = p_phb_sec_ra_c_rf, width = 6, height = 5)
+
+### pH_during
+p_phd_sec_ra_rf <- ggplot(phd_sec_ra_rf, aes(pH_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_phd_sec_ra_c_rf <- ggplot(phd_sec_ra_rf, aes(pH_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_phd_sec_ra_rf.png", plot = p_phd_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_phd_sec_ra_c_rf.png", plot = p_phd_sec_ra_c_rf, width = 6, height = 5)
+
+### pH_after
+p_pha_sec_ra_rf <- ggplot(pha_sec_ra_rf, aes(pH_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_pha_sec_ra_c_rf <- ggplot(pha_sec_ra_rf, aes(pH_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "pH after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_pha_sec_ra_rf.png", plot = p_pha_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_pha_sec_ra_c_rf.png", plot = p_pha_sec_ra_c_rf, width = 6, height = 5)
+
+### conduct_before
+p_cb_sec_ra_rf <- ggplot(cb_sec_ra_rf, aes(conduct_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cb_sec_ra_c_rf <- ggplot(cb_sec_ra_rf, aes(conduct_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cb_sec_ra_rf.png", plot = p_cb_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cb_sec_ra_c_rf.png", plot = p_cb_sec_ra_c_rf, width = 6, height = 5)
+
+### conduct_during
+p_cd_sec_ra_rf <- ggplot(cd_sec_ra_rf, aes(conduct_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_cd_sec_ra_c_rf <- ggplot(cd_sec_ra_rf, aes(conduct_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_cd_sec_ra_rf.png", plot = p_cd_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_cd_sec_ra_c_rf.png", plot = p_cd_sec_ra_c_rf, width = 6, height = 5)
+
+### conduct_after
+p_ca_sec_ra_rf <- ggplot(ca_sec_ra_rf, aes(conduct_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ca_sec_ra_c_rf <- ggplot(ca_sec_ra_rf, aes(conduct_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Conduction after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ca_sec_ra_rf.png", plot = p_ca_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ca_sec_ra_c_rf.png", plot = p_ca_sec_ra_c_rf, width = 6, height = 5)
+
+### ox_before
+p_ob_sec_ra_rf <- ggplot(ob_sec_ra_rf, aes(ox_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ob_sec_ra_c_rf <- ggplot(ob_sec_ra_rf, aes(ox_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ob_sec_ra_rf.png", plot = p_ob_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ob_sec_ra_c_rf.png", plot = p_ob_sec_ra_c_rf, width = 6, height = 5)
+
+### ox_during
+p_od_sec_ra_rf <- ggplot(od_sec_ra_rf, aes(ox_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_od_sec_ra_c_rf <- ggplot(od_sec_ra_rf, aes(ox_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_od_sec_ra_rf.png", plot = p_od_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_od_sec_ra_c_rf.png", plot = p_od_sec_ra_c_rf, width = 6, height = 5)
+
+### ox_after
+p_oa_sec_ra_rf <- ggplot(oa_sec_ra_rf, aes(ox_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_oa_sec_ra_c_rf <- ggplot(oa_sec_ra_rf, aes(ox_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Oxygen after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_oa_sec_ra_rf.png", plot = p_oa_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_oa_sec_ra_c_rf.png", plot = p_oa_sec_ra_c_rf, width = 6, height = 5)
+
+### turb_before
+p_tb_sec_ra_rf <- ggplot(tb_sec_ra_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tb_sec_ra_c_rf <- ggplot(tb_sec_ra_rf, aes(turb_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tb_sec_ra_rf.png", plot = p_tb_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tb_sec_ra_c_rf.png", plot = p_tb_sec_ra_c_rf, width = 6, height = 5)
+
+### turb_during
+p_td_sec_ra_rf <- ggplot(td_sec_ra_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_td_sec_ra_c_rf <- ggplot(td_sec_ra_rf, aes(turb_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_td_sec_ra_rf.png", plot = p_td_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_td_sec_ra_c_rf.png", plot = p_td_sec_ra_c_rf, width = 6, height = 5)
+
+### turb_after
+p_ta_sec_ra_rf <- ggplot(ta_sec_ra_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ta_sec_ra_c_rf <- ggplot(ta_sec_ra_rf, aes(turb_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Turbidity [NTU] after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ta_sec_ra_rf.png", plot = p_ta_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ta_sec_ra_c_rf.png", plot = p_ta_sec_ra_c_rf, width = 6, height = 5)
+
+### temp_before
+p_teb_sec_ra_rf <- ggplot(teb_sec_ra_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_teb_sec_ra_c_rf <- ggplot(teb_sec_ra_rf, aes(temp_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_teb_sec_ra_rf.png", plot = p_teb_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_teb_sec_ra_c_rf.png", plot = p_teb_sec_ra_c_rf, width = 6, height = 5)
+
+### temp_during
+p_ted_sec_ra_rf <- ggplot(ted_sec_ra_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ted_sec_ra_c_rf <- ggplot(ted_sec_ra_rf, aes(temp_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ted_sec_ra_rf.png", plot = p_ted_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ted_sec_ra_c_rf.png", plot = p_ted_sec_ra_c_rf, width = 6, height = 5)
+
+### temp_after
+p_tea_sec_ra_rf <- ggplot(tea_sec_ra_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_tea_sec_ra_c_rf <- ggplot(tea_sec_ra_rf, aes(temp_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Temperature (°C) after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_tea_sec_ra_rf.png", plot = p_tea_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_tea_sec_ra_c_rf.png", plot = p_tea_sec_ra_c_rf, width = 6, height = 5)
+
+### q_before
+p_qb_sec_ra_rf <- ggplot(qb_sec_ra_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qb_sec_ra_c_rf <- ggplot(qb_sec_ra_rf, aes(q_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qb_sec_ra_rf.png", plot = p_qb_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qb_sec_ra_c_rf.png", plot = p_qb_sec_ra_c_rf, width = 6, height = 5)
+
+### q_during
+p_qd_sec_ra_rf <- ggplot(qd_sec_ra_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qd_sec_ra_c_rf <- ggplot(qd_sec_ra_rf, aes(q_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qd_sec_ra_rf.png", plot = p_qd_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qd_sec_ra_c_rf.png", plot = p_qd_sec_ra_c_rf, width = 6, height = 5)
+
+### q_after
+p_qa_sec_ra_rf <- ggplot(qa_sec_ra_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_qa_sec_ra_c_rf <- ggplot(qa_sec_ra_rf, aes(q_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_qa_sec_ra_rf.png", plot = p_qa_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_qa_sec_ra_c_rf.png", plot = p_qa_sec_ra_c_rf, width = 6, height = 5)
+
+### gaug_before
+p_gb_sec_ra_rf <- ggplot(gb_sec_ra_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gb_sec_ra_c_rf <- ggplot(gb_sec_ra_rf, aes(gaug_before, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station before Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gb_sec_ra_rf.png", plot = p_gb_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gb_sec_ra_c_rf.png", plot = p_gb_sec_ra_c_rf, width = 6, height = 5)
+
+### gaug_during
+p_gd_sec_ra_rf <- ggplot(gd_sec_ra_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_gd_sec_ra_c_rf <- ggplot(gd_sec_ra_rf, aes(gaug_during, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station during Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_gd_sec_ra_rf.png", plot = p_gd_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_gd_sec_ra_c_rf.png", plot = p_gd_sec_ra_c_rf, width = 6, height = 5)
+
+### gaug_after
+p_ga_sec_ra_rf <- ggplot(ga_sec_ra_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_ga_sec_ra_c_rf <- ggplot(ga_sec_ra_rf, aes(gaug_after, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Discharge (m3/s) at Gauging Station after Sampling",
+    y = "Relative Abundance"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_ga_sec_ra_rf.png", plot = p_ga_sec_ra_rf, width = 6, height = 5)
+ggsave("ML_model/plots/pdp_ga_sec_ra_c_rf.png", plot = p_ga_sec_ra_c_rf, width = 6, height = 5)
 ```
 
 ### Combined
@@ -7436,7 +9182,7 @@ ggplot(v_in_rf, aes(velocity, yhat, group = index)) +
 
 
 ## RF added
-### Predictor: Velocity
+### ok - Predictor: Velocity
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response ----------------------------------------------------
@@ -7446,9 +9192,7 @@ p_v_k_rf_add <- ggplot(v_k_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7459,9 +9203,7 @@ p_v_k_c_rf_add <- ggplot(v_k_c_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7477,8 +9219,7 @@ p_f_v_k_rf_add <- ggplot(f_v_k_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7489,8 +9230,7 @@ p_f_v_k_c_rf_add <- ggplot(f_v_k_c_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7506,8 +9246,7 @@ p_s_v_k_rf_add <- ggplot(s_v_k_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7518,8 +9257,7 @@ p_s_v_k_c_rf_add <- ggplot(s_v_k_c_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7535,8 +9273,7 @@ p_sp_v_k_rf_add <- ggplot(sp_v_k_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7547,8 +9284,7 @@ p_sp_v_k_c_rf_add <- ggplot(sp_v_k_c_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7564,9 +9300,7 @@ p_x_v_k_rf_add <- ggplot(x_v_k_rf_add, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7577,9 +9311,7 @@ p_y_v_k_rf_add <- ggplot(y_v_k_rf_add, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7596,9 +9328,7 @@ p_v_s_rf_add <- ggplot(v_s_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7609,9 +9339,7 @@ p_v_s_c_rf_add <- ggplot(v_s_c_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7627,8 +9355,7 @@ p_f_v_s_rf_add <- ggplot(f_v_s_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7639,8 +9366,7 @@ p_f_v_s_c_rf_add <- ggplot(f_v_s_c_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7656,8 +9382,7 @@ p_s_v_s_rf_add <- ggplot(s_v_s_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7668,8 +9393,7 @@ p_s_v_s_c_rf_add <- ggplot(s_v_s_c_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7685,8 +9409,7 @@ p_sp_v_s_rf_add <- ggplot(sp_v_s_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7697,8 +9420,7 @@ p_sp_v_s_c_rf_add <- ggplot(sp_v_s_c_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "Shannon Index",
-    title = "Ranger Model without Coordinates"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7714,9 +9436,7 @@ p_x_v_s_rf_add <- ggplot(x_v_s_rf_add, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7727,9 +9447,7 @@ p_y_v_s_rf_add <- ggplot(y_v_s_rf_add, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7746,9 +9464,7 @@ p_v_a_rf_add <- ggplot(v_a_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7759,9 +9475,7 @@ p_v_a_c_rf_add <- ggplot(v_a_c_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7777,8 +9491,7 @@ p_f_v_a_rf_add <- ggplot(f_v_a_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7789,8 +9502,7 @@ p_f_v_a_c_rf_add <- ggplot(f_v_a_c_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7806,8 +9518,7 @@ p_s_v_a_rf_add <- ggplot(s_v_a_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7818,8 +9529,7 @@ p_s_v_a_c_rf_add <- ggplot(s_v_a_c_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7835,8 +9545,7 @@ p_sp_v_a_rf_add <- ggplot(sp_v_a_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7847,8 +9556,7 @@ p_sp_v_a_c_rf_add <- ggplot(sp_v_a_c_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "Absolute Abundance",
-    title = "Ranger Model without Coordinates"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7865,9 +9573,7 @@ p_x_v_a_rf_add <- ggplot(x_v_a_rf_add, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7878,9 +9584,7 @@ p_y_v_a_rf_add <- ggplot(y_v_a_rf_add, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Absolute Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Absolute Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7897,9 +9601,7 @@ p_v_ra_rf_add <- ggplot(v_ra_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7910,9 +9612,7 @@ p_v_ra_c_rf_add <- ggplot(v_ra_c_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7928,8 +9628,7 @@ p_f_v_ra_rf_add <- ggplot(f_v_ra_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7940,8 +9639,7 @@ p_f_v_ra_c_rf_add <- ggplot(f_v_ra_c_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7957,8 +9655,7 @@ p_s_v_ra_rf_add <- ggplot(s_v_ra_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7969,8 +9666,7 @@ p_s_v_ra_c_rf_add <- ggplot(s_v_ra_c_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7986,8 +9682,7 @@ p_sp_v_ra_rf_add <- ggplot(sp_v_ra_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -7998,8 +9693,7 @@ p_sp_v_ra_c_rf_add <- ggplot(sp_v_ra_c_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "Relative Abundance",
-    title = "Ranger Model without Coordinates"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8015,9 +9709,7 @@ p_x_v_ra_rf_add <- ggplot(x_v_ra_rf_add, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8028,9 +9720,7 @@ p_y_v_ra_rf_add <- ggplot(y_v_ra_rf_add, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "Relative Abundance",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity"
+    y = "Relative Abundance"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8051,9 +9741,7 @@ p_v_wd_k_rf_add <- ggplot(v_wd_k_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8064,9 +9752,7 @@ p_v_wd_k_c_rf_add <- ggplot(v_wd_k_c_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8082,9 +9768,7 @@ p_wd_k_rf_add <- ggplot(wd_k_rf_add, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8095,9 +9779,7 @@ p_wd_k_c_rf_add <- ggplot(wd_k_c_rf_add, aes(x = wd_m, y = yhat)) +
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8113,8 +9795,7 @@ p_f_wd_k_rf_add <- ggplot(f_wd_k_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8125,8 +9806,7 @@ p_f_wd_k_c_rf_add <- ggplot(f_wd_k_c_rf_add, aes(froude, yhat)) +
   geom_line() + 
   labs(
     x = "Froude",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8142,8 +9822,7 @@ p_s_wd_k_rf_add <- ggplot(s_wd_k_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8154,8 +9833,7 @@ p_s_wd_k_c_rf_add <- ggplot(s_wd_k_c_rf_add, aes(shear_stress, yhat)) +
   geom_line() + 
   labs(
     x = "Shear Stress",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8171,8 +9849,7 @@ p_sp_wd_k_rf_add <- ggplot(sp_wd_k_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8183,8 +9860,7 @@ p_sp_wd_k_c_rf_add <- ggplot(sp_wd_k_c_rf_add, aes(stream_power, yhat)) +
   geom_line() + 
   labs(
     x = "Stream Power",
-    y = "K-Index",
-    title = "Ranger Model without Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8200,9 +9876,7 @@ p_x_wd_k_rf_add <- ggplot(x_wd_k_rf_add, aes(x, yhat)) +
   geom_line() + 
   labs(
     x = "X Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8213,9 +9887,7 @@ p_y_wd_k_rf_add <- ggplot(y_wd_k_rf_add, aes(y, yhat)) +
   geom_line() + 
   labs(
     x = "Y Coordinate (CH1903+/LV95)",
-    y = "K-Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "K-Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -8232,9 +9904,7 @@ p_v_s_rf_add <- ggplot(v_s_rf_add, aes(velocity, yhat)) +
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "Shannon Index",
-    title = "Ranger Model with Coordinates",
-    subtitle = "Predictor: Velocity & Water Depth"
+    y = "Shannon Index"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
