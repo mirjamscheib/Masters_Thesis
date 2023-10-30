@@ -46,8 +46,18 @@ pkgCheck("hydroGOF") # for NSE calculation with NSE() function
 # Load & prepare data 
 ```{r}
 # Load data containing velocity as predictor variable 
-data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv")  |>
-  dplyr::select(vel_cm_s_mean, vel_cm_s_median, vel_cm_s_sd)
+data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv") |>
+  dplyr::select(-river.x, -flow_regime, -date_mzb_sampling, -field_screen_id, -lab_id, -river.y, -river_type, -hyd_peak_resid_natural, -KW, -geology, -biogeo) |>
+  mutate(catchment_KW_outlet_km2 = as.numeric(catchment_KW_outlet_km2),
+         ecomorph_class = as.numeric(ecomorph_class),
+         unaffected_mean_flow_KW_outlet_m3s = as.numeric(unaffected_mean_flow_KW_outlet_m3s),
+         unaffected_mean_flow_study_site_m3s = as.numeric(unaffected_mean_flow_study_site_m3s),
+         altitude_KW_mabsl = as.numeric(altitude_KW_mabsl),
+         dist_study_site_kw_km = as.numeric(dist_study_site_kw_km))
+
+column_types <- sapply(data_v, class)
+print(column_types)
+```
 
 # Load data containing velocity and wd as predictors 
 data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
@@ -55,383 +65,209 @@ data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv")
 # Load data containing all variables measured at each sampling locations and remove all other "chr" variables
 data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
   dplyr::select(-clog_3_class, -clog_6_class, -sub_type)
-```
     
 ```{r}
 ### TRAINING SETS ###
 # w/o hydr. models "GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"
 # training set containing velocity 
 training_v <- data_v |>
-  filter(Reach_Untersuchungsstelle != "GL1",
-         Reach_Untersuchungsstelle != "GL2",         
-         Reach_Untersuchungsstelle != "L2",
-         Reach_Untersuchungsstelle != "M1",
-         Reach_Untersuchungsstelle != "S1",
-         Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
-         Reach_Untersuchungsstelle != "VR3")
+  filter(reach != "GL1",
+         reach != "GL2",         
+         reach != "L2",
+         reach != "M1",
+         reach != "S1",
+         reach != "S2",
+         reach != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         reach != "VR3")
 
-# training set containing velocity + wd
-training_wd <- data_wd |>
-  filter(Reach_Untersuchungsstelle != "GL1",
-         Reach_Untersuchungsstelle != "GL2",         
-         Reach_Untersuchungsstelle != "L2",
-         Reach_Untersuchungsstelle != "M1",
-         Reach_Untersuchungsstelle != "S1",
-         Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
-         Reach_Untersuchungsstelle != "VR3")
-
-# training set containing all env. variables measured at each sampling location 
-training_sampling <- data_sampling |>
-  filter(Reach_Untersuchungsstelle != "GL1",
-         Reach_Untersuchungsstelle != "GL2",         
-         Reach_Untersuchungsstelle != "L2",
-         Reach_Untersuchungsstelle != "M1",
-         Reach_Untersuchungsstelle != "S1",
-         Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
-         Reach_Untersuchungsstelle != "VR3")
-
-# training set containing all env. variables measured at each sampling location and overall river section 
-training_section <- data_section |>
-  filter(Reach_Untersuchungsstelle != "GL1",
-         Reach_Untersuchungsstelle != "GL2",         
-         Reach_Untersuchungsstelle != "L2",
-         Reach_Untersuchungsstelle != "M1",
-         Reach_Untersuchungsstelle != "S1",
-         Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
-         Reach_Untersuchungsstelle != "VR3")
 
 ### TEST SETS ###
 # test set containing velocity 
 test_v <- data_v |>
-  filter(Reach_Untersuchungsstelle == "GL1" |
-         Reach_Untersuchungsstelle == "GL2" |       
-         Reach_Untersuchungsstelle == "L2" |
-         Reach_Untersuchungsstelle == "M1" |
-         Reach_Untersuchungsstelle == "S1" |
-         Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
-         Reach_Untersuchungsstelle == "VR3")
-
-# test set containing velocity + wd
-test_wd <- data_wd |>
-  filter(Reach_Untersuchungsstelle == "GL1" |
-         Reach_Untersuchungsstelle == "GL2" |       
-         Reach_Untersuchungsstelle == "L2" |
-         Reach_Untersuchungsstelle == "M1" |
-         Reach_Untersuchungsstelle == "S1" |
-         Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
-         Reach_Untersuchungsstelle == "VR3")
-
-# test set containing all env. variables measured at each sampling location 
-test_sampling <- data_sampling |>
-  filter(Reach_Untersuchungsstelle == "GL1" |
-         Reach_Untersuchungsstelle == "GL2" |       
-         Reach_Untersuchungsstelle == "L2" |
-         Reach_Untersuchungsstelle == "M1" |
-         Reach_Untersuchungsstelle == "S1" |
-         Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
-         Reach_Untersuchungsstelle == "VR3")
-
-# test set containing all env. variables measured at each sampling location and overall river section 
-test_section <- data_section |>
-  filter(Reach_Untersuchungsstelle == "GL1" |
-         Reach_Untersuchungsstelle == "GL2" |       
-         Reach_Untersuchungsstelle == "L2" |
-         Reach_Untersuchungsstelle == "M1" |
-         Reach_Untersuchungsstelle == "S1" |
-         Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
-         Reach_Untersuchungsstelle == "VR3")
+  filter(reach == "GL1" |
+         reach == "GL2" |       
+         reach == "L2" |
+         reach == "M1" |
+         reach == "S1" |
+         reach == "S2" |
+         reach == "TH4" | # fehlt noch im lab datensatz 
+         reach == "VR3")
 ```
 
 ## Training Sets w/ coordinates
 ```{r}
 ### PREDICTOR: VELOCITY ### ----------------------------------------------------
 # With k_index as response 
-training_v_k <- training_v |>
-  dplyr::select(k_index, velocity, x, y)
+training_v_k_mean <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+training_v_k_median <- training_v |>
+  dplyr::select(-k_index_mean, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+training_v_k_sd <- training_v |>
+  dplyr::select(-k_index_median, -k_index_mean, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
 # With shannon index as response 
-training_v_s <- training_v |>
-  dplyr::select(shannon, velocity, x, y)
+training_v_s_mean <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+training_v_s_median <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_mean, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+training_v_s_sd <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_mean, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
 # With abundance as response 
-training_v_a <- training_v |>
-  dplyr::select(abundance, velocity, x, y)
+training_v_a_mean <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+training_v_a_median <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_mean, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+training_v_a_sd <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_mean, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
 # With relative abundance as response  
-training_v_ra <- training_v |>
-  dplyr::select(rel_abundance, velocity, x, y)
+training_v_ra_mean <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
-### PREDICTOR: VELOCITY AND WD ### ---------------------------------------------
-# With k_index as response 
-training_wd_k <- training_wd |>
-  dplyr::select(k_index, velocity, wd_m, x, y)
+training_v_ra_median <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_mean, -rel_abundance_sd, -reach)
 
-# With shannon index as response 
-training_wd_s <- training_wd |>
-  dplyr::select(shannon, velocity, wd_m, x, y)
-
-# With abundance index as response 
-training_wd_a <- training_wd |>
-  dplyr::select(abundance, velocity, wd_m, x, y)
-
-# With relative abundance index as response 
-training_wd_ra <- training_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m, x, y)
-
-### PREDICTOR: SAMPLING LOCATIONS ### ------------------------------------------
-# With k_index as response 
-training_samp_k <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With shannon index as response 
-training_samp_s <- training_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With abundance index as response 
-training_samp_a <- training_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With relative abundance index as response 
-training_samp_ra <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
-
-### PREDICTOR: ALL POSSIBLE PREDICTORS ### -------------------------------------
-# With k_index as response 
-training_sec_k <- training_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With shannon index as response 
-training_sec_s <- training_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With abundance index as response 
-training_sec_a <- training_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With relative abundance index as response 
-training_sec_ra <- training_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
+training_v_ra_sd <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_mean, -reach)
 ```
 
 ## Training Sets w/o coordinates
 ```{r}
 ### PREDICTOR: VELOCITY ### --------------------------------------
 # With k_index as response 
-training_v_k_c <- training_v |>
-  dplyr::select(k_index, velocity)
+training_v_k_mean_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With shannon index as response
-training_v_s_c <- training_v |>
-  dplyr::select(shannon, velocity)
+training_v_k_median_c <- training_v |>
+  dplyr::select(-k_index_mean, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With abundance as response
-training_v_a_c <- training_v |>
-  dplyr::select(abundance, velocity)
-
-# With rel_abundance as response
-training_v_ra_c <- training_v |>
-  dplyr::select(rel_abundance, velocity)
-
-### PREDICTOR: VELOCITY AND WD ### ----------------------------------
-# With k_index as response 
-training_wd_k_c <- training_wd |>
-  dplyr::select(k_index, velocity, wd_m)
+training_v_k_sd_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_mean, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
 # With shannon index as response 
-training_wd_s_c <- training_wd |>
-  dplyr::select(shannon, velocity, wd_m)
+training_v_s_mean_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
+
+training_v_s_median_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_mean, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
+
+training_v_s_sd_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_mean, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
 # With abundance as response 
-training_wd_a_c <- training_wd |>
-  dplyr::select(abundance, velocity, wd_m)
+training_v_a_mean_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With rel_abundance as response 
-training_wd_ra_c <- training_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m)
+training_v_a_median_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_mean, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-### PREDICTOR: SAMPLING LOCATIONS ### --------------------------------
-# With k_index as response 
-training_samp_k_c <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
+training_v_a_sd_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_mean, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With shannon index as response 
-training_samp_s_c <- training_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
+# With relative abundance as response  
+training_v_ra_mean_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With abundance as response 
-training_samp_a_c <- training_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
+training_v_ra_median_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_mean, -rel_abundance_sd, -x, -y, -reach)
 
-# With rel_abundance as response 
-training_samp_ra_c <- training_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
-
-### PREDICTOR: ALL POSSIBLE PREDICTORS ### ----------------------------------
-# With k_index as response 
-training_sec_k_c <- training_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
-
-# With shannon index as response 
-training_sec_s_c <- training_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
-
-# With abundance as response 
-training_sec_a_c <- training_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
-
-# With rel_abundance as response 
-training_sec_ra_c <- training_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
+training_v_ra_sd_c <- training_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_mean, -x, -y, -reach)
 ```
 
 ## Test Sets w/ coordinates
 ```{r}
 ### PREDICTOR: VELOCITY ### ------------------------------------------
-# With k_index as response
-test_v_k <- test_v |>
-  dplyr::select(k_index, velocity, x, y) 
+# With k_index as response 
+test_v_k_mean <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
-# With shannon index as response
-test_v_s <- test_v |>
-  dplyr::select(shannon, velocity, x, y) 
+test_v_k_median <- test_v |>
+  dplyr::select(-k_index_mean, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+test_v_k_sd <- test_v |>
+  dplyr::select(-k_index_median, -k_index_mean, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+# With shannon index as response 
+test_v_s_mean <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+test_v_s_median <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_mean, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
+
+test_v_s_sd <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_mean, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
 # With abundance as response 
-test_v_a <- test_v |>
-  dplyr::select(abundance, velocity, x, y) 
+test_v_a_mean <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
-# With relative abundance as response 
-test_v_ra <- test_v |>
-  dplyr::select(rel_abundance, velocity, x, y)
+test_v_a_median <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_mean, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
-### PREDICTOR: VELOCITY + WD ### -----------------------------------
-# With k_index as response 
-test_wd_k <- test_wd |>
-  dplyr::select(k_index, velocity, wd_m, x, y) 
+test_v_a_sd <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_mean, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
-# With shannon index as response 
-test_wd_s <- test_wd |>
-  dplyr::select(shannon, velocity, wd_m, x, y) 
+# With relative abundance as response  
+test_v_ra_mean <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_sd, -reach)
 
-# With abundance as response 
-test_wd_a <- test_wd |>
-  dplyr::select(abundance, velocity, wd_m, x, y)
+test_v_ra_median <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_mean, -rel_abundance_sd, -reach)
 
-# With relative abundance as response 
-test_wd_ra <- test_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m, x, y)
-
-### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------
-# With k_index as response 
-test_samp_k <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle) 
-
-# With shannon index as response 
-test_samp_s <- test_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With abundance index as response
-test_samp_a <- test_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With relative abundance index as response 
-test_samp_ra <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
-
-### PREDICTOR: ALL POSSIBLE PREDICTORS ### -----------------------------------
-# With k_index as response 
-test_sec_k <- test_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With shannon index as response 
-test_sec_s <- test_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With abundance index as response 
-test_sec_a <- test_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
-
-# With relative abundance index as response 
-test_sec_ra <- test_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
+test_v_ra_sd <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_mean, -reach)
 ```
 
 ## Test Sets w/o coordinates
 ```{r}
 ### PREDICTOR: VELOCITY ### --------------------------------------
-# With k_index as response
-test_v_k_c <- test_v |>
-  dplyr::select(k_index, velocity)
-
-# With shannon index as response
-test_v_s_c <- test_v |>
-  dplyr::select(shannon, velocity) 
-
-# With abundance as response
-test_v_a_c <- test_v |>
-  dplyr::select(abundance, velocity) 
-
-# With rel_abundance as response
-test_v_ra_c <- test_v |>
-  dplyr::select(rel_abundance, velocity)
-
-### PREDICTOR: VELOCITY + WD ### -----------------------------------
 # With k_index as response 
-test_wd_k_c <- test_wd |>
-  dplyr::select(k_index, velocity, wd_m) 
+test_v_k_mean_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
+
+test_v_k_median_c <- test_v |>
+  dplyr::select(-k_index_mean, -k_index_sd, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
+
+test_v_k_sd_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_mean, -shannon_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
 # With shannon index as response 
-test_wd_s_c <- test_wd |>
-  dplyr::select(shannon, velocity, wd_m)
+test_v_s_mean_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
+
+test_v_s_median_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_mean, -shannon_sd, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
+
+test_v_s_sd_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_mean, -abundance_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
 # With abundance as response 
-test_wd_a_c <- test_wd |>
-  dplyr::select(abundance, velocity, wd_m)
+test_v_a_mean_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With rel_abundance as response 
-test_wd_ra_c <- test_wd |>
-  dplyr::select(rel_abundance, velocity, wd_m)
+test_v_a_median_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_mean, -abundance_sd, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------
-# With k_index as response 
-test_samp_k_c <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle) 
+test_v_a_sd_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_mean, -rel_abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With shannon index as response 
-test_samp_s_c <- test_sampling |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
+# With relative abundance as response  
+test_v_ra_mean_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_sd, -x, -y, -reach)
 
-# With abundance as response 
-test_samp_a_c <- test_sampling |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
+test_v_ra_median_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_mean, -rel_abundance_sd, -x, -y, -reach)
 
-# With rel_abundance as response 
-test_samp_ra_c <- test_sampling |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
-
-### PREDICTOR: ALL POSSIBLE PREDICTORS ### -----------------------------------
-# With k_index as response 
-test_sec_k_c <- test_section |>
-  dplyr::select(-shannon, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
-
-# With shannon index as response
-test_sec_s_c <- test_section |>
-  dplyr::select(-k_index, -abundance, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
-
-# With abundance as response
-test_sec_a_c <- test_section |>
-  dplyr::select(-shannon, -k_index, -rel_abundance, -x, -y, -Reach_Untersuchungsstelle)
-
-# With rel_abundance as response
-test_sec_ra_c <- test_section |>
-  dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
+test_v_ra_sd_c <- test_v |>
+  dplyr::select(-k_index_median, -k_index_sd, -k_index_mean, -shannon_median, -shannon_sd, -shannon_mean, -abundance_median, -abundance_sd, -abundance_mean, -rel_abundance_median, -rel_abundance_mean, -x, -y, -reach)
 ```
 
 # Boosted Regression Tree
@@ -440,142 +276,89 @@ test_sec_ra_c <- test_section |>
 # convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning
 ### PREDICTOR: VELOCITY ### ----------------------------------------------------
 # With k_index as response
-data_v_k_sp <-  st_as_sf(training_v_k, coords =  c("x", "y"))
-st_crs(data_v_k_sp) <- "EPSG: 2056"
+data_v_k_sp_mean <-  st_as_sf(training_v_k_mean, coords =  c("x", "y"))
+st_crs(data_v_k_sp_mean) <- "EPSG: 2056"
+
+data_v_k_sp_median <-  st_as_sf(training_v_k_median, coords =  c("x", "y"))
+st_crs(data_v_k_sp_median) <- "EPSG: 2056"
+
+data_v_k_sp_sd <-  st_as_sf(training_v_k_sd, coords =  c("x", "y"))
+st_crs(data_v_k_sp_sd) <- "EPSG: 2056"
 
 # With shannon index as response
-data_v_s_sp <-  st_as_sf(training_v_s, coords =  c("x", "y"))
-st_crs(data_v_s_sp) <- "EPSG: 2056"
+data_v_s_sp_mean <-  st_as_sf(training_v_s_mean, coords =  c("x", "y"))
+st_crs(data_v_s_sp_mean) <- "EPSG: 2056"
+
+data_v_s_sp_median <-  st_as_sf(training_v_s_median, coords =  c("x", "y"))
+st_crs(data_v_s_sp_median) <- "EPSG: 2056"
+
+data_v_s_sp_sd <-  st_as_sf(training_v_s_sd, coords =  c("x", "y"))
+st_crs(data_v_s_sp_sd) <- "EPSG: 2056"
 
 # With abundance as response
-data_v_a_sp <-  st_as_sf(training_v_a, coords =  c("x", "y"))
-st_crs(data_v_a_sp) <- "EPSG: 2056"
+data_v_a_sp_mean <-  st_as_sf(training_v_a_mean, coords =  c("x", "y"))
+st_crs(data_v_a_sp_mean) <- "EPSG: 2056"
+
+data_v_a_sp_median <-  st_as_sf(training_v_a_median, coords =  c("x", "y"))
+st_crs(data_v_a_sp_median) <- "EPSG: 2056"
+
+data_v_a_sp_sd <-  st_as_sf(training_v_a_sd, coords =  c("x", "y"))
+st_crs(data_v_a_sp_sd) <- "EPSG: 2056"
 
 # With rel_abundance as response
-data_v_ra_sp <-  st_as_sf(training_v_ra, coords =  c("x", "y"))
-st_crs(data_v_ra_sp) <- "EPSG: 2056"
+data_v_ra_sp_mean <-  st_as_sf(training_v_ra_mean, coords =  c("x", "y"))
+st_crs(data_v_ra_sp_mean) <- "EPSG: 2056"
 
-### PREDICTOR: VELOCITY + WD ### -----------------------------------------------
-# With k_index as response
-data_wd_k_sp <-  st_as_sf(training_wd_k, coords =  c("x", "y"))
-st_crs(data_wd_k_sp) <- "EPSG: 2056"
+data_v_ra_sp_median <-  st_as_sf(training_v_ra_median, coords =  c("x", "y"))
+st_crs(data_v_ra_sp_median) <- "EPSG: 2056"
 
-# With shannon index as response
-data_wd_s_sp <-  st_as_sf(training_wd_s, coords =  c("x", "y"))
-st_crs(data_wd_s_sp) <- "EPSG: 2056"
+data_v_ra_sp_sd <-  st_as_sf(training_v_ra_sd, coords =  c("x", "y"))
+st_crs(data_v_ra_sp_sd) <- "EPSG: 2056"
 
-# With abundance as response
-data_wd_a_sp <-  st_as_sf(training_wd_a, coords =  c("x", "y"))
-st_crs(data_wd_a_sp) <- "EPSG: 2056"
-
-# With rel_abundance as response
-data_wd_ra_sp <-  st_as_sf(training_wd_ra, coords =  c("x", "y"))
-st_crs(data_wd_ra_sp) <- "EPSG: 2056"
-
-### PREDICTOR: SAMPLING LOCATIONS ### ------------------------------------------
-# With k_index as response
-data_samp_k_sp <-  st_as_sf(training_samp_k, coords =  c("x", "y"))
-st_crs(data_samp_k_sp) <- "EPSG: 2056"
-
-# With shannon index as response
-data_samp_s_sp <-  st_as_sf(training_samp_s, coords =  c("x", "y"))
-st_crs(data_samp_s_sp) <- "EPSG: 2056"
-
-# With abundance as response
-data_samp_a_sp <-  st_as_sf(training_samp_a, coords =  c("x", "y"))
-st_crs(data_samp_a_sp) <- "EPSG: 2056"
-
-# With rel_abundance as response
-data_samp_ra_sp <-  st_as_sf(training_samp_ra, coords =  c("x", "y"))
-st_crs(data_samp_ra_sp) <- "EPSG: 2056"
-
-### PREDICTOR: ALL POSSIBLE PREDICTORS ### -------------------------------------
-# With k_index as response
-data_sec_k_sp <-  st_as_sf(training_sec_k, coords =  c("x", "y"))
-st_crs(data_sec_k_sp) <- "EPSG: 2056"
-
-# With shannon index as response
-data_sec_s_sp <-  st_as_sf(training_sec_s, coords =  c("x", "y"))
-st_crs(data_sec_s_sp) <- "EPSG: 2056"
-
-# With abundance as response
-data_sec_a_sp <-  st_as_sf(training_sec_a, coords =  c("x", "y"))
-st_crs(data_sec_a_sp) <- "EPSG: 2056"
-
-# With rel_abundance as response
-data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
-st_crs(data_sec_ra_sp) <- "EPSG: 2056"
 ```
 
 ### Create Task & Learner
 ```{r}
 ### PREDICTOR: VELOCITY ### ----------------------------------------------------
 # With k_index as response
-task_xbrt_v_k <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp,
-  id = "velocity_k_index", target = "k_index")
+task_xbrt_v_k_mean <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp_mean,
+  id = "k_index_mean", target = "k_index_mean")
+
+task_xbrt_v_k_median <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp_median,
+  id = "k_index_median", target = "k_index_median")
+
+task_xbrt_v_k_sd <- mlr3spatiotempcv::as_task_regr_st(data_v_k_sp_sd,
+  id = "k_index_sd", target = "k_index_sd")
 
 # With shannon index as response
-task_xbrt_v_s <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp,
-  id = "velocity_shannon", target = "shannon")
+task_xbrt_v_s_mean <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp_mean,
+  id = "shannon_mean", target = "shannon_mean")
+
+task_xbrt_v_s_median <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp_median,
+  id = "shannon_median", target = "shannon_median")
+
+task_xbrt_v_s_sd <- mlr3spatiotempcv::as_task_regr_st(data_v_s_sp_sd,
+  id = "shannon_sd", target = "shannon_sd")
 
 # With abundance as response 
-task_xbrt_v_a <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp,
-  id = "velocity_abundance", target = "abundance")
+task_xbrt_v_a_mean <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp_mean,
+  id = "abundance_mean", target = "abundance_mean")
+
+task_xbrt_v_a_median <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp_median,
+  id = "abundance_median", target = "abundance_median")
+
+task_xbrt_v_a_sd <- mlr3spatiotempcv::as_task_regr_st(data_v_a_sp_sd,
+  id = "abundance_sd", target = "abundance_sd")
 
 # With rel_abundance as response 
-task_xbrt_v_ra <- mlr3spatiotempcv::as_task_regr_st(data_v_ra_sp,
-  id = "velocity_rel_abundance", target = "rel_abundance")
+task_xbrt_v_ra_mean <- mlr3spatiotempcv::as_task_regr_st(data_v_ra_sp_mean,
+  id = "rel_abundance_mean", target = "rel_abundance_mean")
 
-### PREDICTOR: VELOCITY + WD ### -----------------------------------------------
-# With k_index as response
-task_xbrt_wd_k <- mlr3spatiotempcv::as_task_regr_st(data_wd_k_sp,
-  id = "water_depth_k_index", target = "k_index")
+task_xbrt_v_ra_median <- mlr3spatiotempcv::as_task_regr_st(data_v_ra_sp_median,
+  id = "rel_abundance_median", target = "rel_abundance_median")
 
-# With shannon index as response
-task_xbrt_wd_s <- mlr3spatiotempcv::as_task_regr_st(data_wd_s_sp,
-  id = "water_depth_shannon", target = "shannon")
-
-# With abundance as response
-task_xbrt_wd_a <- mlr3spatiotempcv::as_task_regr_st(data_wd_a_sp,
-  id = "water_depth_abundance", target = "abundance")
-
-# With rel_abundance as response
-task_xbrt_wd_ra <- mlr3spatiotempcv::as_task_regr_st(data_wd_ra_sp,
-  id = "water_depth_rel_abundance", target = "rel_abundance")
-
-### PREDICTORS: SAMPLING LOCATIONS ### -----------------------------------------
-# With k_index as response
-task_xbrt_samp_k <- mlr3spatiotempcv::as_task_regr_st(data_samp_k_sp,
-  id = "sampling_k_index", target = "k_index")
-
-# With shannon index as response
-task_xbrt_samp_s <- mlr3spatiotempcv::as_task_regr_st(data_samp_s_sp,
-  id = "sampling_shannon", target = "shannon")
-
-# With abundance as response
-task_xbrt_samp_a <- mlr3spatiotempcv::as_task_regr_st(data_samp_a_sp,
-  id = "sampling_abundance", target = "abundance")
-
-# With rel_abundance as response
-task_xbrt_samp_ra <- mlr3spatiotempcv::as_task_regr_st(data_samp_ra_sp,
-  id = "sampling_rel_abundance", target = "rel_abundance")
-
-### PREDICTORS: ALL PREDICTORS ### ---------------------------------------------
-# With k_index as response
-task_xbrt_sec_k <- mlr3spatiotempcv::as_task_regr_st(data_sec_k_sp,
-  id = "section_k_index", target = "k_index")
-
-# With shannon index as response
-task_xbrt_sec_s <- mlr3spatiotempcv::as_task_regr_st(data_sec_s_sp,
-  id = "section_shannon", target = "shannon")
-
-# With abundance as response
-task_xbrt_sec_a <- mlr3spatiotempcv::as_task_regr_st(data_sec_a_sp,
-  id = "section_abundance", target = "abundance")
-
-# With rel_abundance as response
-task_xbrt_sec_ra <- mlr3spatiotempcv::as_task_regr_st(data_sec_ra_sp,
-  id = "section_rel_abundance", target = "rel_abundance")
+task_xbrt_v_ra_sd <- mlr3spatiotempcv::as_task_regr_st(data_v_ra_sp_sd,
+  id = "rel_abundance_sd", target = "rel_abundance_sd")
 
 ### LEARNER ### ----------------------------------------------------------------
 # learner for random forest valid for all models
@@ -597,7 +380,25 @@ search_space_xbrt <- paradox::ps(
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
-autotuner_xbrt_v_k <- mlr3tuning::AutoTuner$new(
+autotuner_xbrt_v_k_mean <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+autotuner_xbrt_v_k_median <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+autotuner_xbrt_v_k_sd <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
@@ -607,7 +408,25 @@ autotuner_xbrt_v_k <- mlr3tuning::AutoTuner$new(
 )
 
 # With shannon index as response
-autotuner_xbrt_v_s <- mlr3tuning::AutoTuner$new(
+autotuner_xbrt_v_s_mean <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+autotuner_xbrt_v_s_median <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+autotuner_xbrt_v_s_sd <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
@@ -617,7 +436,25 @@ autotuner_xbrt_v_s <- mlr3tuning::AutoTuner$new(
 )
 
 # With abundance as response
-autotuner_xbrt_v_a <- mlr3tuning::AutoTuner$new(
+autotuner_xbrt_v_a_mean <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+autotuner_xbrt_v_a_median <- mlr3tuning::AutoTuner$new(
+  learner = lrn_xbrt, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_xbrt, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+autotuner_xbrt_v_a_sd <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
@@ -627,7 +464,7 @@ autotuner_xbrt_v_a <- mlr3tuning::AutoTuner$new(
 )
 
 # With rel_abundance as response
-autotuner_xbrt_v_ra <- mlr3tuning::AutoTuner$new(
+autotuner_xbrt_v_ra_mean <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
@@ -636,125 +473,20 @@ autotuner_xbrt_v_ra <- mlr3tuning::AutoTuner$new(
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
-# With k_index as response
-autotuner_xbrt_wd_k <- mlr3tuning::AutoTuner$new(
+autotuner_xbrt_v_ra_median <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
 
-# With shannon index as response
-autotuner_xbrt_wd_s <- mlr3tuning::AutoTuner$new(
+autotuner_xbrt_v_ra_sd <- mlr3tuning::AutoTuner$new(
   learner = lrn_xbrt, # predefined learner
   resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
   measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With abundance as response
-autotuner_xbrt_wd_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With rel_abundance as response
-autotuner_xbrt_wd_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
-# With k_index as response
-autotuner_xbrt_samp_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With shannon index as response
-autotuner_xbrt_samp_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With abundance as response
-autotuner_xbrt_samp_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With rel_abundance as response
-autotuner_xbrt_samp_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# With k_index as response
-autotuner_xbrt_sec_k <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With shannon index as response
-autotuner_xbrt_sec_s <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With abundance as response
-autotuner_xbrt_sec_a <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
-  search_space = search_space_xbrt, # predefined hyperparameter search space
-  tuner = mlr3tuning::tnr("random_search") # specify random search
-)
-
-# With rel_abundance as response
-autotuner_xbrt_sec_ra <- mlr3tuning::AutoTuner$new(
-  learner = lrn_xbrt, # predefined learner
-  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning 
-  measure = mlr3::msr("regr.rmse"), # performance measure
-  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations
   search_space = search_space_xbrt, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
@@ -767,55 +499,24 @@ set.seed(0412022)
 
 ### PREDICTOR: VELOCITY ### --------------------------------------------------
 # With k_index as response
-autotuner_xbrt_v_k$train(task_xbrt_v_k)
+autotuner_xbrt_v_k_mean$train(task_xbrt_v_k_mean)
+autotuner_xbrt_v_k_median$train(task_xbrt_v_k_median)
+autotuner_xbrt_v_k_sd$train(task_xbrt_v_k_sd)
 
 # With shannon index as response
-autotuner_xbrt_v_s$train(task_xbrt_v_s)
+autotuner_xbrt_v_s_mean$train(task_xbrt_v_s_mean)
+autotuner_xbrt_v_s_median$train(task_xbrt_v_s_median)
+autotuner_xbrt_v_s_sd$train(task_xbrt_v_s_sd)
 
 # With abundance as response
-autotuner_xbrt_v_a$train(task_xbrt_v_a)
+autotuner_xbrt_v_a_mean$train(task_xbrt_v_a_mean)
+autotuner_xbrt_v_a_median$train(task_xbrt_v_a_median)
+autotuner_xbrt_v_a_sd$train(task_xbrt_v_a_sd)
 
 # With rel_abundance as response
-autotuner_xbrt_v_ra$train(task_xbrt_v_ra)
-
-### PREDICTORS: VELOCITY + WD ### --------------------------------------------
-# With k_index as response
-autotuner_xbrt_wd_k$train(task_xbrt_wd_k)
-
-# With shannon index as response
-autotuner_xbrt_wd_s$train(task_xbrt_wd_s)
-
-# With abundance as response
-autotuner_xbrt_wd_a$train(task_xbrt_wd_a)
-
-# With rel_abundance as response
-autotuner_xbrt_wd_ra$train(task_xbrt_wd_ra)
-
-### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
-# With k_index as response
-autotuner_xbrt_samp_k$train(task_xbrt_samp_k)
-
-# With shannon index as response
-autotuner_xbrt_samp_s$train(task_xbrt_samp_s)
-
-# With abundance as response
-autotuner_xbrt_samp_a$train(task_xbrt_samp_a)
-
-# With rel_abundance as response
-autotuner_xbrt_samp_ra$train(task_xbrt_samp_ra)
-
-### PREDICTORS: ALL PREDICTORS ### -------------------------------------------
-# With k_index as response
-autotuner_xbrt_sec_k$train(task_xbrt_sec_k)
-
-# With shannon index as response
-autotuner_xbrt_sec_s$train(task_xbrt_sec_s)
-
-# With abundance as response
-autotuner_xbrt_sec_a$train(task_xbrt_sec_a)
-
-# With rel_abundance as response
-autotuner_xbrt_sec_ra$train(task_xbrt_sec_ra)
+autotuner_xbrt_v_ra_mean$train(task_xbrt_v_ra_mean)
+autotuner_xbrt_v_ra_median$train(task_xbrt_v_ra_median)
+autotuner_xbrt_v_ra_sd$train(task_xbrt_v_ra_sd)
 ```
 
 ### Tuned Hyperparameters

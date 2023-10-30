@@ -166,11 +166,19 @@ data_aggr <- data |>
 
 ## Combine environmental and MZB data
 ```{r}
-data_end <- full_join(env_joined, data_aggr, by = "reach")
+# load coordinate data for each reach
+coord <- read.delim("Pre_Processing/abiotic_mi_sampling/reach_coordinates.csv", sep = ";")
+
+# select only relevant columns and rows 
+coord <- coord[c(1:31), c(1:3)]
+
+# join data together to save in .csv
+data_end <- right_join(env_joined, data_aggr, by = "reach")
+data <- left_join(data_end, coord, by = "reach")
 ```
 
 # Save data
 ```{r}
-write.csv(data_end, "Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv", row.names = FALSE)
+write.csv(data, "Pre_Processing/abiotic_mi_sampling/data_aggr_all.csv", row.names = FALSE)
 ```
 
