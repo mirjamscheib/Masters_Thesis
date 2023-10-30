@@ -28,24 +28,598 @@ pkgCheck("readr")
 pkgCheck("dplyr")
 pkgCheck("tidyr")
 pkgCheck("scales")
-
-# load self-written functions 
-source("mth_functions.R")
 ```
 
-# Regression Analysis 
+# Load Data 
 ```{r}
-# plot results 
-ggplot(results, aes(x = foen_hsi, y = shannon)) +
-  geom_point() +
-  geom_smooth(method = lm)
+# load data 
+brt <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_brt.csv")
+brt_add <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_brt_add.csv")
+rf <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_rf.csv")
+rf_add <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_rf_add.csv")
+hsc <- read_delim("Stat_Analysis/stat_analysis_data/hsc_regr_analysis.csv")
+```
+       
+# Regr. Analysis
+## BRT normal
+### Predictor: Velocity
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_v_brt_k <- lm(m2_k_index_v ~ obs_k_index, data = brt)
+sum_v_brt_k <- summary(regr_v_brt_k)
+p_v_brt_k <- sum_v_brt_k$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_brt_k <- sum_v_brt_k$coefficients["obs_k_index", "Estimate"]
 
-# obtain regression model 
-lm_foen <- lm(shannon ~ foen_hsi, data = results)
-summary(lm_foen)
+# with shannon index as response
+regr_v_brt_s <- lm(m2_shannon_v ~ obs_shannon, data = brt)
+sum_v_brt_s <- summary(regr_v_brt_s)
+p_v_brt_s <- sum_v_brt_s$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_brt_s <- sum_v_brt_s$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_v_brt_a <- lm(m2_abundance_v ~ obs_abundance, data = brt)
+sum_v_brt_a <- summary(regr_v_brt_a)
+p_v_brt_a <- sum_v_brt_a$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_brt_a <- sum_v_brt_a$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_v_brt_ra <- lm(m2_rel_abundance_v ~ obs_rel_abundance, data = brt)
+sum_v_brt_ra <- summary(regr_v_brt_ra)
+p_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
 ```
 
-                        
+### Predictor: V + WD
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_wd_brt_k <- lm(m2_k_index_wd ~ obs_k_index, data = brt)
+sum_wd_brt_k <- summary(regr_wd_brt_k)
+p_wd_brt_k <- sum_wd_brt_k$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_brt_k <- sum_wd_brt_k$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_wd_brt_s <- lm(m2_shannon_wd ~ obs_shannon, data = brt)
+sum_wd_brt_s <- summary(regr_wd_brt_s)
+p_wd_brt_s <- sum_wd_brt_s$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_brt_s <- sum_wd_brt_s$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_wd_brt_a <- lm(m2_abundance_wd ~ obs_abundance, data = brt)
+sum_wd_brt_a <- summary(regr_wd_brt_a)
+p_wd_brt_a <- sum_wd_brt_a$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_brt_a <- sum_wd_brt_a$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_brt_ra <- lm(m2_rel_abundance_wd ~ obs_rel_abundance, data = brt)
+sum_wd_brt_ra <- summary(regr_wd_brt_ra)
+p_wd_brt_ra <- sum_wd_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_brt_ra <- sum_wd_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
+```
+
+## BRT add
+### Predictor: Velocity + add
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_v_brt_k_add <- lm(m2_k_index_v ~ obs_k_index, data = brt_add)
+sum_v_brt_k_add <- summary(regr_v_brt_k_add)
+p_v_brt_k_add <- sum_v_brt_k_add$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_brt_k_add <- sum_v_brt_k_add$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_v_brt_s_add <- lm(m2_shannon_v ~ obs_shannon, data = brt_add)
+sum_v_brt_s_add <- summary(regr_v_brt_s_add)
+p_v_brt_s_add <- sum_v_brt_s_add$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_brt_s_add <- sum_v_brt_s_add$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_v_brt_a_add <- lm(m2_abundance_v ~ obs_abundance, data = brt_add)
+sum_v_brt_a_add <- summary(regr_v_brt_a_add)
+p_v_brt_a_add <- sum_v_brt_a_add$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_brt_a_add <- sum_v_brt_a_add$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_v_brt_ra_add <- lm(m2_rel_abundance_v ~ obs_rel_abundance, data = brt_add)
+sum_v_brt_ra_add <- summary(regr_v_brt_ra_add)
+p_v_brt_ra_add <- sum_v_brt_ra_add$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_brt_ra_add <- sum_v_brt_ra_add$coefficients["obs_rel_abundance", "Estimate"]
+```
+
+### Predictor: V + WD + add
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_wd_brt_k_add <- lm(m2_k_index_wd ~ obs_k_index, data = brt_add)
+sum_wd_brt_k_add <- summary(regr_wd_brt_k_add)
+p_wd_brt_k_add <- sum_wd_brt_k_add$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_brt_k_add <- sum_wd_brt_k_add$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_wd_brt_s_add <- lm(m2_shannon_wd ~ obs_shannon, data = brt_add)
+sum_wd_brt_s_add <- summary(regr_wd_brt_s_add)
+p_wd_brt_s_add <- sum_wd_brt_s_add$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_brt_s_add <- sum_wd_brt_s_add$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_wd_brt_a_add <- lm(m2_abundance_wd ~ obs_abundance, data = brt_add)
+sum_wd_brt_a_add <- summary(regr_wd_brt_a_add)
+p_wd_brt_a_add <- sum_wd_brt_a_add$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_brt_a_add <- sum_wd_brt_a_add$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_brt_ra_add <- lm(m2_rel_abundance_wd ~ obs_rel_abundance, data = brt_add)
+sum_wd_brt_ra_add <- summary(regr_wd_brt_ra_add)
+p_wd_brt_ra_add <- sum_wd_brt_ra_add$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_brt_ra_add <- sum_wd_brt_ra_add$coefficients["obs_rel_abundance", "Estimate"]
+```
+
+## RF normal
+### Predictor: Velocity
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_v_rf_k <- lm(m2_k_index_v ~ obs_k_index, data = rf)
+sum_v_rf_k <- summary(regr_v_rf_k)
+p_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_v_rf_s <- lm(m2_shannon_v ~ obs_shannon, data = rf)
+sum_v_rf_s <- summary(regr_v_rf_s)
+p_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_v_rf_a <- lm(m2_abundance_v ~ obs_abundance, data = rf)
+sum_v_rf_a <- summary(regr_v_rf_a)
+p_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_v_rf_ra <- lm(m2_rel_abundance_v ~ obs_rel_abundance, data = rf)
+sum_v_rf_ra <- summary(regr_v_rf_ra)
+p_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
+```
+
+### Predictor: V + WD
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_wd_rf_k <- lm(m2_k_index_wd ~ obs_k_index, data = rf)
+sum_wd_rf_k <- summary(regr_wd_rf_k)
+p_wd_rf_k <- sum_wd_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_rf_k <- sum_wd_rf_k$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_wd_rf_s <- lm(m2_shannon_wd ~ obs_shannon, data = rf)
+sum_wd_rf_s <- summary(regr_wd_rf_s)
+p_wd_rf_s <- sum_wd_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_rf_s <- sum_wd_rf_s$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_wd_rf_a <- lm(m2_abundance_wd ~ obs_abundance, data = rf)
+sum_wd_rf_a <- summary(regr_wd_rf_a)
+p_wd_rf_a <- sum_wd_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_rf_a <- sum_wd_rf_a$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_rf_ra <- lm(m2_rel_abundance_wd ~ obs_rel_abundance, data = rf)
+sum_wd_rf_ra <- summary(regr_wd_rf_ra)
+p_wd_rf_ra <- sum_wd_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_rf_ra <- sum_wd_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
+```
+
+## Stat. Analysis
+```{r}
+# Modellvoraussetzungen prüfen - residualplot 
+par(mfrow=c(2, 2))
+
+### BRT normal ### -----------------------------------------------------------
+### Predictor Velocity ###
+plot(regr_v_brt_k)
+plot(regr_v_brt_s)
+plot(regr_v_brt_a)
+plot(regr_v_brt_ra)
+
+### Predictor V + WD ###
+plot(regr_wd_brt_k)
+plot(regr_wd_brt_s)
+plot(regr_wd_brt_a)
+plot(regr_wd_brt_ra)
+
+### BRT add ### ---------------------------------------------------------------
+### Predictor Velocity ###
+plot(regr_v_brt_k_add)
+plot(regr_v_brt_s_add)
+plot(regr_v_brt_a_add)
+plot(regr_v_brt_ra_add)
+
+### Predictor V + WD ###
+plot(regr_wd_brt_k_add)
+plot(regr_wd_brt_s_add)
+plot(regr_wd_brt_a_add)
+plot(regr_wd_brt_ra_add)
+
+### RF normal ### ---------------------------------------------------------------
+### Predictor Velocity ###
+plot(regr_v_rf_k)
+plot(regr_v_rf_s)
+plot(regr_v_rf_a)
+plot(regr_v_rf_ra)
+
+### Predictor V + WD ###
+plot(regr_wd_rf_k)
+plot(regr_wd_rf_s)
+plot(regr_wd_rf_a)
+plot(regr_wd_rf_ra)
+
+### RF add ### ---------------------------------------------------------------
+### Predictor Velocity ###
+plot(regr_v_rf_k_add)
+plot(regr_v_rf_s_add)
+plot(regr_v_rf_a_add)
+plot(regr_v_rf_ra_add)
+
+### Predictor V + WD ###
+plot(regr_wd_rf_k_add)
+plot(regr_wd_rf_s_add)
+plot(regr_wd_rf_a_add)
+plot(regr_wd_rf_ra_add)
+
+plot(regr_v) # OK
+plot(regr_wd) # Residuen nicht normalverteilt, sonst OK
+plot(regr_f) # OK
+plot(regr_s) # Residien nicht normalverteilt, Linearität fraglich
+plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
+
+# Normalverteilung Residuen starke abweichung 
+# Linearität nicht gegeben aufgrund Bananenform oben links
+```
+
+# Plots
+## BRT normal 
+### Predictor: Velocity
+```{r}
+# with k_index as response 
+ggplot(brt, aes(obs_k_index, m2_k_index_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() 
+
+ggplot(brt, aes(obs_k_index, m2_k_index_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# save the plots 
+#ggsave("Stat_Analysis/regr_plots/pdp_ga_sec_ra_brt_add.png", plot = p_ga_sec_ra_brt_add, width = 6, height = 5)
+#ggsave("ML_model/plots/pdp_ga_sec_ra_c_brt_add.png", plot = p_ga_sec_ra_c_brt_add, width = 6, height = 5)
+
+# with k_index as response 
+ggplot(brt, aes(obs_shannon, m2_shannon_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+  
+ggplot(brt, aes(obs_shannon, m2_shannon_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with abundance as response 
+ggplot(brt, aes(obs_abundance, m2_abundance_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt, aes(obs_abundance, m2_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with relative abundance as response 
+ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+### Predictor: V + WD
+```{r}
+# with k_index as response 
+ggplot(brt, aes(obs_k_index, m2_k_index_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() 
+
+ggplot(brt, aes(obs_k_index, m2_k_index_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with k_index as response 
+ggplot(brt, aes(obs_shannon, m2_shannon_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+  
+ggplot(brt, aes(obs_shannon, m2_shannon_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with abundance as response 
+ggplot(brt, aes(obs_abundance, m2_abundance_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt, aes(obs_abundance, m2_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with relative abundance as response 
+ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+## BRT added 
+### Predictor: Velocity
+```{r}
+# with k_index as response 
+ggplot(brt_add, aes(obs_k_index, m2_k_index_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() 
+
+ggplot(brt_add, aes(obs_k_index, m2_k_index_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with k_index as response 
+ggplot(brt_add, aes(obs_shannon, m2_shannon_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+  
+ggplot(brt_add, aes(obs_shannon, m2_shannon_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with abundance as response 
+ggplot(brt_add, aes(obs_abundance, m2_abundance_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt_add, aes(obs_abundance, m2_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with relative abundance as response 
+ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+### Predictor: V + WD
+```{r}
+# with k_index as response 
+ggplot(brt_add, aes(obs_k_index, m2_k_index_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() 
+
+ggplot(brt_add, aes(obs_k_index, m2_k_index_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with k_index as response 
+ggplot(brt_add, aes(obs_shannon, m2_shannon_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+  
+ggplot(brt_add, aes(obs_shannon, m2_shannon_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with abundance as response 
+ggplot(brt_add, aes(obs_abundance, m2_abundance_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt_add, aes(obs_abundance, m2_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with relative abundance as response 
+ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+## RF normal 
+### Predictor: Velocity
+```{r}
+# with k_index as response 
+ggplot(rf, aes(obs_k_index, m2_k_index_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() 
+
+ggplot(rf, aes(obs_k_index, m2_k_index_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# save the plots 
+#ggsave("Stat_Analysis/regr_plots/pdp_ga_sec_ra_brt_add.png", plot = p_ga_sec_ra_brt_add, width = 6, height = 5)
+#ggsave("ML_model/plots/pdp_ga_sec_ra_c_brt_add.png", plot = p_ga_sec_ra_c_brt_add, width = 6, height = 5)
+
+# with k_index as response 
+ggplot(rf, aes(obs_shannon, m2_shannon_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+  
+ggplot(rf, aes(obs_shannon, m2_shannon_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with abundance as response 
+ggplot(rf, aes(obs_abundance, m2_abundance_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(rf, aes(obs_abundance, m2_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with relative abundance as response 
+ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+### Predictor: V + WD
+```{r}
+# with k_index as response 
+ggplot(rf, aes(obs_k_index, m2_k_index_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() 
+
+ggplot(rf, aes(obs_k_index, m2_k_index_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with k_index as response 
+ggplot(rf, aes(obs_shannon, m2_shannon_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+  
+ggplot(rf, aes(obs_shannon, m2_shannon_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with abundance as response 
+ggplot(rf, aes(obs_abundance, m2_abundance_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(rf, aes(obs_abundance, m2_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+# with relative abundance as response 
+ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+
+ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+# Create dataframe
+```{r}
+results_hdm <- data.frame(lm_p_value = c(p_v_GL1, p_wd_GL1, p_f_GL1, p_s_GL1, p_sp_GL1, p_v_GL2, p_wd_GL2, p_f_GL2, p_s_GL2, p_sp_GL2, p_v_L2, p_wd_L2, p_f_L2, p_s_L2, p_sp_L2, p_v_M1, p_wd_M1, p_f_M1, p_s_M1, p_sp_M1, p_v_S1, p_wd_S1, p_f_S1, p_s_S1, p_sp_S1, p_v_S2, p_wd_S2, p_f_S2, p_s_S2, p_sp_S2, "p_v_TH4", "p_wd_TH4", "p_f_TH4", "p_s_TH4", "p_sp_TH4", p_v_VR3, p_wd_VR3, p_f_VR3, p_s_VR3, p_sp_VR3, p_v, p_wd, p_f, p_s, p_sp),
+                          
+                          lm_slope = c(s_v_GL1, s_wd_GL1, s_f_GL1, s_s_GL1, s_sp_GL1, s_v_GL2, s_wd_GL2, s_f_GL2, s_s_GL2, s_sp_GL2, s_v_L2, s_wd_L2, s_f_L2, s_s_L2, s_sp_L2, s_v_M1, s_wd_M1, s_f_M1, s_s_M1, s_sp_M1, s_v_S1, s_wd_S1, s_f_S1, s_s_S1, s_sp_S1, s_v_S2, s_wd_S2, s_f_S2, s_s_S2, s_sp_S2, "s_v_TH4", "s_wd_TH4", "s_f_TH4", "s_s_TH4", "s_sp_TH4", s_v_VR3, s_wd_VR3, s_f_VR3, s_s_VR3, s_sp_VR3, s_v, s_wd, s_f, s_s, s_sp),
+                          
+  rmse = c(rmse_v_GL1, rmse_wd_GL1, rmse_f_GL1, rmse_s_GL1, rmse_sp_GL1, rmse_v_GL2, rmse_wd_GL2, rmse_f_GL2, rmse_s_GL2, rmse_sp_GL2, rmse_v_L2, rmse_wd_L2, rmse_f_L2, rmse_s_L2, rmse_sp_L2, rmse_v_M1, rmse_wd_M1, rmse_f_M1, rmse_s_M1, rmse_sp_M1, rmse_v_S1, rmse_wd_S1, rmse_f_S1, rmse_s_S1, rmse_sp_S1, rmse_v_S2, rmse_wd_S2, rmse_f_S2, rmse_s_S2, rmse_sp_S2, rmse_v_TH4, rmse_wd_TH4, rmse_f_TH4, rmse_s_TH4, rmse_sp_TH4, rmse_v_VR3, rmse_wd_VR3, rmse_f_VR3, rmse_s_VR3, rmse_sp_VR3, rmse_v, rmse_wd, rmse_f, rmse_s, rmse_sp),
+  
+           mae = c(mae_v_GL1, mae_wd_GL1, mae_f_GL1, mae_s_GL1, mae_sp_GL1, mae_v_GL2, mae_wd_GL2, mae_f_GL2, mae_s_GL2, mae_sp_GL2, mae_v_L2, mae_wd_L2, mae_f_L2, mae_s_L2, mae_sp_L2, mae_v_M1, mae_wd_M1, mae_f_M1, mae_s_M1, mae_sp_M1, mae_v_S1, mae_wd_S1, mae_f_S1, mae_s_S1, mae_sp_S1, mae_v_S2, mae_wd_S2, mae_f_S2, mae_s_S2, mae_sp_S2, mae_v_TH4, mae_wd_TH4, mae_f_TH4, mae_s_TH4, mae_sp_TH4, mae_v_VR3, mae_wd_VR3, mae_f_VR3, mae_s_VR3, mae_sp_VR3, mae_v, mae_wd, mae_f, mae_s, mae_sp),
+  
+           section = c("GL1", "GL1", "GL1", "GL1", "GL1", "GL2", "GL2", "GL2", "GL2", "GL2", "L2", "L2", "L2", "L2", "L2", "M1", "M1", "M1", "M1", "M1", "S1", "S1", "S1", "S1", "S1", "S2", "S2", "S2", "S2", "S2", "TH4", "TH4", "TH4", "TH4", "TH4", "VR3", "VR3", "VR3", "VR3", "VR3", "all", "all", "all", "all", "all"),
+  
+           variable = c("velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power"))
+
+# write .csv file 
+write.csv(results_hdm, "Stat_Analysis/results_hdm_mi_metrics.csv", row.names = FALSE)
+```                 
                            
 
 

@@ -698,7 +698,6 @@ plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
 # Linearität nicht gegeben aufgrund Bananenform oben links
 ```
 
-
 ## Plots
 ```{r}
 ggplot(data_hdm, aes(velocity, v_raster)) +
