@@ -3383,8 +3383,8 @@ oa_sec_s_brt_add <- read.delim("ML_Model/pdp_data/pdp_oa_sec_s_brt_add.csv", sep
 oa_sec_s_c_brt_add <- read.delim("ML_Model/pdp_data/pdp_oa_sec_s_c_brt_add.csv", sep = ",")
 
 ### turb_before
-tb_sec_s_brt_add <- read.delim("ML_Model/pdp_data/pdp_tb_sec_s_brt_add.csv")
-tb_sec_s_c_brt_add <- read.delim("ML_Model/pdp_data/pdp_tb_sec_s_c_brt_add.csv")
+tb_sec_s_brt_add <- read.delim("ML_Model/pdp_data/pdp_tb_sec_s_brt_add.csv", sep = ",")
+tb_sec_s_c_brt_add <- read.delim("ML_Model/pdp_data/pdp_tb_sec_s_c_brt_add.csv", sep = ",")
 
 ### turb_during
 td_sec_s_brt_add <- read.delim("ML_Model/pdp_data/pdp_td_sec_s_brt_add.csv", sep = ",")
@@ -24039,7 +24039,7 @@ ggsave("ML_model/plots/pdp_sub_samp_ra_c_brt_add.png", plot = p_sub_samp_ra_c_br
 
 ### ok - Predictors: All Predictors
 ```{r}
-### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------------
+### PREDICTOR: ALL PREDICTORS ### -----------------------------------------
 # With k_index as response ----------------------------------------------------
 ### froude 
 p_f_sec_k_brt_add <- ggplot(f_sec_k_brt_add, aes(froude, yhat)) + 
@@ -25651,7 +25651,7 @@ p_tb_sec_s_brt_add <- ggplot(tb_sec_s_brt_add, aes(turb_before, yhat)) +
   theme(axis.text = element_text(size=12),
         axis.title = element_text(size=14))
 
-p_tb_sec_s_c_brt_add <- ggplot(tb_sec_s_brt_add, aes(turb_before, yhat)) + 
+p_tb_sec_s_c_brt_add <- ggplot(tb_sec_s_c_brt_add, aes(turb_before, yhat)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
@@ -27888,6 +27888,7 @@ ggsave("ML_model/plots/pdp_ga_sec_ra_c_brt_add.png", plot = p_ga_sec_ra_c_brt_ad
 ```
 
 ## All models 
+### Normal Models
 ```{r}
 # bind all models with k_index -----------------------------------------------
 mod_k_v <- rbind(v_k_rf, v_k_rf_add, v_k_brt, v_k_brt_add)
