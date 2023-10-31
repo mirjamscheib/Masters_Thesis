@@ -27889,23 +27889,42 @@ ggsave("ML_model/plots/pdp_ga_sec_ra_c_brt_add.png", plot = p_ga_sec_ra_c_brt_ad
 
 ## All models 
 ### Normal Models
+  v_wd_k_rf, v_wd_k_rf_add, v_wd_k_brt, v_wd_k_brt_add,
+                 v_samp_k_rf, v_samp_k_rf_add, v_samp_k_brt, v_samp_k_brt_add,
+                 v_sec_k_rf, v_sec_k_rf_add, v_sec_k_brt, v_sec_k_brt_add
 ```{r}
 # bind all models with k_index -----------------------------------------------
+v_k_rf <- v_k_rf |>
+  mutate(mod = "random forest / v")
+
+v_k_rf_add <- v_k_rf_add |>
+  mutate(mod = "random forest / v add")
+
+v_k_brt <- v_k_brt |>
+  mutate(mod = "brt / v")
+
+v_k_brt_add <- v_k_brt_add |>
+  mutate(mod = "brt / v add")
+         
+            
 mod_k_v <- rbind(v_k_rf, v_k_rf_add, v_k_brt, v_k_brt_add)
+
 mod_k_v_c <- rbind(v_k_c_rf, v_k_c_rf_add, v_k_c_brt, v_k_c_brt_add)
+
+mod_k_wd <- rbind(wd_k_rf, wd_k_rf_add, wd_k_brt, wd_k_brt_add)
+mod_k_wd_c <- rbind(wd_k_c_rf, wd_k_c_rf_add, wd_k_c_brt, wd_k_c_brt_add)
+
+mod_k_x <- rbind(x_k_rf, x_k_rf_add, x_k_brt, x_k_brt_add)
+mod_k_y <- rbind(y_k_rf, y_k_rf_add, y_k_brt, y_k_brt_add)
 ```
 
 ```{r}
-# all indices together --------------------------------------------------------
-v_in_rf <- rbind(v_k_rf, v_s_rf, v_ra_rf) # v_a_rf
-
-ggplot(v_in_rf, aes(velocity, yhat, group = index)) + 
+ggplot(mod_k_v, aes(velocity, yhat, group = mod)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
-  geom_line(aes(linetype = index)) + 
+  geom_line(aes(linetype = mod)) + 
   labs(
     x = "Velocity (m/s)",
-    y = "Indices",
-    title = "Ranger Model with Coordinates"
+    y = "K-Index"
   ) +
   theme_minimal()
 ```

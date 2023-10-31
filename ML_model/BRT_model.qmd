@@ -883,70 +883,54 @@ autotuner_xbrt_sec_ra$tuning_result
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
-trainx_v_k <- model.matrix(k_index ~ ., data = training_v_k)
 trainx_v_k_c <- model.matrix(k_index ~ ., data = training_v_k_c)
 
 # With shannon index as response
-trainx_v_s <- model.matrix(shannon ~ ., data = training_v_s)
 trainx_v_s_c <- model.matrix(shannon ~ ., data = training_v_s_c)
 
 # With abundance as response 
-trainx_v_a <- model.matrix(abundance ~ ., data = training_v_a)
 trainx_v_a_c <- model.matrix(abundance ~ ., data = training_v_a_c)
 
 # With rel_abundance as response 
-trainx_v_ra <- model.matrix(rel_abundance ~ ., data = training_v_ra)
 trainx_v_ra_c <- model.matrix(rel_abundance ~ ., data = training_v_ra_c)
 
 ### PREDICTORS: VELOCITY + WD ### --------------------------------------------
 # With k_index as response
-trainx_wd_k <- model.matrix(k_index ~ ., data = training_wd_k)
 trainx_wd_k_c <- model.matrix(k_index ~ ., data = training_wd_k_c)
 
 # With shannon index as response
-trainx_wd_s <- model.matrix(shannon ~ ., data = training_wd_s)
 trainx_wd_s_c <- model.matrix(shannon ~ ., data = training_wd_s_c)
 
 # With abundance as response
-trainx_wd_a <- model.matrix(abundance ~ ., data = training_wd_a)
 trainx_wd_a_c <- model.matrix(abundance ~ ., data = training_wd_a_c)
 
 # With rel_abundance as response
-trainx_wd_ra <- model.matrix(rel_abundance ~ ., data = training_wd_ra)
 trainx_wd_ra_c <- model.matrix(rel_abundance ~ ., data = training_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
-trainx_samp_k <- model.matrix(k_index ~ ., data = training_samp_k)
 trainx_samp_k_c <- model.matrix(k_index ~ ., data = training_samp_k_c)
 
 # With shannon index as response
-trainx_samp_s <- model.matrix(shannon ~ ., data = training_samp_s)
 trainx_samp_s_c <- model.matrix(shannon ~ ., data = training_samp_s_c)
 
 # With abundance as response
-trainx_samp_a <- model.matrix(abundance ~ ., data = training_samp_a)
 trainx_samp_a_c <- model.matrix(abundance ~ ., data = training_samp_a_c)
 
 # With rel_abundance as response
-trainx_samp_ra <- model.matrix(rel_abundance ~ ., data = training_samp_ra)
 trainx_samp_ra_c <- model.matrix(rel_abundance ~ ., data = training_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ### ----------------------------------------
 # With k_index as response
-trainx_sec_k <- model.matrix(k_index ~ ., data = training_sec_k)
 trainx_sec_k_c <- model.matrix(k_index ~ ., data = training_sec_k_c)
 
 # With shannon index as response
-trainx_sec_s <- model.matrix(shannon ~ ., data = training_sec_s)
 trainx_sec_s_c <- model.matrix(shannon ~ ., data = training_sec_s_c)
 
 # With abundance as response
-trainx_sec_a <- model.matrix(abundance ~ ., data = training_sec_a)
 trainx_sec_a_c <- model.matrix(abundance ~ ., data = training_sec_a_c)
 
 # With rel_abundance as response
-trainx_sec_ra <- model.matrix(rel_abundance ~ ., data = training_sec_ra)
 trainx_sec_ra_c <- model.matrix(rel_abundance ~ ., data = training_sec_ra_c)
 ```
 
@@ -954,258 +938,59 @@ trainx_sec_ra_c <- model.matrix(rel_abundance ~ ., data = training_sec_ra_c)
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
-testx_v_k <- model.matrix(k_index ~ ., data = test_v_k)
 testx_v_k_c <- model.matrix(k_index ~ ., data = test_v_k_c)
 testx_v_k_c <- as.matrix(testx_v_k_c[ ,-1])
 
 # With shannon index as response
-testx_v_s <- model.matrix(shannon ~ ., data = test_v_s)
 testx_v_s_c <- model.matrix(shannon ~ ., data = test_v_s_c)
 testx_v_s_c <- as.matrix(testx_v_s_c[ ,-1])
 
 # With abundance as response
-testx_v_a <- model.matrix(abundance ~ ., data = test_v_a)
 testx_v_a_c <- model.matrix(abundance ~ ., data = test_v_a_c)
 testx_v_a_c <- as.matrix(testx_v_a_c[ ,-1])
 
 # With rel_abundance as response
-testx_v_ra <- model.matrix(rel_abundance ~ ., data = test_v_ra)
 testx_v_ra_c <- model.matrix(rel_abundance ~ ., data = test_v_ra_c)
 testx_v_ra_c <- as.matrix(testx_v_ra_c[ ,-1])
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
-testx_wd_k <- model.matrix(k_index ~ ., data = test_wd_k)
 testx_wd_k_c <- model.matrix(k_index ~ ., data = test_wd_k_c)
 
 # With shannon index as response
-testx_wd_s <- model.matrix(shannon ~ ., data = test_wd_s)
 testx_wd_s_c <- model.matrix(shannon ~ ., data = test_wd_s_c)
 
 # With abundance as response
-testx_wd_a <- model.matrix(abundance ~ ., data = test_wd_a)
 testx_wd_a_c <- model.matrix(abundance ~ ., data = test_wd_a_c)
 
 # With rel_abundance as response
-testx_wd_ra <- model.matrix(rel_abundance ~ ., data = test_wd_ra)
 testx_wd_ra_c <- model.matrix(rel_abundance ~ ., data = test_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
-testx_samp_k <- model.matrix(k_index ~ ., data = test_samp_k)
 testx_samp_k_c <- model.matrix(k_index ~ ., data = test_samp_k_c)
 
 # With shannon index as response
-testx_samp_s <- model.matrix(shannon ~ ., data = test_samp_s)
 testx_samp_s_c <- model.matrix(shannon ~ ., data = test_samp_s_c)
 
 # With abundance as response
-testx_samp_a <- model.matrix(abundance ~ ., data = test_samp_a)
 testx_samp_a_c <- model.matrix(abundance ~ ., data = test_samp_a_c)
 
 # With rel_abundance as response
-testx_samp_ra <- model.matrix(rel_abundance ~ ., data = test_samp_ra)
 testx_samp_ra_c <- model.matrix(rel_abundance ~ ., data = test_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ###
 # With k_index as response
-testx_sec_k <- model.matrix(k_index ~ ., data = test_sec_k)
 testx_sec_k_c <- model.matrix(k_index ~ ., data = test_sec_k_c)
 
 # With shannon index as response
-testx_sec_s <- model.matrix(shannon ~ ., data = test_sec_s)
 testx_sec_s_c <- model.matrix(shannon ~ ., data = test_sec_s_c)
 
 # With abundance as response
-testx_sec_a <- model.matrix(abundance ~ ., data = test_sec_a)
 testx_sec_a_c <- model.matrix(abundance ~ ., data = test_sec_a_c)
 
 # With rel_abundance as response
-testx_sec_ra <- model.matrix(rel_abundance ~ ., data = test_sec_ra)
 testx_sec_ra_c <- model.matrix(rel_abundance ~ ., data = test_sec_ra_c)
-```
-
-## XGBOOST w/ coordinates
-```{r}
-### PREDICTOR: VELOCITY ### ---------------------------------------------------
-# With k_index as response
-#          eta nrounds max_depth subsample 
-#1: 0.01838576     922         3 0.6312782          
-xgb_v_k <- xgboost(data = data.matrix(trainx_v_k[ ,-1]),
-                     label = as.numeric(as.character(training_v_k$k_index)),
-                     eta = 0.01838576,
-                     max_depth = 3,
-                     nrounds = 922,
-                     subsample = 0.6312782,
-                     objective = "reg:linear")
-
-# With shannon index as response
-#          eta nrounds max_depth subsample 
-#1: 0.06108969     117         4 0.6531705          
-xgb_v_s <- xgboost(data = data.matrix(trainx_v_s[ ,-1]),
-                     label = as.numeric(as.character(training_v_s$shannon)),
-                     eta = 0.06108969,
-                     max_depth = 4,
-                     nrounds = 117,
-                     subsample = 0.6531705,
-                     objective = "reg:linear")
-
-# With abundance as response
-#          eta nrounds max_depth subsample 
-#1: 0.06943808     314         4 0.7209312          
-xgb_v_a <- xgboost(data = data.matrix(trainx_v_a[ ,-1]),
-                     label = as.numeric(as.character(training_v_a$abundance)),
-                     eta = 0.06943808,
-                     max_depth = 4,
-                     nrounds = 314,
-                     subsample = 0.7209312,
-                     objective = "reg:linear")
-
-# With rel_abundance as response
-#          eta nrounds max_depth subsample 
-#1: 0.01598317     563         5 0.6270098          
-xgb_v_ra <- xgboost(data = data.matrix(trainx_v_ra[ ,-1]),
-                     label = as.numeric(as.character(training_v_ra$rel_abundance)),
-                     eta = 0.01598317,
-                     max_depth = 5,
-                     nrounds = 563,
-                     subsample = 0.6270098,
-                     objective = "reg:linear")
-
-### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
-# With k_index as response
-#          eta nrounds max_depth subsample 
-#1: 0.04028586     240        10 0.5747886          
-xgb_wd_k <- xgboost(data = data.matrix(trainx_wd_k[ ,-1]),
-                     label = as.numeric(as.character(training_wd_k$k_index)),
-                     eta = 0.04028586,
-                     max_depth = 10,
-                     nrounds = 240,
-                     subsample = 0.5747886,
-                     objective = "reg:linear")
-
-# With shannon index as response
-#         eta nrounds max_depth subsample 
-#1: 0.1752399     158         3  0.688202           
-xgb_wd_s <- xgboost(data = data.matrix(trainx_wd_s[ ,-1]),
-                     label = as.numeric(as.character(training_wd_s$shannon)),
-                     eta = 0.1752399,
-                     max_depth = 3,
-                     nrounds = 158,
-                     subsample = 0.688202,
-                     objective = "reg:linear")
-
-# With abundance as response
-#         eta nrounds max_depth subsample 
-#1: 0.3762802     382        10 0.6743872           
-xgb_wd_a <- xgboost(data = data.matrix(trainx_wd_a[ ,-1]),
-                     label = as.numeric(as.character(training_wd_a$abundance)),
-                     eta = 0.3762802,
-                     max_depth = 10,
-                     nrounds = 382,
-                     subsample = 0.6743872,
-                     objective = "reg:linear")
-
-# With rel_abundance as response
-#         eta nrounds max_depth subsample 
-#1: 0.1137246     134         9 0.7207366          
-xgb_wd_ra <- xgboost(data = data.matrix(trainx_wd_ra[ ,-1]),
-                     label = as.numeric(as.character(training_wd_ra$rel_abundance)),
-                     eta = 0.1137246,
-                     max_depth = 9,
-                     nrounds = 134,
-                     subsample = 0.7207366,
-                     objective = "reg:linear")
-
-### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
-# With k_index as response 
-#         eta nrounds max_depth subsample 
-#1: 0.5116662     430         6  0.711504         
-xgb_samp_k <- xgboost(data = data.matrix(trainx_samp_k[ ,-1]),
-                     label = as.numeric(as.character(training_samp_k$k_index)),
-                     eta = 0.5116662,
-                     max_depth = 6,
-                     nrounds = 430,
-                     subsample = 0.711504,
-                     objective = "reg:linear")
-
-# With shannon index as response
-#         eta nrounds max_depth subsample 
-#1: 0.2133212     254         6 0.7400811          
-xgb_samp_s <- xgboost(data = data.matrix(trainx_samp_s[ ,-1]),
-                     label = as.numeric(as.character(training_samp_s$shannon)),
-                     eta = 0.2133212,
-                     max_depth = 6,
-                     nrounds = 254,
-                     subsample = 0.7400811,
-                     objective = "reg:linear")
-
-# With abundance as response
-#         eta nrounds max_depth subsample 
-#1: 0.1064909     907         7  0.682056          
-xgb_samp_a <- xgboost(data = data.matrix(trainx_samp_a[ ,-1]),
-                     label = as.numeric(as.character(training_samp_a$abundance)),
-                     eta = 0.1064909,
-                     max_depth = 7,
-                     nrounds = 907,
-                     subsample = 0.682056,
-                     objective = "reg:linear")
-
-# With rel_abundance as response 
-#         eta nrounds max_depth subsample 
-#1: 0.3418959     720         9 0.5849629        
-xgb_samp_ra <- xgboost(data = data.matrix(trainx_samp_ra[ ,-1]),
-                     label = as.numeric(as.character(training_samp_ra$rel_abundance)),
-                     eta = 0.3418959,
-                     max_depth = 9,
-                     nrounds = 720,
-                     subsample = 0.5849629,
-                     objective = "reg:linear")
-
-### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# With k_index as response
-#          eta nrounds max_depth subsample 
-#1: 0.06357516     157         4 0.5173704                        
-xgb_sec_k <- xgboost(data = data.matrix(trainx_sec_k[ ,-1]),
-                     label = as.numeric(as.character(training_sec_k$k_index)),
-                     eta = 0.06357516,
-                     max_depth = 4,
-                     nrounds = 157,
-                     subsample = 0.5173704,
-                     objective = "reg:linear")
-
-# With shannon index as response 
-#        eta nrounds max_depth subsample 
-#1: 0.4971499     170        10 0.7408772                      
-xgb_sec_s <- xgboost(data = data.matrix(trainx_sec_s[ ,-1]),
-                     label = as.numeric(as.character(training_sec_s$shannon)),
-                     eta = 0.4971499,
-                     max_depth = 10,
-                     nrounds = 170,
-                     subsample = 0.7408772,
-                     objective = "reg:linear")
-
-# With abundance as response
-#        eta nrounds max_depth subsample 
-#1: 0.5496479     710         6 0.5959901                        
-xgb_sec_a <- xgboost(data = data.matrix(trainx_sec_a[ ,-1]),
-                     label = as.numeric(as.character(training_sec_a$abundance)),
-                     eta = 0.5496479,
-                     max_depth = 6,
-                     nrounds = 710,
-                     subsample = 0.5959901,
-                     objective = "reg:linear")
-
-# With rel_abundance as response 
-#         eta nrounds max_depth subsample 
-#1: 0.4186722     348         7 0.5187091                      
-xgb_sec_ra <- xgboost(data = data.matrix(trainx_sec_ra[ ,-1]),
-                      label = as.numeric(as.character(training_sec_ra$rel_abundance)),
-                     eta = 0.4186722,
-                     max_depth = 7,
-                     nrounds = 348,
-                     subsample = 0.5187091,
-                     objective = "reg:linear")
 ```
 
 ## XGBOOST w/o coordinates
@@ -1396,27 +1181,6 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
 ## Variable Importance
 ```{r}
 ### PREDICTORS: VELOCITY ### -------------------------------------------------
-# w/ coordinates
-vi_v_k <- xgb.importance(model = xgb_v_k) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/ coordinates")
-
-vi_v_s <- xgb.importance(model = xgb_v_s) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/ coordinates")
-
-vi_v_a <- xgb.importance(model = xgb_v_a) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/ coordinates")
-
-vi_v_ra <- xgb.importance(model = xgb_v_ra) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/ coordinates")
-
 # w/o coordinates
 vi_v_k_c <- xgb.importance(model = xgb_v_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
@@ -1440,27 +1204,6 @@ vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)|>
 
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
-# w/ coordinates
-vi_wd_k <- xgb.importance(model = xgb_wd_k) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/ coordinates")
-
-vi_wd_s <- xgb.importance(model = xgb_wd_s) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/ coordinates")
-
-vi_wd_a <- xgb.importance(model = xgb_wd_a) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/ coordinates")
-
-vi_wd_ra <- xgb.importance(model = xgb_wd_ra) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/ coordinates")
-
 # w/o coordinates
 vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
@@ -1483,27 +1226,6 @@ vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c) |>
          model = "xgboost w/o coordinates")
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
-# w/ coordinates
-vi_samp_k <- xgb.importance(model = xgb_samp_k) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/ coordinates")
-
-vi_samp_s <- xgb.importance(model = xgb_samp_s) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/ coordinates")
-
-vi_samp_a <- xgb.importance(model = xgb_samp_a) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/ coordinates")
-
-vi_samp_ra <- xgb.importance(model = xgb_samp_ra) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/ coordinates")
-
 # w/o coordinates
 vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
@@ -1526,27 +1248,6 @@ vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c) |>
          model = "xgboost w/o coordinates")
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# w/ coordinates
-vi_sec_k <- xgb.importance(model = xgb_sec_k) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/ coordinates")
-
-vi_sec_s <- xgb.importance(model = xgb_sec_s) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/ coordinates")
-
-vi_sec_a <- xgb.importance(model = xgb_sec_a) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/ coordinates")
-
-vi_sec_ra <- xgb.importance(model = xgb_sec_ra) |>
-  dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/ coordinates")
-
 # w/o coordinates
 vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
@@ -1569,37 +1270,25 @@ vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c) |>
          model = "xgboost w/o coordinates")
 
 # bind results together -------------------------------------------------------
-vi_brt_model_v <- rbind(vi_v_k, vi_v_s, vi_v_a, vi_v_ra) 
 vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)
-vi_brt_model_wd <- rbind(vi_wd_k, vi_wd_s, vi_wd_a, vi_wd_ra) 
 vi_brt_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) 
-vi_brt_model_samp <- rbind(vi_samp_k, vi_samp_s, vi_samp_a, vi_samp_ra) 
 vi_brt_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c) 
-vi_brt_model_sec <- rbind(vi_sec_k, vi_sec_s, vi_sec_a, vi_sec_ra)
 vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) 
 
 # write results into .csv ----------------------------------------------------
-write.csv(vi_brt_model_v, "ML_model/var_imp/vi_brt_model_v.csv", row.names = FALSE)
 write.csv(vi_brt_model_v_c, "ML_model/var_imp/vi_brt_model_v_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_wd, "ML_model/var_imp/vi_brt_model_wd.csv", row.names = FALSE)
 write.csv(vi_brt_model_wd_c, "ML_model/var_imp/vi_brt_model_wd_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_samp, "ML_model/var_imp/vi_brt_model_samp.csv", row.names = FALSE)
 write.csv(vi_brt_model_samp_c, "ML_model/var_imp/vi_brt_model_samp_c.csv", row.names = FALSE)
-write.csv(vi_brt_model_sec, "ML_model/var_imp/vi_brt_model_sec.csv", row.names = FALSE)
 write.csv(vi_brt_model_sec_c, "ML_model/var_imp/vi_brt_model_sec_c.csv", row.names = FALSE)
 ```
 
 ## Partial dependence plots
-### Data extraction & export
+### ! Data extraction & export
+all predictors: ab abundance
 ```{r}
 ### PREDICTOR: VELOCITY ### -------------------------------------------------
 # With k_index as response --------------------------------------------------
 ### velocity
-pdp_model_v_k <- pdp::partial(xgb_v_k, pred.var = "velocity", train = trainx_v_k[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "velocity w/ coordinates",
-         index = "k_index")
-
 train_v_k_c <- as.matrix(trainx_v_k_c[ ,-1])
 colnames(train_v_k_c) <- "velocity"
 pdp_model_v_k_c <- pdp::partial(xgb_v_k_c, pred.var = "velocity", train = train_v_k_c)|>
@@ -1608,30 +1297,10 @@ pdp_model_v_k_c <- pdp::partial(xgb_v_k_c, pred.var = "velocity", train = train_
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_v_k, "ML_Model/pdp_data/pdp_v_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_k_c, "ML_Model/pdp_data/pdp_v_k_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_v_k <- pdp::partial(xgb_v_k, pred.var = "x", train = trainx_v_k[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "velocity w/ coordinates",
-         index = "k_index")
-pdp_model_y_v_k <- pdp::partial(xgb_v_k, pred.var = "y", train = trainx_v_k[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "velocity w/ coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_x_v_k, "ML_Model/pdp_data/pdp_x_v_k_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_v_k, "ML_Model/pdp_data/pdp_y_v_k_brt.csv", row.names = FALSE)
 
 # With shannon index as response ----------------------------------------------
 ### velocity 
-pdp_model_v_s <- pdp::partial(xgb_v_s, pred.var = "velocity", train = trainx_v_s[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "velocity w/ coordinates",
-         index = "shannon index")
-
 train_v_s_c <- as.matrix(trainx_v_s_c[ ,-1])
 colnames(train_v_s_c) <- "velocity"
 pdp_model_v_s_c <- pdp::partial(xgb_v_s_c, pred.var = "velocity", train = train_v_s_c)|>
@@ -1640,30 +1309,10 @@ pdp_model_v_s_c <- pdp::partial(xgb_v_s_c, pred.var = "velocity", train = train_
          index = "shannon index")
 
 # export data 
-write.csv(pdp_model_v_s, "ML_Model/pdp_data/pdp_v_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_s_c, "ML_Model/pdp_data/pdp_v_s_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_v_s <- pdp::partial(xgb_v_k, pred.var = "x", train = trainx_v_k[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "velocity w/ coordinates",
-         index = "shannon index")
-pdp_model_y_v_s <- pdp::partial(xgb_v_k, pred.var = "y", train = trainx_v_k[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "velocity w/ coordinates",
-         index = "shannon index")
-
-# export data 
-write.csv(pdp_model_x_v_s, "ML_Model/pdp_data/pdp_x_v_s_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_v_s, "ML_Model/pdp_data/pdp_y_v_s_brt.csv", row.names = FALSE)
 
 # With abundance as response --------------------------------------------------
 ### velocity 
-pdp_model_v_a <- pdp::partial(xgb_v_a, pred.var = "velocity", train = trainx_v_a[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "velocity w/ coordinates",
-         index = "abundance")
-
 train_v_a_c <- as.matrix(trainx_v_a_c[ ,-1])
 colnames(train_v_a_c) <- "velocity"
 pdp_model_v_a_c <- pdp::partial(xgb_v_a_c, pred.var = "velocity", train = train_v_a_c)|>
@@ -1672,30 +1321,10 @@ pdp_model_v_a_c <- pdp::partial(xgb_v_a_c, pred.var = "velocity", train = train_
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_v_a, "ML_Model/pdp_data/pdp_v_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_a_c, "ML_Model/pdp_data/pdp_v_a_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_v_a <- pdp::partial(xgb_v_a, pred.var = "x", train = trainx_v_a[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "velocity w/ coordinates",
-         index = "abundance")
-pdp_model_y_v_a <- pdp::partial(xgb_v_a, pred.var = "y", train = trainx_v_a[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "velocity w/ coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_x_v_a, "ML_Model/pdp_data/pdp_x_v_a_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_v_a, "ML_Model/pdp_data/pdp_y_v_a_brt.csv", row.names = FALSE)
 
 # With rel_abundance as response ----------------------------------------------
 ### velocity 
-pdp_model_v_ra <- pdp::partial(xgb_v_ra, pred.var = "velocity", train = trainx_v_ra[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "velocity w/ coordinates",
-         index = "rel_abundance")
-
 train_v_ra_c <- as.matrix(trainx_v_ra_c[ ,-1])
 colnames(train_v_ra_c) <- "velocity"
 pdp_model_v_ra_c <- pdp::partial(xgb_v_ra_c, pred.var = "velocity", train = train_v_ra_c)|>
@@ -1704,1798 +1333,1063 @@ pdp_model_v_ra_c <- pdp::partial(xgb_v_ra_c, pred.var = "velocity", train = trai
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_v_ra, "ML_Model/pdp_data/pdp_v_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_ra_c, "ML_Model/pdp_data/pdp_v_ra_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_v_ra <- pdp::partial(xgb_v_ra, pred.var = "x", train = trainx_v_ra[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "velocity w/ coordinates",
-         index = "rel_abundance")
-pdp_model_y_v_ra <- pdp::partial(xgb_v_ra, pred.var = "y", train = trainx_v_ra[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "velocity w/ coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_x_v_ra, "ML_Model/pdp_data/pdp_x_v_ra_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_v_ra, "ML_Model/pdp_data/pdp_y_v_ra_brt.csv", row.names = FALSE)
 
 ### PREDICTORS: VELOCITY + WD ### --------------------------------------------
 # With k_index as response ---------------------------------------------------
 ### velocity 
-pdp_model_v_wd_k <- pdp::partial(xgb_wd_k, pred.var = "velocity", train = trainx_wd_k[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "v + wd w/ coordinates",
-         index = "k_index")
 pdp_model_v_wd_k_c <- pdp::partial(xgb_wd_k_c, pred.var = "velocity", train = trainx_wd_k_c[ ,-1])|>
   mutate(predictors = "velocity_c",
          model = "v + wd w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_v_wd_k, "ML_Model/pdp_data/pdp_v_wd_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_wd_k_c, "ML_Model/pdp_data/pdp_v_wd_k_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_k <- pdp::partial(xgb_wd_k, pred.var = "wd_m", train = trainx_wd_k[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/ coordinates",
-         index = "k_index")
 pdp_model_wd_k_c <- pdp::partial(xgb_wd_k_c, pred.var = "wd_m", train = trainx_wd_k_c[ ,-1])|>
   mutate(predictors = "wd_m_c",
          model = "v + wd w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_wd_k, "ML_Model/pdp_data/pdp_wd_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_k_c, "ML_Model/pdp_data/pdp_wd_k_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_wd_k <- pdp::partial(xgb_wd_k, pred.var = "x", train = trainx_wd_k[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "v + wd w/ coordinates",
-         index = "k_index")
-pdp_model_y_wd_k <- pdp::partial(xgb_wd_k, pred.var = "y", train = trainx_wd_k[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "v + wd w/ coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_x_wd_k, "ML_Model/pdp_data/pdp_x_wd_k_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_wd_k, "ML_Model/pdp_data/pdp_y_wd_k_brt.csv", row.names = FALSE)
 
 # With shannon index as response ----------------------------------------------
 ### velocity 
-pdp_model_v_wd_s <- pdp::partial(xgb_wd_s, pred.var = "velocity", train = trainx_wd_s[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "v + wd w/ coordinates",
-         index = "shannon_index")
 pdp_model_v_wd_s_c <- pdp::partial(xgb_wd_s_c, pred.var = "velocity", train = trainx_wd_s_c[ ,-1])|>
   mutate(predictors = "velocity_c",
          model = "v + wd w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_v_wd_s, "ML_Model/pdp_data/pdp_v_wd_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_wd_s_c, "ML_Model/pdp_data/pdp_v_wd_s_c_brt.csv", row.names = FALSE)
 
 ### wd_m
-pdp_model_wd_s <- pdp::partial(xgb_wd_s, pred.var = "wd_m", train = trainx_wd_s[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/ coordinates",
-         index = "shannon_index")
 pdp_model_wd_s_c <- pdp::partial(xgb_wd_s_c, pred.var = "wd_m", train = trainx_wd_s_c[ ,-1])|>
   mutate(predictors = "wd_m_c",
          model = "v + wd w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_wd_s, "ML_Model/pdp_data/pdp_wd_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_s_c, "ML_Model/pdp_data/pdp_wd_s_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_wd_s <- pdp::partial(xgb_wd_s, pred.var = "x", train = trainx_wd_s[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "v + wd w/ coordinates",
-         index = "shannon_index")
-pdp_model_y_wd_s <- pdp::partial(xgb_wd_s, pred.var = "y", train = trainx_wd_s[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "v + wd w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_x_wd_s, "ML_Model/pdp_data/pdp_x_wd_s_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_wd_s, "ML_Model/pdp_data/pdp_y_wd_s_brt.csv", row.names = FALSE)
 
 # With abundance as response --------------------------------------------------
 ### velocity 
-pdp_model_v_wd_a <- pdp::partial(xgb_wd_a, pred.var = "velocity", train = trainx_wd_a[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "v + wd w/ coordinates",
-         index = "abundance")
 pdp_model_v_wd_a_c <- pdp::partial(xgb_wd_a_c, pred.var = "velocity", train = trainx_wd_a_c[ ,-1])|>
-  mutate(predictors = "velocity_c",
+  mutate(predictors = "velocity",
          model = "v + wd w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_v_wd_a, "ML_Model/pdp_data/pdp_v_wd_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_wd_a_c, "ML_Model/pdp_data/pdp_v_wd_a_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_a <- pdp::partial(xgb_wd_a, pred.var = "wd_m", train = trainx_wd_a[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/ coordinates",
-         index = "abundance")
 pdp_model_wd_a_c <- pdp::partial(xgb_wd_a_c, pred.var = "wd_m", train = trainx_wd_a_c[ ,-1])|>
   mutate(predictors = "wd_m_c",
          model = "v + wd w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_wd_a, "ML_Model/pdp_data/pdp_wd_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_a_c, "ML_Model/pdp_data/pdp_wd_a_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_wd_a <- pdp::partial(xgb_wd_a, pred.var = "x", train = trainx_wd_a[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "v + wd w/ coordinates",
-         index = "abundance")
-pdp_model_y_wd_a <- pdp::partial(xgb_wd_a, pred.var = "y", train = trainx_wd_a[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "v + wd w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_x_wd_a, "ML_Model/pdp_data/pdp_x_wd_a_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_wd_a, "ML_Model/pdp_data/pdp_y_wd_a_brt.csv", row.names = FALSE)
 
 # With rel_abundance as response ---------------------------------------------
 ### velocity
-pdp_model_v_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "velocity", train = trainx_wd_ra[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "v + wd w/ coordinates",
-         index = "rel_abundance")
 pdp_model_v_wd_ra_c <- pdp::partial(xgb_wd_ra_c, pred.var = "velocity", train = trainx_wd_ra_c[ ,-1])|>
   mutate(predictors = "velocity_c",
          model = "v + wd w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_v_wd_ra, "ML_Model/pdp_data/pdp_v_wd_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_wd_ra_c, "ML_Model/pdp_data/pdp_v_wd_ra_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "wd_m", train = trainx_wd_ra[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/ coordinates",
-         index = "rel_abundance")
 pdp_model_wd_ra_c <- pdp::partial(xgb_wd_ra_c, pred.var = "wd_m", train = trainx_wd_ra_c[ ,-1]) |>
   mutate(predictors = "wd_m_c",
          model = "v + wd w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_wd_ra, "ML_Model/pdp_data/pdp_wd_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_ra_c, "ML_Model/pdp_data/pdp_wd_ra_c_brt.csv", row.names = FALSE)
-
-### x/y
-pdp_model_x_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "x", train = trainx_wd_ra[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "v + wd w/ coordinates",
-         index = "rel_abundance")
-pdp_model_y_wd_ra <- pdp::partial(xgb_wd_ra, pred.var = "y", train = trainx_wd_ra[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "v + wd w/ coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_x_wd_ra, "ML_Model/pdp_data/pdp_x_wd_ra_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_wd_ra, "ML_Model/pdp_data/pdp_y_wd_ra_brt.csv", row.names = FALSE)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
 # With k_index as response ---------------------------------------------------
 ### velocity 
-pdp_model_v_samp_k <- pdp::partial(xgb_samp_k, pred.var = "velocity", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_v_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "velocity", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "velocity",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_v_samp_k, "ML_Model/pdp_data/pdp_v_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_samp_k_c, "ML_Model/pdp_data/pdp_v_samp_k_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_samp_k <- pdp::partial(xgb_samp_k_c, pred.var = "wd_m", train = trainx_samp_k_c[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_wd_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "wd_m", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "wd_m",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_wd_samp_k, "ML_Model/pdp_data/pdp_wd_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_samp_k_c, "ML_Model/pdp_data/pdp_wd_samp_k_c_brt.csv", row.names = FALSE)
 
-### x / y 
-pdp_model_x_samp_k <- pdp::partial(xgb_samp_k, pred.var = "x", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "sampling w/ coordinates",
-         index = "k_index")
-pdp_model_y_samp_k <- pdp::partial(xgb_samp_k, pred.var = "y", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "sampling w/ coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_x_samp_k, "ML_Model/pdp_data/pdp_x_samp_k_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_samp_k, "ML_Model/pdp_data/pdp_y_samp_k_brt.csv", row.names = FALSE)
-
 ### z 
-pdp_model_z_samp_k <- pdp::partial(xgb_samp_k, pred.var = "z", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "z",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_z_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "z", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "z_c",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_z_samp_k, "ML_Model/pdp_data/pdp_z_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_z_samp_k_c, "ML_Model/pdp_data/pdp_z_samp_k_c_brt.csv", row.names = FALSE)
 
 ### dist_w 
-pdp_model_dist_samp_k <- pdp::partial(xgb_samp_k, pred.var = "dist_w", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_dist_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "dist_w", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "dist_w_c",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_dist_samp_k, "ML_Model/pdp_data/pdp_dist_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_dist_samp_k_c, "ML_Model/pdp_data/pdp_dist_samp_k_c_brt.csv", row.names = FALSE)
 
 ### cat_v 
-pdp_model_cv_samp_k <- pdp::partial(xgb_samp_k, pred.var = "cat_velocity", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_cv_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "cat_velocity", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "cat_velocity",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_cv_samp_k, "ML_Model/pdp_data/pdp_cv_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cv_samp_k_c, "ML_Model/pdp_data/pdp_cv_samp_k_c_brt.csv", row.names = FALSE)
 
 ### alg_cover 
-pdp_model_ac_samp_k <- pdp::partial(xgb_samp_k, pred.var = "alg_cover", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_ac_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "alg_cover", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "alg_cover",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_ac_samp_k, "ML_Model/pdp_data/pdp_ac_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ac_samp_k_c, "ML_Model/pdp_data/pdp_ac_samp_k_c_brt.csv", row.names = FALSE)
 
 ### moos_cover 
-pdp_model_mc_samp_k <- pdp::partial(xgb_samp_k, pred.var = "moos_cover", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_mc_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "moos_cover", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "moos_cover",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_mc_samp_k, "ML_Model/pdp_data/pdp_mc_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_mc_samp_k_c, "ML_Model/pdp_data/pdp_mc_samp_k_c_brt.csv", row.names = FALSE)
 
 ### cpom_cover 
-pdp_model_cc_samp_k <- pdp::partial(xgb_samp_k, pred.var = "cpom_cover", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_cc_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "cpom_cover", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "cpom_cover",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_cc_samp_k, "ML_Model/pdp_data/pdp_cc_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cc_samp_k_c, "ML_Model/pdp_data/pdp_cc_samp_k_c_brt.csv", row.names = FALSE)
 
 ### clog_3 
-pdp_model_clog_3_samp_k <- pdp::partial(xgb_samp_k, pred.var = "clog_3_class_int", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_clog_3_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "clog_3_class_int", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "clog_3_class",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_clog_3_samp_k, "ML_Model/pdp_data/pdp_clog_3_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_3_samp_k_c, "ML_Model/pdp_data/pdp_clog_3_samp_k_c_brt.csv", row.names = FALSE)
 
 ### clog_6
-pdp_model_clog_6_samp_k <- pdp::partial(xgb_samp_k, pred.var = "clog_6_class_int", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_clog_6_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "clog_6_class_int", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "clog_6_class",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_clog_6_samp_k, "ML_Model/pdp_data/pdp_clog_6_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_6_samp_k_c, "ML_Model/pdp_data/pdp_clog_6_samp_k_c_brt.csv", row.names = FALSE)
 
 ### sub_type
-pdp_model_sub_samp_k <- pdp::partial(xgb_samp_k, pred.var = "sub_type_int", train = trainx_samp_k[ ,-1]) |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_sub_samp_k_c <- pdp::partial(xgb_samp_k_c, pred.var = "sub_type_int", train = trainx_samp_k_c[ ,-1]) |>
   mutate(predictors = "sub_type",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_sub_samp_k, "ML_Model/pdp_data/pdp_sub_samp_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_sub_samp_k_c, "ML_Model/pdp_data/pdp_sub_samp_k_c_brt.csv", row.names = FALSE)
 
 # With shannon index as response ----------------------------------------------
 ### velocity 
-pdp_model_v_samp_s <- pdp::partial(xgb_samp_s, pred.var = "velocity", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_v_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "velocity", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "velocity",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_v_samp_s, "ML_Model/pdp_data/pdp_v_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_samp_s_c, "ML_Model/pdp_data/pdp_v_samp_s_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_samp_s <- pdp::partial(xgb_samp_s, pred.var = "wd_m", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_wd_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "wd_m", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "wd_m",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_wd_samp_s, "ML_Model/pdp_data/pdp_wd_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_samp_s_c, "ML_Model/pdp_data/pdp_wd_samp_s_c_brt.csv", row.names = FALSE)
 
-### x / y 
-pdp_model_x_samp_s <- pdp::partial(xgb_samp_s, pred.var = "x", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
-pdp_model_y_samp_s <- pdp::partial(xgb_samp_s, pred.var = "y", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_x_samp_s, "ML_Model/pdp_data/pdp_x_samp_s_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_samp_s, "ML_Model/pdp_data/pdp_y_samp_s_brt.csv", row.names = FALSE)
-
 ### z 
-pdp_model_z_samp_s <- pdp::partial(xgb_samp_s, pred.var = "z", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "z",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_z_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "z", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "z",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_z_samp_s, "ML_Model/pdp_data/pdp_z_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_z_samp_s_c, "ML_Model/pdp_data/pdp_z_samp_s_c_brt.csv", row.names = FALSE)
 
 ### dist_w 
-pdp_model_dist_samp_s <- pdp::partial(xgb_samp_s, pred.var = "dist_w", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_dist_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "dist_w", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "dist_w",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_dist_samp_s, "ML_Model/pdp_data/pdp_dist_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_dist_samp_s_c, "ML_Model/pdp_data/pdp_dist_samp_s_c_brt.csv", row.names = FALSE)
 
 ### cat_v 
-pdp_model_cv_samp_s <- pdp::partial(xgb_samp_s, pred.var = "cat_velocity", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_cv_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "cat_velocity", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "cat_velocity",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_cv_samp_s, "ML_Model/pdp_data/pdp_cv_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cv_samp_s_c, "ML_Model/pdp_data/pdp_cv_samp_s_c_brt.csv", row.names = FALSE)
 
 ### alg_cover 
-pdp_model_ac_samp_s <- pdp::partial(xgb_samp_s, pred.var = "alg_cover", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_ac_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "alg_cover", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "alg_cover",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_ac_samp_s, "ML_Model/pdp_data/pdp_ac_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ac_samp_s_c, "ML_Model/pdp_data/pdp_ac_samp_s_c_brt.csv", row.names = FALSE)
 
 ### moos_cover 
-pdp_model_mc_samp_s <- pdp::partial(xgb_samp_s, pred.var = "moos_cover", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_mc_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "moos_cover", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "moos_cover",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_mc_samp_s, "ML_Model/pdp_data/pdp_mc_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_mc_samp_s_c, "ML_Model/pdp_data/pdp_mc_samp_s_c_brt.csv", row.names = FALSE)
 
 ### cpom_cover
-pdp_model_cc_samp_s <- pdp::partial(xgb_samp_s, pred.var = "cpom_cover", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_cc_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "cpom_cover", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "cpom_cover",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_cc_samp_s, "ML_Model/pdp_data/pdp_cc_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cc_samp_s_c, "ML_Model/pdp_data/pdp_cc_samp_s_c_brt.csv", row.names = FALSE)
 
 ### clog_3 
-pdp_model_clog_3_samp_s <- pdp::partial(xgb_samp_s, pred.var = "clog_3_class_int", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_clog_3_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "clog_3_class_int", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "clog_3_class",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_clog_3_samp_s, "ML_Model/pdp_data/pdp_clog_3_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_3_samp_s_c, "ML_Model/pdp_data/pdp_clog_3_samp_s_c_brt.csv", row.names = FALSE)
 
 ### clog_6
-pdp_model_clog_6_samp_s <- pdp::partial(xgb_samp_s, pred.var = "clog_6_class_int", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_clog_6_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "clog_6_class_int", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "clog_6_class",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_clog_6_samp_s, "ML_Model/pdp_data/pdp_clog_6_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_6_samp_s_c, "ML_Model/pdp_data/pdp_clog_6_samp_s_c_brt.csv", row.names = FALSE)
 
 ### sub_type 
-pdp_model_sub_samp_s <- pdp::partial(xgb_samp_s, pred.var = "sub_type_int", train = trainx_samp_s[ ,-1]) |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_sub_samp_s_c <- pdp::partial(xgb_samp_s_c, pred.var = "sub_type_int", train = trainx_samp_s_c[ ,-1]) |>
   mutate(predictors = "sub_type",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_sub_samp_s, "ML_Model/pdp_data/pdp_sub_samp_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_sub_samp_s_c, "ML_Model/pdp_data/pdp_sub_samp_s_c_brt.csv", row.names = FALSE)
 
 # With abundance as response --------------------------------------------------
 ### velocity 
-pdp_model_v_samp_a <- pdp::partial(xgb_samp_a, pred.var = "velocity", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_v_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "velocity", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "velocity",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_v_samp_a, "ML_Model/pdp_data/pdp_v_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_samp_a_c, "ML_Model/pdp_data/pdp_v_samp_a_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_samp_a <- pdp::partial(xgb_samp_a, pred.var = "wd_m", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_wd_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "wd_m", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "wd_m",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_wd_samp_a, "ML_Model/pdp_data/pdp_wd_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_samp_a_c, "ML_Model/pdp_data/pdp_wd_samp_a_c_brt.csv", row.names = FALSE)
 
-### x / y 
-pdp_model_x_samp_a <- pdp::partial(xgb_samp_a, pred.var = "x", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "sampling w/ coordinates",
-         index = "abundance")
-pdp_model_y_samp_a <- pdp::partial(xgb_samp_a, pred.var = "y", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "sampling w/ coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_x_samp_a, "ML_Model/pdp_data/pdp_x_samp_a_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_samp_a, "ML_Model/pdp_data/pdp_y_samp_a_brt.csv", row.names = FALSE)
-
 ### z 
-pdp_model_z_samp_a <- pdp::partial(xgb_samp_a, pred.var = "z", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "z",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_z_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "z", train = trainx_samp_a_c[,-1]) |>
   mutate(predictors = "z",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_z_samp_a, "ML_Model/pdp_data/pdp_z_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_z_samp_a_c, "ML_Model/pdp_data/pdp_z_samp_a_c_brt.csv", row.names = FALSE)
 
 ### dist_w 
-pdp_model_dist_samp_a <- pdp::partial(xgb_samp_a, pred.var = "dist_w", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_dist_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "dist_w", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "dist_w",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_dist_samp_a, "ML_Model/pdp_data/pdp_dist_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_dist_samp_a_c, "ML_Model/pdp_data/pdp_dist_samp_a_c_brt.csv", row.names = FALSE)
 
 ### cat_v 
-pdp_model_cv_samp_a <- pdp::partial(xgb_samp_a, pred.var = "cat_velocity", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_cv_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "cat_velocity", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "cat_velocity",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_cv_samp_a, "ML_Model/pdp_data/pdp_cv_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cv_samp_a_c, "ML_Model/pdp_data/pdp_cv_samp_a_c_brt.csv", row.names = FALSE)
 
 ### alg_cover 
-pdp_model_ac_samp_a <- pdp::partial(xgb_samp_a, pred.var = "alg_cover", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_ac_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "alg_cover", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "alg_cover",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_ac_samp_a, "ML_Model/pdp_data/pdp_ac_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ac_samp_a_c, "ML_Model/pdp_data/pdp_ac_samp_a_c_brt.csv", row.names = FALSE)
 
 ### moos_cover 
-pdp_model_mc_samp_a <- pdp::partial(xgb_samp_a, pred.var = "moos_cover", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_mc_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "moos_cover", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "moos_cover",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_mc_samp_a, "ML_Model/pdp_data/pdp_mc_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_mc_samp_a_c, "ML_Model/pdp_data/pdp_mc_samp_a_c_brt.csv", row.names = FALSE)
 
 ### cpom_cover 
-pdp_model_cc_samp_a <- pdp::partial(xgb_samp_a, pred.var = "cpom_cover", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_cc_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "cpom_cover", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "cpom_cover",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_cc_samp_a, "ML_Model/pdp_data/pdp_cc_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cc_samp_a_c, "ML_Model/pdp_data/pdp_cc_samp_a_c_brt.csv", row.names = FALSE)
 
 ### clog_3 
-pdp_model_clog_3_samp_a <- pdp::partial(xgb_samp_a, pred.var = "clog_3_class_int", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_clog_3_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "clog_3_class_int", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "clog_3_class",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_clog_3_samp_a, "ML_Model/pdp_data/pdp_clog_3_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_3_samp_a_c, "ML_Model/pdp_data/pdp_clog_3_samp_a_c_brt.csv", row.names = FALSE)
 
 ### clog_6
-pdp_model_clog_6_samp_a <- pdp::partial(xgb_samp_a, pred.var = "clog_6_class_int", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_clog_6_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "clog_6_class_int", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "clog_6_class",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_clog_6_samp_a, "ML_Model/pdp_data/pdp_clog_6_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_6_samp_a_c, "ML_Model/pdp_data/pdp_clog_6_samp_a_c_brt.csv", row.names = FALSE)
 
 ### sub_type 
-pdp_model_sub_samp_a <- pdp::partial(xgb_samp_a, pred.var = "sub_type_int", train = trainx_samp_a[ ,-1]) |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/ coordinates",
-         index = "abundance")
 pdp_model_sub_samp_a_c <- pdp::partial(xgb_samp_a_c, pred.var = "sub_type_int", train = trainx_samp_a_c[ ,-1]) |>
   mutate(predictors = "sub_type",
          model = "sampling w/o coordinates",
          index = "abundance")
 
 # export data 
-write.csv(pdp_model_sub_samp_a, "ML_Model/pdp_data/pdp_sub_samp_a_brt.csv", row.names = FALSE)
 write.csv(pdp_model_sub_samp_a_c, "ML_Model/pdp_data/pdp_sub_samp_a_c_brt.csv", row.names = FALSE)
 
 # With rel_abundance as response ----------------------------------------------
 ### velocity 
-pdp_model_v_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "velocity", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_v_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "velocity", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "velocity",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_v_samp_ra, "ML_Model/pdp_data/pdp_v_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_samp_ra_c, "ML_Model/pdp_data/pdp_v_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "wd_m", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_wd_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "wd_m", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "wd_m",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_wd_samp_ra, "ML_Model/pdp_data/pdp_wd_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_samp_ra_c, "ML_Model/pdp_data/pdp_wd_samp_ra_c_brt.csv", row.names = FALSE)
 
-### x / y 
-pdp_model_x_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "x", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
-pdp_model_y_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "y", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_x_samp_ra, "ML_Model/pdp_data/pdp_x_samp_ra_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_samp_ra, "ML_Model/pdp_data/pdp_y_samp_ra_brt.csv", row.names = FALSE)
-
 ### z 
-pdp_model_z_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "z", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "z",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_z_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "z", train = trainx_samp_ra_c[,-1]) |>
   mutate(predictors = "z",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_z_samp_ra, "ML_Model/pdp_data/pdp_z_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_z_samp_ra_c, "ML_Model/pdp_data/pdp_z_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### dist_w 
-pdp_model_dist_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "dist_w", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_dist_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "dist_w", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "dist_w",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_dist_samp_ra, "ML_Model/pdp_data/pdp_dist_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_dist_samp_ra_c, "ML_Model/pdp_data/pdp_dist_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### cat_v 
-pdp_model_cv_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "cat_velocity", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_cv_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "cat_velocity", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "cat_velocity",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_cv_samp_ra, "ML_Model/pdp_data/pdp_cv_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cv_samp_ra_c, "ML_Model/pdp_data/pdp_cv_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### alg_cover 
-pdp_model_ac_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "alg_cover", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_ac_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "alg_cover", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "alg_cover",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_ac_samp_ra, "ML_Model/pdp_data/pdp_ac_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ac_samp_ra_c, "ML_Model/pdp_data/pdp_ac_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### moos_cover 
-pdp_model_mc_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "moos_cover", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_mc_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "moos_cover", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "moos_cover",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_mc_samp_ra, "ML_Model/pdp_data/pdp_mc_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_mc_samp_ra_c, "ML_Model/pdp_data/pdp_mc_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### cpom_cover 
-pdp_model_cc_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "cpom_cover", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_cc_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "cpom_cover", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "cpom_cover",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_cc_samp_ra, "ML_Model/pdp_data/pdp_cc_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cc_samp_ra_c, "ML_Model/pdp_data/pdp_cc_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### clog_3 
-pdp_model_clog_3_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "clog_3_class_int", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_clog_3_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "clog_3_class_int", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "clog_3_class",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_clog_3_samp_ra, "ML_Model/pdp_data/pdp_clog_3_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_3_samp_ra_c, "ML_Model/pdp_data/pdp_clog_3_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### clog_6
-pdp_model_clog_6_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "clog_6_class_int", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_clog_6_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "clog_6_class_int", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "clog_6_class",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_clog_6_samp_ra, "ML_Model/pdp_data/pdp_clog_6_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_6_samp_ra_c, "ML_Model/pdp_data/pdp_clog_6_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### sub_type 
-pdp_model_sub_samp_ra <- pdp::partial(xgb_samp_ra, pred.var = "sub_type_int", train = trainx_samp_ra[ ,-1]) |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_sub_samp_ra_c <- pdp::partial(xgb_samp_ra_c, pred.var = "sub_type_int", train = trainx_samp_ra_c[ ,-1]) |>
   mutate(predictors = "sub_type",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_sub_samp_ra, "ML_Model/pdp_data/pdp_sub_samp_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_sub_samp_ra_c, "ML_Model/pdp_data/pdp_sub_samp_ra_c_brt.csv", row.names = FALSE)
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response ----------------------------------------------------
 ### velocity 
-pdp_model_v_sec_k <- pdp::partial(xgb_sec_k, pred.var = "velocity", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "all predictors w/ coordinates",
-         index = "k_index")
 pdp_model_v_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "velocity", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "velocity",
          model = "all predictors w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_v_sec_k, "ML_Model/pdp_data/pdp_v_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_sec_k_c, "ML_Model/pdp_data/pdp_v_sec_k_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_sec_k <- pdp::partial(xgb_sec_k, pred.var = "wd_m", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_wd_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "wd_m", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "wd_m",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_wd_sec_k, "ML_Model/pdp_data/pdp_wd_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_sec_k_c, "ML_Model/pdp_data/pdp_wd_sec_k_c_brt.csv", row.names = FALSE)
 
-### x / y 
-pdp_model_x_sec_k <- pdp::partial(xgb_sec_k, pred.var = "x", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "sampling w/ coordinates",
-         index = "k_index")
-pdp_model_y_sec_k <- pdp::partial(xgb_sec_k, pred.var = "y", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "sampling w/ coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_x_sec_k, "ML_Model/pdp_data/pdp_x_sec_k_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_sec_k, "ML_Model/pdp_data/pdp_y_sec_k_brt.csv", row.names = FALSE)
-
 ### z 
-pdp_model_z_sec_k <- pdp::partial(xgb_sec_k, pred.var = "z", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "z",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_z_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "z", train = trainx_sec_k_c[,-1]) |>
   mutate(predictors = "z",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_z_sec_k, "ML_Model/pdp_data/pdp_z_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_z_sec_k_c, "ML_Model/pdp_data/pdp_z_sec_k_c_brt.csv", row.names = FALSE)
 
 ### dist_w 
-pdp_model_dist_sec_k <- pdp::partial(xgb_sec_k, pred.var = "dist_w", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_dist_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "dist_w", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "dist_w",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_dist_sec_k, "ML_Model/pdp_data/pdp_dist_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_dist_sec_k_c, "ML_Model/pdp_data/pdp_dist_sec_k_c_brt.csv", row.names = FALSE)
 
 ### cat_v 
-pdp_model_cv_sec_k <- pdp::partial(xgb_sec_k, pred.var = "cat_velocity", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_cv_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "cat_velocity", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "cat_velocity",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_cv_sec_k, "ML_Model/pdp_data/pdp_cv_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cv_sec_k_c, "ML_Model/pdp_data/pdp_cv_sec_k_c_brt.csv", row.names = FALSE)
 
 ### alg_cover 
-pdp_model_ac_sec_k <- pdp::partial(xgb_sec_k, pred.var = "alg_cover", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_ac_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "alg_cover", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "alg_cover",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_ac_sec_k, "ML_Model/pdp_data/pdp_ac_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ac_sec_k_c, "ML_Model/pdp_data/pdp_ac_sec_k_c_brt.csv", row.names = FALSE)
 
 ### moos_cover 
-pdp_model_mc_sec_k <- pdp::partial(xgb_sec_k, pred.var = "moos_cover", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_mc_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "moos_cover", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "moos_cover",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_mc_sec_k, "ML_Model/pdp_data/pdp_mc_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_mc_sec_k_c, "ML_Model/pdp_data/pdp_mc_sec_k_c_brt.csv", row.names = FALSE)
 
 ### cpom_cover 
-pdp_model_cc_sec_k <- pdp::partial(xgb_sec_k, pred.var = "cpom_cover", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_cc_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "cpom_cover", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "cpom_cover",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_cc_sec_k, "ML_Model/pdp_data/pdp_cc_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cc_sec_k_c, "ML_Model/pdp_data/pdp_cc_sec_k_c_brt.csv", row.names = FALSE)
 
 ### clog_3 
-pdp_model_clog_3_sec_k <- pdp::partial(xgb_sec_k, pred.var = "clog_3_class_int", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_clog_3_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "clog_3_class_int", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "clog_3_class",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_clog_3_sec_k, "ML_Model/pdp_data/pdp_clog_3_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_3_sec_k_c, "ML_Model/pdp_data/pdp_clog_3_sec_k_c_brt.csv", row.names = FALSE)
 
 ### clog_6
-pdp_model_clog_6_sec_k <- pdp::partial(xgb_sec_k, pred.var = "clog_6_class_int", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_clog_6_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "clog_6_class_int", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "clog_6_class",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_clog_6_sec_k, "ML_Model/pdp_data/pdp_clog_6_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_6_sec_k_c, "ML_Model/pdp_data/pdp_clog_6_sec_k_c_brt.csv", row.names = FALSE)
 
 ### sub_type 
-pdp_model_sub_sec_k <- pdp::partial(xgb_sec_k, pred.var = "sub_type_int", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_sub_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "sub_type_int", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "sub_type",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_sub_sec_k, "ML_Model/pdp_data/pdp_sub_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_sub_sec_k_c, "ML_Model/pdp_data/pdp_sub_sec_k_c_brt.csv", row.names = FALSE)
 
 ### pH_before
-pdp_model_phb_sec_k <- pdp::partial(xgb_sec_k, pred.var = "pH_before", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "pH_before",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_phb_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "pH_before", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "pH_before",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_phb_sec_k, "ML_Model/pdp_data/pdp_phb_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_phb_sec_k_c, "ML_Model/pdp_data/pdp_phb_sec_k_c_brt.csv", row.names = FALSE)
 
 ### pH_during
-pdp_model_phd_sec_k <- pdp::partial(xgb_sec_k, pred.var = "pH_during", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "pH_during",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_phd_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "pH_during", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "pH_during",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_phd_sec_k, "ML_Model/pdp_data/pdp_phd_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_phd_sec_k_c, "ML_Model/pdp_data/pdp_phd_sec_k_c_brt.csv", row.names = FALSE)
 
 ### pH_after
-pdp_model_pha_sec_k <- pdp::partial(xgb_sec_k, pred.var = "pH_after", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "pH_after",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_pha_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "pH_after", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "pH_after",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_pha_sec_k, "ML_Model/pdp_data/pdp_pha_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_pha_sec_k_c, "ML_Model/pdp_data/pdp_pha_sec_k_c_brt.csv", row.names = FALSE)
 
 ### conduct_before
-pdp_model_cb_sec_k <- pdp::partial(xgb_sec_k, pred.var = "conduct_before", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "conduct_before",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_cb_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "conduct_before", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "conduct_before",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_cb_sec_k, "ML_Model/pdp_data/pdp_cb_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cb_sec_k_c, "ML_Model/pdp_data/pdp_cb_sec_k_c_brt.csv", row.names = FALSE)
 
 ### conduct_during
-pdp_model_cd_sec_k <- pdp::partial(xgb_sec_k, pred.var = "conduct_during", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "conduct_during",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_cd_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "conduct_during", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "conduct_during",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_cd_sec_k, "ML_Model/pdp_data/pdp_cd_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cd_sec_k_c, "ML_Model/pdp_data/pdp_cd_sec_k_c_brt.csv", row.names = FALSE)
 
 ### conduct_after
-pdp_model_ca_sec_k <- pdp::partial(xgb_sec_k, pred.var = "conduct_after", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "conduct_after",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_ca_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "conduct_after", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "conduct_after",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_ca_sec_k, "ML_Model/pdp_data/pdp_ca_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ca_sec_k_c, "ML_Model/pdp_data/pdp_ca_sec_k_c_brt.csv", row.names = FALSE)
 
 ### ox_before
-pdp_model_ob_sec_k <- pdp::partial(xgb_sec_k, pred.var = "ox_before", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "ox_before",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_ob_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "ox_before", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "ox_before",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_ob_sec_k, "ML_Model/pdp_data/pdp_ob_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ob_sec_k_c, "ML_Model/pdp_data/pdp_ob_sec_k_c_brt.csv", row.names = FALSE)
 
 ### ox_during
-pdp_model_od_sec_k <- pdp::partial(xgb_sec_k, pred.var = "ox_during", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "ox_during",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_od_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "ox_during", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "ox_during",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_od_sec_k, "ML_Model/pdp_data/pdp_od_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_od_sec_k_c, "ML_Model/pdp_data/pdp_od_sec_k_c_brt.csv", row.names = FALSE)
 
 ### ox_after
-pdp_model_oa_sec_k <- pdp::partial(xgb_sec_k, pred.var = "ox_after", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "ox_after",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_oa_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "ox_after", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "ox_after",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_oa_sec_k, "ML_Model/pdp_data/pdp_oa_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_oa_sec_k_c, "ML_Model/pdp_data/pdp_oa_sec_k_c_brt.csv", row.names = FALSE)
 
 ### turb_before
-pdp_model_tb_sec_k <- pdp::partial(xgb_sec_k, pred.var = "turb_before", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "turb_before",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_tb_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "turb_before", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "turb_before",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_tb_sec_k, "ML_Model/pdp_data/pdp_tb_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_tb_sec_k_c, "ML_Model/pdp_data/pdp_tb_sec_k_c_brt.csv", row.names = FALSE)
 
 ### turb_during
-pdp_model_td_sec_k <- pdp::partial(xgb_sec_k, pred.var = "turb_during", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "turb_during",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_td_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "turb_during", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "turb_during",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_td_sec_k, "ML_Model/pdp_data/pdp_td_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_td_sec_k_c, "ML_Model/pdp_data/pdp_td_sec_k_c_brt.csv", row.names = FALSE)
 
 ### turb_after
-pdp_model_ta_sec_k <- pdp::partial(xgb_sec_k, pred.var = "turb_after", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "turb_after",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_ta_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "turb_after", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "turb_after",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_ta_sec_k, "ML_Model/pdp_data/pdp_ta_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ta_sec_k_c, "ML_Model/pdp_data/pdp_ta_sec_k_c_brt.csv", row.names = FALSE)
 
 ### temp_before
-pdp_model_teb_sec_k <- pdp::partial(xgb_sec_k, pred.var = "temp_before", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "temp_before",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_teb_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "temp_before", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "temp_before",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_teb_sec_k, "ML_Model/pdp_data/pdp_teb_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_teb_sec_k_c, "ML_Model/pdp_data/pdp_teb_sec_k_c_brt.csv", row.names = FALSE)
 
 ### temp_during
-pdp_model_ted_sec_k <- pdp::partial(xgb_sec_k, pred.var = "temp_during", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "temp_during",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_ted_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "temp_during", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "temp_during",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_ted_sec_k, "ML_Model/pdp_data/pdp_ted_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ted_sec_k_c, "ML_Model/pdp_data/pdp_ted_sec_k_c_brt.csv", row.names = FALSE)
 
 ### temp_after
-pdp_model_tea_sec_k <- pdp::partial(xgb_sec_k, pred.var = "temp_after", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "temp_after",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_tea_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "temp_after", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "temp_after",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_tea_sec_k, "ML_Model/pdp_data/pdp_tea_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_tea_sec_k_c, "ML_Model/pdp_data/pdp_tea_sec_k_c_brt.csv", row.names = FALSE)
 
 ### q_before
-pdp_model_qb_sec_k <- pdp::partial(xgb_sec_k, pred.var = "q_before", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "q_before",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_qb_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "q_before", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "q_before",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_qb_sec_k, "ML_Model/pdp_data/pdp_qb_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_qb_sec_k_c, "ML_Model/pdp_data/pdp_qb_sec_k_c_brt.csv", row.names = FALSE)
 
 ### q_during
-pdp_model_qd_sec_k <- pdp::partial(xgb_sec_k, pred.var = "q_during", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "q_during",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_qd_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "q_during", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "q_during",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_qd_sec_k, "ML_Model/pdp_data/pdp_qd_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_qd_sec_k_c, "ML_Model/pdp_data/pdp_qd_sec_k_c_brt.csv", row.names = FALSE)
 
 ### q_after
-pdp_model_qa_sec_k <- pdp::partial(xgb_sec_k, pred.var = "q_after", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "q_after",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_qa_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "q_after", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "q_after",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_qa_sec_k, "ML_Model/pdp_data/pdp_qa_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_qa_sec_k_c, "ML_Model/pdp_data/pdp_qa_sec_k_c_brt.csv", row.names = FALSE)
 
 ### gaug_before
-pdp_model_gb_sec_k <- pdp::partial(xgb_sec_k, pred.var = "gaug_before", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "gaug_before",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_gb_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "gaug_before", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "gaug_before",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_gb_sec_k, "ML_Model/pdp_data/pdp_gb_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_gb_sec_k_c, "ML_Model/pdp_data/pdp_gb_sec_k_c_brt.csv", row.names = FALSE)
 
 ### gaug_during
-pdp_model_gd_sec_k <- pdp::partial(xgb_sec_k, pred.var = "gaug_during", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "gaug_during",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_gd_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "gaug_during", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "gaug_during",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_gd_sec_k, "ML_Model/pdp_data/pdp_gd_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_gd_sec_k_c, "ML_Model/pdp_data/pdp_gd_sec_k_c_brt.csv", row.names = FALSE)
 
 ### gaug_after
-pdp_model_ga_sec_k <- pdp::partial(xgb_sec_k, pred.var = "gaug_after", train = trainx_sec_k[ ,-1]) |>
-  mutate(predictors = "gaug_after",
-         model = "sampling w/ coordinates",
-         index = "k_index")
 pdp_model_ga_sec_k_c <- pdp::partial(xgb_sec_k_c, pred.var = "gaug_after", train = trainx_sec_k_c[ ,-1]) |>
   mutate(predictors = "gaug_after",
          model = "sampling w/o coordinates",
          index = "k_index")
 
 # export data 
-write.csv(pdp_model_ga_sec_k, "ML_Model/pdp_data/pdp_ga_sec_k_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ga_sec_k_c, "ML_Model/pdp_data/pdp_ga_sec_k_c_brt.csv", row.names = FALSE)
 
 # With shannon index as response ----------------------------------------------
 ### velocity 
-pdp_model_v_sec_s <- pdp::partial(xgb_sec_s, pred.var = "velocity", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "velocity",
-         model = "all predictors w/ coordinates",
-         index = "shannon_index")
 pdp_model_v_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "velocity", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "velocity",
          model = "all predictors w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_v_sec_s, "ML_Model/pdp_data/pdp_v_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_v_sec_s_c, "ML_Model/pdp_data/pdp_v_sec_s_c_brt.csv", row.names = FALSE)
 
 ### wd_m 
-pdp_model_wd_sec_s <- pdp::partial(xgb_sec_s, pred.var = "wd_m", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "wd_m",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_wd_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "wd_m", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "wd_m",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_wd_sec_s, "ML_Model/pdp_data/pdp_wd_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_wd_sec_s_c, "ML_Model/pdp_data/pdp_wd_sec_s_c_brt.csv", row.names = FALSE)
 
-### x / y 
-pdp_model_x_sec_s <- pdp::partial(xgb_sec_s, pred.var = "x", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "x",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
-pdp_model_y_sec_s <- pdp::partial(xgb_sec_s, pred.var = "y", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "y",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_x_sec_s, "ML_Model/pdp_data/pdp_x_sec_s_brt.csv", row.names = FALSE)
-write.csv(pdp_model_y_sec_s, "ML_Model/pdp_data/pdp_y_sec_s_brt.csv", row.names = FALSE)
-
 ### z 
-pdp_model_z_sec_s <- pdp::partial(xgb_sec_s, pred.var = "z", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "z",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_z_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "z", train = trainx_sec_s_c[,-1]) |>
   mutate(predictors = "z",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_z_sec_s, "ML_Model/pdp_data/pdp_z_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_z_sec_s_c, "ML_Model/pdp_data/pdp_z_sec_s_c_brt.csv", row.names = FALSE)
 
 ### dist_w 
-pdp_model_dist_sec_s <- pdp::partial(xgb_sec_s, pred.var = "dist_w", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_dist_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "dist_w", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "dist_w",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_dist_sec_s, "ML_Model/pdp_data/pdp_dist_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_dist_sec_s_c, "ML_Model/pdp_data/pdp_dist_sec_s_c_brt.csv", row.names = FALSE)
 
 ### cat_v 
-pdp_model_cv_sec_s <- pdp::partial(xgb_sec_s, pred.var = "cat_velocity", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_cv_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "cat_velocity", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "cat_velocity",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_cv_sec_s, "ML_Model/pdp_data/pdp_cv_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cv_sec_s_c, "ML_Model/pdp_data/pdp_cv_sec_s_c_brt.csv", row.names = FALSE)
 
 ### alg_cover 
-pdp_model_ac_sec_s <- pdp::partial(xgb_sec_s, pred.var = "alg_cover", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_ac_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "alg_cover", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "alg_cover",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_ac_sec_s, "ML_Model/pdp_data/pdp_ac_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ac_sec_s_c, "ML_Model/pdp_data/pdp_ac_sec_s_c_brt.csv", row.names = FALSE)
 
 ### moos_cover 
-pdp_model_mc_sec_s <- pdp::partial(xgb_sec_s, pred.var = "moos_cover", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_mc_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "moos_cover", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "moos_cover",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_mc_sec_s, "ML_Model/pdp_data/pdp_mc_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_mc_sec_s_c, "ML_Model/pdp_data/pdp_mc_sec_s_c_brt.csv", row.names = FALSE)
 
 ### cpom_cover 
-pdp_model_cc_sec_s <- pdp::partial(xgb_sec_s, pred.var = "cpom_cover", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_cc_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "cpom_cover", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "cpom_cover",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_cc_sec_s, "ML_Model/pdp_data/pdp_cc_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cc_sec_s_c, "ML_Model/pdp_data/pdp_cc_sec_s_c_brt.csv", row.names = FALSE)
 
 ### clog_3 
-pdp_model_clog_3_sec_s <- pdp::partial(xgb_sec_s, pred.var = "clog_3_class_int", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_clog_3_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "clog_3_class_int", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "clog_3_class",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_clog_3_sec_s, "ML_Model/pdp_data/pdp_clog_3_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_3_sec_s_c, "ML_Model/pdp_data/pdp_clog_3_sec_s_c_brt.csv", row.names = FALSE)
 
 ### clog_6
-pdp_model_clog_6_sec_s <- pdp::partial(xgb_sec_s, pred.var = "clog_6_class_int", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_clog_6_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "clog_6_class_int", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "clog_6_class",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_clog_6_sec_s, "ML_Model/pdp_data/pdp_clog_6_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_clog_6_sec_s_c, "ML_Model/pdp_data/pdp_clog_6_sec_s_c_brt.csv", row.names = FALSE)
 
 ### sub_type 
-pdp_model_sub_sec_s <- pdp::partial(xgb_sec_s, pred.var = "sub_type_int", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_sub_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "sub_type_int", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "sub_type",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_sub_sec_s, "ML_Model/pdp_data/pdp_sub_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_sub_sec_s_c, "ML_Model/pdp_data/pdp_sub_sec_s_c_brt.csv", row.names = FALSE)
 
 ### pH_before
-pdp_model_phb_sec_s <- pdp::partial(xgb_sec_s, pred.var = "pH_before", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "pH_before",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_phb_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "pH_before", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "pH_before",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_phb_sec_s, "ML_Model/pdp_data/pdp_phb_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_phb_sec_s_c, "ML_Model/pdp_data/pdp_phb_sec_s_c_brt.csv", row.names = FALSE)
 
 ### pH_during
-pdp_model_phd_sec_s <- pdp::partial(xgb_sec_s, pred.var = "pH_during", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "pH_during",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_phd_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "pH_during", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "pH_during",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_phd_sec_s, "ML_Model/pdp_data/pdp_phd_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_phd_sec_s_c, "ML_Model/pdp_data/pdp_phd_sec_s_c_brt.csv", row.names = FALSE)
 
 ### pH_after
-pdp_model_pha_sec_s <- pdp::partial(xgb_sec_s, pred.var = "pH_after", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "pH_after",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_pha_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "pH_after", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "pH_after",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_pha_sec_s, "ML_Model/pdp_data/pdp_pha_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_pha_sec_s_c, "ML_Model/pdp_data/pdp_pha_sec_s_c_brt.csv", row.names = FALSE)
 
 ### conduct_before
-pdp_model_cb_sec_s <- pdp::partial(xgb_sec_s, pred.var = "conduct_before", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "conduct_before",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_cb_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "conduct_before", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "conduct_before",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_cb_sec_s, "ML_Model/pdp_data/pdp_cb_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cb_sec_s_c, "ML_Model/pdp_data/pdp_cb_sec_s_c_brt.csv", row.names = FALSE)
 
 ### conduct_during
-pdp_model_cd_sec_s <- pdp::partial(xgb_sec_s, pred.var = "conduct_during", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "conduct_during",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_cd_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "conduct_during", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "conduct_during",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_cd_sec_s, "ML_Model/pdp_data/pdp_cd_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_cd_sec_s_c, "ML_Model/pdp_data/pdp_cd_sec_s_c_brt.csv", row.names = FALSE)
 
 ### conduct_after
-pdp_model_ca_sec_s <- pdp::partial(xgb_sec_s, pred.var = "conduct_after", train = trainx_sec_s[,-1]) |>
-  mutate(predictors = "conduct_after",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_ca_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "conduct_after", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "conduct_after",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_ca_sec_s, "ML_Model/pdp_data/pdp_ca_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ca_sec_s_c, "ML_Model/pdp_data/pdp_ca_sec_s_c_brt.csv", row.names = FALSE)
 
 ### ox_before
-pdp_model_ob_sec_s <- pdp::partial(xgb_sec_s, pred.var = "ox_before", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "ox_before",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_ob_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "ox_before", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "ox_before",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_ob_sec_s, "ML_Model/pdp_data/pdp_ob_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ob_sec_s_c, "ML_Model/pdp_data/pdp_ob_sec_s_c_brt.csv", row.names = FALSE)
 
 ### ox_during
-pdp_model_od_sec_s <- pdp::partial(xgb_sec_s, pred.var = "ox_during", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "ox_during",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_od_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "ox_during", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "ox_during",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_od_sec_s, "ML_Model/pdp_data/pdp_od_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_od_sec_s_c, "ML_Model/pdp_data/pdp_od_sec_s_c_brt.csv", row.names = FALSE)
 
 ### ox_after
-pdp_model_oa_sec_s <- pdp::partial(xgb_sec_s, pred.var = "ox_after", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "ox_after",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_oa_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "ox_after", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "ox_after",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_oa_sec_s, "ML_Model/pdp_data/pdp_oa_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_oa_sec_s_c, "ML_Model/pdp_data/pdp_oa_sec_s_c_brt.csv", row.names = FALSE)
 
 ### turb_before
-pdp_model_tb_sec_s <- pdp::partial(xgb_sec_s, pred.var = "turb_before", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "turb_before",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_tb_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "turb_before", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "turb_before",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_tb_sec_s, "ML_Model/pdp_data/pdp_tb_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_tb_sec_s_c, "ML_Model/pdp_data/pdp_tb_sec_s_c_brt.csv", row.names = FALSE)
 
 ### turb_during
-pdp_model_td_sec_s <- pdp::partial(xgb_sec_s, pred.var = "turb_during", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "turb_during",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_td_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "turb_during", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "turb_during",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_td_sec_s, "ML_Model/pdp_data/pdp_td_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_td_sec_s_c, "ML_Model/pdp_data/pdp_td_sec_s_c_brt.csv", row.names = FALSE)
 
 ### turb_after
-pdp_model_ta_sec_s <- pdp::partial(xgb_sec_s, pred.var = "turb_after", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "turb_after",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_ta_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "turb_after", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "turb_after",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_ta_sec_s, "ML_Model/pdp_data/pdp_ta_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ta_sec_s_c, "ML_Model/pdp_data/pdp_ta_sec_s_c_brt.csv", row.names = FALSE)
 
 ### temp_before
-pdp_model_teb_sec_s <- pdp::partial(xgb_sec_s, pred.var = "temp_before", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "temp_before",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_teb_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "temp_before", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "temp_before",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_teb_sec_s, "ML_Model/pdp_data/pdp_teb_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_teb_sec_s_c, "ML_Model/pdp_data/pdp_teb_sec_s_c_brt.csv", row.names = FALSE)
 
 ### temp_during
-pdp_model_ted_sec_s <- pdp::partial(xgb_sec_s, pred.var = "temp_during", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "temp_during",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_ted_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "temp_during", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "temp_during",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_ted_sec_s, "ML_Model/pdp_data/pdp_ted_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ted_sec_s_c, "ML_Model/pdp_data/pdp_ted_sec_s_c_brt.csv", row.names = FALSE)
 
 ### temp_after
-pdp_model_tea_sec_s <- pdp::partial(xgb_sec_s, pred.var = "temp_after", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "temp_after",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_tea_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "temp_after", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "temp_after",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_tea_sec_s, "ML_Model/pdp_data/pdp_tea_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_tea_sec_s_c, "ML_Model/pdp_data/pdp_tea_sec_s_c_brt.csv", row.names = FALSE)
 
 ### q_before
-pdp_model_qb_sec_s <- pdp::partial(xgb_sec_s, pred.var = "q_before", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "q_before",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_qb_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "q_before", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "q_before",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_qb_sec_s, "ML_Model/pdp_data/pdp_qb_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_qb_sec_s_c, "ML_Model/pdp_data/pdp_qb_sec_s_c_brt.csv", row.names = FALSE)
 
 ### q_during
-pdp_model_qd_sec_s <- pdp::partial(xgb_sec_s, pred.var = "q_during", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "q_during",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_qd_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "q_during", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "q_during",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_qd_sec_s, "ML_Model/pdp_data/pdp_qd_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_qd_sec_s_c, "ML_Model/pdp_data/pdp_qd_sec_s_c_brt.csv", row.names = FALSE)
 
 ### q_after
-pdp_model_qa_sec_s <- pdp::partial(xgb_sec_s, pred.var = "q_after", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "q_after",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_qa_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "q_after", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "q_after",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_qa_sec_s, "ML_Model/pdp_data/pdp_qa_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_qa_sec_s_c, "ML_Model/pdp_data/pdp_qa_sec_s_c_brt.csv", row.names = FALSE)
 
 ### gaug_before
-pdp_model_gb_sec_s <- pdp::partial(xgb_sec_s, pred.var = "gaug_before", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "gaug_before",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_gb_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "gaug_before", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "gaug_before",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_gb_sec_s, "ML_Model/pdp_data/pdp_gb_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_gb_sec_s_c, "ML_Model/pdp_data/pdp_gb_sec_s_c_brt.csv", row.names = FALSE)
 
 ### gaug_during
-pdp_model_gd_sec_s <- pdp::partial(xgb_sec_s, pred.var = "gaug_during", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "gaug_during",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_gd_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "gaug_during", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "gaug_during",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_gd_sec_s, "ML_Model/pdp_data/pdp_gd_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_gd_sec_s_c, "ML_Model/pdp_data/pdp_gd_sec_s_c_brt.csv", row.names = FALSE)
 
 ### gaug_after
-pdp_model_ga_sec_s <- pdp::partial(xgb_sec_s, pred.var = "gaug_after", train = trainx_sec_s[ ,-1]) |>
-  mutate(predictors = "gaug_after",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
 pdp_model_ga_sec_s_c <- pdp::partial(xgb_sec_s_c, pred.var = "gaug_after", train = trainx_sec_s_c[ ,-1]) |>
   mutate(predictors = "gaug_after",
          model = "sampling w/o coordinates",
          index = "shannon_index")
 
 # export data 
-write.csv(pdp_model_ga_sec_s, "ML_Model/pdp_data/pdp_ga_sec_s_brt.csv", row.names = FALSE)
 write.csv(pdp_model_ga_sec_s_c, "ML_Model/pdp_data/pdp_ga_sec_s_c_brt.csv", row.names = FALSE)
 
 # With abundance as response ----------------------------------------------
@@ -4229,17 +3123,12 @@ write.csv(pdp_model_ob_sec_ra, "ML_Model/pdp_data/pdp_ob_sec_ra_brt.csv", row.na
 write.csv(pdp_model_ob_sec_ra_c, "ML_Model/pdp_data/pdp_ob_sec_ra_c_brt.csv", row.names = FALSE)
 
 ### ox_during
-pdp_model_od_sec_ra <- pdp::partial(xgb_sec_ra, pred.var = "ox_during", train = trainx_sec_ra[ ,-1]) |>
-  mutate(predictors = "ox_during",
-         model = "sampling w/ coordinates",
-         index = "rel_abundance")
 pdp_model_od_sec_ra_c <- pdp::partial(xgb_sec_ra_c, pred.var = "ox_during", train = trainx_sec_ra_c[ ,-1]) |>
   mutate(predictors = "ox_during",
          model = "sampling w/o coordinates",
          index = "rel_abundance")
 
 # export data 
-write.csv(pdp_model_od_sec_ra, "ML_Model/pdp_data/pdp_od_sec_ra_brt.csv", row.names = FALSE)
 write.csv(pdp_model_od_sec_ra_c, "ML_Model/pdp_data/pdp_od_sec_ra_c_brt.csv", row.names = FALSE)
 
 ### ox_after
@@ -4483,86 +3372,54 @@ responses_sec_ra <- test_sec_ra$rel_abundance
 ### PREDICTED VALUES ### ------------------------------------------------------
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
-brt_pred_v_k <- predict(autotuner_xbrt_v_k, newdata = test_v_k)
-brt_pred_model_v_k <- predict(xgb_v_k, newdata = testx_v_k[ ,-1])
 brt_pred_model_v_k_c <- predict(xgb_v_k_c, newdata = testx_v_k_c)
 
 # With shannon index as response
-brt_pred_v_s <- predict(autotuner_xbrt_v_s, newdata = test_v_s)
-brt_pred_model_v_s <- predict(xgb_v_s, newdata = testx_v_s[ ,-1])
 brt_pred_model_v_s_c <- predict(xgb_v_s_c, newdata = testx_v_s_c[ ,-1])
 
 # With abundance as response 
-brt_pred_v_a <- predict(autotuner_xbrt_v_a, newdata = test_v_a)
-brt_pred_model_v_a <- predict(xgb_v_a, newdata = testx_v_a[ ,-1])
 brt_pred_model_v_a_c <- predict(xgb_v_a_c, newdata = testx_v_a_c[ ,-1])
 
 # With rel_abundance as response
-brt_pred_v_ra <- predict(autotuner_xbrt_v_ra, newdata = test_v_ra)
-brt_pred_model_v_ra <- predict(xgb_v_ra, newdata = testx_v_ra[ ,-1])
 brt_pred_model_v_ra_c <- predict(xgb_v_ra_c, newdata = testx_v_ra_c[ ,-1])
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
-brt_pred_wd_k <- predict(autotuner_xbrt_wd_k, newdata = test_wd_k)
-brt_pred_model_wd_k <- predict(xgb_wd_k, newdata = testx_wd_k[ ,-1])
 brt_pred_model_wd_k_c <- predict(xgb_wd_k_c, newdata = testx_wd_k_c[ ,-1])
 
 # With shannon index as response
-brt_pred_wd_s <- predict(autotuner_xbrt_wd_s, newdata = test_wd_s)
-brt_pred_model_wd_s <- predict(xgb_wd_s, newdata = testx_wd_s[ ,-1])
 brt_pred_model_wd_s_c <- predict(xgb_wd_s_c, newdata = testx_wd_s_c[ ,-1])
 
 # With abundance as response
-brt_pred_wd_a <- predict(autotuner_xbrt_wd_a, newdata = test_wd_a)
-brt_pred_model_wd_a <- predict(xgb_wd_a, newdata = testx_wd_a[ ,-1])
 brt_pred_model_wd_a_c <- predict(xgb_wd_a_c, newdata = testx_wd_a_c[ ,-1])
 
 # With rel_abundance as response
-brt_pred_wd_ra <- predict(autotuner_xbrt_wd_ra, newdata = test_wd_ra)
-brt_pred_model_wd_ra <- predict(xgb_wd_ra, newdata = testx_wd_ra[ ,-1])
 brt_pred_model_wd_ra_c <- predict(xgb_wd_ra_c, newdata = testx_wd_ra_c[ ,-1])
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
-brt_pred_samp_k <- predict(autotuner_xbrt_samp_k, newdata = test_samp_k)
-brt_pred_model_samp_k <- predict(xgb_samp_k, newdata = testx_samp_k[ ,-1])
 brt_pred_model_samp_k_c <- predict(xgb_samp_k_c, newdata = testx_samp_k_c[ ,-1])
 
 # With shannon index as response
-brt_pred_samp_s <- predict(autotuner_xbrt_samp_s, newdata = test_samp_s)
-brt_pred_model_samp_s <- predict(xgb_samp_s, newdata = testx_samp_s[ ,-1])
 brt_pred_model_samp_s_c <- predict(xgb_samp_s_c, newdata = testx_samp_s_c[ ,-1])
 
 # With abundance as response
-brt_pred_samp_a <- predict(autotuner_xbrt_samp_a, newdata = test_samp_a)
-brt_pred_model_samp_a <- predict(xgb_samp_a, newdata = testx_samp_a[ ,-1])
 brt_pred_model_samp_a_c <- predict(xgb_samp_a_c, newdata = testx_samp_a_c[ ,-1])
 
 # With rel_abundance as response
-brt_pred_samp_ra <- predict(autotuner_xbrt_samp_ra, newdata = test_samp_ra)
-brt_pred_model_samp_ra <- predict(xgb_samp_ra, newdata = testx_samp_ra[ ,-1])
 brt_pred_model_samp_ra_c <- predict(xgb_samp_ra_c, newdata = testx_samp_ra_c[ ,-1])
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
-brt_pred_sec_k <- predict(autotuner_xbrt_sec_k, newdata = test_sec_k)
-brt_pred_model_sec_k <- predict(xgb_sec_k, newdata = testx_sec_k[ ,-1])
 brt_pred_model_sec_k_c <- predict(xgb_sec_k_c, newdata = testx_sec_k_c[ ,-1])
 
 # With shannon index as response
-brt_pred_sec_s <- predict(autotuner_xbrt_sec_s, newdata = test_sec_s)
-brt_pred_model_sec_s <- predict(xgb_sec_s, newdata = testx_sec_s[ ,-1])
 brt_pred_model_sec_s_c <- predict(xgb_sec_s_c, newdata = testx_sec_s_c[ ,-1])
 
 # With abundance as response
-brt_pred_sec_a <- predict(autotuner_xbrt_sec_a, newdata = test_sec_a)
-brt_pred_model_sec_a <- predict(xgb_sec_a, newdata = testx_sec_a[ ,-1])
 brt_pred_model_sec_a_c <- predict(xgb_sec_a_c, newdata = testx_sec_a_c[ ,-1])
 
 # With rel_abundance as response
-brt_pred_sec_ra <- predict(autotuner_xbrt_sec_ra, newdata = test_sec_ra)
-brt_pred_model_sec_ra <- predict(xgb_sec_ra, newdata = testx_sec_ra[ ,-1])
 brt_pred_model_sec_ra_c <- predict(xgb_sec_ra_c, newdata = testx_sec_ra_c[ ,-1])
 ```
 
@@ -4570,86 +3427,54 @@ brt_pred_model_sec_ra_c <- predict(xgb_sec_ra_c, newdata = testx_sec_ra_c[ ,-1])
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response 
-r2_v_k <- R2(pred = brt_pred_v_k, obs = responses_v_k)
-r2_model_v_k <- R2(pred = brt_pred_model_v_k, obs = responses_v_k)
 r2_model_v_k_c <- R2(pred = brt_pred_model_v_k_c, obs = responses_v_k)
 
 # With shannon index as response 
-r2_v_s <- R2(pred = brt_pred_v_s, obs = responses_v_s)
-r2_model_v_s <- R2(pred = brt_pred_model_v_s, obs = responses_v_s)
 r2_model_v_s_c <- R2(pred = brt_pred_model_v_s_c, obs = responses_v_s)
 
 # With abundance as response
-r2_v_a <- R2(pred = brt_pred_v_a, obs = responses_v_a)
-r2_model_v_a <- R2(pred = brt_pred_model_v_a, obs = responses_v_a)
 r2_model_v_a_c <- R2(pred = brt_pred_model_v_a_c, obs = responses_v_a)
 
 # With rel_abundance as response 
-r2_v_ra <- R2(pred = brt_pred_v_ra, obs = responses_v_ra)
-r2_model_v_ra <- R2(pred = brt_pred_model_v_ra, obs = responses_v_ra)
 r2_model_v_ra_c <- R2(pred = brt_pred_model_v_ra_c, obs = responses_v_ra)
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
-r2_wd_k <- R2(pred = brt_pred_wd_k, obs = responses_wd_k)
-r2_model_wd_k <- R2(pred = brt_pred_model_wd_k, obs = responses_wd_k)
 r2_model_wd_k_c <- R2(pred = brt_pred_model_wd_k_c, obs = responses_wd_k)
 
 # With shannon index as response
-r2_wd_s <- R2(pred = brt_pred_wd_s, obs = responses_wd_s)
-r2_model_wd_s <- R2(pred = brt_pred_model_wd_s, obs = responses_wd_s)
 r2_model_wd_s_c <- R2(pred = brt_pred_model_wd_s_c, obs = responses_wd_s)
 
 # With abundance as response
-r2_wd_a <- R2(pred = brt_pred_wd_a, obs = responses_wd_a)
-r2_model_wd_a <- R2(pred = brt_pred_model_wd_a, obs = responses_wd_a)
 r2_model_wd_a_c <- R2(pred = brt_pred_model_wd_a_c, obs = responses_wd_a)
 
 # With rel_abundance as response 
-r2_wd_ra <- R2(pred = brt_pred_wd_ra, obs = responses_wd_ra)
-r2_model_wd_ra <- R2(pred = brt_pred_model_wd_ra, obs = responses_wd_ra)
 r2_model_wd_ra_c <- R2(pred = brt_pred_model_wd_ra_c, obs = responses_wd_ra)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
-r2_samp_k <- R2(pred = brt_pred_samp_k, obs = responses_samp_k)
-r2_model_samp_k <- R2(pred = brt_pred_model_samp_k, obs = responses_samp_k)
 r2_model_samp_k_c <- R2(pred = brt_pred_model_samp_k_c, obs = responses_samp_k)
 
 # With shannon index as response
-r2_samp_s <- R2(pred = brt_pred_samp_s, obs = responses_samp_s)
-r2_model_samp_s <- R2(pred = brt_pred_model_samp_s, obs = responses_samp_s)
 r2_model_samp_s_c <- R2(pred = brt_pred_model_samp_s_c, obs = responses_samp_s)
 
 # With abundance as response 
-r2_samp_a <- R2(pred = brt_pred_samp_a, obs = responses_samp_a)
-r2_model_samp_a <- R2(pred = brt_pred_model_samp_a, obs = responses_samp_a)
 r2_model_samp_a_c <- R2(pred = brt_pred_model_samp_a_c, obs = responses_samp_a)
 
 # With rel_abundance as response
-r2_samp_ra <- R2(pred = brt_pred_samp_ra, obs = responses_samp_ra)
-r2_model_samp_ra <- R2(pred = brt_pred_model_samp_ra, obs = responses_samp_ra)
 r2_model_samp_ra_c <- R2(pred = brt_pred_model_samp_ra_c, obs = responses_samp_ra)
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
-r2_sec_k <- R2(pred = brt_pred_sec_k, obs = responses_sec_k)
-r2_model_sec_k <- R2(pred = brt_pred_model_sec_k, obs = responses_sec_k)
 r2_model_sec_k_c <- R2(pred = brt_pred_model_sec_k_c, obs = responses_sec_k)
 
 # With shannon index as response 
-r2_sec_s <- R2(pred = brt_pred_sec_s, obs = responses_sec_s)
-r2_model_sec_s <- R2(pred = brt_pred_model_sec_s, obs = responses_sec_s)
 r2_model_sec_s_c <- R2(pred = brt_pred_model_sec_s_c, obs = responses_sec_s)
 
 # With abundance as response
-r2_sec_a <- R2(pred = brt_pred_sec_a, obs = responses_sec_a)
-r2_model_sec_a <- R2(pred = brt_pred_model_sec_a, obs = responses_sec_a)
 r2_model_sec_a_c <- R2(pred = brt_pred_model_sec_a_c, obs = responses_sec_a)
 
 # With rel_abundance as response
-r2_sec_ra <- R2(pred = brt_pred_sec_ra, obs = responses_sec_ra)
-r2_model_sec_ra <- R2(pred = brt_pred_model_sec_ra, obs = responses_sec_ra)
 r2_model_sec_ra_c <- R2(pred = brt_pred_model_sec_ra_c, obs = responses_sec_ra)
 ```
 
@@ -4657,150 +3482,86 @@ r2_model_sec_ra_c <- R2(pred = brt_pred_model_sec_ra_c, obs = responses_sec_ra)
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
-rmse_v_k <- Metrics::rmse(actual = responses_v_k, predicted = brt_pred_v_k)
-rmse_model_v_k <- Metrics::rmse(actual = responses_v_k, predicted = brt_pred_model_v_k)
 rmse_model_v_k_c <- Metrics::rmse(actual = responses_v_k, predicted = brt_pred_model_v_k_c)
 
-mae_v_k <- Metrics::mae(actual = responses_v_k, predicted = brt_pred_v_k)
-mae_model_v_k <- Metrics::mae(actual = responses_v_k, predicted = brt_pred_model_v_k)
 mae_model_v_k_c <- Metrics::mae(actual = responses_v_k, predicted = brt_pred_model_v_k_c)
 
 # With shannon index as response
-rmse_v_s <- Metrics::rmse(actual = responses_v_s, predicted = brt_pred_v_s)
-rmse_model_v_s <- Metrics::rmse(actual = responses_v_s, predicted = brt_pred_model_v_s)
 rmse_model_v_s_c <- Metrics::rmse(actual = responses_v_s, predicted = brt_pred_model_v_s_c)
 
-mae_v_s <- Metrics::mae(actual = responses_v_s, predicted = brt_pred_v_s)
-mae_model_v_s <- Metrics::mae(actual = responses_v_s, predicted = brt_pred_model_v_s)
 mae_model_v_s_c <- Metrics::mae(actual = responses_v_s, predicted = brt_pred_model_v_s_c)
 
 # With abundance as response
-rmse_v_a <- Metrics::rmse(actual = responses_v_a, predicted = brt_pred_v_a)
-rmse_model_v_a <- Metrics::rmse(actual = responses_v_a, predicted = brt_pred_model_v_a)
 rmse_model_v_a_c <- Metrics::rmse(actual = responses_v_a, predicted = brt_pred_model_v_a_c)
 
-mae_v_a <- Metrics::mae(actual = responses_v_a, predicted = brt_pred_v_a)
-mae_model_v_a <- Metrics::mae(actual = responses_v_a, predicted = brt_pred_model_v_a)
 mae_model_v_a_c <- Metrics::mae(actual = responses_v_a, predicted = brt_pred_model_v_a_c)
 
 # With rel_abundance as response
-rmse_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = brt_pred_v_ra)
-rmse_model_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = brt_pred_model_v_ra)
 rmse_model_v_ra_c <- Metrics::rmse(actual = responses_v_ra, predicted = brt_pred_model_v_ra_c)
 
-mae_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = brt_pred_v_ra)
-mae_model_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = brt_pred_model_v_ra)
 mae_model_v_ra_c <- Metrics::mae(actual = responses_v_ra, predicted = brt_pred_model_v_ra_c)
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
-rmse_wd_k <- Metrics::rmse(actual = responses_wd_k, predicted = brt_pred_wd_k)
-rmse_model_wd_k <- Metrics::rmse(actual = responses_wd_k, predicted = brt_pred_model_wd_k)
 rmse_model_wd_k_c <- Metrics::rmse(actual = responses_wd_k, predicted = brt_pred_model_wd_k_c)
 
-mae_wd_k <- Metrics::mae(actual = responses_wd_k, predicted = brt_pred_wd_k)
-mae_model_wd_k <- Metrics::mae(actual = responses_wd_k, predicted = brt_pred_model_wd_k)
 mae_model_wd_k_c <- Metrics::mae(actual = responses_wd_k, predicted = brt_pred_model_wd_k_c)
 
 # With shannon index as response
-rmse_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = brt_pred_wd_s)
-rmse_model_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = brt_pred_model_wd_s)
 rmse_model_wd_s_c <- Metrics::rmse(actual = responses_wd_s, predicted = brt_pred_model_wd_s_c)
 
-mae_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = brt_pred_wd_s)
-mae_model_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = brt_pred_model_wd_s)
 mae_model_wd_s_c <- Metrics::mae(actual = responses_wd_s, predicted = brt_pred_model_wd_s_c)
 
 # With abundance as response
-rmse_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = brt_pred_wd_a)
-rmse_model_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = brt_pred_model_wd_a)
 rmse_model_wd_a_c <- Metrics::rmse(actual = responses_wd_a, predicted = brt_pred_model_wd_a_c)
 
-mae_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = brt_pred_wd_a)
-mae_model_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = brt_pred_model_wd_a)
 mae_model_wd_a_c <- Metrics::mae(actual = responses_wd_a, predicted = brt_pred_model_wd_a_c)
 
 # With rel_abundance as response
-rmse_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = brt_pred_wd_ra)
-rmse_model_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra)
 rmse_model_wd_ra_c <- Metrics::rmse(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra_c)
 
-mae_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = brt_pred_wd_ra)
-mae_model_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra)
 mae_model_wd_ra_c <- Metrics::mae(actual = responses_wd_ra, predicted = brt_pred_model_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
-rmse_samp_k <- Metrics::rmse(actual = responses_samp_k, predicted = brt_pred_samp_k)
-rmse_model_samp_k <- Metrics::rmse(actual = responses_samp_k, predicted = brt_pred_model_samp_k)
 rmse_model_samp_k_c <- Metrics::rmse(actual = responses_samp_k, predicted = brt_pred_model_samp_k_c)
 
-mae_samp_k <- Metrics::mae(actual = responses_samp_k, predicted = brt_pred_samp_k)
-mae_model_samp_k <- Metrics::mae(actual = responses_samp_k, predicted = brt_pred_model_samp_k)
 mae_model_samp_k_c <- Metrics::mae(actual = responses_samp_k, predicted = brt_pred_model_samp_k_c)
 
 # With shannon index as response
-rmse_samp_s <- Metrics::rmse(actual = responses_samp_s, predicted = brt_pred_samp_s)
-rmse_model_samp_s <- Metrics::rmse(actual = responses_samp_s, predicted = brt_pred_model_samp_s)
 rmse_model_samp_s_c <- Metrics::rmse(actual = responses_samp_s, predicted = brt_pred_model_samp_s_c)
 
-mae_samp_s <- Metrics::mae(actual = responses_samp_s, predicted = brt_pred_samp_s)
-mae_model_samp_s <- Metrics::mae(actual = responses_samp_s, predicted = brt_pred_model_samp_s)
 mae_model_samp_s_c <- Metrics::mae(actual = responses_samp_s, predicted = brt_pred_model_samp_s_c)
 
 # With abundance as response
-rmse_samp_a <- Metrics::rmse(actual = responses_samp_a, predicted = brt_pred_samp_a)
-rmse_model_samp_a <- Metrics::rmse(actual = responses_samp_a, predicted = brt_pred_model_samp_a)
 rmse_model_samp_a_c <- Metrics::rmse(actual = responses_samp_a, predicted = brt_pred_model_samp_a_c)
 
-mae_samp_a <- Metrics::mae(actual = responses_samp_a, predicted = brt_pred_samp_a)
-mae_model_samp_a <- Metrics::mae(actual = responses_samp_a, predicted = brt_pred_model_samp_a)
 mae_model_samp_a_c <- Metrics::mae(actual = responses_samp_a, predicted = brt_pred_model_samp_a_c)
 
 # With rel_abundance as response
-rmse_samp_ra <- Metrics::rmse(actual = responses_samp_ra, predicted = brt_pred_samp_ra)
-rmse_model_samp_ra <- Metrics::rmse(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra)
 rmse_model_samp_ra_c <- Metrics::rmse(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra_c)
 
-mae_samp_ra <- Metrics::mae(actual = responses_samp_ra, predicted = brt_pred_samp_ra)
-mae_model_samp_ra <- Metrics::mae(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra)
 mae_model_samp_ra_c <- Metrics::mae(actual = responses_samp_ra, predicted = brt_pred_model_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
-rmse_sec_k <- Metrics::rmse(actual = responses_sec_k, predicted = brt_pred_sec_k)
-rmse_model_sec_k <- Metrics::rmse(actual = responses_sec_k, predicted = brt_pred_model_sec_k)
 rmse_model_sec_k_c <- Metrics::rmse(actual = responses_sec_k, predicted = brt_pred_model_sec_k_c)
 
-mae_sec_k <- Metrics::mae(actual = responses_sec_k, predicted = brt_pred_sec_k)
-mae_model_sec_k <- Metrics::mae(actual = responses_sec_k, predicted = brt_pred_model_sec_k)
 mae_model_sec_k_c <- Metrics::mae(actual = responses_sec_k, predicted = brt_pred_model_sec_k_c)
 
 # With shannon index as response
-rmse_sec_s <- Metrics::rmse(actual = responses_sec_s, predicted = brt_pred_sec_s)
-rmse_model_sec_s <- Metrics::rmse(actual = responses_sec_s, predicted = brt_pred_model_sec_s)
 rmse_model_sec_s_c <- Metrics::rmse(actual = responses_sec_s, predicted = brt_pred_model_sec_s_c)
 
-mae_sec_s <- Metrics::mae(actual = responses_sec_s, predicted = brt_pred_sec_s)
-mae_model_sec_s <- Metrics::mae(actual = responses_sec_s, predicted = brt_pred_model_sec_s)
 mae_model_sec_s_c <- Metrics::mae(actual = responses_sec_s, predicted = brt_pred_model_sec_s_c)
 
 # With abundance as response
-rmse_sec_a <- Metrics::rmse(actual = responses_sec_a, predicted = brt_pred_sec_a)
-rmse_model_sec_a <- Metrics::rmse(actual = responses_sec_a, predicted = brt_pred_model_sec_a)
 rmse_model_sec_a_c <- Metrics::rmse(actual = responses_sec_a, predicted = brt_pred_model_sec_a_c)
 
-mae_sec_a <- Metrics::mae(actual = responses_sec_a, predicted = brt_pred_sec_a)
-mae_model_sec_a <- Metrics::mae(actual = responses_sec_a, predicted = brt_pred_model_sec_a)
 mae_model_sec_a_c <- Metrics::mae(actual = responses_sec_a, predicted = brt_pred_model_sec_a_c)
 
 # With rel_abundance as response
-rmse_sec_ra <- Metrics::rmse(actual = responses_sec_ra, predicted = brt_pred_sec_ra)
-rmse_model_sec_ra <- Metrics::rmse(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra)
 rmse_model_sec_ra_c <- Metrics::rmse(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra_c)
 
-mae_sec_ra <- Metrics::mae(actual = responses_sec_ra, predicted = brt_pred_sec_ra)
-mae_model_sec_ra <- Metrics::mae(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra)
 mae_model_sec_ra_c <- Metrics::mae(actual = responses_sec_ra, predicted = brt_pred_model_sec_ra_c)
 ```
 
@@ -4808,86 +3569,54 @@ mae_model_sec_ra_c <- Metrics::mae(actual = responses_sec_ra, predicted = brt_pr
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
-bias_v_k <- bias(observados = responses_v_k, estimados = brt_pred_v_k)
-bias_model_v_k <- bias(observados = responses_v_k, estimados = brt_pred_model_v_k)
 bias_model_v_k_c <- bias(observados = responses_v_k, estimados = brt_pred_model_v_k_c)
 
 # With shannon index as response
-bias_v_s <- bias(observados = responses_v_s, estimados = brt_pred_v_s)
-bias_model_v_s <- bias(observados = responses_v_s, estimados = brt_pred_model_v_s)
 bias_model_v_s_c <- bias(observados = responses_v_s, estimados = brt_pred_model_v_s_c)
 
 # With abundance as response
-bias_v_a <- bias(observados = responses_v_a, estimados = brt_pred_v_a)
-bias_model_v_a <- bias(observados = responses_v_a, estimados = brt_pred_model_v_a)
 bias_model_v_a_c <- bias(observados = responses_v_a, estimados = brt_pred_model_v_a_c)
 
 # With rel_abundance as response
-bias_v_ra <- bias(observados = responses_v_ra, estimados = brt_pred_v_ra)
-bias_model_v_ra <- bias(observados = responses_v_ra, estimados = brt_pred_model_v_ra)
 bias_model_v_ra_c <- bias(observados = responses_v_ra, estimados = brt_pred_model_v_ra_c)
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
-bias_wd_k <- bias(observados = responses_wd_k, estimados = brt_pred_wd_k)
-bias_model_wd_k <- bias(observados = responses_wd_k, estimados = brt_pred_model_wd_k)
 bias_model_wd_k_c <- bias(observados = responses_wd_k, estimados = brt_pred_model_wd_k_c)
 
 # With shannon index as response
-bias_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_wd_s)
-bias_model_wd_s <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s)
 bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = brt_pred_model_wd_s_c)
 
 # With abundance as response
-bias_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_wd_a)
-bias_model_wd_a <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a)
 bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = brt_pred_model_wd_a_c)
 
 # With rel_abundance as response
-bias_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_wd_ra)
-bias_model_wd_ra <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra)
 bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = brt_pred_model_wd_ra_c)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
-bias_samp_k <- bias(observados = responses_samp_k, estimados = brt_pred_samp_k)
-bias_model_samp_k <- bias(observados = responses_samp_k, estimados = brt_pred_model_samp_k)
 bias_model_samp_k_c <- bias(observados = responses_samp_k, estimados = brt_pred_model_samp_k_c)
 
 # With shannon index as response
-bias_samp_s <- bias(observados = responses_samp_s, estimados = brt_pred_samp_s)
-bias_model_samp_s <- bias(observados = responses_samp_s, estimados = brt_pred_model_samp_s)
 bias_model_samp_s_c <- bias(observados = responses_samp_s, estimados = brt_pred_model_samp_s_c)
 
 # With abundance as response
-bias_samp_a <- bias(observados = responses_samp_a, estimados = brt_pred_samp_a)
-bias_model_samp_a <- bias(observados = responses_samp_a, estimados = brt_pred_model_samp_a)
 bias_model_samp_a_c <- bias(observados = responses_samp_a, estimados = brt_pred_model_samp_a_c)
 
 # With rel_abundance as response
-bias_samp_ra <- bias(observados = responses_samp_ra, estimados = brt_pred_samp_ra)
-bias_model_samp_ra <- bias(observados = responses_samp_ra, estimados = brt_pred_model_samp_ra)
 bias_model_samp_ra_c <- bias(observados = responses_samp_ra, estimados = brt_pred_model_samp_ra_c)
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
-bias_sec_k <- bias(observados = responses_sec_k, estimados = brt_pred_sec_k)
-bias_model_sec_k <- bias(observados = responses_sec_k, estimados = brt_pred_model_sec_k)
 bias_model_sec_k_c <- bias(observados = responses_sec_k, estimados = brt_pred_model_sec_k_c)
 
 # With shannon index as response
-bias_sec_s <- bias(observados = responses_sec_s, estimados = brt_pred_sec_s)
-bias_model_sec_s <- bias(observados = responses_sec_s, estimados = brt_pred_model_sec_s)
 bias_model_sec_s_c <- bias(observados = responses_sec_s, estimados = brt_pred_model_sec_s_c)
 
 # With abundance as response
-bias_sec_a <- bias(observados = responses_sec_a, estimados = brt_pred_sec_a)
-bias_model_sec_a <- bias(observados = responses_sec_a, estimados = brt_pred_model_sec_a)
 bias_model_sec_a_c <- bias(observados = responses_sec_a, estimados = brt_pred_model_sec_a_c)
 
 # With rel_abundance as response
-bias_sec_ra <- bias(observados = responses_sec_ra, estimados = brt_pred_sec_ra)
-bias_model_sec_ra <- bias(observados = responses_sec_ra,  estimados = brt_pred_model_sec_ra)
 bias_model_sec_ra_c <- bias(observados = responses_sec_ra, estimados = brt_pred_model_sec_ra_c)
 ```
 
@@ -4895,110 +3624,84 @@ bias_model_sec_ra_c <- bias(observados = responses_sec_ra, estimados = brt_pred_
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
-nse_v_k <- NSE(sim = brt_pred_v_k, obs = responses_v_k)
-nse_model_v_k <- NSE(sim = brt_pred_model_v_k, obs = responses_v_k)
 nse_model_v_k_c <- NSE(sim = brt_pred_model_v_k_c, obs = responses_v_k)
 
 # With shannon index as response
-nse_v_s <- NSE(sim = brt_pred_v_s, obs = responses_v_s)
-nse_model_v_s <- NSE(sim = brt_pred_model_v_s, obs = responses_v_s)
 nse_model_v_s_c <- NSE(sim = brt_pred_model_v_s_c, obs = responses_v_s)
 
 # With abundance as response
-nse_v_a <- NSE(sim = brt_pred_v_a, obs = responses_v_a)
-nse_model_v_a <- NSE(sim = brt_pred_model_v_a, obs = responses_v_a)
 nse_model_v_a_c <- NSE(sim = brt_pred_model_v_a_c, obs = responses_v_a)
 
 # With rel_abundance as response
-nse_v_ra <- NSE(sim = brt_pred_v_ra, obs = responses_v_ra)
-nse_model_v_ra <- NSE(sim = brt_pred_model_v_ra, obs = responses_v_ra)
 nse_model_v_ra_c <- NSE(sim = brt_pred_model_v_ra_c, obs = responses_v_ra)
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
-nse_wd_k <- NSE(sim = brt_pred_wd_k, obs = responses_wd_k)
-nse_model_wd_k <- NSE(sim = brt_pred_model_wd_k, obs = responses_wd_k)
 nse_model_wd_k_c <- NSE(sim = brt_pred_model_wd_k_c, obs = responses_wd_k)
 
 # With shannon index as response
-nse_wd_s <- NSE(sim = brt_pred_wd_s, obs = responses_wd_s)
-nse_model_wd_s <- NSE(sim = brt_pred_model_wd_s, obs = responses_wd_s)
 nse_model_wd_s_c <- NSE(sim = brt_pred_model_wd_s_c, obs = responses_wd_s)
 
 # With abundance as response
-nse_wd_a <- NSE(sim = brt_pred_wd_a, obs = responses_wd_a)
-nse_model_wd_a <- NSE(sim = brt_pred_model_wd_a, obs = responses_wd_a)
 nse_model_wd_a_c <- NSE(sim = brt_pred_model_wd_a_c, obs = responses_wd_a)
 
 # With rel_abundance as response
-nse_wd_ra <- NSE(sim = brt_pred_wd_ra, obs = responses_wd_ra)
-nse_model_wd_ra <- NSE(sim = brt_pred_model_wd_ra, obs = responses_wd_ra)
 nse_model_wd_ra_c <- NSE(sim = brt_pred_model_wd_ra_c, obs = responses_wd_ra)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
-nse_samp_k <- NSE(sim = brt_pred_samp_k, obs = responses_samp_k)
-nse_model_samp_k <- NSE(sim = brt_pred_model_samp_k, obs = responses_samp_k)
 nse_model_samp_k_c <- NSE(sim = brt_pred_model_samp_k_c, obs = responses_samp_k)
 
 # With shannon index as response
-nse_samp_s <- NSE(sim = brt_pred_samp_s, obs = responses_samp_s)
-nse_model_samp_s <- NSE(sim = brt_pred_model_samp_s, obs = responses_samp_s)
 nse_model_samp_s_c <- NSE(sim = brt_pred_model_samp_s_c, obs = responses_samp_s)
 
 # With abundance as response
-nse_samp_a <- NSE(sim = brt_pred_samp_a, obs = responses_samp_a)
-nse_model_samp_a <- NSE(sim = brt_pred_model_samp_a, obs = responses_samp_a)
 nse_model_samp_a_c <- NSE(sim = brt_pred_model_samp_a_c, obs = responses_samp_a)
 
 # With rel_abundance as response
-nse_samp_ra <- NSE(sim = brt_pred_samp_ra, obs = responses_samp_ra)
-nse_model_samp_ra <- NSE(sim = brt_pred_model_samp_ra, obs = responses_samp_ra)
 nse_model_samp_ra_c <- NSE(sim = brt_pred_model_samp_ra_c, obs = responses_samp_ra)
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
-nse_sec_k <- NSE(sim = brt_pred_sec_k, obs = responses_sec_k)
-nse_model_sec_k <- NSE(sim = brt_pred_model_sec_k, obs = responses_sec_k)
 nse_model_sec_k_c <- NSE(sim = brt_pred_model_sec_k_c, obs = responses_sec_k)
 
 # With shannon index as response
-nse_sec_s <- NSE(sim = brt_pred_sec_s, obs = responses_sec_s)
-nse_model_sec_s <- NSE(sim = brt_pred_model_sec_s, obs = responses_sec_s)
 nse_model_sec_s_c <- NSE(sim = brt_pred_model_sec_s_c, obs = responses_sec_s)
 
 # With abundance as response
-nse_sec_a <- NSE(sim = brt_pred_sec_a, obs = responses_sec_a)
-nse_model_sec_a <- NSE(sim = brt_pred_model_sec_a, obs = responses_sec_a)
 nse_model_sec_a_c <- NSE(sim = brt_pred_model_sec_a_c, obs = responses_sec_a)
 
 # With rel_abundance as response
-nse_sec_ra <- NSE(sim = brt_pred_sec_ra, obs = responses_sec_ra)
-nse_model_sec_ra <- NSE(sim = brt_pred_model_sec_ra, obs = responses_sec_ra)
 nse_model_sec_ra_c <- NSE(sim = brt_pred_model_sec_ra_c, obs = responses_sec_ra)
 ```
 
 ## Write Evaluation Results 
 ```{r}
 # write evaluation metrics into df
-metric_results <- data.frame(nse = c(nse_v_k, nse_model_v_k, nse_model_v_k_c, nse_v_s, nse_model_v_s, nse_model_v_s_c, nse_v_a, nse_model_v_a, nse_model_v_a_c, nse_v_ra, nse_model_v_ra, nse_model_v_ra_c, nse_wd_k, nse_model_wd_k, nse_model_wd_k_c, nse_wd_s, nse_model_wd_s, nse_model_wd_s_c, nse_wd_a, nse_model_wd_a, nse_model_wd_a_c, nse_wd_ra, nse_model_wd_ra, nse_model_wd_ra_c, nse_samp_k, nse_model_samp_k, nse_model_samp_k_c, nse_samp_s, nse_model_samp_s, nse_model_samp_s_c, nse_samp_a, nse_model_samp_a, nse_model_samp_a_c, nse_samp_ra, nse_model_samp_ra, nse_model_samp_ra_c, nse_sec_k, nse_model_sec_k, nse_model_sec_k_c, nse_sec_s, nse_model_sec_s, nse_model_sec_s_c, nse_sec_a, nse_model_sec_a, nse_model_sec_a_c, nse_sec_ra, nse_model_sec_ra, nse_model_sec_ra_c),
+metric_results <- data.frame(nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c),
 
-bias = c(bias_v_k, bias_model_v_k, bias_model_v_k_c, bias_v_s, bias_model_v_s, bias_model_v_s_c, bias_v_a, bias_model_v_a, bias_model_v_a_c, bias_v_ra, bias_model_v_ra, bias_model_v_ra_c, bias_wd_k, bias_model_wd_k, bias_model_wd_k_c, bias_wd_s, bias_model_wd_s, bias_model_wd_s_c, bias_wd_a, bias_model_wd_a, bias_model_wd_a_c, bias_wd_ra, bias_model_wd_ra, bias_model_wd_ra_c, bias_samp_k, bias_model_samp_k, bias_model_samp_k_c, bias_samp_s, bias_model_samp_s, bias_model_samp_s_c, bias_samp_a, bias_model_samp_a, bias_model_samp_a_c, bias_samp_ra, bias_model_samp_ra, bias_model_samp_ra_c, bias_sec_k, bias_model_sec_k, bias_model_sec_k_c, bias_sec_s, bias_model_sec_s, bias_model_sec_s_c, bias_sec_a, bias_model_sec_a, bias_model_sec_a_c, bias_sec_ra, bias_model_sec_ra, bias_model_sec_ra_c),
+bias = c(bias_model_v_k_c, bias_model_v_s_c, bias_model_v_a_c, bias_model_v_ra_c, bias_model_wd_k_c,bias_model_wd_s_c, bias_model_wd_a_c, bias_model_wd_ra_c, bias_model_samp_k_c, bias_model_samp_s_c, bias_model_samp_a_c, bias_model_samp_ra_c, bias_model_sec_k_c, bias_model_sec_s_c, bias_model_sec_a_c, bias_model_sec_ra_c),
 
-mae = c(mae_v_k, mae_model_v_k, mae_model_v_k_c, mae_v_s, mae_model_v_s, mae_model_v_s_c, mae_v_a, mae_model_v_a, mae_model_v_a_c, mae_v_ra, mae_model_v_ra, mae_model_v_ra_c, mae_wd_k, mae_model_wd_k, mae_model_wd_k_c, mae_wd_s, mae_model_wd_s, mae_model_wd_s_c, mae_wd_a, mae_model_wd_a, mae_model_wd_a_c, mae_wd_ra, mae_model_wd_ra, mae_model_wd_ra_c, mae_samp_k, mae_model_samp_k, mae_model_samp_k_c, mae_samp_s, mae_model_samp_s, mae_model_samp_s_c, mae_samp_a, mae_model_samp_a, mae_model_samp_a_c, mae_samp_ra, mae_model_samp_ra, mae_model_samp_ra_c, mae_sec_k, mae_model_sec_k, mae_model_sec_k_c, mae_sec_s, mae_model_sec_s, mae_model_sec_s_c, mae_sec_a, mae_model_sec_a, mae_model_sec_a_c, mae_sec_ra, mae_model_sec_ra, mae_model_sec_ra_c), 
+mae = c(mae_model_v_k_c, mae_model_v_s_c, mae_model_v_a_c, mae_model_v_ra_c, mae_model_wd_k_c, mae_model_wd_s_c, mae_model_wd_a_c, mae_model_wd_ra_c, mae_model_samp_k_c, mae_model_samp_s_c, mae_model_samp_a_c, mae_model_samp_ra_c, mae_model_sec_k_c, mae_model_sec_s_c, mae_model_sec_a_c, mae_model_sec_ra_c), 
 
-rmse = c(rmse_v_k, rmse_model_v_k, rmse_model_v_k_c, rmse_v_s, rmse_model_v_s, rmse_model_v_s_c, rmse_v_a, rmse_model_v_a, rmse_model_v_a_c, rmse_v_ra, rmse_model_v_ra, rmse_model_v_ra_c, rmse_wd_k, rmse_model_wd_k, rmse_model_wd_k_c, rmse_wd_s, rmse_model_wd_s, rmse_model_wd_s_c, rmse_wd_a, rmse_model_wd_a, rmse_model_wd_a_c, rmse_wd_ra, rmse_model_wd_ra, rmse_model_wd_ra_c, rmse_samp_k, rmse_model_samp_k, rmse_model_samp_k_c, rmse_samp_s, rmse_model_samp_s, rmse_model_samp_s_c, rmse_samp_a, rmse_model_samp_a, rmse_model_samp_a_c, rmse_samp_ra, rmse_model_samp_ra, rmse_model_samp_ra_c, rmse_sec_k, rmse_model_sec_k, rmse_model_sec_k_c, rmse_sec_s, rmse_model_sec_s, rmse_model_sec_s_c, rmse_sec_a, rmse_model_sec_a, rmse_model_sec_a_c, rmse_sec_ra, rmse_model_sec_ra, rmse_model_sec_ra_c),
+rmse = c(rmse_model_v_k_c, rmse_model_v_s_c, rmse_model_v_a_c, rmse_model_v_ra_c, rmse_model_wd_k_c, rmse_model_wd_s_c, rmse_model_wd_a_c, rmse_model_wd_ra_c, rmse_model_samp_k_c, rmse_model_samp_s_c, rmse_model_samp_a_c, rmse_model_samp_ra_c, rmse_model_sec_k_c, rmse_model_sec_s_c, rmse_model_sec_a_c, rmse_model_sec_ra_c),
 
-r2 = c(r2_v_k, r2_model_v_k, r2_model_v_k_c, r2_v_s, r2_model_v_s, r2_model_v_s_c, r2_v_a, r2_model_v_a, r2_model_v_a_c, r2_v_ra, r2_model_v_ra, r2_model_v_ra_c, r2_wd_k, r2_model_wd_k, r2_model_wd_k_c, r2_wd_s, r2_model_wd_s, r2_model_wd_s_c, r2_wd_a, r2_model_wd_a, r2_model_wd_a_c, r2_wd_ra,  r2_model_wd_ra, r2_model_wd_ra_c, r2_samp_k, r2_model_samp_k, r2_model_samp_k_c, r2_samp_s, r2_model_samp_s, r2_model_samp_s_c, r2_samp_a, r2_model_samp_a, r2_model_samp_a_c, r2_samp_ra, r2_model_samp_ra, r2_model_samp_ra_c, r2_sec_k, r2_model_sec_k, r2_model_sec_k_c, r2_sec_s, r2_model_sec_s, r2_model_sec_s_c, r2_sec_a, r2_model_sec_a, r2_model_sec_a_c, r2_sec_ra, r2_model_sec_ra, r2_model_sec_ra_c), 
+r2 = c(r2_model_v_k_c, r2_model_v_s_c, r2_model_v_a_c, r2_model_v_ra_c, r2_model_wd_k_c, r2_model_wd_s_c, r2_model_wd_a_c, r2_model_wd_ra_c, r2_model_samp_k_c, r2_model_samp_s_c, r2_model_samp_a_c, r2_model_samp_ra_c, r2_model_sec_k_c, r2_model_sec_s_c, r2_model_sec_a_c, r2_model_sec_ra_c), 
 
-index = c("k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance", "k_index", "k_index", "k_index", "shannon", "shannon", "shannon", "abundance", "abundance", "abundance", "rel_abundance", "rel_abundance", "rel_abundance"),
+index = c("k_index", "shannon", "abundance", "rel_abundance", 
+          "k_index", "shannon", "abundance", "rel_abundance", 
+          "k_index", "shannon", "abundance", "rel_abundance", 
+          "k_index", "shannon", "abundance", "rel_abundance"),
 
-predictor = c("v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v", "v",
-"v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", "v + wd", 
-"samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp", "samp",
-"all", "all", "all", "all", "all", "all", "all", "all", "all", "all", "all", "all"),
+predictor = c("v", "v", "v", "v", 
+              "v + wd", "v + wd", "v + wd", "v + wd",  
+              "samp", "samp", "samp", "samp", 
+              "all", "all", "all", "all"),
 
-model = c("autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord", "autotuner", "xgb", "xgb w/o coord"))
+model = c("brt", "brt", "brt", "brt", 
+          "brt", "brt", "brt", "brt", 
+          "brt", "brt", "brt", "brt",
+          "brt", "brt", "brt", "brt"))
 
 # write results into a .csv 
 write.csv(metric_results, "Stat_Analysis/ml_evaluation_metrics_brt.csv", row.names = FALSE)
@@ -5100,187 +3803,7 @@ crs(VR3_ezg) <- "EPSG: 2056"
 ```
 
 ## Predict Models to Maps 
-### Autotuner 
-```{r}
-# predict ML model to rasters with velocity and wd 
-# GL1 - predictors: v + wd ----------------------------------------------------
-GL1_ezg_wd_k <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-GL1_ezg_wd_s <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-GL1_ezg_wd_a <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-GL1_ezg_wd_ra <- terra::predict(GL1_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#GL1_q_wd_k <- terra::predict(GL1_q, model = autotuner_xbrt_wd_k, fun = predict)
-#GL1_q_wd_s <- terra::predict(GL1_q, model = autotuner_xbrt_wd_s, fun = predict)
-#GL1_q_wd_a <- terra::predict(GL1_q, model = autotuner_xbrt_wd_a, fun = predict)
-#GL1_q_wd_ra <- terra::predict(GL1_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# GL1 - predictor: velocity ---------------------------------------------------
-GL1_ezg_v_k <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-GL1_ezg_v_s <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-GL1_ezg_v_a <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-GL1_ezg_v_ra <- terra::predict(GL1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#GL1_q_v_k <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#GL1_q_v_s <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#GL1_q_v_a <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#GL1_q_v_ra <- terra::predict(GL1_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-
-# GL2 - predictors: v + wd ----------------------------------------------------
-GL2_ezg_wd_k <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-GL2_ezg_wd_s <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-GL2_ezg_wd_a <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-GL2_ezg_wd_ra <- terra::predict(GL2_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#GL2_q_wd_k <- terra::predict(GL2_q, model = autotuner_xbrt_wd_k, fun = predict)
-#GL2_q_wd_s <- terra::predict(GL2_q, model = autotuner_xbrt_wd_s, fun = predict)
-#GL2_q_wd_a <- terra::predict(GL2_q, model = autotuner_xbrt_wd_a, fun = predict)
-#GL2_q_wd_ra <- terra::predict(GL2_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# GL2 - predictor: velocity ---------------------------------------------------
-GL2_ezg_v_k <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-GL2_ezg_v_s <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-GL2_ezg_v_a <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-GL2_ezg_v_ra <- terra::predict(GL2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#GL2_q_v_k <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#GL2_q_v_s <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#GL2_q_v_a <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#GL2_q_v_ra <- terra::predict(GL2_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-
-# L2 - predictors: v + wd -----------------------------------------------------
-L2_ezg_wd_k <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-L2_ezg_wd_s <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-L2_ezg_wd_a <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-L2_ezg_wd_ra <- terra::predict(L2_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#L2_q_wd_k <- terra::predict(L2_q, model = autotuner_xbrt_wd_k, fun = predict)
-#L2_q_wd_s <- terra::predict(L2_q, model = autotuner_xbrt_wd_s, fun = predict)
-#L2_q_wd_a <- terra::predict(L2_q, model = autotuner_xbrt_wd_a, fun = predict)
-#L2_q_wd_ra <- terra::predict(L2_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# L2 - predictor: velocity ----------------------------------------------------
-L2_ezg_v_k <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-L2_ezg_v_s <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-L2_ezg_v_a <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-L2_ezg_v_ra <- terra::predict(L2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#L2_q_v_k <- terra::predict(L2_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#L2_q_v_s <- terra::predict(L2_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#L2_q_v_a <- terra::predict(L2_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#L2_q_v_ra <- terra::predict(L2_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-
-# M1  - predictors: v + wd -----------------------------------------------------
-M1_ezg_wd_k <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-M1_ezg_wd_s <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-M1_ezg_wd_a <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-M1_ezg_wd_ra <- terra::predict(M1_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#M1_q_wd_k <- terra::predict(M1_q, model = autotuner_xbrt_wd_k, fun = predict)
-#M1_q_wd_s <- terra::predict(M1_q, model = autotuner_xbrt_wd_s, fun = predict)
-#M1_q_wd_a <- terra::predict(M1_q, model = autotuner_xbrt_wd_a, fun = predict)
-#M1_q_wd_ra <- terra::predict(M1_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# M1  - predictor: velocity ---------------------------------------------------
-M1_ezg_v_k <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-M1_ezg_v_s <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-M1_ezg_v_a <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-M1_ezg_v_ra <- terra::predict(M1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#M1_q_v_k <- terra::predict(M1_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#M1_q_v_s <- terra::predict(M1_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#M1_q_v_a <- terra::predict(M1_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#M1_q_v_ra <- terra::predict(M1_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-
-# S1  - predictors: v + wd ----------------------------------------------------
-S1_ezg_wd_k <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-S1_ezg_wd_s <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-S1_ezg_wd_a <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-S1_ezg_wd_ra <- terra::predict(S1_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#S1_q_wd_k <- terra::predict(S1_q, model = autotuner_xbrt_wd_k, fun = predict)
-#S1_q_wd_s <- terra::predict(S1_q, model = autotuner_xbrt_wd_s, fun = predict)
-#S1_q_wd_a <- terra::predict(S1_q, model = autotuner_xbrt_wd_a, fun = predict)
-#S1_q_wd_ra <- terra::predict(S1_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# S1  - predictor: velocity ---------------------------------------------------
-S1_ezg_v_k <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-S1_ezg_v_s <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-S1_ezg_v_a <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-S1_ezg_v_ra <- terra::predict(S1_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#S1_q_v_k <- terra::predict(S1_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#S1_q_v_s <- terra::predict(S1_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#S1_q_v_a <- terra::predict(S1_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#S1_q_v_ra <- terra::predict(S1_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-
-# S2  - predictors: v + wd ----------------------------------------------------
-S2_ezg_wd_k <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-S2_ezg_wd_s <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-S2_ezg_wd_a <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-S2_ezg_wd_ra <- terra::predict(S2_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#S2_q_wd_k <- terra::predict(S2_q, model = autotuner_xbrt_wd_k, fun = predict)
-#S2_q_wd_s <- terra::predict(S2_q, model = autotuner_xbrt_wd_s, fun = predict)
-#S2_q_wd_a <- terra::predict(S2_q, model = autotuner_xbrt_wd_a, fun = predict)
-#S2_q_wd_ra <- terra::predict(S2_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# S2  - predictor: velocity ---------------------------------------------------
-S2_ezg_v_k <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-S2_ezg_v_s <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-S2_ezg_v_a <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-S2_ezg_v_ra <- terra::predict(S2_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#S2_q_v_k <- terra::predict(S2_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#S2_q_v_s <- terra::predict(S2_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#S2_q_v_a <- terra::predict(S2_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#S2_q_v_ra <- terra::predict(S2_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-
-# TH4  - predictors: v + wd ---------------------------------------------------
-TH4_ezg_wd_k <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-TH4_ezg_wd_s <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-TH4_ezg_wd_a <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-TH4_ezg_wd_ra <- terra::predict(TH4_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#TH4_q_wd_k <- terra::predict(TH4_q, model = autotuner_xbrt_wd_k, fun = predict)
-#TH4_q_wd_s <- terra::predict(TH4_q, model = autotuner_xbrt_wd_s, fun = predict)
-#TH4_q_wd_a <- terra::predict(TH4_q, model = autotuner_xbrt_wd_a, fun = predict)
-#TH4_q_wd_ra <- terra::predict(TH4_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# TH4  - predictor: velocity --------------------------------------------------
-TH4_ezg_v_k <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-TH4_ezg_v_s <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-TH4_ezg_v_a <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-TH4_ezg_v_ra <- terra::predict(TH4_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#TH4_q_v_k <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#TH4_q_v_s <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#TH4_q_v_a <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#TH4_q_v_ra <- terra::predict(TH4_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-
-# VR3  - predictors: v + wd ---------------------------------------------------
-VR3_ezg_wd_k <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_k, fun = predict)
-VR3_ezg_wd_s <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_s, fun = predict)
-VR3_ezg_wd_a <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_a, fun = predict)
-VR3_ezg_wd_ra <- terra::predict(VR3_ezg, model = autotuner_xbrt_wd_ra, fun = predict)
-
-#VR3_q_wd_k <- terra::predict(VR3_q, model = autotuner_xbrt_wd_k, fun = predict)
-#VR3_q_wd_s <- terra::predict(VR3_q, model = autotuner_xbrt_wd_s, fun = predict)
-#VR3_q_wd_a <- terra::predict(VR3_q, model = autotuner_xbrt_wd_a, fun = predict)
-#VR3_q_wd_ra <- terra::predict(VR3_q, model = autotuner_xbrt_wd_ra, fun = predict)
-
-# VR3  - predictor: velocity --------------------------------------------------
-VR3_ezg_v_k <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_k, fun = predict)
-VR3_ezg_v_s <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_s, fun = predict)
-VR3_ezg_v_a <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_a, fun = predict)
-VR3_ezg_v_ra <- terra::predict(VR3_v_ezg, model = autotuner_xbrt_v_ra, fun = predict)
-
-#VR3_q_v_k <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_k, fun = predict)
-#VR3_q_v_s <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_s, fun = predict)
-#VR3_q_v_a <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_a, fun = predict)
-#VR3_q_v_ra <- terra::predict(VR3_v_q, model = autotuner_xbrt_v_ra, fun = predict)
-```
-
-### Xgboost w/o coordinates
+### Xgboost
 ```{r}
 # predict ML model to rasters with velocity and wd 
 # The work-around is to write a prediction function that first coerces the data.frame with "new data" to a matrix. We can use that function with predict<SpatRaster>
@@ -5535,99 +4058,7 @@ VR3 <- test_wd |>
 ```
 
 ## Extract Results
-### Autotuner 
-```{r}
-# extract raster information for regression analysis later
-# GL1 -------------------------------------------------------------------------
-regr_GL1_wd_k <- raster::extract(GL1_ezg_wd_k, coord_GL1) 
-regr_GL1_wd_s <- raster::extract(GL1_ezg_wd_s, coord_GL1) 
-regr_GL1_wd_a <- raster::extract(GL1_ezg_wd_a, coord_GL1) 
-regr_GL1_wd_ra <- raster::extract(GL1_ezg_wd_ra, coord_GL1) 
-
-regr_GL1_v_k <- raster::extract(GL1_ezg_v_k, coord_GL1) 
-regr_GL1_v_s <- raster::extract(GL1_ezg_v_s, coord_GL1) 
-regr_GL1_v_a <- raster::extract(GL1_ezg_v_a, coord_GL1) 
-regr_GL1_v_ra <- raster::extract(GL1_ezg_v_ra, coord_GL1)
-
-# GL2 -------------------------------------------------------------------------
-regr_GL2_wd_k <- raster::extract(GL2_ezg_wd_k, coord_GL2) 
-regr_GL2_wd_s <- raster::extract(GL2_ezg_wd_s, coord_GL2) 
-regr_GL2_wd_a <- raster::extract(GL2_ezg_wd_a, coord_GL2) 
-regr_GL2_wd_ra <- raster::extract(GL2_ezg_wd_ra, coord_GL2)
-
-regr_GL2_v_k <- raster::extract(GL2_ezg_v_k, coord_GL2) 
-regr_GL2_v_s <- raster::extract(GL2_ezg_v_s, coord_GL2) 
-regr_GL2_v_a <- raster::extract(GL2_ezg_v_a, coord_GL2)
-regr_GL2_v_ra <- raster::extract(GL2_ezg_v_ra, coord_GL2)
-
-# L2 --------------------------------------------------------------------------
-regr_L2_wd_k <- raster::extract(L2_ezg_wd_k, coord_L2) 
-regr_L2_wd_s <- raster::extract(L2_ezg_wd_s, coord_L2) 
-regr_L2_wd_a <- raster::extract(L2_ezg_wd_a, coord_L2) 
-regr_L2_wd_ra <- raster::extract(L2_ezg_wd_ra, coord_L2) 
-
-regr_L2_v_k <- raster::extract(L2_ezg_v_k, coord_L2) 
-regr_L2_v_s <- raster::extract(L2_ezg_v_s, coord_L2) 
-regr_L2_v_a <- raster::extract(L2_ezg_v_a, coord_L2)
-regr_L2_v_ra <- raster::extract(L2_ezg_v_ra, coord_L2)
-
-# M1 --------------------------------------------------------------------------
-regr_M1_wd_k <- raster::extract(M1_ezg_wd_k, coord_M1) 
-regr_M1_wd_s <- raster::extract(M1_ezg_wd_s, coord_M1) 
-regr_M1_wd_a <- raster::extract(M1_ezg_wd_a, coord_M1) 
-regr_M1_wd_ra <- raster::extract(M1_ezg_wd_ra, coord_M1) 
-
-regr_M1_v_k <- raster::extract(M1_ezg_v_k, coord_M1) 
-regr_M1_v_s <- raster::extract(M1_ezg_v_s, coord_M1) 
-regr_M1_v_a <- raster::extract(M1_ezg_v_a, coord_M1)
-regr_M1_v_ra <- raster::extract(M1_ezg_v_ra, coord_M1)
-
-# S1 --------------------------------------------------------------------------
-regr_S1_wd_k <- raster::extract(S1_ezg_wd_k, coord_S1) 
-regr_S1_wd_s <- raster::extract(S1_ezg_wd_s, coord_S1) 
-regr_S1_wd_a <- raster::extract(S1_ezg_wd_a, coord_S1) 
-regr_S1_wd_ra <- raster::extract(S1_ezg_wd_ra, coord_S1) 
-
-regr_S1_v_k <- raster::extract(S1_ezg_v_k, coord_S1) 
-regr_S1_v_s <- raster::extract(S1_ezg_v_s, coord_S1) 
-regr_S1_v_a <- raster::extract(S1_ezg_v_a, coord_S1)
-regr_S1_v_ra <- raster::extract(S1_ezg_v_ra, coord_S1)
-
-# S2 --------------------------------------------------------------------------
-regr_S2_wd_k <- raster::extract(S2_ezg_wd_k, coord_S2) 
-regr_S2_wd_s <- raster::extract(S2_ezg_wd_s, coord_S2) 
-regr_S2_wd_a <- raster::extract(S2_ezg_wd_a, coord_S2) 
-regr_S2_wd_ra <- raster::extract(S2_ezg_wd_ra, coord_S2)
-
-regr_S2_v_k <- raster::extract(S2_ezg_v_k, coord_S2) 
-regr_S2_v_s <- raster::extract(S2_ezg_v_s, coord_S2) 
-regr_S2_v_a <- raster::extract(S2_ezg_v_a, coord_S2)
-regr_S2_v_ra <- raster::extract(S2_ezg_v_ra, coord_S2)
-
-# TH4 -------------------------------------------------------------------------
-regr_TH4_wd_k <- raster::extract(TH4_ezg_wd_k, coord_TH4) 
-regr_TH4_wd_s <- raster::extract(TH4_ezg_wd_s, coord_TH4) 
-regr_TH4_wd_a <- raster::extract(TH4_ezg_wd_a, coord_TH4) 
-regr_TH4_wd_ra <- raster::extract(TH4_ezg_wd_ra, coord_TH4) 
-
-regr_TH4_v_k <- raster::extract(TH4_ezg_v_k, coord_TH4) 
-regr_TH4_v_s <- raster::extract(TH4_ezg_v_s, coord_TH4) 
-regr_TH4_v_a <- raster::extract(TH4_ezg_v_a, coord_TH4)
-regr_TH4_v_ra <- raster::extract(TH4_ezg_v_ra, coord_TH4)
-
-# VR3 -------------------------------------------------------------------------
-regr_VR3_wd_k <- raster::extract(VR3_ezg_wd_k, coord_VR3) 
-regr_VR3_wd_s <- raster::extract(VR3_ezg_wd_s, coord_VR3) 
-regr_VR3_wd_a <- raster::extract(VR3_ezg_wd_a, coord_VR3) 
-regr_VR3_wd_ra <- raster::extract(VR3_ezg_wd_ra, coord_VR3)
-
-regr_VR3_v_k <- raster::extract(VR3_ezg_v_k, coord_VR3) 
-regr_VR3_v_s <- raster::extract(VR3_ezg_v_s, coord_VR3) 
-regr_VR3_v_a <- raster::extract(VR3_ezg_v_a, coord_VR3)
-regr_VR3_v_ra <- raster::extract(VR3_ezg_v_ra, coord_VR3)
-```
-
-### Xgboost w/o coordinates 
+### Xgboost 
 ```{r}
 # extract raster information for regression analysis later
 # GL1 -------------------------------------------------------------------------
@@ -5723,15 +4154,8 @@ regr_m2_VR3_v_ra <- raster::extract(VR3_ezg_m2_v_ra, coord_VR3)
 ```{r}
 # combine all results into dataframe
 # GL1 -------------------------------------------------------------------------
-data_GL1 <- cbind(regr_GL1_wd_k, regr_GL1_wd_s, regr_GL1_wd_a, regr_GL1_wd_ra, regr_GL1_v_k, regr_GL1_v_s, regr_GL1_v_a, regr_GL1_v_ra, regr_m2_GL1_wd_k, regr_m2_GL1_wd_s, regr_m2_GL1_wd_a, regr_m2_GL1_wd_ra, regr_m2_GL1_v_k, regr_m2_GL1_v_s, regr_m2_GL1_v_a, regr_m2_GL1_v_ra, GL1) |>
-  dplyr::rename(auto_k_index_wd = regr_GL1_wd_k,
-         auto_shannon_wd = regr_GL1_wd_s,
-         auto_abundance_wd = regr_GL1_wd_a,
-         auto_rel_abundance_wd = regr_GL1_wd_ra,
-         auto_k_index_v = regr_GL1_v_k,
-         auto_shannon_v = regr_GL1_v_s,
-         auto_abundance_v = regr_GL1_v_a,
-         auto_rel_abundance_v = regr_GL1_v_ra,
+data_GL1 <- cbind(regr_m2_GL1_wd_k, regr_m2_GL1_wd_s, regr_m2_GL1_wd_a, regr_m2_GL1_wd_ra, regr_m2_GL1_v_k, regr_m2_GL1_v_s, regr_m2_GL1_v_a, regr_m2_GL1_v_ra, GL1) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_GL1_wd_k,
          m2_shannon_wd = regr_m2_GL1_wd_s,
          m2_abundance_wd = regr_m2_GL1_wd_a,
@@ -5746,15 +4170,8 @@ data_GL1 <- cbind(regr_GL1_wd_k, regr_GL1_wd_s, regr_GL1_wd_a, regr_GL1_wd_ra, r
          obs_rel_abundance = rel_abundance)
 
 # GL2 -------------------------------------------------------------------------
-data_GL2 <- cbind(regr_GL2_wd_k, regr_GL2_wd_s, regr_GL2_wd_a, regr_GL2_wd_ra, regr_GL2_v_k, regr_GL2_v_s, regr_GL2_v_a, regr_GL2_v_ra, regr_m2_GL2_wd_k, regr_m2_GL2_wd_s, regr_m2_GL2_wd_a, regr_m2_GL2_wd_ra, regr_m2_GL2_v_k, regr_m2_GL2_v_s, regr_m2_GL2_v_a, regr_m2_GL2_v_ra, GL2) |>
-  dplyr::rename(auto_k_index_wd = regr_GL2_wd_k,
-         auto_shannon_wd = regr_GL2_wd_s,
-         auto_abundance_wd = regr_GL2_wd_a,
-         auto_rel_abundance_wd = regr_GL2_wd_ra,
-         auto_k_index_v = regr_GL2_v_k,
-         auto_shannon_v = regr_GL2_v_s,
-         auto_abundance_v = regr_GL2_v_a,
-         auto_rel_abundance_v = regr_GL2_v_ra,
+data_GL2 <- cbind(regr_m2_GL2_wd_k, regr_m2_GL2_wd_s, regr_m2_GL2_wd_a, regr_m2_GL2_wd_ra, regr_m2_GL2_v_k, regr_m2_GL2_v_s, regr_m2_GL2_v_a, regr_m2_GL2_v_ra, GL2) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_GL2_wd_k,
          m2_shannon_wd = regr_m2_GL2_wd_s,
          m2_abundance_wd = regr_m2_GL2_wd_a,
@@ -5769,15 +4186,8 @@ data_GL2 <- cbind(regr_GL2_wd_k, regr_GL2_wd_s, regr_GL2_wd_a, regr_GL2_wd_ra, r
          obs_rel_abundance = rel_abundance)
 
 # L2 --------------------------------------------------------------------------
-data_L2 <- cbind(regr_L2_wd_k, regr_L2_wd_s, regr_L2_wd_a, regr_L2_wd_ra, regr_L2_v_k, regr_L2_v_s, regr_L2_v_a, regr_L2_v_ra, regr_m2_L2_wd_k, regr_m2_L2_wd_s, regr_m2_L2_wd_a, regr_m2_L2_wd_ra, regr_m2_L2_v_k, regr_m2_L2_v_s, regr_m2_L2_v_a, regr_m2_L2_v_ra, L2) |>
-  dplyr::rename(auto_k_index_wd = regr_L2_wd_k,
-         auto_shannon_wd = regr_L2_wd_s,
-         auto_abundance_wd = regr_L2_wd_a,
-         auto_rel_abundance_wd = regr_L2_wd_ra,
-         auto_k_index_v = regr_L2_v_k,
-         auto_shannon_v = regr_L2_v_s,
-         auto_abundance_v = regr_L2_v_a,
-         auto_rel_abundance_v = regr_L2_v_ra,
+data_L2 <- cbind(regr_m2_L2_wd_k, regr_m2_L2_wd_s, regr_m2_L2_wd_a, regr_m2_L2_wd_ra, regr_m2_L2_v_k, regr_m2_L2_v_s, regr_m2_L2_v_a, regr_m2_L2_v_ra, L2) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_L2_wd_k,
          m2_shannon_wd = regr_m2_L2_wd_s,
          m2_abundance_wd = regr_m2_L2_wd_a,
@@ -5792,15 +4202,8 @@ data_L2 <- cbind(regr_L2_wd_k, regr_L2_wd_s, regr_L2_wd_a, regr_L2_wd_ra, regr_L
          obs_rel_abundance = rel_abundance)
 
 # M1 --------------------------------------------------------------------------
-data_M1 <- cbind(regr_M1_wd_k, regr_M1_wd_s, regr_M1_wd_a, regr_M1_wd_ra, regr_M1_v_k, regr_M1_v_s, regr_M1_v_a, regr_M1_v_ra, regr_m2_M1_wd_k, regr_m2_M1_wd_s, regr_m2_M1_wd_a, regr_m2_M1_wd_ra, regr_m2_M1_v_k, regr_m2_M1_v_s, regr_m2_M1_v_a, regr_m2_M1_v_ra, M1) |>
-  dplyr::rename(auto_k_index_wd = regr_M1_wd_k,
-         auto_shannon_wd = regr_M1_wd_s,
-         auto_abundance_wd = regr_M1_wd_a,
-         auto_rel_abundance_wd = regr_M1_wd_ra,
-         auto_k_index_v = regr_M1_v_k,
-         auto_shannon_v = regr_M1_v_s,
-         auto_abundance_v = regr_M1_v_a,
-         auto_rel_abundance_v = regr_M1_v_ra,
+data_M1 <- cbind(regr_m2_M1_wd_k, regr_m2_M1_wd_s, regr_m2_M1_wd_a, regr_m2_M1_wd_ra, regr_m2_M1_v_k, regr_m2_M1_v_s, regr_m2_M1_v_a, regr_m2_M1_v_ra, M1) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_M1_wd_k,
          m2_shannon_wd = regr_m2_M1_wd_s,
          m2_abundance_wd = regr_m2_M1_wd_a,
@@ -5815,15 +4218,8 @@ data_M1 <- cbind(regr_M1_wd_k, regr_M1_wd_s, regr_M1_wd_a, regr_M1_wd_ra, regr_M
          obs_rel_abundance = rel_abundance)
 
 # S1 --------------------------------------------------------------------------
-data_S1 <- cbind(regr_S1_wd_k, regr_S1_wd_s, regr_S1_wd_a, regr_S1_wd_ra, regr_S1_v_k, regr_S1_v_s, regr_S1_v_a, regr_S1_v_ra, regr_m2_S1_wd_k, regr_m2_S1_wd_s, regr_m2_S1_wd_a, regr_m2_S1_wd_ra, regr_m2_S1_v_k, regr_m2_S1_v_s, regr_m2_S1_v_a, regr_m2_S1_v_ra, S1) |>
-  dplyr::rename(auto_k_index_wd = regr_S1_wd_k,
-         auto_shannon_wd = regr_S1_wd_s,
-         auto_abundance_wd = regr_S1_wd_a,
-         auto_rel_abundance_wd = regr_S1_wd_ra,
-         auto_k_index_v = regr_S1_v_k,
-         auto_shannon_v = regr_S1_v_s,
-         auto_abundance_v = regr_S1_v_a,
-         auto_rel_abundance_v = regr_S1_v_ra,
+data_S1 <- cbind(regr_m2_S1_wd_k, regr_m2_S1_wd_s, regr_m2_S1_wd_a, regr_m2_S1_wd_ra, regr_m2_S1_v_k, regr_m2_S1_v_s, regr_m2_S1_v_a, regr_m2_S1_v_ra, S1) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_S1_wd_k,
          m2_shannon_wd = regr_m2_S1_wd_s,
          m2_abundance_wd = regr_m2_S1_wd_a,
@@ -5838,15 +4234,8 @@ data_S1 <- cbind(regr_S1_wd_k, regr_S1_wd_s, regr_S1_wd_a, regr_S1_wd_ra, regr_S
          obs_rel_abundance = rel_abundance)
 
 # S2 --------------------------------------------------------------------------
-data_S2 <- cbind(regr_S2_wd_k, regr_S2_wd_s, regr_S2_wd_a, regr_S2_wd_ra, regr_S2_v_k, regr_S2_v_s, regr_S2_v_a, regr_S2_v_ra, regr_m2_S2_wd_k, regr_m2_S2_wd_s, regr_m2_S2_wd_a, regr_m2_S2_wd_ra, regr_m2_S2_v_k, regr_m2_S2_v_s, regr_m2_S2_v_a, regr_m2_S2_v_ra, S2) |>
-  dplyr::rename(auto_k_index_wd = regr_S2_wd_k,
-         auto_shannon_wd = regr_S2_wd_s,
-         auto_abundance_wd = regr_S2_wd_a,
-         auto_rel_abundance_wd = regr_S2_wd_ra,
-         auto_k_index_v = regr_S2_v_k,
-         auto_shannon_v = regr_S2_v_s,
-         auto_abundance_v = regr_S2_v_a,
-         auto_rel_abundance_v = regr_S2_v_ra,
+data_S2 <- cbind(regr_m2_S2_wd_k, regr_m2_S2_wd_s, regr_m2_S2_wd_a, regr_m2_S2_wd_ra, regr_m2_S2_v_k, regr_m2_S2_v_s, regr_m2_S2_v_a, regr_m2_S2_v_ra, S2) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_S2_wd_k,
          m2_shannon_wd = regr_m2_S2_wd_s,
          m2_abundance_wd = regr_m2_S2_wd_a,
@@ -5862,15 +4251,8 @@ data_S2 <- cbind(regr_S2_wd_k, regr_S2_wd_s, regr_S2_wd_a, regr_S2_wd_ra, regr_S
 
 
 # TH4 -------------------------------------------------------------------------
-data_TH4 <- cbind(regr_TH4_wd_k, regr_TH4_wd_s, regr_TH4_wd_a, regr_TH4_wd_ra, regr_TH4_v_k, regr_TH4_v_s, regr_TH4_v_a, regr_TH4_v_ra, regr_m2_TH4_wd_k, regr_m2_TH4_wd_s, regr_m2_TH4_wd_a, regr_m2_TH4_wd_ra, regr_m2_TH4_v_k, regr_m2_TH4_v_s, regr_m2_TH4_v_a, regr_m2_TH4_v_ra, TH4) |>
-  dplyr::rename(auto_k_index_wd = regr_TH4_wd_k,
-         auto_shannon_wd = regr_TH4_wd_s,
-         auto_abundance_wd = regr_TH4_wd_a,
-         auto_rel_abundance_wd = regr_TH4_wd_ra,
-         auto_k_index_v = regr_TH4_v_k,
-         auto_shannon_v = regr_TH4_v_s,
-         auto_abundance_v = regr_TH4_v_a,
-         auto_rel_abundance_v = regr_TH4_v_ra,
+data_TH4 <- cbind(regr_m2_TH4_wd_k, regr_m2_TH4_wd_s, regr_m2_TH4_wd_a, regr_m2_TH4_wd_ra, regr_m2_TH4_v_k, regr_m2_TH4_v_s, regr_m2_TH4_v_a, regr_m2_TH4_v_ra, TH4) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_TH4_wd_k,
          m2_shannon_wd = regr_m2_TH4_wd_s,
          m2_abundance_wd = regr_m2_TH4_wd_a,
@@ -5886,15 +4268,8 @@ data_TH4 <- cbind(regr_TH4_wd_k, regr_TH4_wd_s, regr_TH4_wd_a, regr_TH4_wd_ra, r
 
 
 # VR3 -------------------------------------------------------------------------
-data_VR3 <- cbind(regr_VR3_wd_k, regr_VR3_wd_s, regr_VR3_wd_a, regr_VR3_wd_ra, regr_VR3_v_k, regr_VR3_v_s, regr_VR3_v_a, regr_VR3_v_ra, regr_m2_VR3_wd_k, regr_m2_VR3_wd_s, regr_m2_VR3_wd_a, regr_m2_VR3_wd_ra, regr_m2_VR3_v_k, regr_m2_VR3_v_s, regr_m2_VR3_v_a, regr_m2_VR3_v_ra, VR3) |>
-  dplyr::rename(auto_k_index_wd = regr_VR3_wd_k,
-         auto_shannon_wd = regr_VR3_wd_s,
-         auto_abundance_wd = regr_VR3_wd_a,
-         auto_rel_abundance_wd = regr_VR3_wd_ra,
-         auto_k_index_v = regr_VR3_v_k,
-         auto_shannon_v = regr_VR3_v_s,
-         auto_abundance_v = regr_VR3_v_a,
-         auto_rel_abundance_v = regr_VR3_v_ra,
+data_VR3 <- cbind(regr_m2_VR3_wd_k, regr_m2_VR3_wd_s, regr_m2_VR3_wd_a, regr_m2_VR3_wd_ra, regr_m2_VR3_v_k, regr_m2_VR3_v_s, regr_m2_VR3_v_a, regr_m2_VR3_v_ra, VR3) |>
+  dplyr::rename(
          m2_k_index_wd = regr_m2_VR3_wd_k,
          m2_shannon_wd = regr_m2_VR3_wd_s,
          m2_abundance_wd = regr_m2_VR3_wd_a,

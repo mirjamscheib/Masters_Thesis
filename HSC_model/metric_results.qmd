@@ -1,0 +1,165 @@
+---
+title: "hsc_metrics"
+format: html
+---
+
+# Libraries 
+```{r}
+#clear R environment
+rm(list = ls())
+
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("sf")
+pkgCheck("terra")
+pkgCheck("dplyr")
+pkgCheck("data.table")  # fast data.frame manipulation (used by mlr3)
+pkgCheck("mlr3") # machine learning (see Chapter 12)
+pkgCheck("mlr3spatiotempcv") # spatio-temporal resampling 
+pkgCheck("mlr3tuning") # hyperparameter tuning package
+pkgCheck("mlr3learners") # interface to most important machine learning packages
+pkgCheck("paradox") # defining hyperparameter spaces
+pkgCheck("ranger")  # rf package
+pkgCheck("tree") # decision tree package
+pkgCheck("readr")
+pkgCheck("sp")
+pkgCheck("raster")
+pkgCheck("gbm")
+pkgCheck("xgboost")
+pkgCheck("caret") # for cohen's kappa calculation 
+pkgCheck("pdp")
+pkgCheck("Metrics")
+pkgCheck("modEvA")
+pkgCheck("tidyr")
+pkgCheck("Fgmutils") # for bias calculation (bias() function)
+pkgCheck("hydroGOF") # for NSE calculation with NSE() function 
+```
+
+# Load & prepare data 
+```{r}
+# Load data containing velocity as predictor variable 
+hsc <- read_delim("Stat_Analysis/stat_analysis_data/hsc_regr_analysis.csv") |>
+  na.omit()
+```
+
+# Deviance explained (R2)
+```{r}
+# With k_index as response 
+r2_class_k <- R2(pred = hsc$foen_class, obs = hsc$k_index, na.rm = TRUE)
+r2_hsi_k <- R2(pred = hsc$foen_hsi, obs = hsc$k_index, na.rm = TRUE)
+
+# With shannon index as response 
+r2_class_s <- R2(pred = hsc$foen_class, obs = hsc$shannon, na.rm = TRUE)
+r2_hsi_s <- R2(pred = hsc$foen_hsi, obs = hsc$shannon, na.rm = TRUE)
+
+# With abundance as response
+r2_class_a <- R2(pred = hsc$foen_class, obs = hsc$abundance, na.rm = TRUE)
+r2_hsi_a <- R2(pred = hsc$foen_hsi, obs = hsc$abundance, na.rm = TRUE)
+
+# With rel_abundance as response 
+r2_class_ra <- R2(pred = hsc$foen_class, obs = hsc$rel_abundance, na.rm = TRUE)
+r2_hsi_ra <- R2(pred = hsc$foen_hsi, obs = hsc$rel_abundance, na.rm = TRUE)
+```
+
+# RMSE & MAE
+```{r}
+# With k_index as response
+rmse_class_k <- Metrics::rmse(actual = hsc$k_index, predicted = hsc$foen_class)
+rmse_hsi_k <- Metrics::rmse(actual = hsc$k_index, predicted = hsc$foen_hsi)
+
+mae_class_k <- Metrics::mae(actual = hsc$k_index, predicted = hsc$foen_class)
+mae_hsi_k <- Metrics::mae(actual = hsc$k_index, predicted = hsc$foen_hsi)
+
+# With shannon index as response
+rmse_class_s <- Metrics::rmse(actual = hsc$shannon, predicted = hsc$foen_class)
+rmse_hsi_s <- Metrics::rmse(actual = hsc$shannon, predicted = hsc$foen_hsi)
+
+mae_class_s <- Metrics::mae(actual = hsc$shannon, predicted = hsc$foen_class)
+mae_hsi_s <- Metrics::mae(actual = hsc$shannon, predicted = hsc$foen_hsi)
+
+# With abundance as response
+rmse_class_a <- Metrics::rmse(actual = hsc$abundance, predicted = hsc$foen_class)
+rmse_hsi_a <- Metrics::rmse(actual = hsc$abundance, predicted = hsc$foen_hsi)
+
+mae_class_a <- Metrics::mae(actual = hsc$abundance, predicted = hsc$foen_class)
+mae_hsi_a <- Metrics::mae(actual = hsc$abundance, predicted = hsc$foen_hsi)
+
+# With rel_abundance as response
+rmse_class_ra <- Metrics::rmse(actual = hsc$rel_abundance, predicted = hsc$foen_class)
+rmse_hsi_ra <- Metrics::rmse(actual = hsc$rel_abundance, predicted = hsc$foen_hsi)
+
+mae_class_ra <- Metrics::mae(actual = hsc$rel_abundance, predicted = hsc$foen_class)
+mae_hsi_ra <- Metrics::mae(actual = hsc$rel_abundance, predicted = hsc$foen_hsi)
+```
+
+# Bias
+```{r}
+# With k_index as response
+bias_class_k <- bias(observados = hsc$k_index, estimados = hsc$foen_class)
+bias_hsi_k <- bias(observados = hsc$k_index, estimados = hsc$foen_hsi)
+
+# With shannon index as response
+bias_class_s <- bias(observados = hsc$shannon, estimados = hsc$foen_class)
+bias_hsi_s <- bias(observados = hsc$shannon, estimados = hsc$foen_hsi)
+
+# With abundance as response
+bias_class_a <- bias(observados = hsc$abundance, estimados = hsc$foen_class)
+bias_hsi_a <- bias(observados = hsc$abundance, estimados = hsc$foen_hsi)
+
+# With rel_abundance as response
+bias_class_ra <- bias(observados = hsc$rel_abundance, estimados = hsc$foen_class)
+bias_hsi_ra <- bias(observados = hsc$rel_abundance, estimados = hsc$foen_hsi)
+```
+
+# Nash-Sutcliffe efficiency (NSE) 
+```{r}
+# With k_index as response
+nse_class_k <- NSE(sim = hsc$foen_class, obs = hsc$k_index)
+nse_hsi_k <- NSE(sim = hsc$foen_hsi, obs = hsc$k_index)
+
+# With shannon index as response
+nse_class_s <- NSE(sim = hsc$foen_class, obs = hsc$shannon)
+nse_hsi_s <- NSE(sim = hsc$foen_hsi, obs = hsc$shannon)
+
+# With abundance as response
+nse_class_a <- NSE(sim = hsc$foen_class, obs = hsc$abundance)
+nse_hsi_a <- NSE(sim = hsc$foen_hsi, obs = hsc$abundance)
+
+# With rel_abundance as response
+nse_class_ra <- NSE(sim = hsc$foen_class, obs = hsc$rel_abundance)
+nse_hsi_ra <- NSE(sim = hsc$foen_hsi, obs = hsc$rel_abundance)
+```
+
+# Write Evaluation Results 
+```{r}
+# write evaluation metrics into df
+metric_results <- data.frame(nse = c(nse_class_k, nse_hsi_k, nse_class_s, nse_hsi_s, nse_class_a, nse_hsi_a, nse_class_ra, nse_hsi_ra),
+
+bias = c(bias_class_k, bias_hsi_k, bias_class_s, bias_hsi_s, bias_class_a, bias_hsi_a, bias_class_ra, bias_hsi_ra),
+
+mae = c(mae_class_k, mae_hsi_k, mae_class_s, mae_hsi_s, mae_class_a, mae_hsi_a, mae_class_ra, mae_hsi_ra), 
+
+rmse = c(rmse_class_k, rmse_hsi_k, rmse_class_s, rmse_hsi_s, rmse_class_a, rmse_hsi_a, rmse_class_ra, rmse_hsi_ra),
+
+r2 = c(r2_class_k, r2_hsi_k, r2_class_s, r2_hsi_s, r2_class_a, r2_hsi_a, r2_class_ra, r2_hsi_ra), 
+
+index = c("k_index", "k_index", "shannon", "shannon", 
+          "abundance", "abundance", "rel_abundance", "rel_abundance"),
+
+predictor = c("class", "hsi", "class", "hsi", 
+              "class", "hsi", "class", "hsi"),
+
+model = c("hsc", "hsc", "hsc", "hsc", 
+          "hsc", "hsc", "hsc", "hsc"))
+
+# write results into a .csv 
+write.csv(metric_results, "Stat_Analysis/ml_evaluation_metrics_hsc.csv", row.names = FALSE)
+```
