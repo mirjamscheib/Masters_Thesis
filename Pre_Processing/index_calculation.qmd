@@ -132,8 +132,7 @@ lab_ml_model_v <- lab_new |>
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, x, y, shannon, abundance, k_index, rel_abundance) |>
-  dplyr::rename(velocity = `Flow_velocity_v60_cm/s`) |>
+  dplyr::select(reach, velocity, x, y, shannon, abundance, k_index, rel_abundance) |>
   mutate(x = as.numeric(x),
          y = as.numeric(y),
          velocity = velocity/100)
@@ -144,13 +143,12 @@ lab_ml_model_wd_v <- lab_new |>
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, shannon, abundance, k_index, rel_abundance) |>
-  dplyr::rename(velocity = `Flow_velocity_v60_cm/s`,
-         wd_m = Water_depth_cm) |>
+  dplyr::select(reach, velocity, wd_cm, x, y, shannon, abundance, k_index, rel_abundance) |>
   mutate(x = as.numeric(x),
          y = as.numeric(y),
          velocity = velocity/100,
-         wd_m = wd_m/100)
+         wd_m = wd_cm/100) |>
+  dplyr::select(-wd_cm)
 
 
 # write results into new .csv file 
@@ -166,10 +164,8 @@ lab_ml_model_sampling <- lab_new |>
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  dplyr::select(Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, z, `DIstance_Wasseranschlaglinie_m`, `Category_Flow_velocity_5_Bewohnbarkeits-klasse`, Clogging_3_Klassen, Clogging_6_Klassen, Substrate_type, `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`, `Moos_cover_Deckungsgrad_6_Kategorien_0-5`, `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`, shannon, abundance, k_index, rel_abundance) |>
-  dplyr::rename(velocity = `Flow_velocity_v60_cm/s`,
-         wd_m = Water_depth_cm,
-         cat_velocity = `Category_Flow_velocity_5_Bewohnbarkeits-klasse`,
+  dplyr::select(reach, velocity, wd_cm, x, y, z, `DIstance_Wasseranschlaglinie_m`, `Category_Flow_velocity_5_Bewohnbarkeits-klasse`, Clogging_3_Klassen, Clogging_6_Klassen, Substrate_type, `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`, `Moos_cover_Deckungsgrad_6_Kategorien_0-5`, `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`, shannon, abundance, k_index, rel_abundance) |>
+  dplyr::rename(cat_velocity = `Category_Flow_velocity_5_Bewohnbarkeits-klasse`,
          dist_w = DIstance_Wasseranschlaglinie_m,
          clog_3_class = Clogging_3_Klassen,
          clog_6_class = Clogging_6_Klassen, 
@@ -180,7 +176,8 @@ lab_ml_model_sampling <- lab_new |>
   mutate(x = as.numeric(x),
          y = as.numeric(y),
          velocity = velocity/100,
-         wd_m = wd_m/100)
+         wd_m = wd_cm/100) |>
+  dplyr::select(-wd_cm)
 
 # df with all environmental variables measured including mean value of before, during and after sampling measured variables 
 # prep data to calculate mean for variables measured only at one location per section
@@ -208,11 +205,8 @@ lab_ml_model_section <- lab_new |>
          + 0.3*(shannon/max(shannon, na.rm = TRUE))
          + 0.2*(EPT_Taxa/max(EPT_Taxa, na.rm = TRUE))
          + 0.1*(abundance/max(abundance, na.rm = TRUE))) |>
-  dplyr::select(-Transect, -Sampling_point, -Abiotic_measured_by.x, -Abiotic_measured_by.y, -River.x, -`RTK-GPS_Nr`, -`MZB_kick-net_taken_by`, -Varia, -Varia_before, -Varia_during, -Varia_after, -Gauging_station, -Sampling_site, -join_key) |>
   dplyr::rename(date = Date_of_survey.x,
          time = Time_of_survey,
-         velocity = `Flow_velocity_v60_cm/s`,
-         wd_m = Water_depth_cm,
          cat_velocity = `Category_Flow_velocity_5_Bewohnbarkeits-klasse`,
          dist_w = DIstance_Wasseranschlaglinie_m,
          clog_3_class = Clogging_3_Klassen,
@@ -248,7 +242,8 @@ lab_ml_model_section <- lab_new |>
   mutate(x = as.numeric(x),
          y = as.numeric(y),
          velocity = velocity/100,
-         wd_m = wd_m/100)
+         wd_m = wd_cm/100) |>
+  dplyr::select(-Transect, -Sampling_point, -Abiotic_measured_by.x, -Abiotic_measured_by.y, -River.x, -`RTK-GPS_Nr`, -`MZB_kick-net_taken_by`, -Varia, -Varia_before, -Varia_during, -Varia_after, -Gauging_station, -Sampling_site, -join_key, -wd_cm)
 ```
 
 ```{r}
@@ -291,11 +286,9 @@ write_xlsx(data_section,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_section.xls
 ```{r}
 # combine all abiotic data with abundance & Shannon Diversity 
 lab_univariate <- lab_ml_model_wd_v |>
-  dplyr::select(Reach_Untersuchungsstelle, velocity, wd_m, x, y, shannon, abundance, k_index) |>
+  dplyr::select(reach, velocity, wd_m, x, y, shannon, abundance, k_index) |>
   mutate(x = as.numeric(x),
-         y = as.numeric(y),
-         velocity = velocity/100,
-         wd_m = wd_m/100)
+         y = as.numeric(y))
 
 # write results into new .csv file 
 write_xlsx(lab_univariate,"Pre_Processing\\abiotic_mi_sampling\\lab_univariate.xlsx") 
