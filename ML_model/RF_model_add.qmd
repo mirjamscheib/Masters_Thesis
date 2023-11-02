@@ -3671,70 +3671,70 @@ write.csv(metric_results, "Stat_Analysis/ml_evaluation_metrics_rf_add.csv", row.
 ## Read rasters
 ```{r}
 # read rasters containing wd and velocity 
-GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg.grd")
-GL1_v_ezg <- stack("Pre_Processing/raster_files/GL1_v_2_56_ezg.tif")
-#GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg_add.grd")
+GL1_v_ezg <- dropLayer(GL1_ezg, i = 2)
+#GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28_add.grd")
 
-GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg.grd")
-GL2_v_ezg <- stack("Pre_Processing/raster_files/GL2_v_2_37_ezg.tif")
-#GL2_q <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg_add.grd")
+GL2_v_ezg <- dropLayer(GL2_ezg, i = 2)
+#GL2_q <- stack("Pre_Processing/rasters_stacked/GL2_3_21_add.grd")
 
-L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg.grd")
-L2_v_ezg <- stack("Pre_Processing/raster_files/L2_v_9_54_ezg.tif")
-#L2_q <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg_add.grd")
+L2_v_ezg <- dropLayer(L2_ezg, i = 2)
+#L2_q <- stack("Pre_Processing/rasters_stacked/L2_2_40_add.grd")
 
-M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg.grd")
-M1_v_ezg <- stack("Pre_Processing/raster_files/M1_v_1_50_ezg.tif")
-#M1_q <- stack("Pre_Processing/rasters_stacked/M1_0_47.grd")
+M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg_add.grd")
+M1_v_ezg <- dropLayer(M1_ezg, i = 2)
+#M1_q <- stack("Pre_Processing/rasters_stacked/M1_0_47_add.grd")
 
-S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg.grd")
-S1_v_ezg <- stack("Pre_Processing/raster_files/S1_v_1_94_ezg.tif")
-#S1_q <- stack("Pre_Processing/rasters_stacked/S1_2_00.grd")
+S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg_add.grd")
+S1_v_ezg <- dropLayer(S1_ezg, i = 2)
+#S1_q <- stack("Pre_Processing/rasters_stacked/S1_2_00_add.grd")
 
-S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg.grd")
-S2_v_ezg <- stack("Pre_Processing/raster_files/S2_v_1_93_ezg.tif")
-#S2_q <- stack("Pre_Processing/rasters_stacked/S2_2_00.grd")
+S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg_add.grd")
+S2_v_ezg <- dropLayer(S2_ezg, i = 2)
+#S2_q <- stack("Pre_Processing/rasters_stacked/S2_2_00_add.grd")
 
-TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg.grd")
-TH4_v_ezg <- stack("Pre_Processing/raster_files/TH4_v_35_12_ezg.tif")
-#TH4_q <- stack("Pre_Processing/rasters_stacked/TH4_11_45.grd")
+TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg_add.grd")
+TH4_v_ezg <- dropLayer(TH4_ezg, i = 2)
+#TH4_q <- stack("Pre_Processing/rasters_stacked/TH4_11_45_add.grd")
 
-VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg.grd")
-VR3_v_ezg <- stack("Pre_Processing/raster_files/VR3_v_21_51_ezg.tif")
-#VR3_q <- stack("Pre_Processing/rasters_stacked/VR3_2_90.grd")
+VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg_add.grd")
+VR3_v_ezg <- dropLayer(VR3_ezg, i = 2)
+#VR3_q <- stack("Pre_Processing/rasters_stacked/VR3_2_90_add.grd")
 
 # rename rasters in stacks for extraction 
-names(GL1_ezg) <- c("velocity", "wd_m")  
-names(GL1_v_ezg) <- c("velocity")
-#names(GL1_q) <- c("velocity", "wd_m") 
+names(GL1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(GL1_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(GL1_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
-names(GL2_ezg) <- c("velocity", "wd_m") 
-names(GL2_v_ezg) <- c("velocity")
-#names(GL2_q) <- c("velocity", "wd_m")
+names(GL2_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(GL2_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(GL2_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
 
-names(L2_ezg) <- c("velocity", "wd_m")
-names(L2_v_ezg) <- c("velocity")
-#names(L2_q) <- c("velocity", "wd_m")
+names(L2_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(L2_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(L2_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
 
-names(M1_ezg) <- c("velocity", "wd_m") 
-names(M1_v_ezg) <- c("velocity")
-#names(M1_q) <- c("velocity", "wd_m") 
+names(M1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(M1_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(M1_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
-names(S1_ezg) <- c("velocity", "wd_m") 
-names(S1_v_ezg) <- c("velocity")
-#names(S1_q) <- c("velocity", "wd_m")  
+names(S1_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(S1_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(S1_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")  
 
-names(S2_ezg) <- c("velocity", "wd_m")
-names(S2_v_ezg) <- c("velocity")
-#names(S2_q) <- c("velocity", "wd_m") 
+names(S2_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
+names(S2_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(S2_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
-names(TH4_ezg) <- c("velocity", "wd_m") 
-names(TH4_v_ezg) <- c("velocity")
-#names(TH4_q) <- c("velocity", "wd_m") 
+names(TH4_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(TH4_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(TH4_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
-names(VR3_ezg) <- c("velocity", "wd_m")
-names(VR3_v_ezg) <- c("velocity")
-#names(VR3_q) <- c("velocity", "wd_m") 
+names(VR3_ezg) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power")
+names(VR3_v_ezg) <- c("velocity", "froude", "shear_stress", "stream_power")
+#names(VR3_q) <- c("velocity", "wd_m", "froude", "shear_stress", "stream_power") 
 
 # assign coordinate system 
 crs(GL1_ezg) <- "EPSG: 2056"
