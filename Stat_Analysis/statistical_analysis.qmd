@@ -333,77 +333,68 @@ par(mfrow=c(2, 2))
 
 ### BRT normal ### -----------------------------------------------------------
 ### Predictor Velocity ###
-plot(regr_v_brt_k) # ok 
-plot(regr_v_brt_s) # Residuen evt. nicht normalverteilt 
-plot(regr_v_brt_a) # Residuen evt. nicht normalverteilt, Linearität fraglich (umgekehrte Trichterform)
-plot(regr_v_brt_ra) # Residuen evt. nicht normalverteilt, Linearität fraglich (umgekehrte Trichterform)
+plot(regr_v_brt_k) # Linearität ok; Residuen ok 
+plot(regr_v_brt_s) # Linearität ok; Residuen evt. nicht normalverteilt 
+plot(regr_v_brt_a) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen evt. nicht normalverteilt
+plot(regr_v_brt_ra) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen evt. nicht normalverteilt
 
 ### Predictor V + WD ###
-plot(regr_wd_brt_k)
-plot(regr_wd_brt_s)
-plot(regr_wd_brt_a)
-plot(regr_wd_brt_ra)
+plot(regr_wd_brt_k) # Linearität ok; Residuen evt. nicht normalverteilt
+plot(regr_wd_brt_s) # Linearität ok; Residuen evt. nicht normalverteilt
+plot(regr_wd_brt_a) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen nicht normalverteilt
+plot(regr_wd_brt_ra) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen nicht normalverteilt
 
 ### BRT add ### ---------------------------------------------------------------
 ### Predictor Velocity ###
-plot(regr_v_brt_k_add)
-plot(regr_v_brt_s_add)
-plot(regr_v_brt_a_add)
-plot(regr_v_brt_ra_add)
+plot(regr_v_brt_k_add) # Linearität ok; Residuen ok
+plot(regr_v_brt_s_add) # Linearität nicht gegeben (leichte Bananenform); Residuen nicht normalverteilt
+plot(regr_v_brt_a_add) # Linearität ok; Residuen normalverteilt
+plot(regr_v_brt_ra_add) # Linearität ok; Residuen normalverteilt 
 
 ### Predictor V + WD ###
-plot(regr_wd_brt_k_add)
-plot(regr_wd_brt_s_add)
-plot(regr_wd_brt_a_add)
-plot(regr_wd_brt_ra_add)
+plot(regr_wd_brt_k_add) # Linearität ok; Residuen nicht normalverteilt
+plot(regr_wd_brt_s_add) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_wd_brt_a_add) # Linearität ok; Residuen normalverteilt
+plot(regr_wd_brt_ra_add) # Linearität nicht gegeben (umgekehrte Trichterform); Residen normalverteilt 
 
 ### RF normal ### ---------------------------------------------------------------
 ### Predictor Velocity ###
-plot(regr_v_rf_k)
-plot(regr_v_rf_s)
-plot(regr_v_rf_a)
-plot(regr_v_rf_ra)
+plot(regr_v_rf_k) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_v_rf_s) # Linearität ok; Residuen nicht normalverteilt
+plot(regr_v_rf_a) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_v_rf_ra) # Linearität ok; Residuen nicht normalverteilt 
 
 ### Predictor V + WD ###
-plot(regr_wd_rf_k)
-plot(regr_wd_rf_s)
-plot(regr_wd_rf_a)
-plot(regr_wd_rf_ra)
+plot(regr_wd_rf_k) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_wd_rf_s) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_wd_rf_a) # Linearität ok; Residuen normalverteilt 
+plot(regr_wd_rf_ra) # Linearität ok; Residuen normalverteilt 
 
 ### RF add ### ---------------------------------------------------------------
 ### Predictor Velocity ###
-plot(regr_v_rf_k_add)
-plot(regr_v_rf_s_add)
-plot(regr_v_rf_a_add)
-plot(regr_v_rf_ra_add)
+plot(regr_v_rf_k_add) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_v_rf_s_add) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_v_rf_a_add) # Linearität ok; Residuen nicht normalverteilt
+plot(regr_v_rf_ra_add) # Linearität ok; Residuen normalverteilt
 
 ### Predictor V + WD ###
-plot(regr_wd_rf_k_add)
-plot(regr_wd_rf_s_add)
-plot(regr_wd_rf_a_add)
-plot(regr_wd_rf_ra_add)
+plot(regr_wd_rf_k_add) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_wd_rf_s_add) # Linearität ok; Residuen nicht normalverteilt 
+plot(regr_wd_rf_a_add) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen normalverteilt 
+plot(regr_wd_rf_ra_add) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen nicht normalverteilt 
 
 ### HSC model ### ---------------------------------------------------------------
 ### Predictor FOEN class ###
-plot(regr_foen_class_k)
-plot(regr_foen_class_s)
-plot(regr_foen_class_a)
-plot(regr_foen_class_ra)
+plot(regr_foen_class_k) # Linearität nicht gegeben (Bananenform); Residuen nicht normalverteilt
+plot(regr_foen_class_s) # Linearität nicht gegeben; Residuen nicht normalverteilt
+plot(regr_foen_class_a) # Linearität nicht gegeben; Residuen nicht normalverteilt
+plot(regr_foen_class_ra) # Linearität nicht gegeben; Residuen nicht normalverteilt
 
 ### Predictor FOEN HSI ###
-plot(regr_foen_hsi_k)
-plot(regr_foen_hsi_s)
-plot(regr_foen_hsi_a)
-plot(regr_foen_hsi_ra)
-
-plot(regr_v) # OK
-plot(regr_wd) # Residuen nicht normalverteilt, sonst OK
-plot(regr_f) # OK
-plot(regr_s) # Residien nicht normalverteilt, Linearität fraglich
-plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
-
-# Normalverteilung Residuen starke abweichung 
-# Linearität nicht gegeben aufgrund Bananenform oben links
+plot(regr_foen_hsi_k) # Linearität nicht gegeben; Residuen nicht normalverteilt
+plot(regr_foen_hsi_s) # Linearität nicht gegeben; Residuen nicht normalverteilt
+plot(regr_foen_hsi_a) # Linearität nicht gegeben; Residuen nicht normalverteilt
+plot(regr_foen_hsi_ra) # Linearität nicht gegeben; Residuen nicht normalverteilt
 ```
 
 # Plots
@@ -413,8 +404,8 @@ plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
 # with k_index as response ----------------------------------------------------
 p_brt_k <- ggplot(brt, aes(obs_k_index, m2_k_index_v)) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 1.0) +
   xlim(0, 1.0) + 
@@ -429,8 +420,8 @@ p_brt_k <- ggplot(brt, aes(obs_k_index, m2_k_index_v)) +
 p_brt_wrap_k <- ggplot(brt, aes(obs_k_index, m2_k_index_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 1.0) +
   xlim(0, 1.0) + 
@@ -439,18 +430,20 @@ p_brt_wrap_k <- ggplot(brt, aes(obs_k_index, m2_k_index_v)) +
     y = "K-Index Predicted"
   ) +
   theme_minimal() +
-  theme(axis.text = element_text(size=10),
-        axis.title = element_text(size=12))
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_k.png", plot = p_brt_k, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k.png", plot = p_brt_wrap_k, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k.png", plot = p_brt_wrap_k, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
 p_brt_s <- ggplot(brt, aes(obs_shannon, m2_shannon_v)) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 5.0) +
   xlim(0, 5.0) + 
@@ -465,8 +458,8 @@ p_brt_s <- ggplot(brt, aes(obs_shannon, m2_shannon_v)) +
 p_brt_wrap_s <- ggplot(brt, aes(obs_shannon, m2_shannon_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 5.0) +
   xlim(0, 5.0) + 
@@ -475,18 +468,20 @@ p_brt_wrap_s <- ggplot(brt, aes(obs_shannon, m2_shannon_v)) +
     y = "Shannon Index Predicted"
   ) +
   theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_s.png", plot = p_brt_s, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s.png", plot = p_brt_wrap_s, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s.png", plot = p_brt_wrap_s, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
 p_brt_a <- ggplot(brt, aes(obs_abundance, m2_abundance_v)) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 3772) +
   xlim(0, 3772) + 
@@ -501,8 +496,8 @@ p_brt_a <- ggplot(brt, aes(obs_abundance, m2_abundance_v)) +
 p_brt_wrap_a <- ggplot(brt, aes(obs_abundance, m2_abundance_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 3772) +
   xlim(0, 3772) + 
@@ -511,18 +506,20 @@ p_brt_wrap_a <- ggplot(brt, aes(obs_abundance, m2_abundance_v)) +
     y = "Absolute Abundance Predicted"
   ) +
   theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_a.png", plot = p_brt_a, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a.png", plot = p_brt_wrap_a, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a.png", plot = p_brt_wrap_a, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
 p_brt_ra <- ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_v)) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 1.0) +
   xlim(0, 1.0) + 
@@ -537,8 +534,8 @@ p_brt_ra <- ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_v)) +
 p_brt_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 1.0) +
   xlim(0, 1.0) + 
@@ -547,12 +544,14 @@ p_brt_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_v)) +
     y = "Relative Abundance Predicted"
   ) +
   theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_ra.png", plot = p_brt_ra, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra.png", plot = p_brt_wrap_ra, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra.png", plot = p_brt_wrap_ra, width = 8, height = 8)
 ```
 
 ### Predictor: V + WD
@@ -560,8 +559,8 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra.png", plot = p_brt_wrap_ra, wi
 # with k_index as response-----------------------------------------------------
 p_brt_wd_k <- ggplot(brt, aes(obs_k_index, m2_k_index_wd)) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 1.0) +
   xlim(0, 1.0) + 
@@ -576,8 +575,8 @@ p_brt_wd_k <- ggplot(brt, aes(obs_k_index, m2_k_index_wd)) +
 p_brt_wd_wrap_k <- ggplot(brt, aes(obs_k_index, m2_k_index_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 1.0) +
   xlim(0, 1.0) + 
@@ -586,18 +585,20 @@ p_brt_wd_wrap_k <- ggplot(brt, aes(obs_k_index, m2_k_index_wd)) +
     y = "K-Index Predicted"
   ) +
   theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_wd_k.png", plot = p_brt_wd_k, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_k.png", plot = p_brt_wd_wrap_k, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_k.png", plot = p_brt_wd_wrap_k, width = 8, height = 8)
 
 # with shannon index as response ---------------------------------------------
 p_brt_wd_s <- ggplot(brt, aes(obs_shannon, m2_shannon_wd)) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 5.0) +
   xlim(0, 5.0) + 
@@ -613,8 +614,305 @@ p_brt_wd_s <- ggplot(brt, aes(obs_shannon, m2_shannon_wd)) +
 p_brt_wd_wrap_s <- ggplot(brt, aes(obs_shannon, m2_shannon_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline(slope = 1, intercept = 0, col = "blue") +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, col = "red") +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_s.png", plot = p_brt_wd_s, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_s.png", plot = p_brt_wd_wrap_s, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_brt_wd_a <- ggplot(brt, aes(obs_abundance, m2_abundance_wd)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+  
+p_brt_wd_wrap_a <- ggplot(brt, aes(obs_abundance, m2_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_a.png", plot = p_brt_wd_a, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_a.png", plot = p_brt_wd_wrap_a, width = 8, height = 8)
+
+# with relative abundance as response ----------------------------------------
+p_brt_wd_ra <- ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+  
+p_brt_wd_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_ra.png", plot = p_brt_wd_ra, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_ra.png", plot = p_brt_wd_wrap_ra, width = 8, height = 8)
+```
+
+## BRT added 
+### Predictor: Velocity + add
+```{r}
+# with k_index as response ----------------------------------------------------
+p_brt_k_add <- ggplot(brt_add, aes(obs_k_index, m2_k_index_v)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_brt_wrap_k_add <- ggplot(brt_add, aes(obs_k_index, m2_k_index_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_k_add.png", plot = p_brt_k_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k_add.png", plot = p_brt_wrap_k_add, width = 8, height = 8)
+
+# with shannon index as response ----------------------------------------------
+p_brt_s_add <- ggplot(brt_add, aes(obs_shannon, m2_shannon_v)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+  
+p_brt_wrap_s_add <- ggplot(brt_add, aes(obs_shannon, m2_shannon_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_s_add.png", plot = p_brt_s_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s_add.png", plot = p_brt_wrap_s_add, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_brt_a_add <- ggplot(brt_add, aes(obs_abundance, m2_abundance_v)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_brt_wrap_a_add <- ggplot(brt_add, aes(obs_abundance, m2_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_a_add.png", plot = p_brt_a_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a_add.png", plot = p_brt_wrap_a_add, width = 8, height = 8)
+
+# with relative abundance as response -----------------------------------------
+p_brt_ra_add <- ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_brt_wrap_ra_add <- ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_ra_add.png", plot = p_brt_ra_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra_add.png", plot = p_brt_wrap_ra_add, width = 8, height = 8)
+```
+
+### Predictor: V + WD + add
+```{r}
+# with k_index as response-----------------------------------------------------
+p_brt_wd_k_add <- ggplot(brt_add, aes(obs_k_index, m2_k_index_wd)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
+p_brt_wd_wrap_k_add <- ggplot(brt_add, aes(obs_k_index, m2_k_index_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_k_add.png", plot = p_brt_wd_k_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_k_add.png", plot = p_brt_wd_wrap_k_add, width = 8, height = 8)
+
+# with shannon index as response ---------------------------------------------
+p_brt_wd_s_add <- ggplot(brt_add, aes(obs_shannon, m2_shannon_wd)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
   theme_minimal() +
   ylim(0, 5.0) +
   xlim(0, 5.0) + 
@@ -626,465 +924,1044 @@ p_brt_wd_wrap_s <- ggplot(brt, aes(obs_shannon, m2_shannon_wd)) +
   theme(axis.text = element_text(size=12),
         axis.title = element_text(size=14))
 
+  
+p_brt_wd_wrap_s_add <- ggplot(brt_add, aes(obs_shannon, m2_shannon_wd)) +
+  facet_wrap(~Reach_Untersuchungsstelle) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_wd_s.png", plot = p_brt_wd_s, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_s.png", plot = p_brt_wd_wrap_s, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_s_add.png", plot = p_brt_wd_s_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_s_add.png", plot = p_brt_wd_wrap_s_add, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-ggplot(brt, aes(obs_abundance, m2_abundance_wd)) +
+p_brt_wd_a_add <- ggplot(brt_add, aes(obs_abundance, m2_abundance_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(brt, aes(obs_abundance, m2_abundance_wd)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-# with relative abundance as response 
-ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-ggplot(brt, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-```
-
-## BRT added 
-### Predictor: Velocity + add
-```{r}
-# with k_index as response 
-ggplot(brt_add, aes(obs_k_index, m2_k_index_v)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
-
-ggplot(brt_add, aes(obs_k_index, m2_k_index_v)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-# with k_index as response 
-ggplot(brt_add, aes(obs_shannon, m2_shannon_v)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
   
-ggplot(brt_add, aes(obs_shannon, m2_shannon_v)) +
+p_brt_wd_wrap_a_add <- ggplot(brt_add, aes(obs_abundance, m2_abundance_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(brt_add, aes(obs_abundance, m2_abundance_v)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_a_add.png", plot = p_brt_wd_a_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_a_add.png", plot = p_brt_wd_wrap_a_add, width = 8, height = 8)
 
-ggplot(brt_add, aes(obs_abundance, m2_abundance_v)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
+# with relative abundance as response ----------------------------------------
+p_brt_wd_ra_add <- ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-# with relative abundance as response 
-ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-```
-
-### Predictor: V + WD + add
-```{r}
-# with k_index as response 
-ggplot(brt_add, aes(obs_k_index, m2_k_index_wd)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
-
-ggplot(brt_add, aes(obs_k_index, m2_k_index_wd)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-# with k_index as response 
-ggplot(brt_add, aes(obs_shannon, m2_shannon_wd)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
   
-ggplot(brt_add, aes(obs_shannon, m2_shannon_wd)) +
+p_brt_wd_wrap_ra_add <- ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(brt_add, aes(obs_abundance, m2_abundance_wd)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-ggplot(brt_add, aes(obs_abundance, m2_abundance_wd)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-# with relative abundance as response 
-ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
-
-ggplot(brt_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_ra_add.png", plot = p_brt_wd_ra_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_ra_add.png", plot = p_brt_wd_wrap_ra_add, width = 8, height = 8)
 ```
 
 ## RF normal 
 ### Predictor: Velocity
 ```{r}
-# with k_index as response 
-ggplot(rf, aes(obs_k_index, m2_k_index_v)) +
+# with k_index as response ----------------------------------------------------
+p_rf_k <- ggplot(rf, aes(obs_k_index, m2_k_index_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf, aes(obs_k_index, m2_k_index_v)) +
+p_rf_wrap_k <- ggplot(rf, aes(obs_k_index, m2_k_index_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
-#ggsave("Stat_Analysis/regr_plots/pdp_ga_sec_ra_brt_add.png", plot = p_ga_sec_ra_brt_add, width = 6, height = 5)
-#ggsave("ML_model/plots/pdp_ga_sec_ra_c_brt_add.png", plot = p_ga_sec_ra_c_brt_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_k.png", plot = p_rf_k, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k.png", plot = p_rf_wrap_k, width = 8, height = 8)
 
-# with k_index as response 
-ggplot(rf, aes(obs_shannon, m2_shannon_v)) +
+# with shannon index as response ----------------------------------------------
+p_rf_s <- ggplot(rf, aes(obs_shannon, m2_shannon_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
   
-ggplot(rf, aes(obs_shannon, m2_shannon_v)) +
+p_rf_wrap_s <- ggplot(rf, aes(obs_shannon, m2_shannon_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(rf, aes(obs_abundance, m2_abundance_v)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_s.png", plot = p_rf_s, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s.png", plot = p_rf_wrap_s, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_rf_a <- ggplot(rf, aes(obs_abundance, m2_abundance_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf, aes(obs_abundance, m2_abundance_v)) +
+p_rf_wrap_a <- ggplot(rf, aes(obs_abundance, m2_abundance_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with relative abundance as response 
-ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_a.png", plot = p_rf_a, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a.png", plot = p_rf_wrap_a, width = 8, height = 8)
+
+# with relative abundance as response -----------------------------------------
+p_rf_ra <- ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+p_rf_wrap_ra <- ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_ra.png", plot = p_rf_ra, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra.png", plot = p_rf_wrap_ra, width = 8, height = 8)
 ```
 
 ### Predictor: V + WD
 ```{r}
-# with k_index as response 
-ggplot(rf, aes(obs_k_index, m2_k_index_wd)) +
+# with k_index as response-----------------------------------------------------
+p_rf_wd_k <- ggplot(rf, aes(obs_k_index, m2_k_index_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf, aes(obs_k_index, m2_k_index_wd)) +
+p_rf_wd_wrap_k <- ggplot(rf, aes(obs_k_index, m2_k_index_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with k_index as response 
-ggplot(rf, aes(obs_shannon, m2_shannon_wd)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_k.png", plot = p_rf_wd_k, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_k.png", plot = p_rf_wd_wrap_k, width = 8, height = 8)
+
+# with shannon index as response ---------------------------------------------
+p_rf_wd_s <- ggplot(rf, aes(obs_shannon, m2_shannon_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
   
-ggplot(rf, aes(obs_shannon, m2_shannon_wd)) +
+p_rf_wd_wrap_s <- ggplot(rf, aes(obs_shannon, m2_shannon_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(rf, aes(obs_abundance, m2_abundance_wd)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_s.png", plot = p_rf_wd_s, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_s.png", plot = p_rf_wd_wrap_s, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_rf_wd_a <- ggplot(rf, aes(obs_abundance, m2_abundance_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf, aes(obs_abundance, m2_abundance_wd)) +
+  
+p_rf_wd_wrap_a <- ggplot(rf, aes(obs_abundance, m2_abundance_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_a.png", plot = p_rf_wd_a, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_a.png", plot = p_rf_wd_wrap_a, width = 8, height = 8)
 
-# with relative abundance as response 
-ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+# with relative abundance as response ----------------------------------------
+p_rf_wd_ra <- ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  
+p_rf_wd_wrap_ra <- ggplot(rf, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_ra.png", plot = p_rf_wd_ra, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_ra.png", plot = p_rf_wd_wrap_ra, width = 8, height = 8)
 ```
 
 ## RF added 
 ### Predictor: Velocity + add
 ```{r}
-# with k_index as response 
-ggplot(rf_add, aes(obs_k_index, m2_k_index_v)) +
+# with k_index as response ----------------------------------------------------
+p_rf_k_add <- ggplot(rf_add, aes(obs_k_index, m2_k_index_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf_add, aes(obs_k_index, m2_k_index_v)) +
+p_rf_wrap_k_add <- ggplot(rf_add, aes(obs_k_index, m2_k_index_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
-#ggsave("Stat_Analysis/regr_plots/pdp_ga_sec_ra_brt_add.png", plot = p_ga_sec_ra_brt_add, width = 6, height = 5)
-#ggsave("ML_model/plots/pdp_ga_sec_ra_c_brt_add.png", plot = p_ga_sec_ra_c_brt_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_k_add.png", plot = p_rf_k_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k_add.png", plot = p_rf_wrap_k_add, width = 8, height = 8)
 
-# with k_index as response 
-ggplot(rf_add, aes(obs_shannon, m2_shannon_v)) +
+# with shannon index as response ----------------------------------------------
+p_rf_s_add <- ggplot(rf_add, aes(obs_shannon, m2_shannon_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
   
-ggplot(rf_add, aes(obs_shannon, m2_shannon_v)) +
+p_rf_wrap_s_add <- ggplot(rf_add, aes(obs_shannon, m2_shannon_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(rf_add, aes(obs_abundance, m2_abundance_v)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_s_add.png", plot = p_rf_s_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s_add.png", plot = p_rf_wrap_s_add, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_rf_a_add <- ggplot(rf_add, aes(obs_abundance, m2_abundance_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf_add, aes(obs_abundance, m2_abundance_v)) +
+p_rf_wrap_a_add <- ggplot(rf_add, aes(obs_abundance, m2_abundance_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with relative abundance as response 
-ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_a_add.png", plot = p_rf_a_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a_add.png", plot = p_rf_wrap_a_add, width = 8, height = 8)
+
+# with relative abundance as response -----------------------------------------
+p_rf_ra_add <- ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
+p_rf_wrap_ra_add <- ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_v)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_ra_add.png", plot = p_rf_ra_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra_add.png", plot = p_rf_wrap_ra_add, width = 8, height = 8)
 ```
 
 ### Predictor: V + WD + add
 ```{r}
-# with k_index as response 
-ggplot(rf_add, aes(obs_k_index, m2_k_index_wd)) +
+# with k_index as response-----------------------------------------------------
+p_rf_wd_k_add <- ggplot(rf_add, aes(obs_k_index, m2_k_index_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf_add, aes(obs_k_index, m2_k_index_wd)) +
+p_rf_wd_wrap_k_add <- ggplot(rf_add, aes(obs_k_index, m2_k_index_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with k_index as response 
-ggplot(rf_add, aes(obs_shannon, m2_shannon_wd)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_k_add.png", plot = p_rf_wd_k_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_k_add.png", plot = p_rf_wd_wrap_k_add, width = 8, height = 8)
+
+# with shannon index as response ---------------------------------------------
+p_rf_wd_s_add <- ggplot(rf_add, aes(obs_shannon, m2_shannon_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
+
   
-ggplot(rf_add, aes(obs_shannon, m2_shannon_wd)) +
+p_rf_wd_wrap_s_add <- ggplot(rf_add, aes(obs_shannon, m2_shannon_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(rf_add, aes(obs_abundance, m2_abundance_wd)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_s_add.png", plot = p_rf_wd_s_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_s_add.png", plot = p_rf_wd_wrap_s_add, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_rf_wd_a_add <- ggplot(rf_add, aes(obs_abundance, m2_abundance_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf_add, aes(obs_abundance, m2_abundance_wd)) +
+  
+p_rf_wd_wrap_a_add <- ggplot(rf_add, aes(obs_abundance, m2_abundance_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 3772) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "Absolute Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with relative abundance as response 
-ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_a_add.png", plot = p_rf_wd_a_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_a_add.png", plot = p_rf_wd_wrap_a_add, width = 8, height = 8)
+
+# with relative abundance as response ----------------------------------------
+p_rf_wd_ra_add <- ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
+  
+p_rf_wd_wrap_ra_add <- ggplot(rf_add, aes(obs_rel_abundance, m2_rel_abundance_wd)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "Relative Abundance Predicted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_ra_add.png", plot = p_rf_wd_ra_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wd_wrap_ra_add.png", plot = p_rf_wd_wrap_ra_add, width = 8, height = 8)
 ```
 
 ## HSC 
 ### Predictor: FOEN class
 ```{r}
-# with k_index as response 
-ggplot(hsc, aes(k_index, foen_class)) +
+# with k_index as response ----------------------------------------------------
+p_class_k <- ggplot(hsc, aes(k_index, foen_class)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
+  geom_abline(slope = 5/1.0, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(hsc, aes(k_index, foen_class)) +
+p_class_wrap_k <- ggplot(hsc, aes(k_index, foen_class)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 5/1.0, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
 # save the plots 
-#ggsave("Stat_Analysis/regr_plots/pdp_ga_sec_ra_brt_add.png", plot = p_ga_sec_ra_brt_add, width = 6, height = 5)
-#ggsave("ML_model/plots/pdp_ga_sec_ra_c_brt_add.png", plot = p_ga_sec_ra_c_brt_add, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_class_k.png", plot = p_class_k, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_class_wrap_k.png", plot = p_class_wrap_k, width = 8, height = 8)
 
-# with shannon index as response 
-ggplot(hsc, aes(shannon, foen_class)) +
+# with shannon index as response ----------------------------------------------
+p_class_s <- ggplot(hsc, aes(shannon, foen_class)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
   
-ggplot(hsc, aes(shannon, foen_class)) +
+p_class_wrap_s <- ggplot(hsc, aes(shannon, foen_class)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(hsc, aes(abundance, foen_class)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_class_s.png", plot = p_class_s, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_class_wrap_s.png", plot = p_class_wrap_s, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_class_a <- ggplot(hsc, aes(abundance, foen_class)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 5/3772, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(hsc, aes(abundance, foen_class)) +
+p_class_wrap_a <- ggplot(hsc, aes(abundance, foen_class)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 5/3772, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with relative abundance as response 
-ggplot(hsc, aes(rel_abundance, foen_class)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_class_a.png", plot = p_class_a, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_class_wrap_a.png", plot = p_class_wrap_a, width = 8, height = 8)
+
+# with relative abundance as response -----------------------------------------
+p_class_ra <- ggplot(hsc, aes(rel_abundance, foen_class)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 5/1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(hsc, aes(rel_abundance, foen_class)) +
+p_class_wrap_ra <- ggplot(hsc, aes(rel_abundance, foen_class)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 5/1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "FOEN Class"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_class_ra.png", plot = p_class_ra, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_class_wrap_ra.png", plot = p_class_wrap_ra, width = 8, height = 8)
 ```
 
 ### Predictor: FOEN HSI
 ```{r}
-# with k_index as response 
-ggplot(hsc, aes(k_index, foen_hsi)) +
+# with k_index as response ----------------------------------------------------
+p_hsi_k <- ggplot(hsc, aes(k_index, foen_hsi)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() 
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(hsc, aes(k_index, foen_hsi)) +
+p_hsi_wrap_k <- ggplot(hsc, aes(k_index, foen_hsi)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with shannon index as response 
-ggplot(hsc, aes(shannon, foen_hsi)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_hsi_k.png", plot = p_hsi_k, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_k.png", plot = p_hsi_wrap_k, width = 8, height = 8)
+
+# with shannon index as response ----------------------------------------------
+p_hsi_s <- ggplot(hsc, aes(shannon, foen_hsi)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1/5, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
   
-ggplot(hsc, aes(shannon, foen_hsi)) +
+p_hsi_wrap_s <- ggplot(hsc, aes(shannon, foen_hsi)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1/5, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with abundance as response 
-ggplot(hsc, aes(abundance, foen_hsi)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_hsi_s.png", plot = p_hsi_s, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_s.png", plot = p_hsi_wrap_s, width = 8, height = 8)
+
+# with abundance as response --------------------------------------------------
+p_hsi_a <- ggplot(hsc, aes(abundance, foen_hsi)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1/3772, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(hsc, aes(abundance, foen_hsi)) +
+p_hsi_wrap_a <- ggplot(hsc, aes(abundance, foen_hsi)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1/3772, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 3772) + 
+  labs(
+    x = "Absolute Abundance Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
 
-# with relative abundance as response 
-ggplot(hsc, aes(rel_abundance, foen_hsi)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_hsi_a.png", plot = p_hsi_a, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_a.png", plot = p_hsi_wrap_a, width = 8, height = 8)
+
+# with relative abundance as response -----------------------------------------
+p_hsi_ra <- ggplot(hsc, aes(rel_abundance, foen_hsi)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(hsc, aes(rel_abundance, foen_hsi)) +
+p_hsi_wrap_ra <- ggplot(hsc, aes(rel_abundance, foen_hsi)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Relative Abundance Observed",
+    y = "FOEN HSI"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=8),
+        axis.title = element_text(size=12),
+        strip.text.x = element_text(
+        size = 12))
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_hsi_ra.png", plot = p_hsi_ra, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_ra.png", plot = p_hsi_wrap_ra, width = 8, height = 8)
 ```
 
 # Create dataframe
@@ -1123,10 +2000,9 @@ write.csv(results_hdm, "Stat_Analysis/results_regr_analysis.csv", row.names = FA
 
 
 ```{r}
-sorted_data <- selected_rows[order(selected_rows$lm_p_value), ]
-
 # Select rows where values in the "Age" column are below the threshold
 selected_rows <- results_hdm[results_hdm$lm_p_value < 0.05, ]
+sorted_data <- selected_rows[order(selected_rows$lm_p_value), ]
 ```
 
 
