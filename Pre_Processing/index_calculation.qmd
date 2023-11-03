@@ -156,7 +156,6 @@ write_xlsx(lab_ml_model_v,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_v.xlsx")
 write_xlsx(lab_ml_model_wd_v,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_wd_v.xlsx") 
 ```
 
-  dplyr::select(Date_of_survey.x, Time_of_survey, Reach_Untersuchungsstelle, `Flow_velocity_v60_cm/s`, Water_depth_cm, x, y, z, `DIstance_Wasseranschlaglinie_m`, `Category_Flow_velocity_5_Bewohnbarkeits-klasse`, Clogging_3_Klassen, Clogging_6_Klassen, Substrate_type, `Algae_cover_Bewuchsdichte_5_Kategorien_1-5`, `Moos_cover_Deckungsgrad_6_Kategorien_0-5`, `CPOM_cover_Deckungsgrad_5_Kategorien_1-5`, shannon, abundance, k_index, rel_abundance) |>
 ```{r}
 # df with all environmental variables measured at each sampling location 
 lab_ml_model_sampling <- lab_new |>
@@ -190,7 +189,7 @@ lab_temp <- lab_new[ ,c("Temperature_C_before", "Temperature_C_during", "Tempera
 lab_new$Turbidity_FNU_after <- as.numeric(gsub(">", "", lab_new$Turbidity_FNU_after))
 lab_turb <- lab_new[ ,c("Turbidity_FNU_before", "Turbidity_FNU_during", "Turbidity_FNU_after")]
 
-lab_ox_sat <- lab_new[ ,c("Oxygen_saturation_%_before", "Oxygen_saturation_%_during", "Oxygen_saturation_%_after")]
+lab_ox_sat <- lab_new[ ,c("Oxygen_saturation_perc_before", "Oxygen_saturation_perc_during", "Oxygen_saturation_perc_after")]
 
 lab_ox_cont <- lab_new[ ,c("Oxygen_content_mg_l_before", "Oxygen_content_mg_l_during", "Oxygen_content_mg_l_after")]
 
@@ -224,9 +223,9 @@ lab_ml_model_section <- lab_new |>
          ox_before = Oxygen_content_mg_l_before,
          ox_during = Oxygen_content_mg_l_during,
          ox_after = Oxygen_content_mg_l_after, 
-         ox_sat_before = `Oxygen_saturation_%_before`,
-         ox_sat_during = `Oxygen_saturation_%_during`,
-         ox_sat_after = `Oxygen_saturation_%_after`,
+         ox_sat_before = `Oxygen_saturation_perc_before`,
+         ox_sat_during = `Oxygen_saturation_perc_during`,
+         ox_sat_after = `Oxygen_saturation_perc_after`,
          gaug_before = Water_gauge_MueM_before,
          gaug_during = Water_gauge_MueM_during,
          gaug_after = Water_gauge_MueM_after,

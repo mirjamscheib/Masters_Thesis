@@ -32,93 +32,14 @@ pkgCheck("writexl")
 abiotic <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/Abiotic_2022_2023_FINAL.csv")
 
 # corrected coordinate data
-abiotic_corr <- read.delim("Pre_Processing/abiotic_mi_sampling/Abiotic_MI_Field_corr.txt", header = FALSE) |>
-  dplyr::rename(join_key = V1,
-                x = V2,
-                y = V3,
-                z = V4)
-
-# coordinate data from every location 
-# Glenner 
-gl1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/GL1.csv", col_names = FALSE)
-gl2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/GL2.csv", col_names = FALSE)
-gl3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/GL3.csv", col_names = FALSE)
-gl4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/GL4.csv", col_names = FALSE)
-gl5 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/GL5.csv", col_names = FALSE)
-gl6 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/GL6.csv", col_names = FALSE)
-
-# Landquart
-l1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/L1.csv", col_names = FALSE)
-l2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/L2.csv", col_names = FALSE)
-l3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/L3.csv", col_names = FALSE)
-l4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/L4.csv", col_names = FALSE)
-lr <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/LR.csv", col_names = FALSE)
-
-# Moesa 
-m1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/M1.csv", col_names = FALSE)
-m2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/M2.csv", col_names = FALSE)
-m3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/M3.csv", col_names = FALSE)
-m4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/M4.csv", col_names = FALSE)
-m5 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/M5.csv", col_names = FALSE)
-m6 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/M6.csv", col_names = FALSE)
-m7 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/M7.csv", col_names = FALSE)
-mr <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/MR.csv", col_names = FALSE)
-
-# Plessur
-p1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/P1.csv", col_names = FALSE)
-p2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/P2.csv", col_names = FALSE)
-p3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/P3.csv", col_names = FALSE)
-pr <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/PR.csv", col_names = FALSE)
-
-# Sitter
-s1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/S1.csv", col_names = FALSE)
-s2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/S2.csv", col_names = FALSE)
-s3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/S3.csv", col_names = FALSE)
-s4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/S4.csv", col_names = FALSE)
-s5 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/S5.csv", col_names = FALSE)
-s6 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/S6.csv", col_names = FALSE)
-
-# Saane 
-sa1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SA1.csv", col_names = FALSE)
-sa2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SA2.csv", col_names = FALSE)
-sa3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SA3.csv", col_names = FALSE)
-sa4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SA4.csv", col_names = FALSE)
-sa5 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SA5.csv", col_names = FALSE)
-sa6 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SA6.csv", col_names = FALSE)
-sa7 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SA7.csv", col_names = FALSE)
-sar <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SAR.csv", col_names = FALSE)
-
-# Sense/Singine 
-se1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SE1.csv", col_names = FALSE)
-se2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SE2-new.csv", col_names = FALSE)
-se3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SE3-NEW.csv", col_names = FALSE)
-se4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SE4.csv", col_names = FALSE)
-sr <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/SR.csv", col_names = FALSE)
-
-# Ticino 
-t1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/T1.csv", col_names = FALSE)
-t2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/T2.csv", col_names = FALSE)
-t3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/T3.csv", col_names = FALSE)
-
-# Thur 
-th1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/th1.csv", col_names = FALSE)
-th2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/th2.csv", col_names = FALSE)
-th3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/TH3-NEW.csv", col_names = FALSE)
-th4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/TH4-NEW.csv", col_names = FALSE)
-th5 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/th5.csv", col_names = FALSE)
-
-# Verzasca
-ve2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VE2.csv", col_names = FALSE)
-ve3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VE3.csv", col_names = FALSE)
-ve4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VE4b.csv", col_names = FALSE)
-
-# Vorderrhein 
-vr1 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VR1.csv", col_names = FALSE)
-vr2 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VR2.csv", col_names = FALSE)
-vr3 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VR3.csv", col_names = FALSE)
-vr4 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VR4.csv", col_names = FALSE)
-vr5 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VR5.csv", col_names = FALSE)
-vr6 <- readr::read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/VR6.csv", col_names = FALSE)
+corr_coord <- read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/Abiotic_MI_Field_corr.txt", col_names = FALSE) |>
+  dplyr::rename(join_key = X1,
+                x = X2,
+                y = X3,
+                z = X4) |>
+  mutate(x = as.numeric(x),
+         y = as.numeric(y),
+         z = as.numeric(z))
 ```
 
 # Create Join Key
@@ -141,25 +62,18 @@ abiotic1 <- abiotic1 |>
 ```
 
 ### Abiotic2
-abiotic2_sum <- abiotic2 |>
-  group_by(River, Reach_Untersuchungsstelle, Abiotic_measured_by, Date_of_survey, Gauging_station) |>
- summarise() |>
-  na.omit()
 ```{r}
 # cut abiotic data into two datasets - the two different tables which are in the original excel file 
 abiotic2 <- abiotic[c(1:162) ,c(25:39)]
 
 # label header into R friendly characters 
-colnames(abiotic2) <- c("River", "reach", "Abiotic_measured_by", "Date_of_survey", "Time_of_survey", "pH", "Conductivity_ys_s", "Oxygen_content_mg_l", "Oxygen_saturation_%", "Turbidity_FNU", "Temperature_C", "Discharge_m3_s", "Water_gauge_MueM", "Gauging_station", "Varia")
+colnames(abiotic2) <- c("River", "reach", "Abiotic_measured_by", "Date_of_survey", "Time_of_survey", "pH", "Conductivity_ys_s", "Oxygen_content_mg_l", "Oxygen_saturation_perc", "Turbidity_FNU", "Temperature_C", "Discharge_m3_s", "Water_gauge_MueM", "Gauging_station", "Varia")
 
 # group and sum variables, which can be grouped  
 abiotic2_sum <- abiotic2 |>
   dplyr::select(River, reach, Abiotic_measured_by, Date_of_survey, Gauging_station)
 
 # Reshaping the data into three columns
-#abiotic2$time_new <- abiotic2 |>
-#  dplyr::select(Time_of_survey, Reach_Untersuchungsstelle)
-
 num_rows <- length(abiotic2$Time_of_survey) / 3 
 
 # Extracting every third value
@@ -188,9 +102,9 @@ oxy_content <- cbind(oxy_content, pH_reach)
 colnames(oxy_content) <- c("Oxygen_content_mg_l_before", "Oxygen_content_mg_l_during", "Oxygen_content_mg_l_after", "reach")
 oxy_content <- na.omit(oxy_content)
 
-oxy_sat <- as.data.frame(matrix(unlist(abiotic2$`Oxygen_saturation_%`, use.names=FALSE),ncol=3, byrow=TRUE))
+oxy_sat <- as.data.frame(matrix(unlist(abiotic2$`Oxygen_saturation_perc`, use.names=FALSE),ncol=3, byrow=TRUE))
 oxy_sat <- cbind(oxy_sat, pH_reach)
-colnames(oxy_sat) <- c("Oxygen_saturation_%_before", "Oxygen_saturation_%_during", "Oxygen_saturation_%_after", "reach")
+colnames(oxy_sat) <- c("Oxygen_saturation_perc_before", "Oxygen_saturation_perc_during", "Oxygen_saturation_perc_after", "reach")
 oxy_sat <- oxy_sat[c(1:54), ]
 
 turbidity <- as.data.frame(matrix(unlist(abiotic2$Turbidity_FNU, use.names=FALSE),ncol=3, byrow=TRUE))
@@ -234,7 +148,17 @@ abiotic2 <- abiotic2_sum |>
 
 # bind abiotic1 with abiotic2 together
 abiotic <- abiotic1 |>
-  full_join(abiotic2, by = "reach", relationship = "many-to-many")
+  full_join(abiotic2, by = "reach", relationship = "many-to-many") 
+
+## make abiotic data containing rows information only once 
+# Identify duplicated rows
+duplicates <- duplicated(abiotic)
+
+# Keep only the rows that are not duplicated
+unique_df <- abiotic[!duplicates, ]
+
+# Reset the row names if needed
+rownames(unique_df) <- NULL
 ```
 
 ## MI Data
@@ -280,7 +204,6 @@ field1 <- field1[-1, ]
 field1 <- field1 |>
   mutate(join_key = paste(Sampling_site, Transect, Flow_range_location, sep = "-"))
 ```
-
 
 ### Lab Data
 ```{r}
@@ -336,120 +259,12 @@ lab_file <- lab_file |>
   dplyr::select(- ...1, -`BRYOZOA...8`, -`"NEMATHELMINTHES"...14`, -Hirudinea...16, -Hirudinea...21, -Oligochaeta...23, -Bivalvia...43, -Transect_Kick)
 ```
 
-## Coordinate Data 
-```{r}
-# coordinates: create the same join key "river-transect-sampling_point"
-# function for column without characters in first column
-join_key <- function(data, section){
-data |>
-  mutate(river = section,
-         transect = head(rep(1:nrow(data), each = 3), nrow(data)),
-         sampling_point = rep(c(3, 2, 1), length.out = nrow(data)),
-         join_key = paste(river, transect, sampling_point, sep = "-")) 
-}
-
-
-# create join key for coordinates
-# Glenner 
-gl1 <- join_key(gl1, "GL1")
-gl2 <- join_key(gl2, "GL2")
-gl3 <- join_key(gl3, "GL3")
-gl4 <- join_key(gl4, "GL4")
-gl5 <- join_key(gl5, "GL5")
-gl6 <- join_key(gl6, "GL6")
-gl6$X5 <- NA
-
-# Landquart
-l1 <- join_key(l1, "L1")
-l2 <- join_key(l2, "L2")
-l3 <- join_key(l3, "L3")
-l4 <- join_key(l4, "L4")
-lr <- join_key(lr, "LR")
-
-# Moesa 
-m1 <- join_key(m1, "M1")
-m2 <- join_key(m2, "M2")
-m3 <- join_key(m3, "M3")
-m4 <- join_key(m4, "M4")
-m5 <- join_key(m5, "M5")
-m6 <- join_key(m6, "M6")
-m7 <- join_key(m7, "M7")
-mr <- join_key(mr, "MR")
-
-# Plessur 
-p1 <- join_key(p1, "P1")
-p2 <- join_key(p2, "P2")
-p3 <- join_key(p3, "P3")
-pr <- join_key(pr, "PR")
-
-# Sitter
-s1 <- join_key(s1, "S1")
-s2 <- join_key(s2, "S2")
-s3 <- join_key(s3, "S3")
-s4 <- join_key(s4, "S4")
-s5 <- join_key(s5, "S5")
-s6 <- join_key(s6, "S6")
-
-# Saane 
-sa1 <- join_key(sa1, "SA1")
-sa2 <- join_key(sa2, "SA2")
-sa3 <- join_key(sa3, "SA3")
-sa4 <- join_key(sa4, "SA4")
-sa5 <- join_key(sa5, "SA5")
-sa6 <- join_key(sa6, "SA6")
-sa7 <- join_key(sa7, "SA7")
-sar <- join_key(sar, "SAR")
-
-# Sense/Singine 
-se1 <- join_key(se1, "SE1")
-se2 <- join_key(se2, "SE2")
-se3 <- join_key(se3, "SE3")
-se4 <- join_key(se4, "SE4")
-sr <- join_key(sr, "SR")
-
-# Ticino 
-t1 <- join_key(t1, "T1")
-t2 <- join_key(t2, "T2")
-t3 <- join_key(t3, "T3")
-
-# Thur 
-th1 <- join_key(th1, "TH1")
-th2 <- join_key(th2, "TH2")
-th3 <- join_key(th3, "TH3")
-th4 <- join_key(th4, "TH4")
-th5 <- join_key(th5, "TH5")
-
-# Verzasca
-ve2 <- join_key(ve2, "VE2")
-ve3 <- join_key(ve3, "VE3")
-ve4 <- join_key(ve4, "VE4")
-
-# Vorderrhein
-vr1 <- join_key(vr1, "VR1")
-vr2 <- join_key(vr2, "VR2")
-vr3 <- join_key(vr3, "VR3")
-vr4 <- join_key(vr4, "VR4") 
-vr5 <- join_key(vr5, "VR5")
-vr6 <- join_key(vr6, "VR6")
-```
-
-# Bind Coordinate DFs together
-```{r}
-# bind all coordinate dfs together  
-coordinates <- rbind(gl1, gl2, gl3, gl4, gl5, gl6, l1, l2, l3, l4, lr, m1, m2, m3, m4, m5, m6, m7, mr, p1, p2, p3, pr, s1, s2, s3, s4, s5, s6, sa1, sa2, sa3, sa4, sa5, sa6, sa7, sar, se1, se2, se3, se4, sr, t1, t2, t3, th1, th2, th3, th4, th5, ve2, ve3, ve4, vr1, vr2, vr3, vr4, vr5, vr6)
-
-# discard columns which are not needed & rename columns 
-coordinates <- coordinates |>
-  dplyr::select(-X1, -X2, -river, -transect, -sampling_point) |>
-  dplyr::rename(x = X3, y = X4, z = X5)
-```
-
 # Join Dataframes 
-## All + MZB Field 
+## Abiotic & MZB Field 
 ```{r}
 # join dataframes together  
 abiotic_field <- abiotic |>
-  full_join(coordinates, by = "join_key") |>
+  full_join(corr_coord, by = "join_key") |>
   full_join(field1, by = "join_key") 
 
 # remove unnessecary columns
@@ -460,26 +275,11 @@ abiotic_field <- abiotic_field |>
 write_xlsx(abiotic_field,"Pre_Processing\\abiotic_mi_sampling\\Abiotic_MI_Field.xlsx")
 ```
 
-## All + MZB Lab 
-```{r}
-# join dataframes together 
-abiotic_lab <- abiotic |>
-  full_join(coordinates, by = "join_key") |>
-  right_join(lab_file, by = "join_key") 
-
-# remove unnessecary columns
-abiotic_lab <- abiotic_lab |>
-  dplyr::select(-River.y, -Date_of_survey.y)
- 
-# write excel with Lab results 
-write_xlsx(abiotic_lab,"Pre_Processing\\abiotic_mi_sampling\\Abiotic_MI_Lab.xlsx")  
-```
-
-## All + MZB Lab with only Lab results 
+## Abiotic & MZB Lab 
 ```{r}
 # anordnung noch ändern und column names geben 
-abiotic_lab_model <- abiotic |>
-  full_join(coordinates, by = "join_key") |>
+abiotic_lab_model <- unique_df |>
+  full_join(corr_coord, by = "join_key") |>
   right_join(lab_file, by = "join_key")
 
 abiotic_lab_model <- abiotic_lab_model |>
