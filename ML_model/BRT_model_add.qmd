@@ -1003,7 +1003,7 @@ testx_sec_ra_c <- model.matrix(rel_abundance ~ ., data = test_sec_ra_c)
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
 #          eta nrounds max_depth subsample 
-#1: 0.01838576     922         3 0.6312782 
+#1: 0.01838576     922         3 0.6312782  
 xgb_v_k_c <- xgboost(data = data.matrix(trainx_v_k_c[ ,-1]),
                      label = as.numeric(as.character(training_v_k_c$k_index)),
                      eta = 0.01838576,
@@ -1014,170 +1014,170 @@ xgb_v_k_c <- xgboost(data = data.matrix(trainx_v_k_c[ ,-1]),
 
 # With shannon index as response
 #          eta nrounds max_depth subsample 
-#1: 0.06108969     117         4 0.6531705 
+#1: 0.02051284     842         3 0.5546174 
 xgb_v_s_c <- xgboost(data = data.matrix(trainx_v_s_c[ ,-1]),
                      label = as.numeric(as.character(training_v_s_c$shannon)),
-                     eta = 0.06108969,
-                     max_depth = 4,
-                     nrounds = 117,
-                     subsample = 0.6531705,
+                     eta = 0.02051284,
+                     max_depth = 3,
+                     nrounds = 842,
+                     subsample = 0.5546174,
                      objective = "reg:linear")
 
 # With abundance as response
 #          eta nrounds max_depth subsample 
-#1: 0.06943808     314         4 0.7209312
+#1: 0.01744147     167         5 0.7081337
 xgb_v_a_c <- xgboost(data = data.matrix(trainx_v_a_c[ ,-1]),
                      label = as.numeric(as.character(training_v_a_c$abundance)),
-                     eta = 0.06943808,
-                     max_depth = 4,
-                     nrounds = 314,
-                     subsample = 0.7209312,
+                     eta = 0.01744147,
+                     max_depth = 5,
+                     nrounds = 167,
+                     subsample = 0.7081337,
                      objective = "reg:linear")
 
 # With rel_abundance as response
 #          eta nrounds max_depth subsample 
-#1: 0.01598317     563         5 0.6270098 
+#1: 0.1571109     304         3 0.6066233 
 xgb_v_ra_c <- xgboost(data = data.matrix(trainx_v_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_v_ra_c$rel_abundance)),
-                     eta = 0.01598317,
-                     max_depth = 5,
-                     nrounds = 563,
-                     subsample = 0.6270098,
+                     eta = 0.1571109,
+                     max_depth = 3,
+                     nrounds = 304,
+                     subsample = 0.6066233,
                      objective = "reg:linear")
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
 #          eta nrounds max_depth subsample 
-#1: 0.04028586     240        10 0.5747886 
+#1: 0.01828801     322        10 0.7039692 
 xgb_wd_k_c <- xgboost(data = data.matrix(trainx_wd_k_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_k_c$k_index)),
-                     eta = 0.04028586,
+                     eta = 0.01828801,
                      max_depth = 10,
-                     nrounds = 240,
-                     subsample = 0.5747886,
+                     nrounds = 322,
+                     subsample = 0.7039692,
                      objective = "reg:linear")
 
 # With shannon index as response
 #         eta nrounds max_depth subsample 
-#1: 0.1409998     605        10  0.731911   
+#1: 0.04499585     376         3 0.5814768   
 xgb_wd_s_c <- xgboost(data = data.matrix(trainx_wd_s_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_s_c$shannon)),
-                     eta = 0.1409998,
-                     max_depth = 10,
-                     nrounds = 605,
-                     subsample = 0.731911,
+                     eta = 0.04499585,
+                     max_depth = 3,
+                     nrounds = 376,
+                     subsample = 0.5814768,
                      objective = "reg:linear")
 
 # With abundance as response
 #          eta nrounds max_depth subsample 
-#1: 0.03123928     226         4  0.700416 
+#1: 0.1800055     277         5 0.7339144 
 xgb_wd_a_c <- xgboost(data = data.matrix(trainx_wd_a_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_a_c$abundance)),
-                     eta = 0.03123928,
-                     max_depth = 4,
-                     nrounds = 226,
-                     subsample = 0.700416,
+                     eta = 0.1800055,
+                     max_depth = 5,
+                     nrounds = 277,
+                     subsample = 0.7339144,
                      objective = "reg:linear")
 
 # With rel_abundance as response
 #          eta nrounds max_depth subsample 
-#1: 0.02019605     448         4 0.6486529             
+#1: 0.1606578     325         7 0.6312232             
 xgb_wd_ra_c <- xgboost(data = data.matrix(trainx_wd_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_wd_ra_c$rel_abundance)),
-                     eta = 0.02019605,
-                     max_depth = 4,
-                     nrounds = 448,
-                     subsample = 0.6486529,
+                     eta = 0.1606578,
+                     max_depth = 7,
+                     nrounds = 325,
+                     subsample = 0.6312232,
                      objective = "reg:linear")
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
 # With k_index as response 
 #         eta nrounds max_depth subsample 
-#1: 0.3036988     380         6 0.6041682                
+#1: 0.02039068     970         4   0.57129                
 xgb_samp_k_c <- xgboost(data = data.matrix(trainx_samp_k_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_k_c$k_index)),
-                     eta = 0.3036988,
-                     max_depth = 6,
-                     nrounds = 380,
-                     subsample = 0.6041682,
+                     eta = 0.02039068,
+                     max_depth = 4,
+                     nrounds = 970,
+                     subsample = 0.57129,
                      objective = "reg:linear")
 
 # With shannon index as response
 #         eta nrounds max_depth subsample 
-#1: 0.4003405     337         4 0.6988528              
+#1: 0.1461828     387         7 0.7189186              
 xgb_samp_s_c <- xgboost(data = data.matrix(trainx_samp_s_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_s_c$shannon)),
-                     eta = 0.4003405,
-                     max_depth = 4,
-                     nrounds = 337,
-                     subsample = 0.6988528,
+                     eta = 0.1461828,
+                     max_depth = 7,
+                     nrounds = 387,
+                     subsample = 0.7189186,
                      objective = "reg:linear")
 
 # With abundance as response
 #         eta nrounds max_depth subsample 
-#1: 0.2813937     725         9 0.5863177               
+#1: 0.1325823     646         3  0.745424               
 xgb_samp_a_c <- xgboost(data = data.matrix(trainx_samp_a_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_a_c$abundance)),
-                     eta = 0.2813937,
-                     max_depth = 9,
-                     nrounds = 725,
-                     subsample = 0.5863177,
+                     eta = 0.1325823,
+                     max_depth = 3,
+                     nrounds = 646,
+                     subsample = 0.745424,
                      objective = "reg:linear")
 
 # With rel_abundance as response 
 #          eta nrounds max_depth subsample 
-#1: 0.07668215     163         8 0.5359887             
+#1: 0.2120678     536         9 0.5065179              
 xgb_samp_ra_c <- xgboost(data = data.matrix(trainx_samp_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_samp_ra_c$rel_abundance)),
-                     eta = 0.07668215,
-                     max_depth = 8,
-                     nrounds = 163,
-                     subsample = 0.5359887,
+                     eta = 0.2120678,
+                     max_depth = 9,
+                     nrounds = 536,
+                     subsample = 0.5065179,
                      objective = "reg:linear")
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #         eta nrounds max_depth subsample 
-#1: 0.6384141     846         5 0.5295119             
+#1: 0.0905284     767        10  0.687448              
 xgb_sec_k_c <- xgboost(data = data.matrix(trainx_sec_k_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_k_c$k_index)),
-                     eta = 0.6384141,
-                     max_depth = 5,
-                     nrounds = 846,
-                     subsample = 0.5295119,
+                     eta = 0.0905284,
+                     max_depth = 10,
+                     nrounds = 767,
+                     subsample = 0.687448,
                      objective = "reg:linear")
 
 # With shannon index as response 
 #         eta nrounds max_depth subsample 
-#1: 0.1060275     584         3 0.6024684              
+#1: 0.03126577     226         5 0.6180107              
 xgb_sec_s_c <- xgboost(data = data.matrix(trainx_sec_s_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_s_c$shannon)),
-                     eta = 0.1060275,
-                     max_depth = 3,
-                     nrounds = 584,
-                     subsample = 0.6024684,
+                     eta = 0.03126577,
+                     max_depth = 5,
+                     nrounds = 226,
+                     subsample = 0.6180107,
                      objective = "reg:linear")
 
 # With abundance as response
 #         eta nrounds max_depth subsample 
-#1: 0.396339     188        10 0.5991595                
+#1: 0.2012684     113         6   0.57472                
 xgb_sec_a_c <- xgboost(data = data.matrix(trainx_sec_a_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_a_c$abundance)),
-                     eta = 0.396339,
-                     max_depth = 10,
-                     nrounds = 188,
-                     subsample = 0.5991595,
+                     eta = 0.2012684,
+                     max_depth = 6,
+                     nrounds = 113,
+                     subsample = 0.57472,
                      objective = "reg:linear")
 
 # With rel_abundance as response 
 #        eta nrounds max_depth subsample 
-#1: 0.7864366     240         8 0.5590043               
+#1: 0.2629999     650        10 0.7065455               
 xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_ra_c$rel_abundance)),
-                     eta = 0.7864366,
-                     max_depth = 8,
-                     nrounds = 240,
-                     subsample = 0.5590043,
+                     eta = 0.2629999,
+                     max_depth = 10,
+                     nrounds = 650,
+                     subsample = 0.7065455,
                      objective = "reg:linear")
 ```
 
