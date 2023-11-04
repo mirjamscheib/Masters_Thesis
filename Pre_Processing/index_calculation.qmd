@@ -152,6 +152,8 @@ lab_ml_model_wd_v <- lab_new |>
 
 
 # write results into new .csv file 
+write.csv(lab_ml_model_v, "Pre_Processing/abiotic_mi_sampling/lab_ml_model_v.csv", row.names = FALSE)
+write.csv(lab_ml_model_wd_v, "Pre_Processing/abiotic_mi_sampling/lab_ml_model_wd_v.csv", row.names = FALSE)
 write_xlsx(lab_ml_model_v,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_v.xlsx") 
 write_xlsx(lab_ml_model_wd_v,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_wd_v.xlsx") 
 ```
