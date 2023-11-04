@@ -999,86 +999,86 @@ autotuner_rf_sec_ra$tuning_result
 ### PREDICTOR: VELOCITY ### --------------------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    2       0.2059293            10 
-rf_model_v_k_c <- ranger(formula = k_index ~., data = training_v_k_c, mtry = 2, sample.fraction = 0.2059293, min.node.size = 10, importance = "impurity")
+#1:    4       0.2145317             7 
+rf_model_v_k_c <- ranger(formula = k_index ~., data = training_v_k_c, mtry = 4, sample.fraction = 0.2145317, min.node.size = 7, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2443021             5          
-rf_model_v_s_c <- ranger(formula = shannon ~., data = training_v_s_c, mtry = 1, sample.fraction = 0.2443021, min.node.size = 5, importance = "impurity")
+#1:    1       0.2312916             7            
+rf_model_v_s_c <- ranger(formula = shannon ~., data = training_v_s_c, mtry = 1, sample.fraction = 0.2312916, min.node.size = 7, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    4       0.2741381             8         
-rf_model_v_a_c <- ranger(formula = abundance ~., data = training_v_a_c, mtry = 4, sample.fraction = 0.2741381, min.node.size = 8, importance = "impurity")
+#1:    4       0.2830968             3         
+rf_model_v_a_c <- ranger(formula = abundance ~., data = training_v_a_c, mtry = 4, sample.fraction = 0.2830968, min.node.size = 3, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    4       0.2679696             2         
+#1:    4       0.2679696             2          
 rf_model_v_ra_c <- ranger(formula = rel_abundance ~., data = training_v_ra_c, mtry = 4, sample.fraction = 0.2679696, min.node.size = 2, importance = "impurity")
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    4       0.2170115             6          
-rf_model_wd_k_c <- ranger(formula = k_index ~., data = training_wd_k_c, mtry = 4, sample.fraction = 0.2170115, min.node.size = 6, importance = "impurity")
+#1:    4       0.2295754             9          
+rf_model_wd_k_c <- ranger(formula = k_index ~., data = training_wd_k_c, mtry = 4, sample.fraction = 0.2295754, min.node.size = 9, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2068668             5          
-rf_model_wd_s_c <- ranger(formula = shannon ~., data = training_wd_s_c, mtry = 1, sample.fraction = 0.2068668, min.node.size = 5, importance = "impurity")
+#1:    1       0.2104337             4         
+rf_model_wd_s_c <- ranger(formula = shannon ~., data = training_wd_s_c, mtry = 1, sample.fraction = 0.2104337, min.node.size = 4, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    4       0.2132617             4          
-rf_model_wd_a_c <- ranger(formula = abundance ~., data = training_wd_a_c, mtry = 4, sample.fraction = 0.2132617, min.node.size = 4, importance = "impurity")
+#1:    5       0.3224187            10         
+rf_model_wd_a_c <- ranger(formula = abundance ~., data = training_wd_a_c, mtry = 5, sample.fraction = 0.3224187, min.node.size = 10, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2197985             6          
-rf_model_wd_ra_c <- ranger(formula = rel_abundance ~., data = training_wd_ra_c, mtry = 1, sample.fraction = 0.2197985, min.node.size = 6, importance = "impurity")
+#1:    5       0.2136812             4         
+rf_model_wd_ra_c <- ranger(formula = rel_abundance ~., data = training_wd_ra_c, mtry = 5, sample.fraction = 0.2136812, min.node.size = 4, importance = "impurity")
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.3387031             5          
-rf_model_samp_k_c <- ranger(formula = k_index ~., data = training_samp_k_c, mtry = 1, sample.fraction = 0.3387031, min.node.size = 5, importance = "impurity")
+#1:    1       0.4228079             1          
+rf_model_samp_k_c <- ranger(formula = k_index ~., data = training_samp_k_c, mtry = 1, sample.fraction = 0.4228079, min.node.size = 1, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2275265             6          
-rf_model_samp_s_c <- ranger(formula = shannon ~., data = training_samp_s_c, mtry = 1, sample.fraction = 0.2275265, min.node.size = 6, importance = "impurity")
+#1:    1       0.2967033             5          
+rf_model_samp_s_c <- ranger(formula = shannon ~., data = training_samp_s_c, mtry = 1, sample.fraction = 0.2967033, min.node.size = 5, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:   14       0.4662279             2          
-rf_model_samp_a_c <- ranger(formula = abundance ~., data = training_samp_a_c, mtry = 14, sample.fraction = 0.4662279, min.node.size = 2, importance = "impurity")
+#1:    1       0.8062077             1          
+rf_model_samp_a_c <- ranger(formula = abundance ~., data = training_samp_a_c, mtry = 14, sample.fraction = 0.8062077, min.node.size = 1, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    9        0.827493             7          
-rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra_c, mtry = 9, sample.fraction = 0.827493, min.node.size = 7, importance = "impurity")
+#1:    1       0.6655148             8          
+rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra_c, mtry = 1, sample.fraction = 0.6655148, min.node.size = 8, importance = "impurity")
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.4870585             7         
-rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 1, sample.fraction = 0.4870585, min.node.size = 7, importance = "impurity")
+#1:    2       0.8387539             2          
+rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 2, sample.fraction = 0.8387539, min.node.size = 2, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:   32        0.365004             8         
-rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 32, sample.fraction = 0.365004, min.node.size = 8, importance = "impurity")
+#1:    1       0.2187433             9         
+rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 1, sample.fraction = 0.2187433, min.node.size = 9, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.3062136             4           
+#1:    1       0.3062136             4          
 rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 1, sample.fraction = 0.3062136, min.node.size = 4, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.4203471            10          
-rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 1, sample.fraction = 0.4203471, min.node.size = 10, importance = "impurity")
+#1:    5        0.808353             1          
+rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 5, sample.fraction = 0.808353, min.node.size = 1, importance = "impurity")
 ```
 
 # Model Evaluation 
