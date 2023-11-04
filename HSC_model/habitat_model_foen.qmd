@@ -1426,7 +1426,8 @@ write.csv(freq_tables, file = "HSC_model/results_foen/results_foen_freq_tables.c
 ## Load Data
 ```{r}
 # read .csv with lab results from river sections 
-univariate <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_univariate.csv")
+univariate <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_univariate.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # create clean df which only contains the values needed 
  univariate <- univariate |>

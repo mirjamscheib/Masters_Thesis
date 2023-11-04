@@ -40,6 +40,12 @@ corr_coord <- read_delim("Pre_Processing/abiotic_mi_sampling/GPS_Points/Abiotic_
   mutate(x = as.numeric(x),
          y = as.numeric(y),
          z = as.numeric(z))
+
+# Load MI data field 
+field <- read_delim("Pre_Processing/abiotic_mi_sampling/MZB_Feldscreening.csv", col_names = FALSE)
+
+# MI data lab 
+lab <- read_delim("Pre_Processing/abiotic_mi_sampling/MZB_SBI_Labor.csv", col_names = FALSE)
 ```
 
 # Create Join Key
@@ -164,9 +170,6 @@ rownames(unique_df) <- NULL
 ## MI Data
 ### Field Data
 ```{r}
-# Load MI data field 
-field <- read_delim("Pre_Processing/abiotic_mi_sampling/MZB_Feldscreening.csv", col_names = FALSE)
-
 # extract first row to repeat always 3 times 
 field_row1 <- field[1, ]
 
@@ -207,9 +210,6 @@ field1 <- field1 |>
 
 ### Lab Data
 ```{r}
-# MI data lab 
-lab <- read_delim("Pre_Processing/abiotic_mi_sampling/MZB_SBI_Labor.csv", col_names = FALSE)
-
 # remove rows and columns that aren't needed 
 lab <- lab[-c(1:2), -3]
 

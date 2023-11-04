@@ -247,7 +247,7 @@ lab_ml_model_section <- lab_new |>
 
 ```{r}
 clog_3_int <- c("none" = 0, "strong" = 2, "slight-medium" = 1)
-clog_6_int <- c("none" = 0, "none-light" = 1, "none-slight" = 2, "slight" = 3, "slight-medium" = 4, "medium-strong" = 5, "strong" = 6)
+clog_6_int <- c("none" = 0, "none " = 0, "none-light" = 1, "none-slight" = 2, "slight" = 3, "slight-medium" = 4, "medium-strong" = 5, "strong" = 6)
 sub_int <- c("< 2.5 mm" = 0, "25 mm > x > 2.5 mm" = 1, "250 mm > x > 25 mm" = 2, "> 250 mm" = 3)
 hydr_type <- c("2a" = 1, "2b" = 2, "3a" = 3, "3b" = 4)
 hydr_int <- c("Hydropeaking" = 1, "Residual flow" = 2, "Natural/near-natural" = 3)
@@ -274,12 +274,13 @@ data_section <- lab_ml_model_section |>
          hydr_int = ifelse(Hydrokeaking_residual_flow_natural_near_natural
                            %in% names(hydr_int), hydr_int[Hydrokeaking_residual_flow_natural_near_natural], NA)) 
 
+
 # write results into new .csv file 
+write.csv(data_sampling, "Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv", row.names = FALSE)
+write.csv(data_section, "Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv", row.names = FALSE)
 write_xlsx(data_sampling,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_sampling.xlsx") 
 write_xlsx(data_section,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_section.xlsx")
 ```
-
-
 
 # Univariate HM DF
 ```{r}
@@ -290,6 +291,7 @@ lab_univariate <- lab_ml_model_wd_v |>
          y = as.numeric(y))
 
 # write results into new .csv file 
+write.csv(lab_univariate, "Pre_Processing/abiotic_mi_sampling/lab_univariate.csv", row.names = FALSE)
 write_xlsx(lab_univariate,"Pre_Processing\\abiotic_mi_sampling\\lab_univariate.xlsx") 
 ```
 

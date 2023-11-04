@@ -46,19 +46,23 @@ pkgCheck("hydroGOF") # for NSE calculation with NSE() function
 # Load & prepare data 
 ```{r}
 # Load data containing velocity as predictor variable 
-data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v.csv") 
+data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v_add.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # Load data containing velocity and wd as predictors 
-data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_v.csv") 
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # Load data containing all variables measured at each sampling locations and remove all other "chr" variables
-data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.csv") |>
-  dplyr::select(-clog_3_class, -clog_6_class, -sub_type)
+data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling_add.csv") |>
+  dplyr::select(-clog_3_class, -clog_6_class, -sub_type) |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # Load data containing all variables measured at each river section and remove all other "chr" variables
 # Additionally, remove ox_sat columns, as they contain NA values
-data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
-  dplyr::select(-clog_3_class, -clog_6_class, -sub_type, -Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -date, -time, -time_before, -time_during, -time_after, -Category_Water_depth, -Number_Taxa, -EPT_Taxa, -ox_sat_after, -ox_sat_before, -ox_sat_during, -hydr_type_int, -hydr_int)
+data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section_add.csv") |>
+  dplyr::select(-clog_3_class, -clog_6_class, -sub_type, -Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -date, -time, -time_before, -time_during, -time_after, -Category_Water_depth, -Number_Taxa, -EPT_Taxa, -ox_sat_after, -ox_sat_before, -ox_sat_during, -hydr_type_int, -hydr_int) |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 ```
     
 ```{r}

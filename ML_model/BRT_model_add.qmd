@@ -47,19 +47,23 @@ pkgCheck("hydroGOF") # for NSE calculation with NSE() function
 # Load & prepare data 
 ```{r}
 # Load data containing velocity as predictor variable 
-data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v_add.csv") 
+data_v <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_v_add.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # Load data containing velocity and wd as predictors 
-data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv") 
+data_wd <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # Load data containing all variables measured at each sampling locations and remove all other "chr" variables
 data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling_add.csv") |>
-  dplyr::select(-clog_3_class, -clog_6_class, -sub_type)
+  dplyr::select(-clog_3_class, -clog_6_class, -sub_type) |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # Load data containing all variables measured at each river section and remove all other "chr" variables
 # Additionally, remove ox_sat columns, as they contain NA values
 data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section_add.csv") |>
-  dplyr::select(-clog_3_class, -clog_6_class, -sub_type, -Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -date, -time, -time_before, -time_during, -time_after, -Category_Water_depth, -Number_Taxa, -EPT_Taxa, -ox_sat_after, -ox_sat_before, -ox_sat_during, -hydr_type_int, -hydr_int)
+  dplyr::select(-clog_3_class, -clog_6_class, -sub_type, -Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -date, -time, -time_before, -time_during, -time_after, -Category_Water_depth, -Number_Taxa, -EPT_Taxa, -ox_sat_after, -ox_sat_before, -ox_sat_during, -hydr_type_int, -hydr_int) |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 ```
     
 ```{r}
@@ -73,7 +77,7 @@ training_v <- data_v |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
          Reach_Untersuchungsstelle != "VR3")
 
 # training set containing velocity + wd
@@ -84,7 +88,7 @@ training_wd <- data_wd |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
          Reach_Untersuchungsstelle != "VR3")
 
 # training set containing all env. variables measured at each sampling location 
@@ -95,7 +99,7 @@ training_sampling <- data_sampling |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
          Reach_Untersuchungsstelle != "VR3")
 
 # training set containing all env. variables measured at each sampling location and overall river section 
@@ -106,7 +110,7 @@ training_section <- data_section |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
          Reach_Untersuchungsstelle != "VR3")
 
 ### TEST SETS ###
@@ -118,7 +122,7 @@ test_v <- data_v |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" | 
          Reach_Untersuchungsstelle == "VR3")
 
 # test set containing velocity + wd
@@ -129,7 +133,7 @@ test_wd <- data_wd |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" |  
          Reach_Untersuchungsstelle == "VR3")
 
 # test set containing all env. variables measured at each sampling location 
@@ -140,7 +144,7 @@ test_sampling <- data_sampling |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" | 
          Reach_Untersuchungsstelle == "VR3")
 
 # test set containing all env. variables measured at each sampling location and overall river section 
@@ -151,7 +155,7 @@ test_section <- data_section |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" | 
          Reach_Untersuchungsstelle == "VR3")
 ```
 
