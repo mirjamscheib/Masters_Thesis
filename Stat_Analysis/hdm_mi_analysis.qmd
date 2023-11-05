@@ -60,7 +60,8 @@ names(VR3_ezg) <- c("velocity", "wd_cm", "froude", "shear_stress", "stream_power
 ## Load data 
 ```{r}
 # load data 
-data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv")
+data <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_wd_add.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # prep extraction data 
 ## GL1
@@ -142,7 +143,7 @@ VR3 <- data |>
 ### GL1 ###
 regr_GL1 <- raster::extract(GL1_ezg, coord_GL1) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
@@ -152,7 +153,7 @@ regr_GL1 <- raster::extract(GL1_ezg, coord_GL1) |>
 ### GL2 ###
 regr_GL2 <- raster::extract(GL2_ezg, coord_GL2) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
@@ -162,7 +163,7 @@ regr_GL2 <- raster::extract(GL2_ezg, coord_GL2) |>
 ### L2 ### 
 regr_L2 <- raster::extract(L2_ezg, coord_L2) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
@@ -172,7 +173,7 @@ regr_L2 <- raster::extract(L2_ezg, coord_L2) |>
 ### M1 ###
 regr_M1 <- raster::extract(M1_ezg, coord_M1) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
@@ -182,7 +183,7 @@ regr_M1 <- raster::extract(M1_ezg, coord_M1) |>
 ### S1 ###
 regr_S1 <- raster::extract(S1_ezg, coord_S1) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
@@ -192,7 +193,7 @@ regr_S1 <- raster::extract(S1_ezg, coord_S1) |>
 ### S2 ###
 regr_S2 <- raster::extract(S2_ezg, coord_S2) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
@@ -202,7 +203,7 @@ regr_S2 <- raster::extract(S2_ezg, coord_S2) |>
 ### TH4 ###
 regr_TH4 <- raster::extract(TH4_ezg, coord_TH4) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
@@ -212,7 +213,7 @@ regr_TH4 <- raster::extract(TH4_ezg, coord_TH4) |>
 ### VR3 ###
 regr_VR3 <- raster::extract(VR3_ezg, coord_VR3) |>
   as.data.frame() |>
-  rename(v_raster = velocity,
+  dplyr::rename(v_raster = velocity,
          wd_m_raster = wd_cm,
          froude_raster = froude,
          shear_raster = shear_stress,
