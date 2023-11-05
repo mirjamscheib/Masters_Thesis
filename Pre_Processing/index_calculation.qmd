@@ -288,7 +288,7 @@ write_xlsx(data_section,"Pre_Processing\\abiotic_mi_sampling\\lab_ml_section.xls
 ```{r}
 # combine all abiotic data with abundance & Shannon Diversity 
 lab_univariate <- lab_ml_model_wd_v |>
-  dplyr::select(reach, velocity, wd_m, x, y, shannon, abundance, k_index) |>
+  dplyr::select(reach, velocity, wd_m, x, y, shannon, abundance, k_index, rel_abundance) |>
   mutate(x = as.numeric(x),
          y = as.numeric(y))
 
