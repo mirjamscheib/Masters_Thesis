@@ -3638,10 +3638,245 @@ nse_model_sec_a_c <- NSE(sim = rf_pred_model_sec_a_c, obs = responses_sec_a)
 nse_model_sec_ra_c <- NSE(sim = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
 ```
 
+## Regression Analysis
+### Create DF
+```{r}
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# With k-index as a response 
+pred_v_k <- as.data.frame(rf_pred_model_v_k_c)
+resp_v_k <- as.data.frame(responses_v_k)
+rf_v_k <- cbind(pred_v_k, responses_v_k) |>
+  dplyr::rename(observed = responses_v_k,
+         predicted = rf_pred_model_v_k_c)
+
+# With shannon index as a response 
+pred_v_s <- as.data.frame(rf_pred_model_v_s_c)
+resp_v_s <- as.data.frame(responses_v_s)
+rf_v_s <- cbind(pred_v_s, responses_v_s) |>
+  dplyr::rename(observed = responses_v_s,
+         predicted = rf_pred_model_v_s_c)
+
+# With abundance as a response 
+pred_v_a <- as.data.frame(rf_pred_model_v_a_c)
+resp_v_a <- as.data.frame(responses_v_a)
+rf_v_a <- cbind(pred_v_a, responses_v_a) |>
+  dplyr::rename(observed = responses_v_a,
+         predicted = rf_pred_model_v_a_c)
+
+# With relative abundance as a response 
+pred_v_ra <- as.data.frame(rf_pred_model_v_ra_c)
+resp_v_ra <- as.data.frame(responses_v_ra)
+rf_v_ra <- cbind(pred_v_ra, responses_v_ra) |>
+  dplyr::rename(observed = responses_v_ra,
+         predicted = rf_pred_model_v_ra_c)
+
+### PREDICTOR: V + WD ### --------------------------------------------------
+# With k-index as a response 
+pred_wd_k <- as.data.frame(rf_pred_model_wd_k_c)
+resp_wd_k <- as.data.frame(responses_wd_k)
+rf_wd_k <- cbind(pred_wd_k, responses_wd_k) |>
+  dplyr::rename(observed = responses_wd_k,
+         predicted = rf_pred_model_wd_k_c)
+
+# With shannon index as a response 
+pred_wd_s <- as.data.frame(rf_pred_model_wd_s_c)
+resp_wd_s <- as.data.frame(responses_wd_s)
+rf_wd_s <- cbind(pred_wd_s, responses_wd_s) |>
+  dplyr::rename(observed = responses_wd_s,
+         predicted = rf_pred_model_wd_s_c)
+
+# With abundance as a response 
+pred_wd_a <- as.data.frame(rf_pred_model_wd_a_c)
+resp_wd_a <- as.data.frame(responses_wd_a)
+rf_wd_a <- cbind(pred_wd_a, responses_wd_a) |>
+  dplyr::rename(observed = responses_wd_a,
+         predicted = rf_pred_model_wd_a_c)
+
+# With relative abundance as a response 
+pred_wd_ra <- as.data.frame(rf_pred_model_wd_ra_c)
+resp_wd_ra <- as.data.frame(responses_wd_ra)
+rf_wd_ra <- cbind(pred_wd_ra, responses_wd_ra) |>
+  dplyr::rename(observed = responses_wd_ra,
+         predicted = rf_pred_model_wd_ra_c)
+
+### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
+# With k-index as a response 
+pred_samp_k <- as.data.frame(rf_pred_model_samp_k_c)
+resp_samp_k <- as.data.frame(responses_samp_k)
+rf_samp_k <- cbind(pred_samp_k, responses_samp_k) |>
+  dplyr::rename(observed = responses_samp_k,
+         predicted = rf_pred_model_samp_k_c)
+
+# With shannon index as a response 
+pred_samp_s <- as.data.frame(rf_pred_model_samp_s_c)
+resp_samp_s <- as.data.frame(responses_samp_s)
+rf_samp_s <- cbind(pred_samp_s, responses_samp_s) |>
+  dplyr::rename(observed = responses_samp_s,
+         predicted = rf_pred_model_samp_s_c)
+
+# With abundance as a response 
+pred_samp_a <- as.data.frame(rf_pred_model_samp_a_c)
+resp_samp_a <- as.data.frame(responses_samp_a)
+rf_samp_a <- cbind(pred_samp_a, responses_samp_a) |>
+  dplyr::rename(observed = responses_samp_a,
+         predicted = rf_pred_model_samp_a_c)
+
+# With relative abundance as a response 
+pred_samp_ra <- as.data.frame(rf_pred_model_samp_ra_c)
+resp_samp_ra <- as.data.frame(responses_samp_ra)
+rf_samp_ra <- cbind(pred_samp_ra, responses_samp_ra) |>
+  dplyr::rename(observed = responses_samp_ra,
+         predicted = rf_pred_model_samp_ra_c)
+
+### PREDICTOR: ALL PREDICTORS ### -------------------------------------------
+# With k-index as a response 
+pred_sec_k <- as.data.frame(rf_pred_model_sec_k_c)
+resp_sec_k <- as.data.frame(responses_sec_k)
+rf_sec_k <- cbind(pred_sec_k, responses_sec_k) |>
+  dplyr::rename(observed = responses_sec_k,
+         predicted = rf_pred_model_sec_k_c)
+
+# With shannon index as a response 
+pred_sec_s <- as.data.frame(rf_pred_model_sec_s_c)
+resp_sec_s <- as.data.frame(responses_sec_s)
+rf_sec_s <- cbind(pred_sec_s, responses_sec_s) |>
+  dplyr::rename(observed = responses_sec_s,
+         predicted = rf_pred_model_sec_s_c)
+
+# With abundance as a response 
+pred_sec_a <- as.data.frame(rf_pred_model_sec_a_c)
+resp_sec_a <- as.data.frame(responses_sec_a)
+rf_sec_a <- cbind(pred_sec_a, responses_sec_a) |>
+  dplyr::rename(observed = responses_sec_a,
+         predicted = rf_pred_model_sec_a_c)
+
+# With relative abundance as a response 
+pred_sec_ra <- as.data.frame(rf_pred_model_sec_ra_c)
+resp_sec_ra <- as.data.frame(responses_sec_ra)
+rf_sec_ra <- cbind(pred_sec_ra, responses_sec_ra) |>
+  dplyr::rename(observed = responses_sec_ra,
+         predicted = rf_pred_model_sec_ra_c)
+```
+
+### LM Models
+```{r}
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# with k_index as response
+regr_v_k <- lm(predicted ~ observed, data = rf_v_k)
+sum_v_k <- summary(regr_v_k)
+p_v_k <- sum_v_k$coefficients["observed", "Pr(>|t|)"]
+s_v_k <- sum_v_k$coefficients["observed", "Estimate"]
+
+# with shannon index as response
+regr_v_s <- lm(predicted ~ observed, data = rf_v_s)
+sum_v_s <- summary(regr_v_s)
+p_v_s <- sum_v_s$coefficients["observed", "Pr(>|t|)"]
+s_v_s <- sum_v_s$coefficients["observed", "Estimate"]
+
+# with abundance as response
+regr_v_a <- lm(predicted ~ observed, data = rf_v_a)
+sum_v_a <- summary(regr_v_a)
+p_v_a <- sum_v_a$coefficients["observed", "Pr(>|t|)"]
+s_v_a <- sum_v_a$coefficients["observed", "Estimate"]
+
+# with rel_abundance as response
+regr_v_ra <- lm(predicted ~ observed, data = rf_v_ra)
+sum_v_ra <- summary(regr_v_ra)
+p_v_ra <- sum_v_ra$coefficients["observed", "Pr(>|t|)"]
+s_v_ra <- sum_v_ra$coefficients["observed", "Estimate"]
+
+### PREDICTOR: V + WD ### --------------------------------------------------
+# with k_index as response
+regr_wd_k <- lm(predicted ~ observed, data = rf_wd_k)
+sum_wd_k <- summary(regr_wd_k)
+p_wd_k <- sum_wd_k$coefficients["observed", "Pr(>|t|)"]
+s_wd_k <- sum_wd_k$coefficients["observed", "Estimate"]
+
+# with shannon index as response
+regr_wd_s <- lm(predicted ~ observed, data = rf_wd_s)
+sum_wd_s <- summary(regr_wd_s)
+p_wd_s <- sum_wd_s$coefficients["observed", "Pr(>|t|)"]
+s_wd_s <- sum_wd_s$coefficients["observed", "Estimate"]
+
+# with abundance as response
+regr_wd_a <- lm(predicted ~ observed, data = rf_wd_a)
+sum_wd_a <- summary(regr_wd_a)
+p_wd_a <- sum_wd_a$coefficients["observed", "Pr(>|t|)"]
+s_wd_a <- sum_wd_a$coefficients["observed", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_ra <- lm(predicted ~ observed, data = rf_wd_ra)
+sum_wd_ra <- summary(regr_wd_ra)
+p_wd_ra <- sum_wd_ra$coefficients["observed", "Pr(>|t|)"]
+s_wd_ra <- sum_wd_ra$coefficients["observed", "Estimate"]
+
+### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
+# with k_index as response
+regr_samp_k <- lm(predicted ~ observed, data = rf_samp_k)
+sum_samp_k <- summary(regr_samp_k)
+p_samp_k <- sum_samp_k$coefficients["observed", "Pr(>|t|)"]
+s_samp_k <- sum_samp_k$coefficients["observed", "Estimate"]
+
+# with shannon index as response
+regr_samp_s <- lm(predicted ~ observed, data = rf_samp_s)
+sum_samp_s <- summary(regr_samp_s)
+p_samp_s <- sum_samp_s$coefficients["observed", "Pr(>|t|)"]
+s_samp_s <- sum_samp_s$coefficients["observed", "Estimate"]
+
+# with abundance as response
+regr_samp_a <- lm(predicted ~ observed, data = rf_samp_a)
+sum_samp_a <- summary(regr_samp_a)
+p_samp_a <- sum_samp_a$coefficients["observed", "Pr(>|t|)"]
+s_samp_a <- sum_samp_a$coefficients["observed", "Estimate"]
+
+# with rel_abundance as response
+regr_samp_ra <- lm(predicted ~ observed, data = rf_samp_ra)
+sum_samp_ra <- summary(regr_samp_ra)
+p_samp_ra <- sum_samp_ra$coefficients["observed", "Pr(>|t|)"]
+s_samp_ra <- sum_samp_ra$coefficients["observed", "Estimate"]
+
+### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
+# with k_index as response
+regr_sec_k <- lm(predicted ~ observed, data = rf_sec_k)
+sum_sec_k <- summary(regr_sec_k)
+p_sec_k <- sum_sec_k$coefficients["observed", "Pr(>|t|)"]
+s_sec_k <- sum_sec_k$coefficients["observed", "Estimate"]
+
+# with shannon index as response
+regr_sec_s <- lm(predicted ~ observed, data = rf_sec_s)
+sum_sec_s <- summary(regr_sec_s)
+p_sec_s <- sum_sec_s$coefficients["observed", "Pr(>|t|)"]
+s_sec_s <- sum_sec_s$coefficients["observed", "Estimate"]
+
+# with abundance as response
+regr_sec_a <- lm(predicted ~ observed, data = rf_sec_a)
+sum_sec_a <- summary(regr_sec_a)
+p_sec_a <- sum_sec_a$coefficients["observed", "Pr(>|t|)"]
+s_sec_a <- sum_sec_a$coefficients["observed", "Estimate"]
+
+# with rel_abundance as response
+regr_sec_ra <- lm(predicted ~ observed, data = rf_sec_ra)
+sum_sec_ra <- summary(regr_sec_ra)
+p_sec_ra <- sum_sec_ra$coefficients["observed", "Pr(>|t|)"]
+s_sec_ra <- sum_sec_ra$coefficients["observed", "Estimate"]
+```
+
 ## Write Evaluation Results 
 ```{r}
 # write evaluation metrics into df
-metric_results <- data.frame(nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c),
+metric_results <- data.frame(lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra,  
+                                           p_wd_k, p_wd_s, p_wd_a,
+                                           p_wd_ra, p_samp_k, p_samp_s, p_samp_a,
+                                           p_samp_ra, p_sec_k, p_sec_s, p_sec_a,
+                                           p_sec_ra),
+                          
+                          lm_slope = c(s_v_k, s_v_s, s_v_a, s_v_ra,  
+                                           s_wd_k, s_wd_s, s_wd_a,
+                                           s_wd_ra, s_samp_k, s_samp_s, s_samp_a,
+                                           s_samp_ra, s_sec_k, s_sec_s, s_sec_a,
+                                           s_sec_ra),
+                          
+  nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c),
 
 bias = c(bias_model_v_k_c, bias_model_v_s_c, bias_model_v_a_c, bias_model_v_ra_c, bias_model_wd_k_c,bias_model_wd_s_c, bias_model_wd_a_c, bias_model_wd_ra_c, bias_model_samp_k_c, bias_model_samp_s_c, bias_model_samp_a_c, bias_model_samp_ra_c, bias_model_sec_k_c, bias_model_sec_s_c, bias_model_sec_a_c, bias_model_sec_ra_c),
 

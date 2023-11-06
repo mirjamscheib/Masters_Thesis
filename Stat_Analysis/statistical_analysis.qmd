@@ -1982,8 +1982,8 @@ results_hdm <- data.frame(lm_p_value = c(p_v_brt_k, p_v_brt_s, p_v_brt_a, p_v_br
   
            variable = c("velocity", "velocity", "velocity", "velocity", "velocity + add", "velocity + add", "velocity + add", "velocity + add",
                         "velocity", "velocity", "velocity", "velocity", "velocity + add", "velocity + add", "velocity + add", "velocity + add",
-                        "velocity", "velocity", "velocity", "velocity", "velocity + add", "velocity + add", "velocity + add", "velocity + add",
-                        "velocity", "velocity", "velocity", "velocity", "velocity + add", "velocity + add", "velocity + add", "velocity + add", 
+                        "v + wd", "v + wd", "v + wd", "v + wd", "v + wd + add", "v + wd + add", "v + wd + add", "v + wd + add",
+                        "v + wd", "v + wd", "v + wd", "v + wd", "v + wd + add", "v + wd + add", "v + wd + add", "v + wd + add", 
                         "foen class", "foen class", "foen class", "foen class",
                         "foen hsi", "foen hsi", "foen hsi", "foen hsi"),
            
@@ -2000,9 +2000,12 @@ write.csv(results_hdm, "Stat_Analysis/results_regr_analysis.csv", row.names = FA
 
 
 ```{r}
-# Select rows where values in the "Age" column are below the threshold
+# Select only rows, which contain significant p-values and sort them
 selected_rows <- results_hdm[results_hdm$lm_p_value < 0.05, ]
 sorted_data <- selected_rows[order(selected_rows$lm_p_value), ]
+
+# exclude hsc model data, because the slope is negative 
+data <- subset(sorted_data, model != "hsc")
 ```
 
 

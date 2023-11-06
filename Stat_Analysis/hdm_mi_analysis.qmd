@@ -701,40 +701,108 @@ plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
 
 ## Plots
 ```{r}
-ggplot(data_hdm, aes(velocity, v_raster)) +
+# velocity --------------------------------------------------------------------
+vel <- ggplot(data_hdm, aes(velocity, v_raster)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Velocity Measured (m/s)",
+    y = "Velocity Extracted (m/s)"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(data_hdm, aes(wd_m, wd_m_raster)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_velocity.png", plot = vel, width = 6, height = 5)
+
+# water depth ----------------------------------------------------------------
+wd <- ggplot(data_hdm, aes(wd_m, wd_m_raster)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Water Depth Measured (m)",
+    y = "Water Depth Extracted (m/s)"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(data_hdm, aes(froude, froude_raster)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_wd.png", plot = wd, width = 6, height = 5)
+
+# froude ----------------------------------------------------------------
+froude <- ggplot(data_hdm, aes(froude, froude_raster)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Froude Measured",
+    y = "Froude Extracted"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(data_hdm, aes(shear_stress, shear_raster)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_froude.png", plot = froude, width = 6, height = 5)
+
+# shear stress ---------------------------------------------------------------
+shear <- ggplot(data_hdm, aes(shear_stress, shear_raster)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Shear Stress Measured (kg m-1 s-2)",
+    y = "Shear Stress Extracted (kg m-1 s-2)"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-ggplot(data_hdm, aes(stream_power, stream_raster)) +
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_shear_stress.png", plot = shear, width = 6, height = 5)
+
+# stream power ---------------------------------------------------------------
+stream <- ggplot(data_hdm, aes(stream_power, stream_raster)) +
   geom_point() +
-  geom_abline() +
-  geom_smooth(method = "lm", se = FALSE)
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Stream Power Measured (W m-2)",
+    y = "Stream Power Extracted (W m-2)"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14))
 
-# plot(data_hdm$velocity, data_hdm$v_raster)
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_stream_power.png", plot = stream, width = 6, height = 5)
 ```
 
 
 # Create dataframe
 ```{r}
-results_hdm <- data.frame(lm_p_value = c(p_v_GL1, p_wd_GL1, p_f_GL1, p_s_GL1, p_sp_GL1, p_v_GL2, p_wd_GL2, p_f_GL2, p_s_GL2, p_sp_GL2, p_v_L2, p_wd_L2, p_f_L2, p_s_L2, p_sp_L2, p_v_M1, p_wd_M1, p_f_M1, p_s_M1, p_sp_M1, p_v_S1, p_wd_S1, p_f_S1, p_s_S1, p_sp_S1, p_v_S2, p_wd_S2, p_f_S2, p_s_S2, p_sp_S2, "p_v_TH4", "p_wd_TH4", "p_f_TH4", "p_s_TH4", "p_sp_TH4", p_v_VR3, p_wd_VR3, p_f_VR3, p_s_VR3, p_sp_VR3, p_v, p_wd, p_f, p_s, p_sp),
+results_hdm <- data.frame(lm_p_value = c(p_v_GL1, p_wd_GL1, p_f_GL1, p_s_GL1, p_sp_GL1, p_v_GL2, p_wd_GL2, p_f_GL2, p_s_GL2, p_sp_GL2, p_v_L2, p_wd_L2, p_f_L2, p_s_L2, p_sp_L2, p_v_M1, p_wd_M1, p_f_M1, p_s_M1, p_sp_M1, p_v_S1, p_wd_S1, p_f_S1, p_s_S1, p_sp_S1, p_v_S2, p_wd_S2, p_f_S2, p_s_S2, p_sp_S2, p_v_TH4, p_wd_TH4, p_f_TH4, p_s_TH4, p_sp_TH4, p_v_VR3, p_wd_VR3, p_f_VR3, p_s_VR3, p_sp_VR3, p_v, p_wd, p_f, p_s, p_sp),
                           
-                          lm_slope = c(s_v_GL1, s_wd_GL1, s_f_GL1, s_s_GL1, s_sp_GL1, s_v_GL2, s_wd_GL2, s_f_GL2, s_s_GL2, s_sp_GL2, s_v_L2, s_wd_L2, s_f_L2, s_s_L2, s_sp_L2, s_v_M1, s_wd_M1, s_f_M1, s_s_M1, s_sp_M1, s_v_S1, s_wd_S1, s_f_S1, s_s_S1, s_sp_S1, s_v_S2, s_wd_S2, s_f_S2, s_s_S2, s_sp_S2, "s_v_TH4", "s_wd_TH4", "s_f_TH4", "s_s_TH4", "s_sp_TH4", s_v_VR3, s_wd_VR3, s_f_VR3, s_s_VR3, s_sp_VR3, s_v, s_wd, s_f, s_s, s_sp),
+                          lm_slope = c(s_v_GL1, s_wd_GL1, s_f_GL1, s_s_GL1, s_sp_GL1, s_v_GL2, s_wd_GL2, s_f_GL2, s_s_GL2, s_sp_GL2, s_v_L2, s_wd_L2, s_f_L2, s_s_L2, s_sp_L2, s_v_M1, s_wd_M1, s_f_M1, s_s_M1, s_sp_M1, s_v_S1, s_wd_S1, s_f_S1, s_s_S1, s_sp_S1, s_v_S2, s_wd_S2, s_f_S2, s_s_S2, s_sp_S2, s_v_TH4, s_wd_TH4, s_f_TH4, s_s_TH4, s_sp_TH4, s_v_VR3, s_wd_VR3, s_f_VR3, s_s_VR3, s_sp_VR3, s_v, s_wd, s_f, s_s, s_sp),
                           
   rmse = c(rmse_v_GL1, rmse_wd_GL1, rmse_f_GL1, rmse_s_GL1, rmse_sp_GL1, rmse_v_GL2, rmse_wd_GL2, rmse_f_GL2, rmse_s_GL2, rmse_sp_GL2, rmse_v_L2, rmse_wd_L2, rmse_f_L2, rmse_s_L2, rmse_sp_L2, rmse_v_M1, rmse_wd_M1, rmse_f_M1, rmse_s_M1, rmse_sp_M1, rmse_v_S1, rmse_wd_S1, rmse_f_S1, rmse_s_S1, rmse_sp_S1, rmse_v_S2, rmse_wd_S2, rmse_f_S2, rmse_s_S2, rmse_sp_S2, rmse_v_TH4, rmse_wd_TH4, rmse_f_TH4, rmse_s_TH4, rmse_sp_TH4, rmse_v_VR3, rmse_wd_VR3, rmse_f_VR3, rmse_s_VR3, rmse_sp_VR3, rmse_v, rmse_wd, rmse_f, rmse_s, rmse_sp),
   
@@ -742,7 +810,7 @@ results_hdm <- data.frame(lm_p_value = c(p_v_GL1, p_wd_GL1, p_f_GL1, p_s_GL1, p_
   
            section = c("GL1", "GL1", "GL1", "GL1", "GL1", "GL2", "GL2", "GL2", "GL2", "GL2", "L2", "L2", "L2", "L2", "L2", "M1", "M1", "M1", "M1", "M1", "S1", "S1", "S1", "S1", "S1", "S2", "S2", "S2", "S2", "S2", "TH4", "TH4", "TH4", "TH4", "TH4", "VR3", "VR3", "VR3", "VR3", "VR3", "all", "all", "all", "all", "all"),
   
-           variable = c("velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power", "velocity", "v + wd", "froude", "shear_stress", "stream_power"))
+           variable = c("velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power"))
 
 # write .csv file 
 write.csv(results_hdm, "Stat_Analysis/results_hdm_mi_metrics.csv", row.names = FALSE)
