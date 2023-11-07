@@ -1145,20 +1145,35 @@ vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c)
 
 # bind results together ------------------------------------------------------
 vi_rf_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c) |>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 vi_rel_rf_model_v_c <- rbind(vi_rel_v_k_c, vi_rel_v_s_c, vi_rel_v_a_c, vi_rel_v_ra_c) |>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 vi_rf_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) |>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 vi_rel_rf_model_wd_c <- rbind(vi_rel_wd_k_c, vi_rel_wd_s_c, vi_rel_wd_a_c, vi_rel_wd_ra_c)|>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 vi_rf_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c)|>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 vi_rel_rf_model_samp_c <- rbind(vi_rel_samp_k_c, vi_rel_samp_s_c, vi_rel_samp_a_c, vi_rel_samp_ra_c)|>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 vi_rf_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c)|>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 vi_rel_rf_model_sec_c <- rbind(vi_rel_sec_k_c, vi_rel_sec_s_c, vi_rel_sec_a_c, vi_rel_sec_ra_c)|>
+  as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
 
 # write results into .csv ------------------------------------------------------
