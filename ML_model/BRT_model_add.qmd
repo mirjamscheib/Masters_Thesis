@@ -1188,90 +1188,74 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
 # w/o coordinates
 vi_v_k_c <- xgb.importance(model = xgb_v_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "k_index")
 
 vi_v_s_c <- xgb.importance(model = xgb_v_s_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "shannon_index")
 
 vi_v_a_c <- xgb.importance(model = xgb_v_a_c)|>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "abundance")
 
 vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)|>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "rel_abundance")
 
 
 ### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
 # w/o coordinates
 vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "k_index")
 
 vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "shannon_index")
 
 vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "abundance")
 
 vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "rel_abundance")
 
 ### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
 # w/o coordinates
 vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "k_index")
 
 vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "shannon_index")
 
 vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "abundance")
 
 vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "rel_abundance")
 
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # w/o coordinates
 vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "k_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "k_index")
 
 vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "shannon_index",
-         model = "xgboost w/o coordinates")
+  mutate(index = "shannon_index")
 
 vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "abundance")
 
 vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c) |>
   dplyr::select(-Cover, -Frequency)  |>
-  mutate(index = "rel_abundance",
-         model = "xgboost w/o coordinates")
+  mutate(index = "rel_abundance")
 
 # bind results together -------------------------------------------------------
 vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)
