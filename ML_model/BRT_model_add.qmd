@@ -4612,3 +4612,269 @@ regr_analysis <- rbind(data_GL1, data_GL2, data_L2, data_M1, data_S1, data_S2, d
 # export to .csv file
 write.csv(regr_analysis, "Stat_Analysis/stat_analysis_data/regr_analysis_brt_add.csv", row.names = FALSE)
 ```
+
+# Scenario Simulations
+## Read rasters
+```{r}
+# read rasters containing wd and velocity 
+# GL1 ------------------------------------------------------------
+GL1_min <- stack("Pre_Processing/rasters_stacked/GL1_3_28_add.grd") |>
+  dropLayer(i = 2)
+GL1_max <- stack("Pre_Processing/rasters_stacked/GL1_31_76_add.grd") |>
+  dropLayer(i = 2)
+
+# GL2 --------------------------------------------------------------
+GL2_min <- stack("Pre_Processing/rasters_stacked/GL2_3_21_add.grd") |>
+  dropLayer(i = 2)
+GL2_max <- stack("Pre_Processing/rasters_stacked/GL2_31_53_add.grd") |>
+  dropLayer(i = 2)
+
+# L2 --------------------------------------------------------------
+L2_base <- stack("Pre_Processing/rasters_stacked/L2_2_40_add.grd") |>
+  dropLayer(i = 2)
+L2_peak <- stack("Pre_Processing/rasters_stacked/L2_9_24_add.grd") |>
+  dropLayer(i = 2)
+L2_max <- stack("Pre_Processing/rasters_stacked/L2_18_90_add.grd") |>
+  dropLayer(i = 2)
+
+# M1 --------------------------------------------------------------
+M1_base <- stack("Pre_Processing/rasters_stacked/M1_0_47_add.grd") |>
+  dropLayer(i = 2)
+M1_peak <- stack("Pre_Processing/rasters_stacked/M1_18_84_add.grd") |>
+  dropLayer(i = 2)
+M1_max <- stack("Pre_Processing/rasters_stacked/M1_22_84_add.grd") |>
+  dropLayer(i = 2)
+
+# S1 --------------------------------------------------------------
+S1_base <- stack("Pre_Processing/rasters_stacked/S1_2_00_add.grd") |>
+  dropLayer(i = 2)
+S1_peak <- stack("Pre_Processing/rasters_stacked/S1_18_00_add.grd") |>
+  dropLayer(i = 2)
+S1_max <- stack("Pre_Processing/rasters_stacked/S1_20_00_add.grd") |>
+  dropLayer(i = 2)
+
+# S2 --------------------------------------------------------------
+S2_base <- stack("Pre_Processing/rasters_stacked/S2_2_00_add.grd") |>
+  dropLayer(i = 2)
+S2_peak <- stack("Pre_Processing/rasters_stacked/S2_18_00_add.grd") |>
+  dropLayer(i = 2)
+S2_max <- stack("Pre_Processing/rasters_stacked/S2_20_00_add.grd") |>
+  dropLayer(i = 2)
+
+# TH4 ---------------------------------------------------------------
+TH4_min <- stack("Pre_Processing/rasters_stacked/TH4_11_45_add.grd") |>
+  dropLayer(i = 2)
+TH4_max <- stack("Pre_Processing/rasters_stacked/TH4_32_93_add.grd") |>
+  dropLayer(i = 2)
+
+# VR3 ----------------------------------------------------------------
+VR3_base <- stack("Pre_Processing/rasters_stacked/VR3_2_90_add.grd") |>
+  dropLayer(i = 2)
+VR3_peak <- stack("Pre_Processing/rasters_stacked/VR3_40_10_add.grd") |>
+  dropLayer(i = 2)
+VR3_max <- stack("Pre_Processing/rasters_stacked/VR3_52_90_add.grd") |>
+  dropLayer(i = 2)
+
+# rename rasters in stacks for extraction 
+names(GL1_min) <- c("velocity", "froude", "shear_stress", "stream_power") 
+names(GL1_max) <- c("velocity", "froude", "shear_stress", "stream_power") 
+
+names(GL2_min) <- c("velocity", "froude", "shear_stress", "stream_power")
+names(GL2_max) <- c("velocity", "froude", "shear_stress", "stream_power")
+
+names(L2_base) <- c("velocity", "froude", "shear_stress", "stream_power")
+names(L2_peak) <- c("velocity", "froude", "shear_stress", "stream_power")
+names(L2_max) <- c("velocity", "froude", "shear_stress", "stream_power")
+
+names(M1_base) <- c("velocity", "froude", "shear_stress", "stream_power") 
+names(M1_peak) <- c("velocity", "froude", "shear_stress", "stream_power") 
+names(M1_max) <- c("velocity", "froude", "shear_stress", "stream_power") 
+
+names(S1_base) <- c("velocity", "froude", "shear_stress", "stream_power")
+names(S1_peak) <- c("velocity", "froude", "shear_stress", "stream_power")  
+names(S1_max) <- c("velocity", "froude", "shear_stress", "stream_power")  
+
+names(S2_base) <- c("velocity", "froude", "shear_stress", "stream_power")
+names(S2_peak) <- c("velocity", "froude", "shear_stress", "stream_power")  
+names(S2_max) <- c("velocity", "froude", "shear_stress", "stream_power") 
+
+names(TH4_min) <- c("velocity", "froude", "shear_stress", "stream_power")
+names(TH4_max) <- c("velocity", "froude", "shear_stress", "stream_power") 
+
+names(VR3_base) <- c("velocity", "froude", "shear_stress", "stream_power")
+names(VR3_peak) <- c("velocity", "froude", "shear_stress", "stream_power") 
+names(VR3_max) <- c("velocity", "froude", "shear_stress", "stream_power") 
+```
+
+## Predict Models to Maps 
+```{r}
+# predict ML model to rasters with velocity and wd 
+# The work-around is to write a prediction function that first coerces the data.frame with "new data" to a matrix. We can use that function with predict<SpatRaster>
+xgbpred <- function(model, data, ...) {
+    predict(model, newdata=as.matrix(data), ...)
+}
+
+# GL1 - predictor: velocity ---------------------------------------------------
+GL1_a_min <- terra::predict(GL1_min, model = xgb_v_a_c, fun = xgbpred)
+GL1_a_max <- terra::predict(GL1_max, model = xgb_v_a_c, fun = xgbpred)
+GL1_a_pers <- mask(GL1_a_max, GL1_a_min)
+
+GL1_ra_min <- terra::predict(GL1_min, model = xgb_v_ra_c, fun = xgbpred)
+GL1_ra_max <- terra::predict(GL1_max, model = xgb_v_ra_c, fun = xgbpred)
+GL1_ra_pers <- mask(GL1_ra_max, GL1_ra_min)
+
+# GL1 write rasters ---------------------
+writeRaster(GL1_a_min, "ML_model/scenarios/GL1_a_min_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL1_a_max, "ML_model/scenarios/GL1_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL1_a_pers, "ML_model/scenarios/GL1_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(GL1_ra_min, "ML_model/scenarios/GL1_ra_min_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL1_ra_max, "ML_model/scenarios/GL1_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL1_ra_pers, "ML_model/scenarios/GL1_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+# GL2 - predictor: velocity ---------------------------------------------------
+GL2_a_min <- terra::predict(GL2_min, model = xgb_v_a_c, fun = xgbpred)
+GL2_a_max <- terra::predict(GL2_max, model = xgb_v_a_c, fun = xgbpred)
+GL2_a_pers <- mask(GL2_a_max, GL2_a_min)
+
+GL2_ra_min <- terra::predict(GL2_min, model = xgb_v_ra_c, fun = xgbpred)
+GL2_ra_max <- terra::predict(GL2_max, model = xgb_v_ra_c, fun = xgbpred)
+GL2_ra_pers <- mask(GL2_ra_max, GL2_ra_min)
+
+# GL2 write rasters ---------------------
+writeRaster(GL2_a_min, "ML_model/scenarios/GL2_a_min_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_a_max, "ML_model/scenarios/GL2_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_a_pers, "ML_model/scenarios/GL2_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(GL2_ra_min, "ML_model/scenarios/GL2_ra_min_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_ra_max, "ML_model/scenarios/GL2_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_ra_pers, "ML_model/scenarios/GL2_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+# L2 - predictor: velocity ----------------------------------------------------
+L2_a_base <- terra::predict(L2_base, model = xgb_v_a_c, fun = xgbpred)
+L2_a_peak <- terra::predict(L2_peak, model = xgb_v_a_c, fun = xgbpred)
+L2_a_max <- terra::predict(L2_max, model = xgb_v_a_c, fun = xgbpred)
+L2_a_pers <- mask(L2_a_peak, L2_a_base)
+
+L2_ra_base <- terra::predict(L2_base, model = xgb_v_ra_c, fun = xgbpred)
+L2_ra_peak <- terra::predict(L2_peak, model = xgb_v_ra_c, fun = xgbpred)
+L2_ra_max <- terra::predict(L2_max, model = xgb_v_ra_c, fun = xgbpred)
+L2_ra_pers <- mask(L2_a_peak, L2_a_base)
+
+# L2 write rasters ---------------------
+writeRaster(L2_a_base, "ML_model/scenarios/L2_a_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_a_peak, "ML_model/scenarios/L2_a_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_a_max, "ML_model/scenarios/L2_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_a_pers, "ML_model/scenarios/L2_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(L2_ra_base, "ML_model/scenarios/L2_ra_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_ra_peak, "ML_model/scenarios/L2_ra_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_ra_max, "ML_model/scenarios/L2_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_ra_pers, "ML_model/scenarios/L2_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+# M1  - predictor: velocity ---------------------------------------------------
+M1_a_base <- terra::predict(M1_base, model = xgb_v_a_c, fun = xgbpred)
+M1_a_peak <- terra::predict(M1_peak, model = xgb_v_a_c, fun = xgbpred)
+M1_a_max <- terra::predict(M1_max, model = xgb_v_a_c, fun = xgbpred)
+M1_a_pers <- mask(M1_a_peak, M1_a_base)
+
+M1_ra_base <- terra::predict(M1_base, model = xgb_v_ra_c, fun = xgbpred)
+M1_ra_peak <- terra::predict(M1_peak, model = xgb_v_ra_c, fun = xgbpred)
+M1_ra_max <- terra::predict(M1_max, model = xgb_v_ra_c, fun = xgbpred)
+M1_ra_pers <- mask(M1_ra_peak, M1_ra_base)
+
+# M1 write rasters ---------------------
+writeRaster(M1_a_base, "ML_model/scenarios/M1_a_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_a_peak, "ML_model/scenarios/M1_a_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_a_max, "ML_model/scenarios/M1_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_a_pers, "ML_model/scenarios/M1_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(M1_ra_base, "ML_model/scenarios/M1_ra_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_ra_peak, "ML_model/scenarios/M1_ra_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_ra_max, "ML_model/scenarios/M1_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_ra_pers, "ML_model/scenarios/M1_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+# S1  - predictor: velocity ---------------------------------------------------
+S1_a_base <- terra::predict(S1_base, model = xgb_v_a_c, fun = xgbpred)
+S1_a_peak <- terra::predict(S1_peak, model = xgb_v_a_c, fun = xgbpred)
+S1_a_max <- terra::predict(S1_max, model = xgb_v_a_c, fun = xgbpred)
+S1_a_pers <- mask(S1_a_peak, S1_a_base)
+
+S1_ra_base <- terra::predict(S1_base, model = xgb_v_ra_c, fun = xgbpred)
+S1_ra_peak <- terra::predict(S1_peak, model = xgb_v_ra_c, fun = xgbpred)
+S1_ra_max <- terra::predict(S1_max, model = xgb_v_ra_c, fun = xgbpred)
+S1_ra_pers <- mask(S1_ra_peak, S1_ra_base)
+
+# S1 write rasters ---------------------
+writeRaster(S1_a_base, "ML_model/scenarios/S1_a_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_a_peak, "ML_model/scenarios/S1_a_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_a_max, "ML_model/scenarios/S1_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_a_pers, "ML_model/scenarios/S1_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(S1_ra_base, "ML_model/scenarios/S1_ra_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_ra_peak, "ML_model/scenarios/S1_ra_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_ra_max, "ML_model/scenarios/S1_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_ra_pers, "ML_model/scenarios/S1_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+# S2  - predictor: velocity ---------------------------------------------------
+S2_a_base <- terra::predict(S2_base, model = xgb_v_a_c, fun = xgbpred)
+S2_a_peak <- terra::predict(S2_peak, model = xgb_v_a_c, fun = xgbpred)
+S2_a_max <- terra::predict(S2_max, model = xgb_v_a_c, fun = xgbpred)
+S2_a_pers <- mask(S2_a_peak, S2_a_base)
+
+S2_ra_base <- terra::predict(S2_base, model = xgb_v_ra_c, fun = xgbpred)
+S2_ra_peak <- terra::predict(S2_peak, model = xgb_v_ra_c, fun = xgbpred)
+S2_ra_max <- terra::predict(S2_max, model = xgb_v_ra_c, fun = xgbpred)
+S2_ra_pers <- mask(S2_ra_peak, S2_ra_base)
+
+# S2 write rasters ---------------------
+writeRaster(S2_a_base, "ML_model/scenarios/S2_a_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_a_peak, "ML_model/scenarios/S2_a_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_a_max, "ML_model/scenarios/S2_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_a_pers, "ML_model/scenarios/S2_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(S2_ra_base, "ML_model/scenarios/S2_ra_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_ra_peak, "ML_model/scenarios/S2_ra_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_ra_max, "ML_model/scenarios/S2_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_ra_pers, "ML_model/scenarios/S2_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+# TH4  - predictor: velocity --------------------------------------------------
+TH4_a_min <- terra::predict(TH4_min, model = xgb_v_a_c, fun = xgbpred)
+TH4_a_max <- terra::predict(TH4_max, model = xgb_v_a_c, fun = xgbpred)
+TH4_a_pers <- mask(TH4_a_max, TH4_a_min)
+
+TH4_ra_min <- terra::predict(TH4_min, model = xgb_v_ra_c, fun = xgbpred)
+TH4_ra_max <- terra::predict(TH4_max, model = xgb_v_ra_c, fun = xgbpred)
+TH4_ra_pers <- mask(TH4_ra_max, TH4_ra_min)
+
+# TH4 write rasters ---------------------
+writeRaster(TH4_a_min, "ML_model/scenarios/TH4_a_min_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(TH4_a_max, "ML_model/scenarios/TH4_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(TH4_a_pers, "ML_model/scenarios/TH4_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(TH4_ra_min, "ML_model/scenarios/TH4_ra_min_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(TH4_ra_max, "ML_model/scenarios/TH4_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(TH4_ra_pers, "ML_model/scenarios/TH4_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+# VR3  - predictor: velocity --------------------------------------------------
+VR3_a_base <- terra::predict(VR3_base, model = xgb_v_a_c, fun = xgbpred)
+VR3_a_peak <- terra::predict(VR3_peak, model = xgb_v_a_c, fun = xgbpred)
+VR3_a_max <- terra::predict(VR3_max, model = xgb_v_a_c, fun = xgbpred)
+VR3_a_pers <- mask(VR3_a_peak, VR3_a_base)
+
+VR3_ra_base <- terra::predict(VR3_base, model = xgb_v_ra_c, fun = xgbpred)
+VR3_ra_peak <- terra::predict(VR3_peak, model = xgb_v_ra_c, fun = xgbpred)
+VR3_ra_max <- terra::predict(VR3_max, model = xgb_v_ra_c, fun = xgbpred)
+VR3_ra_pers <- mask(VR3_ra_peak, VR3_ra_base)
+
+# VR3 write rasters ---------------------
+writeRaster(VR3_a_base, "ML_model/scenarios/VR3_a_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_a_peak, "ML_model/scenarios/VR3_a_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_a_max, "ML_model/scenarios/VR3_a_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_a_pers, "ML_model/scenarios/VR3_a_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+
+writeRaster(VR3_ra_base, "ML_model/scenarios/VR3_ra_base_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_ra_peak, "ML_model/scenarios/VR3_ra_peak_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_ra_max, "ML_model/scenarios/VR3_ra_max_brt.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_ra_pers, "ML_model/scenarios/VR3_ra_pers_brt.tif", format = "GTiff", overwrite = TRUE)
+```
