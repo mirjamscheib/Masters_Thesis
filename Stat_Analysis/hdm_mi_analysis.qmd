@@ -27,11 +27,8 @@ pkgCheck("raster")
 pkgCheck("Metrics")
 pkgCheck("tidyr")
 pkgCheck("ggplot2")
+pkgCheck("hydroGOF") # for NSE calculation with NSE() function 
 ```
-
-vlt. zwischenschritt einbauen, Resultate vergleichen nur mit gemessenen wd und simulierten wd ein ML modell (welche Fehler macht das Modell, weil wir ihm nur simuliere Werte zum predicten geben anstatt)
-
-Regressionsanalyse wd, v zwischen gemessen und simuliert, ich muss schon quantifizieren wie die abweichung zwischen input daten und simulierten daten sind. 
 
 # Evaluation HDM Results
 ## Load rasters
@@ -227,7 +224,7 @@ regr_hdm <- rbind(regr_GL1, regr_GL2, regr_L2, regr_M1, regr_S1, regr_S2, regr_T
 write.csv(regr_hdm, "Stat_Analysis/regr_analysis_hdm.csv", row.names = FALSE)
 ```
 
-# RMSE & MAE
+# Metrics
 ```{r}
 # load data 
 data_hdm <- read_delim("Stat_Analysis/regr_analysis_hdm.csv") |>
@@ -397,6 +394,552 @@ mae_wd <- Metrics::mae(actual = data_hdm$wd_m, predicted = data_hdm$wd_m_raster)
 mae_f <- Metrics::mae(actual = data_hdm$froude, predicted = data_hdm$froude_raster)
 mae_s <- Metrics::mae(actual = data_hdm$shear_stress, predicted = data_hdm$shear_raster)
 mae_sp <- Metrics::mae(actual = data_hdm$stream_power, predicted = data_hdm$stream_raster)
+```
+
+## NSE 
+```{r}
+## GL1 
+nse_v_GL1 <- NSE(sim = GL1$v_raster, obs = GL1$velocity)
+nse_wd_GL1 <- NSE(sim = GL1$wd_m_raster, obs = GL1$wd_m)
+nse_f_GL1 <- NSE(sim = GL1$froude_raster, obs = GL1$froude)
+nse_s_GL1 <- NSE(obs = GL1$shear_stress, sim = GL1$shear_raster)
+nse_sp_GL1 <- NSE(obs = GL1$stream_power, sim = GL1$stream_raster)
+
+## GL2 
+nse_v_GL2 <- NSE(obs = GL2$velocity, sim = GL2$v_raster)
+nse_wd_GL2 <- NSE(obs = GL2$wd_m, sim = GL2$wd_m_raster)
+nse_f_GL2 <- NSE(obs = GL2$froude, sim = GL2$froude_raster)
+nse_s_GL2 <- NSE(obs = GL2$shear_stress, sim = GL2$shear_raster)
+nse_sp_GL2 <- NSE(obs = GL2$stream_power, sim = GL2$stream_raster)
+
+## L2 
+nse_v_L2 <- NSE(obs = L2$velocity, sim = L2$v_raster)
+nse_wd_L2 <- NSE(obs = L2$wd_m, sim = L2$wd_m_raster)
+nse_f_L2 <- NSE(obs = L2$froude, sim = L2$froude_raster)
+nse_s_L2 <- NSE(obs = L2$shear_stress, sim = L2$shear_raster)
+nse_sp_L2 <- NSE(obs = L2$stream_power, sim = L2$stream_raster)
+
+## M1 
+nse_v_M1 <- NSE(obs = M1$velocity, sim = M1$v_raster)
+nse_wd_M1 <- NSE(obs = M1$wd_m, sim = M1$wd_m_raster)
+nse_f_M1 <- NSE(obs = M1$froude, sim = M1$froude_raster)
+nse_s_M1 <- NSE(obs = M1$shear_stress, sim = M1$shear_raster)
+nse_sp_M1 <- NSE(obs = M1$stream_power, sim = M1$stream_raster)
+
+## S1
+nse_v_S1 <- NSE(obs = S1$velocity, sim = S1$v_raster)
+nse_wd_S1 <- NSE(obs = S1$wd_m, sim = S1$wd_m_raster)
+nse_f_S1 <- NSE(obs = S1$froude, sim = S1$froude_raster)
+nse_s_S1 <- NSE(obs = S1$shear_stress, sim = S1$shear_raster)
+nse_sp_S1 <- NSE(obs = S1$stream_power, sim = S1$stream_raster)
+
+## S2
+nse_v_S2 <- NSE(obs = S2$velocity, sim = S2$v_raster)
+nse_wd_S2 <- NSE(obs = S2$wd_m, sim = S2$wd_m_raster)
+nse_f_S2 <- NSE(obs = S2$froude, sim = S2$froude_raster)
+nse_s_S2 <- NSE(obs = S2$shear_stress, sim = S2$shear_raster)
+nse_sp_S2 <- NSE(obs = S2$stream_power, sim = S2$stream_raster)
+
+## TH4
+nse_v_TH4 <- NSE(obs = TH4$velocity, sim = TH4$v_raster)
+nse_wd_TH4 <- NSE(obs = TH4$wd_m, sim = TH4$wd_m_raster)
+nse_f_TH4 <- NSE(obs = TH4$froude, sim = TH4$froude_raster)
+nse_s_TH4 <- NSE(obs = TH4$shear_stress, sim = TH4$shear_raster)
+nse_sp_TH4 <- NSE(obs = TH4$stream_power, sim = TH4$stream_raster)
+
+## VR3
+nse_v_VR3 <- NSE(obs = VR3$velocity, sim = VR3$v_raster)
+nse_wd_VR3 <- NSE(obs = VR3$wd_m, sim = VR3$wd_m_raster)
+nse_f_VR3 <- NSE(obs = VR3$froude, sim = VR3$froude_raster)
+nse_s_VR3 <- NSE(obs = VR3$shear_stress, sim = VR3$shear_raster)
+nse_sp_VR3 <- NSE(obs = VR3$stream_power, sim = VR3$stream_raster)
+
+## ALL
+nse_v <- NSE(obs = data_hdm$velocity, sim = data_hdm$v_raster)
+nse_wd <- NSE(obs = data_hdm$wd_m, sim = data_hdm$wd_m_raster)
+nse_f <- NSE(obs = data_hdm$froude, sim = data_hdm$froude_raster)
+nse_s <- NSE(obs = data_hdm$shear_stress, sim = data_hdm$shear_raster)
+nse_sp <- NSE(obs = data_hdm$stream_power, sim = data_hdm$stream_raster)
+```
+
+## Mean, SD, Min, Max
+```{r}
+### GL1 ### ----------------------------------------------------------------
+### MEAN ###
+GL1_mean_v <- mean(GL1$velocity)
+GL1_mean_wd <- mean(GL1$wd_m)
+GL1_mean_f <- mean(GL1$froude)
+GL1_mean_s <- mean(GL1$shear_stress)
+GL1_mean_sp <- mean(GL1$stream_power)
+
+GL1_mean_v_r <- mean(GL1$v_raster)
+GL1_mean_wd_r <- mean(GL1$wd_m_raster)
+GL1_mean_f_r <- mean(GL1$froude_raster)
+GL1_mean_s_r <- mean(GL1$shear_raster)
+GL1_mean_sp_r <- mean(GL1$stream_raster)
+
+### SD ### 
+GL1_sd_v <- sd(GL1$velocity)
+GL1_sd_wd <- sd(GL1$wd_m)
+GL1_sd_f <- sd(GL1$froude)
+GL1_sd_s <- sd(GL1$shear_stress)
+GL1_sd_sp <- sd(GL1$stream_power)
+
+GL1_sd_v_r <- sd(GL1$v_raster)
+GL1_sd_wd_r <- sd(GL1$wd_m_raster)
+GL1_sd_f_r <- sd(GL1$froude_raster)
+GL1_sd_s_r <- sd(GL1$shear_raster)
+GL1_sd_sp_r <- sd(GL1$stream_raster)
+
+### MIN ### 
+GL1_min_v <- min(GL1$velocity)
+GL1_min_wd <- min(GL1$wd_m)
+GL1_min_f <- min(GL1$froude)
+GL1_min_s <- min(GL1$shear_stress)
+GL1_min_sp <- min(GL1$stream_power)
+
+GL1_min_v_r <- min(GL1$v_raster)
+GL1_min_wd_r <- min(GL1$wd_m_raster)
+GL1_min_f_r <- min(GL1$froude_raster)
+GL1_min_s_r <- min(GL1$shear_raster)
+GL1_min_sp_r <- min(GL1$stream_raster)
+
+### MAX ### 
+GL1_max_v <- max(GL1$velocity)
+GL1_max_wd <- max(GL1$wd_m)
+GL1_max_f <- max(GL1$froude)
+GL1_max_s <- max(GL1$shear_stress)
+GL1_max_sp <- max(GL1$stream_power)
+
+GL1_max_v_r <- max(GL1$v_raster)
+GL1_max_wd_r <- max(GL1$wd_m_raster)
+GL1_max_f_r <- max(GL1$froude_raster)
+GL1_max_s_r <- max(GL1$shear_raster)
+GL1_max_sp_r <- max(GL1$stream_raster)
+
+### GL2 ### ----------------------------------------------------------------
+### MEAN ###
+GL2_mean_v <- mean(GL2$velocity)
+GL2_mean_wd <- mean(GL2$wd_m)
+GL2_mean_f <- mean(GL2$froude)
+GL2_mean_s <- mean(GL2$shear_stress)
+GL2_mean_sp <- mean(GL2$stream_power)
+
+GL2_mean_v_r <- mean(GL2$v_raster)
+GL2_mean_wd_r <- mean(GL2$wd_m_raster)
+GL2_mean_f_r <- mean(GL2$froude_raster)
+GL2_mean_s_r <- mean(GL2$shear_raster)
+GL2_mean_sp_r <- mean(GL2$stream_raster)
+
+### SD ### 
+GL2_sd_v <- sd(GL2$velocity)
+GL2_sd_wd <- sd(GL2$wd_m)
+GL2_sd_f <- sd(GL2$froude)
+GL2_sd_s <- sd(GL2$shear_stress)
+GL2_sd_sp <- sd(GL2$stream_power)
+
+GL2_sd_v_r <- sd(GL2$v_raster)
+GL2_sd_wd_r <- sd(GL2$wd_m_raster)
+GL2_sd_f_r <- sd(GL2$froude_raster)
+GL2_sd_s_r <- sd(GL2$shear_raster)
+GL2_sd_sp_r <- sd(GL2$stream_raster)
+
+### MIN ### 
+GL2_min_v <- min(GL2$velocity)
+GL2_min_wd <- min(GL2$wd_m)
+GL2_min_f <- min(GL2$froude)
+GL2_min_s <- min(GL2$shear_stress)
+GL2_min_sp <- min(GL2$stream_power)
+
+GL2_min_v_r <- min(GL2$v_raster)
+GL2_min_wd_r <- min(GL2$wd_m_raster)
+GL2_min_f_r <- min(GL2$froude_raster)
+GL2_min_s_r <- min(GL2$shear_raster)
+GL2_min_sp_r <- min(GL2$stream_raster)
+
+### MAX ### 
+GL2_max_v <- max(GL2$velocity)
+GL2_max_wd <- max(GL2$wd_m)
+GL2_max_f <- max(GL2$froude)
+GL2_max_s <- max(GL2$shear_stress)
+GL2_max_sp <- max(GL2$stream_power)
+
+GL2_max_v_r <- max(GL2$v_raster)
+GL2_max_wd_r <- max(GL2$wd_m_raster)
+GL2_max_f_r <- max(GL2$froude_raster)
+GL2_max_s_r <- max(GL2$shear_raster)
+GL2_max_sp_r <- max(GL2$stream_raster)
+
+### L2 ### ----------------------------------------------------------------
+### MEAN ###
+L2_mean_v <- mean(L2$velocity)
+L2_mean_wd <- mean(L2$wd_m)
+L2_mean_f <- mean(L2$froude)
+L2_mean_s <- mean(L2$shear_stress)
+L2_mean_sp <- mean(L2$stream_power)
+
+L2_mean_v_r <- mean(L2$v_raster)
+L2_mean_wd_r <- mean(L2$wd_m_raster)
+L2_mean_f_r <- mean(L2$froude_raster)
+L2_mean_s_r <- mean(L2$shear_raster)
+L2_mean_sp_r <- mean(L2$stream_raster)
+
+### SD ### 
+L2_sd_v <- sd(L2$velocity)
+L2_sd_wd <- sd(L2$wd_m)
+L2_sd_f <- sd(L2$froude)
+L2_sd_s <- sd(L2$shear_stress)
+L2_sd_sp <- sd(L2$stream_power)
+
+L2_sd_v_r <- sd(L2$v_raster)
+L2_sd_wd_r <- sd(L2$wd_m_raster)
+L2_sd_f_r <- sd(L2$froude_raster)
+L2_sd_s_r <- sd(L2$shear_raster)
+L2_sd_sp_r <- sd(L2$stream_raster)
+
+### MIN ### 
+L2_min_v <- min(L2$velocity)
+L2_min_wd <- min(L2$wd_m)
+L2_min_f <- min(L2$froude)
+L2_min_s <- min(L2$shear_stress)
+L2_min_sp <- min(L2$stream_power)
+
+L2_min_v_r <- min(L2$v_raster)
+L2_min_wd_r <- min(L2$wd_m_raster)
+L2_min_f_r <- min(L2$froude_raster)
+L2_min_s_r <- min(L2$shear_raster)
+L2_min_sp_r <- min(L2$stream_raster)
+
+### MAX ### 
+L2_max_v <- max(L2$velocity)
+L2_max_wd <- max(L2$wd_m)
+L2_max_f <- max(L2$froude)
+L2_max_s <- max(L2$shear_stress)
+L2_max_sp <- max(L2$stream_power)
+
+L2_max_v_r <- max(L2$v_raster)
+L2_max_wd_r <- max(L2$wd_m_raster)
+L2_max_f_r <- max(L2$froude_raster)
+L2_max_s_r <- max(L2$shear_raster)
+L2_max_sp_r <- max(L2$stream_raster)
+
+### M1 ### ----------------------------------------------------------------
+### MEAN ###
+M1_mean_v <- mean(M1$velocity)
+M1_mean_wd <- mean(M1$wd_m)
+M1_mean_f <- mean(M1$froude)
+M1_mean_s <- mean(M1$shear_stress)
+M1_mean_sp <- mean(M1$stream_power)
+
+M1_mean_v_r <- mean(M1$v_raster)
+M1_mean_wd_r <- mean(M1$wd_m_raster)
+M1_mean_f_r <- mean(M1$froude_raster)
+M1_mean_s_r <- mean(M1$shear_raster)
+M1_mean_sp_r <- mean(M1$stream_raster)
+
+### SD ### 
+M1_sd_v <- sd(M1$velocity)
+M1_sd_wd <- sd(M1$wd_m)
+M1_sd_f <- sd(M1$froude)
+M1_sd_s <- sd(M1$shear_stress)
+M1_sd_sp <- sd(M1$stream_power)
+
+M1_sd_v_r <- sd(M1$v_raster)
+M1_sd_wd_r <- sd(M1$wd_m_raster)
+M1_sd_f_r <- sd(M1$froude_raster)
+M1_sd_s_r <- sd(M1$shear_raster)
+M1_sd_sp_r <- sd(M1$stream_raster)
+
+### MIN ### 
+M1_min_v <- min(M1$velocity)
+M1_min_wd <- min(M1$wd_m)
+M1_min_f <- min(M1$froude)
+M1_min_s <- min(M1$shear_stress)
+M1_min_sp <- min(M1$stream_power)
+
+M1_min_v_r <- min(M1$v_raster)
+M1_min_wd_r <- min(M1$wd_m_raster)
+M1_min_f_r <- min(M1$froude_raster)
+M1_min_s_r <- min(M1$shear_raster)
+M1_min_sp_r <- min(M1$stream_raster)
+
+### MAX ### 
+M1_max_v <- max(M1$velocity)
+M1_max_wd <- max(M1$wd_m)
+M1_max_f <- max(M1$froude)
+M1_max_s <- max(M1$shear_stress)
+M1_max_sp <- max(M1$stream_power)
+
+M1_max_v_r <- max(M1$v_raster)
+M1_max_wd_r <- max(M1$wd_m_raster)
+M1_max_f_r <- max(M1$froude_raster)
+M1_max_s_r <- max(M1$shear_raster)
+M1_max_sp_r <- max(M1$stream_raster)
+
+### S1 ### ----------------------------------------------------------------
+### MEAN ###
+S1_mean_v <- mean(S1$velocity)
+S1_mean_wd <- mean(S1$wd_m)
+S1_mean_f <- mean(S1$froude)
+S1_mean_s <- mean(S1$shear_stress)
+S1_mean_sp <- mean(S1$stream_power)
+
+S1_mean_v_r <- mean(S1$v_raster)
+S1_mean_wd_r <- mean(S1$wd_m_raster)
+S1_mean_f_r <- mean(S1$froude_raster)
+S1_mean_s_r <- mean(S1$shear_raster)
+S1_mean_sp_r <- mean(S1$stream_raster)
+
+### SD ### 
+S1_sd_v <- sd(S1$velocity)
+S1_sd_wd <- sd(S1$wd_m)
+S1_sd_f <- sd(S1$froude)
+S1_sd_s <- sd(S1$shear_stress)
+S1_sd_sp <- sd(S1$stream_power)
+
+S1_sd_v_r <- sd(S1$v_raster)
+S1_sd_wd_r <- sd(S1$wd_m_raster)
+S1_sd_f_r <- sd(S1$froude_raster)
+S1_sd_s_r <- sd(S1$shear_raster)
+S1_sd_sp_r <- sd(S1$stream_raster)
+
+### MIN ### 
+S1_min_v <- min(S1$velocity)
+S1_min_wd <- min(S1$wd_m)
+S1_min_f <- min(S1$froude)
+S1_min_s <- min(S1$shear_stress)
+S1_min_sp <- min(S1$stream_power)
+
+S1_min_v_r <- min(S1$v_raster)
+S1_min_wd_r <- min(S1$wd_m_raster)
+S1_min_f_r <- min(S1$froude_raster)
+S1_min_s_r <- min(S1$shear_raster)
+S1_min_sp_r <- min(S1$stream_raster)
+
+### MAX ### 
+S1_max_v <- max(S1$velocity)
+S1_max_wd <- max(S1$wd_m)
+S1_max_f <- max(S1$froude)
+S1_max_s <- max(S1$shear_stress)
+S1_max_sp <- max(S1$stream_power)
+
+S1_max_v_r <- max(S1$v_raster)
+S1_max_wd_r <- max(S1$wd_m_raster)
+S1_max_f_r <- max(S1$froude_raster)
+S1_max_s_r <- max(S1$shear_raster)
+S1_max_sp_r <- max(S1$stream_raster)
+
+### S2 ### ----------------------------------------------------------------
+### MEAN ###
+S2_mean_v <- mean(S2$velocity)
+S2_mean_wd <- mean(S2$wd_m)
+S2_mean_f <- mean(S2$froude)
+S2_mean_s <- mean(S2$shear_stress)
+S2_mean_sp <- mean(S2$stream_power)
+
+S2_mean_v_r <- mean(S2$v_raster)
+S2_mean_wd_r <- mean(S2$wd_m_raster)
+S2_mean_f_r <- mean(S2$froude_raster)
+S2_mean_s_r <- mean(S2$shear_raster)
+S2_mean_sp_r <- mean(S2$stream_raster)
+
+### SD ### 
+S2_sd_v <- sd(S2$velocity)
+S2_sd_wd <- sd(S2$wd_m)
+S2_sd_f <- sd(S2$froude)
+S2_sd_s <- sd(S2$shear_stress)
+S2_sd_sp <- sd(S2$stream_power)
+
+S2_sd_v_r <- sd(S2$v_raster)
+S2_sd_wd_r <- sd(S2$wd_m_raster)
+S2_sd_f_r <- sd(S2$froude_raster)
+S2_sd_s_r <- sd(S2$shear_raster)
+S2_sd_sp_r <- sd(S2$stream_raster)
+
+### MIN ### 
+S2_min_v <- min(S2$velocity)
+S2_min_wd <- min(S2$wd_m)
+S2_min_f <- min(S2$froude)
+S2_min_s <- min(S2$shear_stress)
+S2_min_sp <- min(S2$stream_power)
+
+S2_min_v_r <- min(S2$v_raster)
+S2_min_wd_r <- min(S2$wd_m_raster)
+S2_min_f_r <- min(S2$froude_raster)
+S2_min_s_r <- min(S2$shear_raster)
+S2_min_sp_r <- min(S2$stream_raster)
+
+### MAX ### 
+S2_max_v <- max(S2$velocity)
+S2_max_wd <- max(S2$wd_m)
+S2_max_f <- max(S2$froude)
+S2_max_s <- max(S2$shear_stress)
+S2_max_sp <- max(S2$stream_power)
+
+S2_max_v_r <- max(S2$v_raster)
+S2_max_wd_r <- max(S2$wd_m_raster)
+S2_max_f_r <- max(S2$froude_raster)
+S2_max_s_r <- max(S2$shear_raster)
+S2_max_sp_r <- max(S2$stream_raster)
+
+### TH4 ### ----------------------------------------------------------------
+### MEAN ###
+TH4_mean_v <- mean(TH4$velocity)
+TH4_mean_wd <- mean(TH4$wd_m)
+TH4_mean_f <- mean(TH4$froude)
+TH4_mean_s <- mean(TH4$shear_stress)
+TH4_mean_sp <- mean(TH4$stream_power)
+
+TH4_mean_v_r <- mean(TH4$v_raster)
+TH4_mean_wd_r <- mean(TH4$wd_m_raster)
+TH4_mean_f_r <- mean(TH4$froude_raster)
+TH4_mean_s_r <- mean(TH4$shear_raster)
+TH4_mean_sp_r <- mean(TH4$stream_raster)
+
+### SD ### 
+TH4_sd_v <- sd(TH4$velocity)
+TH4_sd_wd <- sd(TH4$wd_m)
+TH4_sd_f <- sd(TH4$froude)
+TH4_sd_s <- sd(TH4$shear_stress)
+TH4_sd_sp <- sd(TH4$stream_power)
+
+TH4_sd_v_r <- sd(TH4$v_raster)
+TH4_sd_wd_r <- sd(TH4$wd_m_raster)
+TH4_sd_f_r <- sd(TH4$froude_raster)
+TH4_sd_s_r <- sd(TH4$shear_raster)
+TH4_sd_sp_r <- sd(TH4$stream_raster)
+
+### MIN ### 
+TH4_min_v <- min(TH4$velocity)
+TH4_min_wd <- min(TH4$wd_m)
+TH4_min_f <- min(TH4$froude)
+TH4_min_s <- min(TH4$shear_stress)
+TH4_min_sp <- min(TH4$stream_power)
+
+TH4_min_v_r <- min(TH4$v_raster)
+TH4_min_wd_r <- min(TH4$wd_m_raster)
+TH4_min_f_r <- min(TH4$froude_raster)
+TH4_min_s_r <- min(TH4$shear_raster)
+TH4_min_sp_r <- min(TH4$stream_raster)
+
+### MAX ### 
+TH4_max_v <- max(TH4$velocity)
+TH4_max_wd <- max(TH4$wd_m)
+TH4_max_f <- max(TH4$froude)
+TH4_max_s <- max(TH4$shear_stress)
+TH4_max_sp <- max(TH4$stream_power)
+
+TH4_max_v_r <- max(TH4$v_raster)
+TH4_max_wd_r <- max(TH4$wd_m_raster)
+TH4_max_f_r <- max(TH4$froude_raster)
+TH4_max_s_r <- max(TH4$shear_raster)
+TH4_max_sp_r <- max(TH4$stream_raster)
+
+### VR3 ### ----------------------------------------------------------------
+### MEAN ###
+VR3_mean_v <- mean(VR3$velocity)
+VR3_mean_wd <- mean(VR3$wd_m)
+VR3_mean_f <- mean(VR3$froude)
+VR3_mean_s <- mean(VR3$shear_stress)
+VR3_mean_sp <- mean(VR3$stream_power)
+
+VR3_mean_v_r <- mean(VR3$v_raster)
+VR3_mean_wd_r <- mean(VR3$wd_m_raster)
+VR3_mean_f_r <- mean(VR3$froude_raster)
+VR3_mean_s_r <- mean(VR3$shear_raster)
+VR3_mean_sp_r <- mean(VR3$stream_raster)
+
+### SD ### 
+VR3_sd_v <- sd(VR3$velocity)
+VR3_sd_wd <- sd(VR3$wd_m)
+VR3_sd_f <- sd(VR3$froude)
+VR3_sd_s <- sd(VR3$shear_stress)
+VR3_sd_sp <- sd(VR3$stream_power)
+
+VR3_sd_v_r <- sd(VR3$v_raster)
+VR3_sd_wd_r <- sd(VR3$wd_m_raster)
+VR3_sd_f_r <- sd(VR3$froude_raster)
+VR3_sd_s_r <- sd(VR3$shear_raster)
+VR3_sd_sp_r <- sd(VR3$stream_raster)
+
+### MIN ### 
+VR3_min_v <- min(VR3$velocity)
+VR3_min_wd <- min(VR3$wd_m)
+VR3_min_f <- min(VR3$froude)
+VR3_min_s <- min(VR3$shear_stress)
+VR3_min_sp <- min(VR3$stream_power)
+
+VR3_min_v_r <- min(VR3$v_raster)
+VR3_min_wd_r <- min(VR3$wd_m_raster)
+VR3_min_f_r <- min(VR3$froude_raster)
+VR3_min_s_r <- min(VR3$shear_raster)
+VR3_min_sp_r <- min(VR3$stream_raster)
+
+### MAX ### 
+VR3_max_v <- max(VR3$velocity)
+VR3_max_wd <- max(VR3$wd_m)
+VR3_max_f <- max(VR3$froude)
+VR3_max_s <- max(VR3$shear_stress)
+VR3_max_sp <- max(VR3$stream_power)
+
+VR3_max_v_r <- max(VR3$v_raster)
+VR3_max_wd_r <- max(VR3$wd_m_raster)
+VR3_max_f_r <- max(VR3$froude_raster)
+VR3_max_s_r <- max(VR3$shear_raster)
+VR3_max_sp_r <- max(VR3$stream_raster)
+
+### ALL ### ----------------------------------------------------------------
+### MEAN ###
+mean_v <- mean(data_hdm$velocity)
+mean_wd <- mean(data_hdm$wd_m)
+mean_f <- mean(data_hdm$froude)
+mean_s <- mean(data_hdm$shear_stress)
+mean_sp <- mean(data_hdm$stream_power)
+
+mean_v_r <- mean(data_hdm$v_raster)
+mean_wd_r <- mean(data_hdm$wd_m_raster)
+mean_f_r <- mean(data_hdm$froude_raster)
+mean_s_r <- mean(data_hdm$shear_raster)
+mean_sp_r <- mean(data_hdm$stream_raster)
+
+### SD ### 
+sd_v <- sd(data_hdm$velocity)
+sd_wd <- sd(data_hdm$wd_m)
+sd_f <- sd(data_hdm$froude)
+sd_s <- sd(data_hdm$shear_stress)
+sd_sp <- sd(data_hdm$stream_power)
+
+sd_v_r <- sd(data_hdm$v_raster)
+sd_wd_r <- sd(data_hdm$wd_m_raster)
+sd_f_r <- sd(data_hdm$froude_raster)
+sd_s_r <- sd(data_hdm$shear_raster)
+sd_sp_r <- sd(data_hdm$stream_raster)
+
+### MIN ### 
+min_v <- min(data_hdm$velocity)
+min_wd <- min(data_hdm$wd_m)
+min_f <- min(data_hdm$froude)
+min_s <- min(data_hdm$shear_stress)
+min_sp <- min(data_hdm$stream_power)
+
+min_v_r <- min(data_hdm$v_raster)
+min_wd_r <- min(data_hdm$wd_m_raster)
+min_f_r <- min(data_hdm$froude_raster)
+min_s_r <- min(data_hdm$shear_raster)
+min_sp_r <- min(data_hdm$stream_raster)
+
+### MAX ### 
+max_v <- max(data_hdm$velocity)
+max_wd <- max(data_hdm$wd_m)
+max_f <- max(data_hdm$froude)
+max_s <- max(data_hdm$shear_stress)
+max_sp <- max(data_hdm$stream_power)
+
+max_v_r <- max(data_hdm$v_raster)
+max_wd_r <- max(data_hdm$wd_m_raster)
+max_f_r <- max(data_hdm$froude_raster)
+max_s_r <- max(data_hdm$shear_raster)
+max_sp_r <- max(data_hdm$stream_raster)
 ```
 
 # Regr. Analysis
@@ -711,11 +1254,11 @@ vel <- ggplot(data_hdm, aes(velocity, v_raster)) +
   xlim(0, 1.0) + 
   labs(
     x = "Velocity Measured (m/s)",
-    y = "Velocity Extracted (m/s)"
+    y = "Velocity Simulated (m/s)"
   ) +
   theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_velocity.png", plot = vel, width = 6, height = 5)
@@ -730,11 +1273,11 @@ wd <- ggplot(data_hdm, aes(wd_m, wd_m_raster)) +
   xlim(0, 1.0) + 
   labs(
     x = "Water Depth Measured (m)",
-    y = "Water Depth Extracted (m/s)"
+    y = "Water Depth Simulated (m/s)"
   ) +
   theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_wd.png", plot = wd, width = 6, height = 5)
@@ -807,6 +1350,24 @@ results_hdm <- data.frame(lm_p_value = c(p_v_GL1, p_wd_GL1, p_f_GL1, p_s_GL1, p_
   rmse = c(rmse_v_GL1, rmse_wd_GL1, rmse_f_GL1, rmse_s_GL1, rmse_sp_GL1, rmse_v_GL2, rmse_wd_GL2, rmse_f_GL2, rmse_s_GL2, rmse_sp_GL2, rmse_v_L2, rmse_wd_L2, rmse_f_L2, rmse_s_L2, rmse_sp_L2, rmse_v_M1, rmse_wd_M1, rmse_f_M1, rmse_s_M1, rmse_sp_M1, rmse_v_S1, rmse_wd_S1, rmse_f_S1, rmse_s_S1, rmse_sp_S1, rmse_v_S2, rmse_wd_S2, rmse_f_S2, rmse_s_S2, rmse_sp_S2, rmse_v_TH4, rmse_wd_TH4, rmse_f_TH4, rmse_s_TH4, rmse_sp_TH4, rmse_v_VR3, rmse_wd_VR3, rmse_f_VR3, rmse_s_VR3, rmse_sp_VR3, rmse_v, rmse_wd, rmse_f, rmse_s, rmse_sp),
   
            mae = c(mae_v_GL1, mae_wd_GL1, mae_f_GL1, mae_s_GL1, mae_sp_GL1, mae_v_GL2, mae_wd_GL2, mae_f_GL2, mae_s_GL2, mae_sp_GL2, mae_v_L2, mae_wd_L2, mae_f_L2, mae_s_L2, mae_sp_L2, mae_v_M1, mae_wd_M1, mae_f_M1, mae_s_M1, mae_sp_M1, mae_v_S1, mae_wd_S1, mae_f_S1, mae_s_S1, mae_sp_S1, mae_v_S2, mae_wd_S2, mae_f_S2, mae_s_S2, mae_sp_S2, mae_v_TH4, mae_wd_TH4, mae_f_TH4, mae_s_TH4, mae_sp_TH4, mae_v_VR3, mae_wd_VR3, mae_f_VR3, mae_s_VR3, mae_sp_VR3, mae_v, mae_wd, mae_f, mae_s, mae_sp),
+  
+  nse = c(nse_v_GL1, nse_wd_GL1, nse_f_GL1, nse_s_GL1, nse_sp_GL1, nse_v_GL2, nse_wd_GL2, nse_f_GL2, nse_s_GL2, nse_sp_GL2, nse_v_L2, nse_wd_L2, nse_f_L2, nse_s_L2, nse_sp_L2, nse_v_M1, nse_wd_M1, nse_f_M1, nse_s_M1, nse_sp_M1, nse_v_S1, nse_wd_S1, nse_f_S1, nse_s_S1, nse_sp_S1, nse_v_S2, nse_wd_S2, nse_f_S2, nse_s_S2, nse_sp_S2, nse_v_TH4, nse_wd_TH4, nse_f_TH4, nse_s_TH4, nse_sp_TH4, nse_v_VR3, nse_wd_VR3, nse_f_VR3, nse_s_VR3, nse_sp_VR3, nse_v, nse_wd, nse_f, nse_s, nse_sp),
+  
+  mean_obs = c(GL1_mean_v, GL1_mean_wd, GL1_mean_f, GL1_mean_s, GL1_mean_sp, GL2_mean_v, GL2_mean_wd, GL2_mean_f, GL2_mean_s, GL2_mean_sp, L2_mean_v, L2_mean_wd, L2_mean_f, L2_mean_s, L2_mean_sp, M1_mean_v, M1_mean_wd, M1_mean_f, M1_mean_s, M1_mean_sp, S1_mean_v, S1_mean_wd, S1_mean_f, S1_mean_s, S1_mean_sp, S2_mean_v, S2_mean_wd, S2_mean_f, S2_mean_s, S2_mean_sp, TH4_mean_v, TH4_mean_wd, TH4_mean_f, TH4_mean_s, TH4_mean_sp, VR3_mean_v, VR3_mean_wd, VR3_mean_f, VR3_mean_s, VR3_mean_sp, mean_v, mean_wd, mean_f, mean_s, mean_sp), 
+  
+  mean_raster = c(GL1_mean_v_r, GL1_mean_wd_r, GL1_mean_f_r, GL1_mean_s_r, GL1_mean_sp_r, GL2_mean_v_r, GL2_mean_wd_r, GL2_mean_f_r, GL2_mean_s_r, GL2_mean_sp_r, L2_mean_v_r, L2_mean_wd_r, L2_mean_f_r, L2_mean_s_r, L2_mean_sp_r, M1_mean_v_r, M1_mean_wd_r, M1_mean_f_r, M1_mean_s_r, M1_mean_sp_r, S1_mean_v_r, S1_mean_wd_r, S1_mean_f_r, S1_mean_s_r, S1_mean_sp_r, S2_mean_v_r, S2_mean_wd_r, S2_mean_f_r, S2_mean_s_r, S2_mean_sp_r, TH4_mean_v_r, TH4_mean_wd_r, TH4_mean_f_r, TH4_mean_s_r, TH4_mean_sp_r, VR3_mean_v_r, VR3_mean_wd_r, VR3_mean_f_r, VR3_mean_s_r, VR3_mean_sp_r, mean_v_r, mean_wd_r, mean_f_r, mean_s_r, mean_sp_r), 
+  
+  sd_obs = c(GL1_sd_v, GL1_sd_wd, GL1_sd_f, GL1_sd_s, GL1_sd_sp, GL2_sd_v, GL2_sd_wd, GL2_sd_f, GL2_sd_s, GL2_sd_sp, L2_sd_v, L2_sd_wd, L2_sd_f, L2_sd_s, L2_sd_sp, M1_sd_v, M1_sd_wd, M1_sd_f, M1_sd_s, M1_sd_sp, S1_sd_v, S1_sd_wd, S1_sd_f, S1_sd_s, S1_sd_sp, S2_sd_v, S2_sd_wd, S2_sd_f, S2_sd_s, S2_sd_sp, TH4_sd_v, TH4_sd_wd, TH4_sd_f, TH4_sd_s, TH4_sd_sp, VR3_sd_v, VR3_sd_wd, VR3_sd_f, VR3_sd_s, VR3_sd_sp, sd_v, sd_wd, sd_f, sd_s, sd_sp), 
+  
+  sd_raster = c(GL1_sd_v_r, GL1_sd_wd_r, GL1_sd_f_r, GL1_sd_s_r, GL1_sd_sp_r, GL2_sd_v_r, GL2_sd_wd_r, GL2_sd_f_r, GL2_sd_s_r, GL2_sd_sp_r, L2_sd_v_r, L2_sd_wd_r, L2_sd_f_r, L2_sd_s_r, L2_sd_sp_r, M1_sd_v_r, M1_sd_wd_r, M1_sd_f_r, M1_sd_s_r, M1_sd_sp_r, S1_sd_v_r, S1_sd_wd_r, S1_sd_f_r, S1_sd_s_r, S1_sd_sp_r, S2_sd_v_r, S2_sd_wd_r, S2_sd_f_r, S2_sd_s_r, S2_sd_sp_r, TH4_sd_v_r, TH4_sd_wd_r, TH4_sd_f_r, TH4_sd_s_r, TH4_sd_sp_r, VR3_sd_v_r, VR3_sd_wd_r, VR3_sd_f_r, VR3_sd_s_r, VR3_sd_sp_r, sd_v_r, sd_wd_r, sd_f_r, sd_s_r, sd_sp_r),
+  
+  min_obs = c(GL1_min_v, GL1_min_wd, GL1_min_f, GL1_min_s, GL1_min_sp, GL2_min_v, GL2_min_wd, GL2_min_f, GL2_min_s, GL2_min_sp, L2_min_v, L2_min_wd, L2_min_f, L2_min_s, L2_min_sp, M1_min_v, M1_min_wd, M1_min_f, M1_min_s, M1_min_sp, S1_min_v, S1_min_wd, S1_min_f, S1_min_s, S1_min_sp, S2_min_v, S2_min_wd, S2_min_f, S2_min_s, S2_min_sp, TH4_min_v, TH4_min_wd, TH4_min_f, TH4_min_s, TH4_min_sp, VR3_min_v, VR3_min_wd, VR3_min_f, VR3_min_s, VR3_min_sp, min_v, min_wd, min_f, min_s, min_sp),
+  
+  min_raster = c(GL1_min_v_r, GL1_min_wd_r, GL1_min_f_r, GL1_min_s_r, GL1_min_sp_r, GL2_min_v_r, GL2_min_wd_r, GL2_min_f_r, GL2_min_s_r, GL2_min_sp_r, L2_min_v_r, L2_min_wd_r, L2_min_f_r, L2_min_s_r, L2_min_sp_r, M1_min_v_r, M1_min_wd_r, M1_min_f_r, M1_min_s_r, M1_min_sp_r, S1_min_v_r, S1_min_wd_r, S1_min_f_r, S1_min_s_r, S1_min_sp_r, S2_min_v_r, S2_min_wd_r, S2_min_f_r, S2_min_s_r, S2_min_sp_r, TH4_min_v_r, TH4_min_wd_r, TH4_min_f_r, TH4_min_s_r, TH4_min_sp_r, VR3_min_v_r, VR3_min_wd_r, VR3_min_f_r, VR3_min_s_r, VR3_min_sp_r, min_v_r, min_wd_r, min_f_r, min_s_r, min_sp_r),
+  
+  max_obs = c(GL1_max_v, GL1_max_wd, GL1_max_f, GL1_max_s, GL1_max_sp, GL2_max_v, GL2_max_wd, GL2_max_f, GL2_max_s, GL2_max_sp, L2_max_v, L2_max_wd, L2_max_f, L2_max_s, L2_max_sp, M1_max_v, M1_max_wd, M1_max_f, M1_max_s, M1_max_sp, S1_max_v, S1_max_wd, S1_max_f, S1_max_s, S1_max_sp, S2_max_v, S2_max_wd, S2_max_f, S2_max_s, S2_max_sp, TH4_max_v, TH4_max_wd, TH4_max_f, TH4_max_s, TH4_max_sp, VR3_max_v, VR3_max_wd, VR3_max_f, VR3_max_s, VR3_max_sp, max_v, max_wd, max_f, max_s, max_sp),
+  
+  max_raster = c(GL1_max_v_r, GL1_max_wd_r, GL1_max_f_r, GL1_max_s_r, GL1_max_sp_r, GL2_max_v_r, GL2_max_wd_r, GL2_max_f_r, GL2_max_s_r, GL2_max_sp_r, L2_max_v_r, L2_max_wd_r, L2_max_f_r, L2_max_s_r, L2_max_sp_r, M1_max_v_r, M1_max_wd_r, M1_max_f_r, M1_max_s_r, M1_max_sp_r, S1_max_v_r, S1_max_wd_r, S1_max_f_r, S1_max_s_r, S1_max_sp_r, S2_max_v_r, S2_max_wd_r, S2_max_f_r, S2_max_s_r, S2_max_sp_r, TH4_max_v_r, TH4_max_wd_r, TH4_max_f_r, TH4_max_s_r, TH4_max_sp_r, VR3_max_v_r, VR3_max_wd_r, VR3_max_f_r, VR3_max_s_r, VR3_max_sp_r, max_v_r, max_wd_r, max_f_r, max_s_r, max_sp_r),
   
            section = c("GL1", "GL1", "GL1", "GL1", "GL1", "GL2", "GL2", "GL2", "GL2", "GL2", "L2", "L2", "L2", "L2", "L2", "M1", "M1", "M1", "M1", "M1", "S1", "S1", "S1", "S1", "S1", "S2", "S2", "S2", "S2", "S2", "TH4", "TH4", "TH4", "TH4", "TH4", "VR3", "VR3", "VR3", "VR3", "VR3", "all", "all", "all", "all", "all"),
   
