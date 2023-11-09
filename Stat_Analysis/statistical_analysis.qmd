@@ -326,6 +326,11 @@ p_foen_hsi_ra <- sum_foen_hsi_ra$coefficients["rel_abundance", "Pr(>|t|)"]
 s_foen_hsi_ra <- sum_foen_hsi_ra$coefficients["rel_abundance", "Estimate"]
 ```
 
+```{r}
+plot(foen_hsi ~ rel_abundance, data = hsc)
+abline(lm(foen_hsi ~ rel_abundance, data = hsc))
+```
+
 ## Stat. Analysis
 ```{r}
 # Modellvoraussetzungen prüfen - residualplot 
