@@ -50,24 +50,29 @@ regr_v_brt_k <- lm(m2_k_index_v ~ obs_k_index, data = brt)
 sum_v_brt_k <- summary(regr_v_brt_k)
 p_v_brt_k <- sum_v_brt_k$coefficients["obs_k_index", "Pr(>|t|)"]
 s_v_brt_k <- sum_v_brt_k$coefficients["obs_k_index", "Estimate"]
+r_v_brt_k <- summary(lm(m2_k_index_v ~ obs_k_index, data = brt))$adj.r.squared
 
 # with shannon index as response
 regr_v_brt_s <- lm(m2_shannon_v ~ obs_shannon, data = brt)
 sum_v_brt_s <- summary(regr_v_brt_s)
 p_v_brt_s <- sum_v_brt_s$coefficients["obs_shannon", "Pr(>|t|)"]
 s_v_brt_s <- sum_v_brt_s$coefficients["obs_shannon", "Estimate"]
+r_v_brt_s <- summary(lm(m2_shannon_v ~ obs_shannon, data = brt))$adj.r.squared
 
 # with abundance as response
 regr_v_brt_a <- lm(m2_abundance_v ~ obs_abundance, data = brt)
 sum_v_brt_a <- summary(regr_v_brt_a)
 p_v_brt_a <- sum_v_brt_a$coefficients["obs_abundance", "Pr(>|t|)"]
 s_v_brt_a <- sum_v_brt_a$coefficients["obs_abundance", "Estimate"]
+r_v_brt_a <- summary(lm(m2_abundance_v ~ obs_abundance, data = brt))$adj.r.squared
 
 # with rel_abundance as response
 regr_v_brt_ra <- lm(m2_rel_abundance_v ~ obs_rel_abundance, data = brt)
 sum_v_brt_ra <- summary(regr_v_brt_ra)
 p_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
 s_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
+r_v_brt_ra <- summary(lm(m2_rel_abundance_v ~ obs_rel_abundance, data = brt))$adj.r.squared
+
 ```
 
 ### Predictor: V + WD
@@ -78,24 +83,28 @@ regr_wd_brt_k <- lm(m2_k_index_wd ~ obs_k_index, data = brt)
 sum_wd_brt_k <- summary(regr_wd_brt_k)
 p_wd_brt_k <- sum_wd_brt_k$coefficients["obs_k_index", "Pr(>|t|)"]
 s_wd_brt_k <- sum_wd_brt_k$coefficients["obs_k_index", "Estimate"]
+r_wd_brt_k <- summary(lm(m2_k_index_wd ~ obs_k_index, data = brt))$adj.r.squared
 
 # with shannon index as response
 regr_wd_brt_s <- lm(m2_shannon_wd ~ obs_shannon, data = brt)
 sum_wd_brt_s <- summary(regr_wd_brt_s)
 p_wd_brt_s <- sum_wd_brt_s$coefficients["obs_shannon", "Pr(>|t|)"]
 s_wd_brt_s <- sum_wd_brt_s$coefficients["obs_shannon", "Estimate"]
+r_wd_brt_s <- summary(lm(m2_shannon_wd ~ obs_shannon, data = brt))$adj.r.squared
 
 # with abundance as response
 regr_wd_brt_a <- lm(m2_abundance_wd ~ obs_abundance, data = brt)
 sum_wd_brt_a <- summary(regr_wd_brt_a)
 p_wd_brt_a <- sum_wd_brt_a$coefficients["obs_abundance", "Pr(>|t|)"]
 s_wd_brt_a <- sum_wd_brt_a$coefficients["obs_abundance", "Estimate"]
+r_wd_brt_a <- summary(lm(m2_abundance_wd ~ obs_abundance, data = brt))$adj.r.squared
 
 # with rel_abundance as response
 regr_wd_brt_ra <- lm(m2_rel_abundance_wd ~ obs_rel_abundance, data = brt)
 sum_wd_brt_ra <- summary(regr_wd_brt_ra)
 p_wd_brt_ra <- sum_wd_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
 s_wd_brt_ra <- sum_wd_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
+r_wd_brt_ra <- summary(lm(m2_rel_abundance_wd ~ obs_rel_abundance, data = brt))$adj.r.squared
 ```
 
 ## BRT add
@@ -164,24 +173,28 @@ regr_v_rf_k <- lm(m2_k_index_v ~ obs_k_index, data = rf)
 sum_v_rf_k <- summary(regr_v_rf_k)
 p_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
 s_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Estimate"]
+r_v_rf_k <- summary(lm(m2_k_index_v ~ obs_k_index, data = rf))$adj.r.squared
 
 # with shannon index as response
 regr_v_rf_s <- lm(m2_shannon_v ~ obs_shannon, data = rf)
 sum_v_rf_s <- summary(regr_v_rf_s)
 p_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
 s_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Estimate"]
+r_v_rf_s <- summary(lm(m2_shannon_v ~ obs_shannon, data = rf))$adj.r.squared
 
 # with abundance as response
 regr_v_rf_a <- lm(m2_abundance_v ~ obs_abundance, data = rf)
 sum_v_rf_a <- summary(regr_v_rf_a)
 p_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
 s_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Estimate"]
+r_v_rf_a <- summary(lm(m2_abundance_v ~ obs_abundance, data = rf))$adj.r.squared
 
 # with rel_abundance as response
 regr_v_rf_ra <- lm(m2_rel_abundance_v ~ obs_rel_abundance, data = rf)
 sum_v_rf_ra <- summary(regr_v_rf_ra)
 p_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
 s_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
+r_v_rf_ra <- summary(lm(m2_rel_abundance_v ~ obs_rel_abundance, data = rf))$adj.r.squared
 ```
 
 ### Predictor: V + WD
@@ -2011,6 +2024,13 @@ sorted_data <- selected_rows[order(selected_rows$lm_p_value), ]
 
 # exclude hsc model data, because the slope is negative 
 data <- subset(sorted_data, model != "hsc")
+```
+
+```{r}
+selected_rows <- results_hdm[results_hdm$lm_slope, ]
+sorted_slope <- selected_rows[order(selected_rows$lm_slope), ]
+
+data <- subset(sorted_slope, model != "hsc")
 ```
 
 
