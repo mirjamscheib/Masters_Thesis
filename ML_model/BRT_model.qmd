@@ -4359,3 +4359,146 @@ writeRaster(VR3_s_peak_v, "ML_model/scenarios/VR3_s_peak_v_brt.tif", format = "G
 writeRaster(VR3_s_max_v, "ML_model/scenarios/VR3_s_max_v_brt.tif", format = "GTiff", overwrite = TRUE)
 writeRaster(VR3_s_pers_v, "ML_model/scenarios/VR3_s_pers_v_brt.tif", format = "GTiff", overwrite = TRUE)
 ```
+
+## WUA
+```{r}
+# load self-written functions 
+source("mth_functions.R")
+
+# calculate WUA -------------------------------------------------
+# GL1 -----------------------------------------------------------
+wua_GL1_min <- wua(GL1_s_min_v)
+wua_GL1_max <- wua(GL1_s_max_v)
+wua_GL1_pers <- wua(GL1_s_pers_v)
+
+# GL2 -----------------------------------------------------------
+wua_GL2_min <- wua(GL2_s_min_v)
+wua_GL2_max <- wua(GL2_s_max_v)
+wua_GL2_pers <- wua(GL2_s_pers_v)
+
+# L2 -----------------------------------------------------------
+wua_L2_base <- wua(L2_s_base_v)
+wua_L2_peak <- wua(L2_s_peak_v)
+wua_L2_pers <- wua(L2_s_pers_v)
+
+# M1 -----------------------------------------------------------
+wua_M1_base <- wua(M1_s_base_v)
+wua_M1_peak <- wua(M1_s_peak_v)
+wua_M1_pers <- wua(M1_s_pers_v)
+
+# S1 -----------------------------------------------------------
+wua_S1_base <- wua(S1_s_base_v)
+wua_S1_peak <- wua(S1_s_peak_v)
+wua_S1_pers <- wua(S1_s_pers_v)
+
+# S2 -----------------------------------------------------------
+wua_S2_base <- wua(S2_s_base_v)
+wua_S2_peak <- wua(S2_s_peak_v)
+wua_S2_pers <- wua(S2_s_pers_v)
+
+# TH4 ----------------------------------------------------------
+wua_TH4_min <- wua(TH4_s_min_v)
+wua_TH4_max <- wua(TH4_s_max_v)
+wua_TH4_pers <- wua(TH4_s_pers_v)
+
+# VR3 ----------------------------------------------------------
+wua_VR3_base <- wua(VR3_s_base_v)
+wua_VR3_peak <- wua(VR3_s_peak_v)
+wua_VR3_pers <- wua(VR3_s_pers_v)
+```
+
+
+## HHS
+```{r}
+# 1. calculate frequency tables ---------------------------------------
+# GL1 -----------------------------------------------------------
+freq_GL1_min <- freq_table(GL1_s_min_v)
+freq_GL1_max <- freq_table(GL1_s_max_v)
+freq_GL1_pers <- freq_table(GL1_s_pers_v)
+
+# GL2 -----------------------------------------------------------
+freq_GL2_min <- freq_table(GL2_s_min_v)
+freq_GL2_max <- freq_table(GL2_s_max_v)
+freq_GL2_pers <- freq_table(GL2_s_pers_v)
+
+# L2 -----------------------------------------------------------
+freq_L2_base <- freq_table(L2_s_base_v)
+freq_L2_peak <- freq_table(L2_s_peak_v)
+freq_L2_pers <- freq_table(L2_s_pers_v)
+
+# M1 -----------------------------------------------------------
+freq_M1_base <- freq_table(M1_s_base_v)
+freq_M1_peak <- freq_table(M1_s_peak_v)
+freq_M1_pers <- freq_table(M1_s_pers_v)
+
+# S1 -----------------------------------------------------------
+freq_S1_base <- freq_table(S1_s_base_v)
+freq_S1_peak <- freq_table(S1_s_peak_v)
+freq_S1_pers <- freq_table(S1_s_pers_v)
+
+# S2 -----------------------------------------------------------
+freq_S2_base <- freq_table(S2_s_base_v)
+freq_S2_peak <- freq_table(S2_s_peak_v)
+freq_S2_pers <- freq_table(S2_s_pers_v)
+
+# TH4 -----------------------------------------------------------
+freq_TH4_min <- freq_table(TH4_s_min_v)
+freq_TH4_max <- freq_table(TH4_s_max_v)
+freq_TH4_pers <- freq_table(TH4_s_pers_v)
+
+# VR3 -----------------------------------------------------------
+freq_VR3_base <- freq_table(VR3_s_base_v)
+freq_VR3_peak <- freq_table(VR3_s_peak_v)
+freq_VR3_pers <- freq_table(VR3_s_pers_v)
+
+# 2. calculate wetted area -----------------------------------------------
+# GL1 -----------------------------------------------------------
+wa_GL1_min <- wa_tot(freq_GL1_min, column_name = "count")
+wa_GL1_max <- wa_tot(freq_GL1_max, column_name = "count")
+wa_GL1_pers <- wa_tot(freq_GL1_pers, column_name = "count")
+
+# GL2 -----------------------------------------------------------
+wa_GL2_min <- wa_tot(freq_GL2_min, column_name = "count")
+wa_GL2_max <- wa_tot(freq_GL2_max, column_name = "count")
+wa_GL2_pers <- wa_tot(freq_GL2_pers, column_name = "count")
+
+# 3. calculate HHS ------------------------------------------------------
+hhs_GL1_min <- wua_GL1_min/wa_GL1_min
+```
+
+## Results 
+```{r}
+results <- data.frame(section = c("GL1", "GL1", "GL1",
+                                  "GL2", "GL2", "GL2",
+                                  "L2", "L2", "L2",
+                                  "M1", "M1", "M1",
+                                  "S1", "S1", "S1",
+                                  "S2", "S2", "S2",
+                                  "TH4", "TH4", "TH4",
+                                  "VR3", "VR3", "VR3"),
+                      hydro_cond = c("min", "max", "pers",
+                                     "min", "max", "pers",
+                                     "base", "peak", "pers",
+                                     "base", "peak", "pers",
+                                     "base", "peak", "pers",
+                                     "base", "peak", "pers",
+                                     "min", "max", "pers",
+                                     "base", "peak", "pers"),
+                      wua = c(wua_GL1_min, wua_GL1_max, wua_GL1_pers,
+                              wua_GL2_min, wua_GL2_max, wua_GL2_pers,
+                              wua_L2_base, wua_L2_peak, wua_L2_pers,
+                              wua_M1_base, wua_M1_peak, wua_M1_pers,
+                              wua_S1_base, wua_S1_peak, wua_S1_pers,
+                              wua_S2_base, wua_S2_peak, wua_S2_pers,
+                              wua_TH4_min, wua_TH4_max, wua_TH4_pers,
+                              wua_VR3_base, wua_VR3_peak, wua_VR3_pers),
+                      hhs = c(hhs_GL1_min, hhs_GL1_max, hhs_GL1_pers,
+                              hhs_GL2_min, hhs_GL2_max, hhs_GL2_pers,
+                              hhs_L2_base, hhs_L2_peak, hhs_L2_pers,
+                              hhs_M1_base, hhs_M1_peak, hhs_M1_pers,
+                              hhs_S1_base, hhs_S1_peak, hhs_S1_pers,
+                              hhs_S2_base, hhs_S2_peak, hhs_S2_pers,
+                              hhs_TH4_min, hhs_TH4_max, hhs_TH4_pers,
+                              hhs_VR3_base, hhs_VR3_peak, hhs_VR3_pers))
+```
+

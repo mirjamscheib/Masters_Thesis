@@ -257,3 +257,19 @@ foen_hm <- function(raster_path, base_flow, output_path_pers_reclass, output_pat
                               "value", "normal", "persistent")
   results <- list(metrics = results_metrics, freq = results_freq)   # combine the two resulting dataframes into a list object to recall later
 }
+
+
+#### WUA ####
+wua <- function(x){
+  cellStats(x, 'sum') * 4
+}
+
+#### WA_tot ####
+wa_tot <- function(x, column_name){
+  sum(x[[column_name]]) * 4
+}
+
+#### FREQ. TABLE ####
+freq_table <- function(x){
+  as.data.frame(freq(x, digit=1, useNA= "no"))
+}
