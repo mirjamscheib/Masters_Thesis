@@ -188,7 +188,7 @@ field_row2 <- field[2, -c(1:8)]
 # combine the first two rows 
 combined_vec <- paste(row_filled, field_row2, sep = "_")
 
-# remove the first row and first 8 columns to attach vector to count, projecton factor etc. 
+# remove the first row and first 8 columns to attach vector to count, projecton factor etc.
 field_attach <- field[-c(1:2), -c(1:8)]
 
 # attach created row 

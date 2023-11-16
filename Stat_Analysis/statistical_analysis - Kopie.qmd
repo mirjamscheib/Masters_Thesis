@@ -1,0 +1,169 @@
+---
+title: "Habitat_Model_VZH"
+format: html
+---
+
+# Load packages 
+```{r}
+#clear R environment
+rm(list = ls())
+
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+pkgCheck("terra")
+pkgCheck("raster")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
+pkgCheck("scales")
+```
+
+|>
+  with(paste0(index, "_", model)) |>
+  pivot_longer(cols = c(6:7), names_to = "metric", values_to = "values") 
+  
+# Load Data 
+```{r}
+# load data 
+heat <- read_delim("Stat_Analysis/heat_map.csv") |>
+  subset(model != "hsc")
+
+index <- heat$index
+model <- heat$model
+
+# combine the first two rows 
+combined <- paste(index, model, sep = "_")
+
+# attach created row 
+heat_new <- cbind(combined, heat) |>
+  dplyr::select(-index, -model) |>
+  dplyr::rename(models = combined) 
+
+max(heat_new$)
+
+# load data for bar charts -> variable importance 
+bar <- read_delim("ML_model/var_imp/var_imp_samp.csv") |> 
+  dplyr::select(variable, k_index_rf, k_index_brt) |>
+  mutate(var_new = c("Velocity [m/s]", "Z Coordinate [m.a.s.l.]", "Dist. Waterline [m]", "Cat. Velocity [1-5]", "Algae Cover [1-5]", "Moos Cover [0-3]", "CPOM Cover [1-3]", "Water Deph [m]", "Clogging Class [0-2]", "Clogging Class [0-6]", "Substrate Type [0-3]")) |>
+  pivot_longer(cols = c(2:3), names_to = "models", values_to = "values")
+```
+|>
+  pivot_longer(cols = c(5:6), names_to = "metric_rmse_mae", values_to = "val_rmse_mae") |>
+  pivot_longer(cols = c(2:3), names_to = "metric_r2_nse", values_to = "val_r2_nse") 
+  
+  
+heat_new$val_rmse_mae <- round(heat_new$val_rmse_mae, digits = 3)
+heat_new$val_r2_nse <- round(heat_new$val_r2_nse, digits = 3)
+  
+# Heat Map
+```{r}
+# Melt the data for ggplot
+df_melted <- heat_new %>%
+  gather(variable, value, -models) %>%
+  mutate(value = as.numeric(value))
+
+# Create a custom color palette for each variable
+color_palette <- list(
+  nse = c("low" = "blue", "high" = "red"),
+  r2 = c("low" = "green", "high" = "yellow"),
+  rel_bias = c("low" = "purple", "high" = "orange"),
+  rel_mae = c("low" = "gray", "high" = "pink"),
+  rel_rmse = c("low" = "darkgreen", "high" = "lightgreen")
+)
+
+# Plot the heatmap
+ggplot(df_melted, aes(x = models, y = variable, fill = value)) +
+  geom_tile() +
+  scale_colour_manual(values = unlist(color_palette)) +
+  labs(title = "Heatmap with Manually Defined Colors",
+       x = "Models",
+       y = "Variables") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "bottom")
+```
+
+
+```{r}
+ggplot(heat_new, aes(x = c("nse", "rel_mae"), y = models)) +
+  geom_tile()
+
+gg <- gg + scale_colour_manual(values = perf_text_cols)
+gg <- gg + scale_fill_manual(values=perf_cols)
+```
+
+```{r}
+data <- data.frame(
+  Method = rep(c("Method1", "Method2", "Method3"), each = 3),
+  RMSE = runif(9, min = 0, max = 100),
+  NSE = runif(9, min = 0, max = 1)
+) |>
+  pivot_longer(cols = 2:3, names_to = "metric", values_to = "value")
+
+# Set up the ggplot with geom_tile
+ggplot(data, aes(x = Method, y = metric)) +
+  geom_tile(aes(fill = value), color = "white") +  
+
+# Customize the color scale for RMSE (lower values in darker shades)
+  scale_fill_gradient(name = "RMSE",
+                      low = "darkblue", high = "lightblue",
+                      guide = guide_colorbar(title.position = "top", title.hjust = 0.5),
+                      aesthetics = "fill",
+                      breaks = seq(0, 100, by = 20))  + 
+
+# Customize the color scale for NSE (higher values in darker shades)
+  scale_fill_gradient(name = "NSE",
+                      low = "lightgreen", high = "darkgreen",
+                      guide = guide_colorbar(title.position = "top", title.hjust = 0.5),
+                      aesthetics = "fill",
+                      breaks = seq(0, 1, by = 0.2)) +
+  
+  geom_text(aes(Method, metric, label = value))
+```
+
+
+ggplot(heat_new, aes()) +
+  geom_tile(aes(metric_rmse_mae, models, fill = val_rmse_mae), colour = "white") +
+  geom_text(aes(metric_rmse_mae, models, label = val_rmse_mae)) +
+  scale_fill_gradient(low = "darkgreen", high = "white")  +
+  geom_tile(aes(metric_r2_nse, models, fill = val_r2_nse), colour = "white") +
+  scale_fill_gradient(low = "white", high = "darkgreen") +
+  geom_text(aes(metric_r2_nse, models, label = val_r2_nse)) +
+  theme(legend.position="none")
+
+gg <- gg + scale_colour_manual(values = perf_text_cols)
+gg <- gg + scale_fill_manual(values=perf_cols)
+
+# Bar chart
+```{r}
+library(scales)
+
+p <- ggplot(bar, aes(x = values, y = reorder(var_new, + values), fill = models)) +
+  geom_bar(stat = "identity", position = position_dodge()) + 
+  ylab(label = " ") +
+  xlab(label = " ") +
+  scale_x_continuous(labels = percent_format(scale = 100)) +
+  scale_fill_manual(labels = c("BRT", "RF"), values = c("lightgray", "black")) +  # Adjust legend labels here
+  theme_minimal() +
+  labs(fill = "Algorithm") + 
+  theme(axis.text = element_text(size = 14),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16))
+
+
+# save the plots 
+ggsave("Stat_Analysis/var_imp.png", plot = p, width = 9, height = 6)
+```
+
