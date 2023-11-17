@@ -4462,8 +4462,77 @@ wa_GL2_min <- wa_tot(freq_GL2_min, column_name = "count")
 wa_GL2_max <- wa_tot(freq_GL2_max, column_name = "count")
 wa_GL2_pers <- wa_tot(freq_GL2_pers, column_name = "count")
 
+# L2 -----------------------------------------------------------
+wa_L2_base <- wa_tot(freq_L2_base, column_name = "count")
+wa_L2_peak <- wa_tot(freq_L2_peak, column_name = "count")
+wa_L2_pers <- wa_tot(freq_L2_pers, column_name = "count")
+
+# M1 -----------------------------------------------------------
+wa_M1_base <- wa_tot(freq_M1_base, column_name = "count")
+wa_M1_peak <- wa_tot(freq_M1_peak, column_name = "count")
+wa_M1_pers <- wa_tot(freq_M1_pers, column_name = "count")
+
+# S1 -----------------------------------------------------------
+wa_S1_base <- wa_tot(freq_S1_base, column_name = "count")
+wa_S1_peak <- wa_tot(freq_S1_peak, column_name = "count")
+wa_S1_pers <- wa_tot(freq_S1_pers, column_name = "count")
+
+# S2 -----------------------------------------------------------
+wa_S2_base <- wa_tot(freq_S2_base, column_name = "count")
+wa_S2_peak <- wa_tot(freq_S2_peak, column_name = "count")
+wa_S2_pers <- wa_tot(freq_S2_pers, column_name = "count")
+
+# TH4 -----------------------------------------------------------
+wa_TH4_min <- wa_tot(freq_TH4_min, column_name = "count")
+wa_TH4_max <- wa_tot(freq_TH4_max, column_name = "count")
+wa_TH4_pers <- wa_tot(freq_TH4_pers, column_name = "count")
+
+# VR3 -----------------------------------------------------------
+wa_VR3_base <- wa_tot(freq_VR3_base, column_name = "count")
+wa_VR3_peak <- wa_tot(freq_VR3_peak, column_name = "count")
+wa_VR3_pers <- wa_tot(freq_VR3_pers, column_name = "count")
+
+
 # 3. calculate HHS ------------------------------------------------------
+# GL1 -----------------------------------------------------------
 hhs_GL1_min <- wua_GL1_min/wa_GL1_min
+hhs_GL1_max <- wua_GL1_max/wa_GL1_max
+hhs_GL1_pers <- wua_GL1_pers/wa_GL1_pers
+
+# GL2 -----------------------------------------------------------
+hhs_GL2_min <- wua_GL2_min/wa_GL2_min
+hhs_GL2_max <- wua_GL2_max/wa_GL2_max
+hhs_GL2_pers <- wua_GL2_pers/wa_GL2_pers
+
+# L2 -----------------------------------------------------------
+hhs_L2_base <- wua_L2_base/wa_L2_base
+hhs_L2_peak <- wua_L2_peak/wa_L2_peak
+hhs_L2_pers <- wua_L2_pers/wa_L2_pers
+
+# M1 -----------------------------------------------------------
+hhs_M1_base <- wua_M1_base/wa_M1_base
+hhs_M1_peak <- wua_M1_peak/wa_M1_peak
+hhs_M1_pers <- wua_M1_pers/wa_M1_pers
+
+# S1 -----------------------------------------------------------
+hhs_S1_base <- wua_S1_base/wa_S1_base
+hhs_S1_peak <- wua_S1_peak/wa_S1_peak
+hhs_S1_pers <- wua_S1_pers/wa_S1_pers
+
+# S2 -----------------------------------------------------------
+hhs_S2_base <- wua_S2_base/wa_S2_base
+hhs_S2_peak <- wua_S2_peak/wa_S2_peak
+hhs_S2_pers <- wua_S2_pers/wa_S2_pers
+
+# TH4 -----------------------------------------------------------
+hhs_TH4_min <- wua_TH4_min/wa_TH4_min
+hhs_TH4_max <- wua_TH4_max/wa_TH4_max
+hhs_TH4_pers <- wua_TH4_pers/wa_TH4_pers
+
+# VR3 -----------------------------------------------------------
+hhs_VR3_base <- wua_VR3_base/wa_VR3_base
+hhs_VR3_peak <- wua_VR3_peak/wa_VR3_peak
+hhs_VR3_pers <- wua_VR3_pers/wa_VR3_pers
 ```
 
 ## Results 
@@ -4500,5 +4569,8 @@ results <- data.frame(section = c("GL1", "GL1", "GL1",
                               hhs_S2_base, hhs_S2_peak, hhs_S2_pers,
                               hhs_TH4_min, hhs_TH4_max, hhs_TH4_pers,
                               hhs_VR3_base, hhs_VR3_peak, hhs_VR3_pers))
+
+# write .csv file of results 
+write.csv(results, "ML_model/scenarios/wua_hhs_shannon_vbrt.csv", row.names = FALSE)
 ```
 

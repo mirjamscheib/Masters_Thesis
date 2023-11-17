@@ -1398,4 +1398,22 @@ ggplot(sub_samp_k_c_brt, aes(sub_type, yhat)) +
   geom_line(aes(group = 1))
 ```
 
+# Load WUA / HHS Data
+```{r}
+wua_hhs <- read_delim("ML_Model/scenarios/wua_hhs_shannon_vbrt.csv") 
+```
+
+## Plots
+```{r}
+# WUA Plot --------------------------------------------------------
+ggplot(wua_hhs, aes(x = discharge, y = wua, col = section)) +
+  geom_line(aes(x = discharge, y = wua, linetype = section), lwd = 0.6) +
+  geom_point() +
+  theme_minimal()
+
+# HHS Plot --------------------------------------------------------
+ggplot(wua_hhs, aes(x = discharge, y = hhs, col = section)) +
+  geom_line() +
+  geom_point()
+```
 
