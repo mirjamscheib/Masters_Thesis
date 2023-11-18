@@ -63,6 +63,11 @@ data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.
 data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_section.csv") |>
   dplyr::select(-clog_3_class, -clog_6_class, -sub_type, -Hydropeaking_river_type, -Hydrokeaking_residual_flow_natural_near_natural, -date, -time, -time_before, -time_during, -time_after, -Category_Water_depth, -Number_Taxa, -EPT_Taxa, -ox_sat_after, -ox_sat_before, -ox_sat_during, -hydr_type_int, -hydr_int) |>
   dplyr::rename(Reach_Untersuchungsstelle = reach)
+
+# load data containing selected variables 
+data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach) |>
+  mutate(ecomorph_class = if_else(ecomorph_class == "-", 0, as.numeric(ecomorph_class)))
 ```
     
 ```{r}
@@ -76,7 +81,7 @@ training_v <- data_v |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
          Reach_Untersuchungsstelle != "VR3")
 
 # training set containing velocity + wd
@@ -87,7 +92,7 @@ training_wd <- data_wd |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
          Reach_Untersuchungsstelle != "VR3")
 
 # training set containing all env. variables measured at each sampling location 
@@ -98,7 +103,7 @@ training_sampling <- data_sampling |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
          Reach_Untersuchungsstelle != "VR3")
 
 # training set containing all env. variables measured at each sampling location and overall river section 
@@ -109,7 +114,18 @@ training_section <- data_section |>
          Reach_Untersuchungsstelle != "M1",
          Reach_Untersuchungsstelle != "S1",
          Reach_Untersuchungsstelle != "S2",
-         Reach_Untersuchungsstelle != "TH4", # noch nicht im lab datensatz, darum wirds noch nicht eingerechnet
+         Reach_Untersuchungsstelle != "TH4", 
+         Reach_Untersuchungsstelle != "VR3")
+
+# training set containing all variables selected 
+training_var <- data_var |>
+  filter(Reach_Untersuchungsstelle != "GL1",
+         Reach_Untersuchungsstelle != "GL2",         
+         Reach_Untersuchungsstelle != "L2",
+         Reach_Untersuchungsstelle != "M1",
+         Reach_Untersuchungsstelle != "S1",
+         Reach_Untersuchungsstelle != "S2",
+         Reach_Untersuchungsstelle != "TH4",
          Reach_Untersuchungsstelle != "VR3")
 
 ### TEST SETS ###
@@ -121,7 +137,7 @@ test_v <- data_v |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" | 
          Reach_Untersuchungsstelle == "VR3")
 
 # test set containing velocity + wd
@@ -132,7 +148,7 @@ test_wd <- data_wd |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" | 
          Reach_Untersuchungsstelle == "VR3")
 
 # test set containing all env. variables measured at each sampling location 
@@ -143,7 +159,7 @@ test_sampling <- data_sampling |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" | 
          Reach_Untersuchungsstelle == "VR3")
 
 # test set containing all env. variables measured at each sampling location and overall river section 
@@ -154,7 +170,18 @@ test_section <- data_section |>
          Reach_Untersuchungsstelle == "M1" |
          Reach_Untersuchungsstelle == "S1" |
          Reach_Untersuchungsstelle == "S2" |
-         Reach_Untersuchungsstelle == "TH4" | # fehlt noch im lab datensatz 
+         Reach_Untersuchungsstelle == "TH4" | 
+         Reach_Untersuchungsstelle == "VR3")
+
+# training set containing all variables selected 
+test_var <- data_var |>
+  filter(Reach_Untersuchungsstelle == "GL1" |
+         Reach_Untersuchungsstelle == "GL2" |       
+         Reach_Untersuchungsstelle == "L2" |
+         Reach_Untersuchungsstelle == "M1" |
+         Reach_Untersuchungsstelle == "S1" |
+         Reach_Untersuchungsstelle == "S2" |
+         Reach_Untersuchungsstelle == "TH4" | 
          Reach_Untersuchungsstelle == "VR3")
 ```
 
@@ -227,6 +254,23 @@ training_sec_a <- training_section |>
 # With relative abundance index as response 
 training_sec_ra <- training_section |>
   dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
+
+### PREDICTOR: SELECTED VARIABLES ### -----------------------------------------
+# With k_index as response 
+training_var_k <- training_var |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
+
+# With shannon index as response 
+training_var_s <- training_var |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
+
+# With abundance index as response 
+training_var_a <- training_var |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
+
+# With relative abundance index as response 
+training_var_ra <- training_var |>
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
 ```
 
 ## Training Sets w/o coordinates
@@ -298,6 +342,23 @@ training_sec_a_c <- training_section |>
 # With rel_abundance as response 
 training_sec_ra_c <- training_section |>
   dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
+
+### PREDICTOR: SELECTED VARIABLES ### -----------------------------------------
+# With k_index as response 
+training_var_k_c <- training_var |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -x, -y)
+
+# With shannon index as response 
+training_var_s_c <- training_var |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -x, -y)
+
+# With abundance index as response 
+training_var_a_c <- training_var |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle, -x, -y)
+
+# With relative abundance index as response 
+training_var_ra_c <- training_var |>
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle, -x, -y)
 ```
 
 ## Test Sets w/ coordinates
@@ -368,6 +429,23 @@ test_sec_a <- test_section |>
 
 # With relative abundance index as response 
 test_sec_ra <- test_section |>
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
+
+### PREDICTOR: SELECTED VARIABLES ### -----------------------------------
+# With k_index as response 
+test_var_k <- test_var |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
+
+# With shannon index as response 
+test_var_s <- test_var |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle)
+
+# With abundance index as response 
+test_var_a <- test_var |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle)
+
+# With relative abundance index as response 
+test_var_ra <- test_var |>
   dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle)
 ```
 
@@ -440,9 +518,26 @@ test_sec_a_c <- test_section |>
 # With rel_abundance as response
 test_sec_ra_c <- test_section |>
   dplyr::select(-shannon, -abundance, -k_index, -x, -y, -Reach_Untersuchungsstelle)
+
+### PREDICTOR: SELECTED VARIABLES ### -----------------------------------
+# With k_index as response 
+test_var_k_c <- test_var |>
+  dplyr::select(-shannon, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -x, -y)
+
+# With shannon index as response 
+test_var_s_c <- test_var |>
+  dplyr::select(-k_index, -abundance, -rel_abundance, -Reach_Untersuchungsstelle, -x, -y)
+
+# With abundance index as response 
+test_var_a_c <- test_var |>
+  dplyr::select(-shannon, -k_index, -rel_abundance, -Reach_Untersuchungsstelle, -x, -y)
+
+# With relative abundance index as response 
+test_var_ra_c <- test_var |>
+  dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle, -x, -y)
 ```
 
-# Random Forest 
+# ! Random Forest 
 ## Hyperparameter tuning 
 ```{r}
 # convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning
@@ -513,6 +608,7 @@ st_crs(data_sec_a_sp) <- "EPSG: 2056"
 # With rel_abundance as response
 data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
 st_crs(data_sec_ra_sp) <- "EPSG: 2056"
+
 ```
 
 ### Create Task & Learner

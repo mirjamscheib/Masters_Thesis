@@ -297,4 +297,36 @@ write.csv(lab_univariate, "Pre_Processing/abiotic_mi_sampling/lab_univariate.csv
 write_xlsx(lab_univariate,"Pre_Processing\\abiotic_mi_sampling\\lab_univariate.xlsx") 
 ```
 
+# Selected variables 
+```{r}
+aggr_gis <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.csv") |>
+  dplyr::select(`Ecomorphological Class`, `BIOGEO`, `Mean diffuse total nitrogen [kg/ha a]`, `Mean diffuse total phosphor [kg/ha a]`, `Study site (Untersuchungsstelle)`) |>
+  dplyr::rename(reach = `Study site (Untersuchungsstelle)`,
+                ecomorph_class = `Ecomorphological Class`,
+                biogeo = `BIOGEO`,
+                mean_diff_nitrogen = `Mean diffuse total nitrogen [kg/ha a]`,
+                mean_diff_phosphor = `Mean diffuse total phosphor [kg/ha a]`)
+
+# select all variables needed from sampling locations dataset
+data <- data_sampling |>
+  dplyr::select(reach, z, x, y, velocity, wd_m, k_index, shannon, abundance, rel_abundance)
+
+data_new <- left_join(data, aggr_gis, by = "reach", relationship = "many-to-many")
+
+# change biogeo regions into integers for ML modelling 
+biogeo_new <- c("Southern Alps" = 0, "Central Plateau" = 1, "Northern Alps" = 2, "Eastern Central Alps" = 3)
+
+
+data_int <- data_new |>
+  mutate(biogeo_int = ifelse(biogeo %in% names(biogeo_new), 
+                                   biogeo_new[biogeo], NA)) |>
+  dplyr::select(-biogeo) |>
+  na.omit()
+
+# save as .csv file
+write.csv(data_int, "Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv", row.names = FALSE)  
+```
+
+
+
 
