@@ -1,0 +1,78 @@
+---
+title: "add_hdm"
+format: html
+---
+
+# Libraries
+```{r}
+#clear R environment
+rm(list = ls())
+
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("sf")
+pkgCheck("terra")
+pkgCheck("dplyr")
+pkgCheck("data.table")  # fast data.frame manipulation (used by mlr3)
+pkgCheck("readr")
+pkgCheck("sp")
+pkgCheck("raster")
+pkgCheck("Metrics")
+pkgCheck("tidyr")
+```
+
+# Read mesh and create shp
+```{r}
+#mesh paths
+Twodm_path <- "hydrodynamic_model_results/Landquart_comp.2dm"
+
+#read mesh as a table
+Twodm <- read.table(Twodm_path, sep="", skip=2, header=F, fill=T)
+
+#split mesh in nodes and elements
+#nodes
+nd_df <- Twodm[which(Twodm$V1=="ND"),-1]
+colnames(nd_df) <- c( "ID", "X", "Y", "Z")
+nd_df$X <- as.numeric(nd_df$X)
+nd_df$Y <- as.numeric(nd_df$Y)
+
+#elements
+e3t_df <- Twodm[which(Twodm$V1=="E3T"),][,-1]
+colnames(e3t_df) <- c( "ID", "N1", "N2", "N3")
+
+
+#create table with coordinates of each triangular element (x1,y1,x2,y2,x3,y3)
+triangles <- (cbind(nd_df[e3t_df$N1, c("X","Y")], nd_df[e3t_df$N2, c("X","Y")], nd_df[e3t_df$N3, c("X","Y")], nd_df[e3t_df$N1, c("X","Y")]))
+
+tr_matrix <- matrix(unlist(triangles), ncol=8, byrow = F)
+
+#number of elements
+ID <- e3t_df$ID
+length(ID) # 38694 triangular cells in the computational mesh
+
+# Create SP object
+polys <- SpatialPolygons(mapply(function(poly, id) {
+  xy <- matrix(poly, ncol=2, byrow=TRUE)
+  Polygons(list(Polygon(xy)), ID=id)
+}, split(tr_matrix, row(tr_matrix)), ID))
+
+
+# Create SPDF (exportable as shapefile)
+mesh.sp <- SpatialPolygonsDataFrame(polys, data.frame(id=ID, row.names=ID))
+
+#link results with mesh 
+## Q2.4
+mesh.sp$waterSurfElev_2 <- as.numeric(round(waterSurfElev_2,3))
+mesh.sp$depth_2 <- as.numeric(round(depth_2,3))
+mesh.sp$V_abs_2 <- as.numeric(round(V_abs_2,3))
+mesh.sp$substrate_all <- as.numeric(7)
+```
+

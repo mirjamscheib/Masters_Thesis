@@ -537,7 +537,7 @@ test_var_ra_c <- test_var |>
   dplyr::select(-shannon, -abundance, -k_index, -Reach_Untersuchungsstelle, -x, -y)
 ```
 
-# ! Random Forest 
+# Random Forest 
 ## Hyperparameter tuning 
 ```{r}
 # convert dataframes into spatial objects for mlr3 spatial hyperparameter tuning
@@ -608,6 +608,23 @@ st_crs(data_sec_a_sp) <- "EPSG: 2056"
 # With rel_abundance as response
 data_sec_ra_sp <-  st_as_sf(training_sec_ra, coords =  c("x", "y"))
 st_crs(data_sec_ra_sp) <- "EPSG: 2056"
+
+### PREDICTOR: SELECTED VARIABLES ### -------------------------------------
+# With k_index as response
+data_var_k_sp <-  st_as_sf(training_var_k, coords =  c("x", "y"))
+st_crs(data_var_k_sp) <- "EPSG: 2056"
+
+# With shannon index as response
+data_var_s_sp <-  st_as_sf(training_var_s, coords =  c("x", "y"))
+st_crs(data_var_s_sp) <- "EPSG: 2056"
+
+# With abundance as response
+data_var_a_sp <-  st_as_sf(training_var_a, coords =  c("x", "y"))
+st_crs(data_var_a_sp) <- "EPSG: 2056"
+
+# With rel_abundance as response
+data_var_ra_sp <-  st_as_sf(training_var_ra, coords =  c("x", "y"))
+st_crs(data_var_ra_sp) <- "EPSG: 2056"
 
 ```
 
@@ -680,6 +697,23 @@ task_rf_sec_a <- mlr3spatiotempcv::as_task_regr_st(data_sec_a_sp,
 # TASK with rel_abundance as response
 task_rf_sec_ra <- mlr3spatiotempcv::as_task_regr_st(data_sec_ra_sp,
   id = "section_rel_abundance", target = "rel_abundance")
+
+### PREDICTORS: SELECTED VARIABLES ### ---------------------------------------
+# TASK with k_index as response
+task_rf_var_k <- mlr3spatiotempcv::as_task_regr_st(data_var_k_sp,
+  id = "var_k_index", target = "k_index")
+
+# TASK with shannon index as response 
+task_rf_var_s <- mlr3spatiotempcv::as_task_regr_st(data_var_s_sp,
+  id = "var_shannon", target = "shannon")
+
+# TASK with abundance as response
+task_rf_var_a <- mlr3spatiotempcv::as_task_regr_st(data_var_a_sp,
+  id = "var_abundance", target = "abundance")
+
+# TASK with rel_abundance as response
+task_rf_var_ra <- mlr3spatiotempcv::as_task_regr_st(data_var_ra_sp,
+  id = "var_rel_abundance", target = "rel_abundance")
 
 ### LEARNER ### ---------------------------------------------------------------
 # learner for a random forest model from the ranger package
@@ -801,6 +835,35 @@ search_space_sec_a <- paradox::ps(
 # specify the search space for rel_abundance as response
 search_space_sec_ra <- paradox::ps(
   mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_sec_ra$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# specify the search space for k_index as response
+search_space_var_k <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_var_k$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specify the search space for shannon index as response
+search_space_var_s <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_var_s$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specify the search space for abundance as response
+search_space_var_a <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_var_a$data()) - 1),
+  sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
+  min.node.size = paradox::p_int(lower = 1, upper = 10)
+)
+
+# specify the search space for rel_abundance as response
+search_space_var_ra <- paradox::ps(
+  mtry = paradox::p_int(lower = 1, upper = ncol(task_rf_var_ra$data()) - 1),
   sample.fraction = paradox::p_dbl(lower = 0.2, upper = 0.9),
   min.node.size = paradox::p_int(lower = 1, upper = 10)
 )
@@ -973,6 +1036,47 @@ autotuner_rf_sec_ra <- mlr3tuning::AutoTuner$new(
   search_space = search_space_sec_ra, # predefined hyperparameter search space
   tuner = mlr3tuning::tnr("random_search") # specify random search
 )
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+autotuner_rf_var_k <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_var_k, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# With shannon index as response
+autotuner_rf_var_s <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_var_s, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# With abundance as response
+autotuner_rf_var_a <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_var_a, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
+
+# With rel_abundance as response
+autotuner_rf_var_ra <- mlr3tuning::AutoTuner$new(
+  learner = lrn_rf, # predefined learner
+  resampling = mlr3::rsmp("spcv_coords", folds = 5), # spatial partitioning
+  measure = mlr3::msr("regr.rmse"), # performance measure
+  terminator = mlr3tuning::trm("evals", n_evals = 50), # specify 50 iterations 
+  search_space = search_space_var_ra, # predefined hyperparameter search space
+  tuner = mlr3tuning::tnr("random_search") # specify random search
+)
 ```
 
 ### Train Autotuner
@@ -1031,6 +1135,19 @@ autotuner_rf_sec_a$train(task_rf_sec_a)
 
 # With rel_abundance as response
 autotuner_rf_sec_ra$train(task_rf_sec_ra)
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+autotuner_rf_var_k$train(task_rf_var_k)
+
+# With shannon index as response 
+autotuner_rf_var_s$train(task_rf_var_s)
+
+# With abundance as response
+autotuner_rf_var_a$train(task_rf_var_a)
+
+# With rel_abundance as response
+autotuner_rf_var_ra$train(task_rf_var_ra)
 ```
 
 ### Tuned Hyperparameters
@@ -1086,6 +1203,19 @@ autotuner_rf_sec_a$tuning_result
 
 # With rel_abundance as response
 autotuner_rf_sec_ra$tuning_result
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+autotuner_rf_var_k$tuning_result
+
+# With shannon index as response
+autotuner_rf_var_s$tuning_result
+
+# With abundance as response
+autotuner_rf_var_a$tuning_result
+
+# With rel_abundance as response
+autotuner_rf_var_ra$tuning_result
 ```
 
 # Ranger Models 
@@ -1174,10 +1304,31 @@ rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry
 #   mtry sample.fraction min.node.size 
 #1:    6        0.542884             7                   
 rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 6, sample.fraction = 0.542884, min.node.size = 7, importance = "impurity")
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2612071             8                 
+rf_model_var_k_c <- ranger(formula = k_index ~., data = training_var_k_c, mtry = 1, sample.fraction = 0.2612071, min.node.size = 8, importance = "impurity")
+
+# With shannon index as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.7040984             9                  
+rf_model_var_s_c <- ranger(formula = shannon ~., data = training_var_s_c, mtry = 1, sample.fraction = 0.7040984, min.node.size = 9, importance = "impurity")
+
+# With abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.5287441             4                    
+rf_model_var_a_c <- ranger(formula = abundance ~., data = training_var_a_c, mtry = 1, sample.fraction = 0.5287441, min.node.size = 4, importance = "impurity")
+
+# With rel_abundance as response
+#   mtry sample.fraction min.node.size 
+#1:    1       0.2030046             1                    
+rf_model_var_ra_c <- ranger(formula = rel_abundance ~., data = training_var_ra_c, mtry = 1, sample.fraction = 0.2030046, min.node.size = 1, importance = "impurity")
 ```
 
 # Model Evaluation 
-## Variable Importance
+## ! Variable Importance
 ```{r}
 ### VARIABLE IMPORTANCE FROM RANGER MODELS ### --------------------------------
 ### PREDICTOR: ONLY VELOCITY ### ----------------------------------------------
@@ -1281,8 +1432,8 @@ write.csv(vi_rf_model_sec_c, "ML_model/var_imp/vi_rf_model_sec_woc.csv", row.nam
 write.csv(vi_rel_rf_model_sec_c, "ML_model/var_imp/vi_rel_rf_model_sec_woc.csv", row.names = FALSE)
 ```
 
-## Partial dependence plots
-### Data extraction & export
+## ! Partial dependence plots
+### ! Data extraction & export
 ```{r}
 ### PREDICTOR: VELOCITY ### -------------------------------------------------
 # With k_index as response --------------------------------------------------
@@ -3017,6 +3168,19 @@ rf_pred_model_sec_a_c <- predict(rf_model_sec_a_c, data = test_sec_a_c)$predicti
 # With rel_abundance as response
 rf_pred_model_sec_ra_c <- predict(rf_model_sec_ra_c, data = test_sec_ra_c)$predictions
 
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+rf_pred_model_var_k_c <- predict(rf_model_var_k_c, data = test_var_k_c)$predictions
+
+# With shannon index as response
+rf_pred_model_var_s_c <- predict(rf_model_var_s_c, data = test_var_s_c)$predictions
+
+# With abundance as response
+rf_pred_model_var_a_c <- predict(rf_model_var_a_c, data = test_var_a_c)$predictions
+
+# With rel_abundance as response
+rf_pred_model_var_ra_c <- predict(rf_model_var_ra_c, data = test_var_ra_c)$predictions
+
 ### OBSERVED VALUES ### -------------------------------------------------------
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
@@ -3069,6 +3233,19 @@ responses_sec_a <- test_sec_a$abundance
 
 # With rel_abundance as response
 responses_sec_ra <- test_sec_ra$rel_abundance
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+responses_var_k <- test_var_k$k_index
+
+# With shannon index as response
+responses_var_s <- test_var_s$shannon
+
+# With abundance as response
+responses_var_a <- test_var_a$abundance
+
+# With rel_abundance as response
+responses_var_ra <- test_var_ra$rel_abundance
 ```
 
 ## Deviance explained (R2)
@@ -3124,6 +3301,19 @@ r2_sec_a <- R2(pred = rf_pred_model_sec_a_c, obs = responses_sec_a)
 
 # With rel_abundance as response
 r2_sec_ra <- R2(pred = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
+
+### PREDICTORS: SELECTED VARIABLES ### ---------------------------------------
+# With k_index as response
+r2_var_k <- R2(pred = rf_pred_model_var_k_c, obs = responses_var_k)
+
+# With shannon index as response
+r2_var_s <- R2(pred = rf_pred_model_var_s_c, obs = responses_var_s)
+
+# With abundance as response
+r2_var_a <- R2(pred = rf_pred_model_var_a_c, obs = responses_var_a)
+
+# With rel_abundance as response
+r2_var_ra <- R2(pred = rf_pred_model_var_ra_c, obs = responses_var_ra)
 ```
 
 ## RMSE & MAE
@@ -3211,6 +3401,27 @@ mae_model_sec_a_c <- Metrics::mae(actual = responses_sec_a, predicted = rf_pred_
 rmse_model_sec_ra_c <- Metrics::rmse(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
 
 mae_model_sec_ra_c <- Metrics::mae(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+rmse_model_var_k_c <- Metrics::rmse(actual = responses_var_k, predicted = rf_pred_model_var_k_c)
+
+mae_model_var_k_c <- Metrics::mae(actual = responses_var_k, predicted = rf_pred_model_var_k_c)
+
+# With shannon index as response
+rmse_model_var_s_c <- Metrics::rmse(actual = responses_var_s, predicted = rf_pred_model_var_s_c)
+
+mae_model_var_s_c <- Metrics::mae(actual = responses_var_s, predicted = rf_pred_model_var_s_c)
+
+# With abundance as response
+rmse_model_var_a_c <- Metrics::rmse(actual = responses_var_a, predicted = rf_pred_model_var_a_c)
+
+mae_model_var_a_c <- Metrics::mae(actual = responses_var_a, predicted = rf_pred_model_var_a_c)
+
+# With rel_abundance as response
+rmse_model_var_ra_c <- Metrics::rmse(actual = responses_var_ra, predicted = rf_pred_model_var_ra_c)
+
+mae_model_var_ra_c <- Metrics::mae(actual = responses_var_ra, predicted = rf_pred_model_var_ra_c)
 ```
 
 ## Bias 
@@ -3266,6 +3477,19 @@ bias_model_sec_a_c <- bias(observados = responses_sec_a, estimados = rf_pred_mod
 
 # With rel_abundance as response
 bias_model_sec_ra_c <- bias(observados = responses_sec_ra, estimados = rf_pred_model_sec_ra_c)
+
+### PREDICTORS: SELECTED VARIABLES ### ---------------------------------------
+# With k_index as response
+bias_model_var_k_c <- bias(observados = responses_var_k, estimados = rf_pred_model_var_k_c)
+
+# With shannon index as response
+bias_model_var_s_c <- bias(observados = responses_var_s, estimados = rf_pred_model_var_s_c)
+
+# With abundance as response
+bias_model_var_a_c <- bias(observados = responses_var_a, estimados = rf_pred_model_var_a_c)
+
+# With rel_abundance as response
+bias_model_var_ra_c <- bias(observados = responses_var_ra, estimados = rf_pred_model_var_ra_c)
 ```
 
 ## Nash-Sutcliffe efficiency (NSE) 
@@ -3321,6 +3545,19 @@ nse_model_sec_a_c <- NSE(sim = rf_pred_model_sec_a_c, obs = responses_sec_a)
 
 # With rel_abundance as response
 nse_model_sec_ra_c <- NSE(sim = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# With k_index as response
+nse_model_var_k_c <- NSE(sim = rf_pred_model_var_k_c, obs = responses_var_k)
+
+# With shannon index as response
+nse_model_var_s_c <- NSE(sim = rf_pred_model_var_s_c, obs = responses_var_s)
+
+# With abundance as response
+nse_model_var_a_c <- NSE(sim = rf_pred_model_var_a_c, obs = responses_var_a)
+
+# With rel_abundance as response
+nse_model_var_ra_c <- NSE(sim = rf_pred_model_var_ra_c, obs = responses_var_ra)
 ```
 
 ## Regression Analysis
@@ -3441,6 +3678,35 @@ resp_sec_ra <- as.data.frame(responses_sec_ra)
 rf_sec_ra <- cbind(pred_sec_ra, responses_sec_ra) |>
   dplyr::rename(observed = responses_sec_ra,
          predicted = rf_pred_model_sec_ra_c)
+
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
+# With k-index as a response 
+pred_var_k <- as.data.frame(rf_pred_model_var_k_c)
+resp_var_k <- as.data.frame(responses_var_k)
+rf_var_k <- cbind(pred_var_k, responses_var_k) |>
+  dplyr::rename(observed = responses_var_k,
+         predicted = rf_pred_model_var_k_c)
+
+# With shannon index as a response 
+pred_var_s <- as.data.frame(rf_pred_model_var_s_c)
+resp_var_s <- as.data.frame(responses_var_s)
+rf_var_s <- cbind(pred_var_s, responses_var_s) |>
+  dplyr::rename(observed = responses_var_s,
+         predicted = rf_pred_model_var_s_c)
+
+# With abundance as a response 
+pred_var_a <- as.data.frame(rf_pred_model_var_a_c)
+resp_var_a <- as.data.frame(responses_var_a)
+rf_var_a <- cbind(pred_var_a, responses_var_a) |>
+  dplyr::rename(observed = responses_var_a,
+         predicted = rf_pred_model_var_a_c)
+
+# With relative abundance as a response 
+pred_var_ra <- as.data.frame(rf_pred_model_var_ra_c)
+resp_var_ra <- as.data.frame(responses_var_ra)
+rf_var_ra <- cbind(pred_var_ra, responses_var_ra) |>
+  dplyr::rename(observed = responses_var_ra,
+         predicted = rf_pred_model_var_ra_c)
 ```
 
 ### LM Models
@@ -3544,6 +3810,31 @@ regr_sec_ra <- lm(predicted ~ observed, data = rf_sec_ra)
 sum_sec_ra <- summary(regr_sec_ra)
 p_sec_ra <- sum_sec_ra$coefficients["observed", "Pr(>|t|)"]
 s_sec_ra <- sum_sec_ra$coefficients["observed", "Estimate"]
+
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
+# with k_index as response
+regr_var_k <- lm(predicted ~ observed, data = rf_var_k)
+sum_var_k <- summary(regr_var_k)
+p_var_k <- sum_var_k$coefficients["observed", "Pr(>|t|)"]
+s_var_k <- sum_var_k$coefficients["observed", "Estimate"]
+
+# with shannon index as response
+regr_var_s <- lm(predicted ~ observed, data = rf_var_s)
+sum_var_s <- summary(regr_var_s)
+p_var_s <- sum_var_s$coefficients["observed", "Pr(>|t|)"]
+s_var_s <- sum_var_s$coefficients["observed", "Estimate"]
+
+# with abundance as response
+regr_var_a <- lm(predicted ~ observed, data = rf_var_a)
+sum_var_a <- summary(regr_var_a)
+p_var_a <- sum_var_a$coefficients["observed", "Pr(>|t|)"]
+s_var_a <- sum_var_a$coefficients["observed", "Estimate"]
+
+# with rel_abundance as response
+regr_var_ra <- lm(predicted ~ observed, data = rf_var_ra)
+sum_var_ra <- summary(regr_var_ra)
+p_var_ra <- sum_var_ra$coefficients["observed", "Pr(>|t|)"]
+s_var_ra <- sum_var_ra$coefficients["observed", "Estimate"]
 ```
 
 
@@ -3554,36 +3845,41 @@ metric_results <- data.frame(lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra,
                                            p_wd_k, p_wd_s, p_wd_a,
                                            p_wd_ra, p_samp_k, p_samp_s, p_samp_a,
                                            p_samp_ra, p_sec_k, p_sec_s, p_sec_a,
-                                           p_sec_ra),
+                                           p_sec_ra, p_var_k, p_var_s, p_var_a,
+                                           p_var_ra),
                           
                           lm_slope = c(s_v_k, s_v_s, s_v_a, s_v_ra,  
                                            s_wd_k, s_wd_s, s_wd_a,
                                            s_wd_ra, s_samp_k, s_samp_s, s_samp_a,
                                            s_samp_ra, s_sec_k, s_sec_s, s_sec_a,
-                                           s_sec_ra),
+                                           s_sec_ra, s_var_k, s_var_s, s_var_a,
+                                           s_var_ra),
                           
-                             nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c),
+                             nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c, nse_model_var_k_c, nse_model_var_s_c, nse_model_var_a_c, nse_model_var_ra_c),
 
-bias = c(bias_model_v_k_c, bias_model_v_s_c, bias_model_v_a_c, bias_model_v_ra_c, bias_model_wd_k_c,bias_model_wd_s_c, bias_model_wd_a_c, bias_model_wd_ra_c, bias_model_samp_k_c, bias_model_samp_s_c, bias_model_samp_a_c, bias_model_samp_ra_c, bias_model_sec_k_c, bias_model_sec_s_c, bias_model_sec_a_c, bias_model_sec_ra_c),
+bias = c(bias_model_v_k_c, bias_model_v_s_c, bias_model_v_a_c, bias_model_v_ra_c, bias_model_wd_k_c,bias_model_wd_s_c, bias_model_wd_a_c, bias_model_wd_ra_c, bias_model_samp_k_c, bias_model_samp_s_c, bias_model_samp_a_c, bias_model_samp_ra_c, bias_model_sec_k_c, bias_model_sec_s_c, bias_model_sec_a_c, bias_model_sec_ra_c, bias_model_var_k_c, bias_model_var_s_c, bias_model_var_a_c, bias_model_var_ra_c),
 
-mae = c(mae_model_v_k_c, mae_model_v_s_c, mae_model_v_a_c, mae_model_v_ra_c, mae_model_wd_k_c, mae_model_wd_s_c, mae_model_wd_a_c, mae_model_wd_ra_c, mae_model_samp_k_c, mae_model_samp_s_c, mae_model_samp_a_c, mae_model_samp_ra_c, mae_model_sec_k_c, mae_model_sec_s_c, mae_model_sec_a_c, mae_model_sec_ra_c), 
+mae = c(mae_model_v_k_c, mae_model_v_s_c, mae_model_v_a_c, mae_model_v_ra_c, mae_model_wd_k_c, mae_model_wd_s_c, mae_model_wd_a_c, mae_model_wd_ra_c, mae_model_samp_k_c, mae_model_samp_s_c, mae_model_samp_a_c, mae_model_samp_ra_c, mae_model_sec_k_c, mae_model_sec_s_c, mae_model_sec_a_c, mae_model_sec_ra_c, mae_model_var_k_c, mae_model_var_s_c, mae_model_var_a_c, mae_model_var_ra_c), 
 
-rmse = c(rmse_model_v_k_c, rmse_model_v_s_c, rmse_model_v_a_c, rmse_model_v_ra_c, rmse_model_wd_k_c, rmse_model_wd_s_c, rmse_model_wd_a_c, rmse_model_wd_ra_c, rmse_model_samp_k_c, rmse_model_samp_s_c, rmse_model_samp_a_c, rmse_model_samp_ra_c, rmse_model_sec_k_c, rmse_model_sec_s_c, rmse_model_sec_a_c, rmse_model_sec_ra_c),
+rmse = c(rmse_model_v_k_c, rmse_model_v_s_c, rmse_model_v_a_c, rmse_model_v_ra_c, rmse_model_wd_k_c, rmse_model_wd_s_c, rmse_model_wd_a_c, rmse_model_wd_ra_c, rmse_model_samp_k_c, rmse_model_samp_s_c, rmse_model_samp_a_c, rmse_model_samp_ra_c, rmse_model_sec_k_c, rmse_model_sec_s_c, rmse_model_sec_a_c, rmse_model_sec_ra_c, rmse_model_var_k_c, rmse_model_var_s_c, rmse_model_var_a_c, rmse_model_var_ra_c),
 
-r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_v_ra, r2_wd_k, r2_wd_s, r2_wd_a, r2_wd_ra, r2_samp_k, r2_samp_s, r2_samp_a, r2_samp_ra, r2_sec_k, r2_sec_s, r2_sec_a, r2_sec_ra), 
+r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_v_ra, r2_wd_k, r2_wd_s, r2_wd_a, r2_wd_ra, r2_samp_k, r2_samp_s, r2_samp_a, r2_samp_ra, r2_sec_k, r2_sec_s, r2_sec_a, r2_sec_ra, r2_var_k, r2_var_s, r2_var_a, r2_var_ra), 
 
 index = c("k_index", "shannon", "abundance", "rel_abundance", 
           "k_index", "shannon", "abundance", "rel_abundance", 
           "k_index", "shannon", "abundance", "rel_abundance", 
+          "k_index", "shannon", "abundance", "rel_abundance",
           "k_index", "shannon", "abundance", "rel_abundance"),
 
 predictor = c("v", "v", "v", "v", 
               "v + wd", "v + wd", "v + wd", "v + wd",  
               "samp", "samp", "samp", "samp", 
-              "all", "all", "all", "all"),
+              "all", "all", "all", "all",
+              "var", "var", "var", "var"),
 
 model = c("rf", "rf", "rf", "rf", 
           "rf", "rf", "rf", "rf", 
+          "rf", "rf", "rf", "rf",
           "rf", "rf", "rf", "rf",
           "rf", "rf", "rf", "rf"))
 
