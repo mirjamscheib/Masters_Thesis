@@ -27,52 +27,168 @@ pkgCheck("sp")
 pkgCheck("raster")
 pkgCheck("Metrics")
 pkgCheck("tidyr")
+
+# load self-written functions 
+source("mth_functions.R")
 ```
 
-# Read mesh and create shp
+# Write Rasters with added Parameters
 ```{r}
-#mesh paths
-Twodm_path <- "hydrodynamic_model_results/Landquart_comp.2dm"
+### GL1 ### --------------------------------------------------------------
+GL1 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
+                   z = 708.2711667, 
+                   ecomorph_class = 2, 
+                   nitrogen = 4.43, 
+                   phosphor = 0.398984998, 
+                   biogeo = "Eastern Central Alps", 
+                   raster_z_path = "Pre_Processing/raster_files/GL1_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo.tif")
 
-#read mesh as a table
-Twodm <- read.table(Twodm_path, sep="", skip=2, header=F, fill=T)
+### GL2 ### --------------------------------------------------------------
+GL2 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL2_shape.shp", 
+                   z = 738.0426667, 
+                   ecomorph_class = 2, 
+                   nitrogen = 4.35, 
+                   phosphor = 0.4049904, 
+                   biogeo = "Eastern Central Alps", 
+                   raster_z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif")
 
-#split mesh in nodes and elements
-#nodes
-nd_df <- Twodm[which(Twodm$V1=="ND"),-1]
-colnames(nd_df) <- c( "ID", "X", "Y", "Z")
-nd_df$X <- as.numeric(nd_df$X)
-nd_df$Y <- as.numeric(nd_df$Y)
+### L2 ### --------------------------------------------------------------
+L2 <- hdm_add(shp_path = "Pre_Processing/raster_files/L2_shape.shp", 
+                   z = 794.6173333, 
+                   ecomorph_class = 2, 
+                   nitrogen = 4.03, 
+                   phosphor = 0.347871958, 
+                   biogeo = "Eastern Central Alps", 
+                   raster_z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif")
 
-#elements
-e3t_df <- Twodm[which(Twodm$V1=="E3T"),][,-1]
-colnames(e3t_df) <- c( "ID", "N1", "N2", "N3")
+### M1 ### --------------------------------------------------------------
+M1 <- hdm_add(shp_path = "Pre_Processing/raster_files/M1_shape.shp", 
+                   z = 403.4363333, 
+                   ecomorph_class = 2, 
+                   nitrogen = 6.12, 
+                   phosphor = 0.453213924, 
+                   biogeo = "Southern Alps", 
+                   raster_z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif")
+
+### S1 ### --------------------------------------------------------------
+S1 <- hdm_add(shp_path = "Pre_Processing/raster_files/S1_shape.shp", 
+                   z = 585.8313333, 
+                   ecomorph_class = 2, 
+                   nitrogen = 11.17, 
+                   phosphor = 1.352706565, 
+                   biogeo = "Northern Alps", 
+                   raster_z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif")
+
+### S2 ### --------------------------------------------------------------
+S2 <- hdm_add(shp_path = "Pre_Processing/raster_files/S2_shape.shp", 
+                   z = 562.59975, 
+                   ecomorph_class = 2, 
+                   nitrogen = 11.29, 
+                   phosphor = 1.293177637, 
+                   biogeo = "Central Plateau", 
+                   raster_z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif")
+
+### TH4 ### --------------------------------------------------------------
+TH4 <- hdm_add(shp_path = "Pre_Processing/raster_files/TH4_shape.shp", 
+                   z = 540.3599167, 
+                   ecomorph_class = 0, 
+                   nitrogen = 11.4, 
+                   phosphor = 1.503643677, 
+                   biogeo = "Central Plateau", 
+                   raster_z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif")
+
+### VR3 ### --------------------------------------------------------------
+VR3 <- hdm_add(shp_path = "Pre_Processing/raster_files/VR3_shape.shp", 
+                   z = 671.8723333, 
+                   ecomorph_class = 1, 
+                   nitrogen = 5.0, 
+                   phosphor = 0.676068382, 
+                   biogeo = "Eastern Central Alps", 
+                   raster_z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif")
+
+plot(raster("Pre_Processing/raster_files/GL1_phosphor.tif"))
+```
+
+# Make stacks for each Q
+## Read all rasters
+```{r}
+### GL1 ### ----------------------------------------------------------------
+GL1_z <- raster("Pre_Processing/raster_files/GL1_z.tif")
+GL1_ecomorph <- raster("Pre_Processing/raster_files/GL1_ecomorph.tif")
+GL1_nitrogen <- raster("Pre_Processing/raster_files/GL1_nitrogen.tif")
+GL1_phosphor <- raster("Pre_Processing/raster_files/GL1_phosphor.tif")
+GL1_biogeo <- raster("Pre_Processing/raster_files/GL1_biogeo.tif")
+
+GL1_2_56_ezg_v <- raster("Pre_Processing/raster_files/GL1_v_2_56_ezg.tif")
+GL1_2_56_ezg_wd <- raster("Pre_Processing/raster_files/GL1_wd_2_56_ezg.tif")
+
+GL1_3_28_v <- raster("Pre_Processing/raster_files/GL1_v_3_28.tif")
+GL1_3_28_wd <- raster("Pre_Processing/raster_files/GL1_wd_3_28.tif")
+
+GL1_6_00_v <- raster("Pre_Processing/raster_files/GL1_v_6_00.tif")
+GL1_6_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_6_00.tif")
+
+GL1_9_00_v <- raster("Pre_Processing/raster_files/GL1_v_9_00.tif")
+GL1_9_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_9_00.tif")
+
+GL1_12_68_v <- raster("Pre_Processing/raster_files/GL1_v_12_68.tif")
+GL1_12_68_wd <- raster("Pre_Processing/raster_files/GL1_wd_12_68.tif")
+
+GL1_16_00_v <- raster("Pre_Processing/raster_files/GL1_v_16_00.tif")
+GL1_16_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_16_00.tif")
+
+GL1_19_00_v <- raster("Pre_Processing/raster_files/GL1_v_19_00.tif")
+GL1_19_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_19_00.tif")
+
+GL1_22_00_v <- raster("Pre_Processing/raster_files/GL1_v_22_00.tif")
+GL1_22_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_22_00.tif")
+
+GL1_25_00_v <- raster("Pre_Processing/raster_files/GL1_v_25_00.tif")
+GL1_25_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_25_00.tif")
+
+GL1_28_00_v <- raster("Pre_Processing/raster_files/GL1_v_28_00.tif")
+GL1_28_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_28_00.tif")
+
+GL1_31_76_v <- raster("Pre_Processing/raster_files/GL1_v_31_76.tif")
+GL1_31_76_wd <- raster("Pre_Processing/raster_files/GL1_wd_31_76.tif")
+```
 
 
-#create table with coordinates of each triangular element (x1,y1,x2,y2,x3,y3)
-triangles <- (cbind(nd_df[e3t_df$N1, c("X","Y")], nd_df[e3t_df$N2, c("X","Y")], nd_df[e3t_df$N3, c("X","Y")], nd_df[e3t_df$N1, c("X","Y")]))
-
-tr_matrix <- matrix(unlist(triangles), ncol=8, byrow = F)
-
-#number of elements
-ID <- e3t_df$ID
-length(ID) # 38694 triangular cells in the computational mesh
-
-# Create SP object
-polys <- SpatialPolygons(mapply(function(poly, id) {
-  xy <- matrix(poly, ncol=2, byrow=TRUE)
-  Polygons(list(Polygon(xy)), ID=id)
-}, split(tr_matrix, row(tr_matrix)), ID))
-
-
-# Create SPDF (exportable as shapefile)
-mesh.sp <- SpatialPolygonsDataFrame(polys, data.frame(id=ID, row.names=ID))
-
-#link results with mesh 
-## Q2.4
-mesh.sp$waterSurfElev_2 <- as.numeric(round(waterSurfElev_2,3))
-mesh.sp$depth_2 <- as.numeric(round(depth_2,3))
-mesh.sp$V_abs_2 <- as.numeric(round(V_abs_2,3))
-mesh.sp$substrate_all <- as.numeric(7)
+## Stack all rasters
+```{r}
+#GL1_2_56_ezg <- stack(GL1_v_2_56_ezg, GL1_wd_2_56_ezg, GL1_f_2_56_ezg, GL1_s_2_56_ezg, GL1_sp_2_56_ezg) 
+#names(GL1_2_56_ezg) <- c("GL1_v_2_56_ezg", "GL1_wd_2_56_ezg", "GL1_f_2_56_ezg", "GL1_s_2_56_ezg", "GL1_sp_2_56_ezg") 
 ```
 

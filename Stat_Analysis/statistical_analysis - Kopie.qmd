@@ -51,13 +51,17 @@ heat_new <- cbind(combined, heat) |>
   dplyr::select(-index, -model) |>
   dplyr::rename(models = combined) 
 
-max(heat_new$)
+
 
 # load data for bar charts -> variable importance 
-bar <- read_delim("ML_model/var_imp/var_imp_samp.csv") |> 
+bar <- read_delim("ML_model/var_imp/var_imp_var.csv") |> 
   dplyr::select(variable, k_index_rf, k_index_brt) |>
-  mutate(var_new = c("Velocity [m/s]", "Z Coordinate [m.a.s.l.]", "Dist. Waterline [m]", "Cat. Velocity [1-5]", "Algae Cover [1-5]", "Moos Cover [0-3]", "CPOM Cover [1-3]", "Water Deph [m]", "Clogging Class [0-2]", "Clogging Class [0-6]", "Substrate Type [0-3]")) |>
+  mutate(var_new = c("Z Coordinate [m.a.s.l.]", "Water Deph [m]", "Mean diffused total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffused total phosphor [kg/ha a]", "Ecomorphological Class", "Bioregion")) |>
   pivot_longer(cols = c(2:3), names_to = "models", values_to = "values")
+
+bar_rf <- read_delim("ML_model/var_imp/var_imp_var.csv") |> 
+  dplyr::select(variable, k_index_rf) |>
+  mutate(var_new = c("Z Coordinate [m.a.s.l.]", "Water Deph [m]", "Mean diffused total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffused total phosphor [kg/ha a]", "Ecomorphological Class", "Bioregion"))
 ```
 |>
   pivot_longer(cols = c(5:6), names_to = "metric_rmse_mae", values_to = "val_rmse_mae") |>
@@ -164,6 +168,43 @@ p <- ggplot(bar, aes(x = values, y = reorder(var_new, + values), fill = models))
 
 
 # save the plots 
-ggsave("Stat_Analysis/var_imp.png", plot = p, width = 9, height = 6)
+ggsave("Stat_Analysis/var_imp.png", plot = p, width = 11, height = 6)
+```
+
+```{r}
+library(scales)
+
+p <- ggplot(bar_rf, aes(x = k_index_rf, y = reorder(var_new, + k_index_rf))) +
+  geom_bar(stat = "identity", position = position_dodge()) + 
+  ylab(label = " ") +
+  xlab(label = " ") +
+  scale_x_continuous(labels = percent_format(scale = 100)) +
+  theme_minimal() +
+  labs(fill = "Algorithm") + 
+  theme(axis.text = element_text(size = 14),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16))
+
+# Assuming 'percentage' is a column in your 'bar_rf' data frame containing the calculated percentage values
+bar_rf$percentage <- round(((bar_rf$k_index_rf) * 100), digits = 1)
+
+p2 <- ggplot(bar_rf, aes(x = k_index_rf, y = reorder(var_new, +k_index_rf))) +
+  geom_bar(stat = "identity", position = position_dodge(), fill = "lightgray") + 
+  geom_text(aes(label = percent(percentage / 100)), 
+            position = position_dodge(width = 0.9), 
+            hjust = -0.5,vjust = -0.5, size = 5) +  # Adjust vjust as needed
+  ylab(label = " ") +
+  xlab(label = " ") +
+  scale_x_continuous(labels = percent_format(scale = 100)) +
+  theme_minimal() +
+  labs(fill = "Algorithm") + 
+  theme(axis.text = element_text(size = 14),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16)) +
+  scale_x_continuous(limits = c(0, 0.25), breaks = seq(0, 0.25, by = 0.05))
+
+
+# save the plots 
+ggsave("Stat_Analysis/var_imp_rf.png", plot = p2, width = 11, height = 6)
 ```
 

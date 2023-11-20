@@ -273,3 +273,56 @@ wa_tot <- function(x, column_name){
 freq_table <- function(x){
   as.data.frame(freq(x, digit=1, useNA= "no"))
 }
+
+####  ADD PARAMETERS ####
+# convert hydrodynamic model results into a shapefile, rasters 
+# and return the number of cells of the mesh 
+
+# meaning of the functions arguments: 
+# h5_path = path of the .h5 file you want to convert into a raster
+# twodm_path = path of the .2dm file (mesh file) which resulted from hydrodynamic simulations
+# shp_path = path and name of the shapefile you want to write and read 
+# raster_wd_path = path and name of the raster reflecting water depth at a specific discharge
+# raster_v_path = path and name of the raster reflecting velocity at a specific discharge
+# Assuming your time steps are stored in a dataset named "time_steps", you can access it using:
+# time_steps <- h5read(h5_file, "time_steps")
+
+# Get the index of the last time step
+# last_time_step_index <- length(time_steps)
+
+# Assuming your data is stored in a dataset named "data", you can access the last time step's data using:
+# last_time_step_data <- h5read(h5_file, "data", index = list(last_time_step_index))
+
+hdm_add <- function(shp_path, z, ecomorph_class, nitrogen, phosphor, biogeo, 
+                        raster_z_path, raster_ecomorph_path, raster_nitrogen_path, raster_phosphor_path,
+                        raster_biogeo_path){
+  shape <- read_sf(shp_path)
+  
+  shape$elevation <- as.numeric(z)           
+  shape$ecomorph <- as.numeric(ecomorph_class)
+  shape$diff_nitrogen <- as.numeric(nitrogen)
+  shape$diff_phosphor <- as.numeric(phosphor)
+  shape$bioregion <- as.factor(biogeo)
+                                     # read the shapefile
+  raster_extent <- extent(shape)                                   # Set the raster extent using the bounding box of the shapefile
+  raster_resolution <- 0.5                                             # Set the raster resolution in meters
+  raster_layer <- raster(ext = extent(shape),                      # Create an empty raster layer with the specified extent and resolution
+                         res = raster_resolution)
+  raster_z <- rasterize(shape, raster_layer, shape$elevation)  # Rasterize the shapefile into the empty raster layer - water depth
+  raster_ecomorph <- rasterize(shape, raster_layer, shape$ecomorph) # Rasterize the shapefile into the empty raster layer - velocity
+  raster_nitrogen <- rasterize(shape, raster_layer, shape$diff_nitrogen)  # Rasterize the shapefile into the empty raster layer - water depth
+  raster_phosphor <- rasterize(shape, raster_layer, shape$diff_phosphor)  # Rasterize the shapefile into the empty raster layer - water depth
+  raster_biogeo <- rasterize(shape, raster_layer, shape$biogeo)  # Rasterize the shapefile into the empty raster layer - water depth
+  
+   writeRaster(raster_z, raster_z_path, format = "GTiff",            # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_ecomorph, raster_ecomorph_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_nitrogen, raster_nitrogen_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_phosphor, raster_phosphor_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_biogeo, raster_biogeo_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+}
+
