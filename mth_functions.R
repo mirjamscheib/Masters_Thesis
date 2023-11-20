@@ -295,7 +295,7 @@ freq_table <- function(x){
 
 hdm_add <- function(shp_path, z, ecomorph_class, nitrogen, phosphor, biogeo, 
                         raster_z_path, raster_ecomorph_path, raster_nitrogen_path, raster_phosphor_path,
-                        raster_biogeo_path){
+                        raster_biogeo_path, q_path){
   shape <- read_sf(shp_path)
   
   shape$elevation <- as.numeric(z)           
@@ -306,13 +306,17 @@ hdm_add <- function(shp_path, z, ecomorph_class, nitrogen, phosphor, biogeo,
                                      # read the shapefile
   raster_extent <- extent(shape)                                   # Set the raster extent using the bounding box of the shapefile
   raster_resolution <- 0.5                                             # Set the raster resolution in meters
-  raster_layer <- raster(ext = extent(shape),                      # Create an empty raster layer with the specified extent and resolution
-                         res = raster_resolution)
-  raster_z <- rasterize(shape, raster_layer, shape$elevation)  # Rasterize the shapefile into the empty raster layer - water depth
+  raster_z_1 <- rasterize(shape, raster_layer, shape$elevation)  # Rasterize the shapefile into the empty raster layer - water depth
   raster_ecomorph <- rasterize(shape, raster_layer, shape$ecomorph) # Rasterize the shapefile into the empty raster layer - velocity
   raster_nitrogen <- rasterize(shape, raster_layer, shape$diff_nitrogen)  # Rasterize the shapefile into the empty raster layer - water depth
   raster_phosphor <- rasterize(shape, raster_layer, shape$diff_phosphor)  # Rasterize the shapefile into the empty raster layer - water depth
-  raster_biogeo <- rasterize(shape, raster_layer, shape$biogeo)  # Rasterize the shapefile into the empty raster layer - water depth
+  raster_biogeo <- rasterize(shape, raster_layer, shape$bioregion)  # Rasterize the shapefile into the empty raster layer - water depth
+  
+  raster_z <- mask(raster_z_1, q_path)
+  raster_ecomorph <- mask(raster_ecomorph_1, q_path)
+  raster_nitrogen <- mask(raster_nitrogen_1, q_path)
+  raster_phosphor <- mask(raster_phosphor_1, q_path)
+  raster_biogeo <- mask(raster_biogeo_1, q_path)
   
    writeRaster(raster_z, raster_z_path, format = "GTiff",            # Save the raster layer as a GeoTIFF file
               overwrite = TRUE)
