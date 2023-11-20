@@ -302,7 +302,7 @@ hdm_add <- function(shp_path, z, ecomorph_class, nitrogen, phosphor, biogeo,
   shape$ecomorph <- as.numeric(ecomorph_class)
   shape$diff_nitrogen <- as.numeric(nitrogen)
   shape$diff_phosphor <- as.numeric(phosphor)
-  shape$bioregion <- as.factor(biogeo)
+  shape$bioregion <- as.numeric(biogeo)
                                      # read the shapefile
   raster_extent <- extent(shape)                                   # Set the raster extent using the bounding box of the shapefile
   raster_resolution <- 0.5                                             # Set the raster resolution in meters

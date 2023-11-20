@@ -34,18 +34,22 @@ source("mth_functions.R")
 
 # Write Rasters with added Parameters
 ```{r}
+#biogeo_new <- c("Southern Alps" = 0, "Central Plateau" = 1, "Northern Alps" = 2, "Eastern Central Alps" = 3)
+
 ### GL1 ### --------------------------------------------------------------
 GL1 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
                    z = 708.2711667, 
                    ecomorph_class = 2, 
                    nitrogen = 4.43, 
                    phosphor = 0.398984998, 
-                   biogeo = "Eastern Central Alps", 
+                   biogeo = 3, 
                    raster_z_path = "Pre_Processing/raster_files/GL1_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen.tif",
                    raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor.tif",
                    raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo.tif")
+
+plot(raster("Pre_Processing/raster_files/GL1_phosphor.tif"))
 
 ### GL2 ### --------------------------------------------------------------
 GL2 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL2_shape.shp", 
@@ -53,7 +57,7 @@ GL2 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL2_shape.shp",
                    ecomorph_class = 2, 
                    nitrogen = 4.35, 
                    phosphor = 0.4049904, 
-                   biogeo = "Eastern Central Alps", 
+                   biogeo = 3, 
                    raster_z_path = "Pre_Processing/raster_files/GL2_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
@@ -66,7 +70,7 @@ L2 <- hdm_add(shp_path = "Pre_Processing/raster_files/L2_shape.shp",
                    ecomorph_class = 2, 
                    nitrogen = 4.03, 
                    phosphor = 0.347871958, 
-                   biogeo = "Eastern Central Alps", 
+                   biogeo = 3, 
                    raster_z_path = "Pre_Processing/raster_files/L2_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
@@ -79,7 +83,7 @@ M1 <- hdm_add(shp_path = "Pre_Processing/raster_files/M1_shape.shp",
                    ecomorph_class = 2, 
                    nitrogen = 6.12, 
                    phosphor = 0.453213924, 
-                   biogeo = "Southern Alps", 
+                   biogeo = 0, 
                    raster_z_path = "Pre_Processing/raster_files/M1_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
@@ -92,7 +96,7 @@ S1 <- hdm_add(shp_path = "Pre_Processing/raster_files/S1_shape.shp",
                    ecomorph_class = 2, 
                    nitrogen = 11.17, 
                    phosphor = 1.352706565, 
-                   biogeo = "Northern Alps", 
+                   biogeo = 2, 
                    raster_z_path = "Pre_Processing/raster_files/S1_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
@@ -105,7 +109,7 @@ S2 <- hdm_add(shp_path = "Pre_Processing/raster_files/S2_shape.shp",
                    ecomorph_class = 2, 
                    nitrogen = 11.29, 
                    phosphor = 1.293177637, 
-                   biogeo = "Central Plateau", 
+                   biogeo = 1, 
                    raster_z_path = "Pre_Processing/raster_files/S2_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
@@ -118,7 +122,7 @@ TH4 <- hdm_add(shp_path = "Pre_Processing/raster_files/TH4_shape.shp",
                    ecomorph_class = 0, 
                    nitrogen = 11.4, 
                    phosphor = 1.503643677, 
-                   biogeo = "Central Plateau", 
+                   biogeo = 1, 
                    raster_z_path = "Pre_Processing/raster_files/TH4_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
@@ -131,14 +135,12 @@ VR3 <- hdm_add(shp_path = "Pre_Processing/raster_files/VR3_shape.shp",
                    ecomorph_class = 1, 
                    nitrogen = 5.0, 
                    phosphor = 0.676068382, 
-                   biogeo = "Eastern Central Alps", 
+                   biogeo = 3, 
                    raster_z_path = "Pre_Processing/raster_files/VR3_z.tif",
                    raster_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
                    raster_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
                    raster_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
                    raster_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif")
-
-plot(raster("Pre_Processing/raster_files/GL1_phosphor.tif"))
 ```
 
 # Make stacks for each Q
