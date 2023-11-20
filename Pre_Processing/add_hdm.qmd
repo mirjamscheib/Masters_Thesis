@@ -188,7 +188,9 @@ GL1_31_76_wd <- raster("Pre_Processing/raster_files/GL1_wd_31_76.tif")
 
 ## Stack all rasters
 ```{r}
-#GL1_2_56_ezg <- stack(GL1_v_2_56_ezg, GL1_wd_2_56_ezg, GL1_f_2_56_ezg, GL1_s_2_56_ezg, GL1_sp_2_56_ezg) 
-#names(GL1_2_56_ezg) <- c("GL1_v_2_56_ezg", "GL1_wd_2_56_ezg", "GL1_f_2_56_ezg", "GL1_s_2_56_ezg", "GL1_sp_2_56_ezg") 
+GL1_2_56_ezg <- stack(GL1_2_56_ezg_v, GL1_2_56_ezg_wd, GL1_z, GL1_ecomorph, GL1_nitrogen, GL1_phosphor, GL1_biogeo) 
+names(GL1_2_56_ezg) <- c("velocity", "wd_m", "z", "ecomorph_class", "diff_nitrogen", "diff_phosphor", "biogeo_int") 
+
+writeRaster(GL1_2_56_ezg, "Pre_Processing/rasters_stacked/GL1_2_56_ezg_var.grd", overwrite = TRUE)
 ```
 
