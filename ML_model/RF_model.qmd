@@ -1328,7 +1328,7 @@ rf_model_var_ra_c <- ranger(formula = rel_abundance ~., data = training_var_ra_c
 ```
 
 # Model Evaluation 
-## ! Variable Importance
+## Variable Importance
 ```{r}
 ### VARIABLE IMPORTANCE FROM RANGER MODELS ### --------------------------------
 ### PREDICTOR: ONLY VELOCITY ### ----------------------------------------------
@@ -1388,6 +1388,20 @@ vi_rel_sec_a_c <- vi_sec_a_c/sum(vi_sec_a_c)
 vi_sec_ra_c <- importance(rf_model_sec_ra_c)
 vi_rel_sec_ra_c <- vi_sec_ra_c/sum(vi_sec_ra_c) 
 
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# w/o coordinates
+vi_var_k_c <- importance(rf_model_var_k_c) 
+vi_rel_var_k_c <- vi_var_k_c/sum(vi_var_k_c) 
+
+vi_var_s_c <- importance(rf_model_var_s_c) 
+vi_rel_var_s_c <- vi_var_s_c/sum(vi_var_s_c) 
+
+vi_var_a_c <- importance(rf_model_var_a_c) 
+vi_rel_var_a_c <- vi_var_a_c/sum(vi_var_a_c) 
+
+vi_var_ra_c <- importance(rf_model_var_ra_c)
+vi_rel_var_ra_c <- vi_var_ra_c/sum(vi_var_ra_c) 
+
 # bind results together ------------------------------------------------------
 vi_rf_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c) |>
   as.data.frame() |>
@@ -1421,6 +1435,14 @@ vi_rel_rf_model_sec_c <- rbind(vi_rel_sec_k_c, vi_rel_sec_s_c, vi_rel_sec_a_c, v
   as.data.frame() |>
   mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
 
+vi_rf_model_var_c <- rbind(vi_var_k_c, vi_var_s_c, vi_var_a_c, vi_var_ra_c)|>
+ as.data.frame() |>
+  mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
+vi_rel_rf_model_var_c <- rbind(vi_rel_var_k_c, vi_rel_var_s_c, vi_rel_var_a_c, vi_rel_var_ra_c)|>
+  as.data.frame() |>
+  mutate(index = c("k_index", "shannon", "abundance", "rel_abundance"))
+
 # write results into .csv ------------------------------------------------------
 write.csv(vi_rf_model_v_c, "ML_model/var_imp/vi_rf_model_v_woc.csv", row.names = FALSE)
 write.csv(vi_rel_rf_model_v_c, "ML_model/var_imp/vi_rel_rf_model_v_woc.csv", row.names = FALSE)
@@ -1430,10 +1452,12 @@ write.csv(vi_rf_model_samp_c, "ML_model/var_imp/vi_rf_model_samp_woc.csv", row.n
 write.csv(vi_rel_rf_model_samp_c, "ML_model/var_imp/vi_rel_rf_model_samp_woc.csv", row.names = FALSE)
 write.csv(vi_rf_model_sec_c, "ML_model/var_imp/vi_rf_model_sec_woc.csv", row.names = FALSE)
 write.csv(vi_rel_rf_model_sec_c, "ML_model/var_imp/vi_rel_rf_model_sec_woc.csv", row.names = FALSE)
+write.csv(vi_rf_model_var_c, "ML_model/var_imp/vi_rf_model_var_woc.csv", row.names = FALSE)
+write.csv(vi_rel_rf_model_var_c, "ML_model/var_imp/vi_rel_rf_model_var_woc.csv", row.names = FALSE)
 ```
 
-## ! Partial dependence plots
-### ! Data extraction & export
+## Partial dependence plots
+### Data extraction & export
 ```{r}
 ### PREDICTOR: VELOCITY ### -------------------------------------------------
 # With k_index as response --------------------------------------------------
@@ -3111,6 +3135,71 @@ pdp_model_ga_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_after"
 
 # export data 
 write.csv(pdp_model_ga_sec_ra_c, "ML_Model/pdp_data/pdp_ga_sec_ra_c_rf.csv", row.names = FALSE)
+
+### PREDICTOR: SELECTED VARIABLES ### -----------------------------------------
+# With k_index as response --------------------------------------------------
+### velocity
+pdp_model_v_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "velocity")|>
+  mutate(predictors = "velocity",
+         model = "velocity w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_v_var_k_c, "ML_Model/pdp_data/pdp_v_var_k_c_rf.csv", row.names = FALSE)
+
+### z
+pdp_model_z_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "z")|>
+  mutate(predictors = "z",
+         model = "z w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_z_var_k_c, "ML_Model/pdp_data/pdp_z_var_k_c_rf.csv", row.names = FALSE)
+
+### wd_m
+pdp_model_wd_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "wd_m")|>
+  mutate(predictors = "wd_m",
+         model = "wd_m w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_wd_var_k_c, "ML_Model/pdp_data/pdp_wd_var_k_c_rf.csv", row.names = FALSE)
+
+### nitrogen 
+pdp_model_n_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "mean_diff_nitrogen")|>
+  mutate(predictors = "mean_diff_nitrogen",
+         model = "mean_diff_nitrogen w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_n_var_k_c, "ML_Model/pdp_data/pdp_n_var_k_c_rf.csv", row.names = FALSE)
+
+### phosphor 
+pdp_model_p_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "mean_diff_phosphor")|>
+  mutate(predictors = "mean_diff_phosphor",
+         model = "mean_diff_phosphor w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_p_var_k_c, "ML_Model/pdp_data/pdp_p_var_k_c_rf.csv", row.names = FALSE)
+
+### ecomorph_class 
+pdp_model_e_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "ecomorph_class")|>
+  mutate(predictors = "ecomorph_class",
+         model = "ecomorph_class w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_e_var_k_c, "ML_Model/pdp_data/pdp_e_var_k_c_rf.csv", row.names = FALSE)
+
+### biogeo_int 
+pdp_model_b_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "biogeo_int")|>
+  mutate(predictors = "biogeo_int",
+         model = "biogeo_int w/o coordinates",
+         index = "k_index")
+
+# export data 
+write.csv(pdp_model_b_var_k_c, "ML_Model/pdp_data/pdp_b_var_k_c_rf.csv", row.names = FALSE)
 ```
 
 ## Obs and Pred

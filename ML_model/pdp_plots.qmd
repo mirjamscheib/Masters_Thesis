@@ -197,6 +197,33 @@ sub_samp_ra_c_rf <- read_delim("ML_Model/pdp_data/pdp_sub_samp_ra_c_rf.csv")|>
   mutate(sub_type = c("< 2.5 mm", "25 mm > x > 2.5 mm",  "250 mm > x > 25 mm", "> 250 mm"))
 ```
 
+```{r}
+# With k_index as response ---------------------------------------------------
+### velocity
+v_var_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_v_var_k_c_rf.csv") 
+
+### wd_m
+wd_var_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_wd_var_k_c_rf.csv")
+
+### z 
+z_var_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_z_var_k_c_rf.csv")
+
+### phosphor 
+p_var_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_p_var_k_c_rf.csv")
+
+### nitrogen
+n_var_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_n_var_k_c_rf.csv")
+
+### ecomorph_class 
+e_var_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_e_var_k_c_rf.csv")  |>
+  mutate(ecomorph = c("-", 1, 2, 3, 4))
+
+### biogeo_int
+b_var_k_c_rf <- read_delim("ML_Model/pdp_data/pdp_b_var_k_c_rf.csv") |>
+  mutate(biogeo = c("Southern Alps", "Central Plateau",  "Northern Alps", "Eastern Central Alps"))
+
+```
+
 ## BRT normal 
 ```{r}
 ### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
@@ -371,6 +398,118 @@ sub_samp_ra_c_brt <- read.delim("ML_Model/pdp_data/pdp_sub_samp_ra_c_brt.csv", s
 
 # Plots
 ## RF normal 
+### PREDICTORS: Selected Variables
+```{r}
+# With k_index as response ----------------------------------------------------
+### velocity 
+p_v_var_k_c_rf <- ggplot(v_var_k_c_rf, aes(velocity, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Velocity (m/s)",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_v_var_k_c_rf.png", plot = p_v_var_k_c_rf, width = 6, height = 5)
+
+### wd_m 
+p_wd_var_k_c_rf <- ggplot(wd_var_k_c_rf, aes(x = wd_m, y = yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Water Depth (m)",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_wd_var_k_c_rf.png", plot = p_wd_var_k_c_rf, width = 6, height = 5)
+
+### z 
+p_z_var_k_c_rf <- ggplot(z_var_k_c_rf, aes(z, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Z Coordinate [m.a.s.l.]",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_z_var_k_c_rf.png", plot = p_z_var_k_c_rf, width = 6, height = 5)
+
+### Nitrogen
+p_n_var_k_c_rf <- ggplot(n_var_k_c_rf, aes(mean_diff_nitrogen, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Mean diffused total nitrogen [kg/ha a]",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_n_var_k_c_rf.png", plot = p_n_var_k_c_rf, width = 6, height = 5)
+
+### phosphor
+p_p_var_k_c_rf <- ggplot(p_var_k_c_rf, aes(mean_diff_phosphor, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line() + 
+  labs(
+    x = "Mean diffused total phosphor [kg/ha a]",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_p_var_k_c_rf.png", plot = p_p_var_k_c_rf, width = 6, height = 5)
+
+### ecomorph_class
+p_e_var_k_c_rf <- ggplot(e_var_k_c_rf, aes(ecomorph, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line(aes(group = 1)) + 
+  labs(
+    x = "Ecomorphological Class",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_e_var_k_c_rf.png", plot = p_e_var_k_c_rf, width = 6, height = 5)
+
+### bioregion
+b_var_k_c_rf$biogeo_order <- factor(b_var_k_c_rf$biogeo, levels = c("Southern Alps", "Eastern Central Alps", "Northern Alps","Central Plateau"))
+
+p_b_var_k_c_rf <- ggplot(b_var_k_c_rf, aes(biogeo_order, yhat)) + 
+  # yhat ist die response variable (k-index, simpson oder shannon)
+  geom_line(aes(group = 1)) + 
+  labs(
+    x = "Bioregion",
+    y = "K-Index"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16)) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+
+# save the plots 
+ggsave("ML_model/plots/pdp_b_var_k_c_rf.png", plot = p_b_var_k_c_rf, width = 6, height = 5)
+```
+
 ### Predictors: Sampling Locations
 ```{r}
 ### PREDICTOR: SAMPLING LOCATIONS ### -----------------------------------------
