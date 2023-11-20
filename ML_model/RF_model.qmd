@@ -3982,15 +3982,16 @@ write.csv(metric_results, "Stat_Analysis/ml_evaluation_metrics_rf.csv", row.name
 # read rasters containing wd and velocity 
 GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg.grd")
 GL1_v_ezg <- stack("Pre_Processing/raster_files/GL1_v_2_56_ezg.tif")
-#GL1_q <- stack("Pre_Processing/rasters_stacked/GL1_3_28.grd")
+GL1_ezg_var <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg_var.grd")
 
 GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg.grd")
 GL2_v_ezg <- stack("Pre_Processing/raster_files/GL2_v_2_37_ezg.tif")
-#GL2_q <- stack("Pre_Processing/rasters_stacked/GL2_3_21.grd")
+GL2_ezg_var <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg_var.grd")
 
 L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg.grd")
 L2_v_ezg <- stack("Pre_Processing/raster_files/L2_v_9_54_ezg.tif")
-#L2_q <- stack("Pre_Processing/rasters_stacked/L2_2_40.grd")
+L2_ezg_var <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg_var.grd")
+
 
 M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg.grd")
 M1_v_ezg <- stack("Pre_Processing/raster_files/M1_v_1_50_ezg.tif")

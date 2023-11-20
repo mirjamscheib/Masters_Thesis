@@ -625,78 +625,266 @@ writeRaster(L2_18_90, "Pre_Processing/rasters_stacked/L2_18_90_var.grd", overwri
 
 ### M1 ### -----------------------------------------------------------------
 # stack rasters
-M1_0_47 <- stack(M1_v_0_47, M1_wd_0_47, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_0_47 <- stack(M1_v_0_47, M1_wd_0_47, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_0_47) <- values
 
-M1_0_60 <- stack(M1_v_0_60, M1_wd_0_60, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_0_60 <- stack(M1_v_0_60, M1_wd_0_60, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_0_60) <- values
 
-M1_1_50_ezg <- stack(M1_v_1_50_ezg, M1_wd_1_50_ezg, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_1_50_ezg <- stack(M1_v_1_50_ezg, M1_wd_1_50_ezg, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_1_50_ezg) <- values
 
-M1_4_00 <- stack(M1_v_4_00, M1_wd_4_00, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_4_00 <- stack(M1_v_4_00, M1_wd_4_00, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_4_00) <- values
 
-M1_6_00 <- stack(M1_v_6_00, M1_wd_6_00, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_6_00 <- stack(M1_v_6_00, M1_wd_6_00, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_6_00) <- values
 
-M1_8_00 <- stack(M1_v_8_00, M1_wd_8_00, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_8_00 <- stack(M1_v_8_00, M1_wd_8_00, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_8_00) <- values
 
-M1_10_00 <- stack(M1_v_10_00, M1_wd_10_00, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_10_00 <- stack(M1_v_10_00, M1_wd_10_00, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_10_00) <- values
 
-M1_12_00 <- stack(M1_v_12_00, M1_wd_12_00, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_12_00 <- stack(M1_v_12_00, M1_wd_12_00, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_12_00) <- values
 
-M1_14_00 <- stack(M1_v_14_00, M1_wd_14_00, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_14_00 <- stack(M1_v_14_00, M1_wd_14_00, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_14_00) <- values
 
-M1_16_00 <- stack(M1_v_16_00, M1_wd_16_00, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_16_00 <- stack(M1_v_16_00, M1_wd_16_00, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_16_00) <- values
 
-M1_18_84 <- stack(M1_v_18_84, M1_wd_18_84, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_18_84 <- stack(M1_v_18_84, M1_wd_18_84, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_18_84) <- values
 
-M1_22_84 <- stack(M1_v_22_84, M1_wd_22_84, L2_z, L2_ecomorph, L2_nitrogen, L2_phosphor, L2_biogeo) 
+M1_22_84 <- stack(M1_v_22_84, M1_wd_22_84, M1_z, M1_ecomorph, M1_nitrogen, M1_phosphor, M1_biogeo) 
 names(M1_22_84) <- values
 
 # save stacks 
+writeRaster(M1_0_47, "Pre_Processing/rasters_stacked/M1_0_47_var.grd", overwrite = TRUE)
+writeRaster(M1_0_60, "Pre_Processing/rasters_stacked/M1_0_60_var.grd", overwrite = TRUE)
+writeRaster(M1_1_50_ezg, "Pre_Processing/rasters_stacked/M1_1_50_ezg_var.grd", overwrite = TRUE)
+writeRaster(M1_4_00, "Pre_Processing/rasters_stacked/M1_4_00_var.grd", overwrite = TRUE)
+writeRaster(M1_6_00, "Pre_Processing/rasters_stacked/M1_6_00_var.grd", overwrite = TRUE)
+writeRaster(M1_8_00, "Pre_Processing/rasters_stacked/M1_8_00_var.grd", overwrite = TRUE)
+writeRaster(M1_10_00, "Pre_Processing/rasters_stacked/M1_10_00_var.grd", overwrite = TRUE)
+writeRaster(M1_12_00, "Pre_Processing/rasters_stacked/M1_12_00_var.grd", overwrite = TRUE)
+writeRaster(M1_14_00, "Pre_Processing/rasters_stacked/M1_14_00_var.grd", overwrite = TRUE)
+writeRaster(M1_16_00, "Pre_Processing/rasters_stacked/M1_16_00_var.grd", overwrite = TRUE)
+writeRaster(M1_18_84, "Pre_Processing/rasters_stacked/M1_18_84_var.grd", overwrite = TRUE)
+writeRaster(M1_22_84, "Pre_Processing/rasters_stacked/M1_22_84_var.grd", overwrite = TRUE)
 
-M1_v_0_47 <- raster("Pre_Processing/raster_files/M1_v_0_47.tif")
-M1_wd_0_47 <- raster("Pre_Processing/raster_files/M1_wd_0_47.tif")
+### S1 ### ------------------------------------------------------------------
+# stack rasters 
+S1_1_94_ezg <- stack(S1_v_1_94_ezg, S1_wd_1_94_ezg, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_1_94_ezg) <- values
 
-M1_v_0_60 <- raster("Pre_Processing/raster_files/M1_v_0_60.tif")
-M1_wd_0_60 <- raster("Pre_Processing/raster_files/M1_wd_0_60.tif")
+S1_2_00 <- stack(S1_v_2_00, S1_wd_2_00, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_2_00) <- values
 
-M1_v_1_50_ezg <- raster("Pre_Processing/raster_files/M1_v_1_50_ezg.tif")
-M1_wd_1_50_ezg <- raster("Pre_Processing/raster_files/M1_wd_1_50_ezg.tif")
+S1_3_70 <- stack(S1_v_3_70, S1_wd_3_70, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_3_70) <- values
 
-M1_v_4_00 <- raster("Pre_Processing/raster_files/M1_v_4_00.tif")
-M1_wd_4_00 <- raster("Pre_Processing/raster_files/M1_wd_4_00.tif")
+S1_6_50 <- stack(S1_v_6_50, S1_wd_6_50, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_6_50) <- values
 
-M1_v_6_00 <- raster("Pre_Processing/raster_files/M1_v_6_00.tif")
-M1_wd_6_00 <- raster("Pre_Processing/raster_files/M1_wd_6_00.tif")
+S1_8_50 <- stack(S1_v_8_50, S1_wd_8_50, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_8_50) <- values
 
-M1_v_8_00 <- raster("Pre_Processing/raster_files/M1_v_8_00.tif")
-M1_wd_8_00 <- raster("Pre_Processing/raster_files/M1_wd_8_00.tif")
+S1_10_68 <- stack(S1_v_10_68, S1_wd_10_68, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_10_68) <- values
 
-M1_v_10_00 <- raster("Pre_Processing/raster_files/M1_v_10_00.tif")
-M1_wd_10_00 <- raster("Pre_Processing/raster_files/M1_wd_10_00.tif")
+S1_13_00 <- stack(S1_v_13_00, S1_wd_13_00, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_13_00) <- values
 
-M1_v_12_00 <- raster("Pre_Processing/raster_files/M1_v_12_00.tif")
-M1_wd_12_00 <- raster("Pre_Processing/raster_files/M1_wd_12_00.tif")
+S1_15_00 <- stack(S1_v_15_00, S1_wd_15_00, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_15_00) <- values
 
-M1_v_14_00 <- raster("Pre_Processing/raster_files/M1_v_14_00.tif")
-M1_wd_14_00 <- raster("Pre_Processing/raster_files/M1_wd_14_00.tif")
+S1_18_00 <- stack(S1_v_18_00, S1_wd_18_00, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_18_00) <- values
 
-M1_v_16_00 <- raster("Pre_Processing/raster_files/M1_v_16_00.tif")
-M1_wd_16_00 <- raster("Pre_Processing/raster_files/M1_wd_16_00.tif")
+S1_20_00 <- stack(S1_v_20_00, S1_wd_20_00, S1_z, S1_ecomorph, S1_nitrogen, S1_phosphor, S1_biogeo) 
+names(S1_20_00) <- values
 
-M1_v_18_84 <- raster("Pre_Processing/raster_files/M1_v_18_84.tif")
-M1_wd_18_84 <- raster("Pre_Processing/raster_files/M1_wd_18_84.tif")
+# save stacks
+writeRaster(S1_1_94_ezg, "Pre_Processing/rasters_stacked/S1_1_94_ezg_var.grd", overwrite = TRUE)
+writeRaster(S1_2_00, "Pre_Processing/rasters_stacked/S1_2_00_var.grd", overwrite = TRUE)
+writeRaster(S1_3_70, "Pre_Processing/rasters_stacked/S1_3_70_var.grd", overwrite = TRUE)
+writeRaster(S1_6_50, "Pre_Processing/rasters_stacked/S1_6_50_var.grd", overwrite = TRUE)
+writeRaster(S1_8_50, "Pre_Processing/rasters_stacked/S1_8_50_var.grd", overwrite = TRUE)
+writeRaster(S1_10_68, "Pre_Processing/rasters_stacked/S1_10_68_var.grd", overwrite = TRUE)
+writeRaster(S1_13_00, "Pre_Processing/rasters_stacked/S1_13_00_var.grd", overwrite = TRUE)
+writeRaster(S1_15_00, "Pre_Processing/rasters_stacked/S1_15_00_var.grd", overwrite = TRUE)
+writeRaster(S1_18_00, "Pre_Processing/rasters_stacked/S1_18_00_var.grd", overwrite = TRUE)
+writeRaster(S1_20_00, "Pre_Processing/rasters_stacked/S1_20_00_var.grd", overwrite = TRUE)
 
-M1_v_22_84 <- raster("Pre_Processing/raster_files/M1_v_22_84.tif")
-M1_wd_22_84 <- raster("Pre_Processing/raster_files/M1_wd_22_84.tif")
+### S2 ### ----------------------------------------------------------------
+# stack rasters
+S2_1_93_ezg <- stack(S2_v_1_93_ezg, S2_wd_1_93_ezg, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_1_93_ezg) <- values
+
+S2_2_00 <- stack(S2_v_2_00, S2_wd_2_00, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_2_00) <- values
+
+S2_3_20 <- stack(S2_v_3_20, S2_wd_3_20, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_3_20) <- values
+
+S2_6_50 <- stack(S2_v_6_50, S2_wd_6_50, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_6_50) <- values
+
+S2_8_50 <- stack(S2_v_8_50, S2_wd_8_50, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_8_50) <- values
+
+S2_10_93 <- stack(S2_v_10_93, S2_wd_10_93, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_10_93) <- values
+
+S2_13_00 <- stack(S2_v_13_00, S2_wd_13_00, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_13_00) <- values
+
+S2_15_00 <- stack(S2_v_15_00, S2_wd_15_00, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_15_00) <- values
+
+S2_18_00 <- stack(S2_v_18_00, S2_wd_18_00, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_18_00) <- values
+
+S2_20_00 <- stack(S2_v_20_00, S2_wd_20_00, S2_z, S2_ecomorph, S2_nitrogen, S2_phosphor, S2_biogeo) 
+names(S2_20_00) <- values
+
+# save stacks
+writeRaster(S2_1_93_ezg, "Pre_Processing/rasters_stacked/S2_1_93_ezg_var.grd", overwrite = TRUE)
+writeRaster(S2_2_00, "Pre_Processing/rasters_stacked/S2_2_00_var.grd", overwrite = TRUE)
+writeRaster(S2_3_20, "Pre_Processing/rasters_stacked/S2_3_20_var.grd", overwrite = TRUE)
+writeRaster(S2_6_50, "Pre_Processing/rasters_stacked/S2_6_50_var.grd", overwrite = TRUE)
+writeRaster(S2_8_50, "Pre_Processing/rasters_stacked/S2_8_50_var.grd", overwrite = TRUE)
+writeRaster(S2_10_93, "Pre_Processing/rasters_stacked/S2_10_93_var.grd", overwrite = TRUE)
+writeRaster(S2_13_00, "Pre_Processing/rasters_stacked/S2_13_00_var.grd", overwrite = TRUE)
+writeRaster(S2_15_00, "Pre_Processing/rasters_stacked/S2_15_00_var.grd", overwrite = TRUE)
+writeRaster(S2_18_00, "Pre_Processing/rasters_stacked/S2_18_00_var.grd", overwrite = TRUE)
+writeRaster(S2_20_00, "Pre_Processing/rasters_stacked/S2_20_00_var.grd", overwrite = TRUE)
+
+### TH4 ### ---------------------------------------------------------------
+# stack rasters
+TH4_11_45 <- stack(TH4_v_11_45, TH4_wd_11_45, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_11_45) <- values
+
+TH4_15_00 <- stack(TH4_v_15_00, TH4_wd_15_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_15_00) <- values
+
+TH4_18_00 <- stack(TH4_v_18_00, TH4_wd_18_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_18_00) <- values
+
+TH4_19_96 <- stack(TH4_v_19_96, TH4_wd_19_96, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_19_96) <- values
+
+TH4_22_50 <- stack(TH4_v_22_50, TH4_wd_22_50, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_22_50) <- values
+
+TH4_25_00 <- stack(TH4_v_25_00, TH4_wd_25_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_25_00) <- values
+
+TH4_27_00 <- stack(TH4_v_27_00, TH4_wd_27_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_27_00) <- values
+
+TH4_30_00 <- stack(TH4_v_30_00, TH4_wd_30_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_30_00) <- values
+
+TH4_32_93 <- stack(TH4_v_32_93, TH4_wd_32_93, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_32_93) <- values
+
+TH4_35_12_ezg <- stack(TH4_v_35_12_ezg, TH4_wd_35_12_ezg, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+names(TH4_35_12_ezg) <- values
+
+# save stacks 
+writeRaster(TH4_11_45, "Pre_Processing/rasters_stacked/TH4_11_45_var.grd", overwrite = TRUE)
+writeRaster(TH4_15_00, "Pre_Processing/rasters_stacked/TH4_15_00_var.grd", overwrite = TRUE)
+writeRaster(TH4_18_00, "Pre_Processing/rasters_stacked/TH4_18_00_var.grd", overwrite = TRUE)
+writeRaster(TH4_19_96, "Pre_Processing/rasters_stacked/TH4_19_96_var.grd", overwrite = TRUE)
+writeRaster(TH4_22_50, "Pre_Processing/rasters_stacked/TH4_22_50_var.grd", overwrite = TRUE)
+writeRaster(TH4_25_00, "Pre_Processing/rasters_stacked/TH4_25_00_var.grd", overwrite = TRUE)
+writeRaster(TH4_27_00, "Pre_Processing/rasters_stacked/TH4_27_00_var.grd", overwrite = TRUE)
+writeRaster(TH4_30_00, "Pre_Processing/rasters_stacked/TH4_30_00_var.grd", overwrite = TRUE)
+writeRaster(TH4_32_93, "Pre_Processing/rasters_stacked/TH4_32_93_var.grd", overwrite = TRUE)
+writeRaster(TH4_35_12_ezg, "Pre_Processing/rasters_stacked/TH4_35_12_ezg_var.grd", overwrite = TRUE)
+
+### VR3 ### ------------------------------------------------------------------
+# stack rasters
+VR3_2_90 <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_2_90) <- values
+
+VR3_6_00 <- stack(VR3_v_6_00, VR3_wd_6_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_6_00) <- values
+
+VR3_9_00 <- stack(VR3_v_9_00, VR3_wd_9_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_9_00) <- values
+
+VR3_12_00 <- stack(VR3_v_12_00, VR3_wd_12_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_12_00) <- values
+
+VR3_15_00 <- stack(VR3_v_15_00, VR3_wd_15_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_15_00) <- values
+
+VR3_18_80 <- stack(VR3_v_18_80, VR3_wd_18_80, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_18_80) <- values
+
+VR3_21_51_ezg <- stack(VR3_v_21_51_ezg, VR3_wd_21_51_ezg, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_21_51_ezg) <- values
+
+VR3_22_00 <- stack(VR3_v_22_00, VR3_wd_22_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_22_00) <- values
+
+VR3_25_00 <- stack(VR3_v_25_00, VR3_wd_25_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_25_00) <- values
+
+VR3_28_00 <- stack(VR3_v_28_00, VR3_wd_28_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_28_00) <- values
+
+VR3_31_00 <- stack(VR3_v_31_00, VR3_wd_31_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_31_00) <- values
+
+VR3_34_00 <- stack(VR3_v_34_00, VR3_wd_34_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_34_00) <- values
+
+VR3_37_00 <- stack(VR3_v_37_00, VR3_wd_37_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_37_00) <- values
+
+VR3_40_10 <- stack(VR3_v_40_10, VR3_wd_40_10, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_40_10) <- values
+
+VR3_43_00 <- stack(VR3_v_43_00, VR3_wd_43_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_43_00) <- values
+
+VR3_46_00 <- stack(VR3_v_46_00, VR3_wd_46_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_46_00) <- values
+
+VR3_48_00 <- stack(VR3_v_48_00, VR3_wd_48_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_48_00) <- values
+
+VR3_50_00 <- stack(VR3_v_50_00, VR3_wd_50_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_50_00) <- values
+
+VR3_52_90 <- stack(VR3_v_52_90, VR3_wd_52_90, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+names(VR3_52_90) <- values
+
+# save stacks 
+writeRaster(VR3_2_90, "Pre_Processing/rasters_stacked/VR3_2_90_var.grd", overwrite = TRUE)
+writeRaster(VR3_6_00, "Pre_Processing/rasters_stacked/VR3_6_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_9_00, "Pre_Processing/rasters_stacked/VR3_9_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_12_00, "Pre_Processing/rasters_stacked/VR3_12_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_15_00, "Pre_Processing/rasters_stacked/VR3_15_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_18_80, "Pre_Processing/rasters_stacked/VR3_18_80_var.grd", overwrite = TRUE)
+writeRaster(VR3_21_51_ezg, "Pre_Processing/rasters_stacked/VR3_21_51_ezg_var.grd", overwrite = TRUE)
+writeRaster(VR3_22_00, "Pre_Processing/rasters_stacked/VR3_22_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_25_00, "Pre_Processing/rasters_stacked/VR3_25_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_28_00, "Pre_Processing/rasters_stacked/VR3_28_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_31_00, "Pre_Processing/rasters_stacked/VR3_31_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_34_00, "Pre_Processing/rasters_stacked/VR3_34_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_37_00, "Pre_Processing/rasters_stacked/VR3_37_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_40_10, "Pre_Processing/rasters_stacked/VR3_40_10_var.grd", overwrite = TRUE)
+writeRaster(VR3_43_00, "Pre_Processing/rasters_stacked/VR3_43_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_46_00, "Pre_Processing/rasters_stacked/VR3_46_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_48_00, "Pre_Processing/rasters_stacked/VR3_48_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_50_00, "Pre_Processing/rasters_stacked/VR3_50_00_var.grd", overwrite = TRUE)
+writeRaster(VR3_52_90, "Pre_Processing/rasters_stacked/VR3_52_90_var.grd", overwrite = TRUE)
 ```
 
