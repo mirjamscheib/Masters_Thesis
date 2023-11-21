@@ -1,0 +1,26 @@
+[general]
+creator=R package 'raster'
+created=2023-11-21 13:58:47
+[data]
+datatype=FLT4S
+byteorder=little
+nbands=7
+bandorder=BIL
+minvalue=0:0:562.599731445312:2:11.289999961853:1.29317760467529:1
+maxvalue=2.5789999961853:2.23900008201599:562.599731445312:2:11.289999961853:1.29317760467529:1
+nodatavalue=-3.4e+38
+[legend]
+legendtype=
+values=
+color=
+[description]
+layername=velocity:wd_m:z:ecomorph_class:mean_diff_nitrogen:mean_diff_phosphor:biogeo_int
+[georeference]
+nrows=546
+ncols=401
+xmin=2743305.24
+ymin=1254225.42
+xmax=2743505.74
+ymax=1254498.42
+projection=NA
+wkt=

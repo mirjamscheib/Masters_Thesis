@@ -1282,7 +1282,7 @@ VR3_52_90 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
 
 
 # Make stacks for each Q
-## - Read all rasters
+## Read all rasters
 ### GL1
 ```{r}
 ### GL1 ### ----------------------------------------------------------------
@@ -1895,7 +1895,7 @@ TH4_phosphor_35_12_ezg <- raster("Pre_Processing/raster_files/TH4_phosphor_35_12
 TH4_biogeo_35_12_ezg <- raster("Pre_Processing/raster_files/TH4_biogeo_35_12_ezg.tif")
 ```
 
-
+### VR3
 ```{r}
 # VR3 --------------------------------------------------------------------
 VR3_v_2_90 <- raster("Pre_Processing/raster_files/VR3_v_2_90.tif")
@@ -2381,7 +2381,7 @@ writeRaster(TH4_35_12_ezg, "Pre_Processing/rasters_stacked/TH4_35_12_ezg_var.grd
 
 ### VR3 ### ------------------------------------------------------------------
 # stack rasters
-VR3_2_90 <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_z_v_2_90, VR3_ecomorph_v_2_90, VR3_nitrogen_v_2_90, VR3_phosphor_v_2_90, VR3_biogeo_v_2_90) 
+VR3_2_90 <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_z_2_90, VR3_ecomorph_2_90, VR3_nitrogen_2_90, VR3_phosphor_2_90, VR3_biogeo_2_90) 
 names(VR3_2_90) <- values
 
 VR3_6_00 <- stack(VR3_v_6_00, VR3_wd_6_00, VR3_z_6_00, VR3_ecomorph_6_00, VR3_nitrogen_6_00, VR3_phosphor_6_00, VR3_biogeo_6_00) 
@@ -2459,4 +2459,9 @@ writeRaster(VR3_48_00, "Pre_Processing/rasters_stacked/VR3_48_00_var.grd", overw
 writeRaster(VR3_50_00, "Pre_Processing/rasters_stacked/VR3_50_00_var.grd", overwrite = TRUE)
 writeRaster(VR3_52_90, "Pre_Processing/rasters_stacked/VR3_52_90_var.grd", overwrite = TRUE)
 ```
+
+
+
+
+
 
