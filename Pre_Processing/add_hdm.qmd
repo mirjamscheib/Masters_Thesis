@@ -924,7 +924,7 @@ S2_20_00 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
                    r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_20_00.tif")
 ```
 
-## - TH4
+## TH4
 ```{r}
 ### TH4 ### -------------------------------------------------------------------
 TH4_11_45 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
@@ -1282,7 +1282,7 @@ VR3_52_90 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
 
 
 # Make stacks for each Q
-## Read all rasters
+## - Read all rasters
 ### GL1
 ```{r}
 ### GL1 ### ----------------------------------------------------------------
@@ -2337,31 +2337,31 @@ writeRaster(S2_20_00, "Pre_Processing/rasters_stacked/S2_20_00_var.grd", overwri
 
 ### TH4 ### ---------------------------------------------------------------
 # stack rasters
-TH4_11_45 <- stack(TH4_v_11_45, TH4_wd_11_45, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_11_45 <- stack(TH4_v_11_45, TH4_wd_11_45, TH4_z_11_45, TH4_ecomorph_11_45, TH4_nitrogen_11_45, TH4_phosphor_11_45, TH4_biogeo_11_45) 
 names(TH4_11_45) <- values
 
-TH4_15_00 <- stack(TH4_v_15_00, TH4_wd_15_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_15_00 <- stack(TH4_v_15_00, TH4_wd_15_00, TH4_z_15_00, TH4_ecomorph_15_00, TH4_nitrogen_15_00, TH4_phosphor_15_00, TH4_biogeo_15_00) 
 names(TH4_15_00) <- values
 
-TH4_18_00 <- stack(TH4_v_18_00, TH4_wd_18_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_18_00 <- stack(TH4_v_18_00, TH4_wd_18_00, TH4_z_18_00, TH4_ecomorph_18_00, TH4_nitrogen_18_00, TH4_phosphor_18_00, TH4_biogeo_18_00) 
 names(TH4_18_00) <- values
 
-TH4_19_96 <- stack(TH4_v_19_96, TH4_wd_19_96, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_19_96 <- stack(TH4_v_19_96, TH4_wd_19_96, TH4_z_19_96, TH4_ecomorph_19_96, TH4_nitrogen_19_96, TH4_phosphor_19_96, TH4_biogeo_19_96) 
 names(TH4_19_96) <- values
 
-TH4_22_50 <- stack(TH4_v_22_50, TH4_wd_22_50, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_22_50 <- stack(TH4_v_22_50, TH4_wd_22_50, TH4_z_22_50, TH4_ecomorph_22_50, TH4_nitrogen_22_50, TH4_phosphor_22_50, TH4_biogeo_22_50) 
 names(TH4_22_50) <- values
 
-TH4_25_00 <- stack(TH4_v_25_00, TH4_wd_25_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_25_00 <- stack(TH4_v_25_00, TH4_wd_25_00, TH4_z_25_00, TH4_ecomorph_25_00, TH4_nitrogen_25_00, TH4_phosphor_25_00, TH4_biogeo_25_00) 
 names(TH4_25_00) <- values
 
-TH4_27_00 <- stack(TH4_v_27_00, TH4_wd_27_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_27_00 <- stack(TH4_v_27_00, TH4_wd_27_00, TH4_z_27_00, TH4_ecomorph_27_00, TH4_nitrogen_27_00, TH4_phosphor_27_00, TH4_biogeo_27_00) 
 names(TH4_27_00) <- values
 
-TH4_30_00 <- stack(TH4_v_30_00, TH4_wd_30_00, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_30_00 <- stack(TH4_v_30_00, TH4_wd_30_00, TH4_z_30_00, TH4_ecomorph_30_00, TH4_nitrogen_30_00, TH4_phosphor_30_00, TH4_biogeo_30_00) 
 names(TH4_30_00) <- values
 
-TH4_32_93 <- stack(TH4_v_32_93, TH4_wd_32_93, TH4_z, TH4_ecomorph, TH4_nitrogen, TH4_phosphor, TH4_biogeo) 
+TH4_32_93 <- stack(TH4_v_32_93, TH4_wd_32_93, TH4_z_32_93, TH4_ecomorph_32_93, TH4_nitrogen_32_93, TH4_phosphor_32_93, TH4_biogeo_32_93) 
 names(TH4_32_93) <- values
 
 TH4_35_12_ezg <- stack(TH4_v_35_12_ezg, TH4_wd_35_12_ezg, TH4_z_35_12_ezg, TH4_ecomorph_35_12_ezg, TH4_nitrogen_35_12_ezg, TH4_phosphor_35_12_ezg, TH4_biogeo_35_12_ezg) 
@@ -2381,61 +2381,61 @@ writeRaster(TH4_35_12_ezg, "Pre_Processing/rasters_stacked/TH4_35_12_ezg_var.grd
 
 ### VR3 ### ------------------------------------------------------------------
 # stack rasters
-VR3_2_90 <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_2_90 <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_z_v_2_90, VR3_ecomorph_v_2_90, VR3_nitrogen_v_2_90, VR3_phosphor_v_2_90, VR3_biogeo_v_2_90) 
 names(VR3_2_90) <- values
 
-VR3_6_00 <- stack(VR3_v_6_00, VR3_wd_6_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_6_00 <- stack(VR3_v_6_00, VR3_wd_6_00, VR3_z_6_00, VR3_ecomorph_6_00, VR3_nitrogen_6_00, VR3_phosphor_6_00, VR3_biogeo_6_00) 
 names(VR3_6_00) <- values
 
-VR3_9_00 <- stack(VR3_v_9_00, VR3_wd_9_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_9_00 <- stack(VR3_v_9_00, VR3_wd_9_00, VR3_z_9_00, VR3_ecomorph_9_00, VR3_nitrogen_9_00, VR3_phosphor_9_00, VR3_biogeo_9_00) 
 names(VR3_9_00) <- values
 
-VR3_12_00 <- stack(VR3_v_12_00, VR3_wd_12_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_12_00 <- stack(VR3_v_12_00, VR3_wd_12_00, VR3_z_12_00, VR3_ecomorph_12_00, VR3_nitrogen_12_00, VR3_phosphor_12_00, VR3_biogeo_12_00) 
 names(VR3_12_00) <- values
 
-VR3_15_00 <- stack(VR3_v_15_00, VR3_wd_15_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_15_00 <- stack(VR3_v_15_00, VR3_wd_15_00, VR3_z_15_00, VR3_ecomorph_15_00, VR3_nitrogen_15_00, VR3_phosphor_15_00, VR3_biogeo_15_00) 
 names(VR3_15_00) <- values
 
-VR3_18_80 <- stack(VR3_v_18_80, VR3_wd_18_80, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_18_80 <- stack(VR3_v_18_80, VR3_wd_18_80, VR3_z_18_80, VR3_ecomorph_18_80, VR3_nitrogen_18_80, VR3_phosphor_18_80, VR3_biogeo_18_80) 
 names(VR3_18_80) <- values
 
 VR3_21_51_ezg <- stack(VR3_v_21_51_ezg, VR3_wd_21_51_ezg, VR3_z_21_51_ezg, VR3_ecomorph_21_51_ezg, VR3_nitrogen_21_51_ezg, VR3_phosphor_21_51_ezg, VR3_biogeo_21_51_ezg) 
 names(VR3_21_51_ezg) <- values
 
-VR3_22_00 <- stack(VR3_v_22_00, VR3_wd_22_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_22_00 <- stack(VR3_v_22_00, VR3_wd_22_00, VR3_z_22_00, VR3_ecomorph_22_00, VR3_nitrogen_22_00, VR3_phosphor_22_00, VR3_biogeo_22_00) 
 names(VR3_22_00) <- values
 
-VR3_25_00 <- stack(VR3_v_25_00, VR3_wd_25_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_25_00 <- stack(VR3_v_25_00, VR3_wd_25_00, VR3_z_25_00, VR3_ecomorph_25_00, VR3_nitrogen_25_00, VR3_phosphor_25_00, VR3_biogeo_25_00) 
 names(VR3_25_00) <- values
 
-VR3_28_00 <- stack(VR3_v_28_00, VR3_wd_28_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_28_00 <- stack(VR3_v_28_00, VR3_wd_28_00, VR3_z_28_00, VR3_ecomorph_28_00, VR3_nitrogen_28_00, VR3_phosphor_28_00, VR3_biogeo_28_00) 
 names(VR3_28_00) <- values
 
-VR3_31_00 <- stack(VR3_v_31_00, VR3_wd_31_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_31_00 <- stack(VR3_v_31_00, VR3_wd_31_00, VR3_z_31_00, VR3_ecomorph_31_00, VR3_nitrogen_31_00, VR3_phosphor_31_00, VR3_biogeo_31_00) 
 names(VR3_31_00) <- values
 
-VR3_34_00 <- stack(VR3_v_34_00, VR3_wd_34_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_34_00 <- stack(VR3_v_34_00, VR3_wd_34_00, VR3_z_34_00, VR3_ecomorph_34_00, VR3_nitrogen_34_00, VR3_phosphor_34_00, VR3_biogeo_34_00) 
 names(VR3_34_00) <- values
 
-VR3_37_00 <- stack(VR3_v_37_00, VR3_wd_37_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_37_00 <- stack(VR3_v_37_00, VR3_wd_37_00, VR3_z_37_00, VR3_ecomorph_37_00, VR3_nitrogen_37_00, VR3_phosphor_37_00, VR3_biogeo_37_00) 
 names(VR3_37_00) <- values
 
-VR3_40_10 <- stack(VR3_v_40_10, VR3_wd_40_10, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_40_10 <- stack(VR3_v_40_10, VR3_wd_40_10, VR3_z_40_10, VR3_ecomorph_40_10, VR3_nitrogen_40_10, VR3_phosphor_40_10, VR3_biogeo_40_10) 
 names(VR3_40_10) <- values
 
-VR3_43_00 <- stack(VR3_v_43_00, VR3_wd_43_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_43_00 <- stack(VR3_v_43_00, VR3_wd_43_00, VR3_z_43_00, VR3_ecomorph_43_00, VR3_nitrogen_43_00, VR3_phosphor_43_00, VR3_biogeo_43_00) 
 names(VR3_43_00) <- values
 
-VR3_46_00 <- stack(VR3_v_46_00, VR3_wd_46_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_46_00 <- stack(VR3_v_46_00, VR3_wd_46_00, VR3_z_46_00, VR3_ecomorph_46_00, VR3_nitrogen_46_00, VR3_phosphor_46_00, VR3_biogeo_46_00) 
 names(VR3_46_00) <- values
 
-VR3_48_00 <- stack(VR3_v_48_00, VR3_wd_48_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_48_00 <- stack(VR3_v_48_00, VR3_wd_48_00, VR3_z_48_00, VR3_ecomorph_48_00, VR3_nitrogen_48_00, VR3_phosphor_48_00, VR3_biogeo_48_00) 
 names(VR3_48_00) <- values
 
-VR3_50_00 <- stack(VR3_v_50_00, VR3_wd_50_00, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_50_00 <- stack(VR3_v_50_00, VR3_wd_50_00, VR3_z_50_00, VR3_ecomorph_50_00, VR3_nitrogen_50_00, VR3_phosphor_50_00, VR3_biogeo_50_00) 
 names(VR3_50_00) <- values
 
-VR3_52_90 <- stack(VR3_v_52_90, VR3_wd_52_90, VR3_z, VR3_ecomorph, VR3_nitrogen, VR3_phosphor, VR3_biogeo) 
+VR3_52_90 <- stack(VR3_v_52_90, VR3_wd_52_90, VR3_z_52_90, VR3_ecomorph_52_90, VR3_nitrogen_52_90, VR3_phosphor_52_90, VR3_biogeo_52_90) 
 names(VR3_52_90) <- values
 
 # save stacks 
