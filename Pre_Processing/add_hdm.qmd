@@ -428,7 +428,7 @@ GL2_31_53 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
                    r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_31_53.tif")
 ```
 
-## L2
+## - L2
 ```{r}
 ### L2 ### -----------------------------------------------------------------
 L2_2_40 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
@@ -1880,11 +1880,11 @@ TH4_biogeo_30_00 <- raster("Pre_Processing/raster_files/TH4_biogeo_30_00.tif")
 
 TH4_v_32_93 <- raster("Pre_Processing/raster_files/TH4_v_32_93.tif")
 TH4_wd_32_93 <- raster("Pre_Processing/raster_files/TH4_wd_32_93.tif")
-TH4_z_30_00 <- raster("Pre_Processing/raster_files/TH4_z_30_00.tif")
-TH4_ecomorph_30_00 <- raster("Pre_Processing/raster_files/TH4_ecomorph_30_00.tif")
-TH4_nitrogen_30_00 <- raster("Pre_Processing/raster_files/TH4_nitrogen_30_00.tif")
-TH4_phosphor_30_00 <- raster("Pre_Processing/raster_files/TH4_phosphor_30_00.tif")
-TH4_biogeo_30_00 <- raster("Pre_Processing/raster_files/TH4_biogeo_30_00.tif")
+TH4_z_32_93 <- raster("Pre_Processing/raster_files/TH4_z_32_93.tif")
+TH4_ecomorph_32_93 <- raster("Pre_Processing/raster_files/TH4_ecomorph_32_93.tif")
+TH4_nitrogen_32_93 <- raster("Pre_Processing/raster_files/TH4_nitrogen_32_93.tif")
+TH4_phosphor_32_93 <- raster("Pre_Processing/raster_files/TH4_phosphor_32_93.tif")
+TH4_biogeo_32_93 <- raster("Pre_Processing/raster_files/TH4_biogeo_32_93.tif")
 
 TH4_v_35_12_ezg <- raster("Pre_Processing/raster_files/TH4_v_35_12_ezg.tif")
 TH4_wd_35_12_ezg <- raster("Pre_Processing/raster_files/TH4_wd_35_12_ezg.tif")
@@ -1900,21 +1900,51 @@ TH4_biogeo_35_12_ezg <- raster("Pre_Processing/raster_files/TH4_biogeo_35_12_ezg
 # VR3 --------------------------------------------------------------------
 VR3_v_2_90 <- raster("Pre_Processing/raster_files/VR3_v_2_90.tif")
 VR3_wd_2_90 <- raster("Pre_Processing/raster_files/VR3_wd_2_90.tif")
+VR3_z_2_90 <- raster("Pre_Processing/raster_files/VR3_z_2_90.tif")
+VR3_ecomorph_2_90 <- raster("Pre_Processing/raster_files/VR3_ecomorph_2_90.tif")
+VR3_nitrogen_2_90 <- raster("Pre_Processing/raster_files/VR3_nitrogen_2_90.tif")
+VR3_phosphor_2_90 <- raster("Pre_Processing/raster_files/VR3_phosphor_2_90.tif")
+VR3_biogeo_2_90 <- raster("Pre_Processing/raster_files/VR3_biogeo_2_90.tif")
 
 VR3_v_6_00 <- raster("Pre_Processing/raster_files/VR3_v_6_00.tif")
 VR3_wd_6_00 <- raster("Pre_Processing/raster_files/VR3_wd_6_00.tif")
+VR3_z_6_00 <- raster("Pre_Processing/raster_files/VR3_z_6_00.tif")
+VR3_ecomorph_6_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_6_00.tif")
+VR3_nitrogen_6_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_6_00.tif")
+VR3_phosphor_6_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_6_00.tif")
+VR3_biogeo_6_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_6_00.tif")
 
 VR3_v_9_00 <- raster("Pre_Processing/raster_files/VR3_v_9_00.tif")
 VR3_wd_9_00 <- raster("Pre_Processing/raster_files/VR3_wd_9_00.tif")
+VR3_z_9_00 <- raster("Pre_Processing/raster_files/VR3_z_9_00.tif")
+VR3_ecomorph_9_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_9_00.tif")
+VR3_nitrogen_9_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_9_00.tif")
+VR3_phosphor_9_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_9_00.tif")
+VR3_biogeo_9_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_9_00.tif")
 
 VR3_v_12_00 <- raster("Pre_Processing/raster_files/VR3_v_12_00.tif")
 VR3_wd_12_00 <- raster("Pre_Processing/raster_files/VR3_wd_12_00.tif")
+VR3_z_12_00 <- raster("Pre_Processing/raster_files/VR3_z_12_00.tif")
+VR3_ecomorph_12_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_12_00.tif")
+VR3_nitrogen_12_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_12_00.tif")
+VR3_phosphor_12_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_12_00.tif")
+VR3_biogeo_12_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_12_00.tif")
 
 VR3_v_15_00 <- raster("Pre_Processing/raster_files/VR3_v_15_00.tif")
 VR3_wd_15_00 <- raster("Pre_Processing/raster_files/VR3_wd_15_00.tif")
+VR3_z_15_00 <- raster("Pre_Processing/raster_files/VR3_z_15_00.tif")
+VR3_ecomorph_15_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_15_00.tif")
+VR3_nitrogen_15_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_15_00.tif")
+VR3_phosphor_15_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_15_00.tif")
+VR3_biogeo_15_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_15_00.tif")
 
 VR3_v_18_80 <- raster("Pre_Processing/raster_files/VR3_v_18_80.tif")
 VR3_wd_18_80 <- raster("Pre_Processing/raster_files/VR3_wd_18_80.tif")
+VR3_z_18_80 <- raster("Pre_Processing/raster_files/VR3_z_18_80.tif")
+VR3_ecomorph_18_80 <- raster("Pre_Processing/raster_files/VR3_ecomorph_18_80.tif")
+VR3_nitrogen_18_80 <- raster("Pre_Processing/raster_files/VR3_nitrogen_18_80.tif")
+VR3_phosphor_18_80 <- raster("Pre_Processing/raster_files/VR3_phosphor_18_80.tif")
+VR3_biogeo_18_80 <- raster("Pre_Processing/raster_files/VR3_biogeo_18_80.tif")
 
 VR3_v_21_51_ezg <- raster("Pre_Processing/raster_files/VR3_v_21_51_ezg.tif")
 VR3_wd_21_51_ezg <- raster("Pre_Processing/raster_files/VR3_wd_21_51_ezg.tif")
@@ -1926,39 +1956,99 @@ VR3_biogeo_21_51_ezg <- raster("Pre_Processing/raster_files/VR3_biogeo_21_51_ezg
 
 VR3_v_22_00 <- raster("Pre_Processing/raster_files/VR3_v_22_00.tif")
 VR3_wd_22_00 <- raster("Pre_Processing/raster_files/VR3_wd_22_00.tif")
+VR3_z_22_00 <- raster("Pre_Processing/raster_files/VR3_z_22_00.tif")
+VR3_ecomorph_22_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_22_00.tif")
+VR3_nitrogen_22_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_22_00.tif")
+VR3_phosphor_22_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_22_00.tif")
+VR3_biogeo_22_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_22_00.tif")
 
 VR3_v_25_00 <- raster("Pre_Processing/raster_files/VR3_v_25_00.tif")
 VR3_wd_25_00 <- raster("Pre_Processing/raster_files/VR3_wd_25_00.tif")
+VR3_z_25_00 <- raster("Pre_Processing/raster_files/VR3_z_25_00.tif")
+VR3_ecomorph_25_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_25_00.tif")
+VR3_nitrogen_25_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_25_00.tif")
+VR3_phosphor_25_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_25_00.tif")
+VR3_biogeo_25_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_25_00.tif")
 
 VR3_v_28_00 <- raster("Pre_Processing/raster_files/VR3_v_28_00.tif")
 VR3_wd_28_00 <- raster("Pre_Processing/raster_files/VR3_wd_28_00.tif")
+VR3_z_28_00 <- raster("Pre_Processing/raster_files/VR3_z_28_00.tif")
+VR3_ecomorph_28_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_28_00.tif")
+VR3_nitrogen_28_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_28_00.tif")
+VR3_phosphor_28_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_28_00.tif")
+VR3_biogeo_28_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_28_00.tif")
 
 VR3_v_31_00 <- raster("Pre_Processing/raster_files/VR3_v_31_00.tif")
 VR3_wd_31_00 <- raster("Pre_Processing/raster_files/VR3_wd_31_00.tif")
+VR3_z_31_00 <- raster("Pre_Processing/raster_files/VR3_z_31_00.tif")
+VR3_ecomorph_31_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_31_00.tif")
+VR3_nitrogen_31_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_31_00.tif")
+VR3_phosphor_31_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_31_00.tif")
+VR3_biogeo_31_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_31_00.tif")
 
 VR3_v_34_00 <- raster("Pre_Processing/raster_files/VR3_v_34_00.tif")
 VR3_wd_34_00 <- raster("Pre_Processing/raster_files/VR3_wd_34_00.tif")
+VR3_z_34_00 <- raster("Pre_Processing/raster_files/VR3_z_34_00.tif")
+VR3_ecomorph_34_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_34_00.tif")
+VR3_nitrogen_34_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_34_00.tif")
+VR3_phosphor_34_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_34_00.tif")
+VR3_biogeo_34_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_34_00.tif")
 
 VR3_v_37_00 <- raster("Pre_Processing/raster_files/VR3_v_37_00.tif")
 VR3_wd_37_00 <- raster("Pre_Processing/raster_files/VR3_wd_37_00.tif")
+VR3_z_37_00 <- raster("Pre_Processing/raster_files/VR3_z_37_00.tif")
+VR3_ecomorph_37_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_37_00.tif")
+VR3_nitrogen_37_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_37_00.tif")
+VR3_phosphor_37_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_37_00.tif")
+VR3_biogeo_37_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_37_00.tif")
 
 VR3_v_40_10 <- raster("Pre_Processing/raster_files/VR3_v_40_10.tif")
 VR3_wd_40_10 <- raster("Pre_Processing/raster_files/VR3_wd_40_10.tif")
+VR3_z_40_10 <- raster("Pre_Processing/raster_files/VR3_z_40_10.tif")
+VR3_ecomorph_40_10 <- raster("Pre_Processing/raster_files/VR3_ecomorph_40_10.tif")
+VR3_nitrogen_40_10 <- raster("Pre_Processing/raster_files/VR3_nitrogen_40_10.tif")
+VR3_phosphor_40_10 <- raster("Pre_Processing/raster_files/VR3_phosphor_40_10.tif")
+VR3_biogeo_40_10 <- raster("Pre_Processing/raster_files/VR3_biogeo_40_10.tif")
 
 VR3_v_43_00 <- raster("Pre_Processing/raster_files/VR3_v_43_00.tif")
 VR3_wd_43_00 <- raster("Pre_Processing/raster_files/VR3_wd_43_00.tif")
+VR3_z_43_00 <- raster("Pre_Processing/raster_files/VR3_z_43_00.tif")
+VR3_ecomorph_43_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_43_00.tif")
+VR3_nitrogen_43_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_43_00.tif")
+VR3_phosphor_43_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_43_00.tif")
+VR3_biogeo_43_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_43_00.tif")
 
 VR3_v_46_00 <- raster("Pre_Processing/raster_files/VR3_v_46_00.tif")
 VR3_wd_46_00 <- raster("Pre_Processing/raster_files/VR3_wd_46_00.tif")
+VR3_z_46_00 <- raster("Pre_Processing/raster_files/VR3_z_46_00.tif")
+VR3_ecomorph_46_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_46_00.tif")
+VR3_nitrogen_46_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_46_00.tif")
+VR3_phosphor_46_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_46_00.tif")
+VR3_biogeo_46_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_46_00.tif")
 
 VR3_v_48_00 <- raster("Pre_Processing/raster_files/VR3_v_48_00.tif")
 VR3_wd_48_00 <- raster("Pre_Processing/raster_files/VR3_wd_48_00.tif")
+VR3_z_48_00 <- raster("Pre_Processing/raster_files/VR3_z_48_00.tif")
+VR3_ecomorph_48_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_48_00.tif")
+VR3_nitrogen_48_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_48_00.tif")
+VR3_phosphor_48_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_48_00.tif")
+VR3_biogeo_48_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_48_00.tif")
 
 VR3_v_50_00 <- raster("Pre_Processing/raster_files/VR3_v_50_00.tif")
 VR3_wd_50_00 <- raster("Pre_Processing/raster_files/VR3_wd_50_00.tif")
+VR3_z_50_00 <- raster("Pre_Processing/raster_files/VR3_z_50_00.tif")
+VR3_ecomorph_50_00 <- raster("Pre_Processing/raster_files/VR3_ecomorph_50_00.tif")
+VR3_nitrogen_50_00 <- raster("Pre_Processing/raster_files/VR3_nitrogen_50_00.tif")
+VR3_phosphor_50_00 <- raster("Pre_Processing/raster_files/VR3_phosphor_50_00.tif")
+VR3_biogeo_50_00 <- raster("Pre_Processing/raster_files/VR3_biogeo_50_00.tif")
 
 VR3_v_52_90 <- raster("Pre_Processing/raster_files/VR3_v_52_90.tif")
 VR3_wd_52_90 <- raster("Pre_Processing/raster_files/VR3_wd_52_90.tif")
+VR3_z_52_90 <- raster("Pre_Processing/raster_files/VR3_z_52_90.tif")
+VR3_ecomorph_52_90 <- raster("Pre_Processing/raster_files/VR3_ecomorph_52_90.tif")
+VR3_nitrogen_52_90 <- raster("Pre_Processing/raster_files/VR3_nitrogen_52_90.tif")
+VR3_phosphor_52_90 <- raster("Pre_Processing/raster_files/VR3_phosphor_52_90.tif")
+VR3_biogeo_52_90 <- raster("Pre_Processing/raster_files/VR3_biogeo_52_90.tif")
 ```
 
 
@@ -1987,19 +2077,19 @@ names(GL1_12_68) <- values
 GL1_16_00 <- stack(GL1_16_00_v, GL1_16_00_wd, GL1_z_16_00, GL1_ecomorph_16_00, GL1_nitrogen_16_00, GL1_phosphor_16_00, GL1_biogeo_16_00) 
 names(GL1_16_00) <- values
 
-GL1_19_00 <- stack(GL1_19_00_v, GL1_19_00_wd, GL1_z, GL1_ecomorph, GL1_nitrogen, GL1_phosphor, GL1_biogeo) 
+GL1_19_00 <- stack(GL1_19_00_v, GL1_19_00_wd, GL1_z_19_00, GL1_ecomorph_19_00, GL1_nitrogen_19_00, GL1_phosphor_19_00, GL1_biogeo_19_00) 
 names(GL1_19_00) <- values
 
-GL1_22_00 <- stack(GL1_22_00_v, GL1_22_00_wd, GL1_z, GL1_ecomorph, GL1_nitrogen, GL1_phosphor, GL1_biogeo) 
+GL1_22_00 <- stack(GL1_22_00_v, GL1_22_00_wd, GL1_z_22_00, GL1_ecomorph_22_00, GL1_nitrogen_22_00, GL1_phosphor_22_00, GL1_biogeo_22_00) 
 names(GL1_22_00) <- values
 
-GL1_25_00 <- stack(GL1_25_00_v, GL1_25_00_wd, GL1_z, GL1_ecomorph, GL1_nitrogen, GL1_phosphor, GL1_biogeo) 
+GL1_25_00 <- stack(GL1_25_00_v, GL1_25_00_wd, GL1_z_25_00, GL1_ecomorph_25_00, GL1_nitrogen_25_00, GL1_phosphor_25_00, GL1_biogeo_25_00) 
 names(GL1_25_00) <- values
 
-GL1_28_00 <- stack(GL1_28_00_v, GL1_28_00_wd, GL1_z, GL1_ecomorph, GL1_nitrogen, GL1_phosphor, GL1_biogeo) 
+GL1_28_00 <- stack(GL1_28_00_v, GL1_28_00_wd, GL1_z_28_00, GL1_ecomorph_28_00, GL1_nitrogen_28_00, GL1_phosphor_28_00, GL1_biogeo_28_00) 
 names(GL1_28_00) <- values
 
-GL1_31_76 <- stack(GL1_31_76_v, GL1_31_76_wd, GL1_z, GL1_ecomorph, GL1_nitrogen, GL1_phosphor, GL1_biogeo) 
+GL1_31_76 <- stack(GL1_31_76_v, GL1_31_76_wd, GL1_z_31_76, GL1_ecomorph_31_76, GL1_nitrogen_31_76, GL1_phosphor_31_76, GL1_biogeo_31_76) 
 names(GL1_31_76) <- values
  
 # save rasters
@@ -2020,37 +2110,37 @@ writeRaster(GL1_31_76, "Pre_Processing/rasters_stacked/GL1_31_76_var.grd", overw
 GL2_2_37_ezg <- stack(GL2_v_2_37_ezg, GL2_wd_2_37_ezg, GL2_z_2_37_ezg, GL2_ecomorph_2_37_ezg, GL2_nitrogen_2_37_ezg, GL2_phosphor_2_37_ezg, GL2_biogeo_2_37_ezg) 
 names(GL2_2_37_ezg) <- values
 
-GL2_3_21 <- stack(GL2_v_3_21, GL2_wd_3_21, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_3_21 <- stack(GL2_v_3_21, GL2_wd_3_21, GL2_z_3_21, GL2_ecomorph_3_21, GL2_nitrogen_3_21, GL2_phosphor_3_21, GL2_biogeo_3_21) 
 names(GL2_3_21) <- values
 
-GL2_6_00 <- stack(GL2_v_6_00, GL2_wd_6_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_6_00 <- stack(GL2_v_6_00, GL2_wd_6_00, GL2_z_6_00, GL2_ecomorph_6_00, GL2_nitrogen_6_00, GL2_phosphor_6_00, GL2_biogeo_6_00) 
 names(GL2_6_00) <- values
 
-GL2_9_00 <- stack(GL2_v_9_00, GL2_wd_9_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_9_00 <- stack(GL2_v_9_00, GL2_wd_9_00, GL2_z_9_00, GL2_ecomorph_9_00, GL2_nitrogen_9_00, GL2_phosphor_9_00, GL2_biogeo_9_00) 
 names(GL2_9_00) <- values
 
-GL2_11_00 <- stack(GL2_v_11_00, GL2_wd_11_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_11_00 <- stack(GL2_v_11_00, GL2_wd_11_00, GL2_z_11_00, GL2_ecomorph_11_00, GL2_nitrogen_11_00, GL2_phosphor_11_00, GL2_biogeo_11_00) 
 names(GL2_11_00) <- values
 
-GL2_12_52 <- stack(GL2_v_12_52, GL2_wd_12_52, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_12_52 <- stack(GL2_v_12_52, GL2_wd_12_52, GL2_z_12_52, GL2_ecomorph_12_52, GL2_nitrogen_12_52, GL2_phosphor_12_52, GL2_biogeo_12_52) 
 names(GL2_12_52) <- values
 
-GL2_16_00 <- stack(GL2_v_16_00, GL2_wd_16_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_16_00 <- stack(GL2_v_16_00, GL2_wd_16_00, GL2_z_16_00, GL2_ecomorph_16_00, GL2_nitrogen_16_00, GL2_phosphor_16_00, GL2_biogeo_16_00) 
 names(GL2_16_00) <- values
 
-GL2_19_00 <- stack(GL2_v_19_00, GL2_wd_19_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_19_00 <- stack(GL2_v_19_00, GL2_wd_19_00, GL2_z_19_00, GL2_ecomorph_19_00, GL2_nitrogen_19_00, GL2_phosphor_19_00, GL2_biogeo_19_00) 
 names(GL2_19_00) <- values
 
-GL2_22_00 <- stack(GL2_v_22_00, GL2_wd_22_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_22_00 <- stack(GL2_v_22_00, GL2_wd_22_00, GL2_z_22_00, GL2_ecomorph_22_00, GL2_nitrogen_22_00, GL2_phosphor_22_00, GL2_biogeo_22_00) 
 names(GL2_22_00) <- values
 
-GL2_25_00 <- stack(GL2_v_25_00, GL2_wd_25_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_25_00 <- stack(GL2_v_25_00, GL2_wd_25_00, GL2_z_25_00, GL2_ecomorph_25_00, GL2_nitrogen_25_00, GL2_phosphor_25_00, GL2_biogeo_25_00) 
 names(GL2_25_00) <- values
 
-GL2_28_00 <- stack(GL2_v_28_00, GL2_wd_28_00, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_28_00 <- stack(GL2_v_28_00, GL2_wd_28_00, GL2_z_28_00, GL2_ecomorph_28_00, GL2_nitrogen_28_00, GL2_phosphor_28_00, GL2_biogeo_28_00) 
 names(GL2_28_00) <- values
 
-GL2_31_53 <- stack(GL2_v_31_53, GL2_wd_31_53, GL2_z, GL2_ecomorph, GL2_nitrogen, GL2_phosphor, GL2_biogeo) 
+GL2_31_53 <- stack(GL2_v_31_53, GL2_wd_31_53, GL2_z_31_53, GL2_ecomorph_31_53, GL2_nitrogen_31_53, GL2_phosphor_31_53, GL2_biogeo_31_53) 
 names(GL2_31_53) <- values
 
 # save rasters
