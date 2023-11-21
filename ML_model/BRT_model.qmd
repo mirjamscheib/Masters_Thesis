@@ -4048,38 +4048,62 @@ GL1_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg.grd")
 GL1_v_ezg <- stack("Pre_Processing/raster_files/GL1_v_2_56_ezg.tif")
 GL1_ezg_var <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg_var.grd")
 
+# Reorder the layers
+new_order <- c(3, 1, 2, 4, 5, 6, 7)  # Specify the new order of layers
+GL1_ezg_var <- GL1_ezg_var[[new_order]]
+
 GL2_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg.grd")
 GL2_v_ezg <- stack("Pre_Processing/raster_files/GL2_v_2_37_ezg.tif")
 GL2_ezg_var <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg_var.grd")
+
+# Reorder the layers
+GL2_ezg_var <- GL2_ezg_var[[new_order]]
 
 L2_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg.grd")
 L2_v_ezg <- stack("Pre_Processing/raster_files/L2_v_9_54_ezg.tif")
 L2_ezg_var <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg_var.grd")
 
+# Reorder the layers
+L2_ezg_var <- L2_ezg_var[[new_order]]
+
 M1_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg.grd")
 M1_v_ezg <- stack("Pre_Processing/raster_files/M1_v_1_50_ezg.tif")
 M1_ezg_var <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg_var.grd")
+
+# Reorder the layers
+M1_ezg_var <- M1_ezg_var[[new_order]]
 
 S1_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg.grd")
 S1_v_ezg <- stack("Pre_Processing/raster_files/S1_v_1_94_ezg.tif")
 S1_ezg_var <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg_var.grd")
 
+# Reorder the layers
+S1_ezg_var <- S1_ezg_var[[new_order]]
+
 S2_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg.grd")
 S2_v_ezg <- stack("Pre_Processing/raster_files/S2_v_1_93_ezg.tif")
 S2_ezg_var <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg_var.grd")
+
+# Reorder the layers
+S2_ezg_var <- S2_ezg_var[[new_order]]
 
 TH4_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg.grd")
 TH4_v_ezg <- stack("Pre_Processing/raster_files/TH4_v_35_12_ezg.tif")
 TH4_ezg_var <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg_var.grd")
 
+# Reorder the layers
+TH4_ezg_var <- TH4_ezg_var[[new_order]]
+
 VR3_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg.grd")
 VR3_v_ezg <- stack("Pre_Processing/raster_files/VR3_v_21_51_ezg.tif")
 VR3_ezg_var <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg_var.grd")
 
+# Reorder the layers
+VR3_ezg_var <- VR3_ezg_var[[new_order]]
+
 # rename rasters in stacks for extraction 
 names(GL1_ezg) <- c("velocity", "wd_m")  
 names(GL1_v_ezg) <- c("velocity")
-#names(GL1_q) <- c("velocity", "wd_m") 
 
 names(GL2_ezg) <- c("velocity", "wd_m") 
 names(GL2_v_ezg) <- c("velocity")
@@ -4381,7 +4405,6 @@ VR3 <- test_wd |>
   subset(Reach_Untersuchungsstelle == "VR3")
 ```
 
-## Extract Results
 ## Extract Results
 ```{r}
 # extract raster information for regression analysis later

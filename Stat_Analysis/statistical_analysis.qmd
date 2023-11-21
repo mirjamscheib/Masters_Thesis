@@ -1586,22 +1586,32 @@ ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_ra.png", plot = p_hsi_wrap_ra, wi
 
 # Create dataframe
 ```{r}
-results_hdm <- data.frame(lm_p_value = c(p_v_brt_k, p_v_brt_s, p_v_brt_a, p_v_brt_ra, p_v_rf_k, p_v_rf_s, p_v_rf_a, p_v_rf_ra,  
-                                           p_wd_brt_k, p_wd_brt_s, p_wd_brt_a, p_wd_brt_ra, p_wd_rf_k, p_wd_rf_s, p_wd_rf_a, p_wd_rf_ra, 
+results_hdm <- data.frame(lm_p_value = c(p_v_brt_k, p_v_brt_s, p_v_brt_a, p_v_brt_ra,
+                                         p_v_rf_k, p_v_rf_s, p_v_rf_a, p_v_rf_ra,  
+                                         p_wd_brt_k, p_wd_brt_s, p_wd_brt_a, p_wd_brt_ra,
+                                         p_wd_rf_k, p_wd_rf_s, p_wd_rf_a, p_wd_rf_ra, 
                                          p_var_brt_k, p_var_brt_s, p_var_brt_a, p_var_brt_ra,
                                          p_var_rf_k, p_var_rf_s, p_var_rf_a, p_var_rf_ra,
-                                           p_foen_class_k, p_foen_class_s, p_foen_class_a, p_foen_class_ra,
-                                           p_foen_hsi_k, p_foen_hsi_s, p_foen_hsi_a, p_foen_hsi_ra),
+                                         p_foen_class_k, p_foen_class_s, p_foen_class_a, p_foen_class_ra,
+                                         p_foen_hsi_k, p_foen_hsi_s, p_foen_hsi_a, p_foen_hsi_ra),
                           
-                          lm_slope = c(s_v_brt_k, s_v_brt_s, s_v_brt_a, s_v_brt_ra, s_v_rf_k, s_v_rf_s, s_v_rf_a, s_v_rf_ra, 
-                                       s_wd_brt_k, s_wd_brt_s, s_wd_brt_a, s_wd_brt_ra,  s_wd_rf_k, s_wd_rf_s, s_wd_rf_a, s_wd_rf_ra,
-                                       s_var_brt_k, s_var_brt_s, s_var_brt_a, s_var_brt_ra, s_var_rf_k, s_var_rf_s, s_var_rf_a, s_var_rf_ra, 
+                          lm_slope = c(s_v_brt_k, s_v_brt_s, s_v_brt_a, s_v_brt_ra,
+                                       s_v_rf_k, s_v_rf_s, s_v_rf_a, s_v_rf_ra, 
+                                       s_wd_brt_k, s_wd_brt_s, s_wd_brt_a, s_wd_brt_ra, 
+                                       s_wd_rf_k, s_wd_rf_s, s_wd_rf_a, s_wd_rf_ra,
+                                       s_var_brt_k, s_var_brt_s, s_var_brt_a, s_var_brt_ra,
+                                       s_var_rf_k, s_var_rf_s, s_var_rf_a, s_var_rf_ra, 
                                        s_foen_class_k, s_foen_class_s, s_foen_class_a, s_foen_class_ra,
                                        s_foen_hsi_k, s_foen_hsi_s, s_foen_hsi_a, s_foen_hsi_ra),
                           
-                          index = c("k_index", "shannon", "abundance", "rel_abundance", "k_index", "shannon", "abundance", "rel_abundance", "k_index", "shannon", "abundance", "rel_abundance", 
-                                  "k_index", "shannon", "abundance", "rel_abundance", "k_index", "shannon", "abundance", "rel_abundance", "k_index", "shannon", "abundance", "rel_abundance", "k_index", "shannon", "abundance", "rel_abundance",
-                                  "k_index", "shannon", "abundance", "rel_abundance", "k_index", "shannon", "abundance", "rel_abundance"),
+                          index = c("k_index", "shannon", "abundance", "rel_abundance", 
+                                    "k_index", "shannon", "abundance", "rel_abundance", 
+                                    "k_index", "shannon", "abundance", "rel_abundance", 
+                                    "k_index", "shannon", "abundance", "rel_abundance", 
+                                    "k_index", "shannon", "abundance", "rel_abundance", 
+                                    "k_index", "shannon", "abundance", "rel_abundance", 
+                                    "k_index", "shannon", "abundance", "rel_abundance",
+                                    "k_index", "shannon", "abundance", "rel_abundance"),
                           
   
            variable = c("velocity", "velocity", "velocity", "velocity",
@@ -1619,7 +1629,8 @@ results_hdm <- data.frame(lm_p_value = c(p_v_brt_k, p_v_brt_s, p_v_brt_a, p_v_br
                      "rf", "rf", "rf", "rf",
                      "brt", "brt", "brt", "brt",
                      "rf", "rf", "rf", "rf",
-                     "hsc", "hsc", "hsc", "hsc", "hsc", "hsc", "hsc", "hsc"))
+                     "hsc", "hsc", "hsc", "hsc", 
+                     "hsc", "hsc", "hsc", "hsc"))
 
 # write .csv file 
 write.csv(results_hdm, "Stat_Analysis/results_regr_analysis.csv", row.names = FALSE)
