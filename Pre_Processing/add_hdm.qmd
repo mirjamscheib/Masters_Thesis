@@ -33,24 +33,100 @@ source("mth_functions.R")
 ```
 
 # Write Rasters with added Parameters
+create separate function to mask each attribute for each discharge 
 ```{r}
 #biogeo_new <- c("Southern Alps" = 0, "Central Plateau" = 1, "Northern Alps" = 2, "Eastern Central Alps" = 3)
 
 ### GL1 ### --------------------------------------------------------------
-GL1 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
+GL1_2_56_ezg <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
                    z = 708.2711667, 
                    ecomorph_class = 2, 
                    nitrogen = 4.43, 
                    phosphor = 0.398984998, 
                    biogeo = 3, 
-                   raster_z_path = "Pre_Processing/raster_files/GL1_z.tif",
-                   raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph.tif",
-                   raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen.tif",
-                   raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor.tif",
-                   raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo.tif")
+                   raster_z_path = "Pre_Processing/raster_files/GL1_z_2_56_ezg.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph_2_56_ezg.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen_2_56_ezg.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor_2_56_ezg.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo_2_56_ezg.tif",
+               q_path = "Pre_Processing/raster_files/GL1_v_2_56_ezg.tif")
 
-plot(raster("Pre_Processing/raster_files/GL1_phosphor.tif"))
+GL1_3_28 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
+                   z = 708.2711667, 
+                   ecomorph_class = 2, 
+                   nitrogen = 4.43, 
+                   phosphor = 0.398984998, 
+                   biogeo = 3, 
+                   raster_z_path = "Pre_Processing/raster_files/GL1_z_3_28.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph_3_28.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen_3_28.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor_3_28.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo_3_28.tif",
+               q_path = "Pre_Processing/raster_files/GL1_v_3_28.tif")
 
+GL1_6_00 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
+                   z = 708.2711667, 
+                   ecomorph_class = 2, 
+                   nitrogen = 4.43, 
+                   phosphor = 0.398984998, 
+                   biogeo = 3, 
+                   raster_z_path = "Pre_Processing/raster_files/GL1_z_6_00.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph_6_00.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen_6_00.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor_6_00.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo_6_00.tif",
+               q_path = "Pre_Processing/raster_files/GL1_v_6_00.tif")
+
+GL1_9_00 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
+                   z = 708.2711667, 
+                   ecomorph_class = 2, 
+                   nitrogen = 4.43, 
+                   phosphor = 0.398984998, 
+                   biogeo = 3, 
+                   raster_z_path = "Pre_Processing/raster_files/GL1_z_9_00.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph_9_00.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen_9_00.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor_9_00.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo_9_00.tif",
+               q_path = "Pre_Processing/raster_files/GL1_v_9_00.tif")
+
+GL1_12_68 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL1_shape.shp", 
+                   z = 708.2711667, 
+                   ecomorph_class = 2, 
+                   nitrogen = 4.43, 
+                   phosphor = 0.398984998, 
+                   biogeo = 3, 
+                   raster_z_path = "Pre_Processing/raster_files/GL1_z_12_68.tif",
+                   raster_ecomorph_path = "Pre_Processing/raster_files/GL1_ecomorph_12_68.tif",
+                   raster_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen_12_68.tif",
+                   raster_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor_12_68.tif",
+                   raster_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo_12_68.tif",
+               q_path = "Pre_Processing/raster_files/GL1_v_12_68.tif")
+
+GL1_12_68_v <- raster("Pre_Processing/raster_files/GL1_v_12_68.tif")
+GL1_12_68_wd <- raster("Pre_Processing/raster_files/GL1_wd_12_68.tif")
+
+GL1_16_00_v <- raster("Pre_Processing/raster_files/GL1_v_16_00.tif")
+GL1_16_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_16_00.tif")
+
+GL1_19_00_v <- raster("Pre_Processing/raster_files/GL1_v_19_00.tif")
+GL1_19_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_19_00.tif")
+
+GL1_22_00_v <- raster("Pre_Processing/raster_files/GL1_v_22_00.tif")
+GL1_22_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_22_00.tif")
+
+GL1_25_00_v <- raster("Pre_Processing/raster_files/GL1_v_25_00.tif")
+GL1_25_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_25_00.tif")
+
+GL1_28_00_v <- raster("Pre_Processing/raster_files/GL1_v_28_00.tif")
+GL1_28_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_28_00.tif")
+
+GL1_31_76_v <- raster("Pre_Processing/raster_files/GL1_v_31_76.tif")
+GL1_31_76_wd <- raster("Pre_Processing/raster_files/GL1_wd_31_76.tif")
+```
+
+
+```{r}
 ### GL2 ### --------------------------------------------------------------
 GL2 <- hdm_add(shp_path = "Pre_Processing/raster_files/GL2_shape.shp", 
                    z = 738.0426667, 
