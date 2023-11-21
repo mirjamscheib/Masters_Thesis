@@ -4695,84 +4695,50 @@ write.csv(regr_analysis, "Stat_Analysis/stat_analysis_data/regr_analysis_rf.csv"
 ```{r}
 # read rasters containing wd and velocity 
 # GL1 ------------------------------------------------------------
-GL1_min_v <- stack("Pre_Processing/raster_files/GL1_v_3_28.tif")
-GL1_max_v <- stack("Pre_Processing/raster_files/GL1_v_31_76.tif")
+GL1_min_var <- stack("Pre_Processing/raster_files/GL1_3_28_var.tif")
+GL1_max_var <- stack("Pre_Processing/raster_files/GL1_31_76_var.tif")
 
 # GL2 --------------------------------------------------------------
-GL2_min_v <- stack("Pre_Processing/raster_files/GL2_v_3_21.tif")
-GL2_max_v <- stack("Pre_Processing/raster_files/GL2_v_31_53.tif")
+GL2_min_var <- stack("Pre_Processing/raster_files/GL2_3_21_var.tif")
+GL2_max_var <- stack("Pre_Processing/raster_files/GL2_31_53_var.tif")
 
 # L2 --------------------------------------------------------------
-L2_base_v <- stack("Pre_Processing/raster_files/L2_v_2_40.tif")
-L2_peak_v <- stack("Pre_Processing/raster_files/L2_v_9_24.tif") 
-L2_max_v <- stack("Pre_Processing/raster_files/L2_v_18_90.tif") 
+L2_base_var <- stack("Pre_Processing/raster_files/L2_2_40_var.tif")
+L2_peak_var <- stack("Pre_Processing/raster_files/L2_9_24_var.tif") 
+L2_max_var <- stack("Pre_Processing/raster_files/L2_18_90_var.tif") 
 
 # M1 --------------------------------------------------------------
-M1_base_v <- stack("Pre_Processing/raster_files/M1_v_0_47.tif") 
-M1_peak_v <- stack("Pre_Processing/raster_files/M1_v_18_84.tif") 
-M1_max_v <- stack("Pre_Processing/raster_files/M1_v_22_84.tif") 
+M1_base_var <- stack("Pre_Processing/raster_files/M1_0_47_var.tif") 
+M1_peak_var <- stack("Pre_Processing/raster_files/M1_18_84_var.tif") 
+M1_max_var <- stack("Pre_Processing/raster_files/M1_22_84_var.tif") 
 
 # S1 --------------------------------------------------------------
-S1_base_v <- stack("Pre_Processing/raster_files/S1_v_2_00.tif") 
-S1_peak_v <- stack("Pre_Processing/raster_files/S1_v_18_00.tif") 
-S1_max_v <- stack("Pre_Processing/raster_files/S1_v_20_00.tif") 
+S1_base_var <- stack("Pre_Processing/raster_files/S1_2_00_var.tif") 
+S1_peak_var <- stack("Pre_Processing/raster_files/S1_18_00_var.tif") 
+S1_max_var <- stack("Pre_Processing/raster_files/S1_20_00_var.tif") 
 
 # S2 --------------------------------------------------------------
-S2_base_v <- stack("Pre_Processing/raster_files/S2_v_2_00.tif") 
-S2_peak_v <- stack("Pre_Processing/raster_files/S2_v_18_00.tif") 
-S2_max_v <- stack("Pre_Processing/raster_files/S2_v_20_00.tif") 
+S2_base_var <- stack("Pre_Processing/raster_files/S2_2_00_var.tif") 
+S2_peak_var <- stack("Pre_Processing/raster_files/S2_18_00_var.tif") 
+S2_max_var <- stack("Pre_Processing/raster_files/S2_20_00_var.tif") 
 
 # TH4 ---------------------------------------------------------------
-TH4_min_v <- stack("Pre_Processing/raster_files/TH4_v_11_45.tif") 
-TH4_max_v <- stack("Pre_Processing/raster_files/TH4_v_32_93.tif")
+TH4_min_var <- stack("Pre_Processing/raster_files/TH4_11_45_var.tif") 
+TH4_max_var <- stack("Pre_Processing/raster_files/TH4_32_93_var.tif")
 
 # VR3 ----------------------------------------------------------------
-VR3_base_v <- stack("Pre_Processing/raster_files/VR3_v_2_90.tif") 
-VR3_peak_v <- stack("Pre_Processing/raster_files/VR3_v_40_10.tif") 
-VR3_max_v <- stack("Pre_Processing/raster_files/VR3_v_52_90.tif")
-
-# rename rasters in stacks for extraction 
-names(GL1_min_v) <- c("velocity") 
-names(GL1_max_v) <- c("velocity") 
-
-names(GL2_min_v) <- c("velocity") 
-names(GL2_max_v) <- c("velocity")
-
-names(L2_base_v) <- c("velocity")
-names(L2_peak_v) <- c("velocity")
-names(L2_max_v) <- c("velocity")
-
-names(M1_base_v) <- c("velocity") 
-names(M1_peak_v) <- c("velocity") 
-names(M1_max_v) <- c("velocity")
-
-names(S1_base_v) <- c("velocity")
-names(S1_peak_v) <- c("velocity")  
-names(S1_max_v) <- c("velocity") 
-
-names(S2_base_v) <- c("velocity")
-names(S2_peak_v) <- c("velocity")  
-names(S2_max_v) <- c("velocity") 
-
-names(TH4_min_v) <- c("velocity")
-names(TH4_max_v) <- c("velocity")
-
-names(VR3_base_v) <- c("velocity")
-names(VR3_peak_v) <- c("velocity") 
-names(VR3_max_v) <- c("velocity") 
+VR3_base_var <- stack("Pre_Processing/raster_files/VR3_2_90_var.tif") 
+VR3_peak_var <- stack("Pre_Processing/raster_files/VR3_40_10_var.tif") 
+VR3_max_var <- stack("Pre_Processing/raster_files/VR3_52_90_var.tif")
 ```
 
 ## Predict Models to Maps 
 ```{r}
 # predict ML model to rasters with velocity and wd 
 # GL1 - predictor: velocity ---------------------------------------------------
-GL1_a_min_v <- raster::predict(GL1_min_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL1_a_max_v <- raster::predict(GL1_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL1_a_pers_v <- mask(GL1_a_max_v, GL1_a_min_v)
-
-GL1_ra_min_v <- raster::predict(GL1_min_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL1_ra_max_v <- raster::predict(GL1_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL1_ra_pers_v <- mask(GL1_ra_max_v, GL1_ra_min_v)
+GL1_k_min_var <- raster::predict(GL1_min_var, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL1_k_max_var <- raster::predict(GL1_max_var, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+GL1_k_pers_var <- mask(GL1_a_max_var, GL1_a_min_var)
 
 # GL1 write rasters ---------------------
 writeRaster(GL1_a_min_v, "ML_model/scenarios/GL1_a_min_v_rf.tif", format = "GTiff", overwrite = TRUE)
