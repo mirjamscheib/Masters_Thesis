@@ -144,6 +144,7 @@ VR3 <- hdm_add(shp_path = "Pre_Processing/raster_files/VR3_shape.shp",
 ```
 
 # Mask rasters with Q
+## GL1
 ```{r}
 ### GL1 ### ---------------------------------------------------------------
 GL1_2_56_ezg <- q_mask(z_path = "Pre_Processing/raster_files/GL1_z.tif",
@@ -277,7 +278,10 @@ GL1_31_76 <- q_mask(z_path = "Pre_Processing/raster_files/GL1_z.tif",
                    r_nitrogen_path = "Pre_Processing/raster_files/GL1_nitrogen_31_76.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/GL1_phosphor_31_76.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/GL1_biogeo_31_76.tif")
+```
 
+## GL2
+```{r}
 ### GL2 ### ----------------------------------------------------------------
 GL2_2_37_ezg <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
                    ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
@@ -291,7 +295,190 @@ GL2_2_37_ezg <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_2_37_ezg.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_2_37_ezg.tif")
 
+GL2_3_21 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_3_21.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_3_21.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_3_21.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_3_21.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_3_21.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_3_21.tif")
+
+GL2_6_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_6_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_6_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_6_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_6_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_6_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_6_00.tif")
+
+GL2_9_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_9_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_9_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_9_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_9_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_9_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_9_00.tif")
+
+GL2_11_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_11_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_11_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_11_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_11_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_11_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_11_00.tif")
+
+GL2_12_52 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_12_52.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_12_52.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_12_52.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_12_52.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_12_52.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_12_52.tif")
+
+GL2_16_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_16_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_16_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_16_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_16_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_16_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_16_00.tif")
+
+GL2_19_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_19_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_19_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_19_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_19_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_19_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_19_00.tif")
+
+GL2_22_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_22_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_22_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_22_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_22_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_22_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_22_00.tif")
+
+GL2_25_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_25_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_25_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_25_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_25_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_25_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_25_00.tif")
+
+GL2_28_00 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_28_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_28_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_28_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_28_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_28_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_28_00.tif")
+
+GL2_31_53 <- q_mask(z_path = "Pre_Processing/raster_files/GL2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/GL2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/GL2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/GL2_v_31_53.tif",
+                   r_z_path = "Pre_Processing/raster_files/GL2_z_31_53.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/GL2_ecomorph_31_53.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/GL2_nitrogen_31_53.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/GL2_phosphor_31_53.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/GL2_biogeo_31_53.tif")
+```
+
+## L2
+```{r}
 ### L2 ### -----------------------------------------------------------------
+L2_2_40 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/L2_v_2_40.tif",
+                   r_z_path = "Pre_Processing/raster_files/L2_z_2_40.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph_2_40.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen_2_40.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_2_40.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_2_40.tif")
+
+L2_3_90 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/L2_v_3_90.tif",
+                   r_z_path = "Pre_Processing/raster_files/L2_z_3_90.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph_3_90.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen_3_90.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_3_90.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_3_90.tif")
+
+L2_7_00 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/L2_v_7_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/L2_z_7_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph_7_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen_7_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_7_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_7_00.tif")
+
+L2_9_24 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/L2_v_9_24.tif",
+                   r_z_path = "Pre_Processing/raster_files/L2_z_9_24.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph_9_24.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen_9_24.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_9_24.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_9_24.tif")
+
 L2_9_54_ezg <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
                    ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
                    nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
@@ -304,7 +491,70 @@ L2_9_54_ezg <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_9_54_ezg.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_9_54_ezg.tif")
 
+L2_13_30 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/L2_v_13_30.tif",
+                   r_z_path = "Pre_Processing/raster_files/L2_z_13_30.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph_13_30.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen_13_30.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_13_30.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_13_30.tif")
+
+L2_16_50 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/L2_v_16_50.tif",
+                   r_z_path = "Pre_Processing/raster_files/L2_z_16_50.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph_16_50.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen_16_50.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_16_50.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_16_50.tif")
+
+L2_18_90 <- q_mask(z_path = "Pre_Processing/raster_files/L2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/L2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/L2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/L2_v_18_90.tif",
+                   r_z_path = "Pre_Processing/raster_files/L2_z_18_90.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/L2_ecomorph_18_90.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/L2_nitrogen_18_90.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/L2_phosphor_18_90.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/L2_biogeo_18_90.tif")
+```
+
+## M1
+```{r}
 ### M1 ### -----------------------------------------------------------------
+M1_0_47 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_0_47.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_0_47.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_0_47.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_0_47.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_0_47.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_0_47.tif")
+
+M1_0_60 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_0_60.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_0_60.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_0_60.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_0_60.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_0_60.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_0_60.tif")
+
 M1_1_50_ezg <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
                    ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
                    nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
@@ -317,6 +567,117 @@ M1_1_50_ezg <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_1_50_ezg.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_1_50_ezg.tif")
 
+M1_4_00 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_4_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_4_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_4_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_4_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_4_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_4_00.tif")
+
+M1_6_00 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_6_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_6_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_6_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_6_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_6_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_6_00.tif")
+
+M1_8_00 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_8_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_8_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_8_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_8_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_8_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_8_00.tif")
+
+M1_10_00 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_10_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_10_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_10_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_10_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_10_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_10_00.tif")
+
+M1_12_00 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_12_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_12_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_12_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_12_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_12_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_12_00.tif")
+
+M1_14_00 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_14_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_14_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_14_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_14_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_14_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_14_00.tif")
+
+M1_16_00 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_16_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_16_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_16_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_16_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_16_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_16_00.tif")
+
+M1_18_84 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_18_84.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_18_84.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_18_84.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_18_84.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_18_84.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_18_84.tif")
+
+M1_22_84 <- q_mask(z_path = "Pre_Processing/raster_files/M1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/M1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/M1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/M1_v_22_84.tif",
+                   r_z_path = "Pre_Processing/raster_files/M1_z_22_84.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/M1_ecomorph_22_84.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/M1_nitrogen_22_84.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/M1_phosphor_22_84.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/M1_biogeo_22_84.tif")
+```
+
+## S1
+```{r}
 ### S1 ### -------------------------------------------------------------------
 S1_1_94_ezg <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
                    ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
@@ -330,6 +691,117 @@ S1_1_94_ezg <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_1_94_ezg.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_1_94_ezg.tif")
 
+S1_2_00 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_2_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_2_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_2_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_2_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_2_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_2_00.tif")
+
+S1_3_70 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_3_70.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_3_70.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_3_70.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_3_70.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_3_70.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_3_70.tif")
+
+S1_6_50 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_6_50.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_6_50.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_6_50.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_6_50.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_6_50.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_6_50.tif")
+
+S1_8_50 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_8_50.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_8_50.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_8_50.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_8_50.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_8_50.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_8_50.tif")
+
+S1_10_68 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_10_68.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_10_68.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_10_68.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_10_68.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_10_68.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_10_68.tif")
+
+S1_13_00 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_13_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_13_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_13_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_13_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_13_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_13_00.tif")
+
+S1_15_00 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_15_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_15_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_15_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_15_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_15_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_15_00.tif")
+
+S1_18_00 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_18_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_18_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_18_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_18_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_18_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_18_00.tif")
+
+S1_20_00 <- q_mask(z_path = "Pre_Processing/raster_files/S1_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S1_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S1_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S1_v_20_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S1_z_20_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S1_ecomorph_20_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S1_nitrogen_20_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S1_phosphor_20_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S1_biogeo_20_00.tif")
+```
+
+## S2
+```{r}
 ### S2 ### -------------------------------------------------------------------
 S2_1_93_ezg <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
                    ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
@@ -343,7 +815,226 @@ S2_1_93_ezg <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_1_93_ezg.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_1_93_ezg.tif")
 
+S2_2_00 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_2_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_2_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_2_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_2_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_2_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_2_00.tif")
+
+S2_3_20 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_3_20.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_3_20.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_3_20.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_3_20.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_3_20.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_3_20.tif")
+
+S2_6_50 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_6_50.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_6_50.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_6_50.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_6_50.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_6_50.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_6_50.tif")
+
+S2_8_50 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_8_50.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_8_50.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_8_50.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_8_50.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_8_50.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_8_50.tif")
+
+S2_10_93 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_10_93.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_10_93.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_10_93.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_10_93.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_10_93.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_10_93.tif")
+
+S2_13_00 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_13_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_13_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_13_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_13_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_13_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_13_00.tif")
+
+S2_15_00 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_15_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_15_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_15_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_15_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_15_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_15_00.tif")
+
+S2_18_00 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_18_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_18_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_18_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_18_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_18_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_18_00.tif")
+
+S2_20_00 <- q_mask(z_path = "Pre_Processing/raster_files/S2_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/S2_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/S2_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/S2_v_20_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/S2_z_20_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/S2_ecomorph_20_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/S2_nitrogen_20_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/S2_phosphor_20_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/S2_biogeo_20_00.tif")
+```
+
+## TH4
+```{r}
 ### TH4 ### -------------------------------------------------------------------
+TH4_11_45 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_11_45.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_11_45.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_11_45.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_11_45.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_11_45.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_11_45.tif")
+
+TH4_15_00 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_15_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_15_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_15_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_15_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_15_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_15_00.tif")
+
+TH4_18_00 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_18_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_18_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_18_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_18_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_18_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_18_00.tif")
+
+TH4_19_96 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_19_96.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_19_96.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_19_96.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_19_96.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_19_96.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_19_96.tif")
+
+TH4_22_50 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_22_50.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_22_50.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_22_50.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_22_50.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_22_50.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_22_50.tif")
+
+TH4_25_00 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_25_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_25_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_25_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_25_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_25_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_25_00.tif")
+
+TH4_27_00 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_27_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_27_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_27_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_27_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_27_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_27_00.tif")
+
+TH4_30_00 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_30_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_30_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_30_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_30_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_30_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_30_00.tif")
+
+TH4_32_93 <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/TH4_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/TH4_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/TH4_v_32_93.tif",
+                   r_z_path = "Pre_Processing/raster_files/TH4_z_32_93.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph_32_93.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_32_93.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_32_93.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_32_93.tif")
+
 TH4_35_12_ezg <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
                    ecomorph_path = "Pre_Processing/raster_files/TH4_ecomorph.tif",
                    nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen.tif",
@@ -355,8 +1046,83 @@ TH4_35_12_ezg <- q_mask(z_path = "Pre_Processing/raster_files/TH4_z.tif",
                    r_nitrogen_path = "Pre_Processing/raster_files/TH4_nitrogen_35_12_ezg.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/TH4_phosphor_35_12_ezg.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/TH4_biogeo_35_12_ezg.tif")
+```
 
+## VR3
+```{r}
 ### VR3 ### -------------------------------------------------------------------
+VR3_2_90 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_2_90.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_2_90.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_2_90.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_2_90.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_2_90.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_2_90.tif")
+
+VR3_6_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_6_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_6_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_6_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_6_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_6_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_6_00.tif")
+
+VR3_9_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_9_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_9_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_9_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_9_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_9_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_9_00.tif")
+
+VR3_12_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_12_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_12_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_12_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_12_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_12_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_12_00.tif")
+
+VR3_15_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_15_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_15_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_15_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_15_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_15_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_15_00.tif")
+
+VR3_18_80 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_18_80.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_18_80.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_18_80.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_18_80.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_18_80.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_18_80.tif")
+
 VR3_21_51_ezg <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
                    ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
                    nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
@@ -368,11 +1134,156 @@ VR3_21_51_ezg <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
                    r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_21_51_ezg.tif",
                    r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_21_51_ezg.tif", 
                    r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_21_51_ezg.tif")
+
+VR3_22_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_22_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_22_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_22_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_22_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_22_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_22_00.tif")
+
+VR3_25_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_25_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_25_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_25_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_25_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_25_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_25_00.tif")
+
+VR3_28_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_28_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_28_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_28_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_28_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_28_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_28_00.tif")
+
+VR3_31_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_31_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_31_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_31_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_31_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_31_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_31_00.tif")
+
+VR3_34_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_34_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_34_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_34_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_34_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_34_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_34_00.tif")
+
+VR3_37_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_37_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_37_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_37_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_37_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_37_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_37_00.tif")
+
+VR3_40_10 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_40_10.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_40_10.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_40_10.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_40_10.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_40_10.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_40_10.tif")
+
+VR3_43_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_43_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_43_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_43_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_43_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_43_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_43_00.tif")
+
+VR3_46_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_46_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_46_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_46_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_46_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_46_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_46_00.tif")
+
+VR3_48_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_48_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_48_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_48_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_48_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_48_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_48_00.tif")
+
+VR3_50_00 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_50_00.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_50_00.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_50_00.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_50_00.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_50_00.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_50_00.tif")
+
+VR3_52_90 <- q_mask(z_path = "Pre_Processing/raster_files/VR3_z.tif",
+                   ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph.tif",
+                   nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen.tif",
+                   phosphor_path = "Pre_Processing/raster_files/VR3_phosphor.tif",
+                   biogeo_path = "Pre_Processing/raster_files/VR3_biogeo.tif",
+                   q_path = "Pre_Processing/raster_files/VR3_v_52_90.tif",
+                   r_z_path = "Pre_Processing/raster_files/VR3_z_52_90.tif", 
+                   r_ecomorph_path = "Pre_Processing/raster_files/VR3_ecomorph_52_90.tif", 
+                   r_nitrogen_path = "Pre_Processing/raster_files/VR3_nitrogen_52_90.tif",
+                   r_phosphor_path = "Pre_Processing/raster_files/VR3_phosphor_52_90.tif", 
+                   r_biogeo_path = "Pre_Processing/raster_files/VR3_biogeo_52_90.tif")
 ```
 
 
 # Make stacks for each Q
 ## Read all rasters
+### GL1
 ```{r}
 ### GL1 ### ----------------------------------------------------------------
 GL1_2_56_ezg_v <- raster("Pre_Processing/raster_files/GL1_v_2_56_ezg.tif")
@@ -385,18 +1296,43 @@ GL1_biogeo_2_56_ezg <- raster("Pre_Processing/raster_files/GL1_biogeo_2_56_ezg.t
 
 GL1_3_28_v <- raster("Pre_Processing/raster_files/GL1_v_3_28.tif")
 GL1_3_28_wd <- raster("Pre_Processing/raster_files/GL1_wd_3_28.tif")
+GL1_z_3_28 <- raster("Pre_Processing/raster_files/GL1_z_3_28.tif")
+GL1_ecomorph_3_28 <- raster("Pre_Processing/raster_files/GL1_ecomorph_3_28.tif")
+GL1_nitrogen_3_28 <- raster("Pre_Processing/raster_files/GL1_nitrogen_3_28.tif")
+GL1_phosphor_3_28 <- raster("Pre_Processing/raster_files/GL1_phosphor_3_28.tif")
+GL1_biogeo_3_28 <- raster("Pre_Processing/raster_files/GL1_biogeo_3_28.tif")
 
 GL1_6_00_v <- raster("Pre_Processing/raster_files/GL1_v_6_00.tif")
 GL1_6_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_6_00.tif")
+GL1_z_6_00 <- raster("Pre_Processing/raster_files/GL1_z_6_00.tif")
+GL1_ecomorph_6_00 <- raster("Pre_Processing/raster_files/GL1_ecomorph_6_00.tif")
+GL1_nitrogen_6_00 <- raster("Pre_Processing/raster_files/GL1_nitrogen_6_00.tif")
+GL1_phosphor_6_00 <- raster("Pre_Processing/raster_files/GL1_phosphor_6_00.tif")
+GL1_biogeo_6_00 <- raster("Pre_Processing/raster_files/GL1_biogeo_6_00.tif")
 
 GL1_9_00_v <- raster("Pre_Processing/raster_files/GL1_v_9_00.tif")
 GL1_9_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_9_00.tif")
+GL1_z_9_00 <- raster("Pre_Processing/raster_files/GL1_z_9_00.tif")
+GL1_ecomorph_9_00 <- raster("Pre_Processing/raster_files/GL1_ecomorph_9_00.tif")
+GL1_nitrogen_9_00 <- raster("Pre_Processing/raster_files/GL1_nitrogen_9_00.tif")
+GL1_phosphor_9_00 <- raster("Pre_Processing/raster_files/GL1_phosphor_9_00.tif")
+GL1_biogeo_9_00 <- raster("Pre_Processing/raster_files/GL1_biogeo_9_00.tif")
 
 GL1_12_68_v <- raster("Pre_Processing/raster_files/GL1_v_12_68.tif")
 GL1_12_68_wd <- raster("Pre_Processing/raster_files/GL1_wd_12_68.tif")
+GL1_z_12_68 <- raster("Pre_Processing/raster_files/GL1_z_12_68.tif")
+GL1_ecomorph_12_68 <- raster("Pre_Processing/raster_files/GL1_ecomorph_12_68.tif")
+GL1_nitrogen_12_68 <- raster("Pre_Processing/raster_files/GL1_nitrogen_12_68.tif")
+GL1_phosphor_12_68 <- raster("Pre_Processing/raster_files/GL1_phosphor_12_68.tif")
+GL1_biogeo_12_68 <- raster("Pre_Processing/raster_files/GL1_biogeo_12_68.tif")
 
 GL1_16_00_v <- raster("Pre_Processing/raster_files/GL1_v_16_00.tif")
 GL1_16_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_16_00.tif")
+GL1_z_16_00 <- raster("Pre_Processing/raster_files/GL1_z_16_00.tif")
+GL1_ecomorph_16_00 <- raster("Pre_Processing/raster_files/GL1_ecomorph_16_00.tif")
+GL1_nitrogen_16_00 <- raster("Pre_Processing/raster_files/GL1_nitrogen_16_00.tif")
+GL1_phosphor_16_00 <- raster("Pre_Processing/raster_files/GL1_phosphor_16_00.tif")
+GL1_biogeo_16_00 <- raster("Pre_Processing/raster_files/GL1_biogeo_16_00.tif")
 
 GL1_19_00_v <- raster("Pre_Processing/raster_files/GL1_v_19_00.tif")
 GL1_19_00_wd <- raster("Pre_Processing/raster_files/GL1_wd_19_00.tif")
@@ -703,7 +1639,7 @@ VR3_wd_52_90 <- raster("Pre_Processing/raster_files/VR3_wd_52_90.tif")
 ## Stack all rasters
 ```{r}
 # names for rasters in stack
-values <- c("velocity", "wd_m", "z", "ecomorph_class", "diff_nitrogen", "diff_phosphor", "biogeo_int")
+values <- c("velocity", "wd_m", "z", "ecomorph_class", "mean_diff_nitrogen", "mean_diff_phosphor", "biogeo_int")
 
 ### GL1 ### ----------------------------------------------------------------
 # srack rasters

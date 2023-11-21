@@ -1,6 +1,6 @@
 [general]
 creator=R package 'raster'
-created=2023-11-21 08:06:17
+created=2023-11-21 09:10:45
 [data]
 datatype=FLT4S
 byteorder=little
@@ -14,7 +14,7 @@ legendtype=
 values=
 color=
 [description]
-layername=velocity:wd_m:z:ecomorph_class:diff_nitrogen:diff_phosphor:biogeo_int
+layername=velocity:wd_m:z:ecomorph_class:mean_diff_nitrogen:mean_diff_phosphor:biogeo_int
 [georeference]
 nrows=996
 ncols=463
