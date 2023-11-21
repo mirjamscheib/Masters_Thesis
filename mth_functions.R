@@ -312,12 +312,6 @@ hdm_add <- function(shp_path, z, ecomorph_class, nitrogen, phosphor, biogeo,
   raster_phosphor <- rasterize(shape, raster_layer, shape$diff_phosphor)  # Rasterize the shapefile into the empty raster layer - water depth
   raster_biogeo <- rasterize(shape, raster_layer, shape$bioregion)  # Rasterize the shapefile into the empty raster layer - water depth
   
-  raster_z <- mask(raster_z_1, q_path)
-  raster_ecomorph <- mask(raster_ecomorph_1, q_path)
-  raster_nitrogen <- mask(raster_nitrogen_1, q_path)
-  raster_phosphor <- mask(raster_phosphor_1, q_path)
-  raster_biogeo <- mask(raster_biogeo_1, q_path)
-  
    writeRaster(raster_z, raster_z_path, format = "GTiff",            # Save the raster layer as a GeoTIFF file
               overwrite = TRUE)
   writeRaster(raster_ecomorph, raster_ecomorph_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
@@ -327,6 +321,34 @@ hdm_add <- function(shp_path, z, ecomorph_class, nitrogen, phosphor, biogeo,
   writeRaster(raster_phosphor, raster_phosphor_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
               overwrite = TRUE)
   writeRaster(raster_biogeo, raster_biogeo_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+}
+
+#### q_mask ####
+q_mask <- function(z_path, ecomorph_path, nitrogen_path, phosphor_path, 
+       biogeo_path, q_path, r_z_path, r_ecomorph_path, r_nitrogen_path,
+       r_phosphor_path, r_biogeo_path) {
+  z <- raster(z_path)
+  ecomorph <- raster(ecomorph_path)
+  nitrogen <- raster(nitrogen_path)
+  phosphor <- raster(phosphor_path)
+  biogeo <- raster(biogeo_path)
+  q <- raster(q_path) 
+  raster_z <- mask(z, q)
+  raster_ecomorph <- mask(ecomorph, q)
+  raster_nitrogen <- mask(nitrogen, q)
+  raster_phosphor <- mask(phosphor, q)
+  raster_biogeo <- mask(biogeo, q)
+  
+  writeRaster(raster_z, r_z_path, format = "GTiff",            # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_ecomorph, r_ecomorph_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_nitrogen, r_nitrogen_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_phosphor, r_phosphor_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
+              overwrite = TRUE)
+  writeRaster(raster_biogeo, r_biogeo_path, format = "GTiff",          # Save the raster layer as a GeoTIFF file
               overwrite = TRUE)
 }
 
