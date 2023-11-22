@@ -4691,579 +4691,392 @@ write.csv(regr_analysis, "Stat_Analysis/stat_analysis_data/regr_analysis_rf.csv"
 ```
 
 # Scenario Simulations 
-# Read rasters
+## Read rasters
 ```{r}
 ### GL1 ### ----------------------------------------------------------------
-GL1_2_56_ezg_var <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg_var.grd")
-GL1_min_3_28_var <- stack("Pre_Processing/rasters_stacked/GL1_3_28_var.grd")
-GL1_6_00_var <- stack("Pre_Processing/rasters_stacked/GL1_6_00_var.grd")
-GL1_9_00_var <- stack("Pre_Processing/rasters_stacked/GL1_9_00_var.grd")
-GL1_12_68_var <- stack("Pre_Processing/rasters_stacked/GL1_12_68_var.grd")
-GL1_16_00_var <- stack("Pre_Processing/rasters_stacked/GL1_16_00_var.grd")
-GL1_19_00_var <- stack("Pre_Processing/rasters_stacked/GL1_19_00_var.grd")
-GL1_22_00_var <- stack("Pre_Processing/rasters_stacked/GL1_22_00_var.grd")
-GL1_25_00_var <- stack("Pre_Processing/rasters_stacked/GL1_25_00_var.grd")
-GL1_28_00_var <- stack("Pre_Processing/rasters_stacked/GL1_28_00_var.grd")
-GL1_max_31_76_var <- stack("Pre_Processing/rasters_stacked/GL1_31_76_var.grd")
-
+GL1_2_56_ezg <- stack("Pre_Processing/rasters_stacked/GL1_2_56_ezg_var.grd")
+GL1_min_3_28 <- stack("Pre_Processing/rasters_stacked/GL1_3_28_var.grd")
+GL1_6_00 <- stack("Pre_Processing/rasters_stacked/GL1_6_00_var.grd")
+GL1_9_00 <- stack("Pre_Processing/rasters_stacked/GL1_9_00_var.grd")
+GL1_12_68 <- stack("Pre_Processing/rasters_stacked/GL1_12_68_var.grd")
+GL1_16_00 <- stack("Pre_Processing/rasters_stacked/GL1_16_00_var.grd")
+GL1_19_00 <- stack("Pre_Processing/rasters_stacked/GL1_19_00_var.grd")
+GL1_22_00 <- stack("Pre_Processing/rasters_stacked/GL1_22_00_var.grd")
+GL1_25_00 <- stack("Pre_Processing/rasters_stacked/GL1_25_00_var.grd")
+GL1_28_00 <- stack("Pre_Processing/rasters_stacked/GL1_28_00_var.grd")
+GL1_max_31_76 <- stack("Pre_Processing/rasters_stacked/GL1_31_76_var.grd")
 
 ### GL2 ### ----------------------------------------------------------------
-# stack rasters
-GL2_2_37_ezg <- stack(GL2_v_2_37_ezg, GL2_wd_2_37_ezg, GL2_z_2_37_ezg, GL2_ecomorph_2_37_ezg, GL2_nitrogen_2_37_ezg, GL2_phosphor_2_37_ezg, GL2_biogeo_2_37_ezg) 
-names(GL2_2_37_ezg) <- values
-
-GL2_3_21 <- stack(GL2_v_3_21, GL2_wd_3_21, GL2_z_3_21, GL2_ecomorph_3_21, GL2_nitrogen_3_21, GL2_phosphor_3_21, GL2_biogeo_3_21) 
-names(GL2_3_21) <- values
-
-GL2_6_00 <- stack(GL2_v_6_00, GL2_wd_6_00, GL2_z_6_00, GL2_ecomorph_6_00, GL2_nitrogen_6_00, GL2_phosphor_6_00, GL2_biogeo_6_00) 
-names(GL2_6_00) <- values
-
-GL2_9_00 <- stack(GL2_v_9_00, GL2_wd_9_00, GL2_z_9_00, GL2_ecomorph_9_00, GL2_nitrogen_9_00, GL2_phosphor_9_00, GL2_biogeo_9_00) 
-names(GL2_9_00) <- values
-
-GL2_11_00 <- stack(GL2_v_11_00, GL2_wd_11_00, GL2_z_11_00, GL2_ecomorph_11_00, GL2_nitrogen_11_00, GL2_phosphor_11_00, GL2_biogeo_11_00) 
-names(GL2_11_00) <- values
-
-GL2_12_52 <- stack(GL2_v_12_52, GL2_wd_12_52, GL2_z_12_52, GL2_ecomorph_12_52, GL2_nitrogen_12_52, GL2_phosphor_12_52, GL2_biogeo_12_52) 
-names(GL2_12_52) <- values
-
-GL2_16_00 <- stack(GL2_v_16_00, GL2_wd_16_00, GL2_z_16_00, GL2_ecomorph_16_00, GL2_nitrogen_16_00, GL2_phosphor_16_00, GL2_biogeo_16_00) 
-names(GL2_16_00) <- values
-
-GL2_19_00 <- stack(GL2_v_19_00, GL2_wd_19_00, GL2_z_19_00, GL2_ecomorph_19_00, GL2_nitrogen_19_00, GL2_phosphor_19_00, GL2_biogeo_19_00) 
-names(GL2_19_00) <- values
-
-GL2_22_00 <- stack(GL2_v_22_00, GL2_wd_22_00, GL2_z_22_00, GL2_ecomorph_22_00, GL2_nitrogen_22_00, GL2_phosphor_22_00, GL2_biogeo_22_00) 
-names(GL2_22_00) <- values
-
-GL2_25_00 <- stack(GL2_v_25_00, GL2_wd_25_00, GL2_z_25_00, GL2_ecomorph_25_00, GL2_nitrogen_25_00, GL2_phosphor_25_00, GL2_biogeo_25_00) 
-names(GL2_25_00) <- values
-
-GL2_28_00 <- stack(GL2_v_28_00, GL2_wd_28_00, GL2_z_28_00, GL2_ecomorph_28_00, GL2_nitrogen_28_00, GL2_phosphor_28_00, GL2_biogeo_28_00) 
-names(GL2_28_00) <- values
-
-GL2_31_53 <- stack(GL2_v_31_53, GL2_wd_31_53, GL2_z_31_53, GL2_ecomorph_31_53, GL2_nitrogen_31_53, GL2_phosphor_31_53, GL2_biogeo_31_53) 
-names(GL2_31_53) <- values
-
-# save rasters
-writeRaster(GL2_2_37_ezg, "Pre_Processing/rasters_stacked/GL2_2_37_ezg_var.grd", overwrite = TRUE)
-writeRaster(GL2_3_21, "Pre_Processing/rasters_stacked/GL2_3_21_var.grd", overwrite = TRUE)
-writeRaster(GL2_6_00, "Pre_Processing/rasters_stacked/GL2_6_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_9_00, "Pre_Processing/rasters_stacked/GL2_9_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_11_00, "Pre_Processing/rasters_stacked/GL2_11_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_12_52, "Pre_Processing/rasters_stacked/GL2_12_52_var.grd", overwrite = TRUE)
-writeRaster(GL2_16_00, "Pre_Processing/rasters_stacked/GL2_16_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_19_00, "Pre_Processing/rasters_stacked/GL2_19_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_22_00, "Pre_Processing/rasters_stacked/GL2_22_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_25_00, "Pre_Processing/rasters_stacked/GL2_25_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_28_00, "Pre_Processing/rasters_stacked/GL2_28_00_var.grd", overwrite = TRUE)
-writeRaster(GL2_31_53, "Pre_Processing/rasters_stacked/GL2_31_53_var.grd", overwrite = TRUE)
-
-
+GL2_2_37_ezg <- stack("Pre_Processing/rasters_stacked/GL2_2_37_ezg_var.grd")
+GL2_min_3_21 <- stack("Pre_Processing/rasters_stacked/GL2_3_21_var.grd")
+GL2_6_00 <- stack("Pre_Processing/rasters_stacked/GL2_6_00_var.grd")
+GL2_9_00 <- stack("Pre_Processing/rasters_stacked/GL2_9_00_var.grd")
+GL2_11_00 <- stack("Pre_Processing/rasters_stacked/GL2_11_00_var.grd")
+GL2_12_52 <- stack("Pre_Processing/rasters_stacked/GL2_12_52_var.grd")
+GL2_16_00 <- stack("Pre_Processing/rasters_stacked/GL2_16_00_var.grd")
+GL2_19_00 <- stack("Pre_Processing/rasters_stacked/GL2_19_00_var.grd")
+GL2_22_00 <- stack("Pre_Processing/rasters_stacked/GL2_22_00_var.grd")
+GL2_25_00 <- stack("Pre_Processing/rasters_stacked/GL2_25_00_var.grd")
+GL2_28_00 <- stack("Pre_Processing/rasters_stacked/GL2_28_00_var.grd")
+GL2_max_31_53 <- stack("Pre_Processing/rasters_stacked/GL2_31_53_var.grd")
 
 ### L2 ### -------------------------------------------------------------------
-# stack rasters
-L2_2_40 <- stack(L2_v_2_40, L2_wd_2_40, L2_z_2_40, L2_ecomorph_2_40, L2_nitrogen_2_40, L2_phosphor_2_40, L2_biogeo_2_40) 
-names(L2_2_40) <- values
-
-L2_3_90 <- stack(L2_v_3_90, L2_wd_3_90, L2_z_3_90, L2_ecomorph_3_90, L2_nitrogen_3_90, L2_phosphor_3_90, L2_biogeo_3_90) 
-names(L2_3_90) <- values
-
-L2_7_00 <- stack(L2_v_7_00, L2_wd_7_00, L2_z_7_00, L2_ecomorph_7_00, L2_nitrogen_7_00, L2_phosphor_7_00, L2_biogeo_7_00) 
-names(L2_7_00) <- values
-
-L2_9_24 <- stack(L2_v_9_24, L2_wd_9_24, L2_z_9_24, L2_ecomorph_9_24, L2_nitrogen_9_24, L2_phosphor_9_24, L2_biogeo_9_24) 
-names(L2_9_24) <- values
-
-L2_9_54_ezg <- stack(L2_v_9_54_ezg, L2_wd_9_54_ezg, L2_z_9_54_ezg, L2_ecomorph_9_54_ezg, L2_nitrogen_9_54_ezg, L2_phosphor_9_54_ezg, L2_biogeo_9_54_ezg) 
-names(L2_9_54_ezg) <- values
-
-L2_13_30 <- stack(L2_v_13_30, L2_wd_13_30, L2_z_13_30, L2_ecomorph_13_30, L2_nitrogen_13_30, L2_phosphor_13_30, L2_biogeo_13_30) 
-names(L2_13_30) <- values
-
-L2_16_50 <- stack(L2_v_16_50, L2_wd_16_50, L2_z_16_50, L2_ecomorph_16_50, L2_nitrogen_16_50, L2_phosphor_16_50, L2_biogeo_16_50) 
-names(L2_16_50) <- values
-
-L2_18_90 <- stack(L2_v_18_90, L2_wd_18_90, L2_z_18_90, L2_ecomorph_18_90, L2_nitrogen_18_90, L2_phosphor_18_90, L2_biogeo_18_90) 
-names(L2_18_90) <- values
-
-# save stacks
-writeRaster(L2_2_40, "Pre_Processing/rasters_stacked/L2_2_40_var.grd", overwrite = TRUE)
-writeRaster(L2_3_90, "Pre_Processing/rasters_stacked/L2_3_90_var.grd", overwrite = TRUE)
-writeRaster(L2_7_00, "Pre_Processing/rasters_stacked/L2_7_00_var.grd", overwrite = TRUE)
-writeRaster(L2_9_24, "Pre_Processing/rasters_stacked/L2_9_24_var.grd", overwrite = TRUE)
-writeRaster(L2_9_54_ezg, "Pre_Processing/rasters_stacked/L2_9_54_ezg_var.grd", overwrite = TRUE)
-writeRaster(L2_13_30, "Pre_Processing/rasters_stacked/L2_13_30_var.grd", overwrite = TRUE)
-writeRaster(L2_16_50, "Pre_Processing/rasters_stacked/L2_16_50_var.grd", overwrite = TRUE)
-writeRaster(L2_18_90, "Pre_Processing/rasters_stacked/L2_18_90_var.grd", overwrite = TRUE)
+L2_base_2_40 <- stack("Pre_Processing/rasters_stacked/L2_2_40_var.grd")
+L2_3_90 <- stack("Pre_Processing/rasters_stacked/L2_3_90_var.grd")
+L2_7_00 <- stack("Pre_Processing/rasters_stacked/L2_7_00_var.grd")
+L2_peak_9_24 <- stack("Pre_Processing/rasters_stacked/L2_9_24_var.grd")
+L2_9_54_ezg <- stack("Pre_Processing/rasters_stacked/L2_9_54_ezg_var.grd")
+L2_13_30 <- stack("Pre_Processing/rasters_stacked/L2_13_30_var.grd")
+L2_16_50 <- stack("Pre_Processing/rasters_stacked/L2_16_50_var.grd")
+L2_18_90 <- stack("Pre_Processing/rasters_stacked/L2_18_90_var.grd")
 
 ### M1 ### -----------------------------------------------------------------
-# stack rasters
-M1_0_47 <- stack(M1_v_0_47, M1_wd_0_47, M1_z_0_47, M1_ecomorph_0_47, M1_nitrogen_0_47, M1_phosphor_0_47, M1_biogeo_0_47) 
-names(M1_0_47) <- values
-
-M1_0_60 <- stack(M1_v_0_60, M1_wd_0_60, M1_z_0_60, M1_ecomorph_0_60, M1_nitrogen_0_60, M1_phosphor_0_60, M1_biogeo_0_60) 
-names(M1_0_60) <- values
-
-M1_1_50_ezg <- stack(M1_v_1_50_ezg, M1_wd_1_50_ezg, M1_z_1_50_ezg, M1_ecomorph_1_50_ezg, M1_nitrogen_1_50_ezg, M1_phosphor_1_50_ezg, M1_biogeo_1_50_ezg) 
-names(M1_1_50_ezg) <- values
-
-M1_4_00 <- stack(M1_v_4_00, M1_wd_4_00, M1_z_4_00, M1_ecomorph_4_00, M1_nitrogen_4_00, M1_phosphor_4_00, M1_biogeo_4_00) 
-names(M1_4_00) <- values
-
-M1_6_00 <- stack(M1_v_6_00, M1_wd_6_00, M1_z_6_00, M1_ecomorph_6_00, M1_nitrogen_6_00, M1_phosphor_6_00, M1_biogeo_6_00) 
-names(M1_6_00) <- values
-
-M1_8_00 <- stack(M1_v_8_00, M1_wd_8_00, M1_z_8_00, M1_ecomorph_8_00, M1_nitrogen_8_00, M1_phosphor_8_00, M1_biogeo_8_00) 
-names(M1_8_00) <- values
-
-M1_10_00 <- stack(M1_v_10_00, M1_wd_10_00, M1_z_10_00, M1_ecomorph_10_00, M1_nitrogen_10_00, M1_phosphor_10_00, M1_biogeo_10_00) 
-names(M1_10_00) <- values
-
-M1_12_00 <- stack(M1_v_12_00, M1_wd_12_00, M1_z_12_00, M1_ecomorph_12_00, M1_nitrogen_12_00, M1_phosphor_12_00, M1_biogeo_12_00) 
-names(M1_12_00) <- values
-
-M1_14_00 <- stack(M1_v_14_00, M1_wd_14_00, M1_z_14_00, M1_ecomorph_14_00, M1_nitrogen_14_00, M1_phosphor_14_00, M1_biogeo_14_00) 
-names(M1_14_00) <- values
-
-M1_16_00 <- stack(M1_v_16_00, M1_wd_16_00, M1_z_16_00, M1_ecomorph_16_00, M1_nitrogen_16_00, M1_phosphor_16_00, M1_biogeo_16_00) 
-names(M1_16_00) <- values
-
-M1_18_84 <- stack(M1_v_18_84, M1_wd_18_84, M1_z_18_84, M1_ecomorph_18_84, M1_nitrogen_18_84, M1_phosphor_18_84, M1_biogeo_18_84) 
-names(M1_18_84) <- values
-
-M1_22_84 <- stack(M1_v_22_84, M1_wd_22_84, M1_z_22_84, M1_ecomorph_22_84, M1_nitrogen_22_84, M1_phosphor_22_84, M1_biogeo_22_84) 
-names(M1_22_84) <- values
-
-# save stacks 
-writeRaster(M1_0_47, "Pre_Processing/rasters_stacked/M1_0_47_var.grd", overwrite = TRUE)
-writeRaster(M1_0_60, "Pre_Processing/rasters_stacked/M1_0_60_var.grd", overwrite = TRUE)
-writeRaster(M1_1_50_ezg, "Pre_Processing/rasters_stacked/M1_1_50_ezg_var.grd", overwrite = TRUE)
-writeRaster(M1_4_00, "Pre_Processing/rasters_stacked/M1_4_00_var.grd", overwrite = TRUE)
-writeRaster(M1_6_00, "Pre_Processing/rasters_stacked/M1_6_00_var.grd", overwrite = TRUE)
-writeRaster(M1_8_00, "Pre_Processing/rasters_stacked/M1_8_00_var.grd", overwrite = TRUE)
-writeRaster(M1_10_00, "Pre_Processing/rasters_stacked/M1_10_00_var.grd", overwrite = TRUE)
-writeRaster(M1_12_00, "Pre_Processing/rasters_stacked/M1_12_00_var.grd", overwrite = TRUE)
-writeRaster(M1_14_00, "Pre_Processing/rasters_stacked/M1_14_00_var.grd", overwrite = TRUE)
-writeRaster(M1_16_00, "Pre_Processing/rasters_stacked/M1_16_00_var.grd", overwrite = TRUE)
-writeRaster(M1_18_84, "Pre_Processing/rasters_stacked/M1_18_84_var.grd", overwrite = TRUE)
-writeRaster(M1_22_84, "Pre_Processing/rasters_stacked/M1_22_84_var.grd", overwrite = TRUE)
+M1_base_0_47 <- stack("Pre_Processing/rasters_stacked/M1_0_47_var.grd")
+M1_0_60 <- stack("Pre_Processing/rasters_stacked/M1_0_60_var.grd")
+M1_1_50_ezg <- stack("Pre_Processing/rasters_stacked/M1_1_50_ezg_var.grd")
+M1_4_00 <- stack("Pre_Processing/rasters_stacked/M1_4_00_var.grd")
+M1_6_00 <- stack("Pre_Processing/rasters_stacked/M1_6_00_var.grd")
+M1_8_00 <- stack("Pre_Processing/rasters_stacked/M1_8_00_var.grd")
+M1_10_00 <- stack("Pre_Processing/rasters_stacked/M1_10_00_var.grd")
+M1_12_00 <- stack("Pre_Processing/rasters_stacked/M1_12_00_var.grd")
+M1_14_00 <- stack("Pre_Processing/rasters_stacked/M1_14_00_var.grd")
+M1_16_00 <- stack("Pre_Processing/rasters_stacked/M1_16_00_var.grd")
+M1_peak_18_84 <- stack("Pre_Processing/rasters_stacked/M1_18_84_var.grd")
+M1_22_84 <- stack("Pre_Processing/rasters_stacked/M1_22_84_var.grd")
 
 ### S1 ### ------------------------------------------------------------------
-# stack rasters 
-S1_1_94_ezg <- stack(S1_v_1_94_ezg, S1_wd_1_94_ezg, S1_z_1_94_ezg, S1_ecomorph_1_94_ezg, S1_nitrogen_1_94_ezg, S1_phosphor_1_94_ezg, S1_biogeo_1_94_ezg) 
-names(S1_1_94_ezg) <- values
-
-S1_2_00 <- stack(S1_v_2_00, S1_wd_2_00, S1_z_2_00, S1_ecomorph_2_00, S1_nitrogen_2_00, S1_phosphor_2_00, S1_biogeo_2_00) 
-names(S1_2_00) <- values
-
-S1_3_70 <- stack(S1_v_3_70, S1_wd_3_70, S1_z_3_70, S1_ecomorph_3_70, S1_nitrogen_3_70, S1_phosphor_3_70, S1_biogeo_3_70) 
-names(S1_3_70) <- values
-
-S1_6_50 <- stack(S1_v_6_50, S1_wd_6_50, S1_z_6_50, S1_ecomorph_6_50, S1_nitrogen_6_50, S1_phosphor_6_50, S1_biogeo_6_50) 
-names(S1_6_50) <- values
-
-S1_8_50 <- stack(S1_v_8_50, S1_wd_8_50, S1_z_8_50, S1_ecomorph_8_50, S1_nitrogen_8_50, S1_phosphor_8_50, S1_biogeo_8_50) 
-names(S1_8_50) <- values
-
-S1_10_68 <- stack(S1_v_10_68, S1_wd_10_68, S1_z_10_68, S1_ecomorph_10_68, S1_nitrogen_10_68, S1_phosphor_10_68, S1_biogeo_10_68) 
-names(S1_10_68) <- values
-
-S1_13_00 <- stack(S1_v_13_00, S1_wd_13_00, S1_z_13_00, S1_ecomorph_13_00, S1_nitrogen_13_00, S1_phosphor_13_00, S1_biogeo_13_00) 
-names(S1_13_00) <- values
-
-S1_15_00 <- stack(S1_v_15_00, S1_wd_15_00, S1_z_15_00, S1_ecomorph_15_00, S1_nitrogen_15_00, S1_phosphor_15_00, S1_biogeo_15_00) 
-names(S1_15_00) <- values
-
-S1_18_00 <- stack(S1_v_18_00, S1_wd_18_00, S1_z_18_00, S1_ecomorph_18_00, S1_nitrogen_18_00, S1_phosphor_18_00, S1_biogeo_18_00) 
-names(S1_18_00) <- values
-
-S1_20_00 <- stack(S1_v_20_00, S1_wd_20_00, S1_z_20_00, S1_ecomorph_20_00, S1_nitrogen_20_00, S1_phosphor_20_00, S1_biogeo_20_00) 
-names(S1_20_00) <- values
-
-# save stacks
-writeRaster(S1_1_94_ezg, "Pre_Processing/rasters_stacked/S1_1_94_ezg_var.grd", overwrite = TRUE)
-writeRaster(S1_2_00, "Pre_Processing/rasters_stacked/S1_2_00_var.grd", overwrite = TRUE)
-writeRaster(S1_3_70, "Pre_Processing/rasters_stacked/S1_3_70_var.grd", overwrite = TRUE)
-writeRaster(S1_6_50, "Pre_Processing/rasters_stacked/S1_6_50_var.grd", overwrite = TRUE)
-writeRaster(S1_8_50, "Pre_Processing/rasters_stacked/S1_8_50_var.grd", overwrite = TRUE)
-writeRaster(S1_10_68, "Pre_Processing/rasters_stacked/S1_10_68_var.grd", overwrite = TRUE)
-writeRaster(S1_13_00, "Pre_Processing/rasters_stacked/S1_13_00_var.grd", overwrite = TRUE)
-writeRaster(S1_15_00, "Pre_Processing/rasters_stacked/S1_15_00_var.grd", overwrite = TRUE)
-writeRaster(S1_18_00, "Pre_Processing/rasters_stacked/S1_18_00_var.grd", overwrite = TRUE)
-writeRaster(S1_20_00, "Pre_Processing/rasters_stacked/S1_20_00_var.grd", overwrite = TRUE)
+S1_1_94_ezg <- stack("Pre_Processing/rasters_stacked/S1_1_94_ezg_var.grd")
+S1_base_2_00 <- stack("Pre_Processing/rasters_stacked/S1_2_00_var.grd")
+S1_3_70 <- stack("Pre_Processing/rasters_stacked/S1_3_70_var.grd")
+S1_6_50 <- stack("Pre_Processing/rasters_stacked/S1_6_50_var.grd")
+S1_8_50 <- stack("Pre_Processing/rasters_stacked/S1_8_50_var.grd")
+S1_10_68 <- stack("Pre_Processing/rasters_stacked/S1_10_68_var.grd")
+S1_13_00 <- stack("Pre_Processing/rasters_stacked/S1_13_00_var.grd")
+S1_15_00 <- stack("Pre_Processing/rasters_stacked/S1_15_00_var.grd")
+S1_peak_18_00 <- stack("Pre_Processing/rasters_stacked/S1_18_00_var.grd")
+S1_20_00 <- stack("Pre_Processing/rasters_stacked/S1_20_00_var.grd")
 
 ### S2 ### ----------------------------------------------------------------
-# stack rasters
-S2_1_93_ezg <- stack(S2_v_1_93_ezg, S2_wd_1_93_ezg, S2_z_1_93_ezg, S2_ecomorph_1_93_ezg, S2_nitrogen_1_93_ezg, S2_phosphor_1_93_ezg, S2_biogeo_1_93_ezg) 
-names(S2_1_93_ezg) <- values
-
-S2_2_00 <- stack(S2_v_2_00, S2_wd_2_00, S2_z_2_00, S2_ecomorph_2_00, S2_nitrogen_2_00, S2_phosphor_2_00, S2_biogeo_2_00) 
-names(S2_2_00) <- values
-
-S2_3_20 <- stack(S2_v_3_20, S2_wd_3_20, S2_z_3_20, S2_ecomorph_3_20, S2_nitrogen_3_20, S2_phosphor_3_20, S2_biogeo_3_20) 
-names(S2_3_20) <- values
-
-S2_6_50 <- stack(S2_v_6_50, S2_wd_6_50, S2_z_6_50, S2_ecomorph_6_50, S2_nitrogen_6_50, S2_phosphor_6_50, S2_biogeo_6_50) 
-names(S2_6_50) <- values
-
-S2_8_50 <- stack(S2_v_8_50, S2_wd_8_50, S2_z_8_50, S2_ecomorph_8_50, S2_nitrogen_8_50, S2_phosphor_8_50, S2_biogeo_8_50) 
-names(S2_8_50) <- values
-
-S2_10_93 <- stack(S2_v_10_93, S2_wd_10_93, S2_z_10_93, S2_ecomorph_10_93, S2_nitrogen_10_93, S2_phosphor_10_93, S2_biogeo_10_93) 
-names(S2_10_93) <- values
-
-S2_13_00 <- stack(S2_v_13_00, S2_wd_13_00, S2_z_13_00, S2_ecomorph_13_00, S2_nitrogen_13_00, S2_phosphor_13_00, S2_biogeo_13_00) 
-names(S2_13_00) <- values
-
-S2_15_00 <- stack(S2_v_15_00, S2_wd_15_00, S2_z_15_00, S2_ecomorph_15_00, S2_nitrogen_15_00, S2_phosphor_15_00, S2_biogeo_15_00) 
-names(S2_15_00) <- values
-
-S2_18_00 <- stack(S2_v_18_00, S2_wd_18_00, S2_z_18_00, S2_ecomorph_18_00, S2_nitrogen_18_00, S2_phosphor_18_00, S2_biogeo_18_00) 
-names(S2_18_00) <- values
-
-S2_20_00 <- stack(S2_v_20_00, S2_wd_20_00, S2_z_20_00, S2_ecomorph_20_00, S2_nitrogen_20_00, S2_phosphor_20_00, S2_biogeo_20_00) 
-names(S2_20_00) <- values
-
-# save stacks
-writeRaster(S2_1_93_ezg, "Pre_Processing/rasters_stacked/S2_1_93_ezg_var.grd", overwrite = TRUE)
-writeRaster(S2_2_00, "Pre_Processing/rasters_stacked/S2_2_00_var.grd", overwrite = TRUE)
-writeRaster(S2_3_20, "Pre_Processing/rasters_stacked/S2_3_20_var.grd", overwrite = TRUE)
-writeRaster(S2_6_50, "Pre_Processing/rasters_stacked/S2_6_50_var.grd", overwrite = TRUE)
-writeRaster(S2_8_50, "Pre_Processing/rasters_stacked/S2_8_50_var.grd", overwrite = TRUE)
-writeRaster(S2_10_93, "Pre_Processing/rasters_stacked/S2_10_93_var.grd", overwrite = TRUE)
-writeRaster(S2_13_00, "Pre_Processing/rasters_stacked/S2_13_00_var.grd", overwrite = TRUE)
-writeRaster(S2_15_00, "Pre_Processing/rasters_stacked/S2_15_00_var.grd", overwrite = TRUE)
-writeRaster(S2_18_00, "Pre_Processing/rasters_stacked/S2_18_00_var.grd", overwrite = TRUE)
-writeRaster(S2_20_00, "Pre_Processing/rasters_stacked/S2_20_00_var.grd", overwrite = TRUE)
+S2_1_93_ezg <- stack("Pre_Processing/rasters_stacked/S2_1_93_ezg_var.grd")
+S2_base_2_00 <- stack("Pre_Processing/rasters_stacked/S2_2_00_var.grd")
+S2_3_20 <- stack("Pre_Processing/rasters_stacked/S2_3_20_var.grd")
+S2_6_50 <- stack("Pre_Processing/rasters_stacked/S2_6_50_var.grd")
+S2_8_50 <- stack("Pre_Processing/rasters_stacked/S2_8_50_var.grd")
+S2_10_93 <- stack("Pre_Processing/rasters_stacked/S2_10_93_var.grd")
+S2_13_00 <- stack("Pre_Processing/rasters_stacked/S2_13_00_var.grd")
+S2_15_00 <- stack("Pre_Processing/rasters_stacked/S2_15_00_var.grd")
+S2_peak_18_00 <- stack("Pre_Processing/rasters_stacked/S2_18_00_var.grd")
+S2_20_00 <- stack("Pre_Processing/rasters_stacked/S2_20_00_var.grd")
 
 ### TH4 ### ---------------------------------------------------------------
-# stack rasters
-TH4_11_45 <- stack(TH4_v_11_45, TH4_wd_11_45, TH4_z_11_45, TH4_ecomorph_11_45, TH4_nitrogen_11_45, TH4_phosphor_11_45, TH4_biogeo_11_45) 
-names(TH4_11_45) <- values
+TH4_min_11_45 <- stack("Pre_Processing/rasters_stacked/TH4_11_45_var.grd")
+TH4_15_00 <- stack("Pre_Processing/rasters_stacked/TH4_15_00_var.grd")
+TH4_18_00 <- stack("Pre_Processing/rasters_stacked/TH4_18_00_var.grd")
+TH4_19_96 <- stack("Pre_Processing/rasters_stacked/TH4_19_96_var.grd")
+TH4_22_50 <- stack("Pre_Processing/rasters_stacked/TH4_22_50_var.grd")
+TH4_25_00 <- stack("Pre_Processing/rasters_stacked/TH4_25_00_var.grd")
+TH4_27_00 <- stack("Pre_Processing/rasters_stacked/TH4_27_00_var.grd")
+TH4_30_00 <- stack("Pre_Processing/rasters_stacked/TH4_30_00_var.grd")
+TH4_max_32_93 <- stack("Pre_Processing/rasters_stacked/TH4_32_93_var.grd")
+TH4_35_12_ezg <- stack("Pre_Processing/rasters_stacked/TH4_35_12_ezg_var.grd")
 
-TH4_15_00 <- stack(TH4_v_15_00, TH4_wd_15_00, TH4_z_15_00, TH4_ecomorph_15_00, TH4_nitrogen_15_00, TH4_phosphor_15_00, TH4_biogeo_15_00) 
-names(TH4_15_00) <- values
-
-TH4_18_00 <- stack(TH4_v_18_00, TH4_wd_18_00, TH4_z_18_00, TH4_ecomorph_18_00, TH4_nitrogen_18_00, TH4_phosphor_18_00, TH4_biogeo_18_00) 
-names(TH4_18_00) <- values
-
-TH4_19_96 <- stack(TH4_v_19_96, TH4_wd_19_96, TH4_z_19_96, TH4_ecomorph_19_96, TH4_nitrogen_19_96, TH4_phosphor_19_96, TH4_biogeo_19_96) 
-names(TH4_19_96) <- values
-
-TH4_22_50 <- stack(TH4_v_22_50, TH4_wd_22_50, TH4_z_22_50, TH4_ecomorph_22_50, TH4_nitrogen_22_50, TH4_phosphor_22_50, TH4_biogeo_22_50) 
-names(TH4_22_50) <- values
-
-TH4_25_00 <- stack(TH4_v_25_00, TH4_wd_25_00, TH4_z_25_00, TH4_ecomorph_25_00, TH4_nitrogen_25_00, TH4_phosphor_25_00, TH4_biogeo_25_00) 
-names(TH4_25_00) <- values
-
-TH4_27_00 <- stack(TH4_v_27_00, TH4_wd_27_00, TH4_z_27_00, TH4_ecomorph_27_00, TH4_nitrogen_27_00, TH4_phosphor_27_00, TH4_biogeo_27_00) 
-names(TH4_27_00) <- values
-
-TH4_30_00 <- stack(TH4_v_30_00, TH4_wd_30_00, TH4_z_30_00, TH4_ecomorph_30_00, TH4_nitrogen_30_00, TH4_phosphor_30_00, TH4_biogeo_30_00) 
-names(TH4_30_00) <- values
-
-TH4_32_93 <- stack(TH4_v_32_93, TH4_wd_32_93, TH4_z_32_93, TH4_ecomorph_32_93, TH4_nitrogen_32_93, TH4_phosphor_32_93, TH4_biogeo_32_93) 
-names(TH4_32_93) <- values
-
-TH4_35_12_ezg <- stack(TH4_v_35_12_ezg, TH4_wd_35_12_ezg, TH4_z_35_12_ezg, TH4_ecomorph_35_12_ezg, TH4_nitrogen_35_12_ezg, TH4_phosphor_35_12_ezg, TH4_biogeo_35_12_ezg) 
-names(TH4_35_12_ezg) <- values
-
-# save stacks 
-writeRaster(TH4_11_45, "Pre_Processing/rasters_stacked/TH4_11_45_var.grd", overwrite = TRUE)
-writeRaster(TH4_15_00, "Pre_Processing/rasters_stacked/TH4_15_00_var.grd", overwrite = TRUE)
-writeRaster(TH4_18_00, "Pre_Processing/rasters_stacked/TH4_18_00_var.grd", overwrite = TRUE)
-writeRaster(TH4_19_96, "Pre_Processing/rasters_stacked/TH4_19_96_var.grd", overwrite = TRUE)
-writeRaster(TH4_22_50, "Pre_Processing/rasters_stacked/TH4_22_50_var.grd", overwrite = TRUE)
-writeRaster(TH4_25_00, "Pre_Processing/rasters_stacked/TH4_25_00_var.grd", overwrite = TRUE)
-writeRaster(TH4_27_00, "Pre_Processing/rasters_stacked/TH4_27_00_var.grd", overwrite = TRUE)
-writeRaster(TH4_30_00, "Pre_Processing/rasters_stacked/TH4_30_00_var.grd", overwrite = TRUE)
-writeRaster(TH4_32_93, "Pre_Processing/rasters_stacked/TH4_32_93_var.grd", overwrite = TRUE)
-writeRaster(TH4_35_12_ezg, "Pre_Processing/rasters_stacked/TH4_35_12_ezg_var.grd", overwrite = TRUE)
 
 ### VR3 ### ------------------------------------------------------------------
-# stack rasters
-VR3_2_90 <- stack(VR3_v_2_90, VR3_wd_2_90, VR3_z_v_2_90, VR3_ecomorph_v_2_90, VR3_nitrogen_v_2_90, VR3_phosphor_v_2_90, VR3_biogeo_v_2_90) 
-names(VR3_2_90) <- values
-
-VR3_6_00 <- stack(VR3_v_6_00, VR3_wd_6_00, VR3_z_6_00, VR3_ecomorph_6_00, VR3_nitrogen_6_00, VR3_phosphor_6_00, VR3_biogeo_6_00) 
-names(VR3_6_00) <- values
-
-VR3_9_00 <- stack(VR3_v_9_00, VR3_wd_9_00, VR3_z_9_00, VR3_ecomorph_9_00, VR3_nitrogen_9_00, VR3_phosphor_9_00, VR3_biogeo_9_00) 
-names(VR3_9_00) <- values
-
-VR3_12_00 <- stack(VR3_v_12_00, VR3_wd_12_00, VR3_z_12_00, VR3_ecomorph_12_00, VR3_nitrogen_12_00, VR3_phosphor_12_00, VR3_biogeo_12_00) 
-names(VR3_12_00) <- values
-
-VR3_15_00 <- stack(VR3_v_15_00, VR3_wd_15_00, VR3_z_15_00, VR3_ecomorph_15_00, VR3_nitrogen_15_00, VR3_phosphor_15_00, VR3_biogeo_15_00) 
-names(VR3_15_00) <- values
-
-VR3_18_80 <- stack(VR3_v_18_80, VR3_wd_18_80, VR3_z_18_80, VR3_ecomorph_18_80, VR3_nitrogen_18_80, VR3_phosphor_18_80, VR3_biogeo_18_80) 
-names(VR3_18_80) <- values
-
-VR3_21_51_ezg <- stack(VR3_v_21_51_ezg, VR3_wd_21_51_ezg, VR3_z_21_51_ezg, VR3_ecomorph_21_51_ezg, VR3_nitrogen_21_51_ezg, VR3_phosphor_21_51_ezg, VR3_biogeo_21_51_ezg) 
-names(VR3_21_51_ezg) <- values
-
-VR3_22_00 <- stack(VR3_v_22_00, VR3_wd_22_00, VR3_z_22_00, VR3_ecomorph_22_00, VR3_nitrogen_22_00, VR3_phosphor_22_00, VR3_biogeo_22_00) 
-names(VR3_22_00) <- values
-
-VR3_25_00 <- stack(VR3_v_25_00, VR3_wd_25_00, VR3_z_25_00, VR3_ecomorph_25_00, VR3_nitrogen_25_00, VR3_phosphor_25_00, VR3_biogeo_25_00) 
-names(VR3_25_00) <- values
-
-VR3_28_00 <- stack(VR3_v_28_00, VR3_wd_28_00, VR3_z_28_00, VR3_ecomorph_28_00, VR3_nitrogen_28_00, VR3_phosphor_28_00, VR3_biogeo_28_00) 
-names(VR3_28_00) <- values
-
-VR3_31_00 <- stack(VR3_v_31_00, VR3_wd_31_00, VR3_z_31_00, VR3_ecomorph_31_00, VR3_nitrogen_31_00, VR3_phosphor_31_00, VR3_biogeo_31_00) 
-names(VR3_31_00) <- values
-
-VR3_34_00 <- stack(VR3_v_34_00, VR3_wd_34_00, VR3_z_34_00, VR3_ecomorph_34_00, VR3_nitrogen_34_00, VR3_phosphor_34_00, VR3_biogeo_34_00) 
-names(VR3_34_00) <- values
-
-VR3_37_00 <- stack(VR3_v_37_00, VR3_wd_37_00, VR3_z_37_00, VR3_ecomorph_37_00, VR3_nitrogen_37_00, VR3_phosphor_37_00, VR3_biogeo_37_00) 
-names(VR3_37_00) <- values
-
-VR3_40_10 <- stack(VR3_v_40_10, VR3_wd_40_10, VR3_z_40_10, VR3_ecomorph_40_10, VR3_nitrogen_40_10, VR3_phosphor_40_10, VR3_biogeo_40_10) 
-names(VR3_40_10) <- values
-
-VR3_43_00 <- stack(VR3_v_43_00, VR3_wd_43_00, VR3_z_43_00, VR3_ecomorph_43_00, VR3_nitrogen_43_00, VR3_phosphor_43_00, VR3_biogeo_43_00) 
-names(VR3_43_00) <- values
-
-VR3_46_00 <- stack(VR3_v_46_00, VR3_wd_46_00, VR3_z_46_00, VR3_ecomorph_46_00, VR3_nitrogen_46_00, VR3_phosphor_46_00, VR3_biogeo_46_00) 
-names(VR3_46_00) <- values
-
-VR3_48_00 <- stack(VR3_v_48_00, VR3_wd_48_00, VR3_z_48_00, VR3_ecomorph_48_00, VR3_nitrogen_48_00, VR3_phosphor_48_00, VR3_biogeo_48_00) 
-names(VR3_48_00) <- values
-
-VR3_50_00 <- stack(VR3_v_50_00, VR3_wd_50_00, VR3_z_50_00, VR3_ecomorph_50_00, VR3_nitrogen_50_00, VR3_phosphor_50_00, VR3_biogeo_50_00) 
-names(VR3_50_00) <- values
-
-VR3_52_90 <- stack(VR3_v_52_90, VR3_wd_52_90, VR3_z_52_90, VR3_ecomorph_52_90, VR3_nitrogen_52_90, VR3_phosphor_52_90, VR3_biogeo_52_90) 
-names(VR3_52_90) <- values
-
-# save stacks 
-writeRaster(VR3_2_90, "Pre_Processing/rasters_stacked/VR3_2_90_var.grd", overwrite = TRUE)
-writeRaster(VR3_6_00, "Pre_Processing/rasters_stacked/VR3_6_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_9_00, "Pre_Processing/rasters_stacked/VR3_9_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_12_00, "Pre_Processing/rasters_stacked/VR3_12_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_15_00, "Pre_Processing/rasters_stacked/VR3_15_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_18_80, "Pre_Processing/rasters_stacked/VR3_18_80_var.grd", overwrite = TRUE)
-writeRaster(VR3_21_51_ezg, "Pre_Processing/rasters_stacked/VR3_21_51_ezg_var.grd", overwrite = TRUE)
-writeRaster(VR3_22_00, "Pre_Processing/rasters_stacked/VR3_22_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_25_00, "Pre_Processing/rasters_stacked/VR3_25_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_28_00, "Pre_Processing/rasters_stacked/VR3_28_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_31_00, "Pre_Processing/rasters_stacked/VR3_31_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_34_00, "Pre_Processing/rasters_stacked/VR3_34_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_37_00, "Pre_Processing/rasters_stacked/VR3_37_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_40_10, "Pre_Processing/rasters_stacked/VR3_40_10_var.grd", overwrite = TRUE)
-writeRaster(VR3_43_00, "Pre_Processing/rasters_stacked/VR3_43_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_46_00, "Pre_Processing/rasters_stacked/VR3_46_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_48_00, "Pre_Processing/rasters_stacked/VR3_48_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_50_00, "Pre_Processing/rasters_stacked/VR3_50_00_var.grd", overwrite = TRUE)
-writeRaster(VR3_52_90, "Pre_Processing/rasters_stacked/VR3_52_90_var.grd", overwrite = TRUE)
+VR3_base_2_90 <- stack("Pre_Processing/rasters_stacked/VR3_2_90_var.grd")
+VR3_6_00 <- stack("Pre_Processing/rasters_stacked/VR3_6_00_var.grd")
+VR3_9_00 <- stack("Pre_Processing/rasters_stacked/VR3_9_00_var.grd")
+VR3_12_00 <- stack("Pre_Processing/rasters_stacked/VR3_12_00_var.grd")
+VR3_15_00 <- stack("Pre_Processing/rasters_stacked/VR3_15_00_var.grd")
+VR3_18_80 <- stack("Pre_Processing/rasters_stacked/VR3_18_80_var.grd")
+VR3_21_51_ezg <- stack("Pre_Processing/rasters_stacked/VR3_21_51_ezg_var.grd")
+VR3_22_00 <- stack("Pre_Processing/rasters_stacked/VR3_22_00_var.grd")
+VR3_25_00 <- stack("Pre_Processing/rasters_stacked/VR3_25_00_var.grd")
+VR3_28_00 <- stack("Pre_Processing/rasters_stacked/VR3_28_00_var.grd")
+VR3_31_00 <- stack("Pre_Processing/rasters_stacked/VR3_31_00_var.grd")
+VR3_34_00 <- stack("Pre_Processing/rasters_stacked/VR3_34_00_var.grd")
+VR3_37_00 <- stack("Pre_Processing/rasters_stacked/VR3_37_00_var.grd")
+VR3_peak_40_10 <- stack("Pre_Processing/rasters_stacked/VR3_40_10_var.grd")
+VR3_43_00 <- stack("Pre_Processing/rasters_stacked/VR3_43_00_var.grd")
+VR3_46_00 <- stack("Pre_Processing/rasters_stacked/VR3_46_00_var.grd")
+VR3_48_00 <- stack("Pre_Processing/rasters_stacked/VR3_48_00_var.grd")
+VR3_50_00 <- stack("Pre_Processing/rasters_stacked/VR3_50_00_var.grd")
+VR3_52_90 <- stack("Pre_Processing/rasters_stacked/VR3_52_90_var.grd")
 ```
 
-```{r}
-# read rasters containing wd and velocity 
-# GL1 ------------------------------------------------------------
-GL1_min_var <- stack("Pre_Processing/raster_files/GL1_3_28_var.tif")
-GL1_max_var <- stack("Pre_Processing/raster_files/GL1_31_76_var.tif")
 
-# GL2 --------------------------------------------------------------
-GL2_min_var <- stack("Pre_Processing/raster_files/GL2_3_21_var.tif")
-GL2_max_var <- stack("Pre_Processing/raster_files/GL2_31_53_var.tif")
-
-# L2 --------------------------------------------------------------
-L2_base_var <- stack("Pre_Processing/raster_files/L2_2_40_var.tif")
-L2_peak_var <- stack("Pre_Processing/raster_files/L2_9_24_var.tif") 
-L2_max_var <- stack("Pre_Processing/raster_files/L2_18_90_var.tif") 
-
-# M1 --------------------------------------------------------------
-M1_base_var <- stack("Pre_Processing/raster_files/M1_0_47_var.tif") 
-M1_peak_var <- stack("Pre_Processing/raster_files/M1_18_84_var.tif") 
-M1_max_var <- stack("Pre_Processing/raster_files/M1_22_84_var.tif") 
-
-# S1 --------------------------------------------------------------
-S1_base_var <- stack("Pre_Processing/raster_files/S1_2_00_var.tif") 
-S1_peak_var <- stack("Pre_Processing/raster_files/S1_18_00_var.tif") 
-S1_max_var <- stack("Pre_Processing/raster_files/S1_20_00_var.tif") 
-
-# S2 --------------------------------------------------------------
-S2_base_var <- stack("Pre_Processing/raster_files/S2_2_00_var.tif") 
-S2_peak_var <- stack("Pre_Processing/raster_files/S2_18_00_var.tif") 
-S2_max_var <- stack("Pre_Processing/raster_files/S2_20_00_var.tif") 
-
-# TH4 ---------------------------------------------------------------
-TH4_min_var <- stack("Pre_Processing/raster_files/TH4_11_45_var.tif") 
-TH4_max_var <- stack("Pre_Processing/raster_files/TH4_32_93_var.tif")
-
-# VR3 ----------------------------------------------------------------
-VR3_base_var <- stack("Pre_Processing/raster_files/VR3_2_90_var.tif") 
-VR3_peak_var <- stack("Pre_Processing/raster_files/VR3_40_10_var.tif") 
-VR3_max_var <- stack("Pre_Processing/raster_files/VR3_52_90_var.tif")
-```
-
-## Predict Models to Maps 
+## Predict Models to Maps
+### GL1
 ```{r}
 # predict ML model to rasters with velocity and wd 
-# GL1 - predictor: velocity ---------------------------------------------------
-GL1_k_min_var <- raster::predict(GL1_min_var, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL1_k_max_var <- raster::predict(GL1_max_var, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL1_k_pers_var <- mask(GL1_a_max_var, GL1_a_min_var)
+# GL1 ------------------------------------------------------------------
+GL1_k_2_56_ezg <- raster::predict(GL1_2_56_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-# GL1 write rasters ---------------------
-writeRaster(GL1_a_min_v, "ML_model/scenarios/GL1_a_min_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL1_a_max_v, "ML_model/scenarios/GL1_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL1_a_pers_v, "ML_model/scenarios/GL1_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+GL1_k_min_3_28 <- raster::predict(GL1_min_3_28, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-writeRaster(GL1_ra_min_v, "ML_model/scenarios/GL1_ra_min_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL1_ra_max_v, "ML_model/scenarios/GL1_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL1_ra_pers_v, "ML_model/scenarios/GL1_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+GL1_k_6_00 <- raster::predict(GL1_6_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+GL1_k_9_00 <- raster::predict(GL1_9_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_12_68 <- raster::predict(GL1_12_68, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_16_00 <- raster::predict(GL1_16_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_19_00 <- raster::predict(GL1_19_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_22_00 <- raster::predict(GL1_22_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_25_00 <- raster::predict(GL1_25_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_28_00 <- raster::predict(GL1_28_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_max_31_76 <- raster::predict(GL1_max_31_76, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL1_k_pers_var <- mask(GL1_max_31_76, GL1_k_min_3_28)
+
+# GL1 write scenario rasters ---------------------
+writeRaster(GL1_k_min_3_28, "ML_model/scenarios/GL1_k_min_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL1_k_max_31_76, "ML_model/scenarios/GL1_k_max_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL1_k_pers_var, "ML_model/scenarios/GL1_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
+```
+
+### GL2
+```{r}
 # GL2 - predictor: velocity ---------------------------------------------------
-GL2_a_min_v <- raster::predict(GL2_min_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL2_a_max_v <- raster::predict(GL2_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL2_a_pers_v <- mask(GL2_a_max_v, GL2_a_min_v)
+GL2_k_2_37_ezg <- raster::predict(GL2_2_37_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL2_ra_min_v <- raster::predict(GL2_min_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL2_ra_max_v <- raster::predict(GL2_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-GL2_ra_pers_v <- mask(GL2_ra_max_v, GL2_ra_min_v)
+GL2_k_min_3_21 <- raster::predict(GL2_min_3_21, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_6_00 <- raster::predict(GL2_6_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_9_00 <- raster::predict(GL2_9_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_11_00 <- raster::predict(GL2_11_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_12_52 <- raster::predict(GL2_12_52, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_16_00 <- raster::predict(GL2_16_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_19_00 <- raster::predict(GL2_19_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_22_00 <- raster::predict(GL2_22_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_25_00 <- raster::predict(GL2_25_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_28_00 <- raster::predict(GL2_28_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_max_31_53 <- raster::predict(GL2_max_31_53, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+GL2_k_pers_var <- mask(GL2_k_max_31_53, GL2_k_min_3_21)
 
 # GL2 write rasters ---------------------
-writeRaster(GL2_a_min_v, "ML_model/scenarios/GL2_a_min_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL2_a_max_v, "ML_model/scenarios/GL2_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL2_a_pers_v, "ML_model/scenarios/GL2_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_k_min_3_21, "ML_model/scenarios/GL2_k_min_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_k_max_31_53, "ML_model/scenarios/GL2_k_max_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(GL2_k_pers_var, "ML_model/scenarios/GL2_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
+```
 
-writeRaster(GL2_ra_min_v, "ML_model/scenarios/GL2_ra_min_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL2_ra_max_v, "ML_model/scenarios/GL2_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(GL2_ra_pers_v, "ML_model/scenarios/GL2_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
-
+### L2
+```{r}
 # L2 - predictor: velocity ----------------------------------------------------
-L2_a_base_v <- raster::predict(L2_base_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-L2_a_peak_v <- raster::predict(L2_peak_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-L2_a_max_v <- raster::predict(L2_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-L2_a_pers_v <- mask(L2_a_peak_v, L2_a_base_v)
+L2_k_base_2_40 <- raster::predict(L2_base_2_40, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-L2_ra_base_v <- raster::predict(L2_base_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-L2_ra_peak_v <- raster::predict(L2_peak_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-L2_ra_max_v <- raster::predict(L2_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-L2_ra_pers_v <- mask(L2_ra_peak_v, L2_ra_base_v)
+L2_k_3_90 <- raster::predict(L2_3_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_7_00 <- raster::predict(L2_7_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_peak_9_24 <- raster::predict(L2_peak_9_24, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_9_54_ezg <- raster::predict(L2_9_54_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_13_30 <- raster::predict(L2_13_30, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_16_50 <- raster::predict(L2_16_50, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_18_90 <- raster::predict(L2_18_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_pers_var <- mask(L2_k_peak_9_24, L2_k_base_2_40_var)
 
 # L2 write rasters ---------------------
-writeRaster(L2_a_base_v, "ML_model/scenarios/L2_a_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_a_peak_v, "ML_model/scenarios/L2_a_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_a_max_v, "ML_model/scenarios/L2_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_a_pers_v, "ML_model/scenarios/L2_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_k_base_2_40, "ML_model/scenarios/L2_k_base_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_k_peak_9_24, "ML_model/scenarios/L2_k_peak_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(L2_k_pers_var, "ML_model/scenarios/L2_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
+```
 
-writeRaster(L2_ra_base_v, "ML_model/scenarios/L2_ra_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_ra_peak_v, "ML_model/scenarios/L2_ra_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_ra_max_v, "ML_model/scenarios/L2_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(L2_ra_pers_v, "ML_model/scenarios/L2_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
-
+### M1 
+```{r}
 # M1  - predictor: velocity ---------------------------------------------------
-M1_a_base_v <- raster::predict(M1_base_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-M1_a_peak_v <- raster::predict(M1_peak_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-M1_a_max_v <- raster::predict(M1_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-M1_a_pers_v <- mask(M1_a_peak_v, M1_a_base_v)
+M1_k_base_0_47 <- raster::predict(M1_base_0_47, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-M1_ra_base_v <- raster::predict(M1_base_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-M1_ra_peak_v <- raster::predict(M1_peak_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-M1_ra_max_v <- raster::predict(M1_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-M1_ra_pers_v <- mask(M1_ra_peak_v, M1_ra_base_v)
+M1_k_0_60 <- raster::predict(M1_0_60, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_1_50_ezg <- raster::predict(M1_1_50_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_4_00 <- raster::predict(M1_4_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_6_00 <- raster::predict(M1_6_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_8_00 <- raster::predict(M1_8_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_10_00 <- raster::predict(M1_10_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_12_00 <- raster::predict(M1_12_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_14_00 <- raster::predict(M1_14_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_16_00 <- raster::predict(M1_16_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_peak_18_84 <- raster::predict(M1_peak_18_84, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_22_84 <- raster::predict(M1_22_84, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+M1_k_pers_var <- mask(M1_k_peak_18_84, M1_k_base_0_47)
+
 
 # M1 write rasters ---------------------
-writeRaster(M1_a_base_v, "ML_model/scenarios/M1_a_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(M1_a_peak_v, "ML_model/scenarios/M1_a_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(M1_a_max_v, "ML_model/scenarios/M1_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(M1_a_pers_v, "ML_model/scenarios/M1_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_k_base_0_47, "ML_model/scenarios/M1_k_base_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_k_peak_18_84, "ML_model/scenarios/M1_k_peak_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(M1_k_pers_var, "ML_model/scenarios/M1_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
+```
 
-writeRaster(M1_ra_base_v, "ML_model/scenarios/M1_ra_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(M1_ra_peak_v, "ML_model/scenarios/M1_ra_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(M1_ra_max_v, "ML_model/scenarios/M1_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(M1_ra_pers_v, "ML_model/scenarios/M1_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
-
+### S1
+```{r}
 # S1  - predictor: velocity ---------------------------------------------------
-S1_a_base_v <- raster::predict(S1_base_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S1_a_peak_v <- raster::predict(S1_peak_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S1_a_max_v <- raster::predict(S1_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S1_a_pers_v <- mask(S1_a_peak_v, S1_a_base_v)
+S1_k_1_94_ezg <- raster::predict(S1_1_94_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S1_ra_base_v <- raster::predict(S1_base_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S1_ra_peak_v <- raster::predict(S1_peak_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S1_ra_max_v <- raster::predict(S1_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S1_ra_pers_v <- mask(S1_ra_peak_v, S1_ra_base_v)
+S1_k_base_2_00 <- raster::predict(S1_base_2_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_3_70 <- raster::predict(S1_3_70, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_6_50 <- raster::predict(S1_6_50, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_8_50 <- raster::predict(S1_8_50, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_10_68 <- raster::predict(S1_10_68, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_13_00 <- raster::predict(S1_13_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_15_00 <- raster::predict(S1_15_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_peak_18_00 <- raster::predict(S1_peak_18_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_20_00 <- raster::predict(S1_20_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S1_k_pers_var <- mask(S1_k_peak_18_00, S1_k_base_2_00)
 
 # S1 write rasters ---------------------
-writeRaster(S1_a_base_v, "ML_model/scenarios/S1_a_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S1_a_peak_v, "ML_model/scenarios/S1_a_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S1_a_max_v, "ML_model/scenarios/S1_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S1_a_pers_v, "ML_model/scenarios/S1_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_k_base_2_00, "ML_model/scenarios/S1_k_base_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_k_peak_18_00, "ML_model/scenarios/S1_k_peak_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S1_k_pers_var, "ML_model/scenarios/S1_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
+```
 
-writeRaster(S1_ra_base_v, "ML_model/scenarios/S1_ra_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S1_ra_peak_v, "ML_model/scenarios/S1_ra_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S1_ra_max_v, "ML_model/scenarios/S1_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S1_ra_pers_v, "ML_model/scenarios/S1_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
-
+### S2
+```{r}
 # S2  - predictor: velocity ---------------------------------------------------
-S2_a_base_v <- raster::predict(S2_base_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S2_a_peak_v <- raster::predict(S2_peak_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S2_a_max_v <- raster::predict(S2_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S2_a_pers_v <- mask(S2_a_peak_v, S2_a_base_v)
+S2_k_1_93_ezg <- raster::predict(S2_1_93_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-S2_ra_base_v <- raster::predict(S2_base_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S2_ra_peak_v <- raster::predict(S2_peak_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S2_ra_max_v <- raster::predict(S2_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-S2_ra_pers_v <- mask(S2_ra_peak_v, S2_ra_base_v)
+S2_k_base_2_00 <- raster::predict(S2_base_2_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_3_20 <- raster::predict(S2_3_20, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_6_50 <- raster::predict(S2_6_50, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_8_50 <- raster::predict(S2_8_50, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_10_93 <- raster::predict(S2_10_93, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_13_00 <- raster::predict(S2_13_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_15_00 <- raster::predict(S2_15_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_peak_18_00 <- raster::predict(S2_peak_18_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_20_00 <- raster::predict(S2_20_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+S2_k_pers_var <- mask(S2_k_peak_18_00, S2_k_base_2_00)
 
 # S2 write rasters ---------------------
-writeRaster(S2_a_base_v, "ML_model/scenarios/S2_a_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S2_a_peak_v, "ML_model/scenarios/S2_a_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S2_a_max_v, "ML_model/scenarios/S2_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S2_a_pers_v, "ML_model/scenarios/S2_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_k_base_2_00, "ML_model/scenarios/S2_k_base_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_k_peak_18_00, "ML_model/scenarios/S2_k_peak_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(S2_k_pers_var, "ML_model/scenarios/S2_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
+```
 
-writeRaster(S2_ra_base_v, "ML_model/scenarios/S2_ra_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S2_ra_peak_v, "ML_model/scenarios/S2_ra_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S2_ra_max_v, "ML_model/scenarios/S2_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(S2_ra_pers_v, "ML_model/scenarios/S2_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
-
+### TH4
+```{r}
 # TH4  - predictor: velocity --------------------------------------------------
-TH4_a_min_v <- raster::predict(TH4_min_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-TH4_a_max_v <- raster::predict(TH4_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-TH4_a_pers_v <- mask(TH4_a_max_v, TH4_a_min_v)
+TH4_k_min_11_45 <- raster::predict(TH4_min_11_45, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-TH4_ra_min_v <- raster::predict(TH4_min_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-TH4_ra_max_v <- raster::predict(TH4_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-TH4_ra_pers_v <- mask(TH4_ra_max_v, TH4_ra_min_v)
+TH4_k_15_00 <- raster::predict(TH4_15_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_18_00 <- raster::predict(TH4_18_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_19_96 <- raster::predict(TH4_19_96, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_22_50 <- raster::predict(TH4_22_50, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_25_00 <- raster::predict(TH4_25_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_27_00 <- raster::predict(TH4_27_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_30_00 <- raster::predict(TH4_30_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_max_32_93 <- raster::predict(TH4_max_32_93, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_35_12_ezg <- raster::predict(TH4_35_12_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+TH4_k_pers_var <- mask(TH4_k_max_32_93, TH4_k_min_11_45)
 
 # TH4 write rasters ---------------------
-writeRaster(TH4_a_min_v, "ML_model/scenarios/TH4_a_min_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(TH4_a_max_v, "ML_model/scenarios/TH4_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(TH4_a_pers_v, "ML_model/scenarios/TH4_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(TH4_k_min_11_45, "ML_model/scenarios/TH4_k_min_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(TH4_k_max_32_93, "ML_model/scenarios/TH4_k_max_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(TH4_k_pers_var, "ML_model/scenarios/TH4_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
+```
 
-writeRaster(TH4_ra_min_v, "ML_model/scenarios/TH4_ra_min_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(TH4_ra_max_v, "ML_model/scenarios/TH4_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(TH4_ra_pers_v, "ML_model/scenarios/TH4_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
-
+### VR3
+```{r}
 # VR3  - predictor: velocity --------------------------------------------------
-VR3_a_base_v <- raster::predict(VR3_base_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-VR3_a_peak_v <- raster::predict(VR3_peak_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-VR3_a_max_v <- raster::predict(VR3_max_v, rf_model_v_a_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-VR3_a_pers_v <- mask(VR3_a_peak_v, VR3_a_base_v)
+VR3_k_base_2_90 <- raster::predict(VR3_base_2_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-VR3_ra_base_v <- raster::predict(VR3_base_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-VR3_ra_peak_v <- raster::predict(VR3_peak_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-VR3_ra_max_v <- raster::predict(VR3_max_v, rf_model_v_ra_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
-VR3_ra_pers_v <- mask(VR3_ra_peak_v, VR3_ra_base_v)
+VR3_k_6_00 <- raster::predict(VR3_6_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_9_00 <- raster::predict(VR3_9_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_12_00 <- raster::predict(VR3_12_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_15_00 <- raster::predict(VR3_15_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_18_80 <- raster::predict(VR3_18_80, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_21_51_ezg <- raster::predict(VR3_21_51_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_22_00 <- raster::predict(VR3_22_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_25_00 <- raster::predict(VR3_25_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_28_00 <- raster::predict(VR3_28_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_31_00 <- raster::predict(VR3_31_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_34_00 <- raster::predict(VR3_34_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_37_00 <- raster::predict(VR3_37_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_peak_40_10 <- raster::predict(VR3_peak_40_10, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_43_00 <- raster::predict(VR3_43_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_46_00 <- raster::predict(VR3_46_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_48_00 <- raster::predict(VR3_48_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_50_00 <- raster::predict(VR3_50_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_52_90 <- raster::predict(VR3_52_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+VR3_k_pers_var <- mask(VR3_k_peak_40_10, VR3_k_base_2_90)
 
 # VR3 write rasters ---------------------
-writeRaster(VR3_a_base_v, "ML_model/scenarios/VR3_a_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(VR3_a_peak_v, "ML_model/scenarios/VR3_a_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(VR3_a_max_v, "ML_model/scenarios/VR3_a_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(VR3_a_pers_v, "ML_model/scenarios/VR3_a_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
-
-writeRaster(VR3_ra_base_v, "ML_model/scenarios/VR3_ra_base_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(VR3_ra_peak_v, "ML_model/scenarios/VR3_ra_peak_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(VR3_ra_max_v, "ML_model/scenarios/VR3_ra_max_v_rf.tif", format = "GTiff", overwrite = TRUE)
-writeRaster(VR3_ra_pers_v, "ML_model/scenarios/VR3_ra_pers_v_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_k_base_2_90, "ML_model/scenarios/VR3_k_base_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_k_peak_40_10, "ML_model/scenarios/VR3_k_peak_var_rf.tif", format = "GTiff", overwrite = TRUE)
+writeRaster(VR3_k_pers_var, "ML_model/scenarios/VR3_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
 ```
 
 ## WUA
@@ -5273,19 +5086,51 @@ source("mth_functions.R")
 
 # calculate WUA -------------------------------------------------
 # GL1 -----------------------------------------------------------
-wua_GL1_min <- wua(GL1_s_min_v)
-wua_GL1_max <- wua(GL1_s_max_v)
-wua_GL1_pers <- wua(GL1_s_pers_v)
+wua_GL1_2_56_ezg <- wua(GL1_k_2_56_ezg)
+wua_GL1_min_3_28 <- wua(GL1_k_min_3_28)
+wua_GL1_6_00 <- wua(GL1_k_6_00)
+wua_GL1_9_00 <- wua(GL1_k_9_00)
+wua_GL1_12_68 <- wua(GL1_k_12_68)
+wua_GL1_16_00 <- wua(GL1_k_16_00)
+wua_GL1_19_00 <- wua(GL1_k_19_00)
+wua_GL1_22_00 <- wua(GL1_k_22_00)
+wua_GL1_25_00 <- wua(GL1_k_25_00)
+wua_GL1_28_00 <- wua(GL1_k_28_00)
+wua_GL1_max_31_76 <- wua(GL1_k_max_31_76)
+wua_GL1_pers_var <- wua(GL1_k_pers_var)
 
 # GL2 -----------------------------------------------------------
-wua_GL2_min <- wua(GL2_s_min_v)
-wua_GL2_max <- wua(GL2_s_max_v)
-wua_GL2_pers <- wua(GL2_s_pers_v)
+wua_GL2_2_37_ezg <- wua(GL2_k_2_37_ezg)
+wua_GL2_min_3_21 <- wua(GL2_k_min_3_21)
+wua_GL2_6_00 <- wua(GL2_k_6_00)
+wua_GL2_9_00 <- wua(GL2_k_9_00)
+wua_GL2_11_00 <- wua(GL2_k_11_00)
+wua_GL2_12_52 <- wua(GL2_k_12_52)
+wua_GL2_16_00 <- wua(GL2_k_16_00)
+wua_GL2_19_00 <- wua(GL2_k_19_00)
+wua_GL2_22_00 <- wua(GL2_k_22_00)
+wua_GL2_25_00 <- wua(GL2_k_25_00)
+wua_GL2_28_00 <- wua(GL2_k_28_00)
+wua_GL2_max_31_53 <- wua(GL2_k_max_31_53)
+wua_GL2_pers_var <- wua(GL2_k_pers_var)
 
 # L2 -----------------------------------------------------------
-wua_L2_base <- wua(L2_s_base_v)
-wua_L2_peak <- wua(L2_s_peak_v)
-wua_L2_pers <- wua(L2_s_pers_v)
+wua_L2_base_2_40 <- wua(L2_k_base_2_40)
+wua_L2_3_90 <- wua(L2_k_3_90)
+wua_L2_7_00 <- wua(L2_k_7_00)
+
+L2_k_peak_9_24 <- raster::predict(L2_peak_9_24, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_9_54_ezg <- raster::predict(L2_9_54_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_13_30 <- raster::predict(L2_13_30, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_16_50 <- raster::predict(L2_16_50, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_18_90 <- raster::predict(L2_18_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
+
+L2_k_pers_var <- mask(L2_k_peak_9_24, L2_k_base_2_40_var)
+
 
 # M1 -----------------------------------------------------------
 wua_M1_base <- wua(M1_s_base_v)
