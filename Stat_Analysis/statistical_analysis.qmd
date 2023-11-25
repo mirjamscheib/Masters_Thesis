@@ -72,7 +72,6 @@ sum_v_brt_ra <- summary(regr_v_brt_ra)
 p_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
 s_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
 r_v_brt_ra <- summary(lm(rel_abundance_v ~ obs_rel_abundance, data = brt))$adj.r.squared
-
 ```
 
 ### Predictor: V + WD

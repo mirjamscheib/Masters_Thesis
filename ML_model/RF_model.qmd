@@ -4831,7 +4831,18 @@ GL1_k_28_00 <- raster::predict(GL1_28_00, rf_model_var_k_c, type='response', pro
 
 GL1_k_max_31_76 <- raster::predict(GL1_max_31_76, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
-GL1_k_pers_var <- mask(GL1_max_31_76, GL1_k_min_3_28)
+GL1_k_pers_2_56_ezg <- mask(GL1_k_2_56_ezg, GL1_k_min_3_28)
+GL1_k_pers_3_28 <- mask(GL1_k_min_3_28, GL1_k_min_3_28)
+GL1_k_pers_6_00 <- mask(GL1_k_min_6_00, GL1_k_min_3_28)
+GL1_k_pers_9_00 <- mask(GL1_k_min_9_00, GL1_k_min_3_28)
+GL1_k_pers_12_68 <- mask(GL1_k_min_12_68, GL1_k_min_3_28)
+GL1_k_pers_16_00 <- mask(GL1_k_min_16_00, GL1_k_min_3_28)
+GL1_k_pers_19_00 <- mask(GL1_k_min_19_00, GL1_k_min_3_28)
+GL1_k_pers_22_00 <- mask(GL1_k_min_22_00, GL1_k_min_3_28)
+GL1_k_pers_25_00 <- mask(GL1_k_min_25_00, GL1_k_min_3_28)
+GL1_k_pers_28_00 <- mask(GL1_k_min_28_00, GL1_k_min_3_28)
+GL1_k_pers_31_76 <- mask(GL1_k_min_31_76, GL1_k_min_3_28)
+GL1_k_pers_var <- mask(GL1_k_max_31_76, GL1_k_min_3_28)
 
 # GL1 write scenario rasters ---------------------
 writeRaster(GL1_k_min_3_28, "ML_model/scenarios/GL1_k_min_var_rf.tif", format = "GTiff", overwrite = TRUE)
@@ -4866,6 +4877,18 @@ GL2_k_28_00 <- raster::predict(GL2_28_00, rf_model_var_k_c, type='response', pro
 
 GL2_k_max_31_53 <- raster::predict(GL2_max_31_53, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+GL2_k_pers_2_37_ezg <- mask(GL2_k_2_37_ezg, GL2_k_min_3_21)
+GL2_k_pers_3_21 <- mask(GL2_k_3_21, GL2_k_min_3_21)
+GL2_k_pers_6_00 <- mask(GL2_k_6_00, GL2_k_min_3_21)
+GL2_k_pers_9_00 <- mask(GL2_k_9_00, GL2_k_min_3_21)
+GL2_k_pers_11_00 <- mask(GL2_k_11_00, GL2_k_min_3_21)
+GL2_k_pers_12_52 <- mask(GL2_k_12_52, GL2_k_min_3_21)
+GL2_k_pers_16_00 <- mask(GL2_k_16_00, GL2_k_min_3_21)
+GL2_k_pers_19_00 <- mask(GL2_k_19_00, GL2_k_min_3_21)
+GL2_k_pers_22_00 <- mask(GL2_k_22_00, GL2_k_min_3_21)
+GL2_k_pers_25_00 <- mask(GL2_k_25_00, GL2_k_min_3_21)
+GL2_k_pers_28_00 <- mask(GL2_k_28_00, GL2_k_min_3_21)
+GL2_k_pers_31_53 <- mask(GL2_k_31_53, GL2_k_min_3_21)
 GL2_k_pers_var <- mask(GL2_k_max_31_53, GL2_k_min_3_21)
 
 # GL2 write rasters ---------------------
@@ -4893,6 +4916,14 @@ L2_k_16_50 <- raster::predict(L2_16_50, rf_model_var_k_c, type='response', progr
 
 L2_k_18_90 <- raster::predict(L2_18_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+L2_k_pers_2_40 <- mask(L2_k_base_2_40, L2_k_base_2_40)
+L2_k_pers_3_90 <- mask(L2_k_3_90, L2_k_base_2_40)
+L2_k_pers_7_00 <- mask(L2_k_7_00, L2_k_base_2_40)
+L2_k_pers_9_24 <- mask(L2_k_9_24, L2_k_base_2_40)
+L2_k_pers_9_54_ezg <- mask(L2_k_9_54_ezg, L2_k_base_2_40)
+L2_k_pers_13_30 <- mask(L2_k_13_30, L2_k_base_2_40)
+L2_k_pers_16_50 <- mask(L2_k_16_50, L2_k_base_2_40)
+L2_k_pers_18_90 <- mask(L2_k_18_90, L2_k_base_2_40)
 L2_k_pers_var <- mask(L2_k_peak_9_24, L2_k_base_2_40)
 
 # L2 write rasters ---------------------
@@ -4928,8 +4959,19 @@ M1_k_peak_18_84 <- raster::predict(M1_peak_18_84, rf_model_var_k_c, type='respon
 
 M1_k_22_84 <- raster::predict(M1_22_84, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+M1_k_pers_0_47 <- mask(M1_k_base_0_47, M1_k_base_0_47)
+M1_k_pers_0_60 <- mask(M1_k_0_60, M1_k_base_0_47)
+M1_k_pers_1_50_ezg <- mask(M1_k_1_50_ezg, M1_k_base_0_47)
+M1_k_pers_4_00 <- mask(M1_k_4_00, M1_k_base_0_47)
+M1_k_pers_6_00 <- mask(M1_k_6_00, M1_k_base_0_47)
+M1_k_pers_8_00 <- mask(M1_k_8_00, M1_k_base_0_47)
+M1_k_pers_10_00 <- mask(M1_k_10_00, M1_k_base_0_47)
+M1_k_pers_12_00 <- mask(M1_k_12_00, M1_k_base_0_47)
+M1_k_pers_14_00 <- mask(M1_k_14_00, M1_k_base_0_47)
+M1_k_pers_16_00 <- mask(M1_k_16_00, M1_k_base_0_47)
+M1_k_pers_18_84 <- mask(M1_k_peak_18_84, M1_k_base_0_47)
+M1_k_pers_22_84 <- mask(M1_k_22_84, M1_k_base_0_47)
 M1_k_pers_var <- mask(M1_k_peak_18_84, M1_k_base_0_47)
-
 
 # M1 write rasters ---------------------
 writeRaster(M1_k_base_0_47, "ML_model/scenarios/M1_k_base_var_rf.tif", format = "GTiff", overwrite = TRUE)
@@ -4960,6 +5002,16 @@ S1_k_peak_18_00 <- raster::predict(S1_peak_18_00, rf_model_var_k_c, type='respon
 
 S1_k_20_00 <- raster::predict(S1_20_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+S1_k_pers_1_94_ezg <- mask(S1_k_1_94_ezg, S1_k_base_2_00)
+S1_k_pers_2_00 <- mask(S1_k_base_2_00, S1_k_base_2_00)
+S1_k_pers_3_70 <- mask(S1_k_3_70, S1_k_base_2_00)
+S1_k_pers_6_50 <- mask(S1_k_6_50, S1_k_base_2_00)
+S1_k_pers_8_50 <- mask(S1_k_8_50, S1_k_base_2_00)
+S1_k_pers_10_68 <- mask(S1_k_10_68, S1_k_base_2_00)
+S1_k_pers_13_00 <- mask(S1_k_13_00, S1_k_base_2_00)
+S1_k_pers_15_00 <- mask(S1_k_15_00, S1_k_base_2_00)
+S1_k_pers_18_00 <- mask(S1_k_18_00, S1_k_base_2_00)
+S1_k_pers_20_00 <- mask(S1_k_20_00, S1_k_base_2_00)
 S1_k_pers_var <- mask(S1_k_peak_18_00, S1_k_base_2_00)
 
 # S1 write rasters ---------------------
@@ -4985,12 +5037,22 @@ S2_k_10_93 <- raster::predict(S2_10_93, rf_model_var_k_c, type='response', progr
 
 S2_k_13_00 <- raster::predict(S2_13_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+
 S2_k_15_00 <- raster::predict(S2_15_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 S2_k_peak_18_00 <- raster::predict(S2_peak_18_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
 S2_k_20_00 <- raster::predict(S2_20_00, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+S2_k_pers_1_93_ezg <- mask(S2_k_1_93_ezg, S2_k_base_2_00)
+S2_k_pers_2_00 <- mask(S2_k_base_2_00, S2_k_base_2_00)
+S2_k_pers_3_20 <- mask(S2_k_3_20, S2_k_base_2_00)
+S2_k_pers_6_50 <- mask(S2_k_6_50, S2_k_base_2_00)
+S2_k_pers_8_50 <- mask(S2_k_8_50, S2_k_base_2_00)
+S2_k_pers_10_93 <- mask(S2_k_10_93, S2_k_base_2_00)
+S2_k_pers_15_00 <- mask(S2_k_15_00, S2_k_base_2_00)
+S2_k_pers_18_00 <- mask(S2_k_peak_18_00, S2_k_base_2_00)
+S2_k_pers_20_00 <- mask(S2_k_20_00, S2_k_base_2_00)
 S2_k_pers_var <- mask(S2_k_peak_18_00, S2_k_base_2_00)
 
 # S2 write rasters ---------------------
@@ -5022,6 +5084,16 @@ TH4_k_max_32_93 <- raster::predict(TH4_max_32_93, rf_model_var_k_c, type='respon
 
 TH4_k_35_12_ezg <- raster::predict(TH4_35_12_ezg, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+TH4_k_pers_11_45 <- mask(TH4_k_min_11_45, TH4_k_min_11_45)
+TH4_k_pers_15_00 <- mask(TH4_k_15_00, TH4_k_min_11_45)
+TH4_k_pers_18_00 <- mask(TH4_k_18_00, TH4_k_min_11_45)
+TH4_k_pers_19_96 <- mask(TH4_k_19_96, TH4_k_min_11_45)
+TH4_k_pers_22_50 <- mask(TH4_k_22_50, TH4_k_min_11_45)
+TH4_k_pers_25_00 <- mask(TH4_k_25_00, TH4_k_min_11_45)
+TH4_k_pers_27_00 <- mask(TH4_k_27_00, TH4_k_min_11_45)
+TH4_k_pers_30_00 <- mask(TH4_k_30_00, TH4_k_min_11_45)
+TH4_k_pers_32_93 <- mask(TH4_k_max_32_93, TH4_k_min_11_45)
+TH4_k_pers_35_12_ezg <- mask(TH4_k_35_12_ezg, TH4_k_min_11_45)
 TH4_k_pers_var <- mask(TH4_k_max_32_93, TH4_k_min_11_45)
 
 # TH4 write rasters ---------------------
@@ -5030,7 +5102,7 @@ writeRaster(TH4_k_max_32_93, "ML_model/scenarios/TH4_k_max_var_rf.tif", format =
 writeRaster(TH4_k_pers_var, "ML_model/scenarios/TH4_k_pers_var_rf.tif", format = "GTiff", overwrite = TRUE)
 ```
 
-### - VR3
+### VR3
 ```{r}
 # VR3  - predictor: velocity --------------------------------------------------
 VR3_k_base_2_90 <- raster::predict(VR3_base_2_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
@@ -5071,6 +5143,25 @@ VR3_k_50_00 <- raster::predict(VR3_50_00, rf_model_var_k_c, type='response', pro
 
 VR3_k_52_90 <- raster::predict(VR3_52_90, rf_model_var_k_c, type='response', progress='window', fun = function(model, ...) predict(model, ...)$predictions)
 
+VR3_k_pers_2_90 <- mask(VR3_k_base_2_90, VR3_k_base_2_90)
+VR3_k_pers_6_00 <- mask(VR3_k_6_00, VR3_k_base_2_90)
+VR3_k_pers_9_00 <- mask(VR3_k_9_00, VR3_k_base_2_90)
+VR3_k_pers_12_00 <- mask(VR3_k_12_00, VR3_k_base_2_90)
+VR3_k_pers_15_00 <- mask(VR3_k_15_00, VR3_k_base_2_90)
+VR3_k_pers_18_80 <- mask(VR3_k_18_80, VR3_k_base_2_90)
+VR3_k_pers_21_51_ezg <- mask(VR3_k_21_51_ezg, VR3_k_base_2_90)
+VR3_k_pers_22_00 <- mask(VR3_k_22_00, VR3_k_base_2_90)
+VR3_k_pers_25_00 <- mask(VR3_k_25_00, VR3_k_base_2_90)
+VR3_k_pers_28_00 <- mask(VR3_k_28_00, VR3_k_base_2_90)
+VR3_k_pers_31_00 <- mask(VR3_k_31_00, VR3_k_base_2_90)
+VR3_k_pers_34_00 <- mask(VR3_k_34_00, VR3_k_base_2_90)
+VR3_k_pers_37_00 <- mask(VR3_k_37_00, VR3_k_base_2_90)
+VR3_k_pers_40_10 <- mask(VR3_k_peak_40_10, VR3_k_base_2_90)
+VR3_k_pers_43_00 <- mask(VR3_k_43_00, VR3_k_base_2_90)
+VR3_k_pers_46_00 <- mask(VR3_k_46_00, VR3_k_base_2_90)
+VR3_k_pers_48_00 <- mask(VR3_k_48_00, VR3_k_base_2_90)
+VR3_k_pers_50_00 <- mask(VR3_k_50_00, VR3_k_base_2_90)
+VR3_k_pers_52_90 <- mask(VR3_k_52_90, VR3_k_base_2_90)
 VR3_k_pers_var <- mask(VR3_k_peak_40_10, VR3_k_base_2_90)
 
 # VR3 write rasters ---------------------
@@ -5097,7 +5188,18 @@ wua_GL1_22_00 <- wua(GL1_k_22_00)
 wua_GL1_25_00 <- wua(GL1_k_25_00)
 wua_GL1_28_00 <- wua(GL1_k_28_00)
 wua_GL1_max_31_76 <- wua(GL1_k_max_31_76)
-wua_GL1_pers_var <- wua(GL1_k_pers_var)
+
+wua_GL1_2_56_ezg_pers <- wua(GL1_k_pers_2_56_ezg)
+wua_GL1_min_3_28_pers <- wua(GL1_k_pers_3_28)
+wua_GL1_6_00_pers <- wua(GL1_k_pers_6_00)
+wua_GL1_9_00_pers <- wua(GL1_k_pers_9_00)
+wua_GL1_12_68_pers <- wua(GL1_k_pers_12_68)
+wua_GL1_16_00_pers <- wua(GL1_k_pers_16_00)
+wua_GL1_19_00_pers <- wua(GL1_k_pers_19_00)
+wua_GL1_22_00_pers <- wua(GL1_k_pers_22_00)
+wua_GL1_25_00_pers <- wua(GL1_k_pers_25_00)
+wua_GL1_28_00_pers <- wua(GL1_k_pers_28_00)
+wua_GL1_max_31_76_pers <- wua(GL1_k_pers_31_76)
 
 # GL2 -----------------------------------------------------------
 wua_GL2_2_37_ezg <- wua(GL2_k_2_37_ezg)
@@ -5112,7 +5214,19 @@ wua_GL2_22_00 <- wua(GL2_k_22_00)
 wua_GL2_25_00 <- wua(GL2_k_25_00)
 wua_GL2_28_00 <- wua(GL2_k_28_00)
 wua_GL2_max_31_53 <- wua(GL2_k_max_31_53)
-wua_GL2_pers_var <- wua(GL2_k_pers_var)
+
+wua_GL2_2_37_ezg_pers <- wua(GL2_k_pers_2_37_ezg)
+wua_GL2_min_3_21_pers <- wua(GL2_k_pers_3_21)
+wua_GL2_6_00_pers <- wua(GL2_k_pers_6_00)
+wua_GL2_9_00_pers <- wua(GL2_k_pers_9_00)
+wua_GL2_11_00_pers <- wua(GL2_k_pers_11_00)
+wua_GL2_12_52_pers <- wua(GL2_k_pers_12_52)
+wua_GL2_16_00_pers <- wua(GL2_k_pers_16_00)
+wua_GL2_19_00_pers <- wua(GL2_k_pers_19_00)
+wua_GL2_22_00_pers <- wua(GL2_k_pers_22_00)
+wua_GL2_25_00_pers <- wua(GL2_k_pers_25_00)
+wua_GL2_28_00_pers <- wua(GL2_k_pers_28_00)
+wua_GL2_max_31_53_pers <- wua(GL2_k_pers_31_53)
 
 # L2 -----------------------------------------------------------
 wua_L2_base_2_40 <- wua(L2_k_base_2_40)
@@ -5123,7 +5237,15 @@ wua_L2_9_54_ezg <- wua(L2_k_9_54_ezg)
 wua_L2_13_30 <- wua(L2_k_13_30)
 wua_L2_16_50 <- wua(L2_k_16_50)
 wua_L2_18_90 <- wua(L2_k_18_90)
-wua_L2_pers_var <- wua(L2_k_pers_var)
+
+wua_L2_base_2_40_pers <- wua(L2_k_pers_2_40)
+wua_L2_3_90_pers <- wua(L2_k_pers_3_90)
+wua_L2_7_00_pers <- wua(L2_k_pers_7_00)
+wua_L2_peak_9_24_pers <- wua(L2_k_pers_9_24)
+wua_L2_9_54_ezg_pers <- wua(L2_k_pers_9_54_ezg)
+wua_L2_13_30_pers <- wua(L2_k_pers_13_30)
+wua_L2_16_50_pers <- wua(L2_k_pers_16_50)
+wua_L2_18_90_pers <- wua(L2_k_pers_18_90)
 
 # M1 -----------------------------------------------------------
 wua_M1_base_0_47 <- wua(M1_k_base_0_47)
@@ -5138,7 +5260,19 @@ wua_M1_14_00 <- wua(M1_k_14_00)
 wua_M1_16_00 <- wua(M1_k_16_00)
 wua_M1_peak_18_84 <- wua(M1_k_peak_18_84)
 wua_M1_22_84 <- wua(M1_k_22_84)
-wua_M1_pers_var <- wua(M1_k_pers_var)
+
+wua_M1_base_0_47_pers <- wua(M1_k_pers_0_47)
+wua_M1_0_60_pers <- wua(M1_k_pers_0_60)
+wua_M1_1_50_ezg_pers <- wua(M1_k_pers_1_50_ezg)
+wua_M1_4_00_pers <- wua(M1_k_pers_4_00)
+wua_M1_6_00_pers <- wua(M1_k_pers_6_00)
+wua_M1_8_00_pers <- wua(M1_k_pers_8_00)
+wua_M1_10_00_pers <- wua(M1_k_pers_10_00)
+wua_M1_12_00_pers <- wua(M1_k_pers_12_00)
+wua_M1_14_00_pers <- wua(M1_k_pers_14_00)
+wua_M1_16_00_pers <- wua(M1_k_pers_16_00)
+wua_M1_peak_18_84_pers <- wua(M1_k_pers_18_84)
+wua_M1_22_84_pers <- wua(M1_k_pers_22_84)
 
 # S1 -----------------------------------------------------------
 wua_S1_1_94_ezg <- wua(S1_k_1_94_ezg)
@@ -5151,7 +5285,17 @@ wua_S1_13_00 <- wua(S1_k_13_00)
 wua_S1_15_00 <- wua(S1_k_15_00)
 wua_S1_peak_18_00 <- wua(S1_k_peak_18_00)
 wua_S1_20_00 <- wua(S1_k_20_00)
-wua_S1_pers_var <- wua(S1_k_pers_var)
+
+wua_S1_1_94_ezg_pers <- wua(S1_k_pers_1_94_ezg)
+wua_S1_base_2_00_pers <- wua(S1_k_pers_2_00)
+wua_S1_3_70_pers <- wua(S1_k_pers_3_70)
+wua_S1_6_50_pers <- wua(S1_k_pers_6_50)
+wua_S1_8_50_pers <- wua(S1_k_pers_8_50)
+wua_S1_10_68_pers <- wua(S1_k_pers_10_68)
+wua_S1_13_00_pers <- wua(S1_k_pers_13_00)
+wua_S1_15_00_pers <- wua(S1_k_pers_15_00)
+wua_S1_peak_18_00_pers <- wua(S1_k_pers_18_00)
+wua_S1_20_00_pers <- wua(S1_k_pers_20_00)
 
 # S2 -----------------------------------------------------------
 wua_S2_1_93_ezg <- wua(S2_k_1_93_ezg)
@@ -5164,7 +5308,17 @@ wua_S2_13_00 <- wua(S2_k_13_00)
 wua_S2_15_00 <- wua(S2_k_15_00)
 wua_S2_peak_18_00 <- wua(S2_k_peak_18_00)
 wua_S2_20_00 <- wua(S2_k_20_00)
-wua_S2_pers_var <- wua(S2_k_pers_var)
+
+wua_S2_1_93_ezg_pers <- wua(S2_k_pers_1_93_ezg)
+wua_S2_base_2_00_pers <- wua(S2_k_pers_2_00)
+wua_S2_3_20_pers <- wua(S2_k_pers_3_20)
+wua_S2_6_50_pers <- wua(S2_k_pers_6_50)
+wua_S2_8_50_pers <- wua(S2_k_pers_8_50)
+wua_S2_10_93_pers <- wua(S2_k_pers_10_93)
+wua_S2_13_00_pers <- wua(S2_k_pers_13_00)
+wua_S2_15_00_pers <- wua(S2_k_pers_15_00)
+wua_S2_peak_18_00_pers <- wua(S2_k_pers_18_00)
+wua_S2_20_00_pers <- wua(S2_k_pers_20_00)
 
 # TH4 ----------------------------------------------------------
 wua_TH4_min_11_45 <- wua(TH4_k_min_11_45)
@@ -5177,7 +5331,18 @@ wua_TH4_27_00 <- wua(TH4_k_27_00)
 wua_TH4_30_00 <- wua(TH4_k_30_00)
 wua_TH4_max_32_93 <- wua(TH4_k_max_32_93)
 wua_TH4_35_12_ezg <- wua(TH4_k_35_12_ezg)
-wua_TH4_pers_var <- wua(TH4_k_pers_var)
+
+wua_TH4_min_11_45_pers <- wua(TH4_k_pers_11_45)
+wua_TH4_15_00_pers <- wua(TH4_k_pers_15_00)
+wua_TH4_18_00_pers <- wua(TH4_k_pers_18_00)
+wua_TH4_19_96_pers <- wua(TH4_k_pers_19_96)
+wua_TH4_22_50_pers <- wua(TH4_k_pers_22_50)
+wua_TH4_25_00_pers <- wua(TH4_k_pers_25_00)
+wua_TH4_27_00_pers <- wua(TH4_k_pers_27_00)
+wua_TH4_30_00_pers <- wua(TH4_k_pers_30_00)
+wua_TH4_max_32_93_pers <- wua(TH4_k_pers_32_93)
+wua_TH4_35_12_ezg_pers <- wua(TH4_k_pers_35_12_ezg)
+
 
 # VR3 ----------------------------------------------------------
 wua_VR3_base_2_90 <- wua(VR3_k_base_2_90)
@@ -5199,7 +5364,26 @@ wua_VR3_46_00 <- wua(VR3_k_46_00)
 wua_VR3_48_00 <- wua(VR3_k_48_00)
 wua_VR3_50_00 <- wua(VR3_k_50_00)
 wua_VR3_52_90 <- wua(VR3_k_52_90)
-wua_VR3_pers_var <- wua(VR3_k_pers_var)
+
+wua_VR3_base_2_90_pers <- wua(VR3_k_pers_2_90)
+wua_VR3_6_00_pers <- wua(VR3_k_pers_6_00)
+wua_VR3_9_00_pers <- wua(VR3_k_pers_9_00)
+wua_VR3_12_00_pers <- wua(VR3_k_pers_12_00)
+wua_VR3_15_00_pers <- wua(VR3_k_pers_15_00)
+wua_VR3_18_80_pers <- wua(VR3_k_pers_18_80)
+wua_VR3_21_51_ezg_pers <- wua(VR3_k_pers_21_51_ezg)
+wua_VR3_22_00_pers <- wua(VR3_k_pers_22_00)
+wua_VR3_25_00_pers <- wua(VR3_k_pers_25_00)
+wua_VR3_28_00_pers <- wua(VR3_k_pers_28_00)
+wua_VR3_31_00_pers <- wua(VR3_k_pers_31_00)
+wua_VR3_34_00_pers <- wua(VR3_k_pers_34_00)
+wua_VR3_37_00_pers <- wua(VR3_k_pers_37_00)
+wua_VR3_peak_40_10_pers <- wua(VR3_k_pers_40_10)
+wua_VR3_43_00_pers <- wua(VR3_k_pers_43_00)
+wua_VR3_46_00_pers <- wua(VR3_k_pers_46_00)
+wua_VR3_48_00_pers <- wua(VR3_k_pers_48_00)
+wua_VR3_50_00_pers <- wua(VR3_k_pers_50_00)
+wua_VR3_52_90_pers <- wua(VR3_k_pers_52_90)
 ```
 
 
@@ -5218,7 +5402,18 @@ freq_GL1_22_00 <- freq_table(GL1_k_22_00)
 freq_GL1_25_00 <- freq_table(GL1_k_25_00)
 freq_GL1_28_00 <- freq_table(GL1_k_28_00)
 freq_GL1_max_31_76 <- freq_table(GL1_k_max_31_76)
-freq_GL1_pers_var <- freq_table(GL1_k_pers_var)
+
+freq_GL1_2_56_ezg_pers <- freq_table(GL1_k_pers_2_56_ezg)
+freq_GL1_min_3_28_pers <- freq_table(GL1_k_pers_3_28)
+freq_GL1_6_00_pers <- freq_table(GL1_k_pers_6_00)
+freq_GL1_9_00_pers <- freq_table(GL1_k_pers_9_00)
+freq_GL1_12_68_pers <- freq_table(GL1_k_pers_12_68)
+freq_GL1_16_00_pers <- freq_table(GL1_k_pers_16_00)
+freq_GL1_19_00_pers <- freq_table(GL1_k_pers_19_00)
+freq_GL1_22_00_pers <- freq_table(GL1_k_pers_22_00)
+freq_GL1_25_00_pers <- freq_table(GL1_k_pers_25_00)
+freq_GL1_28_00_pers <- freq_table(GL1_k_pers_28_00)
+freq_GL1_max_31_76_pers <- freq_table(GL1_k_pers_31_76)
 
 # GL2 -----------------------------------------------------------
 freq_GL2_2_37_ezg <- freq_table(GL2_k_2_37_ezg)
@@ -5233,7 +5428,19 @@ freq_GL2_22_00 <- freq_table(GL2_k_22_00)
 freq_GL2_25_00 <- freq_table(GL2_k_25_00)
 freq_GL2_28_00 <- freq_table(GL2_k_28_00)
 freq_GL2_max_31_53 <- freq_table(GL2_k_max_31_53)
-freq_GL2_pers_var <- freq_table(GL2_k_pers_var)
+
+freq_GL2_2_37_ezg_pers <- freq_table(GL2_k_pers_2_37_ezg)
+freq_GL2_min_3_21_pers <- freq_table(GL2_k_pers_3_21)
+freq_GL2_6_00_pers <- freq_table(GL2_k_pers_6_00)
+freq_GL2_9_00_pers <- freq_table(GL2_k_pers_9_00)
+freq_GL2_11_00_pers <- freq_table(GL2_k_pers_11_00)
+freq_GL2_12_52_pers <- freq_table(GL2_k_pers_12_52)
+freq_GL2_16_00_pers <- freq_table(GL2_k_pers_16_00)
+freq_GL2_19_00_pers <- freq_table(GL2_k_pers_19_00)
+freq_GL2_22_00_pers <- freq_table(GL2_k_pers_22_00)
+freq_GL2_25_00_pers <- freq_table(GL2_k_pers_25_00)
+freq_GL2_28_00_pers <- freq_table(GL2_k_pers_28_00)
+freq_GL2_max_31_53_pers <- freq_table(GL2_k_pers_31_53)
 
 # L2 -----------------------------------------------------------
 freq_L2_base_2_40 <- freq_table(L2_k_base_2_40)
@@ -5244,7 +5451,15 @@ freq_L2_9_54_ezg <- freq_table(L2_k_9_54_ezg)
 freq_L2_13_30 <- freq_table(L2_k_13_30)
 freq_L2_16_50 <- freq_table(L2_k_16_50)
 freq_L2_18_90 <- freq_table(L2_k_18_90)
-freq_L2_pers_var <- freq_table(L2_k_pers_var)
+
+freq_L2_base_2_40_pers <- freq_table(L2_k_pers_2_40)
+freq_L2_3_90_pers <- freq_table(L2_k_pers_3_90)
+freq_L2_7_00_pers <- freq_table(L2_k_pers_7_00)
+freq_L2_peak_9_24_pers <- freq_table(L2_k_pers_9_24)
+freq_L2_9_54_ezg_pers <- freq_table(L2_k_pers_9_54_ezg)
+freq_L2_13_30_pers <- freq_table(L2_k_pers_13_30)
+freq_L2_16_50_pers <- freq_table(L2_k_pers_16_50)
+freq_L2_18_90_pers <- freq_table(L2_k_pers_18_90)
 
 # M1 -----------------------------------------------------------
 freq_M1_base_0_47 <- freq_table(M1_k_base_0_47)
@@ -5259,7 +5474,19 @@ freq_M1_14_00 <- freq_table(M1_k_14_00)
 freq_M1_16_00 <- freq_table(M1_k_16_00)
 freq_M1_peak_18_84 <- freq_table(M1_k_peak_18_84)
 freq_M1_22_84 <- freq_table(M1_k_22_84)
-freq_M1_pers_var <- freq_table(M1_k_pers_var)
+
+freq_M1_base_0_47_pers <- freq_table(M1_k_pers_0_47)
+freq_M1_0_60_pers <- freq_table(M1_k_pers_0_60)
+freq_M1_1_50_ezg_pers <- freq_table(M1_k_pers_1_50_ezg)
+freq_M1_4_00_pers <- freq_table(M1_k_pers_4_00)
+freq_M1_6_00_pers <- freq_table(M1_k_pers_6_00)
+freq_M1_8_00_pers <- freq_table(M1_k_pers_8_00)
+freq_M1_10_00_pers <- freq_table(M1_k_pers_10_00)
+freq_M1_12_00_pers <- freq_table(M1_k_pers_12_00)
+freq_M1_14_00_pers <- freq_table(M1_k_pers_14_00)
+freq_M1_16_00_pers <- freq_table(M1_k_pers_16_00)
+freq_M1_peak_18_84_pers <- freq_table(M1_k_pers_18_84)
+freq_M1_22_84_pers <- freq_table(M1_k_pers_22_84)
 
 # S1 -----------------------------------------------------------
 freq_S1_1_94_ezg <- freq_table(S1_k_1_94_ezg)
@@ -5272,7 +5499,17 @@ freq_S1_13_00 <- freq_table(S1_k_13_00)
 freq_S1_15_00 <- freq_table(S1_k_15_00)
 freq_S1_peak_18_00 <- freq_table(S1_k_peak_18_00)
 freq_S1_20_00 <- freq_table(S1_k_20_00)
-freq_S1_pers_var <- freq_table(S1_k_pers_var)
+
+freq_S1_1_94_ezg_pers <- freq_table(S1_k_pers_1_94_ezg)
+freq_S1_base_2_00_pers <- freq_table(S1_k_pers_2_00)
+freq_S1_3_70_pers <- freq_table(S1_k_pers_3_70)
+freq_S1_6_50_pers <- freq_table(S1_k_pers_6_50)
+freq_S1_8_50_pers <- freq_table(S1_k_pers_8_50)
+freq_S1_10_68_pers <- freq_table(S1_k_pers_10_68)
+freq_S1_13_00_pers <- freq_table(S1_k_pers_13_00)
+freq_S1_15_00_pers <- freq_table(S1_k_pers_15_00)
+freq_S1_peak_18_00_pers <- freq_table(S1_k_pers_18_00)
+freq_S1_20_00_pers <- freq_table(S1_k_pers_20_00)
 
 # S2 -----------------------------------------------------------
 freq_S2_1_93_ezg <- freq_table(S2_k_1_93_ezg)
@@ -5285,7 +5522,17 @@ freq_S2_13_00 <- freq_table(S2_k_13_00)
 freq_S2_15_00 <- freq_table(S2_k_15_00)
 freq_S2_peak_18_00 <- freq_table(S2_k_peak_18_00)
 freq_S2_20_00 <- freq_table(S2_k_20_00)
-freq_S2_pers_var <- freq_table(S2_k_pers_var)
+
+freq_S2_1_93_ezg_pers <- freq_table(S2_k_pers_1_93_ezg)
+freq_S2_base_2_00_pers <- freq_table(S2_k_pers_2_00)
+freq_S2_3_20_pers <- freq_table(S2_k_pers_3_20)
+freq_S2_6_50_pers <- freq_table(S2_k_pers_6_50)
+freq_S2_8_50_pers <- freq_table(S2_k_pers_8_50)
+freq_S2_10_93_pers <- freq_table(S2_k_pers_10_93)
+freq_S2_13_00_pers <- freq_table(S2_k_pers_13_00)
+freq_S2_15_00_pers <- freq_table(S2_k_pers_15_00)
+freq_S2_peak_18_00_pers <- freq_table(S2_k_pers_18_00)
+freq_S2_20_00_pers <- freq_table(S2_k_pers_20_00)
 
 # TH4 ----------------------------------------------------------
 freq_TH4_min_11_45 <- freq_table(TH4_k_min_11_45)
@@ -5298,7 +5545,17 @@ freq_TH4_27_00 <- freq_table(TH4_k_27_00)
 freq_TH4_30_00 <- freq_table(TH4_k_30_00)
 freq_TH4_max_32_93 <- freq_table(TH4_k_max_32_93)
 freq_TH4_35_12_ezg <- freq_table(TH4_k_35_12_ezg)
-freq_TH4_pers_var <- freq_table(TH4_k_pers_var)
+
+freq_TH4_min_11_45_pers <- freq_table(TH4_k_pers_11_45)
+freq_TH4_15_00_pers <- freq_table(TH4_k_pers_15_00)
+freq_TH4_18_00_pers <- freq_table(TH4_k_pers_18_00)
+freq_TH4_19_96_pers <- freq_table(TH4_k_pers_19_96)
+freq_TH4_22_50_pers <- freq_table(TH4_k_pers_22_50)
+freq_TH4_25_00_pers <- freq_table(TH4_k_pers_25_00)
+freq_TH4_27_00_pers <- freq_table(TH4_k_pers_27_00)
+freq_TH4_30_00_pers <- freq_table(TH4_k_pers_30_00)
+freq_TH4_max_32_93_pers <- freq_table(TH4_k_pers_32_93)
+freq_TH4_35_12_ezg_pers <- freq_table(TH4_k_pers_35_12_ezg)
 
 # VR3 ----------------------------------------------------------
 freq_VR3_base_2_90 <- freq_table(VR3_k_base_2_90)
@@ -5320,7 +5577,26 @@ freq_VR3_46_00 <- freq_table(VR3_k_46_00)
 freq_VR3_48_00 <- freq_table(VR3_k_48_00)
 freq_VR3_50_00 <- freq_table(VR3_k_50_00)
 freq_VR3_52_90 <- freq_table(VR3_k_52_90)
-freq_VR3_pers_var <- freq_table(VR3_k_pers_var)
+
+freq_VR3_base_2_90_pers <- freq_table(VR3_k_pers_2_90)
+freq_VR3_6_00_pers <- freq_table(VR3_k_pers_6_00)
+freq_VR3_9_00_pers <- freq_table(VR3_k_pers_9_00)
+freq_VR3_12_00_pers <- freq_table(VR3_k_pers_12_00)
+freq_VR3_15_00_pers <- freq_table(VR3_k_pers_15_00)
+freq_VR3_18_80_pers <- freq_table(VR3_k_pers_18_80)
+freq_VR3_21_51_ezg_pers <- freq_table(VR3_k_pers_21_51_ezg)
+freq_VR3_22_00_pers <- freq_table(VR3_k_pers_22_00)
+freq_VR3_25_00_pers <- freq_table(VR3_k_pers_25_00)
+freq_VR3_28_00_pers <- freq_table(VR3_k_pers_28_00)
+freq_VR3_31_00_pers <- freq_table(VR3_k_pers_31_00)
+freq_VR3_34_00_pers <- freq_table(VR3_k_pers_34_00)
+freq_VR3_37_00_pers <- freq_table(VR3_k_pers_37_00)
+freq_VR3_peak_40_10_pers <- freq_table(VR3_k_pers_40_10)
+freq_VR3_43_00_pers <- freq_table(VR3_k_pers_43_00)
+freq_VR3_46_00_pers <- freq_table(VR3_k_pers_46_00)
+freq_VR3_48_00_pers <- freq_table(VR3_k_pers_48_00)
+freq_VR3_50_00_pers <- freq_table(VR3_k_pers_50_00)
+freq_VR3_52_90_pers <- freq_table(VR3_k_pers_52_90)
 
 # 2. calculate wetted area -----------------------------------------------
 # GL1 -----------------------------------------------------------
@@ -5335,7 +5611,18 @@ wa_GL1_22_00 <- wa_tot(freq_GL1_22_00, column_name = "count")
 wa_GL1_25_00 <- wa_tot(freq_GL1_25_00, column_name = "count")
 wa_GL1_28_00 <- wa_tot(freq_GL1_28_00, column_name = "count")
 wa_GL1_max_31_76 <- wa_tot(freq_GL1_max_31_76, column_name = "count")
-wa_GL1_pers_var <- wa_tot(freq_GL1_pers_var, column_name = "count")
+
+wa_GL1_2_56_ezg_pers <- wa_tot(freq_GL1_2_56_ezg_pers, column_name = "count")
+wa_GL1_min_3_28_pers <- wa_tot(freq_GL1_min_3_28_pers, column_name = "count")
+wa_GL1_6_00_pers <- wa_tot(freq_GL1_6_00_pers, column_name = "count")
+wa_GL1_9_00_pers <- wa_tot(freq_GL1_9_00_pers, column_name = "count")
+wa_GL1_12_68_pers <- wa_tot(freq_GL1_12_68_pers, column_name = "count")
+wa_GL1_16_00_pers <- wa_tot(freq_GL1_16_00_pers, column_name = "count")
+wa_GL1_19_00_pers <- wa_tot(freq_GL1_19_00_pers, column_name = "count")
+wa_GL1_22_00_pers <- wa_tot(freq_GL1_22_00_pers, column_name = "count")
+wa_GL1_25_00_pers <- wa_tot(freq_GL1_25_00_pers, column_name = "count")
+wa_GL1_28_00_pers <- wa_tot(freq_GL1_28_00_pers, column_name = "count")
+wa_GL1_max_31_76_pers <- wa_tot(freq_GL1_max_31_76_pers, column_name = "count")
 
 # GL2 -----------------------------------------------------------
 wa_GL2_2_37_ezg <- wa_tot(freq_GL2_2_37_ezg, column_name = "count")
@@ -5350,7 +5637,19 @@ wa_GL2_22_00 <- wa_tot(freq_GL2_22_00, column_name = "count")
 wa_GL2_25_00 <- wa_tot(freq_GL2_25_00, column_name = "count")
 wa_GL2_28_00 <- wa_tot(freq_GL2_28_00, column_name = "count")
 wa_GL2_max_31_53 <- wa_tot(freq_GL2_max_31_53, column_name = "count")
-wa_GL2_pers_var <- wa_tot(freq_GL2_pers_var, column_name = "count")
+
+wa_GL2_2_37_ezg_pers <- wa_tot(freq_GL2_2_37_ezg_pers, column_name = "count")
+wa_GL2_min_3_21_pers <- wa_tot(freq_GL2_min_3_21_pers, column_name = "count")
+wa_GL2_6_00_pers <- wa_tot(freq_GL2_6_00_pers, column_name = "count")
+wa_GL2_9_00_pers <- wa_tot(freq_GL2_9_00_pers, column_name = "count")
+wa_GL2_11_00_pers <- wa_tot(freq_GL2_11_00_pers, column_name = "count")
+wa_GL2_12_52_pers <- wa_tot(freq_GL2_12_52_pers, column_name = "count")
+wa_GL2_16_00_pers <- wa_tot(freq_GL2_16_00_pers, column_name = "count")
+wa_GL2_19_00_pers <- wa_tot(freq_GL2_19_00_pers, column_name = "count")
+wa_GL2_22_00_pers <- wa_tot(freq_GL2_22_00_pers, column_name = "count")
+wa_GL2_25_00_pers <- wa_tot(freq_GL2_25_00_pers, column_name = "count")
+wa_GL2_28_00_pers <- wa_tot(freq_GL2_28_00_pers, column_name = "count")
+wa_GL2_max_31_53_pers <- wa_tot(freq_GL2_max_31_53_pers, column_name = "count")
 
 # L2 -----------------------------------------------------------
 wa_L2_base_2_40 <- wa_tot(freq_L2_base_2_40, column_name = "count")
@@ -5361,7 +5660,15 @@ wa_L2_9_54_ezg <- wa_tot(freq_L2_9_54_ezg, column_name = "count")
 wa_L2_13_30 <- wa_tot(freq_L2_13_30, column_name = "count")
 wa_L2_16_50 <- wa_tot(freq_L2_16_50, column_name = "count")
 wa_L2_18_90 <- wa_tot(freq_L2_18_90, column_name = "count")
-wa_L2_pers_var <- wa_tot(freq_L2_pers_var, column_name = "count")
+
+wa_L2_base_2_40_pers <- wa_tot(freq_L2_base_2_40_pers, column_name = "count")
+wa_L2_3_90_pers <- wa_tot(freq_L2_3_90_pers, column_name = "count")
+wa_L2_7_00_pers <- wa_tot(freq_L2_7_00_pers, column_name = "count")
+wa_L2_peak_9_24_pers <- wa_tot(freq_L2_peak_9_24_pers, column_name = "count")
+wa_L2_9_54_ezg_pers <- wa_tot(freq_L2_9_54_ezg_pers, column_name = "count")
+wa_L2_13_30_pers <- wa_tot(freq_L2_13_30_pers, column_name = "count")
+wa_L2_16_50_pers <- wa_tot(freq_L2_16_50_pers, column_name = "count")
+wa_L2_18_90_pers <- wa_tot(freq_L2_18_90_pers, column_name = "count")
 
 # M1 -----------------------------------------------------------
 wa_M1_base_0_47 <- wa_tot(freq_M1_base_0_47, column_name = "count")
@@ -5376,7 +5683,19 @@ wa_M1_14_00 <- wa_tot(freq_M1_14_00, column_name = "count")
 wa_M1_16_00 <- wa_tot(freq_M1_16_00, column_name = "count")
 wa_M1_peak_18_84 <- wa_tot(freq_M1_peak_18_84, column_name = "count")
 wa_M1_22_84 <- wa_tot(freq_M1_22_84, column_name = "count")
-wa_M1_pers_var <- wa_tot(freq_M1_pers_var, column_name = "count")
+
+wa_M1_base_0_47_pers <- wa_tot(freq_M1_base_0_47_pers, column_name = "count")
+wa_M1_0_60_pers <- wa_tot(freq_M1_0_60_pers, column_name = "count")
+wa_M1_1_50_ezg_pers <- wa_tot(freq_M1_1_50_ezg_pers, column_name = "count")
+wa_M1_4_00_pers <- wa_tot(freq_M1_4_00_pers, column_name = "count")
+wa_M1_6_00_pers <- wa_tot(freq_M1_6_00_pers, column_name = "count")
+wa_M1_8_00_pers <- wa_tot(freq_M1_8_00_pers, column_name = "count")
+wa_M1_10_00_pers <- wa_tot(freq_M1_10_00_pers, column_name = "count")
+wa_M1_12_00_pers <- wa_tot(freq_M1_12_00_pers, column_name = "count")
+wa_M1_14_00_pers <- wa_tot(freq_M1_14_00_pers, column_name = "count")
+wa_M1_16_00_pers <- wa_tot(freq_M1_16_00_pers, column_name = "count")
+wa_M1_peak_18_84_pers <- wa_tot(freq_M1_peak_18_84_pers, column_name = "count")
+wa_M1_22_84_pers <- wa_tot(freq_M1_22_84_pers, column_name = "count")
 
 # S1 -----------------------------------------------------------
 wa_S1_1_94_ezg <- wa_tot(freq_S1_1_94_ezg, column_name = "count")
@@ -5389,7 +5708,17 @@ wa_S1_13_00 <- wa_tot(freq_S1_13_00, column_name = "count")
 wa_S1_15_00 <- wa_tot(freq_S1_15_00, column_name = "count")
 wa_S1_peak_18_00 <- wa_tot(freq_S1_peak_18_00, column_name = "count")
 wa_S1_20_00 <- wa_tot(freq_S1_20_00, column_name = "count")
-wa_S1_pers_var <- wa_tot(freq_S1_pers_var, column_name = "count")
+
+wa_S1_1_94_ezg_pers <- wa_tot(freq_S1_1_94_ezg_pers, column_name = "count")
+wa_S1_base_2_00_pers <- wa_tot(freq_S1_base_2_00_pers, column_name = "count")
+wa_S1_3_70_pers <- wa_tot(freq_S1_3_70_pers, column_name = "count")
+wa_S1_6_50_pers <- wa_tot(freq_S1_6_50_pers, column_name = "count")
+wa_S1_8_50_pers <- wa_tot(freq_S1_8_50_pers, column_name = "count")
+wa_S1_10_68_pers <- wa_tot(freq_S1_10_68_pers, column_name = "count")
+wa_S1_13_00_pers <- wa_tot(freq_S1_13_00_pers, column_name = "count")
+wa_S1_15_00_pers <- wa_tot(freq_S1_15_00_pers, column_name = "count")
+wa_S1_peak_18_00_pers <- wa_tot(freq_S1_peak_18_00_pers, column_name = "count")
+wa_S1_20_00_pers <- wa_tot(freq_S1_20_00_pers, column_name = "count")
 
 # S2 -----------------------------------------------------------
 wa_S2_1_93_ezg <- wa_tot(freq_S2_1_93_ezg, column_name = "count")
@@ -5402,7 +5731,17 @@ wa_S2_13_00 <- wa_tot(freq_S2_13_00, column_name = "count")
 wa_S2_15_00 <- wa_tot(freq_S2_15_00, column_name = "count")
 wa_S2_peak_18_00 <- wa_tot(freq_S2_peak_18_00, column_name = "count")
 wa_S2_20_00 <- wa_tot(freq_S2_20_00, column_name = "count")
-wa_S2_pers_var <- wa_tot(freq_S2_pers_var, column_name = "count")
+
+wa_S2_1_93_ezg_pers <- wa_tot(freq_S2_1_93_ezg_pers, column_name = "count")
+wa_S2_base_2_00_pers <- wa_tot(freq_S2_base_2_00_pers, column_name = "count")
+wa_S2_3_20_pers <- wa_tot(freq_S2_3_20_pers, column_name = "count")
+wa_S2_6_50_pers <- wa_tot(freq_S2_6_50_pers, column_name = "count")
+wa_S2_8_50_pers <- wa_tot(freq_S2_8_50_pers, column_name = "count")
+wa_S2_10_93_pers <- wa_tot(freq_S2_10_93_pers, column_name = "count")
+wa_S2_13_00_pers <- wa_tot(freq_S2_13_00_pers, column_name = "count")
+wa_S2_15_00_pers <- wa_tot(freq_S2_15_00_pers, column_name = "count")
+wa_S2_peak_18_00_pers <- wa_tot(freq_S2_peak_18_00_pers, column_name = "count")
+wa_S2_20_00_pers <- wa_tot(freq_S2_20_00_pers, column_name = "count")
 
 # TH4 ----------------------------------------------------------
 wa_TH4_min_11_45 <- wa_tot(freq_TH4_min_11_45, column_name = "count")
@@ -5415,7 +5754,17 @@ wa_TH4_27_00 <- wa_tot(freq_TH4_27_00, column_name = "count")
 wa_TH4_30_00 <- wa_tot(freq_TH4_30_00, column_name = "count")
 wa_TH4_max_32_93 <- wa_tot(freq_TH4_max_32_93, column_name = "count")
 wa_TH4_35_12_ezg <- wa_tot(freq_TH4_35_12_ezg, column_name = "count")
-wa_TH4_pers_var <- wa_tot(freq_TH4_pers_var, column_name = "count")
+
+wa_TH4_min_11_45_pers <- wa_tot(freq_TH4_min_11_45_pers, column_name = "count")
+wa_TH4_15_00_pers <- wa_tot(freq_TH4_15_00_pers, column_name = "count")
+wa_TH4_18_00_pers <- wa_tot(freq_TH4_18_00_pers, column_name = "count")
+wa_TH4_19_96_pers <- wa_tot(freq_TH4_19_96_pers, column_name = "count")
+wa_TH4_22_50_pers <- wa_tot(freq_TH4_22_50_pers, column_name = "count")
+wa_TH4_25_00_pers <- wa_tot(freq_TH4_25_00_pers, column_name = "count")
+wa_TH4_27_00_pers <- wa_tot(freq_TH4_27_00_pers, column_name = "count")
+wa_TH4_30_00_pers <- wa_tot(freq_TH4_30_00_pers, column_name = "count")
+wa_TH4_max_32_93_pers <- wa_tot(freq_TH4_max_32_93_pers, column_name = "count")
+wa_TH4_35_12_ezg_pers <- wa_tot(freq_TH4_35_12_ezg_pers, column_name = "count")
 
 # VR3 -----------------------------------------------------------
 wa_VR3_base_2_90 <- wa_tot(freq_VR3_base_2_90, column_name = "count")
@@ -5437,7 +5786,26 @@ wa_VR3_46_00 <- wa_tot(freq_VR3_46_00, column_name = "count")
 wa_VR3_48_00 <- wa_tot(freq_VR3_48_00, column_name = "count")
 wa_VR3_50_00 <- wa_tot(freq_VR3_50_00, column_name = "count")
 wa_VR3_52_90 <- wa_tot(freq_VR3_52_90, column_name = "count")
-wa_VR3_pers_var <- wa_tot(freq_VR3_pers_var, column_name = "count")
+
+wa_VR3_base_2_90_pers <- wa_tot(freq_VR3_base_2_90_pers, column_name = "count")
+wa_VR3_6_00_pers <- wa_tot(freq_VR3_6_00_pers, column_name = "count")
+wa_VR3_9_00_pers <- wa_tot(freq_VR3_9_00_pers, column_name = "count")
+wa_VR3_12_00_pers <- wa_tot(freq_VR3_12_00_pers, column_name = "count")
+wa_VR3_15_00_pers <- wa_tot(freq_VR3_15_00_pers, column_name = "count")
+wa_VR3_18_80_pers <- wa_tot(freq_VR3_18_80_pers, column_name = "count")
+wa_VR3_21_51_ezg_pers <- wa_tot(freq_VR3_21_51_ezg_pers, column_name = "count")
+wa_VR3_22_00_pers <- wa_tot(freq_VR3_22_00_pers, column_name = "count")
+wa_VR3_25_00_pers <- wa_tot(freq_VR3_25_00_pers, column_name = "count")
+wa_VR3_28_00_pers <- wa_tot(freq_VR3_28_00_pers, column_name = "count")
+wa_VR3_31_00_pers <- wa_tot(freq_VR3_31_00_pers, column_name = "count")
+wa_VR3_34_00_pers <- wa_tot(freq_VR3_34_00_pers, column_name = "count")
+wa_VR3_37_00_pers <- wa_tot(freq_VR3_37_00_pers, column_name = "count")
+wa_VR3_peak_40_10_pers <- wa_tot(freq_VR3_peak_40_10_pers, column_name = "count")
+wa_VR3_43_00_pers <- wa_tot(freq_VR3_43_00_pers, column_name = "count")
+wa_VR3_46_00_pers <- wa_tot(freq_VR3_46_00_pers, column_name = "count")
+wa_VR3_48_00_pers <- wa_tot(freq_VR3_48_00_pers, column_name = "count")
+wa_VR3_50_00_pers <- wa_tot(freq_VR3_50_00_pers, column_name = "count")
+wa_VR3_52_90_pers <- wa_tot(freq_VR3_52_90_pers, column_name = "count")
 
 # 3. calculate HHS ------------------------------------------------------
 # GL1 -----------------------------------------------------------
@@ -5452,7 +5820,18 @@ hhs_GL1_22_00 <- wua_GL1_22_00/wa_GL1_22_00
 hhs_GL1_25_00 <- wua_GL1_25_00/wa_GL1_25_00
 hhs_GL1_28_00 <- wua_GL1_28_00/wa_GL1_28_00
 hhs_GL1_max_31_76 <- wua_GL1_max_31_76/wa_GL1_max_31_76
-hhs_GL1_pers_var <- wua_GL1_pers_var/wa_GL1_pers_var
+
+hhs_GL1_2_56_ezg_pers <- wua_GL1_2_56_ezg_pers/wa_GL1_2_56_ezg_pers
+hhs_GL1_min_3_28_pers <- wua_GL1_min_3_28_pers/wa_GL1_min_3_28_pers
+hhs_GL1_6_00_pers <- wua_GL1_6_00_pers/wa_GL1_6_00_pers
+hhs_GL1_9_00_pers <- wua_GL1_9_00_pers/wa_GL1_9_00_pers
+hhs_GL1_12_68_pers <- wua_GL1_12_68_pers/wa_GL1_12_68_pers
+hhs_GL1_16_00_pers <- wua_GL1_16_00_pers/wa_GL1_16_00_pers
+hhs_GL1_19_00_pers <- wua_GL1_19_00_pers/wa_GL1_19_00_pers
+hhs_GL1_22_00_pers <- wua_GL1_22_00_pers/wa_GL1_22_00_pers
+hhs_GL1_25_00_pers <- wua_GL1_25_00_pers/wa_GL1_25_00_pers
+hhs_GL1_28_00_pers <- wua_GL1_28_00_pers/wa_GL1_28_00_pers
+hhs_GL1_max_31_76_pers <- wua_GL1_max_31_76_pers/wa_GL1_max_31_76_pers
 
 # GL2 -----------------------------------------------------------
 hhs_GL2_2_37_ezg <- wua_GL2_2_37_ezg/wa_GL2_2_37_ezg
@@ -5467,7 +5846,18 @@ hhs_GL2_22_00 <- wua_GL2_22_00/wa_GL2_22_00
 hhs_GL2_25_00 <- wua_GL2_25_00/wa_GL2_25_00
 hhs_GL2_28_00 <- wua_GL2_28_00/wa_GL2_28_00
 hhs_GL2_max_31_53 <- wua_GL2_max_31_53/wa_GL2_max_31_53
-hhs_GL2_pers_var <- wua_GL2_pers_var/wa_GL2_pers_var
+
+hhs_GL1_2_56_ezg_pers <- wua_GL1_2_56_ezg_pers/wa_GL1_2_56_ezg_pers
+hhs_GL1_min_3_28_pers <- wua_GL1_min_3_28_pers/wa_GL1_min_3_28_pers
+hhs_GL1_6_00_pers <- wua_GL1_6_00_pers/wa_GL1_6_00_pers
+hhs_GL1_9_00_pers <- wua_GL1_9_00_pers/wa_GL1_9_00_pers
+hhs_GL1_12_68_pers <- wua_GL1_12_68_pers/wa_GL1_12_68_pers
+hhs_GL1_16_00_pers <- wua_GL1_16_00_pers/wa_GL1_16_00_pers
+hhs_GL1_19_00_pers <- wua_GL1_19_00_pers/wa_GL1_19_00_pers
+hhs_GL1_22_00_pers <- wua_GL1_22_00_pers/wa_GL1_22_00_pers
+hhs_GL1_25_00_pers <- wua_GL1_25_00_pers/wa_GL1_25_00_pers
+hhs_GL1_28_00_pers <- wua_GL1_28_00_pers/wa_GL1_28_00_pers
+hhs_GL1_max_31_76_pers <- wua_GL1_max_31_76_pers/wa_GL1_max_31_76_pers
 
 # L2 -----------------------------------------------------------
 hhs_L2_base_2_40 <- wua_L2_base_2_40/wa_L2_base_2_40
@@ -5478,7 +5868,15 @@ hhs_L2_9_54_ezg <- wua_L2_9_54_ezg/wa_L2_9_54_ezg
 hhs_L2_13_30 <- wua_L2_13_30/wa_L2_13_30
 hhs_L2_16_50 <- wua_L2_16_50/wa_L2_16_50
 hhs_L2_18_90 <- wua_L2_18_90/wa_L2_18_90
-hhs_L2_pers_var <- wua_L2_pers_var/wa_L2_pers_var
+
+hhs_L2_base_2_40_pers <- wua_L2_base_2_40_pers/wa_L2_base_2_40_pers
+hhs_L2_3_90_pers <- wua_L2_3_90_pers/wa_L2_3_90_pers
+hhs_L2_7_00_pers <- wua_L2_7_00_pers/wa_L2_7_00_pers
+hhs_L2_peak_9_24_pers <- wua_L2_peak_9_24_pers/wa_L2_peak_9_24_pers
+hhs_L2_9_54_ezg_pers <- wua_L2_9_54_ezg_pers/wa_L2_9_54_ezg_pers
+hhs_L2_13_30_pers <- wua_L2_13_30_pers/wa_L2_13_30_pers
+hhs_L2_16_50_pers <- wua_L2_16_50_pers/wa_L2_16_50_pers
+hhs_L2_18_90_pers <- wua_L2_18_90_pers/wa_L2_18_90_pers
 
 # M1 -----------------------------------------------------------
 hhs_M1_base_0_47 <- wua_M1_base_0_47/wa_M1_base_0_47
@@ -5493,7 +5891,19 @@ hhs_M1_14_00 <- wua_M1_14_00/wa_M1_14_00
 hhs_M1_16_00 <- wua_M1_16_00/wa_M1_16_00
 hhs_M1_peak_18_84 <- wua_M1_peak_18_84/wa_M1_peak_18_84
 hhs_M1_22_84 <- wua_M1_22_84/wa_M1_22_84
-hhs_M1_pers_var <- wua_M1_pers_var/wa_M1_pers_var
+
+hhs_M1_base_0_47_pers <- wua_M1_base_0_47_pers/wa_M1_base_0_47_pers
+hhs_M1_0_60_pers <- wua_M1_0_60_pers/wa_M1_0_60_pers
+hhs_M1_1_50_ezg_pers <- wua_M1_1_50_ezg_pers/wa_M1_1_50_ezg_pers
+hhs_M1_4_00_pers <- wua_M1_4_00_pers/wa_M1_4_00_pers
+hhs_M1_6_00_pers <- wua_M1_6_00_pers/wa_M1_6_00_pers
+hhs_M1_8_00_pers <- wua_M1_8_00_pers/wa_M1_8_00_pers
+hhs_M1_10_00_pers <- wua_M1_10_00_pers/wa_M1_10_00_pers
+hhs_M1_12_00_pers <- wua_M1_12_00_pers/wa_M1_12_00_pers
+hhs_M1_14_00_pers <- wua_M1_14_00_pers/wa_M1_14_00_pers
+hhs_M1_16_00_pers <- wua_M1_16_00_pers/wa_M1_16_00_pers
+hhs_M1_peak_18_84_pers <- wua_M1_peak_18_84_pers/wa_M1_peak_18_84_pers
+hhs_M1_22_84_pers <- wua_M1_22_84_pers/wa_M1_22_84_pers
 
 # S1 -----------------------------------------------------------
 hhs_S1_1_94_ezg <- wua_S1_1_94_ezg/wa_S1_1_94_ezg
@@ -5506,7 +5916,17 @@ hhs_S1_13_00 <- wua_S1_13_00/wa_S1_13_00
 hhs_S1_15_00 <- wua_S1_15_00/wa_S1_15_00
 hhs_S1_peak_18_00 <- wua_S1_peak_18_00/wa_S1_peak_18_00
 hhs_S1_20_00 <- wua_S1_20_00/wa_S1_20_00
-hhs_S1_pers_var <- wua_S1_pers_var/wa_S1_pers_var
+
+hhs_S1_1_94_ezg_pers <- wua_S1_1_94_ezg_pers/wa_S1_1_94_ezg_pers
+hhs_S1_base_2_00_pers <- wua_S1_base_2_00_pers/wa_S1_base_2_00_pers
+hhs_S1_3_70_pers <- wua_S1_3_70_pers/wa_S1_3_70_pers
+hhs_S1_6_50_pers <- wua_S1_6_50_pers/wa_S1_6_50_pers
+hhs_S1_8_50_pers <- wua_S1_8_50_pers/wa_S1_8_50_pers
+hhs_S1_10_68_pers <- wua_S1_10_68_pers/wa_S1_10_68_pers
+hhs_S1_13_00_pers <- wua_S1_13_00_pers/wa_S1_13_00_pers
+hhs_S1_15_00_pers <- wua_S1_15_00_pers/wa_S1_15_00_pers
+hhs_S1_peak_18_00_pers <- wua_S1_peak_18_00_pers/wa_S1_peak_18_00_pers
+hhs_S1_20_00_pers <- wua_S1_20_00_pers/wa_S1_20_00_pers
 
 # S2 -----------------------------------------------------------
 hhs_S2_1_93_ezg <- wua_S2_1_93_ezg/wa_S2_1_93_ezg
@@ -5519,7 +5939,17 @@ hhs_S2_13_00 <- wua_S2_13_00/wa_S2_13_00
 hhs_S2_15_00 <- wua_S2_15_00/wa_S2_15_00
 hhs_S2_peak_18_00 <- wua_S2_peak_18_00/wa_S2_peak_18_00
 hhs_S2_20_00 <- wua_S2_20_00/wa_S2_20_00
-hhs_S2_pers_var <- wua_S2_pers_var/wa_S2_pers_var
+
+hhs_S2_1_93_ezg_pers <- wua_S2_1_93_ezg_pers/wa_S2_1_93_ezg_pers
+hhs_S2_base_2_00_pers <- wua_S2_base_2_00_pers/wa_S2_base_2_00_pers
+hhs_S2_3_20_pers <- wua_S2_3_20_pers/wa_S2_3_20_pers
+hhs_S2_6_50_pers <- wua_S2_6_50_pers/wa_S2_6_50_pers
+hhs_S2_8_50_pers <- wua_S2_8_50_pers/wa_S2_8_50_pers
+hhs_S2_10_93_pers <- wua_S2_10_93_pers/wa_S2_10_93_pers
+hhs_S2_13_00_pers <- wua_S2_13_00_pers/wa_S2_13_00_pers
+hhs_S2_15_00_pers <- wua_S2_15_00_pers/wa_S2_15_00_pers
+hhs_S2_peak_18_00_pers <- wua_S2_peak_18_00_pers/wa_S2_peak_18_00_pers
+hhs_S2_20_00_pers <- wua_S2_20_00_pers/wa_S2_20_00_pers
 
 # TH4 -----------------------------------------------------------
 hhs_TH4_min_11_45 <- wua_TH4_min_11_45/wa_TH4_min_11_45
@@ -5532,7 +5962,17 @@ hhs_TH4_27_00 <- wua_TH4_27_00/wa_TH4_27_00
 hhs_TH4_30_00 <- wua_TH4_30_00/wa_TH4_30_00
 hhs_TH4_max_32_93 <- wua_TH4_max_32_93/wa_TH4_max_32_93
 hhs_TH4_35_12_ezg <- wua_TH4_35_12_ezg/wa_TH4_35_12_ezg
-hhs_TH4_pers_var <- wua_TH4_pers_var/wa_TH4_pers_var
+
+hhs_TH4_min_11_45_pers <- wua_TH4_min_11_45_pers/wa_TH4_min_11_45_pers
+hhs_TH4_15_00_pers <- wua_TH4_15_00_pers/wa_TH4_15_00_pers
+hhs_TH4_18_00_pers <- wua_TH4_18_00_pers/wa_TH4_18_00_pers
+hhs_TH4_19_96_pers <- wua_TH4_19_96_pers/wa_TH4_19_96_pers
+hhs_TH4_22_50_pers <- wua_TH4_22_50_pers/wa_TH4_22_50_pers
+hhs_TH4_25_00_pers <- wua_TH4_25_00_pers/wa_TH4_25_00_pers
+hhs_TH4_27_00_pers <- wua_TH4_27_00_pers/wa_TH4_27_00_pers
+hhs_TH4_30_00_pers <- wua_TH4_30_00_pers/wa_TH4_30_00_pers
+hhs_TH4_max_32_93_pers <- wua_TH4_max_32_93_pers/wa_TH4_max_32_93_pers
+hhs_TH4_35_12_ezg_pers <- wua_TH4_35_12_ezg_pers/wa_TH4_35_12_ezg_pers
 
 # VR3 -----------------------------------------------------------
 hhs_VR3_base_2_90 <- wua_VR3_base_2_90/wa_VR3_base_2_90
@@ -5554,101 +5994,209 @@ hhs_VR3_46_00 <- wua_VR3_46_00/wa_VR3_46_00
 hhs_VR3_48_00 <- wua_VR3_48_00/wa_VR3_48_00
 hhs_VR3_50_00 <- wua_VR3_50_00/wa_VR3_50_00
 hhs_VR3_52_90 <- wua_VR3_52_90/wa_VR3_52_90
-hhs_VR3_pers_var <- wua_VR3_pers_var/wa_VR3_pers_var
+
+hhs_VR3_base_2_90_pers <- wua_VR3_base_2_90_pers/wa_VR3_base_2_90_pers
+hhs_VR3_6_00_pers <- wua_VR3_6_00_pers/wa_VR3_6_00_pers
+hhs_VR3_9_00_pers <- wua_VR3_9_00_pers/wa_VR3_9_00_pers
+hhs_VR3_12_00_pers <- wua_VR3_12_00_pers/wa_VR3_12_00_pers
+hhs_VR3_15_00_pers <- wua_VR3_15_00_pers/wa_VR3_15_00_pers
+hhs_VR3_18_80_pers <- wua_VR3_18_80_pers/wa_VR3_18_80_pers
+hhs_VR3_21_51_ezg_pers <- wua_VR3_21_51_ezg_pers/wa_VR3_21_51_ezg_pers
+hhs_VR3_22_00_pers <- wua_VR3_22_00_pers/wa_VR3_22_00_pers
+hhs_VR3_25_00_pers <- wua_VR3_25_00_pers/wa_VR3_25_00_pers
+hhs_VR3_28_00_pers <- wua_VR3_28_00_pers/wa_VR3_28_00_pers
+hhs_VR3_31_00_pers <- wua_VR3_31_00_pers/wa_VR3_31_00_pers
+hhs_VR3_34_00_pers <- wua_VR3_34_00_pers/wa_VR3_34_00_pers
+hhs_VR3_37_00_pers <- wua_VR3_37_00_pers/wa_VR3_37_00_pers
+hhs_VR3_peak_40_10_pers <- wua_VR3_peak_40_10_pers/wa_VR3_peak_40_10_pers
+hhs_VR3_43_00_pers <- wua_VR3_43_00_pers/wa_VR3_43_00_pers
+hhs_VR3_46_00_pers <- wua_VR3_46_00_pers/wa_VR3_46_00_pers
+hhs_VR3_48_00_pers <- wua_VR3_48_00_pers/wa_VR3_48_00_pers
+hhs_VR3_50_00_pers <- wua_VR3_50_00_pers/wa_VR3_50_00_pers
+hhs_VR3_52_90_pers <- wua_VR3_52_90_pers/wa_VR3_52_90_pers
 ```
 
 ## Results 
 ```{r}
 results <- data.frame(
-  wua = c(wua_GL1_2_56_ezg, wua_GL1_min_3_28, wua_GL1_6_00, wua_GL1_9_00, wua_GL1_12_68, wua_GL1_16_00, wua_GL1_19_00, wua_GL1_22_00, wua_GL1_25_00, wua_GL1_28_00, wua_GL1_max_31_76, wua_GL1_pers_var,
+  wua = c(
+# GL1 --------------------------------------------  
+wua_GL1_2_56_ezg, wua_GL1_min_3_28, wua_GL1_6_00, wua_GL1_9_00, wua_GL1_12_68, wua_GL1_16_00, wua_GL1_19_00, wua_GL1_22_00, wua_GL1_25_00, wua_GL1_28_00, wua_GL1_max_31_76,
+ 
+# GL2 -------------------------------------------       
+        wua_GL2_2_37_ezg, wua_GL2_min_3_21, wua_GL2_6_00, wua_GL2_9_00, wua_GL2_11_00, wua_GL2_12_52, wua_GL2_16_00, wua_GL2_19_00, wua_GL2_22_00, wua_GL2_25_00, wua_GL2_28_00, wua_GL2_max_31_53,
         
-        wua_GL2_2_37_ezg, wua_GL2_min_3_21, wua_GL2_6_00, wua_GL2_9_00, wua_GL2_11_00, wua_GL2_12_52, wua_GL2_16_00, wua_GL2_19_00, wua_GL2_22_00, wua_GL2_25_00, wua_GL2_28_00, wua_GL2_max_31_53, wua_GL2_pers_var,
+# L2 -----------------------------------------------
+wua_L2_base_2_40, wua_L2_3_90, wua_L2_7_00, wua_L2_peak_9_24, wua_L2_9_54_ezg, wua_L2_13_30, wua_L2_16_50, wua_L2_18_90,
+
+# M1 ---------------------------------------------------
+wua_M1_base_0_47, wua_M1_0_60, wua_M1_1_50_ezg, wua_M1_4_00, wua_M1_6_00, wua_M1_8_00, wua_M1_10_00, wua_M1_12_00, wua_M1_14_00, wua_M1_16_00, wua_M1_peak_18_84, wua_M1_22_84,
+
+# S1 --------------------------------------------------
+wua_S1_1_94_ezg, wua_S1_base_2_00, wua_S1_3_70, wua_S1_6_50, wua_S1_8_50, wua_S1_10_68, wua_S1_13_00, wua_S1_15_00, wua_S1_peak_18_00, wua_S1_20_00,
+
+ # S2 -------------------------------------------------
+wua_S2_1_93_ezg, wua_S2_base_2_00, wua_S2_3_20, wua_S2_6_50, wua_S2_8_50, wua_S2_10_93, wua_S2_13_00, wua_S2_15_00, wua_S2_peak_18_00, wua_S2_20_00,
+
+# TH4 -----------------------------------------------------
+wua_TH4_min_11_45, wua_TH4_15_00, wua_TH4_18_00, wua_TH4_19_96, wua_TH4_22_50, wua_TH4_25_00, wua_TH4_27_00, wua_TH4_30_00, wua_TH4_max_32_93, wua_TH4_35_12_ezg,
+
+# VR3 ---------------------------------------------------
+wua_VR3_base_2_90, wua_VR3_6_00, wua_VR3_9_00, wua_VR3_12_00, wua_VR3_15_00, wua_VR3_18_80, wua_VR3_21_51_ezg, wua_VR3_22_00, wua_VR3_25_00, wua_VR3_28_00, wua_VR3_31_00, wua_VR3_34_00, wua_VR3_37_00, wua_VR3_peak_40_10, wua_VR3_43_00, wua_VR3_46_00, wua_VR3_48_00, wua_VR3_50_00, wua_VR3_52_90),
+
+wua_pers = c(
+# GL1 --------------------------------------------  
+wua_GL1_2_56_ezg_pers, wua_GL1_min_3_28_pers, wua_GL1_6_00_pers, wua_GL1_9_00_pers, wua_GL1_12_68_pers, wua_GL1_16_00_pers, wua_GL1_19_00_pers, wua_GL1_22_00_pers, wua_GL1_25_00_pers, wua_GL1_28_00_pers, wua_GL1_max_31_76_pers,
+ 
+# GL2 -------------------------------------------       
+        wua_GL2_2_37_ezg_pers, wua_GL2_min_3_21_pers, wua_GL2_6_00_pers, wua_GL2_9_00_pers, wua_GL2_11_00_pers, wua_GL2_12_52_pers, wua_GL2_16_00_pers, wua_GL2_19_00_pers, wua_GL2_22_00_pers, wua_GL2_25_00_pers, wua_GL2_28_00_pers, wua_GL2_max_31_53_pers,
         
-wua_L2_base_2_40, wua_L2_3_90, wua_L2_7_00, wua_L2_peak_9_24, wua_L2_9_54_ezg, wua_L2_13_30, wua_L2_16_50, wua_L2_18_90, wua_L2_pers_var,
+# L2 -----------------------------------------------
+wua_L2_base_2_40_pers, wua_L2_3_90_pers, wua_L2_7_00_pers, wua_L2_peak_9_24_pers, wua_L2_9_54_ezg_pers, wua_L2_13_30_pers, wua_L2_16_50_pers, wua_L2_18_90_pers,
 
-wua_M1_base_0_47, wua_M1_0_60, wua_M1_1_50_ezg, wua_M1_4_00, wua_M1_6_00, wua_M1_8_00, wua_M1_10_00, wua_M1_12_00, wua_M1_14_00, wua_M1_16_00, wua_M1_peak_18_84, wua_M1_22_84, wua_M1_pers_var,
+# M1 ---------------------------------------------------
+wua_M1_base_0_47_pers, wua_M1_0_60_pers, wua_M1_1_50_ezg_pers, wua_M1_4_00_pers, wua_M1_6_00_pers, wua_M1_8_00_pers, wua_M1_10_00_pers, wua_M1_12_00_pers, wua_M1_14_00_pers, wua_M1_16_00_pers, wua_M1_peak_18_84_pers, wua_M1_22_84_pers,
 
-wua_S1_1_94_ezg, wua_S1_base_2_00, wua_S1_3_70, wua_S1_6_50, wua_S1_8_50, wua_S1_10_68, wua_S1_13_00, wua_S1_15_00, wua_S1_peak_18_00, wua_S1_20_00, wua_S1_pers_var,
+# S1 --------------------------------------------------
+wua_S1_1_94_ezg_pers, wua_S1_base_2_00_pers, wua_S1_3_70_pers, wua_S1_6_50_pers, wua_S1_8_50_pers, wua_S1_10_68_pers, wua_S1_13_00_pers, wua_S1_15_00_pers, wua_S1_peak_18_00_pers, wua_S1_20_00_pers,
 
-wua_S2_1_93_ezg, wua_S2_base_2_00, wua_S2_3_20, wua_S2_6_50, wua_S2_8_50, wua_S2_10_93, wua_S2_13_00, wua_S2_15_00, wua_S2_peak_18_00, wua_S2_20_00, wua_S2_pers_var,
+ # S2 -------------------------------------------------
+wua_S2_1_93_ezg_pers, wua_S2_base_2_00_pers, wua_S2_3_20_pers, wua_S2_6_50_pers, wua_S2_8_50_pers, wua_S2_10_93_pers, wua_S2_13_00_pers, wua_S2_15_00_pers, wua_S2_peak_18_00_pers, wua_S2_20_00_pers,
 
-wua_TH4_min_11_45, wua_TH4_15_00, wua_TH4_18_00, wua_TH4_19_96, wua_TH4_22_50, wua_TH4_25_00, wua_TH4_27_00, wua_TH4_30_00, wua_TH4_max_32_93, wua_TH4_35_12_ezg, wua_TH4_pers_var,
+# TH4 -----------------------------------------------------
+wua_TH4_min_11_45_pers, wua_TH4_15_00_pers, wua_TH4_18_00_pers, wua_TH4_19_96_pers, wua_TH4_22_50_pers, wua_TH4_25_00_pers, wua_TH4_27_00_pers, wua_TH4_30_00_pers, wua_TH4_max_32_93_pers, wua_TH4_35_12_ezg_pers,
 
-wua_VR3_base_2_90, wua_VR3_6_00, wua_VR3_9_00, wua_VR3_12_00, wua_VR3_15_00, wua_VR3_18_80, wua_VR3_21_51_ezg, wua_VR3_22_00, wua_VR3_25_00, wua_VR3_28_00, wua_VR3_31_00, wua_VR3_34_00, wua_VR3_37_00, wua_VR3_peak_40_10, wua_VR3_43_00, wua_VR3_46_00, wua_VR3_48_00, wua_VR3_50_00, wua_VR3_52_90, wua_VR3_pers_var),
+# VR3 ---------------------------------------------------
+wua_VR3_base_2_90_pers, wua_VR3_6_00_pers, wua_VR3_9_00_pers, wua_VR3_12_00_pers, wua_VR3_15_00_pers, wua_VR3_18_80_pers, wua_VR3_21_51_ezg_pers, wua_VR3_22_00_pers, wua_VR3_25_00_pers, wua_VR3_28_00_pers, wua_VR3_31_00_pers, wua_VR3_34_00_pers, wua_VR3_37_00_pers, wua_VR3_peak_40_10_pers, wua_VR3_43_00_pers, wua_VR3_46_00_pers, wua_VR3_48_00_pers, wua_VR3_50_00_pers, wua_VR3_52_90_pers),
 
-hhs = c(hhs_GL1_2_56_ezg, hhs_GL1_min_3_28, hhs_GL1_6_00, hhs_GL1_9_00, hhs_GL1_12_68, hhs_GL1_16_00, hhs_GL1_19_00, hhs_GL1_22_00, hhs_GL1_25_00, hhs_GL1_28_00, hhs_GL1_max_31_76, hhs_GL1_pers_var,
+hhs = c(
+# GL1 -------------------------------------
+  hhs_GL1_2_56_ezg, hhs_GL1_min_3_28, hhs_GL1_6_00, hhs_GL1_9_00, hhs_GL1_12_68, hhs_GL1_16_00, hhs_GL1_19_00, hhs_GL1_22_00, hhs_GL1_25_00, hhs_GL1_28_00, hhs_GL1_max_31_76,
 
-hhs_GL2_2_37_ezg, hhs_GL2_min_3_21, hhs_GL2_6_00, hhs_GL2_9_00, hhs_GL2_11_00, hhs_GL2_12_52, hhs_GL2_16_00, hhs_GL2_19_00, hhs_GL2_22_00, hhs_GL2_25_00, hhs_GL2_28_00, hhs_GL2_max_31_53, hhs_GL2_pers_var,
+# GL2 -------------------------------------
+hhs_GL2_2_37_ezg, hhs_GL2_min_3_21, hhs_GL2_6_00, hhs_GL2_9_00, hhs_GL2_11_00, hhs_GL2_12_52, hhs_GL2_16_00, hhs_GL2_19_00, hhs_GL2_22_00, hhs_GL2_25_00, hhs_GL2_28_00, hhs_GL2_max_31_53,
 
-hhs_L2_base_2_40, hhs_L2_3_90, hhs_L2_7_00, hhs_L2_peak_9_24, hhs_L2_9_54_ezg, hhs_L2_13_30, hhs_L2_16_50, hhs_L2_18_90, hhs_L2_pers_var, 
+# L2 ---------------------------------------
+hhs_L2_base_2_40, hhs_L2_3_90, hhs_L2_7_00, hhs_L2_peak_9_24, hhs_L2_9_54_ezg, hhs_L2_13_30, hhs_L2_16_50, hhs_L2_18_90, 
 
-hhs_M1_base_0_47, hhs_M1_0_60, hhs_M1_1_50_ezg, hhs_M1_4_00, hhs_M1_6_00, hhs_M1_8_00, hhs_M1_10_00, hhs_M1_12_00, hhs_M1_14_00, hhs_M1_16_00, hhs_M1_peak_18_84, hhs_M1_22_84, hhs_M1_pers_var,
+# M1 -----------------------------------------
+hhs_M1_base_0_47, hhs_M1_0_60, hhs_M1_1_50_ezg, hhs_M1_4_00, hhs_M1_6_00, hhs_M1_8_00, hhs_M1_10_00, hhs_M1_12_00, hhs_M1_14_00, hhs_M1_16_00, hhs_M1_peak_18_84, hhs_M1_22_84,
 
-hhs_S1_1_94_ezg, hhs_S1_base_2_00, hhs_S1_3_70, hhs_S1_6_50, hhs_S1_8_50, hhs_S1_10_68, hhs_S1_13_00, hhs_S1_15_00, hhs_S1_peak_18_00, hhs_S1_20_00, hhs_S1_pers_var,
+# S1 --------------------------------------------
+hhs_S1_1_94_ezg, hhs_S1_base_2_00, hhs_S1_3_70, hhs_S1_6_50, hhs_S1_8_50, hhs_S1_10_68, hhs_S1_13_00, hhs_S1_15_00, hhs_S1_peak_18_00, hhs_S1_20_00,
 
-hhs_S2_1_93_ezg, hhs_S2_base_2_00, hhs_S2_3_20, hhs_S2_6_50, hhs_S2_8_50, hhs_S2_10_93, hhs_S2_13_00, hhs_S2_15_00, hhs_S2_peak_18_00, hhs_S2_20_00, hhs_S2_pers_var, 
+# S2 -----------------------------------
+hhs_S2_1_93_ezg, hhs_S2_base_2_00, hhs_S2_3_20, hhs_S2_6_50, hhs_S2_8_50, hhs_S2_10_93, hhs_S2_13_00, hhs_S2_15_00, hhs_S2_peak_18_00, hhs_S2_20_00, 
 
-hhs_TH4_min_11_45, hhs_TH4_15_00, hhs_TH4_18_00, hhs_TH4_19_96, hhs_TH4_22_50, hhs_TH4_25_00, hhs_TH4_27_00, hhs_TH4_30_00, hhs_TH4_max_32_93, hhs_TH4_35_12_ezg, hhs_TH4_pers_var,
+# TH4 ----------------------------------------
+hhs_TH4_min_11_45, hhs_TH4_15_00, hhs_TH4_18_00, hhs_TH4_19_96, hhs_TH4_22_50, hhs_TH4_25_00, hhs_TH4_27_00, hhs_TH4_30_00, hhs_TH4_max_32_93, hhs_TH4_35_12_ezg,
 
-hhs_VR3_base_2_90, hhs_VR3_6_00, hhs_VR3_9_00, hhs_VR3_12_00, hhs_VR3_15_00, hhs_VR3_18_80, hhs_VR3_21_51_ezg, hhs_VR3_22_00, hhs_VR3_25_00, hhs_VR3_28_00, hhs_VR3_31_00, hhs_VR3_34_00, hhs_VR3_37_00, hhs_VR3_peak_40_10, hhs_VR3_43_00, hhs_VR3_46_00, hhs_VR3_48_00, hhs_VR3_50_00, hhs_VR3_52_90, hhs_VR3_pers_var)
+# VR3 --------------------------------------------
+hhs_VR3_base_2_90, hhs_VR3_6_00, hhs_VR3_9_00, hhs_VR3_12_00, hhs_VR3_15_00, hhs_VR3_18_80, hhs_VR3_21_51_ezg, hhs_VR3_22_00, hhs_VR3_25_00, hhs_VR3_28_00, hhs_VR3_31_00, hhs_VR3_34_00, hhs_VR3_37_00, hhs_VR3_peak_40_10, hhs_VR3_43_00, hhs_VR3_46_00, hhs_VR3_48_00, hhs_VR3_50_00, hhs_VR3_52_90),
 
-Q = c(2.56, 3.28, 6.00, 9.00, 12.68, 16.00, 19.00, 22.00, 25.00, 28.00, 31.76, 31.76,
+hhs_pers = c(
+# GL1 -------------------------------------
+  hhs_GL1_2_56_ezg_pers, hhs_GL1_min_3_28_pers, hhs_GL1_6_00_pers, hhs_GL1_9_00_pers, hhs_GL1_12_68_pers, hhs_GL1_16_00_pers, hhs_GL1_19_00_pers, hhs_GL1_22_00_pers, hhs_GL1_25_00_pers, hhs_GL1_28_00_pers, hhs_GL1_max_31_76_pers,
+
+# GL2 -------------------------------------
+hhs_GL2_2_37_ezg_pers, hhs_GL2_min_3_21_pers, hhs_GL2_6_00_pers, hhs_GL2_9_00_pers, hhs_GL2_11_00_pers, hhs_GL2_12_52_pers, hhs_GL2_16_00_pers, hhs_GL2_19_00_pers, hhs_GL2_22_00_pers, hhs_GL2_25_00_pers, hhs_GL2_28_00_pers, hhs_GL2_max_31_53_pers,
+
+# L2 ---------------------------------------
+hhs_L2_base_2_40_pers, hhs_L2_3_90_pers, hhs_L2_7_00_pers, hhs_L2_peak_9_24_pers, hhs_L2_9_54_ezg_pers, hhs_L2_13_30_pers, hhs_L2_16_50_pers, hhs_L2_18_90_pers, 
+
+# M1 -----------------------------------------
+hhs_M1_base_0_47_pers, hhs_M1_0_60_pers, hhs_M1_1_50_ezg_pers, hhs_M1_4_00_pers, hhs_M1_6_00_pers, hhs_M1_8_00_pers, hhs_M1_10_00_pers, hhs_M1_12_00_pers, hhs_M1_14_00_pers, hhs_M1_16_00_pers, hhs_M1_peak_18_84_pers, hhs_M1_22_84_pers,
+
+# S1 --------------------------------------------
+hhs_S1_1_94_ezg_pers, hhs_S1_base_2_00_pers, hhs_S1_3_70_pers, hhs_S1_6_50_pers, hhs_S1_8_50_pers, hhs_S1_10_68_pers, hhs_S1_13_00_pers, hhs_S1_15_00_pers, hhs_S1_peak_18_00_pers, hhs_S1_20_00_pers,
+
+# S2 -----------------------------------
+hhs_S2_1_93_ezg_pers, hhs_S2_base_2_00_pers, hhs_S2_3_20_pers, hhs_S2_6_50_pers, hhs_S2_8_50_pers, hhs_S2_10_93_pers, hhs_S2_13_00_pers, hhs_S2_15_00_pers, hhs_S2_peak_18_00_pers, hhs_S2_20_00_pers, 
+
+# TH4 ----------------------------------------
+hhs_TH4_min_11_45_pers, hhs_TH4_15_00_pers, hhs_TH4_18_00_pers, hhs_TH4_19_96_pers, hhs_TH4_22_50_pers, hhs_TH4_25_00_pers, hhs_TH4_27_00_pers, hhs_TH4_30_00_pers, hhs_TH4_max_32_93_pers, hhs_TH4_35_12_ezg_pers,
+
+# VR3 --------------------------------------------
+hhs_VR3_base_2_90_pers, hhs_VR3_6_00_pers, hhs_VR3_9_00_pers, hhs_VR3_12_00_pers, hhs_VR3_15_00_pers, hhs_VR3_18_80_pers, hhs_VR3_21_51_ezg_pers, hhs_VR3_22_00_pers, hhs_VR3_25_00_pers, hhs_VR3_28_00_pers, hhs_VR3_31_00_pers, hhs_VR3_34_00_pers, hhs_VR3_37_00_pers, hhs_VR3_peak_40_10_pers, hhs_VR3_43_00_pers, hhs_VR3_46_00_pers, hhs_VR3_48_00_pers, hhs_VR3_50_00_pers, hhs_VR3_52_90_pers),
+
+Q = c(
+# GL1 ---------------------------------------
+  2.56, 3.28, 6.00, 9.00, 12.68, 16.00, 19.00, 22.00, 25.00, 28.00, 31.76,
       
-      2.37, 3.21, 6.00, 9.00, 11.00, 12.52, 16.00, 19.00, 22.00, 25.00, 28.00, 31.53, 31.53,
+# GL1 ----------------------------------------
+      2.37, 3.21, 6.00, 9.00, 11.00, 12.52, 16.00, 19.00, 22.00, 25.00, 28.00, 31.53,
+  
+# L2 -----------------------------------------    
+      2.40, 3.90, 7.00, 9.24, 9.54, 13.30, 16.50, 18.90,
       
-      2.40, 3.90, 7.00, 9.24, 9.54, 13.30, 16.50, 18.90, 9.24,
+# M1 -----------------------------------------
+      0.47, 0.60, 1.50, 4.00, 6.00, 8.00, 10.00, 12.00, 14.00, 16.00, 18.84, 22.84,
       
-      0.47, 0.60, 1.50, 4.00, 6.00, 8.00, 10.00, 12.00, 14.00, 16.00, 18.84, 22.84, 18.84,
+# S1 --------------------------------------------
+      1.94, 2.00, 3.70, 6.50, 8.50, 10.68, 13.00, 15.00, 18.00, 20.00,
       
-      1.94, 2.00, 3.70, 6.50, 8.50, 10.68, 13.00, 15.00, 18.00, 20.00, 18.00,
+# S2 ----------------------------------------------
+      1.93, 2.00, 3.20, 6.50, 8.50, 10.93, 13.00, 15.00, 18.00, 20.00,
       
-      1.93, 2.00, 3.20, 6.50, 8.50, 10.93, 13.00, 15.00, 18.00, 20.00, 18.00,
-      
-      11.45, 15.00, 18.00, 19.96, 22.50, 25.00, 27.00, 30.00, 32.93, 35.12, 32.93,
-      
-      2.90, 6.00, 9.00, 12.00, 15.00, 18.80, 21.51, 22.00, 25.00, 28.00, 31.00, 34.00, 37.00, 40.10, 43.00, 46.00, 48.00, 50.00, 52.90, 40.10),
+# TH4 ----------------------------------------------
+      11.45, 15.00, 18.00, 19.96, 22.50, 25.00, 27.00, 30.00, 32.93, 35.12,
 
-hydr_cond = c(NA, "min", NA, NA, NA, NA, NA, NA, NA, NA, "max", "max_pers",
+# VR3 ------------------------------------------------      
+      2.90, 6.00, 9.00, 12.00, 15.00, 18.80, 21.51, 22.00, 25.00, 28.00, 31.00, 34.00, 37.00, 40.10, 43.00, 46.00, 48.00, 50.00, 52.90),
+
+hydr_cond = c(
+  # GL1 ------------------------------------------
+  NA, "min", NA, NA, NA, NA, NA, NA, NA, NA, "max",
+  
+  # GL2 ------------------------------------------    
+      NA, "min", NA, NA, NA, NA, NA, NA, NA, NA, NA, "max",
+   
+  # L2 -------------------------------------------   
+      "base", NA, NA, "peak", NA, NA, NA, NA, 
+     
+  # M1 -------------------------------------------- 
+      "base", NA, NA, NA, NA, NA, NA, NA, NA, NA, "peak", NA,
+   
+  # S1 -----------------------------------------------   
+      NA, "base", NA, NA, NA, NA, NA, NA, "peak", NA, 
+   
+  # S2 --------------------------------------------------   
+      NA, "base", NA, NA, NA, NA, NA, NA, "peak", NA, 
+    
+  # TH4 -------------------------------------------------  
+      "min", NA, NA, NA, NA, NA, NA, NA, "max", NA, 
       
-      NA, "min", NA, NA, NA, NA, NA, NA, NA, NA, NA, "max", "max_pers",
-      
-      "base", NA, NA, "peak", NA, NA, NA, NA, "peak_pers",
-      
-      "base", NA, NA, NA, NA, NA, NA, NA, NA, NA, "peak", NA, "peak_pers",
-      
-      NA, "base", NA, NA, NA, NA, NA, NA, "peak", NA, "peak_pers",
-      
-      NA, "base", NA, NA, NA, NA, NA, NA, "peak", NA, "peak_pers",
-      
-      "min", NA, NA, NA, NA, NA, NA, NA, "max", NA, "max_pers",
-      
-      "base", NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "peak", NA, NA, NA, NA, NA, "peak_pers"), 
+  # VR3 --------------------------------------
+      "base", NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, "peak", NA, NA, NA, NA, NA, ), 
  
 section = c("GL1", "GL1", "GL1", "GL1", "GL1", "GL1", 
-            "GL1", "GL1", "GL1", "GL1", "GL1", "GL1",
+            "GL1", "GL1", "GL1", "GL1", "GL1",
             
             "GL2", "GL2", "GL2", "GL2", "GL2", "GL2",
-            "GL2", "GL2", "GL2", "GL2", "GL2", "GL2", "GL2",
+            "GL2", "GL2", "GL2", "GL2", "GL2", "GL2", 
             
-            "L2", "L2", "L2", "L2", "L2", "L2", "L2", "L2", "L2",
+            "L2", "L2", "L2", "L2", "L2",  
+            "L2", "L2", "L2",
             
-            "M1", "M1", "M1", "M1", "M1", "M1", "M1", "M1", "M1",
-            "M1", "M1", "M1", "M1",
+            "M1", "M1", "M1", "M1", "M1", "M1", 
+            "M1", "M1", "M1", "M1", "M1", "M1", 
             
             "S1", "S1", "S1", "S1", "S1", "S1", 
-            "S1", "S1", "S1", "S1", "S1",
+            "S1", "S1", "S1", "S1", 
             
             "S2", "S2", "S2", "S2", "S2", "S2",
-             "S2", "S2", "S2", "S2", "S2",
+             "S2", "S2", "S2", "S2", 
             
             "TH4", "TH4", "TH4", "TH4", "TH4", "TH4",
-            "TH4", "TH4", "TH4", "TH4", "TH4", 
+            "TH4", "TH4", "TH4", "TH4", 
             
             "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3",
-            "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3"))
+            "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3", "VR3"))
 
 
 
 # write .csv file of results 
 write.csv(results, "ML_model/scenarios/wua_hhs_k_var_rf.csv", row.names = FALSE)
 ```
+
+

@@ -1539,20 +1539,50 @@ ggplot(sub_samp_k_c_brt, aes(sub_type, yhat)) +
 
 # Load WUA / HHS Data
 ```{r}
-wua_hhs <- read_delim("ML_Model/scenarios/wua_hhs_shannon_vbrt.csv") 
+wua_hhs <- read_delim("ML_Model/scenarios/wua_hhs_k_var_rf.csv")
+
+max(wua_hhs$wua)
 ```
 
 ## Plots
 ```{r}
 # WUA Plot --------------------------------------------------------
-ggplot(wua_hhs, aes(x = discharge, y = wua, col = section)) +
-  geom_line(aes(x = discharge, y = wua, linetype = section), lwd = 0.6) +
-  geom_point() +
-  theme_minimal()
+wua <- ggplot(wua_hhs, aes(x = Q, y = wua, col = section)) +
+  geom_line() +
+  geom_point() + 
+  labs(
+    x = "Discharge [m3/s]",
+    y = "WUA [m2]",
+    col = "Section",
+    linetype = "Section"
+  ) +
+  theme_minimal() +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14),
+        legend.title = element_text(size=14),
+        legend.text = element_text(size=12)) +
+  scale_y_continuous(limits = c(0, 500000), breaks = seq(0, 500000, by = 75000))
 
 # HHS Plot --------------------------------------------------------
-ggplot(wua_hhs, aes(x = discharge, y = hhs, col = section)) +
+hhs <- ggplot(wua_hhs, aes(x = Q, y = hhs, col = section)) +
   geom_line() +
-  geom_point()
+  geom_point() + 
+  labs(
+    x = "Discharge [m3/s]",
+    y = "HHS [-]",
+    col = "Section",
+    linetype = "Section"
+  ) +
+  theme_minimal() +
+  theme_minimal() +
+  theme(axis.text = element_text(size=12),
+        axis.title = element_text(size=14),
+        legend.title = element_text(size=14),
+        legend.text = element_text(size=12)) 
+
+# save the plots 
+ggsave("Stat_Analysis/plots/wua.png", plot = wua, width = 7, height = 5)
+ggsave("Stat_Analysis/plots/hhs.png", plot = hhs, width = 7, height = 5)
 ```
 
