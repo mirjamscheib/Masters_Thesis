@@ -1619,3 +1619,20 @@ wua <- ggplot(wua_hhs, aes(x = Q, y = wua, col = section)) +
   scale_y_continuous(limits = c(0, 500000), breaks = seq(0, 500000, by = 75000))
 ```
 
+# Load HSC data
+```{r}
+hsc <- read_delim("HSC_model/HSC_MI/HSC_MI.csv") |>
+  dplyr::rename(class = `FG_class_cm/s`) |>
+  mutate(class = as.factor(class))
+
+hsc$class_ordered <- factor(c("< 5", "5 - 25", "25 - 75", "75 - 150", "150 - 250", "> 250"))
+```
+
+## Create HSC plot
+```{r}
+ggplot(hsc, aes(class_ordered, HSI)) +
+  geom_line() |>
+  labs(x = "Flow velocity class [m/s]",
+       y = "Habitat Suitability Index (HHS) [-]")
+```
+
