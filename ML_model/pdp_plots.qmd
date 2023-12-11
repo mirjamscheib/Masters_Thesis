@@ -401,13 +401,22 @@ sub_samp_ra_c_brt <- read.delim("ML_Model/pdp_data/pdp_sub_samp_ra_c_brt.csv", s
 ### PREDICTORS: Selected Variables
 ```{r}
 # With k_index as response ----------------------------------------------------
+# Logit transformation function
+logit <- function(x){
+  x <- x/100
+  log(x/(1-x))
+}
+
+v_var_k_c_rf <- v_var_k_c_rf |>
+  mutate(yhat_log = scale(logit(yhat)))
+
 ### velocity 
-p_v_var_k_c_rf <- ggplot(v_var_k_c_rf, aes(velocity, yhat)) + 
+p_v_var_k_c_rf <- ggplot(v_var_k_c_rf, aes(velocity, yhat_log)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
     x = "Velocity (m/s)",
-    y = "K-Index"
+    y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
@@ -417,12 +426,15 @@ p_v_var_k_c_rf <- ggplot(v_var_k_c_rf, aes(velocity, yhat)) +
 ggsave("ML_model/plots/pdp_v_var_k_c_rf.png", plot = p_v_var_k_c_rf, width = 6, height = 5)
 
 ### wd_m 
-p_wd_var_k_c_rf <- ggplot(wd_var_k_c_rf, aes(x = wd_m, y = yhat)) + 
+wd_var_k_c_rf <- wd_var_k_c_rf |>
+  mutate(yhat_log = scale(logit(yhat)))
+
+p_wd_var_k_c_rf <- ggplot(wd_var_k_c_rf, aes(x = wd_m, y = yhat_log)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
     x = "Water Depth (m)",
-    y = "K-Index"
+    y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
@@ -432,12 +444,15 @@ p_wd_var_k_c_rf <- ggplot(wd_var_k_c_rf, aes(x = wd_m, y = yhat)) +
 ggsave("ML_model/plots/pdp_wd_var_k_c_rf.png", plot = p_wd_var_k_c_rf, width = 6, height = 5)
 
 ### z 
-p_z_var_k_c_rf <- ggplot(z_var_k_c_rf, aes(z, yhat)) + 
+z_var_k_c_rf <- z_var_k_c_rf |>
+  mutate(yhat_log = scale(logit(yhat)))
+
+p_z_var_k_c_rf <- ggplot(z_var_k_c_rf, aes(z, yhat_log)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
     x = "Z Coordinate [m.a.s.l.]",
-    y = "K-Index"
+    y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
@@ -447,12 +462,15 @@ p_z_var_k_c_rf <- ggplot(z_var_k_c_rf, aes(z, yhat)) +
 ggsave("ML_model/plots/pdp_z_var_k_c_rf.png", plot = p_z_var_k_c_rf, width = 6, height = 5)
 
 ### Nitrogen
-p_n_var_k_c_rf <- ggplot(n_var_k_c_rf, aes(mean_diff_nitrogen, yhat)) + 
+n_var_k_c_rf <- n_var_k_c_rf |>
+  mutate(yhat_log = scale(logit(yhat)))
+
+p_n_var_k_c_rf <- ggplot(n_var_k_c_rf, aes(mean_diff_nitrogen, yhat_log)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
     x = "Mean diffused total nitrogen [kg/ha a]",
-    y = "K-Index"
+    y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
@@ -462,12 +480,15 @@ p_n_var_k_c_rf <- ggplot(n_var_k_c_rf, aes(mean_diff_nitrogen, yhat)) +
 ggsave("ML_model/plots/pdp_n_var_k_c_rf.png", plot = p_n_var_k_c_rf, width = 6, height = 5)
 
 ### phosphor
-p_p_var_k_c_rf <- ggplot(p_var_k_c_rf, aes(mean_diff_phosphor, yhat)) + 
+p_var_k_c_rf <- p_var_k_c_rf |>
+  mutate(yhat_log = scale(logit(yhat)))
+
+p_p_var_k_c_rf <- ggplot(p_var_k_c_rf, aes(mean_diff_phosphor, yhat_log)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
     x = "Mean diffused total phosphor [kg/ha a]",
-    y = "K-Index"
+    y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
@@ -477,12 +498,15 @@ p_p_var_k_c_rf <- ggplot(p_var_k_c_rf, aes(mean_diff_phosphor, yhat)) +
 ggsave("ML_model/plots/pdp_p_var_k_c_rf.png", plot = p_p_var_k_c_rf, width = 6, height = 5)
 
 ### ecomorph_class
-p_e_var_k_c_rf <- ggplot(e_var_k_c_rf, aes(ecomorph, yhat)) + 
+e_var_k_c_rf <- e_var_k_c_rf |>
+  mutate(yhat_log = scale(logit(yhat)))
+
+p_e_var_k_c_rf <- ggplot(e_var_k_c_rf, aes(ecomorph, yhat_log)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line(aes(group = 1)) + 
   labs(
     x = "Ecomorphological Class",
-    y = "K-Index"
+    y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
@@ -492,14 +516,17 @@ p_e_var_k_c_rf <- ggplot(e_var_k_c_rf, aes(ecomorph, yhat)) +
 ggsave("ML_model/plots/pdp_e_var_k_c_rf.png", plot = p_e_var_k_c_rf, width = 6, height = 5)
 
 ### bioregion
+b_var_k_c_rf <- b_var_k_c_rf |>
+  mutate(yhat_log = scale(logit(yhat)))
+
 b_var_k_c_rf$biogeo_order <- factor(b_var_k_c_rf$biogeo, levels = c("Southern Alps", "Eastern Central Alps", "Northern Alps","Central Plateau"))
 
-p_b_var_k_c_rf <- ggplot(b_var_k_c_rf, aes(biogeo_order, yhat)) + 
+p_b_var_k_c_rf <- ggplot(b_var_k_c_rf, aes(biogeo_order, yhat_log)) + 
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line(aes(group = 1)) + 
   labs(
     x = "Bioregion",
-    y = "K-Index"
+    y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
@@ -1537,7 +1564,6 @@ ggplot(sub_samp_k_c_brt, aes(sub_type, yhat)) +
   geom_line(aes(group = 1))
 ```
 
-# Load WUA / HHS Data
 ```{r}
 wua_hhs <- read_delim("ML_Model/scenarios/wua_hhs_k_var_rf.csv")
 ```
@@ -1619,20 +1645,5 @@ wua <- ggplot(wua_hhs, aes(x = Q, y = wua, col = section)) +
   scale_y_continuous(limits = c(0, 500000), breaks = seq(0, 500000, by = 75000))
 ```
 
-# Load HSC data
-```{r}
-hsc <- read_delim("HSC_model/HSC_MI/HSC_MI.csv") |>
-  dplyr::rename(class = `FG_class_cm/s`) |>
-  mutate(class = as.factor(class))
 
-hsc$class_ordered <- factor(c("< 5", "5 - 25", "25 - 75", "75 - 150", "150 - 250", "> 250"))
-```
-
-## Create HSC plot
-```{r}
-ggplot(hsc, aes(class_ordered, HSI)) +
-  geom_line() |>
-  labs(x = "Flow velocity class [m/s]",
-       y = "Habitat Suitability Index (HHS) [-]")
-```
 

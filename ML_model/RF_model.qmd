@@ -3337,7 +3337,7 @@ responses_var_a <- test_var_a$abundance
 responses_var_ra <- test_var_ra$rel_abundance
 ```
 
-## Deviance explained (R2)
+## R2
 ```{r}
 ### PREDICTOR: VELOCITY ### --------------------------------------------------
 # With k_index as response
@@ -3404,6 +3404,40 @@ r2_var_a <- R2(pred = rf_pred_model_var_a_c, obs = responses_var_a)
 # With rel_abundance as response
 r2_var_ra <- R2(pred = rf_pred_model_var_ra_c, obs = responses_var_ra)
 ```
+
+## Deviance explained 
+```{r}
+# Assuming 'training_v_k_c' is your training data
+# and 'k_index' is your response variable
+
+# Step 1: Fit the ranger model
+rf_model_v_k_c <- ranger(formula = k_index ~., data = training_v_k_c, mtry = 1, 
+                          sample.fraction = 0.2145317, min.node.size = 7, importance = "impurity")
+
+# Step 2: Calculate Total Deviance
+observed_values <- training_v_k_c$k_index
+predicted_values <- predict(rf_model_v_k_c, data = training_v_k_c)$predictions
+total_deviance <- sum((observed_values - mean(observed_values))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_model <- ranger(formula = k_index ~., data = training_v_k_c, mtry = 1, 
+                   sample.fraction = 0.2145317, min.node.size = 7, importance = "impurity",
+                   num.trees = 100, num.random.splits = 1, num.fold = 5)
+
+# Extract cross-validation residual deviance
+cv_residual_deviance <- cv_model$prediction.error
+
+# Step 4: Calculate Deviance Explained
+deviance_explained <- (total_deviance - cv_residual_deviance) / total_deviance
+
+# Print the results
+cat("Total Deviance:", total_deviance, "\n")
+cat("Cross-Validation Residual Deviance:", cv_residual_deviance, "\n")
+cat("Deviance Explained:", deviance_explained, "\n")
+
+```
+
 
 ## RMSE & MAE
 ```{r}
@@ -3945,6 +3979,8 @@ metric_results <- data.frame(lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra,
                                            s_var_ra),
                           
                              nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c, nse_model_var_k_c, nse_model_var_s_c, nse_model_var_a_c, nse_model_var_ra_c),
+                          
+                          deviance = c(de_v_k, de_v_s, de_v_a, de_v_ra, de_wd_k, de_wd_s, de_wd_a, de_wd_ra, de_samp_k, de_samp_s, de_samp_a, de_samp_ra, de_sec_k, de_sec_s, de_sec_a, de_sec_ra, de_var_k, de_var_s, de_var_a, de_var_ra),
 
 bias = c(bias_model_v_k_c, bias_model_v_s_c, bias_model_v_a_c, bias_model_v_ra_c, bias_model_wd_k_c,bias_model_wd_s_c, bias_model_wd_a_c, bias_model_wd_ra_c, bias_model_samp_k_c, bias_model_samp_s_c, bias_model_samp_a_c, bias_model_samp_ra_c, bias_model_sec_k_c, bias_model_sec_s_c, bias_model_sec_a_c, bias_model_sec_ra_c, bias_model_var_k_c, bias_model_var_s_c, bias_model_var_a_c, bias_model_var_ra_c),
 

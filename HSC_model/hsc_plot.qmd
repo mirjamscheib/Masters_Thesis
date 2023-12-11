@@ -1,0 +1,74 @@
+---
+title: "hsc_plot"
+format: html
+---
+
+
+# Libraries 
+```{r}
+#clear R environment
+rm(list = ls())
+
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("sf")
+pkgCheck("terra")
+pkgCheck("dplyr")
+pkgCheck("data.table")  # fast data.frame manipulation (used by mlr3)
+pkgCheck("mlr3") # machine learning (see Chapter 12)
+pkgCheck("mlr3spatiotempcv") # spatio-temporal resampling 
+pkgCheck("mlr3tuning") # hyperparameter tuning package
+pkgCheck("mlr3learners") # interface to most important machine learning packages
+pkgCheck("paradox") # defining hyperparameter spaces
+pkgCheck("ranger")  # rf package
+pkgCheck("tree") # decision tree package
+pkgCheck("readr")
+pkgCheck("sp")
+pkgCheck("raster")
+pkgCheck("gbm")
+pkgCheck("xgboost")
+pkgCheck("caret") # for cohen's kappa calculation 
+pkgCheck("pdp")
+pkgCheck("Metrics")
+pkgCheck("modEvA")
+pkgCheck("tidyr")
+pkgCheck("Fgmutils") # for bias calculation (bias() function)
+pkgCheck("hydroGOF") # for NSE calculation with NSE() function 
+```
+
+# Load HSC data
+```{r}
+hsc <- read_delim("HSC_model/HSC_MI/HSC_MI.csv") |>
+  dplyr::rename(class = `FG_class_cm/s`) |>
+  mutate(class = as.factor(class))
+
+hsc$class_ordered <- factor(c("v < 5", "5 ≤ v < 25", "25 ≤ v < 75", "75 ≤ v < 150", "150 ≤ v < 250", "v ≥ 250"))
+
+hsc$class_ordered <- factor(hsc$class_ordered, levels = c("v < 5", "5 ≤ v < 25", "25 ≤ v < 75", "75 ≤ v < 150", "150 ≤ v < 250", "v ≥ 250"))
+```
+
+## Create HSC plot
+```{r}
+p_hsc <- ggplot(hsc, aes(class_ordered, HSI)) +
+  geom_line(group = 1, lwd = 0.8) +
+  geom_point() +
+  labs(x = "Flow velocity class [m/s]",
+       y = "Habitat Suitability Index (HHS) [-]") +
+  theme_minimal()  +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16)) +
+  scale_y_continuous(limits = c(0.0, 1.0), breaks = seq(0.0, 1.0, by = 0.1)) 
+  #theme(axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=0.5))
+
+# save the plots 
+ggsave("HSC_model/HSC_MI/hsc.png", plot = p_hsc, width = 11, height = 5)
+```
+

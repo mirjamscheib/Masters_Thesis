@@ -3468,7 +3468,7 @@ r2_model_var_a_c <- R2(pred = brt_pred_model_var_a_c, obs = responses_var_a)
 r2_model_var_ra_c <- R2(pred = brt_pred_model_var_ra_c, obs = responses_var_ra)
 ```
 
-## Deviance explained 
+## ! Deviance explained 
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response ---------------------------------------------------
@@ -3701,7 +3701,7 @@ de_samp_k <- (td_samp_k - cv_rd_samp_k) / td_samp_k
 # With shannon index as response --------------------------------------------
 # Step 2: Calculate Total Deviance
 ov_samp_s <- as.numeric(as.character(training_samp_s_c$shannon))
-pv_samp_s <- predict(xgb_v_s_c, data.matrix(trainx_samp_s_c[, -1]))
+pv_samp_s <- predict(xgb_samp_s_c, data.matrix(trainx_samp_s_c[, -1]))
 td_samp_s <- sum((ov_samp_s - mean(pv_samp_s))^2)
 
 # Step 3: Perform Cross-Validation (example using k-fold cross-validation)
@@ -3723,121 +3723,257 @@ cv_rd_samp_s <- min(cv_samp_s$evaluation_log$test_rmse_mean)
 # Step 4: Calculate Deviance Explained
 de_samp_s <- (td_samp_s - cv_rd_samp_s) / td_samp_s
 
-```
+# With abundance as response --------------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_samp_a <- as.numeric(as.character(training_samp_a_c$abundance))
+pv_samp_a <- predict(xgb_samp_a_c, data.matrix(trainx_samp_a_c[, -1]))
+td_samp_a <- sum((ov_samp_a - mean(pv_samp_a))^2)
 
-```{r}
-### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
-# With abundance as response
-#           eta nrounds max_depth subsample
-#1: 0.006622144     154      3917 0.6283266    
-xgb_samp_a_c <- xgboost(data = data.matrix(trainx_samp_a_c[ ,-1]),
-                     label = as.numeric(as.character(training_samp_a_c$abundance)),
-                     eta = 0.006622144,
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_samp_a <- xgb.cv(data = data.matrix(trainx_samp_a_c[, -1]),
+                   label = as.numeric(as.character(training_samp_a_c$abundance)),
+                   nfold = 5,
+                   eta = 0.006622144,
                      nrounds = 154,
                      max_depth = 3917,
                      subsample = 0.6283266,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
-# With rel_abundance as response 
-#         eta nrounds max_depth subsample 
-#1: 0.3057943     751      6014 0.5325193 
-xgb_samp_ra_c <- xgboost(data = data.matrix(trainx_samp_ra_c[ ,-1]),
-                     label = as.numeric(as.character(training_samp_ra_c$rel_abundance)),
-                     eta = 0.3057943,
+# Extract cross-validation residual deviance
+cv_rd_samp_a <- min(cv_samp_a$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_samp_a <- (td_samp_a - cv_rd_samp_a) / td_samp_a
+
+# With rel_abundance as response --------------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_samp_ra <- as.numeric(as.character(training_samp_ra_c$rel_abundance))
+pv_samp_ra <- predict(xgb_samp_ra_c, data.matrix(trainx_samp_ra_c[, -1]))
+td_samp_ra <- sum((ov_samp_ra - mean(pv_samp_ra))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_samp_ra <- xgb.cv(data = data.matrix(trainx_samp_ra_c[, -1]),
+                   label = as.numeric(as.character(training_samp_ra_c$rel_abundance)),
+                   nfold = 5,
+                   eta = 0.3057943,
                      nrounds = 751,
                      max_depth = 6014,
                      subsample = 0.5325193,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
+# Extract cross-validation residual deviance
+cv_rd_samp_ra <- min(cv_samp_ra$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_samp_ra <- (td_samp_ra - cv_rd_samp_ra) / td_samp_ra
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# With k_index as response
-#          eta nrounds max_depth subsample 
-#1: 0.1685379     324         4 0.6693844                       
-xgb_sec_k_c <- xgboost(data = data.matrix(trainx_sec_k_c[ ,-1]),
-                     label = as.numeric(as.character(training_sec_k_c$k_index)),
-                     eta = 0.1685379,
+# With k_index as response ---------------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_sec_k <- as.numeric(as.character(training_sec_k_c$k_index))
+pv_sec_k <- predict(xgb_sec_k_c, data.matrix(trainx_sec_k_c[, -1]))
+td_sec_k <- sum((ov_sec_k - mean(pv_sec_k))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_sec_k <- xgb.cv(data = data.matrix(trainx_sec_k_c[, -1]),
+                   label = as.numeric(as.character(training_sec_k_c$k_index)),
+                   nfold = 5,
+                   eta = 0.1685379,
                      max_depth = 4,
                      nrounds = 324,
                      subsample = 0.6693844,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
-# With shannon index as response 
-#        eta nrounds max_depth subsample 
-#1: 0.09633102     680       8 0.6800524                       
-xgb_sec_s_c <- xgboost(data = data.matrix(trainx_sec_s_c[ ,-1]),
-                     label = as.numeric(as.character(training_sec_s_c$shannon)),
-                     eta = 0.09633102,
+# Extract cross-validation residual deviance
+cv_rd_sec_k <- min(cv_sec_k$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_sec_k <- (td_sec_k - cv_rd_sec_k) / td_sec_k
+
+# With shannon index as response --------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_sec_s <- as.numeric(as.character(training_sec_s_c$shannon))
+pv_sec_s <- predict(xgb_sec_s_c, data.matrix(trainx_sec_s_c[, -1]))
+td_sec_s <- sum((ov_sec_s - mean(pv_sec_s))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_sec_s <- xgb.cv(data = data.matrix(trainx_sec_s_c[, -1]),
+                   label = as.numeric(as.character(training_sec_s_c$shannon)),
+                   nfold = 5,
+                   eta = 0.09633102,
                      max_depth = 8,
                      nrounds = 680,
                      subsample = 0.6800524,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
-# With abundance as response
-#        eta nrounds max_depth subsample 
-#1: 0.2229642     532         9 0.7099357                        
-xgb_sec_a_c <- xgboost(data = data.matrix(trainx_sec_a_c[ ,-1]),
-                     label = as.numeric(as.character(training_sec_a_c$abundance)),
-                     eta = 0.2229642,
+# Extract cross-validation residual deviance
+cv_rd_sec_s <- min(cv_sec_s$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_sec_s <- (td_sec_s - cv_rd_sec_s) / td_sec_s
+
+# With abundance as response --------------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_sec_a <- as.numeric(as.character(training_sec_a_c$abundance))
+pv_sec_a <- predict(xgb_sec_a_c, data.matrix(trainx_sec_a_c[, -1]))
+td_sec_a <- sum((ov_sec_a - mean(pv_sec_a))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_sec_a <- xgb.cv(data = data.matrix(trainx_sec_a_c[, -1]),
+                   label = as.numeric(as.character(training_sec_a_c$abundance)),
+                   nfold = 5,
+                   eta = 0.2229642,
                      max_depth = 9,
                      nrounds = 532,
                      subsample = 0.7099357,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
-# With rel_abundance as response 
-#         eta nrounds max_depth subsample 
-#1: 0.03772061     377         6 0.6407695                       
-xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
-                      label = as.numeric(as.character(training_sec_ra_c$rel_abundance)),
-                     eta = 0.03772061,
+# Extract cross-validation residual deviance
+cv_rd_sec_a <- min(cv_sec_a$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_sec_a <- (td_sec_a - cv_rd_sec_a) / td_sec_a
+
+# With rel_abundance as response ---------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_sec_ra <- as.numeric(as.character(training_sec_ra_c$rel_abundance))
+pv_sec_ra <- predict(xgb_sec_ra_c, data.matrix(trainx_sec_ra_c[, -1]))
+td_sec_ra <- sum((ov_sec_ra - mean(pv_sec_ra))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_sec_ra <- xgb.cv(data = data.matrix(trainx_sec_ra_c[, -1]),
+                   label = as.numeric(as.character(training_sec_ra_c$rel_abundance)),
+                   nfold = 5,
+                   eta = 0.03772061,
                      max_depth = 6,
                      nrounds = 377,
                      subsample = 0.6407695,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
+
+# Extract cross-validation residual deviance
+cv_rd_sec_ra <- min(cv_sec_ra$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_sec_ra <- (td_sec_ra - cv_rd_sec_ra) / td_sec_ra
 
 ### PREDICTORS: SELECTED VARIABLES ### --------------------------------------------
-# With k_index as response
-#           eta nrounds max_depth subsample 
-#1: 0.002163145     783      5972 0.5024628                     
-xgb_var_k_c <- xgboost(data = data.matrix(trainx_var_k_c[ ,-1]),
-                     label = as.numeric(as.character(training_var_k_c$k_index)),
-                     eta = 0.002163145,
+# With k_index as response ---------------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_var_k <- as.numeric(as.character(training_var_k_c$k_index))
+pv_var_k <- predict(xgb_var_k_c, data.matrix(trainx_var_k_c[, -1]))
+td_var_k <- sum((ov_var_k - mean(pv_var_k))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_var_k <- xgb.cv(data = data.matrix(trainx_var_k_c[, -1]),
+                   label = as.numeric(as.character(training_var_k_c$k_index)),
+                   nfold = 5,
+                   eta = 0.002163145,
                      nrounds = 783,
                      max_depth = 5972,
                      subsample = 0.5024628,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
-# With shannon index as response 
-#        eta nrounds max_depth subsample
-#1: 0.0855199      30      1179  0.586375                   
-xgb_var_s_c <- xgboost(data = data.matrix(trainx_var_s_c[ ,-1]),
-                     label = as.numeric(as.character(training_var_s_c$shannon)),
-                     eta = 0.0855199,
+# Extract cross-validation residual deviance
+cv_rd_var_k <- min(cv_var_k$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_var_k <- (td_var_k - cv_rd_var_k) / td_var_k
+
+# With shannon index as response --------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_var_s <- as.numeric(as.character(training_var_s_c$shannon))
+pv_var_s <- predict(xgb_var_s_c, data.matrix(trainx_var_s_c[, -1]))
+td_var_s <- sum((ov_var_s - mean(pv_var_s))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_var_s <- xgb.cv(data = data.matrix(trainx_var_s_c[, -1]),
+                   label = as.numeric(as.character(training_var_s_c$shannon)),
+                   nfold = 5,
+                   eta = 0.0855199,
                      nrounds = 30,
                      max_depth = 1179,
                      subsample = 0.586375,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
-# With abundance as response
-#         eta nrounds max_depth subsample
-#1: 0.3378068     406      3694 0.5145095                      
-xgb_var_a_c <- xgboost(data = data.matrix(trainx_var_a_c[ ,-1]),
-                     label = as.numeric(as.character(training_var_a_c$abundance)),
-                     eta = 0.3378068,
+# Extract cross-validation residual deviance
+cv_rd_var_s <- min(cv_var_s$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_var_s <- (td_var_s - cv_rd_var_s) / td_var_s
+
+# With abundance as response --------------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_var_a <- as.numeric(as.character(training_var_a_c$abundance))
+pv_var_a <- predict(xgb_var_a_c, data.matrix(trainx_var_a_c[, -1]))
+td_var_a <- sum((ov_var_a - mean(pv_var_a))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_var_a <- xgb.cv(data = data.matrix(trainx_var_a_c[, -1]),
+                   label = as.numeric(as.character(training_var_a_c$abundance)),
+                   nfold = 5,
+                   eta = 0.3378068,
                      nrounds = 406,
                      max_depth = 3694,
                      subsample = 0.5145095,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
 
-# With rel_abundance as response 
-#         eta nrounds max_depth subsample
-#1: 0.4977537     180      7284 0.6304385                       
-xgb_var_ra_c <- xgboost(data = data.matrix(trainx_var_ra_c[ ,-1]),
-                      label = as.numeric(as.character(training_var_ra_c$rel_abundance)),
-                     eta = 0.4977537,
+# Extract cross-validation residual deviance
+cv_rd_var_a <- min(cv_var_a$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_var_a <- (td_var_a - cv_rd_var_a) / td_var_a
+
+# With rel_abundance as response ---------------------------------------------
+# Step 2: Calculate Total Deviance
+ov_var_ra <- as.numeric(as.character(training_var_ra_c$rel_abundance))
+pv_var_ra <- predict(xgb_var_ra_c, data.matrix(trainx_var_ra_c[, -1]))
+td_var_ra <- sum((ov_var_ra - mean(pv_var_ra))^2)
+
+# Step 3: Perform Cross-Validation (example using k-fold cross-validation)
+set.seed(123)
+cv_var_ra <- xgb.cv(data = data.matrix(trainx_var_ra_c[, -1]),
+                   label = as.numeric(as.character(training_var_ra_c$rel_abundance)),
+                   nfold = 5,
+                   eta = 0.4977537,
                      nrounds = 180,
                      max_depth = 7284,
                      subsample = 0.6304385,
-                     objective = "reg:linear")
+                     objective = "reg:linear",
+                   metrics = "rmse",
+                   print_every_n = 1)
+
+# Extract cross-validation residual deviance
+cv_rd_var_ra <- min(cv_var_ra$evaluation_log$test_rmse_mean)
+
+# Step 4: Calculate Deviance Explained
+de_var_ra <- (td_var_ra - cv_rd_var_ra) / td_var_ra
+
 ```
 
 ## RMSE & MAE
@@ -4377,6 +4513,8 @@ metric_results <- data.frame(lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra,
                                            s_samp_ra, s_sec_k, s_sec_s, s_sec_a,
                                            s_sec_ra, s_var_k, s_var_s, s_var_a,
                                            s_var_ra),
+                          
+                          deviance = c(de_v_k, de_v_s, de_v_a, de_v_ra, de_wd_k, de_wd_s, de_wd_a, de_wd_ra, de_samp_k, de_samp_s, de_samp_a, de_samp_ra, de_sec_k, de_sec_s, de_sec_a, de_sec_ra, de_var_k, de_var_s, de_var_a, de_var_ra),
                           
                           nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c, nse_model_var_k_c, nse_model_var_s_c, nse_model_var_a_c, nse_model_var_ra_c),
 
