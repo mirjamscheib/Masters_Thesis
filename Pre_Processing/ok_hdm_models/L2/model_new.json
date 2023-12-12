@@ -1,0 +1,57 @@
+{
+  "SETUP": {
+    "DOMAIN": {
+      "BASEPLANE_2D": {
+        "GEOMETRY": {
+          "STRINGDEF": [
+            {
+              "name": "input",
+              "upstream_direction": "left"
+            },
+            {
+              "name": "output",
+              "upstream_direction": "left"
+            }
+          ],
+          "mesh_file": "hdm_models/L2/Landquart_computational-mesh_anto_depthcorr.2dm"
+        },
+        "HYDRAULICS": {
+          "BOUNDARY": {
+            "STANDARD": [
+              {
+                "discharge": 2.4,
+                "name": "inflow",
+                "slope": 0.0033,
+                "string_name": "input",
+                "type": "uniform_in"
+              },
+              {
+                "name": "outflow",
+                "slope": 0.0033,
+                "string_name": "output",
+                "type": "uniform_out"
+              }
+            ]
+          },
+          "FRICTION": {
+            "default_friction": 11.5,
+            "type": "strickler"
+          },
+          "INITIAL": {
+            "type": "dry"
+          },
+          "PARAMETER": {
+            "CFL": 0.9,
+            "fluid_density": 1000,
+            "max_time_step": 10,
+            "minimum_water_depth": 0.01
+          }
+        }
+      },
+      "PHYSICAL_PROPERTIES": {
+        "gravity": 9.81
+      }
+    },
+    "simulation_name": "landquart_s1"
+  }
+}
