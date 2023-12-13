@@ -1,0 +1,166 @@
+---
+title: "Reconstruct Discharges of Sampling Days"
+format: html
+---
+
+# Load packages
+```{r}
+# clear R memory 
+rm(list = ls())
+
+# load packages 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+pkgCheck("terra")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
+pkgCheck("scales")
+pkgCheck("hdf5r")
+pkgCheck("sp")
+pkgCheck("sf")
+pkgCheck("spatstat.geom")
+pkgCheck("spatstat.explore")
+pkgCheck("gstat")
+pkgCheck("purrr")
+pkgCheck("rgdal")
+```
+
+# Reconstruct using EZG
+mit einzugsgebiet einbezogen:
+Q_study_site_MZB = Q_studysite_area / Q_pegel_area * Q_pegel_MZB
+
+*Q_studysite_area*: Catchment area of the study site (river section) in km2
+*Q_pegel_area*: Catchment area of the pegel area/site in km2
+*Q_pegel_MZB*: = Q_MI_site
+
+## Q_MI_site
+```{r}
+# Extract Q of MI sampling days for all sections (from abiotic data)
+# Load MI Data
+mzb_data <- read_delim("Pre_Processing/abiotic_mi_sampling/Abiotic_MI_Field.csv")
+
+# select relevant columns 
+data <- mzb_data %>%
+  mutate(mean_Q = rowMeans(dplyr::select(., Discharge_m3_s_before,
+                                  Discharge_m3_s_during,
+                                  Discharge_m3_s_after))) %>%
+  dplyr::select(reach, Discharge_m3_s_before,
+                Discharge_m3_s_after,
+                Discharge_m3_s_during, mean_Q)
+
+
+
+# select only single river sections and calculate mean Q per river section 
+# GL1
+Q_MI_GL1 <- data |>
+  subset(reach == "GL1") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_GL1 = mean(mean_Q)) 
+
+# GL2
+Q_MI_GL2 <- data |>
+  subset(reach == "GL2") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_GL2 =mean(mean_Q))
+
+# L2
+Q_MI_L2 <- data |>
+  subset(reach == "L2") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_L2 = mean(mean_Q))
+
+# M1
+Q_MI_M1 <- data |>
+  subset(reach == "M1") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_M1 = mean(mean_Q))
+
+# S1
+Q_MI_S1 <- data |>
+  subset(reach == "S1") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_S1 = mean(mean_Q))
+
+# S2
+Q_MI_S2 <- data |>
+  subset(reach == "S2") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_S2 = mean(mean_Q))
+
+# TH4
+Q_MI_TH4 <- data |>
+  subset(reach == "TH4") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_TH4 = mean(mean_Q))
+
+# VR3
+Q_MI_VR3 <- data |>
+  subset(reach == "VR3") |>
+  dplyr::select(reach, mean_Q) |>
+  summarise(Q_MI_VR3 = mean(mean_Q))
+```
+
+## Q_studysite_area
+```{r}
+Q_studysite_area_GL1 <- 380.3714661
+Q_studysite_area_GL2 <- 371.5935349
+Q_studysite_area_L2 <- 320.5772706
+Q_studysite_area_M1 <- 199.4
+Q_studysite_area_S1 <- 269.7738
+Q_studysite_area_S2 <- 287.1519
+Q_studysite_area_TH4 <- 472.2496
+Q_studysite_area_VR3 <- 1182
+```
+
+## Q_pegel_area
+```{r}
+Q_pegel_area_GL1 <- 381 # Glenner - Castrisch: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2498
+Q_pegel_area_GL2 <- 381 # Glenner - Castrisch: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2498 
+Q_pegel_area_L2 <- 614 # Landquart - Felsenbach: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2150
+Q_pegel_area_M1 <- 472  # Moesa-Lumino: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2420
+Q_pegel_area_S1 <- 261 # Sitter - St. Gallen, Bruggen / Au: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2468
+Q_pegel_area_S2 <- 261 # Sitter - St. Gallen, Bruggen / Au: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2468
+Q_pegel_area_TH4 <- 493 # Thur - Jonschwil, Mühlau: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2303
+Q_pegel_area_VR3 <- 774 # Vorderrhein - Ilanz: https://www.hydrodaten.admin.ch/de/seen-und-fluesse/stationen-und-daten/2033
+```
+
+## Calculate Q
+```{r}
+Q_study_site_MZB_GL1 <- Q_studysite_area_GL1 / Q_pegel_area_GL1 * Q_MI_GL1
+Q_study_site_MZB_GL2 <- Q_studysite_area_GL2 / Q_pegel_area_GL2 * Q_MI_GL2
+Q_study_site_MZB_L2 <- Q_studysite_area_L2 / Q_pegel_area_GL1 * Q_MI_L2
+Q_study_site_MZB_M1 <- Q_studysite_area_M1 / Q_pegel_area_GL1 * Q_MI_M1
+Q_study_site_MZB_S1 <- Q_studysite_area_S1 / Q_pegel_area_GL1 * Q_MI_S1
+Q_study_site_MZB_S2 <- Q_studysite_area_S2 / Q_pegel_area_GL1 * Q_MI_S2
+Q_study_site_MZB_TH4 <- Q_studysite_area_TH4 / Q_pegel_area_GL1 * Q_MI_TH4
+Q_study_site_MZB_VR3 <- Q_studysite_area_VR3 / Q_pegel_area_GL1 * Q_MI_VR3
+```
+
+# Save results
+```{r}
+# Put all results into a dataframe 
+results <- data.frame(Q_MI = c(Q_MI_GL1$Q_MI_GL1, Q_MI_GL2$Q_MI_GL2, Q_MI_L2$Q_MI_L2,
+                               Q_MI_M1$Q_MI_M1, Q_MI_S1$Q_MI_S1, Q_MI_S2$Q_MI_S2,
+                               Q_MI_TH4$Q_MI_TH4, Q_MI_VR3$Q_MI_VR3),
+                      Q_pegel_EZG = c(Q_pegel_area_GL1, Q_pegel_area_GL2, Q_pegel_area_M1, Q_pegel_area_L2, Q_pegel_area_S1, Q_pegel_area_S2, Q_pegel_area_TH4, Q_pegel_area_VR3),
+                      Q_study_EZG = c(Q_studysite_area_GL1, Q_studysite_area_GL2, Q_studysite_area_L2, Q_studysite_area_M1, Q_studysite_area_S1, Q_studysite_area_S2, Q_studysite_area_TH4, Q_studysite_area_VR3),
+                      Q_reconstructed_EZG = c(Q_study_site_MZB_GL1$Q_MI_GL1, Q_study_site_MZB_GL2$Q_MI_GL2, Q_study_site_MZB_L2$Q_MI_L2, Q_study_site_MZB_M1$Q_MI_M1, Q_study_site_MZB_S1$Q_MI_S1, Q_study_site_MZB_S2$Q_MI_S2, Q_study_site_MZB_TH4$Q_MI_TH4, Q_study_site_MZB_VR3$Q_MI_VR3),
+                      section = c("GL1", "GL2", "L2", "M1", "S1", "S2", "TH4", "VR3"))
+
+# Save results as .csv - file 
+write.csv(results, "Pre_Processing/abiotic_mi_sampling/reconstructed_discharges.csv", row.names = FALSE)
+```
+
+                                  
