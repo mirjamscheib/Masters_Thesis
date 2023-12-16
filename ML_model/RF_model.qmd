@@ -61,19 +61,11 @@ data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.
 # Load data containing all variables measured at each river section and remove all other "chr" variables
 # Additionally, remove ox_sat columns, as they contain NA values
 data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv") |>
-  dplyr::rename(Reach_Untersuchungsstelle = reach) |>
-  mutate(ecomorph_class = if_else(ecomorph_class == "-", 0, as.numeric(ecomorph_class)))
-
-# Remove every second row
-data_section <- data_section[-seq(c(2), nrow(data_section), by = c(2)), ]
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 
 # load data containing selected variables 
 data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv") |>
-  dplyr::rename(Reach_Untersuchungsstelle = reach) |>
-  mutate(ecomorph_class = if_else(ecomorph_class == "-", 0, as.numeric(ecomorph_class)))
-
-# Remove every second row
-data_var <- data_var[-seq(2, nrow(data_var), by = 2), ]
+  dplyr::rename(Reach_Untersuchungsstelle = reach)
 ```
     
 ```{r}
@@ -1156,7 +1148,7 @@ autotuner_rf_var_a$train(task_rf_var_a)
 autotuner_rf_var_ra$train(task_rf_var_ra)
 ```
 
-### Tuned Hyperparameters
+### ADD Tuned Hyperparameters
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response

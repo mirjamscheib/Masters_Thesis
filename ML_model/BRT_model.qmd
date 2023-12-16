@@ -1009,7 +1009,7 @@ autotuner_xbrt_var_a$train(task_xbrt_var_a)
 autotuner_xbrt_var_ra$train(task_xbrt_var_ra)
 ```
 
-### Tuned Hyperparameters
+### ADD Tuned Hyperparameters
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
