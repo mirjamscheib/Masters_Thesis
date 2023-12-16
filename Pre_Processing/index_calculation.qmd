@@ -322,9 +322,9 @@ aggr_gis_2 <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.c
 data <- data_sampling |>
   dplyr::select(reach, z, x, y, velocity, wd_m, k_index, shannon, abundance, rel_abundance)
 
-data_new <- left_join(data, aggr_gis, by = "reach", relationship = "many-to-many")
+data_new <- dplyr::left_join(data, aggr_gis, by = "reach")
 
-data_new_2 <- left_join(data, aggr_gis_2, by = "reach", relationship = "many-to-many")
+data_new_2 <- left_join(data, aggr_gis_2, by = "reach")
 
 # change biogeo regions and geology into integers for ML modelling 
 biogeo_new <- c("Southern Alps" = 0, "Central Plateau" = 1, "Northern Alps" = 2, "Eastern Central Alps" = 3)
@@ -352,6 +352,12 @@ write.csv(data_int, "Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv", ro
 write.csv(data_int_2, "Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv", row.names = FALSE)  
 ```
 
+```{r}
+# Check for duplicates in the 'reach' column of 'data'
+duplicated_reach <- data$duplicated("reach")
+
+data <- aggregate(. ~ reach, data, mean)
+```
 
 
 

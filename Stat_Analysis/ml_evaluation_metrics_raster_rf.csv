@@ -1,13 +1,13 @@
-"nse","bias","r2","index","model","origin","rmse","mae"
--0.255757764136716,NA,0.0425074359834455,"k_index","rf","raster_extract",NA,NA
--0.457904519904457,NA,0.0161034688488918,"shannon","rf","raster_extract",NA,NA
--0.130236603415175,NA,0.00632514781499448,"abundance","rf","raster_extract",NA,NA
--0.128076091150946,NA,0.00931226778181731,"rel_abundance","rf","raster_extract",NA,NA
--0.10776676476266,NA,0.0162054318566261,"k_index","rf","raster_extract",NA,NA
--0.337939167579584,NA,0.0267848254560148,"shannon","rf","raster_extract",NA,NA
--0.0963634727492377,NA,0.0153136408926712,"abundance","rf","raster_extract",NA,NA
--0.0965561640358141,NA,0.0128294205609678,"rel_abundance","rf","raster_extract",NA,NA
--1.40181309726143,NA,0.354207083137423,"k_index","rf","raster_extract",NA,NA
--0.426476604723009,NA,0.0180167259536365,"shannon","rf","raster_extract",NA,NA
--0.364452344102427,NA,0.0567044854007438,"abundance","rf","raster_extract",NA,NA
--0.325903558804934,NA,0.0509969932503822,"rel_abundance","rf","raster_extract",NA,NA
+"nse","r2","bias","rmse","mae","index","model","predictor","origin"
+-0.230640360951023,0.0407567157297606,NA,NA,NA,"k_index","rf","v","raster_extract"
+-0.458812290719924,0.0194043734386772,NA,NA,NA,"shannon","rf","v","raster_extract"
+-0.123361920038197,0.00559468756035701,NA,NA,NA,"abundance","rf","v","raster_extract"
+-0.123678286986386,0.0064514922458912,NA,NA,NA,"rel_abundance","rf","v","raster_extract"
+-0.108306857148346,0.0179353660982123,NA,NA,NA,"k_index","rf","v + wd","raster_extract"
+-0.341718716508092,0.0381346421126119,NA,NA,NA,"shannon","rf","v + wd","raster_extract"
+-0.10224587526677,0.0120123848841112,NA,NA,NA,"abundance","rf","v + wd","raster_extract"
+-0.0733859854026335,0.0168475625439496,NA,NA,NA,"rel_abundance","rf","v + wd","raster_extract"
+-1.19769252771656,0.345851879900815,NA,NA,NA,"k_index","rf","var","raster_extract"
+-0.394282998662379,0.023983274092761,NA,NA,NA,"shannon","rf","var","raster_extract"
+-0.396525647400521,0.0651806183025586,NA,NA,NA,"abundance","rf","var","raster_extract"
+-0.366187233698084,0.0599812408255519,NA,NA,NA,"rel_abundance","rf","var","raster_extract"

@@ -65,7 +65,7 @@ data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv"
   mutate(ecomorph_class = if_else(ecomorph_class == "-", 0, as.numeric(ecomorph_class)))
 
 # Remove every second row
-data_section <- data_section[-seq(2, nrow(data_section), by = 2), ]
+data_section <- data_section[-seq(c(2), nrow(data_section), by = c(2)), ]
 
 # load data containing selected variables 
 data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv") |>
@@ -1293,23 +1293,23 @@ rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    2       0.8387539             2                 
-rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 2, sample.fraction = 0.8387539, min.node.size = 2, importance = "impurity")
+#1:    8        0.225604             6                 
+rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 8, sample.fraction = 0.225604, min.node.size = 6, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.5632708             2                  
-rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 1, sample.fraction = 0.5632708, min.node.size = 2, importance = "impurity")
+#1:    1       0.4528197             1                   
+rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 1, sample.fraction = 0.4528197, min.node.size = 1, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    2       0.5495946             3                    
-rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 2, sample.fraction = 0.5495946, min.node.size = 3, importance = "impurity")
+#1:    1       0.7637322             2                   
+rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 1, sample.fraction = 0.7637322, min.node.size = 2, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    6        0.542884             7                   
-rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 6, sample.fraction = 0.542884, min.node.size = 7, importance = "impurity")
+#1:    1       0.4890119             3                   
+rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 1, sample.fraction = 0.4890119, min.node.size = 3, importance = "impurity")
 
 ### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
 # With k_index as response
@@ -1462,1751 +1462,7 @@ write.csv(vi_rf_model_var_c, "ML_model/var_imp/vi_rf_model_var_woc.csv", row.nam
 write.csv(vi_rel_rf_model_var_c, "ML_model/var_imp/vi_rel_rf_model_var_woc.csv", row.names = FALSE)
 ```
 
-## !sec! Partial dependence plots
-### Data extraction & export
-```{r}
-### PREDICTOR: VELOCITY ### -------------------------------------------------
-# With k_index as response --------------------------------------------------
-### velocity
-pdp_model_v_k_c <- pdp::partial(rf_model_v_k_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity_c",
-         model = "velocity w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_v_k_c, "ML_Model/pdp_data/pdp_v_k_c_rf.csv", row.names = FALSE)
-
-# With shannon index as response ----------------------------------------------
-### velocity 
-pdp_model_v_s_c <- pdp::partial(rf_model_v_s_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity_c",
-         model = "velocity w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_v_s_c, "ML_Model/pdp_data/pdp_v_s_c_rf.csv", row.names = FALSE)
-
-# With abundance as response --------------------------------------------------
-### velocity 
-pdp_model_v_a_c <- pdp::partial(rf_model_v_a_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "velocity w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_v_a_c, "ML_Model/pdp_data/pdp_v_a_c_rf.csv", row.names = FALSE)
-
-
-# With rel_abundance as response ----------------------------------------------
-### velocity 
-pdp_model_v_ra_c <- pdp::partial(rf_model_v_ra_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "velocity w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_v_ra_c, "ML_Model/pdp_data/pdp_v_ra_c_rf.csv", row.names = FALSE)
-
-### PREDICTORS: VELOCITY + WD ### --------------------------------------------
-# With k_index as response ---------------------------------------------------
-### velocity 
-pdp_model_v_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "v + wd w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_v_wd_k_c, "ML_Model/pdp_data/pdp_v_wd_k_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_k_c <- pdp::partial(rf_model_wd_k_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_wd_k_c, "ML_Model/pdp_data/pdp_wd_k_c_rf.csv", row.names = FALSE)
-
-# With shannon index as response ----------------------------------------------
-### velocity 
-pdp_model_v_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "v + wd w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_v_wd_s_c, "ML_Model/pdp_data/pdp_v_wd_s_c_rf.csv", row.names = FALSE)
-
-### wd_m
-pdp_model_wd_s_c <- pdp::partial(rf_model_wd_s_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_wd_s_c, "ML_Model/pdp_data/pdp_wd_s_c_rf.csv", row.names = FALSE)
-
-# With abundance as response --------------------------------------------------
-### velocity 
-pdp_model_v_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "v + wd w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_v_wd_a_c, "ML_Model/pdp_data/pdp_v_wd_a_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_a_c <- pdp::partial(rf_model_wd_a_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_wd_a_c, "ML_Model/pdp_data/pdp_wd_a_c_rf.csv", row.names = FALSE)
-
-# With rel_abundance as response ---------------------------------------------
-### velocity
-pdp_model_v_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "v + wd w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_v_wd_ra_c, "ML_Model/pdp_data/pdp_v_wd_ra_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_ra_c <- pdp::partial(rf_model_wd_ra_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "v + wd w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_wd_ra_c, "ML_Model/pdp_data/pdp_wd_ra_c_rf.csv", row.names = FALSE)
-
-### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------------
-# With k_index as response ---------------------------------------------------
-### velocity 
-pdp_model_v_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_v_samp_k_c, "ML_Model/pdp_data/pdp_v_samp_k_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_wd_samp_k_c, "ML_Model/pdp_data/pdp_wd_samp_k_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_z_samp_k_c, "ML_Model/pdp_data/pdp_z_samp_k_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_dist_samp_k_c, "ML_Model/pdp_data/pdp_dist_samp_k_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_cv_samp_k_c, "ML_Model/pdp_data/pdp_cv_samp_k_c_rf.csv", row.names = FALSE)
-
-### alg_cover 
-pdp_model_ac_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_ac_samp_k_c, "ML_Model/pdp_data/pdp_ac_samp_k_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_mc_samp_k_c, "ML_Model/pdp_data/pdp_mc_samp_k_c_rf.csv", row.names = FALSE)
-
-### cpom_cover 
-pdp_model_cc_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_cc_samp_k_c, "ML_Model/pdp_data/pdp_cc_samp_k_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_clog_3_samp_k_c, "ML_Model/pdp_data/pdp_clog_3_samp_k_c_rf.csv", row.names = FALSE)
-
-### clog_6 
-pdp_model_clog_6_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_clog_6_samp_k_c, "ML_Model/pdp_data/pdp_clog_6_samp_k_c_rf.csv", row.names = FALSE)
-
-### sub_type
-pdp_model_sub_samp_k_c <- pdp::partial(rf_model_samp_k_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_sub_samp_k_c, "ML_Model/pdp_data/pdp_sub_samp_k_c_rf.csv", row.names = FALSE)
-
-# With shannon index as response ----------------------------------------------
-### velocity 
-pdp_model_v_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_v_samp_s_c, "ML_Model/pdp_data/pdp_v_samp_s_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_wd_samp_s_c, "ML_Model/pdp_data/pdp_wd_samp_s_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_z_samp_s_c, "ML_Model/pdp_data/pdp_z_samp_s_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_dist_samp_s_c, "ML_Model/pdp_data/pdp_dist_samp_s_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/ coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_cv_samp_s_c, "ML_Model/pdp_data/pdp_cv_samp_s_c_rf.csv", row.names = FALSE)
-
-### alg_cover 
-pdp_model_ac_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_ac_samp_s_c, "ML_Model/pdp_data/pdp_ac_samp_s_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_mc_samp_s_c, "ML_Model/pdp_data/pdp_mc_samp_s_c_rf.csv", row.names = FALSE)
-
-### cpom_cover
-pdp_model_cc_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_cc_samp_s_c, "ML_Model/pdp_data/pdp_cc_samp_s_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_clog_3_samp_s_c, "ML_Model/pdp_data/pdp_clog_3_samp_s_c_rf.csv", row.names = FALSE)
-
-### clog_6 
-pdp_model_clog_6_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_clog_6_samp_s_c, "ML_Model/pdp_data/pdp_clog_6_samp_s_c_rf.csv", row.names = FALSE)
-
-### sub_type 
-pdp_model_sub_samp_s_c <- pdp::partial(rf_model_samp_s_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_sub_samp_s_c, "ML_Model/pdp_data/pdp_sub_samp_s_c_rf.csv", row.names = FALSE)
-
-# With abundance as response --------------------------------------------------
-### velocity 
-pdp_model_v_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_v_samp_a_c, "ML_Model/pdp_data/pdp_v_samp_a_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_wd_samp_a_c, "ML_Model/pdp_data/pdp_wd_samp_a_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_z_samp_a_c, "ML_Model/pdp_data/pdp_z_samp_a_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_dist_samp_a_c, "ML_Model/pdp_data/pdp_dist_samp_a_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_cv_samp_a_c, "ML_Model/pdp_data/pdp_cv_samp_a_c_rf.csv", row.names = FALSE)
-
-### alg_cover 
-pdp_model_ac_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_ac_samp_a_c, "ML_Model/pdp_data/pdp_ac_samp_a_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_mc_samp_a_c, "ML_Model/pdp_data/pdp_mc_samp_a_c_rf.csv", row.names = FALSE)
-
-### cpom_cover 
-pdp_model_cc_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_cc_samp_a_c, "ML_Model/pdp_data/pdp_cc_samp_a_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_clog_3_samp_a_c, "ML_Model/pdp_data/pdp_clog_3_samp_a_c_rf.csv", row.names = FALSE)
-
-### clog_6 
-pdp_model_clog_6_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_clog_6_samp_a_c, "ML_Model/pdp_data/pdp_clog_6_samp_a_c_rf.csv", row.names = FALSE)
-
-### sub_type 
-pdp_model_sub_samp_a_c <- pdp::partial(rf_model_samp_a_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_sub_samp_a_c, "ML_Model/pdp_data/pdp_sub_samp_a_c_rf.csv", row.names = FALSE)
-
-# With rel_abundance as response ----------------------------------------------
-### velocity 
-pdp_model_v_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_v_samp_ra_c, "ML_Model/pdp_data/pdp_v_samp_ra_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_wd_samp_ra_c, "ML_Model/pdp_data/pdp_wd_samp_ra_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_z_samp_ra_c, "ML_Model/pdp_data/pdp_z_samp_ra_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_dist_samp_ra_c, "ML_Model/pdp_data/pdp_dist_samp_ra_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_cv_samp_ra_c, "ML_Model/pdp_data/pdp_cv_samp_ra_c_rf.csv", row.names = FALSE)
-
-### alg_cover 
-pdp_model_ac_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_ac_samp_ra_c, "ML_Model/pdp_data/pdp_ac_samp_ra_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_mc_samp_ra_c, "ML_Model/pdp_data/pdp_mc_samp_ra_c_rf.csv", row.names = FALSE)
-
-### cpom_cover 
-pdp_model_cc_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_cc_samp_ra_c, "ML_Model/pdp_data/pdp_cc_samp_ra_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_clog_3_samp_ra_c, "ML_Model/pdp_data/pdp_clog_3_samp_ra_c_rf.csv", row.names = FALSE)
-
-### clog_6 
-pdp_model_clog_6_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_clog_6_samp_ra_c, "ML_Model/pdp_data/pdp_clog_6_samp_ra_c_rf.csv", row.names = FALSE)
-
-### sub_type 
-pdp_model_sub_samp_ra_c <- pdp::partial(rf_model_samp_ra_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "sampling w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_sub_samp_ra_c, "ML_Model/pdp_data/pdp_sub_samp_ra_c_rf.csv", row.names = FALSE)
-
-### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# With k_index as response ----------------------------------------------------
-### velocity 
-pdp_model_v_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_v_sec_k_c, "ML_Model/pdp_data/pdp_v_sec_k_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_wd_sec_k_c, "ML_Model/pdp_data/pdp_wd_sec_k_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_z_sec_k_c, "ML_Model/pdp_data/pdp_z_sec_k_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_dist_sec_k_c, "ML_Model/pdp_data/pdp_dist_sec_k_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_cv_sec_k_c, "ML_Model/pdp_data/pdp_cv_sec_k_c_rf.csv", row.names = FALSE)
-
-### alg_cover
-pdp_model_ac_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_ac_sec_k_c, "ML_Model/pdp_data/pdp_ac_sec_k_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_mc_sec_k_c, "ML_Model/pdp_data/pdp_mc_sec_k_c_rf.csv", row.names = FALSE)
-
-### cpom_cover 
-pdp_model_cc_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_cc_sec_k_c, "ML_Model/pdp_data/pdp_cc_sec_k_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_clog_3_sec_k_c, "ML_Model/pdp_data/pdp_clog_3_sec_k_c_rf.csv", row.names = FALSE)
-
-### clog_6
-pdp_model_clog_6_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_clog_6_sec_k_c, "ML_Model/pdp_data/pdp_clog_6_sec_k_c_rf.csv", row.names = FALSE)
-
-### sub_type 
-pdp_model_sub_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_sub_sec_k_c, "ML_Model/pdp_data/pdp_sub_sec_k_c_rf.csv", row.names = FALSE)
-
-### pH_before
-pdp_model_phb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_before") |>
-  mutate(predictors = "pH_before",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_phb_sec_k_c, "ML_Model/pdp_data/pdp_phb_sec_k_c_rf.csv", row.names = FALSE)
-
-### pH_during
-pdp_model_phd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_during") |>
-  mutate(predictors = "pH_during",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_phd_sec_k_c, "ML_Model/pdp_data/pdp_phd_sec_k_c_rf.csv", row.names = FALSE)
-
-### pH_after
-pdp_model_pha_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "pH_after") |>
-  mutate(predictors = "pH_after",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_pha_sec_k_c, "ML_Model/pdp_data/pdp_pha_sec_k_c_rf.csv", row.names = FALSE)
-
-### conduct_before
-pdp_model_cb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_before") |>
-  mutate(predictors = "conduct_before",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_cb_sec_k_c, "ML_Model/pdp_data/pdp_cb_sec_k_c_rf.csv", row.names = FALSE)
-
-### conduct_during
-pdp_model_cd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_during") |>
-  mutate(predictors = "conduct_during",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_cd_sec_k_c, "ML_Model/pdp_data/pdp_cd_sec_k_c_rf.csv", row.names = FALSE)
-
-### conduct_after
-pdp_model_ca_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "conduct_after") |>
-  mutate(predictors = "conduct_after",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_ca_sec_k_c, "ML_Model/pdp_data/pdp_ca_sec_k_c_rf.csv", row.names = FALSE)
-
-### ox_before
-pdp_model_ob_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_before") |>
-  mutate(predictors = "ox_before",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_ob_sec_k_c, "ML_Model/pdp_data/pdp_ob_sec_k_c_rf.csv", row.names = FALSE)
-
-### ox_during
-pdp_model_od_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_during") |>
-  mutate(predictors = "ox_during",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_od_sec_k_c, "ML_Model/pdp_data/pdp_od_sec_k_c_rf.csv", row.names = FALSE)
-
-### ox_after
-pdp_model_oa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "ox_after") |>
-  mutate(predictors = "ox_after",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_oa_sec_k_c, "ML_Model/pdp_data/pdp_oa_sec_k_c_rf.csv", row.names = FALSE)
-
-### turb_before
-pdp_model_tb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_before") |>
-  mutate(predictors = "turb_before",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_tb_sec_k_c, "ML_Model/pdp_data/pdp_tb_sec_k_c_rf.csv", row.names = FALSE)
-
-### turb_during
-pdp_model_td_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_during") |>
-  mutate(predictors = "turb_during",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_td_sec_k_c, "ML_Model/pdp_data/pdp_td_sec_k_c_rf.csv", row.names = FALSE)
-
-### turb_after
-pdp_model_ta_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "turb_after") |>
-  mutate(predictors = "turb_after",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_ta_sec_k_c, "ML_Model/pdp_data/pdp_ta_sec_k_c_rf.csv", row.names = FALSE)
-
-### temp_before
-pdp_model_teb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_before") |>
-  mutate(predictors = "temp_before",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_teb_sec_k_c, "ML_Model/pdp_data/pdp_teb_sec_k_c_rf.csv", row.names = FALSE)
-
-### temp_during
-pdp_model_ted_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_during") |>
-  mutate(predictors = "temp_during",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_ted_sec_k_c, "ML_Model/pdp_data/pdp_ted_sec_k_c_rf.csv", row.names = FALSE)
-
-### temp_after
-pdp_model_tea_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "temp_after") |>
-  mutate(predictors = "temp_after",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_tea_sec_k_c, "ML_Model/pdp_data/pdp_tea_sec_k_c_rf.csv", row.names = FALSE)
-
-### q_before
-pdp_model_qb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_before") |>
-  mutate(predictors = "q_before",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_qb_sec_k_c, "ML_Model/pdp_data/pdp_qb_sec_k_c_rf.csv", row.names = FALSE)
-
-### q_during
-pdp_model_qd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_during") |>
-  mutate(predictors = "q_during",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_qd_sec_k_c, "ML_Model/pdp_data/pdp_qd_sec_k_c_rf.csv", row.names = FALSE)
-
-### q_after
-pdp_model_qa_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "q_after") |>
-  mutate(predictors = "q_after",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_qa_sec_k_c, "ML_Model/pdp_data/pdp_qa_sec_k_c_rf.csv", row.names = FALSE)
-
-### gaug_before
-pdp_model_gb_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_before") |>
-  mutate(predictors = "gaug_before",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_gb_sec_k_c, "ML_Model/pdp_data/pdp_gb_sec_k_c_rf.csv", row.names = FALSE)
-
-### gaug_during
-pdp_model_gd_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_during") |>
-  mutate(predictors = "gaug_during",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_gd_sec_k_c, "ML_Model/pdp_data/pdp_gd_sec_k_c_rf.csv", row.names = FALSE)
-
-### gaug_after
-pdp_model_ga_sec_k_c <- pdp::partial(rf_model_sec_k_c, pred.var = "gaug_after") |>
-  mutate(predictors = "gaug_after",
-         model = "all predictors w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_ga_sec_k_c, "ML_Model/pdp_data/pdp_ga_sec_k_c_rf.csv", row.names = FALSE)
-
-# With shannon index as response ----------------------------------------------
-### velocity 
-pdp_model_v_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_v_sec_s_c, "ML_Model/pdp_data/pdp_v_sec_s_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_wd_sec_s_c, "ML_Model/pdp_data/pdp_wd_sec_s_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_z_sec_s_c, "ML_Model/pdp_data/pdp_z_sec_s_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_dist_sec_s_c, "ML_Model/pdp_data/pdp_dist_sec_s_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_cv_sec_s_c, "ML_Model/pdp_data/pdp_cv_sec_s_c_rf.csv", row.names = FALSE)
-
-### alg_cover
-pdp_model_ac_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_ac_sec_s_c, "ML_Model/pdp_data/pdp_ac_sec_s_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_mc_sec_s_c, "ML_Model/pdp_data/pdp_mc_sec_s_c_rf.csv", row.names = FALSE)
-
-### cpom_cover 
-pdp_model_cc_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_cc_sec_s_c, "ML_Model/pdp_data/pdp_cc_sec_s_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_clog_3_sec_s_c, "ML_Model/pdp_data/pdp_clog_3_sec_s_c_rf.csv", row.names = FALSE)
-
-### clog_6
-pdp_model_clog_6_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_clog_6_sec_s_c, "ML_Model/pdp_data/pdp_clog_6_sec_s_c_rf.csv", row.names = FALSE)
-
-### sub_type 
-pdp_model_sub_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_sub_sec_s_c, "ML_Model/pdp_data/pdp_sub_sec_s_c_rf.csv", row.names = FALSE)
-
-### pH_before
-pdp_model_phb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_before") |>
-  mutate(predictors = "pH_before",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_phb_sec_s_c, "ML_Model/pdp_data/pdp_phb_sec_s_c_rf.csv", row.names = FALSE)
-
-### pH_during
-pdp_model_phd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_during") |>
-  mutate(predictors = "pH_during",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_phd_sec_s_c, "ML_Model/pdp_data/pdp_phd_sec_s_c_rf.csv", row.names = FALSE)
-
-### pH_after
-pdp_model_pha_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "pH_after") |>
-  mutate(predictors = "pH_after",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_pha_sec_s_c, "ML_Model/pdp_data/pdp_pha_sec_s_c_rf.csv", row.names = FALSE)
-
-### conduct_before
-pdp_model_cb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_before") |>
-  mutate(predictors = "conduct_before",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_cb_sec_s_c, "ML_Model/pdp_data/pdp_cb_sec_s_c_rf.csv", row.names = FALSE)
-
-### conduct_during
-pdp_model_cd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_during") |>
-  mutate(predictors = "conduct_during",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_cd_sec_s_c, "ML_Model/pdp_data/pdp_cd_sec_s_c_rf.csv", row.names = FALSE)
-
-### conduct_after
-pdp_model_ca_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "conduct_after") |>
-  mutate(predictors = "conduct_after",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_ca_sec_s_c, "ML_Model/pdp_data/pdp_ca_sec_s_c_rf.csv", row.names = FALSE)
-
-### ox_before
-pdp_model_ob_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_before") |>
-  mutate(predictors = "ox_before",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_ob_sec_s_c, "ML_Model/pdp_data/pdp_ob_sec_s_c_rf.csv", row.names = FALSE)
-
-### ox_during
-pdp_model_od_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_during") |>
-  mutate(predictors = "ox_during",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_od_sec_s_c, "ML_Model/pdp_data/pdp_od_sec_s_c_rf.csv", row.names = FALSE)
-
-### ox_after
-pdp_model_oa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "ox_after") |>
-  mutate(predictors = "ox_after",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_oa_sec_s_c, "ML_Model/pdp_data/pdp_oa_sec_s_c_rf.csv", row.names = FALSE)
-
-### turb_before
-pdp_model_tb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_before") |>
-  mutate(predictors = "turb_before",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_tb_sec_s_c, "ML_Model/pdp_data/pdp_tb_sec_s_c_rf.csv", row.names = FALSE)
-
-### turb_during
-pdp_model_td_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_during") |>
-  mutate(predictors = "turb_during",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_td_sec_s_c, "ML_Model/pdp_data/pdp_td_sec_s_c_rf.csv", row.names = FALSE)
-
-### turb_after
-pdp_model_ta_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "turb_after") |>
-  mutate(predictors = "turb_after",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_ta_sec_s_c, "ML_Model/pdp_data/pdp_ta_sec_s_c_rf.csv", row.names = FALSE)
-
-### temp_before
-pdp_model_teb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_before") |>
-  mutate(predictors = "temp_before",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_teb_sec_s_c, "ML_Model/pdp_data/pdp_teb_sec_s_c_rf.csv", row.names = FALSE)
-
-### temp_during
-pdp_model_ted_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_during") |>
-  mutate(predictors = "temp_during",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_ted_sec_s_c, "ML_Model/pdp_data/pdp_ted_sec_s_c_rf.csv", row.names = FALSE)
-
-### temp_after
-pdp_model_tea_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "temp_after") |>
-  mutate(predictors = "temp_after",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_tea_sec_s_c, "ML_Model/pdp_data/pdp_tea_sec_s_c_rf.csv", row.names = FALSE)
-
-### q_before
-pdp_model_qb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_before") |>
-  mutate(predictors = "q_before",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_qb_sec_s_c, "ML_Model/pdp_data/pdp_qb_sec_s_c_rf.csv", row.names = FALSE)
-
-### q_during
-pdp_model_qd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_during") |>
-  mutate(predictors = "q_during",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_qd_sec_s_c, "ML_Model/pdp_data/pdp_qd_sec_s_c_rf.csv", row.names = FALSE)
-
-### q_after
-pdp_model_qa_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "q_after") |>
-  mutate(predictors = "q_after",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_qa_sec_s_c, "ML_Model/pdp_data/pdp_qa_sec_s_c_rf.csv", row.names = FALSE)
-
-### gaug_before
-pdp_model_gb_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_before") |>
-  mutate(predictors = "gaug_before",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_gb_sec_s_c, "ML_Model/pdp_data/pdp_gb_sec_s_c_rf.csv", row.names = FALSE)
-
-### gaug_during
-pdp_model_gd_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_during") |>
-  mutate(predictors = "gaug_during",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_gd_sec_s_c, "ML_Model/pdp_data/pdp_gd_sec_s_c_rf.csv", row.names = FALSE)
-
-### gaug_after
-pdp_model_ga_sec_s_c <- pdp::partial(rf_model_sec_s_c, pred.var = "gaug_after") |>
-  mutate(predictors = "gaug_after",
-         model = "all predictors w/o coordinates",
-         index = "shannon_index")
-
-# export data 
-write.csv(pdp_model_ga_sec_s_c, "ML_Model/pdp_data/pdp_ga_sec_s_c_rf.csv", row.names = FALSE)
-
-# With abundance as response --------------------------------------------------
-### velocity 
-pdp_model_v_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_v_sec_a_c, "ML_Model/pdp_data/pdp_v_sec_a_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_wd_sec_a_c, "ML_Model/pdp_data/pdp_wd_sec_a_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_z_sec_a_c, "ML_Model/pdp_data/pdp_z_sec_a_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_dist_sec_a_c, "ML_Model/pdp_data/pdp_dist_sec_a_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_cv_sec_a_c, "ML_Model/pdp_data/pdp_cv_sec_a_c_rf.csv", row.names = FALSE)
-
-### alg_cover
-pdp_model_ac_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_ac_sec_a_c, "ML_Model/pdp_data/pdp_ac_sec_a_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_mc_sec_a_c, "ML_Model/pdp_data/pdp_mc_sec_a_c_rf.csv", row.names = FALSE)
-
-### cpom_cover 
-pdp_model_cc_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_cc_sec_a_c, "ML_Model/pdp_data/pdp_cc_sec_a_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_clog_3_sec_a_c, "ML_Model/pdp_data/pdp_clog_3_sec_a_c_rf.csv", row.names = FALSE)
-
-### clog_6
-pdp_model_clog_6_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_clog_6_sec_a_c, "ML_Model/pdp_data/pdp_clog_6_sec_a_c_rf.csv", row.names = FALSE)
-
-### sub_type 
-pdp_model_sub_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_sub_sec_a_c, "ML_Model/pdp_data/pdp_sub_sec_a_c_rf.csv", row.names = FALSE)
-
-### pH_before
-pdp_model_phb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_before") |>
-  mutate(predictors = "pH_before",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_phb_sec_a_c, "ML_Model/pdp_data/pdp_phb_sec_a_c_rf.csv", row.names = FALSE)
-
-### pH_during
-pdp_model_phd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_during") |>
-  mutate(predictors = "pH_during",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_phd_sec_a_c, "ML_Model/pdp_data/pdp_phd_sec_a_c_rf.csv", row.names = FALSE)
-
-### pH_after
-pdp_model_pha_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "pH_after") |>
-  mutate(predictors = "pH_after",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_pha_sec_a_c, "ML_Model/pdp_data/pdp_pha_sec_a_c_rf.csv", row.names = FALSE)
-
-### conduct_before
-pdp_model_cb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_before") |>
-  mutate(predictors = "conduct_before",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_cb_sec_a_c, "ML_Model/pdp_data/pdp_cb_sec_a_c_rf.csv", row.names = FALSE)
-
-### conduct_during
-pdp_model_cd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_during") |>
-  mutate(predictors = "conduct_during",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_cd_sec_a_c, "ML_Model/pdp_data/pdp_cd_sec_a_c_rf.csv", row.names = FALSE)
-
-### conduct_after
-pdp_model_ca_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "conduct_after") |>
-  mutate(predictors = "conduct_after",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_ca_sec_a_c, "ML_Model/pdp_data/pdp_ca_sec_a_c_rf.csv", row.names = FALSE)
-
-### ox_before
-pdp_model_ob_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_before") |>
-  mutate(predictors = "ox_before",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_ob_sec_a_c, "ML_Model/pdp_data/pdp_ob_sec_a_c_rf.csv", row.names = FALSE)
-
-### ox_during
-pdp_model_od_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_during") |>
-  mutate(predictors = "ox_during",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_od_sec_a_c, "ML_Model/pdp_data/pdp_od_sec_a_c_rf.csv", row.names = FALSE)
-
-### ox_after
-pdp_model_oa_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "ox_after") |>
-  mutate(predictors = "ox_after",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_oa_sec_a_c, "ML_Model/pdp_data/pdp_oa_sec_a_c_rf.csv", row.names = FALSE)
-
-### turb_before
-pdp_model_tb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_before") |>
-  mutate(predictors = "turb_before",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_tb_sec_a_c, "ML_Model/pdp_data/pdp_tb_sec_a_c_rf.csv", row.names = FALSE)
-
-### turb_during
-pdp_model_td_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_during") |>
-  mutate(predictors = "turb_during",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_td_sec_a_c, "ML_Model/pdp_data/pdp_td_sec_a_c_rf.csv", row.names = FALSE)
-
-### turb_after
-pdp_model_ta_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "turb_after") |>
-  mutate(predictors = "turb_after",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_ta_sec_a_c, "ML_Model/pdp_data/pdp_ta_sec_a_c_rf.csv", row.names = FALSE)
-
-### temp_before
-pdp_model_teb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_before") |>
-  mutate(predictors = "temp_before",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_teb_sec_a_c, "ML_Model/pdp_data/pdp_teb_sec_a_c_rf.csv", row.names = FALSE)
-
-### temp_during
-pdp_model_ted_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_during") |>
-  mutate(predictors = "temp_during",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_ted_sec_a_c, "ML_Model/pdp_data/pdp_ted_sec_a_c_rf.csv", row.names = FALSE)
-
-### temp_after
-pdp_model_tea_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "temp_after") |>
-  mutate(predictors = "temp_after",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_tea_sec_a_c, "ML_Model/pdp_data/pdp_tea_sec_a_c_rf.csv", row.names = FALSE)
-
-### q_before
-pdp_model_qb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_before") |>
-  mutate(predictors = "q_before",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_qb_sec_a_c, "ML_Model/pdp_data/pdp_qb_sec_a_c_rf.csv", row.names = FALSE)
-
-### q_during
-pdp_model_qd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_during") |>
-  mutate(predictors = "q_during",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_qd_sec_a_c, "ML_Model/pdp_data/pdp_qd_sec_a_c_rf.csv", row.names = FALSE)
-
-### q_after
-pdp_model_qa_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "q_after") |>
-  mutate(predictors = "q_after",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_qa_sec_a_c, "ML_Model/pdp_data/pdp_qa_sec_a_c_rf.csv", row.names = FALSE)
-
-### gaug_before
-pdp_model_gb_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_before") |>
-  mutate(predictors = "gaug_before",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_gb_sec_a_c, "ML_Model/pdp_data/pdp_gb_sec_a_c_rf.csv", row.names = FALSE)
-
-### gaug_during
-pdp_model_gd_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_during") |>
-  mutate(predictors = "gaug_during",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_gd_sec_a_c, "ML_Model/pdp_data/pdp_gd_sec_a_c_rf.csv", row.names = FALSE)
-
-### gaug_after
-pdp_model_ga_sec_a_c <- pdp::partial(rf_model_sec_a_c, pred.var = "gaug_after") |>
-  mutate(predictors = "gaug_after",
-         model = "all predictors w/o coordinates",
-         index = "abundance")
-
-# export data 
-write.csv(pdp_model_ga_sec_a_c, "ML_Model/pdp_data/pdp_ga_sec_a_c_rf.csv", row.names = FALSE)
-
-# With relative abundance as response -----------------------------------------
-### velocity 
-pdp_model_v_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_v_sec_ra_c, "ML_Model/pdp_data/pdp_v_sec_ra_c_rf.csv", row.names = FALSE)
-
-### wd_m 
-pdp_model_wd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_wd_sec_ra_c, "ML_Model/pdp_data/pdp_wd_sec_ra_c_rf.csv", row.names = FALSE)
-
-### z 
-pdp_model_z_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "z") |>
-  mutate(predictors = "z",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_z_sec_ra_c, "ML_Model/pdp_data/pdp_z_sec_ra_c_rf.csv", row.names = FALSE)
-
-### dist_w 
-pdp_model_dist_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "dist_w") |>
-  mutate(predictors = "dist_w",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_dist_sec_ra_c, "ML_Model/pdp_data/pdp_dist_sec_ra_c_rf.csv", row.names = FALSE)
-
-### cat_v 
-pdp_model_cv_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cat_velocity") |>
-  mutate(predictors = "cat_velocity",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_cv_sec_ra_c, "ML_Model/pdp_data/pdp_cv_sec_ra_c_rf.csv", row.names = FALSE)
-
-### alg_cover
-pdp_model_ac_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "alg_cover") |>
-  mutate(predictors = "alg_cover",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_ac_sec_ra_c, "ML_Model/pdp_data/pdp_ac_sec_ra_c_rf.csv", row.names = FALSE)
-
-### moos_cover 
-pdp_model_mc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "moos_cover") |>
-  mutate(predictors = "moos_cover",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_mc_sec_ra_c, "ML_Model/pdp_data/pdp_mc_sec_ra_c_rf.csv", row.names = FALSE)
-
-### cpom_cover 
-pdp_model_cc_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "cpom_cover") |>
-  mutate(predictors = "cpom_cover",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_cc_sec_ra_c, "ML_Model/pdp_data/pdp_cc_sec_ra_c_rf.csv", row.names = FALSE)
-
-### clog_3 
-pdp_model_clog_3_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_3_class_int") |>
-  mutate(predictors = "clog_3_class",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_clog_3_sec_ra_c, "ML_Model/pdp_data/pdp_clog_3_sec_ra_c_rf.csv", row.names = FALSE)
-
-### clog_6
-pdp_model_clog_6_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "clog_6_class_int") |>
-  mutate(predictors = "clog_6_class",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_clog_6_sec_ra_c, "ML_Model/pdp_data/pdp_clog_6_sec_ra_c_rf.csv", row.names = FALSE)
-
-### sub_type 
-pdp_model_sub_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "sub_type_int") |>
-  mutate(predictors = "sub_type",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_sub_sec_ra_c, "ML_Model/pdp_data/pdp_sub_sec_ra_c_rf.csv", row.names = FALSE)
-
-### pH_before
-pdp_model_phb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_before") |>
-  mutate(predictors = "pH_before",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_phb_sec_ra_c, "ML_Model/pdp_data/pdp_phb_sec_ra_c_rf.csv", row.names = FALSE)
-
-### pH_during
-pdp_model_phd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_during") |>
-  mutate(predictors = "pH_during",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_phd_sec_ra_c, "ML_Model/pdp_data/pdp_phd_sec_ra_c_rf.csv", row.names = FALSE)
-
-### pH_after
-pdp_model_pha_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "pH_after") |>
-  mutate(predictors = "pH_after",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_pha_sec_ra_c, "ML_Model/pdp_data/pdp_pha_sec_ra_c_rf.csv", row.names = FALSE)
-
-### conduct_before
-pdp_model_cb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_before") |>
-  mutate(predictors = "conduct_before",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_cb_sec_ra_c, "ML_Model/pdp_data/pdp_cb_sec_ra_c_rf.csv", row.names = FALSE)
-
-### conduct_during
-pdp_model_cd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_during") |>
-  mutate(predictors = "conduct_during",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_cd_sec_ra_c, "ML_Model/pdp_data/pdp_cd_sec_ra_c_rf.csv", row.names = FALSE)
-
-### conduct_after
-pdp_model_ca_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "conduct_after") |>
-  mutate(predictors = "conduct_after",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_ca_sec_ra_c, "ML_Model/pdp_data/pdp_ca_sec_ra_c_rf.csv", row.names = FALSE)
-
-### ox_before
-pdp_model_ob_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_before") |>
-  mutate(predictors = "ox_before",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_ob_sec_ra_c, "ML_Model/pdp_data/pdp_ob_sec_ra_c_rf.csv", row.names = FALSE)
-
-### ox_during
-pdp_model_od_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_during") |>
-  mutate(predictors = "ox_during",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_od_sec_ra_c, "ML_Model/pdp_data/pdp_od_sec_ra_c_rf.csv", row.names = FALSE)
-
-### ox_after
-pdp_model_oa_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "ox_after") |>
-  mutate(predictors = "ox_after",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_oa_sec_ra_c, "ML_Model/pdp_data/pdp_oa_sec_ra_c_rf.csv", row.names = FALSE)
-
-### turb_before
-pdp_model_tb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_before") |>
-  mutate(predictors = "turb_before",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_tb_sec_ra_c, "ML_Model/pdp_data/pdp_tb_sec_ra_c_rf.csv", row.names = FALSE)
-
-### turb_during
-pdp_model_td_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_during") |>
-  mutate(predictors = "turb_during",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_td_sec_ra_c, "ML_Model/pdp_data/pdp_td_sec_ra_c_rf.csv", row.names = FALSE)
-
-### turb_after
-pdp_model_ta_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "turb_after") |>
-  mutate(predictors = "turb_after",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_ta_sec_ra_c, "ML_Model/pdp_data/pdp_ta_sec_ra_c_rf.csv", row.names = FALSE)
-
-### temp_before
-pdp_model_teb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_before") |>
-  mutate(predictors = "temp_before",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_teb_sec_ra_c, "ML_Model/pdp_data/pdp_teb_sec_ra_c_rf.csv", row.names = FALSE)
-
-### temp_during
-pdp_model_ted_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_during") |>
-  mutate(predictors = "temp_during",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_ted_sec_ra_c, "ML_Model/pdp_data/pdp_ted_sec_ra_c_rf.csv", row.names = FALSE)
-
-### temp_after
-pdp_model_tea_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "temp_after") |>
-  mutate(predictors = "temp_after",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_tea_sec_ra_c, "ML_Model/pdp_data/pdp_tea_sec_ra_c_rf.csv", row.names = FALSE)
-
-### q_before
-pdp_model_qb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_before") |>
-  mutate(predictors = "q_before",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_qb_sec_ra_c, "ML_Model/pdp_data/pdp_qb_sec_ra_c_rf.csv", row.names = FALSE)
-
-### q_during
-pdp_model_qd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_during") |>
-  mutate(predictors = "q_during",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_qd_sec_ra_c, "ML_Model/pdp_data/pdp_qd_sec_ra_c_rf.csv", row.names = FALSE)
-
-### q_after
-pdp_model_qa_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "q_after") |>
-  mutate(predictors = "q_after",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_qa_sec_ra_c, "ML_Model/pdp_data/pdp_qa_sec_ra_c_rf.csv", row.names = FALSE)
-
-### gaug_before
-pdp_model_gb_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_before") |>
-  mutate(predictors = "gaug_before",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_gb_sec_ra_c, "ML_Model/pdp_data/pdp_gb_sec_ra_c_rf.csv", row.names = FALSE)
-
-### gaug_during
-pdp_model_gd_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_during") |>
-  mutate(predictors = "gaug_during",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_gd_sec_ra_c, "ML_Model/pdp_data/pdp_gd_sec_ra_c_rf.csv", row.names = FALSE)
-
-### gaug_after
-pdp_model_ga_sec_ra_c <- pdp::partial(rf_model_sec_ra_c, pred.var = "gaug_after") |>
-  mutate(predictors = "gaug_after",
-         model = "all predictors w/o coordinates",
-         index = "rel_abundance")
-
-# export data 
-write.csv(pdp_model_ga_sec_ra_c, "ML_Model/pdp_data/pdp_ga_sec_ra_c_rf.csv", row.names = FALSE)
-
-### PREDICTOR: SELECTED VARIABLES ### -----------------------------------------
-# With k_index as response --------------------------------------------------
-### velocity
-pdp_model_v_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "velocity")|>
-  mutate(predictors = "velocity",
-         model = "velocity w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_v_var_k_c, "ML_Model/pdp_data/pdp_v_var_k_c_rf.csv", row.names = FALSE)
-
-### z
-pdp_model_z_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "z")|>
-  mutate(predictors = "z",
-         model = "z w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_z_var_k_c, "ML_Model/pdp_data/pdp_z_var_k_c_rf.csv", row.names = FALSE)
-
-### wd_m
-pdp_model_wd_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "wd_m")|>
-  mutate(predictors = "wd_m",
-         model = "wd_m w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_wd_var_k_c, "ML_Model/pdp_data/pdp_wd_var_k_c_rf.csv", row.names = FALSE)
-
-### nitrogen 
-pdp_model_n_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "mean_diff_nitrogen")|>
-  mutate(predictors = "mean_diff_nitrogen",
-         model = "mean_diff_nitrogen w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_n_var_k_c, "ML_Model/pdp_data/pdp_n_var_k_c_rf.csv", row.names = FALSE)
-
-### phosphor 
-pdp_model_p_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "mean_diff_phosphor")|>
-  mutate(predictors = "mean_diff_phosphor",
-         model = "mean_diff_phosphor w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_p_var_k_c, "ML_Model/pdp_data/pdp_p_var_k_c_rf.csv", row.names = FALSE)
-
-### ecomorph_class 
-pdp_model_e_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "ecomorph_class")|>
-  mutate(predictors = "ecomorph_class",
-         model = "ecomorph_class w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_e_var_k_c, "ML_Model/pdp_data/pdp_e_var_k_c_rf.csv", row.names = FALSE)
-
-### biogeo_int 
-pdp_model_b_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "biogeo_int")|>
-  mutate(predictors = "biogeo_int",
-         model = "biogeo_int w/o coordinates",
-         index = "k_index")
-
-# export data 
-write.csv(pdp_model_b_var_k_c, "ML_Model/pdp_data/pdp_b_var_k_c_rf.csv", row.names = FALSE)
-```
+## - PDP - *sec*
 
 ## Obs and Pred
 ```{r}
@@ -3475,7 +1731,7 @@ r2_v_k <- R2(pred = rf_pred_model_v_k_c, obs = responses_v_k)
 r2_rast_v_k <- R2(pred = p_rast_v_k, obs = responses_v_k, na.rm = TRUE)
 
 # with training data 
-r2_train_v_k <- R2(pred = pred_train_v_k, obs = training_v_k_c$k_index, na.rm = TRUE)
+r2_train_v_k <- R2(pred = pred_train_v_k, obs = training_v_k_c$k_index)
 
 # With shannon index as response ------------------------
 # with model using measured values - test set
@@ -3485,7 +1741,7 @@ r2_v_s <- R2(pred = rf_pred_model_v_s_c, obs = responses_v_s)
 r2_rast_v_s <- R2(pred = p_rast_v_s, obs = responses_v_s, na.rm = TRUE)
 
 # with training data 
-r2_train_v_s <- R2(pred = pred_train_v_s, obs = training_v_s_c$shannon, na.rm = TRUE)
+r2_train_v_s <- R2(pred = pred_train_v_s, obs = training_v_s_c$shannon)
 
 # With abundance as response --------------------------------
 # with model using measured values - test set
@@ -3495,7 +1751,7 @@ r2_v_a <- R2(pred = rf_pred_model_v_a_c, obs = responses_v_a)
 r2_rast_v_a <- R2(pred = p_rast_v_a, obs = responses_v_a, na.rm = TRUE)
 
 # with training data 
-r2_train_v_a <- R2(pred = pred_train_v_a, obs = training_v_a_c$abundance, na.rm = TRUE)
+r2_train_v_a <- R2(pred = pred_train_v_a, obs = training_v_a_c$abundance)
 
 # With rel_abundance as response  --------------------------
 # with model using measured values - test set
@@ -3505,7 +1761,7 @@ r2_v_ra <- R2(pred = rf_pred_model_v_ra_c, obs = responses_v_ra)
 r2_rast_v_ra <- R2(pred = p_rast_v_ra, obs = responses_v_ra, na.rm = TRUE)
 
 # with training data 
-r2_train_v_ra <- R2(pred = pred_train_v_ra, obs = training_v_ra_c$rel_abundance, na.rm = TRUE)
+r2_train_v_ra <- R2(pred = pred_train_v_ra, obs = training_v_ra_c$rel_abundance)
 
 ### PREDICTORS: VELOCITY + WD ### -------------------------------------
 # With k_index as response ----------------------
@@ -3516,7 +1772,7 @@ r2_wd_k <- R2(pred = rf_pred_model_wd_k_c, obs = responses_wd_k)
 r2_rast_wd_k <- R2(pred = p_rast_wd_k, obs = responses_wd_k, na.rm = TRUE)
 
 # with training data 
-r2_train_wd_k <- R2(pred = pred_train_wd_k, obs = training_wd_k_c$k_index, na.rm = TRUE)
+r2_train_wd_k <- R2(pred = pred_train_wd_k, obs = training_wd_k_c$k_index)
 
 # With shannon index as response -------------------
 # with model using measured values - test set
@@ -3526,7 +1782,7 @@ r2_wd_s <- R2(pred = rf_pred_model_wd_s_c, obs = responses_wd_s)
 r2_rast_wd_s <- R2(pred = p_rast_wd_s, obs = responses_wd_s, na.rm = TRUE)
 
 # with training data 
-r2_train_wd_s <- R2(pred = pred_train_wd_s, obs = training_wd_s_c$shannon, na.rm = TRUE)
+r2_train_wd_s <- R2(pred = pred_train_wd_s, obs = training_wd_s_c$shannon)
 
 # With abundance as response ----------------------------
 # with model using measured values - test set
@@ -3536,7 +1792,7 @@ r2_wd_a <- R2(pred = rf_pred_model_wd_a_c, obs = responses_wd_a)
 r2_rast_wd_a <- R2(pred = p_rast_wd_a, obs = responses_wd_a, na.rm = TRUE)
 
 # with training data 
-r2_train_wd_a <- R2(pred = pred_train_wd_a, obs = training_wd_a_c$abundance, na.rm = TRUE)
+r2_train_wd_a <- R2(pred = pred_train_wd_a, obs = training_wd_a_c$abundance)
 
 # With rel_abundance as response --------------------------
 # with model using measured values - test set
@@ -3546,7 +1802,7 @@ r2_wd_ra <- R2(pred = rf_pred_model_wd_ra_c, obs = responses_wd_ra)
 r2_rast_wd_ra <- R2(pred = p_rast_wd_ra, obs = responses_wd_ra, na.rm = TRUE)
 
 # with training data 
-r2_train_wd_ra <- R2(pred = pred_train_wd_ra, obs = training_wd_ra_c$rel_abundance, na.rm = TRUE)
+r2_train_wd_ra <- R2(pred = pred_train_wd_ra, obs = training_wd_ra_c$rel_abundance)
 
 ### PREDICTORS: SAMPLING LOCATIONS ### --------------------------------
 # With k_index as response ------------------------------
@@ -3554,28 +1810,28 @@ r2_train_wd_ra <- R2(pred = pred_train_wd_ra, obs = training_wd_ra_c$rel_abundan
 r2_samp_k <- R2(pred = rf_pred_model_samp_k_c, obs = responses_samp_k)
 
 # with training data 
-r2_train_samp_k <- R2(pred = pred_train_samp_k, obs = training_v_k_c$k_index, na.rm = TRUE)
+r2_train_samp_k <- R2(pred = pred_train_samp_k, obs = training_v_k_c$k_index)
 
 # With shannon index as response ----------------------------
 # with model using measured values - test set
 r2_samp_s <- R2(pred = rf_pred_model_samp_s_c, obs = responses_samp_s)
 
 # with training data 
-r2_train_samp_s <- R2(pred = pred_train_samp_s, obs = training_v_s_c$shannon, na.rm = TRUE)
+r2_train_samp_s <- R2(pred = pred_train_samp_s, obs = training_v_s_c$shannon)
 
 # With abundance as response -----------------------------
 # with model using measured values - test set
 r2_samp_a <- R2(pred = rf_pred_model_samp_a_c, obs = responses_samp_a)
 
 # with training data 
-r2_train_samp_a <- R2(pred = pred_train_samp_a, obs = training_v_a_c$abundance, na.rm = TRUE)
+r2_train_samp_a <- R2(pred = pred_train_samp_a, obs = training_v_a_c$abundance)
 
 # With rel_abundance as response -----------------------------
 # with model using measured values - test set
 r2_samp_ra <- R2(pred = rf_pred_model_samp_ra_c, obs = responses_samp_ra)
 
 # with training data 
-r2_train_samp_ra <- R2(pred = pred_train_samp_ra, obs = training_v_ra_c$rel_abundance, na.rm = TRUE)
+r2_train_samp_ra <- R2(pred = pred_train_samp_ra, obs = training_v_ra_c$rel_abundance)
 
 ### PREDICTORS: ALL PREDICTORS ### ----------------------------------
 # With k_index as response --------------------
@@ -3583,28 +1839,28 @@ r2_train_samp_ra <- R2(pred = pred_train_samp_ra, obs = training_v_ra_c$rel_abun
 r2_sec_k <- R2(pred = rf_pred_model_sec_k_c, obs = responses_sec_k)
 
 # with training data 
-r2_train_sec_k <- R2(pred = pred_train_sec_k, obs = training_v_k_c$k_index, na.rm = TRUE)
+r2_train_sec_k <- R2(pred = pred_train_sec_k, obs = training_sec_k_c$k_index)
 
 # With shannon index as response ----------------
 # with model using measured values - test set
 r2_sec_s <- R2(pred = rf_pred_model_sec_s_c, obs = responses_sec_s)
 
 # with training data 
-r2_train_sec_s <- R2(pred = pred_train_sec_s, obs = training_v_s_c$shannon, na.rm = TRUE)
+r2_train_sec_s <- R2(pred = pred_train_sec_s, obs = training_sec_s_c$shannon)
 
 # With abundance as response --------------------------
 # with model using measured values - test set
 r2_sec_a <- R2(pred = rf_pred_model_sec_a_c, obs = responses_sec_a)
 
 # with training data 
-r2_train_sec_a <- R2(pred = pred_train_sec_a, obs = training_v_a_c$abundance, na.rm = TRUE)
+r2_train_sec_a <- R2(pred = pred_train_sec_a, obs = training_sec_a_c$abundance)
 
 # With rel_abundance as response ------------------------
 # with model using measured values - test set
 r2_sec_ra <- R2(pred = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
 
 # with training data 
-r2_train_sec_ra <- R2(pred = pred_train_sec_ra, obs = training_v_ra_c$rel_abundance, na.rm = TRUE)
+r2_train_sec_ra <- R2(pred = pred_train_sec_ra, obs = training_sec_ra_c$rel_abundance)
 
 ### PREDICTORS: SELECTED VARIABLES ### ----------------------------
 # With k_index as response --------------------------
@@ -3615,7 +1871,7 @@ r2_var_k <- R2(pred = rf_pred_model_var_k_c, obs = responses_var_k)
 r2_rast_var_k <- R2(pred = p_rast_var_k, obs = responses_var_k, na.rm = TRUE)
 
 # with training data 
-r2_train_var_k <- R2(pred = pred_train_var_k, obs = training_v_k_c$k_index, na.rm = TRUE)
+r2_train_var_k <- R2(pred = pred_train_var_k, obs = training_var_k_c$k_index)
 
 # With shannon index as response -------------------
 # with model using measured values - test set
@@ -3625,7 +1881,7 @@ r2_var_s <- R2(pred = rf_pred_model_var_s_c, obs = responses_var_s)
 r2_rast_var_s <- R2(pred = p_rast_var_s, obs = responses_var_s, na.rm = TRUE)
 
 # with training data 
-r2_train_var_s <- R2(pred = pred_train_var_s, obs = training_v_s_c$shannon, na.rm = TRUE)
+r2_train_var_s <- R2(pred = pred_train_var_s, obs = training_var_s_c$shannon)
 
 # With abundance as response -----------------------
 # with model using measured values - test set
@@ -3635,7 +1891,7 @@ r2_var_a <- R2(pred = rf_pred_model_var_a_c, obs = responses_var_a)
 r2_rast_var_a <- R2(pred = p_rast_var_a, obs = responses_var_a, na.rm = TRUE)
 
 # with training data 
-r2_train_var_a <- R2(pred = pred_train_var_a, obs = training_v_a_c$abundance, na.rm = TRUE)
+r2_train_var_a <- R2(pred = pred_train_var_a, obs = training_var_a_c$abundance)
 
 # With rel_abundance as response ------------------------
 # with model using measured values - test set
@@ -3645,7 +1901,7 @@ r2_var_ra <- R2(pred = rf_pred_model_var_ra_c, obs = responses_var_ra)
 r2_rast_var_ra <- R2(pred = p_rast_var_ra, obs = responses_var_ra, na.rm = TRUE)
 
 # with training data 
-r2_train_var_ra <- R2(pred = pred_train_var_ra, obs = training_v_ra_c$rel_abundance, na.rm = TRUE)
+r2_train_var_ra <- R2(pred = pred_train_var_ra, obs = training_var_ra_c$rel_abundance)
 ```
 
 ## RMSE & MAE
@@ -3681,7 +1937,7 @@ rmse_model_v_s_c <- Metrics::rmse(actual = responses_v_s, predicted = rf_pred_mo
 rmse_rast_v_s <- Metrics::rmse(actual = responses_v_s, predicted = p_rast_v_s)
 
 # with training data 
-rmse_train_v_s <- Metrics::rmse(actual = responses_v_s, predicted = pred_train_v_s)
+rmse_train_v_s <- Metrics::rmse(actual = training_v_s_c$shannon, predicted = pred_train_v_s)
 
 #### MAE ####
 # with model using measured values - test set
@@ -3691,7 +1947,7 @@ mae_model_v_s_c <- Metrics::mae(actual = responses_v_s, predicted = rf_pred_mode
 mae_rast_v_s <- Metrics::mae(actual = responses_v_s, predicted = p_rast_v_s)
 
 # with training data 
-mae_train_v_s <- Metrics::mae(actual = responses_v_s, predicted = pred_train_v_s)
+mae_train_v_s <- Metrics::mae(actual = training_v_s_c$shannon, predicted = pred_train_v_s)
 
 # With abundance as response -------------------------
 #### RMSE ####
@@ -3702,7 +1958,7 @@ rmse_model_v_a_c <- Metrics::rmse(actual = responses_v_a, predicted = rf_pred_mo
 rmse_rast_v_a <- Metrics::rmse(actual = responses_v_a, predicted = p_rast_v_a)
 
 # with training data 
-rmse_train_v_a <- Metrics::rmse(actual = responses_v_a, predicted = pred_train_v_a)
+rmse_train_v_a <- Metrics::rmse(actual = training_v_a_c$abundance, predicted = pred_train_v_a)
 
 #### MAE ####
 # with model using measured values - test set
@@ -3712,7 +1968,7 @@ mae_model_v_a_c <- Metrics::mae(actual = responses_v_a, predicted = rf_pred_mode
 mae_rast_v_a <- Metrics::mae(actual = responses_v_a, predicted = p_rast_v_a)
 
 # with training data 
-mae_train_v_a <- Metrics::mae(actual = responses_v_a, predicted = pred_train_v_a)
+mae_train_v_a <- Metrics::mae(actual = training_v_a_c$abundance, predicted = pred_train_v_a)
 
 # With rel_abundance as response --------------------------
 #### RMSE ####
@@ -3723,7 +1979,7 @@ rmse_model_v_ra_c <- Metrics::rmse(actual = responses_v_ra, predicted = rf_pred_
 rmse_rast_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = p_rast_v_ra)
 
 # with training data 
-rmse_train_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = pred_train_v_ra)
+rmse_train_v_ra <- Metrics::rmse(actual = training_v_ra_c$rel_abundance, predicted = pred_train_v_ra)
 
 #### MAE ####
 # with model using measured values - test set
@@ -3733,7 +1989,7 @@ mae_model_v_ra_c <- Metrics::mae(actual = responses_v_ra, predicted = rf_pred_mo
 mae_rast_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = p_rast_v_ra)
 
 # with training data 
-mae_train_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = pred_train_v_ra)
+mae_train_v_ra <- Metrics::mae(actual = training_v_ra_c$rel_abundance, predicted = pred_train_v_ra)
 
 ### PREDICTORS: VELOCITY + WD ### -----------------------------------
 # With k_index as response ---------------------------
@@ -3766,7 +2022,7 @@ rmse_model_wd_s_c <- Metrics::rmse(actual = responses_wd_s, predicted = rf_pred_
 rmse_rast_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = p_rast_wd_s)
 
 # with training data 
-rmse_train_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = pred_train_wd_s)
+rmse_train_wd_s <- Metrics::rmse(actual = training_wd_s_c$shannon, predicted = pred_train_wd_s)
 
 #### MAE ####
 # with model using measured values - test set
@@ -3776,272 +2032,624 @@ mae_model_wd_s_c <- Metrics::mae(actual = responses_wd_s, predicted = rf_pred_mo
 mae_rast_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = p_rast_wd_s)
 
 # with training data 
-mae_train_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = pred_train_wd_s)
+mae_train_wd_s <- Metrics::mae(actual = training_v_s_c$shannon, predicted = pred_train_wd_s)
 
 # With abundance as response -----------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_wd_a_c <- Metrics::rmse(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
+
+# with model using raster extracted values - test set
 rmse_rast_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = p_rast_wd_a)
 
+# with training data 
+rmse_train_wd_a <- Metrics::rmse(actual = training_wd_a_c$abundance, predicted = pred_train_wd_a)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_wd_a_c <- Metrics::mae(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
+
+# with model using raster extracted values - test set
 mae_rast_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = p_rast_wd_a)
 
-# With rel_abundance as response
+# with training data 
+mae_train_wd_a <- Metrics::mae(actual = training_wd_a_c$abundance, predicted = pred_train_wd_a)
+
+# With rel_abundance as response --------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_wd_ra_c <- Metrics::rmse(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
+
+# with model using raster extracted values - test set
 rmse_rast_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = p_rast_wd_ra)
 
+# with training data 
+rmse_train_wd_ra <- Metrics::rmse(actual = training_wd_ra_c$rel_abundance, predicted = pred_train_wd_ra)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_wd_ra_c <- Metrics::mae(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
+
+# with model using raster extracted values - test set
 mae_rast_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = p_rast_wd_ra)
 
+# with training data 
+mae_train_wd_ra <- Metrics::mae(actual = training_wd_ra_c$rel_abundance, predicted = pred_train_wd_ra)
+
 ### PREDICTORS: SAMPLING LOCATIONS ### ---------------------------------
-# With k_index as response
+# With k_index as response ------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_samp_k_c <- Metrics::rmse(actual = responses_samp_k, predicted = rf_pred_model_samp_k_c)
 
+# with training data 
+rmse_train_samp_k <- Metrics::rmse(actual = training_v_k_c$k_index, predicted = pred_train_samp_k)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_samp_k_c <- Metrics::mae(actual = responses_samp_k, predicted = rf_pred_model_samp_k_c)
 
-# With shannon index as response
+# with training data 
+mae_train_samp_k <- Metrics::mae(actual = training_v_k_c$k_index, predicted = pred_train_samp_k)
+
+# With shannon index as response ----------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_samp_s_c <- Metrics::rmse(actual = responses_samp_s, predicted = rf_pred_model_samp_s_c)
 
+# with training data 
+rmse_train_samp_s <- Metrics::rmse(actual = training_v_s_c$shannon, predicted = pred_train_samp_s)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_samp_s_c <- Metrics::mae(actual = responses_samp_s, predicted = rf_pred_model_samp_s_c)
 
-# With abundance as response
+# with training data 
+mae_train_samp_s <- Metrics::mae(actual = training_v_s_c$shannon, predicted = pred_train_samp_s)
+
+# With abundance as response ---------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_samp_a_c <- Metrics::rmse(actual = responses_samp_a, predicted = rf_pred_model_samp_a_c)
 
+# with training data 
+rmse_train_samp_a <- Metrics::rmse(actual = training_v_a_c$abundance, predicted = pred_train_samp_a)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_samp_a_c <- Metrics::mae(actual = responses_samp_a, predicted = rf_pred_model_samp_a_c)
 
-# With rel_abundance as response
+# with training data 
+mae_train_samp_a <- Metrics::mae(actual = training_v_a_c$abundance, predicted = pred_train_samp_a)
+
+# With rel_abundance as response -----------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_samp_ra_c <- Metrics::rmse(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra_c)
 
+# with training data 
+rmse_train_samp_ra <- Metrics::rmse(actual = training_v_ra_c$rel_abundance, predicted = pred_train_samp_ra)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_samp_ra_c <- Metrics::mae(actual = responses_samp_ra, predicted = rf_pred_model_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# With k_index as response
+# with training data 
+mae_train_samp_ra <- Metrics::mae(actual = training_v_ra_c$rel_abundance, predicted = pred_train_samp_ra)
+
+### PREDICTORS: ALL PREDICTORS ### -------------------------------------
+# With k_index as response ------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_sec_k_c <- Metrics::rmse(actual = responses_sec_k, predicted = rf_pred_model_sec_k_c)
 
+# with training data 
+rmse_train_sec_k <- Metrics::rmse(actual = training_sec_k_c$k_index, predicted = pred_train_sec_k)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_sec_k_c <- Metrics::mae(actual = responses_sec_k, predicted = rf_pred_model_sec_k_c)
 
-# With shannon index as response
+# with training data 
+mae_train_sec_k <- Metrics::mae(actual = training_sec_k_c$k_index, predicted = pred_train_sec_k)
+
+# With shannon index as response --------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_sec_s_c <- Metrics::rmse(actual = responses_sec_s, predicted = rf_pred_model_sec_s_c)
 
+# with training data 
+rmse_train_sec_s <- Metrics::rmse(actual = training_sec_s_c$shannon, predicted = pred_train_sec_s)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_sec_s_c <- Metrics::mae(actual = responses_sec_s, predicted = rf_pred_model_sec_s_c)
 
-# With abundance as response
+# with training data 
+mae_train_sec_s <- Metrics::mae(actual = training_sec_s_c$shannon, predicted = pred_train_sec_s)
+
+# With abundance as response ------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_sec_a_c <- Metrics::rmse(actual = responses_sec_a, predicted = rf_pred_model_sec_a_c)
 
+# with training data 
+rmse_train_sec_a <- Metrics::rmse(actual = training_sec_a_c$abundance, predicted = pred_train_sec_a)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_sec_a_c <- Metrics::mae(actual = responses_sec_a, predicted = rf_pred_model_sec_a_c)
 
-# With rel_abundance as response
+# with training data 
+mae_train_sec_a <- Metrics::mae(actual = training_sec_a_c$abundance, predicted = pred_train_sec_a)
+
+# With rel_abundance as response ---------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_sec_ra_c <- Metrics::rmse(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
 
+# with training data 
+rmse_train_sec_ra <- Metrics::rmse(actual = training_sec_ra_c$rel_abundance, predicted = pred_train_sec_ra)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_sec_ra_c <- Metrics::mae(actual = responses_sec_ra, predicted = rf_pred_model_sec_ra_c)
 
-### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
-# With k_index as response
+# with training data 
+mae_train_sec_ra <- Metrics::mae(actual = training_sec_ra_c$rel_abundance, predicted = pred_train_sec_ra)
+
+### PREDICTORS: SELECTED VARIABLES ### -------------------------------
+# With k_index as response ----------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_var_k_c <- Metrics::rmse(actual = responses_var_k, predicted = rf_pred_model_var_k_c)
+
+# with model using raster extracted values - test set
 rmse_rast_var_k <- Metrics::rmse(actual = responses_var_k, predicted = p_rast_var_k)
 
+# with training data 
+rmse_train_var_k <- Metrics::rmse(actual = training_var_k_c$k_index, predicted = pred_train_var_k)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_var_k_c <- Metrics::mae(actual = responses_var_k, predicted = rf_pred_model_var_k_c)
+
+# with model using raster extracted values - test set
 mae_rast_var_k <- Metrics::mae(actual = responses_var_k, predicted = p_rast_var_k)
 
-# With shannon index as response
+# with training data 
+mae_train_var_k <- Metrics::mae(actual = training_var_k_c$k_index, predicted = pred_train_var_k)
+
+# With shannon index as response -------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_var_s_c <- Metrics::rmse(actual = responses_var_s, predicted = rf_pred_model_var_s_c)
+
+# with model using raster extracted values - test set
 rmse_rast_var_s <- Metrics::rmse(actual = responses_var_s, predicted = p_rast_var_s)
 
+# with training data 
+rmse_train_var_s <- Metrics::rmse(actual = training_var_s_c$shannon, predicted = pred_train_var_s)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_var_s_c <- Metrics::mae(actual = responses_var_s, predicted = rf_pred_model_var_s_c)
+
+# with model using raster extracted values - test set
 mae_rast_var_s <- Metrics::mae(actual = responses_var_s, predicted = p_rast_var_s)
 
-# With abundance as response
+# with training data 
+mae_train_var_s <- Metrics::mae(actual = training_var_s_c$shannon, predicted = pred_train_var_s)
+
+# With abundance as response -----------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_var_a_c <- Metrics::rmse(actual = responses_var_a, predicted = rf_pred_model_var_a_c)
+
+# with model using raster extracted values - test set
 rmse_rast_var_a <- Metrics::rmse(actual = responses_var_a, predicted = p_rast_var_a)
 
+# with training data 
+rmse_train_var_a <- Metrics::rmse(actual = training_var_a_c$abundance, predicted = pred_train_var_a)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_var_a_c <- Metrics::mae(actual = responses_var_a, predicted = rf_pred_model_var_a_c)
+
+# with model using raster extracted values - test set
 mae_rast_var_a <- Metrics::mae(actual = responses_var_a, predicted = p_rast_var_a)
 
-# With rel_abundance as response
+# with training data 
+mae_train_var_a <- Metrics::mae(actual = training_var_a_c$abundance, predicted = pred_train_var_a)
+
+# With rel_abundance as response ----------------------------
+#### RMSE ####
+# with model using measured values - test set
 rmse_model_var_ra_c <- Metrics::rmse(actual = responses_var_ra, predicted = rf_pred_model_var_ra_c)
+
+# with model using raster extracted values - test set
 rmse_rast_var_ra <- Metrics::rmse(actual = responses_var_ra, predicted = p_rast_var_ra)
 
+# with training data 
+rmse_train_var_ra <- Metrics::rmse(actual = training_var_ra_c$rel_abundance, predicted = pred_train_var_ra)
+
+#### MAE ####
+# with model using measured values - test set
 mae_model_var_ra_c <- Metrics::mae(actual = responses_var_ra, predicted = rf_pred_model_var_ra_c)
+
+# with model using raster extracted values - test set
 mae_rast_var_ra <- Metrics::mae(actual = responses_var_ra, predicted = p_rast_var_ra)
 
+# with training data 
+mae_train_var_ra <- Metrics::mae(actual = training_var_ra_c$rel_abundance, predicted = pred_train_var_ra)
 ```
-
-r2 = c(r2_train_v_k, r2_train_v_s, r2_train_v_a, r2_train_v_ra,
-r2_train_wd_k, r2_train_wd_s, r2_train_wd_a, r2_train_wd_ra,
-r2_train_samp_k, r2_train_samp_s, r2_train_samp_a, r2_train_samp_ra,
-r2_train_sec_k, r2_train_sec_s, r2_train_sec_a, r2_train_sec_ra,
-r2_train_var_k, r2_train_var_s, r2_train_var_a, r2_train_var_ra), 
-
-index = c("k_index", "shannon", "abundance", "rel_abundance",
-"k_index", "shannon", "abundance", "rel_abundance",
-"k_index", "shannon", "abundance", "rel_abundance",
-"k_index", "shannon", "abundance", "rel_abundance",
-"k_index", "shannon", "abundance", "rel_abundance"),
-
-predictors = c("velocity", "velocity", "velocity", "velocity",
-"wd", "wd", "wd", "wd",
-"samp", "samp", "samp", "samp",
-"all", "all", "all", "all", 
-"var", "var", "var", "var")
 
 ## Bias 
 ```{r}
-### ONLY VELOCITY AS PREDICTOR ### --------------------------------------------
-# With k_index as response
+### ONLY VELOCITY AS PREDICTOR ### ---------------------------------
+# With k_index as response --------------------
+# with model using measured values - test set
 bias_model_v_k_c <- bias(observados = responses_v_k, estimados = rf_pred_model_v_k_c)
+
+# with model using raster extracted values - test set
 bias_rast_v_k <- bias(observados = responses_v_k, estimados = p_rast_v_k)
 
-# With shannon index as response
+# with training data 
+bias_train_v_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_v_k)
+
+# With shannon index as response ---------------------
+# with model using measured values - test set
 bias_model_v_s_c <- bias(observados = responses_v_s, estimados = rf_pred_model_v_s_c)
+
+# with model using raster extracted values - test set
 bias_rast_v_s <- bias(observados = responses_v_s, estimados = p_rast_v_s)
 
-# With abundance as response
+# with training data 
+bias_train_v_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_v_s)
+
+# With abundance as response --------------------
+# with model using measured values - test set
 bias_model_v_a_c <- bias(observados = responses_v_a, estimados = rf_pred_model_v_a_c)
+
+# with model using raster extracted values - test set
 bias_rast_v_a <- bias(observados = responses_v_a, estimados = p_rast_v_a)
 
-# With rel_abundance as response
+# with training data 
+bias_train_v_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_v_a)
+
+# With rel_abundance as response ---------------------
+# with model using measured values - test set
 bias_model_v_ra_c <- bias(observados = responses_v_ra, estimados = rf_pred_model_v_ra_c)
+
+# with model using raster extracted values - test set
 bias_rast_v_ra <- bias(observados = responses_v_ra, estimados = p_rast_v_ra)
 
-### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
-# With k_index as response
+# with training data 
+bias_train_v_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_v_ra)
+
+### PREDICTORS: VELOCITY + WD ### -----------------------------------
+# With k_index as response ------------------------
+# with model using measured values - test set
 bias_model_wd_k_c <- bias(observados = responses_wd_k, estimados = rf_pred_model_wd_k_c)
+
+# with model using raster extracted values - test set
 bias_rast_wd_k <- bias(observados = responses_wd_k, estimados = p_rast_wd_k)
 
-# With shannon index as response
+# with training data 
+bias_train_wd_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_wd_k)
+
+# With shannon index as response --------------------
+# with model using measured values - test set
 bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = rf_pred_model_wd_s_c)
+
+# with model using raster extracted values - test set
 bias_rast_wd_s <- bias(observados = responses_wd_s, estimados = p_rast_wd_s)
 
-# With abundance as response
+# with training data 
+bias_train_wd_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_wd_s)
+
+# With abundance as response ---------------------
+# with model using measured values - test set
 bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = rf_pred_model_wd_a_c)
+
+# with model using raster extracted values - test set
 bias_rast_wd_a <- bias(observados = responses_wd_a, estimados = p_rast_wd_a)
 
-# With rel_abundance as response
+# with training data 
+bias_train_wd_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_wd_a)
+
+# With rel_abundance as response ---------------------
+# with model using measured values - test set
 bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = rf_pred_model_wd_ra_c)
+
+# with model using raster extracted values - test set
 bias_rast_wd_ra <- bias(observados = responses_wd_ra, estimados = p_rast_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
-# With k_index as response
+# with training data 
+bias_train_wd_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_wd_ra)
+
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------
+# With k_index as response --------------------------
+# with model using measured values - test set
 bias_model_samp_k_c <- bias(observados = responses_samp_k, estimados = rf_pred_model_samp_k_c)
 
-# With shannon index as response
+# with training data 
+bias_train_samp_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_samp_k)
+
+# With shannon index as response ---------------------
+# with model using measured values - test set
 bias_model_samp_s_c <- bias(observados = responses_samp_s, estimados = rf_pred_model_samp_s_c)
 
-# With abundance as response
+# with training data 
+bias_train_samp_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_samp_s)
+
+# With abundance as response -----------------------
+# with model using measured values - test set
 bias_model_samp_a_c <- bias(observados = responses_samp_a, estimados = rf_pred_model_samp_a_c)
 
-# With rel_abundance as response
+# with training data 
+bias_train_samp_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_samp_a)
+
+# With rel_abundance as response -------------------------
+# with model using measured values - test set
 bias_model_samp_ra_c <- bias(observados = responses_samp_ra, estimados = rf_pred_model_samp_ra_c)
 
-### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# With k_index as response
+# with training data 
+bias_train_samp_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_samp_ra)
+
+### PREDICTORS: ALL PREDICTORS ### ---------------------------------
+# With k_index as response --------------------------
+# with model using measured values - test set
 bias_model_sec_k_c <- bias(observados = responses_sec_k, estimados = rf_pred_model_sec_k_c)
 
-# With shannon index as response
+# with training data 
+bias_train_sec_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_sec_k)
+
+# With shannon index as response -------------------
+# with model using measured values - test set
 bias_model_sec_s_c <- bias(observados = responses_sec_s, estimados = rf_pred_model_sec_s_c)
 
-# With abundance as response
+# with training data 
+bias_train_sec_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_sec_s)
+
+# With abundance as response ----------------------
+# with model using measured values - test set
 bias_model_sec_a_c <- bias(observados = responses_sec_a, estimados = rf_pred_model_sec_a_c)
 
-# With rel_abundance as response
+# with training data 
+bias_train_sec_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_sec_a)
+
+# With rel_abundance as response -------------------
+# with model using measured values - test set
 bias_model_sec_ra_c <- bias(observados = responses_sec_ra, estimados = rf_pred_model_sec_ra_c)
 
-### PREDICTORS: SELECTED VARIABLES ### ---------------------------------------
-# With k_index as response
+# with training data 
+bias_train_sec_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_sec_ra)
+
+### PREDICTORS: SELECTED VARIABLES ### -----------------------------
+# With k_index as response ------------------------
+# with model using measured values - test set
 bias_model_var_k_c <- bias(observados = responses_var_k, estimados = rf_pred_model_var_k_c)
+
+# with model using raster extracted values - test set
 bias_rast_var_k <- bias(observados = responses_var_k, estimados = p_rast_var_k)
 
-# With shannon index as response
+# with training data 
+bias_train_var_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_var_k)
+
+# With shannon index as response ---------------------
+# with model using measured values - test set
 bias_model_var_s_c <- bias(observados = responses_var_s, estimados = rf_pred_model_var_s_c)
+
+# with model using raster extracted values - test set
 bias_rast_var_s <- bias(observados = responses_var_s, estimados = p_rast_var_s)
 
-# With abundance as response
+# with training data 
+bias_train_var_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_var_s)
+
+# With abundance as response ------------------------
+# with model using measured values - test set
 bias_model_var_a_c <- bias(observados = responses_var_a, estimados = rf_pred_model_var_a_c)
+
+# with model using raster extracted values - test set
 bias_rast_var_a <- bias(observados = responses_var_a, estimados = p_rast_var_a)
 
-# With rel_abundance as response
-bias_model_var_ra_c <- bias(observados = responses_var_ra, estimados = rf_pred_model_var_ra_c)
-bias_rast_var_ra <- bias(observados = responses_var_ra, estimados = p_rast_var_ra)
-```
+# with training data 
+bias_train_var_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_var_a)
 
+# With rel_abundance as response ---------------------
+# with model using measured values - test set
+bias_model_var_ra_c <- bias(observados = responses_var_ra, estimados = rf_pred_model_var_ra_c)
+
+# with model using raster extracted values - test set
+bias_rast_var_ra <- bias(observados = responses_var_ra, estimados = p_rast_var_ra)
+
+# with training data 
+bias_train_var_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_var_ra)
+```
 
 ## Nash-Sutcliffe efficiency (NSE) 
 ```{r}
-### PREDICTOR: VELOCITY ### ---------------------------------------------------
-# With k_index as response
+### PREDICTOR: VELOCITY ### ----------------------------------------
+# With k_index as response --------------------
+# with model using measured values - test set
 nse_model_v_k_c <- NSE(sim = rf_pred_model_v_k_c, obs = responses_v_k)
+
+# with model using raster extracted values - test set
 nse_rast_v_k <- NSE(sim = p_rast_v_k, obs = responses_v_k)
 
-# With shannon index as response
+# with training data 
+nse_train_v_k <- NSE(sim = pred_train_v_k, obs = training_v_k_c$k_index)
+
+# With shannon index as response --------------------
+# with model using measured values - test set
 nse_model_v_s_c <- NSE(sim = rf_pred_model_v_s_c, obs = responses_v_s)
+
+# with model using raster extracted values - test set
 nse_rast_v_s <- NSE(sim = p_rast_v_s, obs = responses_v_s)
 
-# With abundance as response
+# with training data 
+nse_train_v_s <- NSE(sim = pred_train_v_s, obs = training_v_s_c$shannon)
+
+# With abundance as response --------------------
+# with model using measured values - test set
 nse_model_v_a_c <- NSE(sim = rf_pred_model_v_a_c, obs = responses_v_a)
+
+# with model using raster extracted values - test set
 nse_rast_v_a <- NSE(sim = p_rast_v_a, obs = responses_v_a)
 
-# With rel_abundance as response
+# with training data 
+nse_train_v_a <- NSE(sim = pred_train_v_a, obs = training_v_a_c$abundance)
+
+# With rel_abundance as response ---------------------
+# with model using measured values - test set
 nse_model_v_ra_c <- NSE(sim = rf_pred_model_v_ra_c, obs = responses_v_ra)
+
+# with model using raster extracted values - test set
 nse_rast_v_ra <- NSE(sim = p_rast_v_ra, obs = responses_v_ra)
 
-### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
-# With k_index as response
+# with training data 
+nse_train_v_ra <- NSE(sim = pred_train_v_ra, obs = training_v_ra_c$rel_abundance)
+
+### PREDICTORS: VELOCITY + WD ### -------------------------------------
+# With k_index as response -------------------------
+# with model using measured values - test set
 nse_model_wd_k_c <- NSE(sim = rf_pred_model_wd_k_c, obs = responses_wd_k)
+
+# with model using raster extracted values - test set
 nse_rast_wd_k <- NSE(sim = p_rast_wd_k, obs = responses_wd_k)
 
-# With shannon index as response
+# with training data 
+nse_train_wd_k <- NSE(sim = pred_train_wd_k, obs = training_v_k_c$k_index)
+
+# With shannon index as response ------------------------
+# with model using measured values - test set
 nse_model_wd_s_c <- NSE(sim = rf_pred_model_wd_s_c, obs = responses_wd_s)
+
+# with model using raster extracted values - test set
 nse_rast_wd_s <- NSE(sim = p_rast_wd_s, obs = responses_wd_s)
 
-# With abundance as response
+# with training data 
+nse_train_wd_s <- NSE(sim = pred_train_wd_s, obs = training_v_s_c$shannon)
+
+# With abundance as response ---------------------
+# with model using measured values - test set
 nse_model_wd_a_c <- NSE(sim = rf_pred_model_wd_a_c, obs = responses_wd_a)
+
+# with model using raster extracted values - test set
 nse_rast_wd_a <- NSE(sim = p_rast_wd_a, obs = responses_wd_a)
 
-# With rel_abundance as response
+# with training data 
+nse_train_wd_a <- NSE(sim = pred_train_wd_a, obs = training_v_a_c$abundance)
+
+# With rel_abundance as response -----------------------
+# with model using measured values - test set
 nse_model_wd_ra_c <- NSE(sim = rf_pred_model_wd_ra_c, obs = responses_wd_ra)
+
+# with model using raster extracted values - test set
 nse_rast_wd_ra <- NSE(sim = p_rast_wd_ra, obs = responses_wd_ra)
 
-### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
-# With k_index as response
+# with training data 
+nse_train_wd_ra <- NSE(sim = pred_train_wd_ra, obs = training_v_ra_c$rel_abundance)
+
+### PREDICTORS: SAMPLING LOCATIONS ### -------------------------------
+# With k_index as response --------------------------
+# with model using measured values - test set
 nse_model_samp_k_c <- NSE(sim = rf_pred_model_samp_k_c, obs = responses_samp_k)
 
-# With shannon index as response
+# with training data 
+nse_train_samp_k <- NSE(sim = pred_train_samp_k, obs = training_v_k_c$k_index)
+
+# With shannon index as response ---------------------------
+# with model using measured values - test set
 nse_model_samp_s_c <- NSE(sim = rf_pred_model_samp_s_c, obs = responses_samp_s)
 
-# With abundance as response
+# with training data 
+nse_train_samp_s <- NSE(sim = pred_train_samp_s, obs = training_v_s_c$shannon)
+
+# With abundance as response ----------------------
+# with model using measured values - test set
 nse_model_samp_a_c <- NSE(sim = rf_pred_model_samp_a_c, obs = responses_samp_a)
 
-# With rel_abundance as response
+# with training data 
+nse_train_samp_a <- NSE(sim = pred_train_samp_a, obs = training_v_a_c$abundance)
+
+# With rel_abundance as response -------------------
+# with model using measured values - test set
 nse_model_samp_ra_c <- NSE(sim = rf_pred_model_samp_ra_c, obs = responses_samp_ra)
 
-### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
-# With k_index as response
+# with training data 
+nse_train_samp_ra <- NSE(sim = pred_train_samp_ra, obs = training_v_ra_c$rel_abundance)
+
+### PREDICTORS: ALL PREDICTORS ### ------------------------------------
+# With k_index as response -------------------------
+# with model using measured values - test set
 nse_model_sec_k_c <- NSE(sim = rf_pred_model_sec_k_c, obs = responses_sec_k)
 
-# With shannon index as response
+# with training data 
+nse_train_sec_k <- NSE(sim = pred_train_sec_k, obs = training_sec_k_c$k_index)
+
+# With shannon index as response -------------------------
+# with model using measured values - test set
 nse_model_sec_s_c <- NSE(sim = rf_pred_model_sec_s_c, obs = responses_sec_s)
 
-# With abundance as response
+# with training data 
+nse_train_sec_s <- NSE(sim = pred_train_sec_s, obs = training_sec_s_c$shannon)
+
+# With abundance as response ----------------------------
+# with model using measured values - test set
 nse_model_sec_a_c <- NSE(sim = rf_pred_model_sec_a_c, obs = responses_sec_a)
 
-# With rel_abundance as response
+# with training data 
+nse_train_sec_a <- NSE(sim = pred_train_sec_a, obs = training_sec_a_c$abundance)
+
+# With rel_abundance as response ----------------------------
+# with model using measured values - test set
 nse_model_sec_ra_c <- NSE(sim = rf_pred_model_sec_ra_c, obs = responses_sec_ra)
 
-### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
-# With k_index as response
+# with training data 
+nse_train_sec_ra <- NSE(sim = pred_train_sec_ra, obs = training_sec_ra_c$rel_abundance)
+
+### PREDICTORS: SELECTED VARIABLES ### ---------------------------------
+# With k_index as response --------------------------
+# with model using measured values - test set
 nse_model_var_k_c <- NSE(sim = rf_pred_model_var_k_c, obs = responses_var_k)
+
+# with model using raster extracted values - test set
 nse_rast_var_k <- NSE(sim = p_rast_var_k, obs = responses_var_k)
 
-# With shannon index as response
+# with training data 
+nse_train_var_k <- NSE(sim = pred_train_var_k, obs = training_var_k_c$k_index)
+
+# With shannon index as response ---------------------
+# with model using measured values - test set
 nse_model_var_s_c <- NSE(sim = rf_pred_model_var_s_c, obs = responses_var_s)
+
+# with model using raster extracted values - test set
 nse_rast_var_s <- NSE(sim = p_rast_var_s, obs = responses_var_s)
 
-# With abundance as response
+# with training data 
+nse_train_var_s <- NSE(sim = pred_train_var_s, obs = training_var_s_c$shannon)
+
+# With abundance as response -----------------------------
+# with model using measured values - test set
 nse_model_var_a_c <- NSE(sim = rf_pred_model_var_a_c, obs = responses_var_a)
+
+# with model using raster extracted values - test set
 nse_rast_var_a <- NSE(sim = p_rast_var_a, obs = responses_var_a)
 
+# with training data 
+nse_train_var_a <- NSE(sim = pred_train_var_a, obs = training_var_a_c$abundance)
+
 # With rel_abundance as response
+# with model using measured values - test set
 nse_model_var_ra_c <- NSE(sim = rf_pred_model_var_ra_c, obs = responses_var_ra)
+
+# with model using raster extracted values - test set
 nse_rast_var_ra <- NSE(sim = p_rast_var_ra, obs = responses_var_ra)
+
+# with training data 
+nse_train_var_ra <- NSE(sim = pred_train_var_ra, obs = training_var_ra_c$rel_abundance)
 ```
 
 ## - Regression Analysis
@@ -4051,9 +2659,11 @@ nse_rast_var_ra <- NSE(sim = p_rast_var_ra, obs = responses_var_ra)
 # With k-index as a response 
 pred_v_k <- as.data.frame(rf_pred_model_v_k_c)
 resp_v_k <- as.data.frame(responses_v_k)
+pred_raster_v_k <- as.data.frame(p_rast_v_k)
 rf_v_k <- cbind(pred_v_k, responses_v_k) |>
   dplyr::rename(observed = responses_v_k,
-         predicted = rf_pred_model_v_k_c)
+         pred_measured = rf_pred_model_v_k_c,
+         pred_rast = pred_raster_v_k)
 
 # With shannon index as a response 
 pred_v_s <- as.data.frame(rf_pred_model_v_s_c)
@@ -4324,17 +2934,26 @@ s_var_ra <- sum_var_ra$coefficients["observed", "Estimate"]
 ## Write Evaluation Results 
 ```{r}
 # write evaluation metrics into df
+# metric results calculated from simulated values extracted from rasters
 metric_results_raster <- data.frame(nse = c(nse_rast_v_k, nse_rast_v_s, nse_rast_v_a, nse_rast_v_ra,
 nse_rast_wd_k, nse_rast_wd_s, nse_rast_wd_a, nse_rast_wd_ra,
 nse_rast_var_k, nse_rast_var_s, nse_rast_var_a, nse_rast_var_ra),
+
+r2 = c(r2_rast_v_k, r2_rast_v_s, r2_rast_v_a, r2_rast_v_ra,
+r2_rast_wd_k, r2_rast_wd_s, r2_rast_wd_a, r2_rast_wd_ra,
+r2_rast_var_k, r2_rast_var_s, r2_rast_var_a, r2_rast_var_ra),
 
 bias = c(bias_rast_v_k, bias_rast_v_s, bias_rast_v_a, bias_rast_v_ra,
 bias_rast_wd_k, bias_rast_wd_s, bias_rast_wd_a, bias_rast_wd_ra,
 bias_rast_var_k, bias_rast_var_s, bias_rast_var_a, bias_rast_var_ra),
 
-r2 = c(r2_rast_v_k, r2_rast_v_s, r2_rast_v_a, r2_rast_v_ra,
-r2_rast_wd_k, r2_rast_wd_s, r2_rast_wd_a, r2_rast_wd_ra,
-r2_rast_var_k, r2_rast_var_s, r2_rast_var_a, r2_rast_var_ra),
+rmse = c(rmse_rast_v_k, rmse_rast_v_s, rmse_rast_v_a, rmse_rast_v_ra,
+rmse_rast_wd_k, rmse_rast_wd_s, rmse_rast_wd_a, rmse_rast_wd_ra,
+rmse_rast_var_k, rmse_rast_var_s, rmse_rast_var_a, rmse_rast_var_ra),
+
+mae = c(mae_rast_v_k, mae_rast_v_s, mae_rast_v_a, mae_rast_v_ra,
+mae_rast_wd_k, mae_rast_wd_s, mae_rast_wd_a, mae_rast_wd_ra,
+mae_rast_var_k, mae_rast_var_s, mae_rast_var_a, mae_rast_var_ra),
 
 index = c("k_index", "shannon", "abundance", "rel_abundance",
 "k_index", "shannon", "abundance", "rel_abundance",
@@ -4344,19 +2963,118 @@ model = c("rf", "rf", "rf", "rf",
 "rf", "rf", "rf", "rf",
 "rf", "rf", "rf", "rf"),
 
+predictor = c("v", "v", "v", "v", 
+              "v + wd", "v + wd", "v + wd", "v + wd",  
+              "var", "var", "var", "var"),
+
 origin = c("raster_extract", "raster_extract", "raster_extract","raster_extract",
 "raster_extract", "raster_extract", "raster_extract","raster_extract", 
-"raster_extract", "raster_extract", "raster_extract","raster_extract"),
+"raster_extract", "raster_extract", "raster_extract","raster_extract"))
 
-rmse = c(rmse_rast_v_k, rmse_rast_v_s, rmse_rast_v_a, rmse_rast_v_ra,
-rmse_rast_wd_k, rmse_rast_wd_s, rmse_rast_wd_a, rmse_rast_wd_ra,
-rmse_rast_var_k, rmse_rast_var_s, rmse_rast_var_a, rmse_rast_var_ra),
+# metric results calculated from simulated values using measured v and wd
+metric_results_measured <- data.frame(nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c, nse_model_var_k_c, nse_model_var_s_c, nse_model_var_a_c, nse_model_var_ra_c),
 
-mae = c(mae_rast_v_k, mae_rast_v_s, mae_rast_v_a, mae_rast_v_ra,
-mae_rast_wd_k, mae_rast_wd_s, mae_rast_wd_a, mae_rast_wd_ra,
-mae_rast_var_k, mae_rast_var_s, mae_rast_var_a, mae_rast_var_ra))
+                                      r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_v_ra, r2_wd_k, r2_wd_s, r2_wd_a, r2_wd_ra, r2_samp_k, r2_samp_s, r2_samp_a, r2_samp_ra, r2_sec_k, r2_sec_s, r2_sec_a, r2_sec_ra, r2_var_k, r2_var_s, r2_var_a, r2_var_ra),
+                                      
+bias = c(bias_model_v_k_c, bias_model_v_s_c, bias_model_v_a_c, bias_model_v_ra_c, bias_model_wd_k_c,bias_model_wd_s_c, bias_model_wd_a_c, bias_model_wd_ra_c, bias_model_samp_k_c, bias_model_samp_s_c, bias_model_samp_a_c, bias_model_samp_ra_c, bias_model_sec_k_c, bias_model_sec_s_c, bias_model_sec_a_c, bias_model_sec_ra_c, bias_model_var_k_c, bias_model_var_s_c, bias_model_var_a_c, bias_model_var_ra_c),
 
-metric_results_measured <- data.frame(lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra,  
+rmse = c(rmse_model_v_k_c, rmse_model_v_s_c, rmse_model_v_a_c, rmse_model_v_ra_c, rmse_model_wd_k_c, rmse_model_wd_s_c, rmse_model_wd_a_c, rmse_model_wd_ra_c, rmse_model_samp_k_c, rmse_model_samp_s_c, rmse_model_samp_a_c, rmse_model_samp_ra_c, rmse_model_sec_k_c, rmse_model_sec_s_c, rmse_model_sec_a_c, rmse_model_sec_ra_c, rmse_model_var_k_c, rmse_model_var_s_c, rmse_model_var_a_c, rmse_model_var_ra_c),
+
+mae = c(mae_model_v_k_c, mae_model_v_s_c, mae_model_v_a_c, mae_model_v_ra_c, mae_model_wd_k_c, mae_model_wd_s_c, mae_model_wd_a_c, mae_model_wd_ra_c, mae_model_samp_k_c, mae_model_samp_s_c, mae_model_samp_a_c, mae_model_samp_ra_c, mae_model_sec_k_c, mae_model_sec_s_c, mae_model_sec_a_c, mae_model_sec_ra_c, mae_model_var_k_c, mae_model_var_s_c, mae_model_var_a_c, mae_model_var_ra_c), 
+
+index = c("k_index", "shannon", "abundance", "rel_abundance", 
+          "k_index", "shannon", "abundance", "rel_abundance", 
+          "k_index", "shannon", "abundance", "rel_abundance", 
+          "k_index", "shannon", "abundance", "rel_abundance",
+          "k_index", "shannon", "abundance", "rel_abundance"),
+
+model = c("rf", "rf", "rf", "rf", 
+          "rf", "rf", "rf", "rf", 
+          "rf", "rf", "rf", "rf",
+          "rf", "rf", "rf", "rf",
+          "rf", "rf", "rf", "rf"),
+
+predictor = c("v", "v", "v", "v", 
+              "v + wd", "v + wd", "v + wd", "v + wd",  
+              "samp", "samp", "samp", "samp", 
+              "all", "all", "all", "all",
+              "var", "var", "var", "var"),
+
+origin = c("measured", "measured", "measured","measured",
+"measured", "measured", "measured","measured", 
+"measured", "measured", "measured","measured",
+"measured", "measured", "measured","measured",
+"measured", "measured", "measured","measured"))
+
+# metric results calculated for training data
+metrics_training <- data.frame(nse = c(nse_train_v_k, nse_train_v_s, nse_train_v_a, nse_train_v_ra,
+nse_train_wd_k, nse_train_wd_s, nse_train_wd_a, nse_train_wd_ra,
+nse_train_samp_k, nse_train_samp_s, nse_train_samp_a, nse_train_samp_ra,
+nse_train_sec_k, nse_train_sec_s, nse_train_sec_a, nse_train_sec_ra,
+nse_train_var_k, nse_train_var_s, nse_train_var_a, nse_train_var_ra),
+
+r2 = c(r2_train_v_k, r2_train_v_s, r2_train_v_a, r2_train_v_ra,
+r2_train_wd_k, r2_train_wd_s, r2_train_wd_a, r2_train_wd_ra,
+r2_train_samp_k, r2_train_samp_s, r2_train_samp_a, r2_train_samp_ra,
+r2_train_sec_k, r2_train_sec_s, r2_train_sec_a, r2_train_sec_ra,
+r2_train_var_k, r2_train_var_s, r2_train_var_a, r2_train_var_ra),
+
+bias = c(bias_train_v_k, bias_train_v_s, bias_train_v_a, bias_train_v_ra,
+bias_train_wd_k, bias_train_wd_s, bias_train_wd_a, bias_train_wd_ra,
+bias_train_samp_k, bias_train_samp_s, bias_train_samp_a, bias_train_samp_ra,
+bias_train_sec_k, bias_train_sec_s, bias_train_sec_a, bias_train_sec_ra,
+bias_train_var_k, bias_train_var_s, bias_train_var_a, bias_train_var_ra),
+
+rmse = c(rmse_train_v_k, rmse_train_v_s, rmse_train_v_a, rmse_train_v_ra,
+rmse_train_wd_k, rmse_train_wd_s, rmse_train_wd_a, rmse_train_wd_ra,
+rmse_train_samp_k, rmse_train_samp_s, rmse_train_samp_a, rmse_train_samp_ra,
+rmse_train_sec_k, rmse_train_sec_s, rmse_train_sec_a, rmse_train_sec_ra,
+rmse_train_var_k, rmse_train_var_s, rmse_train_var_a, rmse_train_var_ra),
+
+mae = c(mae_train_v_k, mae_train_v_s, mae_train_v_a, mae_train_v_ra,
+mae_train_wd_k, mae_train_wd_s, mae_train_wd_a, mae_train_wd_ra,
+mae_train_samp_k, mae_train_samp_s, mae_train_samp_a, mae_train_samp_ra,
+mae_train_sec_k, mae_train_sec_s, mae_train_sec_a, mae_train_sec_ra,
+mae_train_var_k, mae_train_var_s, mae_train_var_a, mae_train_var_ra),
+
+index = c("k_index", "shannon", "abundance", "rel_abundance",
+"k_index", "shannon", "abundance", "rel_abundance",
+"k_index", "shannon", "abundance", "rel_abundance",
+"k_index", "shannon", "abundance", "rel_abundance",
+"k_index", "shannon", "abundance", "rel_abundance"),
+
+model = c("rf", "rf", "rf", "rf", 
+          "rf", "rf", "rf", "rf", 
+          "rf", "rf", "rf", "rf",
+          "rf", "rf", "rf", "rf",
+          "rf", "rf", "rf", "rf"),
+
+predictor = c("velocity", "velocity", "velocity", "velocity",
+"wd", "wd", "wd", "wd",
+"samp", "samp", "samp", "samp",
+"all", "all", "all", "all", 
+"var", "var", "var", "var"),
+
+origin = c("training", "training", "training","training",
+"training", "training", "training","training", 
+"training", "training", "training","training",
+"training", "training", "training","training",
+"training", "training", "training","training"))
+
+# bind all dataframes together into one cohesive dataframe 
+all_metrics <- rbind(metric_results_measured, metric_results_raster, metrics_training)
+
+# write results into a .csv 
+write.csv(metric_results_measured, "Stat_Analysis/ml_evaluation_metrics_measured_rf.csv", row.names = FALSE)
+
+write.csv(metric_results_raster, "Stat_Analysis/ml_evaluation_metrics_raster_rf.csv", row.names = FALSE)
+
+write.csv(metrics_training, "Stat_Analysis/ml_evaluation_metrics_training_rf.csv", row.names = FALSE)
+
+write.csv(all_metrics, "Stat_Analysis/ml_evaluation_metrics_all_rf.csv", row.names = FALSE)
+```
+ 
+lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra,  
                                            p_wd_k, p_wd_s, p_wd_a,
                                            p_wd_ra, p_samp_k, p_samp_s, p_samp_a,
                                            p_samp_ra, p_sec_k, p_sec_s, p_sec_a,
@@ -4368,42 +3086,8 @@ metric_results_measured <- data.frame(lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra
                                            s_wd_ra, s_samp_k, s_samp_s, s_samp_a,
                                            s_samp_ra, s_sec_k, s_sec_s, s_sec_a,
                                            s_sec_ra, s_var_k, s_var_s, s_var_a,
-                                           s_var_ra),
-                          
-                             nse = c(nse_model_v_k_c, nse_model_v_s_c, nse_model_v_a_c, nse_model_v_ra_c, nse_model_wd_k_c, nse_model_wd_s_c, nse_model_wd_a_c, nse_model_wd_ra_c, nse_model_samp_k_c, nse_model_samp_s_c, nse_model_samp_a_c, nse_model_samp_ra_c, nse_model_sec_k_c, nse_model_sec_s_c, nse_model_sec_a_c, nse_model_sec_ra_c, nse_model_var_k_c, nse_model_var_s_c, nse_model_var_a_c, nse_model_var_ra_c),
+                                           s_var_ra)
 
-bias = c(bias_model_v_k_c, bias_model_v_s_c, bias_model_v_a_c, bias_model_v_ra_c, bias_model_wd_k_c,bias_model_wd_s_c, bias_model_wd_a_c, bias_model_wd_ra_c, bias_model_samp_k_c, bias_model_samp_s_c, bias_model_samp_a_c, bias_model_samp_ra_c, bias_model_sec_k_c, bias_model_sec_s_c, bias_model_sec_a_c, bias_model_sec_ra_c, bias_model_var_k_c, bias_model_var_s_c, bias_model_var_a_c, bias_model_var_ra_c),
-
-mae = c(mae_model_v_k_c, mae_model_v_s_c, mae_model_v_a_c, mae_model_v_ra_c, mae_model_wd_k_c, mae_model_wd_s_c, mae_model_wd_a_c, mae_model_wd_ra_c, mae_model_samp_k_c, mae_model_samp_s_c, mae_model_samp_a_c, mae_model_samp_ra_c, mae_model_sec_k_c, mae_model_sec_s_c, mae_model_sec_a_c, mae_model_sec_ra_c, mae_model_var_k_c, mae_model_var_s_c, mae_model_var_a_c, mae_model_var_ra_c), 
-
-rmse = c(rmse_model_v_k_c, rmse_model_v_s_c, rmse_model_v_a_c, rmse_model_v_ra_c, rmse_model_wd_k_c, rmse_model_wd_s_c, rmse_model_wd_a_c, rmse_model_wd_ra_c, rmse_model_samp_k_c, rmse_model_samp_s_c, rmse_model_samp_a_c, rmse_model_samp_ra_c, rmse_model_sec_k_c, rmse_model_sec_s_c, rmse_model_sec_a_c, rmse_model_sec_ra_c, rmse_model_var_k_c, rmse_model_var_s_c, rmse_model_var_a_c, rmse_model_var_ra_c),
-
-r2 = c(r2_v_k, r2_v_s, r2_v_a, r2_v_ra, r2_wd_k, r2_wd_s, r2_wd_a, r2_wd_ra, r2_samp_k, r2_samp_s, r2_samp_a, r2_samp_ra, r2_sec_k, r2_sec_s, r2_sec_a, r2_sec_ra, r2_var_k, r2_var_s, r2_var_a, r2_var_ra), 
-
-index = c("k_index", "shannon", "abundance", "rel_abundance", 
-          "k_index", "shannon", "abundance", "rel_abundance", 
-          "k_index", "shannon", "abundance", "rel_abundance", 
-          "k_index", "shannon", "abundance", "rel_abundance",
-          "k_index", "shannon", "abundance", "rel_abundance"),
-
-predictor = c("v", "v", "v", "v", 
-              "v + wd", "v + wd", "v + wd", "v + wd",  
-              "samp", "samp", "samp", "samp", 
-              "all", "all", "all", "all",
-              "var", "var", "var", "var"),
-
-model = c("rf", "rf", "rf", "rf", 
-          "rf", "rf", "rf", "rf", 
-          "rf", "rf", "rf", "rf",
-          "rf", "rf", "rf", "rf",
-          "rf", "rf", "rf", "rf"))
-
-# write results into a .csv 
-write.csv(metric_results_measured, "Stat_Analysis/ml_evaluation_metrics_measured_rf.csv", row.names = FALSE)
-
-write.csv(metric_results_raster, "Stat_Analysis/ml_evaluation_metrics_raster_rf.csv", row.names = FALSE)
-```
- 
 # Extract 
 ## Read rasters
 ```{r}
