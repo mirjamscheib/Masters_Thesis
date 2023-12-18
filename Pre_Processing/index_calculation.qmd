@@ -298,6 +298,13 @@ write_xlsx(lab_univariate,"Pre_Processing\\abiotic_mi_sampling\\lab_univariate.x
 ```
 
 # Selected variables 
+|>
+  group_by(reach) |>
+  dplyr::summarise(ecomorph_class = mean(ecomorph_class),
+            biogeo_int = mean(biogeo_int),
+            mean_diff_nitrogen = mean(mean_diff_nitrogen),
+            mean_diff_phosphor = mean(mean_diff_phosphor)) 
+            
 ```{r}
 # change biogeo regions and geology into integers for ML modelling
 biogeo_new <- c("Southern Alps" = 0, "Central Plateau" = 1, "Northern Alps" = 2, "Eastern Central Alps" = 3)
@@ -315,12 +322,8 @@ aggr_gis <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.csv
   mutate(biogeo_int = ifelse(biogeo %in% names(biogeo_new), 
                                    biogeo_new[biogeo], NA),
          ecomorph_class = ifelse(ecomorph_class == "-", 0, as.numeric(ecomorph_class))) |>
-  dplyr::select(-biogeo) |>
-  group_by(reach) |>
-  dplyr::summarise(ecomorph_class = mean(ecomorph_class),
-            biogeo_int = mean(biogeo_int),
-            mean_diff_nitrogen = mean(mean_diff_nitrogen),
-            mean_diff_phosphor = mean(mean_diff_phosphor)) 
+  dplyr::select(-biogeo) 
+
 
 aggr_gis_2 <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.csv") |>
   dplyr::select(`Ecomorphological Class`, `BIOGEO`, `Mean diffuse total nitrogen [kg/ha a]`, `Mean diffuse total phosphor [kg/ha a]`, `Study site (Untersuchungsstelle)`, `Number of inhabitants`, `Domestic wastewater discharge`, Geology) |>
@@ -359,7 +362,7 @@ data_new_2 <- left_join(data, aggr_gis_2, by = "reach")
 # save as .csv file
 write.csv(data_new, "Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv", row.names = FALSE)  
 
-write.csv(data_new_2, "Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv", row.names = FALSE)  
+write.csv(data_new_2, "Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv", row.names = FALSE) 
 ```
 
 

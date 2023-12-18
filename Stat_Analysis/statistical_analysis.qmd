@@ -32,257 +32,914 @@ pkgCheck("scales")
 
 # Load Data 
 ```{r}
+# change biogeo regions and geology into integers for ML modelling
+test_sections <- c("L2" = "Hydropeaking", "M1" = "Hydropeaking", "S1" = "Hydropeaking", "S2" = "Hydropeaking", "TH4" = "Natural/near-natural", "GL1" = "Natural/near-natural", "GL2" = "Natural/near-natural", "VR3" = "Hydropeaking")
+
+training_sections <- c("L2" = "Hydropeaking", "L1" = "Hydropeaking", "LR" = "Residual flow",
+                       "M1" = "Hydropeaking", "M5" = "Hydropeaking", "M7" = "Hydropeaking", "MR" = "Residual flow", 
+                       "GL5" = "Natural/near-natural", 
+                       "P1" = "Hydropeaking", "PR" = "Residual flow", 
+                       "SA1" = "Hydropeaking", "SA2" = "Hydropeaking", "SA6" = "Hydropeaking", "SAR" = "Residual flow",
+                       "SE2" = "Natural/near-natural", "SE3" = "Natural/near-natural",
+                       "S1" = "Hydropeaking", "S2" = "Hydropeaking", "SR" = "Residual flow",
+                       "S5" = "Hydropeaking", "TH3" = "Natural/near-natural", "TH4" = "Natural/near-natural", 
+                       "T1" = "Hydropeaking", "T2" = "Hydropeaking",
+                       "GL1" = "Natural/near-natural", "GL2" = "Natural/near-natural", 
+                       "VE2" = "Natural/near-natural", "VE4" = "Natural/near-natural",
+                       "VR1" = "Hydropeaking", "VR3" = "Hydropeaking", "VR6" = "Residual flow")
+
 # load data 
-brt <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_brt.csv")
-brt_add <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_brt_add.csv")
-rf <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_rf.csv")
-rf_add <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_rf_add.csv")
-hsc <- read_delim("Stat_Analysis/stat_analysis_data/hsc_regr_analysis.csv")
+brt_test <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_test_brt.csv") |>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(test_sections), 
+                                   test_sections[Reach_Untersuchungsstelle], NA))
+
+brt_test_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_test_2_brt.csv")|>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(test_sections), 
+                                   test_sections[Reach_Untersuchungsstelle], NA))
+
+brt_train <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_brt.csv")|>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
+                                   training_sections[Reach_Untersuchungsstelle], NA))
+
+
+### RF ### 
+rf_test <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_test_rf.csv") |>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(test_sections), 
+                                   test_sections[Reach_Untersuchungsstelle], NA))
+
+rf_test_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_test_2_rf.csv") |>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(test_sections), 
+                                   test_sections[Reach_Untersuchungsstelle], NA))
+
+rf_train <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_rf.csv")|>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
+                                   training_sections[Reach_Untersuchungsstelle], NA))
 ```
        
 # Regr. Analysis
-## BRT normal
-### Predictor: Velocity
+## BRT
+### Test Measured
 ```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: VELOCITY ### --------------------------------------------------
 # with k_index as response
-regr_v_brt_k <- lm(k_index_v ~ obs_k_index, data = brt)
-sum_v_brt_k <- summary(regr_v_brt_k)
-p_v_brt_k <- sum_v_brt_k$coefficients["obs_k_index", "Pr(>|t|)"]
-s_v_brt_k <- sum_v_brt_k$coefficients["obs_k_index", "Estimate"]
-r_v_brt_k <- summary(lm(k_index_v ~ obs_k_index, data = brt))$adj.r.squared
+regr_v_brt_k_measured <- lm(brt_pred_model_v_k_c ~ obs_k_index, data = brt_test)
+sum_v_brt_k_measured <- summary(regr_v_brt_k_measured)
+p_v_brt_k_measured <- sum_v_brt_k_measured$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_brt_k_measured <- sum_v_brt_k_measured$coefficients["obs_k_index", "Estimate"]
 
 # with shannon index as response
-regr_v_brt_s <- lm(shannon_v ~ obs_shannon, data = brt)
-sum_v_brt_s <- summary(regr_v_brt_s)
-p_v_brt_s <- sum_v_brt_s$coefficients["obs_shannon", "Pr(>|t|)"]
-s_v_brt_s <- sum_v_brt_s$coefficients["obs_shannon", "Estimate"]
-r_v_brt_s <- summary(lm(shannon_v ~ obs_shannon, data = brt))$adj.r.squared
+regr_v_brt_s_measured <- lm(brt_pred_model_v_s_c ~ obs_shannon, data = brt_test)
+sum_v_brt_s_measured <- summary(regr_v_brt_s_measured)
+p_v_brt_s_measured <- sum_v_brt_s_measured$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_brt_s_measured <- sum_v_brt_s_measured$coefficients["obs_shannon", "Estimate"]
 
 # with abundance as response
-regr_v_brt_a <- lm(abundance_v ~ obs_abundance, data = brt)
-sum_v_brt_a <- summary(regr_v_brt_a)
-p_v_brt_a <- sum_v_brt_a$coefficients["obs_abundance", "Pr(>|t|)"]
-s_v_brt_a <- sum_v_brt_a$coefficients["obs_abundance", "Estimate"]
-r_v_brt_a <- summary(lm(abundance_v ~ obs_abundance, data = brt))$adj.r.squared
+regr_v_brt_a_measured <- lm(brt_pred_model_v_a_c ~ obs_abundance, data = brt_test)
+sum_v_brt_a_measured <- summary(regr_v_brt_a_measured)
+p_v_brt_a_measured <- sum_v_brt_a_measured$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_brt_a_measured <- sum_v_brt_a_measured$coefficients["obs_abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_v_brt_ra <- lm(rel_abundance_v ~ obs_rel_abundance, data = brt)
-sum_v_brt_ra <- summary(regr_v_brt_ra)
-p_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
-s_v_brt_ra <- sum_v_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
-r_v_brt_ra <- summary(lm(rel_abundance_v ~ obs_rel_abundance, data = brt))$adj.r.squared
-```
+regr_v_brt_ra_measured <- lm(brt_pred_model_v_ra_c ~ obs_rel_abundance, data = brt_test)
+sum_v_brt_ra_measured <- summary(regr_v_brt_ra_measured)
+p_v_brt_ra_measured <- sum_v_brt_ra_measured$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_brt_ra_measured <- sum_v_brt_ra_measured$coefficients["obs_rel_abundance", "Estimate"]
 
-### Predictor: V + WD
-```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: V + WD ### --------------------------------------------------
 # with k_index as response
-regr_wd_brt_k <- lm(k_index_wd ~ obs_k_index, data = brt)
-sum_wd_brt_k <- summary(regr_wd_brt_k)
-p_wd_brt_k <- sum_wd_brt_k$coefficients["obs_k_index", "Pr(>|t|)"]
-s_wd_brt_k <- sum_wd_brt_k$coefficients["obs_k_index", "Estimate"]
-r_wd_brt_k <- summary(lm(k_index_wd ~ obs_k_index, data = brt))$adj.r.squared
+regr_wd_brt_k_measured <- lm(brt_pred_model_wd_k_c ~ obs_k_index, data = brt_test)
+sum_wd_brt_k_measured <- summary(regr_wd_brt_k_measured)
+p_wd_brt_k_measured <- sum_wd_brt_k_measured$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_brt_k_measured <- sum_wd_brt_k_measured$coefficients["obs_k_index", "Estimate"]
 
 # with shannon index as response
-regr_wd_brt_s <- lm(shannon_wd ~ obs_shannon, data = brt)
-sum_wd_brt_s <- summary(regr_wd_brt_s)
-p_wd_brt_s <- sum_wd_brt_s$coefficients["obs_shannon", "Pr(>|t|)"]
-s_wd_brt_s <- sum_wd_brt_s$coefficients["obs_shannon", "Estimate"]
-r_wd_brt_s <- summary(lm(shannon_wd ~ obs_shannon, data = brt))$adj.r.squared
+regr_wd_brt_s_measured <- lm(brt_pred_model_wd_s_c ~ obs_shannon, data = brt_test)
+sum_wd_brt_s_measured <- summary(regr_wd_brt_s_measured)
+p_wd_brt_s_measured <- sum_wd_brt_s_measured$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_brt_s_measured <- sum_wd_brt_s_measured$coefficients["obs_shannon", "Estimate"]
 
 # with abundance as response
-regr_wd_brt_a <- lm(abundance_wd ~ obs_abundance, data = brt)
-sum_wd_brt_a <- summary(regr_wd_brt_a)
-p_wd_brt_a <- sum_wd_brt_a$coefficients["obs_abundance", "Pr(>|t|)"]
-s_wd_brt_a <- sum_wd_brt_a$coefficients["obs_abundance", "Estimate"]
-r_wd_brt_a <- summary(lm(abundance_wd ~ obs_abundance, data = brt))$adj.r.squared
+regr_wd_brt_a_measured <- lm(brt_pred_model_wd_a_c ~ obs_abundance, data = brt_test)
+sum_wd_brt_a_measured <- summary(regr_wd_brt_a_measured)
+p_wd_brt_a_measured <- sum_wd_brt_a_measured$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_brt_a_measured <- sum_wd_brt_a_measured$coefficients["obs_abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_wd_brt_ra <- lm(rel_abundance_wd ~ obs_rel_abundance, data = brt)
-sum_wd_brt_ra <- summary(regr_wd_brt_ra)
-p_wd_brt_ra <- sum_wd_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
-s_wd_brt_ra <- sum_wd_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
-r_wd_brt_ra <- summary(lm(rel_abundance_wd ~ obs_rel_abundance, data = brt))$adj.r.squared
-```
+regr_wd_brt_ra_measured <- lm(brt_pred_model_wd_ra_c ~ obs_rel_abundance, data = brt_test)
+sum_wd_brt_ra_measured <- summary(regr_wd_brt_ra_measured)
+p_wd_brt_ra_measured <- sum_wd_brt_ra_measured$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_brt_ra_measured <- sum_wd_brt_ra_measured$coefficients["obs_rel_abundance", "Estimate"]
 
-### Predictor: selected variables
-```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
 # with k_index as response
-regr_var_brt_k <- lm(k_index_var ~ obs_k_index, data = brt)
-sum_var_brt_k <- summary(regr_var_brt_k)
-p_var_brt_k <- sum_var_brt_k$coefficients["obs_k_index", "Pr(>|t|)"]
-s_var_brt_k <- sum_var_brt_k$coefficients["obs_k_index", "Estimate"]
-r_var_brt_k <- summary(lm(k_index_var ~ obs_k_index, data = brt))$adj.r.squared
+regr_samp_brt_k_measured <- lm(brt_pred_model_samp_k_c ~ obs_k_index, data = brt_test)
+sum_samp_brt_k_measured <- summary(regr_samp_brt_k_measured)
+p_samp_brt_k_measured <- sum_samp_brt_k_measured$coefficients["obs_k_index", "Pr(>|t|)"]
+s_samp_brt_k_measured <- sum_samp_brt_k_measured$coefficients["obs_k_index", "Estimate"]
 
 # with shannon index as response
-regr_var_brt_s <- lm(shannon_var ~ obs_shannon, data = brt)
-sum_var_brt_s <- summary(regr_wd_brt_s)
-p_var_brt_s <- sum_var_brt_s$coefficients["obs_shannon", "Pr(>|t|)"]
-s_var_brt_s <- sum_var_brt_s$coefficients["obs_shannon", "Estimate"]
-r_var_brt_s <- summary(lm(shannon_var ~ obs_shannon, data = brt))$adj.r.squared
+regr_samp_brt_s_measured <- lm(brt_pred_model_samp_s_c ~ obs_shannon, data = brt_test)
+sum_samp_brt_s_measured <- summary(regr_samp_brt_s_measured)
+p_samp_brt_s_measured <- sum_samp_brt_s_measured$coefficients["obs_shannon", "Pr(>|t|)"]
+s_samp_brt_s_measured <- sum_samp_brt_s_measured$coefficients["obs_shannon", "Estimate"]
 
 # with abundance as response
-regr_var_brt_a <- lm(abundance_var ~ obs_abundance, data = brt)
-sum_var_brt_a <- summary(regr_var_brt_a)
-p_var_brt_a <- sum_var_brt_a$coefficients["obs_abundance", "Pr(>|t|)"]
-s_var_brt_a <- sum_var_brt_a$coefficients["obs_abundance", "Estimate"]
-r_var_brt_a <- summary(lm(abundance_var ~ obs_abundance, data = brt))$adj.r.squared
+regr_samp_brt_a_measured <- lm(brt_pred_model_samp_a_c ~ obs_abundance, data = brt_test)
+sum_samp_brt_a_measured <- summary(regr_samp_brt_a_measured)
+p_samp_brt_a_measured <- sum_samp_brt_a_measured$coefficients["obs_abundance", "Pr(>|t|)"]
+s_samp_brt_a_measured <- sum_samp_brt_a_measured$coefficients["obs_abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_var_brt_ra <- lm(rel_abundance_var ~ obs_rel_abundance, data = brt)
-sum_var_brt_ra <- summary(regr_var_brt_ra)
-p_var_brt_ra <- sum_var_brt_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
-s_var_brt_ra <- sum_var_brt_ra$coefficients["obs_rel_abundance", "Estimate"]
-r_var_brt_ra <- summary(lm(rel_abundance_var ~ obs_rel_abundance, data = brt))$adj.r.squared
-```
+regr_samp_brt_ra_measured <- lm(brt_pred_model_samp_ra_c ~ obs_rel_abundance, data = brt_test)
+sum_samp_brt_ra_measured <- summary(regr_samp_brt_ra_measured)
+p_samp_brt_ra_measured <- sum_samp_brt_ra_measured$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_samp_brt_ra_measured <- sum_samp_brt_ra_measured$coefficients["obs_rel_abundance", "Estimate"]
 
-## RF normal
-### Predictor: Velocity
-```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
 # with k_index as response
-regr_v_rf_k <- lm(k_index_v ~ obs_k_index, data = rf)
-sum_v_rf_k <- summary(regr_v_rf_k)
-p_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
-s_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Estimate"]
-r_v_rf_k <- summary(lm(k_index_v ~ obs_k_index, data = rf))$adj.r.squared
+regr_sec_brt_k_measured <- lm(brt_pred_model_sec_k_c ~ k_index, data = brt_test_2)
+sum_sec_brt_k_measured <- summary(regr_sec_brt_k_measured)
+p_sec_brt_k_measured <- sum_sec_brt_k_measured$coefficients["k_index", "Pr(>|t|)"]
+s_sec_brt_k_measured <- sum_sec_brt_k_measured$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_v_rf_s <- lm(shannon_v ~ obs_shannon, data = rf)
-sum_v_rf_s <- summary(regr_v_rf_s)
-p_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
-s_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Estimate"]
-r_v_rf_s <- summary(lm(shannon_v ~ obs_shannon, data = rf))$adj.r.squared
+regr_sec_brt_s_measured <- lm(brt_pred_model_sec_s_c ~ shannon, data = brt_test_2)
+sum_sec_brt_s_measured <- summary(regr_sec_brt_s_measured)
+p_sec_brt_s_measured <- sum_sec_brt_s_measured$coefficients["shannon", "Pr(>|t|)"]
+s_sec_brt_s_measured <- sum_sec_brt_s_measured$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_v_rf_a <- lm(abundance_v ~ obs_abundance, data = rf)
-sum_v_rf_a <- summary(regr_v_rf_a)
-p_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
-s_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Estimate"]
-r_v_rf_a <- summary(lm(abundance_v ~ obs_abundance, data = rf))$adj.r.squared
+regr_sec_brt_a_measured <- lm(brt_pred_model_sec_a_c ~ abundance, data = brt_test_2)
+sum_sec_brt_a_measured <- summary(regr_sec_brt_a_measured)
+p_sec_brt_a_measured <- sum_sec_brt_a_measured$coefficients["abundance", "Pr(>|t|)"]
+s_sec_brt_a_measured <- sum_sec_brt_a_measured$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_v_rf_ra <- lm(rel_abundance_v ~ obs_rel_abundance, data = rf)
-sum_v_rf_ra <- summary(regr_v_rf_ra)
-p_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
-s_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
-r_v_rf_ra <- summary(lm(rel_abundance_v ~ obs_rel_abundance, data = rf))$adj.r.squared
-```
+regr_sec_brt_ra_measured <- lm(brt_pred_model_sec_ra_c ~ rel_abundance, data = brt_test_2)
+sum_sec_brt_ra_measured <- summary(regr_sec_brt_ra_measured)
+p_sec_brt_ra_measured <- sum_sec_brt_ra_measured$coefficients["rel_abundance", "Pr(>|t|)"]
+s_sec_brt_ra_measured <- sum_sec_brt_ra_measured$coefficients["rel_abundance", "Estimate"]
 
-### Predictor: V + WD
-```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
 # with k_index as response
-regr_wd_rf_k <- lm(k_index_wd ~ obs_k_index, data = rf)
-sum_wd_rf_k <- summary(regr_wd_rf_k)
-p_wd_rf_k <- sum_wd_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
-s_wd_rf_k <- sum_wd_rf_k$coefficients["obs_k_index", "Estimate"]
+regr_var_brt_k_measured <- lm(brt_pred_model_var_k_c ~ k_index, data = brt_test_2)
+sum_var_brt_k_measured <- summary(regr_var_brt_k_measured)
+p_var_brt_k_measured <- sum_var_brt_k_measured$coefficients["k_index", "Pr(>|t|)"]
+s_var_brt_k_measured <- sum_var_brt_k_measured$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_wd_rf_s <- lm(shannon_wd ~ obs_shannon, data = rf)
-sum_wd_rf_s <- summary(regr_wd_rf_s)
-p_wd_rf_s <- sum_wd_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
-s_wd_rf_s <- sum_wd_rf_s$coefficients["obs_shannon", "Estimate"]
+regr_var_brt_s_measured <- lm(brt_pred_model_var_s_c ~ shannon, data = brt_test_2)
+sum_var_brt_s_measured <- summary(regr_var_brt_s_measured)
+p_var_brt_s_measured <- sum_var_brt_s_measured$coefficients["shannon", "Pr(>|t|)"]
+s_var_brt_s_measured <- sum_var_brt_s_measured$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_wd_rf_a <- lm(abundance_wd ~ obs_abundance, data = rf)
-sum_wd_rf_a <- summary(regr_wd_rf_a)
-p_wd_rf_a <- sum_wd_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
-s_wd_rf_a <- sum_wd_rf_a$coefficients["obs_abundance", "Estimate"]
+regr_var_brt_a_measured <- lm(brt_pred_model_var_a_c ~ abundance, data = brt_test_2)
+sum_var_brt_a_measured <- summary(regr_var_brt_a_measured)
+p_var_brt_a_measured <- sum_var_brt_a_measured$coefficients["abundance", "Pr(>|t|)"]
+s_var_brt_a_measured <- sum_var_brt_a_measured$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_wd_rf_ra <- lm(rel_abundance_wd ~ obs_rel_abundance, data = rf)
-sum_wd_rf_ra <- summary(regr_wd_rf_ra)
-p_wd_rf_ra <- sum_wd_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
-s_wd_rf_ra <- sum_wd_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
+regr_var_brt_ra_measured <- lm(brt_pred_model_var_ra_c ~ rel_abundance, data = brt_test_2)
+sum_var_brt_ra_measured <- summary(regr_var_brt_ra_measured)
+p_var_brt_ra_measured <- sum_var_brt_ra_measured$coefficients["rel_abundance", "Pr(>|t|)"]
+s_var_brt_ra_measured <- sum_var_brt_ra_measured$coefficients["rel_abundance", "Estimate"]
 ```
-
-### Predictor: selected variables
+                                          
+### Test Raster
 ```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: VELOCITY ### --------------------------------------------------
 # with k_index as response
-regr_var_rf_k <- lm(k_index_var ~ obs_k_index, data = rf)
-sum_var_rf_k <- summary(regr_var_rf_k)
-p_var_rf_k <- sum_var_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
-s_var_rf_k <- sum_var_rf_k$coefficients["obs_k_index", "Estimate"]
+regr_v_brt_k_rast <- lm(k_index_v ~ obs_k_index, data = brt_test)
+sum_v_brt_k_rast <- summary(regr_v_brt_k_rast)
+p_v_brt_k_rast <- sum_v_brt_k_rast$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_brt_k_rast <- sum_v_brt_k_rast$coefficients["obs_k_index", "Estimate"]
+r_v_brt_k_rast <- summary(lm(k_index_v ~ obs_k_index, data = brt))$adj.r.squared
 
 # with shannon index as response
-regr_var_rf_s <- lm(shannon_var ~ obs_shannon, data = rf)
-sum_var_rf_s <- summary(regr_var_rf_s)
-p_var_rf_s <- sum_var_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
-s_var_rf_s <- sum_var_rf_s$coefficients["obs_shannon", "Estimate"]
+regr_v_brt_s_rast <- lm(shannon_v ~ obs_shannon, data = brt_test)
+sum_v_brt_s_rast <- summary(regr_v_brt_s_rast)
+p_v_brt_s_rast <- sum_v_brt_s_rast$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_brt_s_rast <- sum_v_brt_s_rast$coefficients["obs_shannon", "Estimate"]
+r_v_brt_s_rast <- summary(lm(shannon_v ~ obs_shannon, data = brt))$adj.r.squared
 
 # with abundance as response
-regr_var_rf_a <- lm(abundance_var ~ obs_abundance, data = rf)
-sum_var_rf_a <- summary(regr_var_rf_a)
-p_var_rf_a <- sum_var_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
-s_var_rf_a <- sum_var_rf_a$coefficients["obs_abundance", "Estimate"]
+regr_v_brt_a_rast <- lm(abundance_v ~ obs_abundance, data = brt_test)
+sum_v_brt_a_rast <- summary(regr_v_brt_a_rast)
+p_v_brt_a_rast <- sum_v_brt_a_rast$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_brt_a_rast <- sum_v_brt_a_rast$coefficients["obs_abundance", "Estimate"]
+r_v_brt_a_rast <- summary(lm(abundance_v ~ obs_abundance, data = brt))$adj.r.squared
 
 # with rel_abundance as response
-regr_var_rf_ra <- lm(rel_abundance_var ~ obs_rel_abundance, data = rf)
-sum_var_rf_ra <- summary(regr_var_rf_ra)
-p_var_rf_ra <- sum_var_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
-s_var_rf_ra <- sum_var_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
-```
+regr_v_brt_ra_rast <- lm(rel_abundance_v ~ obs_rel_abundance, data = brt_test)
+sum_v_brt_ra_rast <- summary(regr_v_brt_ra_rast)
+p_v_brt_ra_rast <- sum_v_brt_ra_rast$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_brt_ra_rast <- sum_v_brt_ra_rast$coefficients["obs_rel_abundance", "Estimate"]
+r_v_brt_ra_rast <- summary(lm(rel_abundance_v ~ obs_rel_abundance, data = brt))$adj.r.squared
 
-## HSC
-### Predictor: FOEN class
-```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: V + WD ### --------------------------------------------------
 # with k_index as response
-regr_foen_class_k <- lm(foen_class ~ k_index, data = hsc)
-sum_foen_class_k <- summary(regr_foen_class_k)
-p_foen_class_k <- sum_foen_class_k$coefficients["k_index", "Pr(>|t|)"]
-s_foen_class_k <- sum_foen_class_k$coefficients["k_index", "Estimate"]
+regr_wd_brt_k_rast <- lm(k_index_wd ~ obs_k_index, data = brt_test)
+sum_wd_brt_k_rast <- summary(regr_wd_brt_k_rast)
+p_wd_brt_k_rast <- sum_wd_brt_k_rast$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_brt_k_rast <- sum_wd_brt_k_rast$coefficients["obs_k_index", "Estimate"]
+r_wd_brt_k_rast <- summary(lm(k_index_wd ~ obs_k_index, data = brt))$adj.r.squared
 
 # with shannon index as response
-regr_foen_class_s <- lm(foen_class ~ shannon, data = hsc)
-sum_foen_class_s <- summary(regr_foen_class_s)
-p_foen_class_s <- sum_foen_class_s$coefficients["shannon", "Pr(>|t|)"]
-s_foen_class_s <- sum_foen_class_s$coefficients["shannon", "Estimate"]
+regr_wd_brt_s_rast <- lm(shannon_wd ~ obs_shannon, data = brt_test)
+sum_wd_brt_s_rast <- summary(regr_wd_brt_s_rast)
+p_wd_brt_s_rast <- sum_wd_brt_s_rast$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_brt_s_rast <- sum_wd_brt_s_rast$coefficients["obs_shannon", "Estimate"]
+r_wd_brt_s_rast <- summary(lm(shannon_wd ~ obs_shannon, data = brt))$adj.r.squared
 
 # with abundance as response
-regr_foen_class_a <- lm(foen_class ~ abundance, data = hsc)
-sum_foen_class_a <- summary(regr_foen_class_a)
-p_foen_class_a <- sum_foen_class_a$coefficients["abundance", "Pr(>|t|)"]
-s_foen_class_a <- sum_foen_class_a$coefficients["abundance", "Estimate"]
+regr_wd_brt_a_rast <- lm(abundance_wd ~ obs_abundance, data = brt_test)
+sum_wd_brt_a_rast <- summary(regr_wd_brt_a_rast)
+p_wd_brt_a_rast <- sum_wd_brt_a_rast$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_brt_a_rast <- sum_wd_brt_a_rast$coefficients["obs_abundance", "Estimate"]
+r_wd_brt_a_rast <- summary(lm(abundance_wd ~ obs_abundance, data = brt))$adj.r.squared
 
 # with rel_abundance as response
-regr_foen_class_ra <- lm(foen_class ~ rel_abundance, data = hsc)
-sum_foen_class_ra <- summary(regr_foen_class_ra)
-p_foen_class_ra <- sum_foen_class_ra$coefficients["rel_abundance", "Pr(>|t|)"]
-s_foen_class_ra <- sum_foen_class_ra$coefficients["rel_abundance", "Estimate"]
-```
+regr_wd_brt_ra_rast <- lm(rel_abundance_wd ~ obs_rel_abundance, data = brt_test)
+sum_wd_brt_ra_rast <- summary(regr_wd_brt_ra_rast)
+p_wd_brt_ra_rast <- sum_wd_brt_ra_rast$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_brt_ra_rast <- sum_wd_brt_ra_rast$coefficients["obs_rel_abundance", "Estimate"]
+r_wd_brt_ra_rast <- summary(lm(rel_abundance_wd ~ obs_rel_abundance, data = brt))$adj.r.squared
 
-### Predictor: FOEN HSI
-```{r}
-### BRT models ----------------------------------------------------------------
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
 # with k_index as response
-regr_foen_hsi_k <- lm(foen_hsi ~ k_index, data = hsc)
-sum_foen_hsi_k <- summary(regr_foen_hsi_k)
-p_foen_hsi_k <- sum_foen_hsi_k$coefficients["k_index", "Pr(>|t|)"]
-s_foen_hsi_k <- sum_foen_hsi_k$coefficients["k_index", "Estimate"]
+regr_var_brt_k_rast <- lm(k_index_var ~ obs_k_index, data = brt_test)
+sum_var_brt_k_rast <- summary(regr_var_brt_k_rast)
+p_var_brt_k_rast <- sum_var_brt_k_rast$coefficients["obs_k_index", "Pr(>|t|)"]
+s_var_brt_k_rast <- sum_var_brt_k_rast$coefficients["obs_k_index", "Estimate"]
+r_var_brt_k_rast <- summary(lm(k_index_var ~ obs_k_index, data = brt))$adj.r.squared
 
 # with shannon index as response
-regr_foen_hsi_s <- lm(foen_hsi ~ shannon, data = hsc)
-sum_foen_hsi_s <- summary(regr_foen_hsi_s)
-p_foen_hsi_s <- sum_foen_hsi_s$coefficients["shannon", "Pr(>|t|)"]
-s_foen_hsi_s <- sum_foen_hsi_s$coefficients["shannon", "Estimate"]
+regr_var_brt_s_rast <- lm(shannon_var ~ obs_shannon, data = brt_test)
+sum_var_brt_s_rast <- summary(regr_wd_brt_s_rast)
+p_var_brt_s_rast <- sum_var_brt_s_rast$coefficients["obs_shannon", "Pr(>|t|)"]
+s_var_brt_s_rast <- sum_var_brt_s_rast$coefficients["obs_shannon", "Estimate"]
+r_var_brt_s_rast <- summary(lm(shannon_var ~ obs_shannon, data = brt))$adj.r.squared
 
 # with abundance as response
-regr_foen_hsi_a <- lm(foen_hsi ~ abundance, data = hsc)
-sum_foen_hsi_a <- summary(regr_foen_hsi_a)
-p_foen_hsi_a <- sum_foen_hsi_a$coefficients["abundance", "Pr(>|t|)"]
-s_foen_hsi_a <- sum_foen_hsi_a$coefficients["abundance", "Estimate"]
+regr_var_brt_a_rast <- lm(abundance_var ~ obs_abundance, data = brt_test)
+sum_var_brt_a_rast <- summary(regr_var_brt_a_rast)
+p_var_brt_a_rast <- sum_var_brt_a_rast$coefficients["obs_abundance", "Pr(>|t|)"]
+s_var_brt_a_rast <- sum_var_brt_a_rast$coefficients["obs_abundance", "Estimate"]
+r_var_brt_a_rast <- summary(lm(abundance_var ~ obs_abundance, data = brt))$adj.r.squared
 
 # with rel_abundance as response
-regr_foen_hsi_ra <- lm(foen_hsi ~ rel_abundance, data = hsc)
-sum_foen_hsi_ra <- summary(regr_foen_hsi_ra)
-p_foen_hsi_ra <- sum_foen_hsi_ra$coefficients["rel_abundance", "Pr(>|t|)"]
-s_foen_hsi_ra <- sum_foen_hsi_ra$coefficients["rel_abundance", "Estimate"]
+regr_var_brt_ra_rast <- lm(rel_abundance_var ~ obs_rel_abundance, data = brt_test)
+sum_var_brt_ra_rast <- summary(regr_var_brt_ra_rast)
+p_var_brt_ra_rast <- sum_var_brt_ra_rast$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_var_brt_ra_rast <- sum_var_brt_ra_rast$coefficients["obs_rel_abundance", "Estimate"]
+r_var_brt_ra_rast <- summary(lm(rel_abundance_var ~ obs_rel_abundance, data = brt))$adj.r.squared
 ```
+                              
+### Training Sets
+```{r}
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# with k_index as response
+regr_v_brt_k_train <- lm(pred_train_v_k ~ k_index, data = brt_train)
+sum_v_brt_k_train <- summary(regr_v_k_train)
+p_v_brt_k_train <- sum_v_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_v_brt_k_train <- sum_v_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_v_brt_s_train <- lm(pred_train_v_s ~ shannon, data = brt_train)
+sum_v_brt_s_train <- summary(regr_v_s_train)
+p_v_brt_s_train <- sum_v_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_v_brt_s_train <- sum_v_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_v_brt_a_train <- lm(pred_train_v_a ~ abundance, data = brt_train)
+sum_v_brt_a_train <- summary(regr_v_a_train)
+p_v_brt_a_train <- sum_v_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_v_brt_a_train <- sum_v_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_v_brt_ra_train <- lm(pred_train_v_ra ~ rel_abundance, data = brt_train)
+sum_v_brt_ra_train <- summary(regr_v_ra_train)
+p_v_brt_ra_train <- sum_v_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_v_brt_ra_train <- sum_v_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: V + WD ### --------------------------------------------------
+# with k_index as response
+regr_wd_brt_k_train <- lm(pred_train_wd_k ~ k_index, data = brt_train)
+sum_wd_brt_k_train <- summary(regr_wd_k_train)
+p_wd_brt_k_train <- sum_wd_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_wd_brt_k_train <- sum_wd_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_wd_brt_s_train <- lm(pred_train_wd_s ~ shannon, data = brt_train)
+sum_wd_brt_s_train <- summary(regr_wd_s_train)
+p_wd_brt_s_train <- sum_wd_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_wd_brt_s_train <- sum_wd_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_wd_brt_a_train <- lm(pred_train_wd_a ~ abundance, data = brt_train)
+sum_wd_brt_a_train <- summary(regr_wd_a_train)
+p_wd_brt_a_train <- sum_wd_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_wd_brt_a_train <- sum_wd_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_brt_ra_train <- lm(pred_train_wd_ra ~ rel_abundance, data = brt_train)
+sum_wd_brt_ra_train <- summary(regr_wd_ra_train)
+p_wd_brt_ra_train <- sum_wd_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_wd_brt_ra_train <- sum_wd_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
+# with k_index as response
+regr_samp_brt_k_train <- lm(pred_train_samp_k ~ k_index, data = brt_train)
+sum_samp_brt_k_train <- summary(regr_samp_k_train)
+p_samp_brt_k_train <- sum_samp_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_samp_brt_k_train <- sum_samp_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_samp_brt_s_train <- lm(pred_train_samp_s ~ shannon, data = brt_train)
+sum_samp_brt_s_train <- summary(regr_samp_s_train)
+p_samp_brt_s_train <- sum_samp_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_samp_brt_s_train <- sum_samp_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_samp_brt_a_train <- lm(pred_train_samp_a ~ abundance, data = brt_train)
+sum_samp_brt_a_train <- summary(regr_samp_a_train)
+p_samp_brt_a_train <- sum_samp_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_samp_brt_a_train <- sum_samp_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_samp_brt_ra_train <- lm(pred_train_samp_ra ~ rel_abundance, data = brt_train)
+sum_samp_brt_ra_train <- summary(regr_samp_ra_train)
+p_samp_brt_ra_train <- sum_samp_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_samp_brt_ra_train <- sum_samp_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
+# with k_index as response
+regr_sec_brt_k_train <- lm(pred_train_sec_k ~ k_index, data = brt_train)
+sum_sec_brt_k_train <- summary(regr_sec_k_train)
+p_sec_brt_k_train <- sum_sec_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_sec_brt_k_train <- sum_sec_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_sec_brt_s_train <- lm(pred_train_sec_s ~ shannon, data = brt_train)
+sum_sec_brt_s_train <- summary(regr_sec_s_train)
+p_sec_brt_s_train <- sum_sec_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_sec_brt_s_train <- sum_sec_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_sec_brt_a_train <- lm(pred_train_sec_a ~ abundance, data = brt_train)
+sum_sec_brt_a_train <- summary(regr_sec_a_train)
+p_sec_brt_a_train <- sum_sec_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_sec_brt_a_train <- sum_sec_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_sec_brt_ra_train <- lm(pred_train_sec_ra ~ rel_abundance, data = brt_train)
+sum_sec_brt_ra_train <- summary(regr_sec_ra_train)
+p_sec_brt_ra_train <- sum_sec_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_sec_brt_ra_train <- sum_sec_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
+# with k_index as response
+regr_var_brt_k_train <- lm(pred_train_var_k ~ k_index, data = brt_train)
+sum_var_brt_k_train <- summary(regr_var_k_train)
+p_var_brt_k_train <- sum_var_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_var_brt_k_train <- sum_var_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_var_brt_s_train <- lm(pred_train_var_s ~ shannon, data = brt_train)
+sum_var_brt_s_train <- summary(regr_var_s_train)
+p_var_brt_s_train <- sum_var_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_var_brt_s_train <- sum_var_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_var_brt_a_train <- lm(pred_train_var_a ~ abundance, data = brt_train)
+sum_var_brt_a_train <- summary(regr_var_a_train)
+p_var_brt_a_train <- sum_var_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_var_brt_a_train <- sum_var_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_var_brt_ra_train <- lm(pred_train_var_ra ~ rel_abundance, data = brt_train)
+sum_var_brt_ra_train <- summary(regr_var_ra_train)
+p_var_brt_ra_train <- sum_var_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_var_brt_ra_train <- sum_var_ra_train$coefficients["rel_abundance", "Estimate"]
+```
+                              
+## RF
+### Test Measured 
+```{r}
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# with k_index as response
+regr_v_rf_rf_k_measured <- lm(rf_pred_model_v_rf_k_c ~ obs_k_index, data = rf_test)
+sum_v_rf_k_measured <- summary(regr_v_rf_k_measured)
+p_v_rf_k_measured <- sum_v_rf_k_measured$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_rf_k_measured <- sum_v_rf_k_measured$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_v_rf_s_measured <- lm(rf_pred_model_v_rf_s_c ~ obs_shannon, data = rf_test)
+sum_v_rf_s_measured <- summary(regr_v_rf_s_measured)
+p_v_rf_s_measured <- sum_v_rf_s_measured$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_rf_s_measured <- sum_v_rf_s_measured$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_v_rf_a_measured <- lm(rf_pred_model_v_rf_a_c ~ obs_abundance, data = rf_test)
+sum_v_rf_a_measured <- summary(regr_v_rf_a_measured)
+p_v_rf_a_measured <- sum_v_rf_a_measured$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_rf_a_measured <- sum_v_rf_a_measured$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_v_rf_ra_measured <- lm(rf_pred_model_v_rf_ra_c ~ obs_rel_abundance, data = rf_test)
+sum_v_rf_ra_measured <- summary(regr_v_rf_ra_measured)
+p_v_rf_ra_measured <- sum_v_rf_ra_measured$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_rf_ra_measured <- sum_v_rf_ra_measured$coefficients["obs_rel_abundance", "Estimate"]
+
+### PREDICTOR: V + WD ### --------------------------------------------------
+# with k_index as response
+regr_wd_rf_k_measured <- lm(rf_pred_model_wd_rf_k_c ~ obs_k_index, data = rf_test)
+sum_wd_rf_k_measured <- summary(regr_wd_rf_k_measured)
+p_wd_rf_k_measured <- sum_wd_rf_k_measured$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_rf_k_measured <- sum_wd_rf_k_measured$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_wd_rf_s_measured <- lm(rf_pred_model_wd_rf_s_c ~ obs_shannon, data = rf_test)
+sum_wd_rf_s_measured <- summary(regr_wd_rf_s_measured)
+p_wd_rf_s_measured <- sum_wd_rf_s_measured$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_rf_s_measured <- sum_wd_rf_s_measured$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_wd_rf_a_measured <- lm(rf_pred_model_wd_rf_a_c ~ obs_abundance, data = rf_test)
+sum_wd_rf_a_measured <- summary(regr_wd_rf_a_measured)
+p_wd_rf_a_measured <- sum_wd_rf_a_measured$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_rf_a_measured <- sum_wd_rf_a_measured$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_rf_ra_measured <- lm(rf_pred_model_wd_rf_ra_c ~ obs_rel_abundance, data = rf_test)
+sum_wd_rf_ra_measured <- summary(regr_wd_rf_ra_measured)
+p_wd_rf_ra_measured <- sum_wd_rf_ra_measured$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_rf_ra_measured <- sum_wd_rf_ra_measured$coefficients["obs_rel_abundance", "Estimate"]
+
+### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
+# with k_index as response
+regr_samp_rf_k_measured <- lm(rf_pred_model_samp_rf_k_c ~ obs_k_index, data = rf_test)
+sum_samp_rf_k_measured <- summary(regr_samp_rf_k_measured)
+p_samp_rf_k_measured <- sum_samp_rf_k_measured$coefficients["obs_k_index", "Pr(>|t|)"]
+s_samp_rf_k_measured <- sum_samp_rf_k_measured$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_samp_rf_s_measured <- lm(rf_pred_model_samp_rf_s_c ~ obs_shannon, data = rf_test)
+sum_samp_rf_s_measured <- summary(regr_samp_rf_s_measured)
+p_samp_rf_s_measured <- sum_samp_rf_s_measured$coefficients["obs_shannon", "Pr(>|t|)"]
+s_samp_rf_s_measured <- sum_samp_rf_s_measured$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_samp_rf_a_measured <- lm(rf_pred_model_samp_rf_a_c ~ obs_abundance, data = rf_test)
+sum_samp_rf_a_measured <- summary(regr_samp_rf_a_measured)
+p_samp_rf_a_measured <- sum_samp_rf_a_measured$coefficients["obs_abundance", "Pr(>|t|)"]
+s_samp_rf_a_measured <- sum_samp_rf_a_measured$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_samp_rf_ra_measured <- lm(rf_pred_model_samp_rf_ra_c ~ obs_rel_abundance, data = rf_test)
+sum_samp_rf_ra_measured <- summary(regr_samp_rf_ra_measured)
+p_samp_rf_ra_measured <- sum_samp_rf_ra_measured$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_samp_rf_ra_measured <- sum_samp_rf_ra_measured$coefficients["obs_rel_abundance", "Estimate"]
+
+### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
+# with k_index as response
+regr_sec_rf_k_measured <- lm(rf_pred_model_sec_rf_k_c ~ k_index, data = rf_test_2)
+sum_sec_rf_k_measured <- summary(regr_sec_rf_k_measured)
+p_sec_rf_k_measured <- sum_sec_rf_k_measured$coefficients["k_index", "Pr(>|t|)"]
+s_sec_rf_k_measured <- sum_sec_rf_k_measured$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_sec_rf_s_measured <- lm(rf_pred_model_sec_rf_s_c ~ shannon, data = rf_test_2)
+sum_sec_rf_s_measured <- summary(regr_sec_rf_s_measured)
+p_sec_rf_s_measured <- sum_sec_rf_s_measured$coefficients["shannon", "Pr(>|t|)"]
+s_sec_rf_s_measured <- sum_sec_rf_s_measured$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_sec_rf_a_measured <- lm(rf_pred_model_sec_rf_a_c ~ abundance, data = rf_test_2)
+sum_sec_rf_a_measured <- summary(regr_sec_rf_a_measured)
+p_sec_rf_a_measured <- sum_sec_rf_a_measured$coefficients["abundance", "Pr(>|t|)"]
+s_sec_rf_a_measured <- sum_sec_rf_a_measured$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_sec_rf_ra_measured <- lm(rf_pred_model_sec_rf_ra_c ~ rel_abundance, data = rf_test_2)
+sum_sec_rf_ra_measured <- summary(regr_sec_rf_ra_measured)
+p_sec_rf_ra_measured <- sum_sec_rf_ra_measured$coefficients["rel_abundance", "Pr(>|t|)"]
+s_sec_rf_ra_measured <- sum_sec_rf_ra_measured$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
+# with k_index as response
+regr_var_rf_k_measured <- lm(rf_pred_model_var_rf_k_c ~ k_index, data = rf_test_2)
+sum_var_rf_k_measured <- summary(regr_var_rf_k_measured)
+p_var_rf_k_measured <- sum_var_rf_k_measured$coefficients["k_index", "Pr(>|t|)"]
+s_var_rf_k_measured <- sum_var_rf_k_measured$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_var_rf_s_measured <- lm(rf_pred_model_var_rf_s_c ~ shannon, data = rf_test_2)
+sum_var_rf_s_measured <- summary(regr_var_rf_s_measured)
+p_var_rf_s_measured <- sum_var_rf_s_measured$coefficients["shannon", "Pr(>|t|)"]
+s_var_rf_s_measured <- sum_var_rf_s_measured$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_var_rf_a_measured <- lm(rf_pred_model_var_rf_a_c ~ abundance, data = rf_test_2)
+sum_var_rf_a_measured <- summary(regr_var_rf_a_measured)
+p_var_rf_a_measured <- sum_var_rf_a_measured$coefficients["abundance", "Pr(>|t|)"]
+s_var_rf_a_measured <- sum_var_rf_a_measured$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_var_rf_ra_measured <- lm(rf_pred_model_var_rf_ra_c ~ rel_abundance, data = rf_test_2)
+sum_var_rf_ra_measured <- summary(regr_var_rf_ra_measured)
+p_var_rf_ra_measured <- sum_var_rf_ra_measured$coefficients["rel_abundance", "Pr(>|t|)"]
+s_var_rf_ra_measured <- sum_var_rf_ra_measured$coefficients["rel_abundance", "Estimate"]
+```
+
+### Test Raster
+```{r}
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# with k_index as response
+regr_v_rf_k_rast <- lm(k_index_v ~ obs_k_index, data = rf_test)
+sum_v_rf_k_rast <- summary(regr_v_rf_k_rast)
+p_v_rf_k_rast <- sum_v_rf_k_rast$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_rf_k_rast <- sum_v_rf_k_rast$coefficients["obs_k_index", "Estimate"]
+r_v_rf_k_rast <- summary(lm(k_index_v ~ obs_k_index, data = brt))$adj.r.squared
+
+# with shannon index as response
+regr_v_rf_s_rast <- lm(shannon_v ~ obs_shannon, data = rf_test)
+sum_v_rf_s_rast <- summary(regr_v_rf_s_rast)
+p_v_rf_s_rast <- sum_v_rf_s_rast$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_rf_s_rast <- sum_v_rf_s_rast$coefficients["obs_shannon", "Estimate"]
+r_v_rf_s_rast <- summary(lm(shannon_v ~ obs_shannon, data = brt))$adj.r.squared
+
+# with abundance as response
+regr_v_rf_a_rast <- lm(abundance_v ~ obs_abundance, data = rf_test)
+sum_v_rf_a_rast <- summary(regr_v_rf_a_rast)
+p_v_rf_a_rast <- sum_v_rf_a_rast$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_rf_a_rast <- sum_v_rf_a_rast$coefficients["obs_abundance", "Estimate"]
+r_v_rf_a_rast <- summary(lm(abundance_v ~ obs_abundance, data = brt))$adj.r.squared
+
+# with rel_abundance as response
+regr_v_rf_ra_rast <- lm(rel_abundance_v ~ obs_rel_abundance, data = rf_test)
+sum_v_rf_ra_rast <- summary(regr_v_rf_ra_rast)
+p_v_rf_ra_rast <- sum_v_rf_ra_rast$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_rf_ra_rast <- sum_v_rf_ra_rast$coefficients["obs_rel_abundance", "Estimate"]
+r_v_rf_ra_rast <- summary(lm(rel_abundance_v ~ obs_rel_abundance, data = brt))$adj.r.squared
+
+### PREDICTOR: V + WD ### --------------------------------------------------
+# with k_index as response
+regr_wd_rf_k_rast <- lm(k_index_wd ~ obs_k_index, data = rf_test)
+sum_wd_rf_k_rast <- summary(regr_wd_rf_k_rast)
+p_wd_rf_k_rast <- sum_wd_rf_k_rast$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_rf_k_rast <- sum_wd_rf_k_rast$coefficients["obs_k_index", "Estimate"]
+r_wd_rf_k_rast <- summary(lm(k_index_wd ~ obs_k_index, data = brt))$adj.r.squared
+
+# with shannon index as response
+regr_wd_rf_s_rast <- lm(shannon_wd ~ obs_shannon, data = rf_test)
+sum_wd_rf_s_rast <- summary(regr_wd_rf_s_rast)
+p_wd_rf_s_rast <- sum_wd_rf_s_rast$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_rf_s_rast <- sum_wd_rf_s_rast$coefficients["obs_shannon", "Estimate"]
+r_wd_rf_s_rast <- summary(lm(shannon_wd ~ obs_shannon, data = brt))$adj.r.squared
+
+# with abundance as response
+regr_wd_rf_a_rast <- lm(abundance_wd ~ obs_abundance, data = rf_test)
+sum_wd_rf_a_rast <- summary(regr_wd_rf_a_rast)
+p_wd_rf_a_rast <- sum_wd_rf_a_rast$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_rf_a_rast <- sum_wd_rf_a_rast$coefficients["obs_abundance", "Estimate"]
+r_wd_rf_a_rast <- summary(lm(abundance_wd ~ obs_abundance, data = brt))$adj.r.squared
+
+# with rel_abundance as response
+regr_wd_rf_ra_rast <- lm(rel_abundance_wd ~ obs_rel_abundance, data = rf_test)
+sum_wd_rf_ra_rast <- summary(regr_wd_rf_ra_rast)
+p_wd_rf_ra_rast <- sum_wd_rf_ra_rast$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_rf_ra_rast <- sum_wd_rf_ra_rast$coefficients["obs_rel_abundance", "Estimate"]
+r_wd_rf_ra_rast <- summary(lm(rel_abundance_wd ~ obs_rel_abundance, data = brt))$adj.r.squared
+
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
+# with k_index as response
+regr_var_rf_k_rast <- lm(k_index_var ~ obs_k_index, data = rf_test)
+sum_var_rf_k_rast <- summary(regr_var_rf_k_rast)
+p_var_rf_k_rast <- sum_var_rf_k_rast$coefficients["obs_k_index", "Pr(>|t|)"]
+s_var_rf_k_rast <- sum_var_rf_k_rast$coefficients["obs_k_index", "Estimate"]
+r_var_rf_k_rast <- summary(lm(k_index_var ~ obs_k_index, data = brt))$adj.r.squared
+
+# with shannon index as response
+regr_var_rf_s_rast <- lm(shannon_var ~ obs_shannon, data = rf_test)
+sum_var_rf_s_rast <- summary(regr_wd_rf_s_rast)
+p_var_rf_s_rast <- sum_var_rf_s_rast$coefficients["obs_shannon", "Pr(>|t|)"]
+s_var_rf_s_rast <- sum_var_rf_s_rast$coefficients["obs_shannon", "Estimate"]
+r_var_rf_s_rast <- summary(lm(shannon_var ~ obs_shannon, data = brt))$adj.r.squared
+
+# with abundance as response
+regr_var_rf_a_rast <- lm(abundance_var ~ obs_abundance, data = rf_test)
+sum_var_rf_a_rast <- summary(regr_var_rf_a_rast)
+p_var_rf_a_rast <- sum_var_rf_a_rast$coefficients["obs_abundance", "Pr(>|t|)"]
+s_var_rf_a_rast <- sum_var_rf_a_rast$coefficients["obs_abundance", "Estimate"]
+r_var_rf_a_rast <- summary(lm(abundance_var ~ obs_abundance, data = brt))$adj.r.squared
+
+# with rel_abundance as response
+regr_var_rf_ra_rast <- lm(rel_abundance_var ~ obs_rel_abundance, data = rf_test)
+sum_var_rf_ra_rast <- summary(regr_var_rf_ra_rast)
+p_var_rf_ra_rast <- sum_var_rf_ra_rast$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_var_rf_ra_rast <- sum_var_rf_ra_rast$coefficients["obs_rel_abundance", "Estimate"]
+r_var_rf_ra_rast <- summary(lm(rel_abundance_var ~ obs_rel_abundance, data = brt))$adj.r.squared
+```
+
+### Training Sets
+```{r}
+### PREDICTOR: VELOCITY ### --------------------------------------------------
+# with k_index as response
+regr_v_rf_k_train <- lm(pred_train_v_k ~ k_index, data = rf_train)
+sum_v_rf_k_train <- summary(regr_v_k_train)
+p_v_rf_k_train <- sum_v_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_v_rf_k_train <- sum_v_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_v_rf_s_train <- lm(pred_train_v_s ~ shannon, data = rf_train)
+sum_v_rf_s_train <- summary(regr_v_s_train)
+p_v_rf_s_train <- sum_v_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_v_rf_s_train <- sum_v_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_v_rf_a_train <- lm(pred_train_v_a ~ abundance, data = rf_train)
+sum_v_rf_a_train <- summary(regr_v_a_train)
+p_v_rf_a_train <- sum_v_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_v_rf_a_train <- sum_v_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_v_rf_ra_train <- lm(pred_train_v_ra ~ rel_abundance, data = rf_train)
+sum_v_rf_ra_train <- summary(regr_v_ra_train)
+p_v_rf_ra_train <- sum_v_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_v_rf_ra_train <- sum_v_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: V + WD ### --------------------------------------------------
+# with k_index as response
+regr_wd_rf_k_train <- lm(pred_train_wd_k ~ k_index, data = rf_train)
+sum_wd_rf_k_train <- summary(regr_wd_k_train)
+p_wd_rf_k_train <- sum_wd_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_wd_rf_k_train <- sum_wd_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_wd_rf_s_train <- lm(pred_train_wd_s ~ shannon, data = rf_train)
+sum_wd_rf_s_train <- summary(regr_wd_s_train)
+p_wd_rf_s_train <- sum_wd_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_wd_rf_s_train <- sum_wd_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_wd_rf_a_train <- lm(pred_train_wd_a ~ abundance, data = rf_train)
+sum_wd_rf_a_train <- summary(regr_wd_a_train)
+p_wd_rf_a_train <- sum_wd_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_wd_rf_a_train <- sum_wd_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_rf_ra_train <- lm(pred_train_wd_ra ~ rel_abundance, data = rf_train)
+sum_wd_rf_ra_train <- summary(regr_wd_ra_train)
+p_wd_rf_ra_train <- sum_wd_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_wd_rf_ra_train <- sum_wd_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
+# with k_index as response
+regr_samp_rf_k_train <- lm(pred_train_samp_k ~ k_index, data = rf_train)
+sum_samp_rf_k_train <- summary(regr_samp_k_train)
+p_samp_rf_k_train <- sum_samp_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_samp_rf_k_train <- sum_samp_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_samp_rf_s_train <- lm(pred_train_samp_s ~ shannon, data = rf_train)
+sum_samp_rf_s_train <- summary(regr_samp_s_train)
+p_samp_rf_s_train <- sum_samp_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_samp_rf_s_train <- sum_samp_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_samp_rf_a_train <- lm(pred_train_samp_a ~ abundance, data = rf_train)
+sum_samp_rf_a_train <- summary(regr_samp_a_train)
+p_samp_rf_a_train <- sum_samp_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_samp_rf_a_train <- sum_samp_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_samp_rf_ra_train <- lm(pred_train_samp_ra ~ rel_abundance, data = rf_train)
+sum_samp_rf_ra_train <- summary(regr_samp_ra_train)
+p_samp_rf_ra_train <- sum_samp_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_samp_rf_ra_train <- sum_samp_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
+# with k_index as response
+regr_sec_rf_k_train <- lm(pred_train_sec_k ~ k_index, data = rf_train)
+sum_sec_rf_k_train <- summary(regr_sec_k_train)
+p_sec_rf_k_train <- sum_sec_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_sec_rf_k_train <- sum_sec_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_sec_rf_s_train <- lm(pred_train_sec_s ~ shannon, data = rf_train)
+sum_sec_rf_s_train <- summary(regr_sec_s_train)
+p_sec_rf_s_train <- sum_sec_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_sec_rf_s_train <- sum_sec_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_sec_rf_a_train <- lm(pred_train_sec_a ~ abundance, data = rf_train)
+sum_sec_rf_a_train <- summary(regr_sec_a_train)
+p_sec_rf_a_train <- sum_sec_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_sec_rf_a_train <- sum_sec_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_sec_rf_ra_train <- lm(pred_train_sec_ra ~ rel_abundance, data = rf_train)
+sum_sec_rf_ra_train <- summary(regr_sec_ra_train)
+p_sec_rf_ra_train <- sum_sec_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_sec_rf_ra_train <- sum_sec_ra_train$coefficients["rel_abundance", "Estimate"]
+
+### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
+# with k_index as response
+regr_var_rf_k_train <- lm(pred_train_var_k ~ k_index, data = rf_train)
+sum_var_rf_k_train <- summary(regr_var_k_train)
+p_var_rf_k_train <- sum_var_k_train$coefficients["k_index", "Pr(>|t|)"]
+s_var_rf_k_train <- sum_var_k_train$coefficients["k_index", "Estimate"]
+
+# with shannon index as response
+regr_var_rf_s_train <- lm(pred_train_var_s ~ shannon, data = rf_train)
+sum_var_rf_s_train <- summary(regr_var_s_train)
+p_var_rf_s_train <- sum_var_s_train$coefficients["shannon", "Pr(>|t|)"]
+s_var_rf_s_train <- sum_var_s_train$coefficients["shannon", "Estimate"]
+
+# with abundance as response
+regr_var_rf_a_train <- lm(pred_train_var_a ~ abundance, data = rf_train)
+sum_var_rf_a_train <- summary(regr_var_a_train)
+p_var_rf_a_train <- sum_var_a_train$coefficients["abundance", "Pr(>|t|)"]
+s_var_rf_a_train <- sum_var_a_train$coefficients["abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_var_rf_ra_train <- lm(pred_train_var_ra ~ rel_abundance, data = rf_train)
+sum_var_rf_ra_train <- summary(regr_var_ra_train)
+p_var_rf_ra_train <- sum_var_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
+s_var_rf_ra_train <- sum_var_ra_train$coefficients["rel_abundance", "Estimate"]
+```
+
+# Create dataframe
+```{r}
+regr_brt <- data.frame(p_value = c(p_v_brt_k_measured, p_v_brt_s_measured, p_v_brt_a_measured, p_v_brt_ra_measured,
+                                        p_wd_brt_k_measured, p_wd_brt_s_measured, p_wd_brt_a_measured, p_wd_brt_ra_measured,
+                                        p_samp_brt_k_measured, p_samp_brt_s_measured, p_samp_brt_a_measured, p_samp_brt_ra_measured,
+                                        p_sec_brt_k_measured, p_sec_brt_s_measured, p_sec_brt_a_measured, p_sec_brt_ra_measured,
+                                        p_var_brt_k_measured, p_var_brt_s_measured, p_var_brt_a_measured, p_var_brt_ra_measured,
+                                        p_v_brt_k_rast, p_v_brt_s_rast, p_v_brt_a_rast, p_v_brt_ra_rast,
+                                        p_wd_brt_k_rast, p_wd_brt_s_rast, p_wd_brt_a_rast, p_wd_brt_ra_rast,
+                                        p_var_brt_k_rast, p_var_brt_s_rast, p_var_brt_a_rast, p_var_brt_ra_rast,
+                                        p_v_brt_k_train, p_v_brt_s_train, p_v_brt_a_train, p_v_brt_ra_train,
+                                        p_wd_brt_k_train, p_wd_brt_s_train, p_wd_brt_a_train, p_wd_brt_ra_train,
+                                        p_samp_brt_k_train, p_samp_brt_s_train, p_samp_brt_a_train, p_samp_brt_ra_train,
+                                        p_sec_brt_k_train, p_sec_brt_s_train, p_sec_brt_a_train, p_sec_brt_ra_train,
+                                        p_var_brt_k_train, p_var_brt_s_train, p_var_brt_a_train, p_var_brt_ra_train),
+                            slope = c(s_v_brt_k_measured, s_v_brt_s_measured, s_v_brt_a_measured, s_v_brt_ra_measured,
+                                        s_wd_brt_k_measured, s_wd_brt_s_measured, s_wd_brt_a_measured, s_wd_brt_ra_measured,
+                                        s_samp_brt_k_measured, s_samp_brt_s_measured, s_samp_brt_a_measured, s_samp_brt_ra_measured,
+                                        s_sec_brt_k_measured, s_sec_brt_s_measured, s_sec_brt_a_measured, s_sec_brt_ra_measured,
+                                        s_var_brt_k_measured, s_var_brt_s_measured, s_var_brt_a_measured, s_var_brt_ra_measured,
+                                        s_v_brt_k_rast, s_v_brt_s_rast, s_v_brt_a_rast, s_v_brt_ra_rast,
+                                        s_wd_brt_k_rast, s_wd_brt_s_rast, s_wd_brt_a_rast, s_wd_brt_ra_rast,
+                                        s_var_brt_k_rast, s_var_brt_s_rast, s_var_brt_a_rast, s_var_brt_ra_rast,
+                                        s_v_brt_k_train, s_v_brt_s_train, s_v_brt_a_train, s_v_brt_ra_train,
+                                        s_wd_brt_k_train, s_wd_brt_s_train, s_wd_brt_a_train, s_wd_brt_ra_train,
+                                        s_samp_brt_k_train, s_samp_brt_s_train, s_samp_brt_a_train, s_samp_brt_ra_train,
+                                        s_sec_brt_k_train, s_sec_brt_s_train, s_sec_brt_a_train, s_sec_brt_ra_train,
+                                        s_var_brt_k_train, s_var_brt_s_train, s_var_brt_a_train, s_var_brt_ra_train),
+                            index = c("k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance"),
+                            algorithm = c("brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt",
+                                          "brt", "brt", "brt", "brt"),
+                            predictor = c("velocity", "velocity", "velocity", "velocity",
+                                          "v + wd", "v + wd", "v + wd", "v + wd",
+                                          "samp", "samp", "samp", "samp",
+                                          "sec", "sec", "sec", "sec",
+                                          "var", "var", "var", "var",
+                                          "velocity", "velocity", "velocity", "velocity",
+                                          "v + wd", "v + wd", "v + wd", "v + wd",
+                                          "var", "var", "var", "var",
+                                          "velocity", "velocity", "velocity", "velocity",
+                                          "v + wd", "v + wd", "v + wd", "v + wd",
+                                          "samp", "samp", "samp", "samp",
+                                          "sec", "sec", "sec", "sec",
+                                          "var", "var", "var", "var"),
+                              origin = c("measured", "measured", "measured", "measured",
+                              "measured", "measured", "measured", "measured",
+                              "measured", "measured", "measured", "measured", 
+                              "measured", "measured", "measured", "measured",
+                              "measured", "measured", "measured", "measured",
+                              "raster", "raster", "raster", "raster",
+                              "raster", "raster", "raster", "raster", 
+                              "raster", "raster", "raster", "raster",
+                              "training", "training", "training", "training",
+                              "training", "training", "training", "training",
+                              "training", "training", "training", "training", 
+                              "training", "training", "training", "training",
+                              "training", "training", "training", "training"))
+
+
+regr_rf <- data.frame(p_value = c(p_v_rf_k_measured, p_v_rf_s_measured, p_v_rf_a_measured, p_v_rf_ra_measured,
+                                        p_wd_rf_k_measured, p_wd_rf_s_measured, p_wd_rf_a_measured, p_wd_rf_ra_measured,
+                                        p_samp_rf_k_measured, p_samp_rf_s_measured, p_samp_rf_a_measured, p_samp_rf_ra_measured,
+                                        p_sec_rf_k_measured, p_sec_rf_s_measured, p_sec_rf_a_measured, p_sec_rf_ra_measured,
+                                        p_var_rf_k_measured, p_var_rf_s_measured, p_var_rf_a_measured, p_var_rf_ra_measured,
+                                        p_v_rf_k_rast, p_v_rf_s_rast, p_v_rf_a_rast, p_v_rf_ra_rast,
+                                        p_wd_rf_k_rast, p_wd_rf_s_rast, p_wd_rf_a_rast, p_wd_rf_ra_rast,
+                                        p_var_rf_k_rast, p_var_rf_s_rast, p_var_rf_a_rast, p_var_rf_ra_rast,
+                                        p_v_rf_k_train, p_v_rf_s_train, p_v_rf_a_train, p_v_rf_ra_train,
+                                        p_wd_rf_k_train, p_wd_rf_s_train, p_wd_rf_a_train, p_wd_rf_ra_train,
+                                        p_samp_rf_k_train, p_samp_rf_s_train, p_samp_rf_a_train, p_samp_rf_ra_train,
+                                        p_sec_rf_k_train, p_sec_rf_s_train, p_sec_rf_a_train, p_sec_rf_ra_train,
+                                        p_var_rf_k_train, p_var_rf_s_train, p_var_rf_a_train, p_var_rf_ra_train),
+                            slope = c(s_v_rf_k_measured, s_v_rf_s_measured, s_v_rf_a_measured, s_v_rf_ra_measured,
+                                        s_wd_rf_k_measured, s_wd_rf_s_measured, s_wd_rf_a_measured, s_wd_rf_ra_measured,
+                                        s_samp_rf_k_measured, s_samp_rf_s_measured, s_samp_rf_a_measured, s_samp_rf_ra_measured,
+                                        s_sec_rf_k_measured, s_sec_rf_s_measured, s_sec_rf_a_measured, s_sec_rf_ra_measured,
+                                        s_var_rf_k_measured, s_var_rf_s_measured, s_var_rf_a_measured, s_var_rf_ra_measured,
+                                        s_v_rf_k_rast, s_v_rf_s_rast, s_v_rf_a_rast, s_v_rf_ra_rast,
+                                        s_wd_rf_k_rast, s_wd_rf_s_rast, s_wd_rf_a_rast, s_wd_rf_ra_rast,
+                                        s_var_rf_k_rast, s_var_rf_s_rast, s_var_rf_a_rast, s_var_rf_ra_rast,
+                                        s_v_rf_k_train, s_v_rf_s_train, s_v_rf_a_train, s_v_rf_ra_train,
+                                        s_wd_rf_k_train, s_wd_rf_s_train, s_wd_rf_a_train, s_wd_rf_ra_train,
+                                        s_samp_rf_k_train, s_samp_rf_s_train, s_samp_rf_a_train, s_samp_rf_ra_train,
+                                        s_sec_rf_k_train, s_sec_rf_s_train, s_sec_rf_a_train, s_sec_rf_ra_train,
+                                        s_var_rf_k_train, s_var_rf_s_train, s_var_rf_a_train, s_var_rf_ra_train),
+                            index = c("k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance",
+                                      "k_index", "shannon", "abundance", "rel_abundance"),
+                            algorithm = c("rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf",
+                                          "rf", "rf", "rf", "rf"),
+                            predictor = c("velocity", "velocity", "velocity", "velocity",
+                                          "v + wd", "v + wd", "v + wd", "v + wd",
+                                          "samp", "samp", "samp", "samp",
+                                          "sec", "sec", "sec", "sec",
+                                          "var", "var", "var", "var",
+                                          "velocity", "velocity", "velocity", "velocity",
+                                          "v + wd", "v + wd", "v + wd", "v + wd",
+                                          "var", "var", "var", "var",
+                                          "velocity", "velocity", "velocity", "velocity",
+                                          "v + wd", "v + wd", "v + wd", "v + wd",
+                                          "samp", "samp", "samp", "samp",
+                                          "sec", "sec", "sec", "sec",
+                                          "var", "var", "var", "var"),
+                              origin = c("measured", "measured", "measured", "measured",
+                              "measured", "measured", "measured", "measured",
+                              "measured", "measured", "measured", "measured", 
+                              "measured", "measured", "measured", "measured",
+                              "measured", "measured", "measured", "measured",
+                              "raster", "raster", "raster", "raster",
+                              "raster", "raster", "raster", "raster", 
+                              "raster", "raster", "raster", "raster",
+                              "training", "training", "training", "training",
+                              "training", "training", "training", "training",
+                              "training", "training", "training", "training", 
+                              "training", "training", "training", "training",
+                              "training", "training", "training", "training"))
+
+regr_all <- rbind(regr_brt, regr_rf)
+
+# write .csv file 
+write.csv(regr_brt, "Stat_Analysis/stat_analysis_data/results_regr_brt.csv", row.names = FALSE)
+write.csv(regr_rf, "Stat_Analysis/stat_analysis_data/results_regr_rf.csv", row.names = FALSE)
+write.csv(regr_all, "Stat_Analysis/stat_analysis_data/results_regr_rf.csv", row.names = FALSE)
+```
+
 
 ## Stat. Analysis
 ```{r}
@@ -314,27 +971,15 @@ plot(regr_wd_rf_k) # Linearität ok; Residuen nicht normalverteilt
 plot(regr_wd_rf_s) # Linearität ok; Residuen nicht normalverteilt 
 plot(regr_wd_rf_a) # Linearität ok; Residuen normalverteilt 
 plot(regr_wd_rf_ra) # Linearität ok; Residuen normalverteilt 
-
-### HSC model ### ---------------------------------------------------------------
-### Predictor FOEN class ###
-plot(regr_foen_class_k) # Linearität nicht gegeben (Bananenform); Residuen nicht normalverteilt
-plot(regr_foen_class_s) # Linearität nicht gegeben; Residuen nicht normalverteilt
-plot(regr_foen_class_a) # Linearität nicht gegeben; Residuen nicht normalverteilt
-plot(regr_foen_class_ra) # Linearität nicht gegeben; Residuen nicht normalverteilt
-
-### Predictor FOEN HSI ###
-plot(regr_foen_hsi_k) # Linearität nicht gegeben; Residuen nicht normalverteilt
-plot(regr_foen_hsi_s) # Linearität nicht gegeben; Residuen nicht normalverteilt
-plot(regr_foen_hsi_a) # Linearität nicht gegeben; Residuen nicht normalverteilt
-plot(regr_foen_hsi_ra) # Linearität nicht gegeben; Residuen nicht normalverteilt
 ```
 
 # Plots
-## BRT normal 
-### Predictor: Velocity
+## BRT 
+### Test Raster
 ```{r}
+### PREDICTOR: VELOCITY ### --------------------------------------------------
 # with k_index as response ----------------------------------------------------
-p_brt_k <- ggplot(brt, aes(obs_k_index, k_index_v)) +
+p_brt_k <- ggplot(brt_test, aes(obs_k_index, k_index_v, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -349,7 +994,7 @@ p_brt_k <- ggplot(brt, aes(obs_k_index, k_index_v)) +
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16))
 
-p_brt_wrap_k <- ggplot(brt, aes(obs_k_index, k_index_v)) +
+p_brt_wrap_k <- ggplot(brt_test, aes(obs_k_index, k_index_v, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -372,7 +1017,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_k.png", plot = p_brt_k, width = 6, hei
 ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k.png", plot = p_brt_wrap_k, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
-p_brt_s <- ggplot(brt, aes(obs_shannon, shannon_v)) +
+p_brt_s <- ggplot(brt_test, aes(obs_shannon, shannon_v, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -387,7 +1032,7 @@ p_brt_s <- ggplot(brt, aes(obs_shannon, shannon_v)) +
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16))
   
-p_brt_wrap_s <- ggplot(brt, aes(obs_shannon, shannon_v)) +
+p_brt_wrap_s <- ggplot(brt_test, aes(obs_shannon, shannon_v, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -410,7 +1055,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_s.png", plot = p_brt_s, width = 6, hei
 ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s.png", plot = p_brt_wrap_s, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-p_brt_a <- ggplot(brt, aes(obs_abundance, abundance_v)) +
+p_brt_a <- ggplot(brt_test, aes(obs_abundance, abundance_v, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -425,7 +1070,7 @@ p_brt_a <- ggplot(brt, aes(obs_abundance, abundance_v)) +
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16))
 
-p_brt_wrap_a <- ggplot(brt, aes(obs_abundance, abundance_v)) +
+p_brt_wrap_a <- ggplot(brt_test, aes(obs_abundance, abundance_v, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -448,7 +1093,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_a.png", plot = p_brt_a, width = 6, hei
 ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a.png", plot = p_brt_wrap_a, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
-p_brt_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_v)) +
+p_brt_ra <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_v, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -463,7 +1108,7 @@ p_brt_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_v)) +
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16))
 
-p_brt_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_v)) +
+p_brt_wrap_ra <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_v, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -484,12 +1129,11 @@ p_brt_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_v)) +
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_ra.png", plot = p_brt_ra, width = 6, height = 5)
 ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra.png", plot = p_brt_wrap_ra, width = 8, height = 8)
-```
 
-### Predictor: V + WD
-```{r}
+
+### PREDICTOR: V + WD ### --------------------------------------------------
 # with k_index as response-----------------------------------------------------
-p_brt_wd_k <- ggplot(brt, aes(obs_k_index, k_index_wd)) +
+p_brt_wd_k <- ggplot(brt_test, aes(obs_k_index, k_index_wd, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -504,7 +1148,7 @@ p_brt_wd_k <- ggplot(brt, aes(obs_k_index, k_index_wd)) +
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16))
 
-p_brt_wd_wrap_k <- ggplot(brt, aes(obs_k_index, k_index_wd)) +
+p_brt_wd_wrap_k <- ggplot(brt_test, aes(obs_k_index, k_index_wd, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -527,7 +1171,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_wd_k.png", plot = p_brt_wd_k, width = 
 ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_k.png", plot = p_brt_wd_wrap_k, width = 8, height = 8)
 
 # with shannon index as response ---------------------------------------------
-p_brt_wd_s <- ggplot(brt, aes(obs_shannon, shannon_wd)) +
+p_brt_wd_s <- ggplot(brt_test, aes(obs_shannon, shannon_wd, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -543,7 +1187,7 @@ p_brt_wd_s <- ggplot(brt, aes(obs_shannon, shannon_wd)) +
         axis.title = element_text(size=16))
 
   
-p_brt_wd_wrap_s <- ggplot(brt, aes(obs_shannon, shannon_wd)) +
+p_brt_wd_wrap_s <- ggplot(brt_test, aes(obs_shannon, shannon_wd, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -566,7 +1210,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_wd_s.png", plot = p_brt_wd_s, width = 
 ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_s.png", plot = p_brt_wd_wrap_s, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-p_brt_wd_a <- ggplot(brt, aes(obs_abundance, abundance_wd)) +
+p_brt_wd_a <- ggplot(brt_test, aes(obs_abundance, abundance_wd, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -582,7 +1226,7 @@ p_brt_wd_a <- ggplot(brt, aes(obs_abundance, abundance_wd)) +
         axis.title = element_text(size=16))
 
   
-p_brt_wd_wrap_a <- ggplot(brt, aes(obs_abundance, abundance_wd)) +
+p_brt_wd_wrap_a <- ggplot(brt_test, aes(obs_abundance, abundance_wd, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -605,7 +1249,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_wd_a.png", plot = p_brt_wd_a, width = 
 ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_a.png", plot = p_brt_wd_wrap_a, width = 8, height = 8)
 
 # with relative abundance as response ----------------------------------------
-p_brt_wd_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_wd)) +
+p_brt_wd_ra <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_wd, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -621,7 +1265,7 @@ p_brt_wd_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_wd)) +
         axis.title = element_text(size=16))
 
   
-p_brt_wd_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_wd)) +
+p_brt_wd_wrap_ra <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_wd, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -642,12 +1286,10 @@ p_brt_wd_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_wd)) +
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_wd_ra.png", plot = p_brt_wd_ra, width = 6, height = 5)
 ggsave("Stat_Analysis/regr_plots/regr_brt_wd_wrap_ra.png", plot = p_brt_wd_wrap_ra, width = 8, height = 8)
-```
 
-### Predictor: selected variables
-```{r}
+### PREDICTOR: SELCTED VARIABLES ### ------------------------------------------
 # with k_index as response-----------------------------------------------------
-p_brt_var_k <- ggplot(brt, aes(obs_k_index, k_index_var)) +
+p_brt_var_k <- ggplot(brt_test, aes(obs_k_index, k_index_var, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -662,7 +1304,7 @@ p_brt_var_k <- ggplot(brt, aes(obs_k_index, k_index_var)) +
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16))
 
-p_brt_var_wrap_k <- ggplot(brt, aes(obs_k_index, k_index_var)) +
+p_brt_var_wrap_k <- ggplot(brt_test, aes(obs_k_index, k_index_var, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -685,7 +1327,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_var_k.png", plot = p_brt_var_k, width 
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_wrap_k.png", plot = p_brt_var_wrap_k, width = 8, height = 8)
 
 # with shannon index as response ---------------------------------------------
-p_brt_var_s <- ggplot(brt, aes(obs_shannon, shannon_var)) +
+p_brt_var_s <- ggplot(brt_test, aes(obs_shannon, shannon_var, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -701,7 +1343,7 @@ p_brt_var_s <- ggplot(brt, aes(obs_shannon, shannon_var)) +
         axis.title = element_text(size=16))
 
   
-p_brt_var_wrap_s <- ggplot(brt, aes(obs_shannon, shannon_var)) +
+p_brt_var_wrap_s <- ggplot(brt_test, aes(obs_shannon, shannon_var, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -724,7 +1366,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_var_s.png", plot = p_brt_var_s, width 
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_wrap_s.png", plot = p_brt_var_wrap_s, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-p_brt_var_a <- ggplot(brt, aes(obs_abundance, abundance_var)) +
+p_brt_var_a <- ggplot(brt_test, aes(obs_abundance, abundance_var, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -740,7 +1382,7 @@ p_brt_var_a <- ggplot(brt, aes(obs_abundance, abundance_var)) +
         axis.title = element_text(size=16))
 
   
-p_brt_var_wrap_a <- ggplot(brt, aes(obs_abundance, abundance_var)) +
+p_brt_var_wrap_a <- ggplot(brt_test, aes(obs_abundance, abundance_var, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -763,7 +1405,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_var_a.png", plot = p_brt_var_a, width 
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_wrap_a.png", plot = p_brt_var_wrap_a, width = 8, height = 8)
 
 # with relative abundance as response ----------------------------------------
-p_brt_var_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_var)) +
+p_brt_var_ra <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_var, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -779,7 +1421,7 @@ p_brt_var_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_var)) +
         axis.title = element_text(size=16))
 
   
-p_brt_var_wrap_ra <- ggplot(brt, aes(obs_rel_abundance, rel_abundance_var)) +
+p_brt_var_wrap_ra <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_var, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -1272,385 +1914,6 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_var_ra.png", plot = p_rf_var_ra, width 
 ggsave("Stat_Analysis/regr_plots/regr_rf_var_wrap_ra.png", plot = p_rf_var_wrap_ra, width = 8, height = 8)
 ```
 
-## HSC 
-### Predictor: FOEN class
-```{r}
-# with k_index as response ----------------------------------------------------
-p_class_k <- ggplot(hsc, aes(k_index, foen_class)) +
-  geom_point() +
-  geom_abline(slope = 5/1.0, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "K-Index Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
 
-p_class_wrap_k <- ggplot(hsc, aes(k_index, foen_class)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 5/1.0, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "K-Index Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_class_k.png", plot = p_class_k, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_class_wrap_k.png", plot = p_class_wrap_k, width = 8, height = 8)
-
-# with shannon index as response ----------------------------------------------
-p_class_s <- ggplot(hsc, aes(shannon, foen_class)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5.0) +
-  xlim(0, 5.0) + 
-  labs(
-    x = "Shannon Index Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
-  
-p_class_wrap_s <- ggplot(hsc, aes(shannon, foen_class)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5.0) +
-  xlim(0, 5.0) + 
-  labs(
-    x = "Shannon Index Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_class_s.png", plot = p_class_s, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_class_wrap_s.png", plot = p_class_wrap_s, width = 8, height = 8)
-
-# with abundance as response --------------------------------------------------
-p_class_a <- ggplot(hsc, aes(abundance, foen_class)) +
-  geom_point() +
-  geom_abline(slope = 5/3772, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5) +
-  xlim(0, 3772) + 
-  labs(
-    x = "Absolute Abundance Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
-
-p_class_wrap_a <- ggplot(hsc, aes(abundance, foen_class)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 5/3772, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5) +
-  xlim(0, 3772) + 
-  labs(
-    x = "Absolute Abundance Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_class_a.png", plot = p_class_a, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_class_wrap_a.png", plot = p_class_wrap_a, width = 8, height = 8)
-
-# with relative abundance as response -----------------------------------------
-p_class_ra <- ggplot(hsc, aes(rel_abundance, foen_class)) +
-  geom_point() +
-  geom_abline(slope = 5/1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "Relative Abundance Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
-
-p_class_wrap_ra <- ggplot(hsc, aes(rel_abundance, foen_class)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 5/1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 5.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "Relative Abundance Observed",
-    y = "FOEN Class"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_class_ra.png", plot = p_class_ra, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_class_wrap_ra.png", plot = p_class_wrap_ra, width = 8, height = 8)
-```
-
-### Predictor: FOEN HSI
-```{r}
-# with k_index as response ----------------------------------------------------
-p_hsi_k <- ggplot(hsc, aes(k_index, foen_hsi)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "K-Index Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
-
-p_hsi_wrap_k <- ggplot(hsc, aes(k_index, foen_hsi)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "K-Index Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_hsi_k.png", plot = p_hsi_k, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_k.png", plot = p_hsi_wrap_k, width = 8, height = 8)
-
-# with shannon index as response ----------------------------------------------
-p_hsi_s <- ggplot(hsc, aes(shannon, foen_hsi)) +
-  geom_point() +
-  geom_abline(slope = 1/5, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 5.0) + 
-  labs(
-    x = "Shannon Index Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
-  
-p_hsi_wrap_s <- ggplot(hsc, aes(shannon, foen_hsi)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 1/5, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 5.0) + 
-  labs(
-    x = "Shannon Index Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_hsi_s.png", plot = p_hsi_s, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_s.png", plot = p_hsi_wrap_s, width = 8, height = 8)
-
-# with abundance as response --------------------------------------------------
-p_hsi_a <- ggplot(hsc, aes(abundance, foen_hsi)) +
-  geom_point() +
-  geom_abline(slope = 1/3772, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 3772) + 
-  labs(
-    x = "Absolute Abundance Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
-
-p_hsi_wrap_a <- ggplot(hsc, aes(abundance, foen_hsi)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 1/3772, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 3772) + 
-  labs(
-    x = "Absolute Abundance Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_hsi_a.png", plot = p_hsi_a, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_a.png", plot = p_hsi_wrap_a, width = 8, height = 8)
-
-# with relative abundance as response -----------------------------------------
-p_hsi_ra <- ggplot(hsc, aes(rel_abundance, foen_hsi)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "Relative Abundance Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
-
-p_hsi_wrap_ra <- ggplot(hsc, aes(rel_abundance, foen_hsi)) +
-  facet_wrap(~Reach_Untersuchungsstelle) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "Relative Abundance Observed",
-    y = "FOEN HSI"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=8),
-        axis.title = element_text(size=12),
-        strip.text.x = element_text(
-        size = 12))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_hsi_ra.png", plot = p_hsi_ra, width = 6, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_hsi_wrap_ra.png", plot = p_hsi_wrap_ra, width = 8, height = 8)
-```
-
-# Create dataframe
-```{r}
-results_hdm <- data.frame(lm_p_value = c(p_v_brt_k, p_v_brt_s, p_v_brt_a, p_v_brt_ra,
-                                         p_v_rf_k, p_v_rf_s, p_v_rf_a, p_v_rf_ra,  
-                                         p_wd_brt_k, p_wd_brt_s, p_wd_brt_a, p_wd_brt_ra,
-                                         p_wd_rf_k, p_wd_rf_s, p_wd_rf_a, p_wd_rf_ra, 
-                                         p_var_brt_k, p_var_brt_s, p_var_brt_a, p_var_brt_ra,
-                                         p_var_rf_k, p_var_rf_s, p_var_rf_a, p_var_rf_ra,
-                                         p_foen_class_k, p_foen_class_s, p_foen_class_a, p_foen_class_ra,
-                                         p_foen_hsi_k, p_foen_hsi_s, p_foen_hsi_a, p_foen_hsi_ra),
-                          
-                          lm_slope = c(s_v_brt_k, s_v_brt_s, s_v_brt_a, s_v_brt_ra,
-                                       s_v_rf_k, s_v_rf_s, s_v_rf_a, s_v_rf_ra, 
-                                       s_wd_brt_k, s_wd_brt_s, s_wd_brt_a, s_wd_brt_ra, 
-                                       s_wd_rf_k, s_wd_rf_s, s_wd_rf_a, s_wd_rf_ra,
-                                       s_var_brt_k, s_var_brt_s, s_var_brt_a, s_var_brt_ra,
-                                       s_var_rf_k, s_var_rf_s, s_var_rf_a, s_var_rf_ra, 
-                                       s_foen_class_k, s_foen_class_s, s_foen_class_a, s_foen_class_ra,
-                                       s_foen_hsi_k, s_foen_hsi_s, s_foen_hsi_a, s_foen_hsi_ra),
-                          
-                          index = c("k_index", "shannon", "abundance", "rel_abundance", 
-                                    "k_index", "shannon", "abundance", "rel_abundance", 
-                                    "k_index", "shannon", "abundance", "rel_abundance", 
-                                    "k_index", "shannon", "abundance", "rel_abundance", 
-                                    "k_index", "shannon", "abundance", "rel_abundance", 
-                                    "k_index", "shannon", "abundance", "rel_abundance", 
-                                    "k_index", "shannon", "abundance", "rel_abundance",
-                                    "k_index", "shannon", "abundance", "rel_abundance"),
-                          
-  
-           variable = c("velocity", "velocity", "velocity", "velocity",
-                        "velocity", "velocity", "velocity", "velocity", 
-                        "v + wd", "v + wd", "v + wd", "v + wd", 
-                        "v + wd", "v + wd", "v + wd", "v + wd", 
-                        "var", "var", "var", "var", 
-                        "var", "var", "var", "var",
-                        "foen class", "foen class", "foen class", "foen class",
-                        "foen hsi", "foen hsi", "foen hsi", "foen hsi"),
-           
-           model = c("brt", "brt", "brt", "brt",
-                     "rf", "rf", "rf", "rf",
-                     "brt", "brt", "brt", "brt",
-                     "rf", "rf", "rf", "rf",
-                     "brt", "brt", "brt", "brt",
-                     "rf", "rf", "rf", "rf",
-                     "hsc", "hsc", "hsc", "hsc", 
-                     "hsc", "hsc", "hsc", "hsc"))
-
-# write .csv file 
-write.csv(results_hdm, "Stat_Analysis/results_regr_analysis.csv", row.names = FALSE)
-```                 
-                           
-
-
-```{r}
-# Select only rows, which contain significant p-values and sort them
-selected_rows <- results_hdm[results_hdm$lm_p_value < 0.05, ]
-sorted_data <- selected_rows[order(selected_rows$lm_p_value), ]
-
-# exclude hsc model data, because the slope is negative 
-data <- subset(sorted_data, model != "hsc")
-```
-
-```{r}
-selected_rows <- results_hdm[results_hdm$lm_slope, ]
-sorted_slope <- selected_rows[order(selected_rows$lm_slope), ]
-
-data <- subset(sorted_slope, model != "hsc")
-```
 
 

@@ -1749,7 +1749,136 @@ pdp_model_b_var_k_c <- pdp::partial(rf_model_var_k_c, pred.var = "biogeo_int")|>
 write.csv(pdp_model_b_var_k_c, "ML_Model/pdp_data/pdp_b_var_k_c_rf.csv", row.names = FALSE)
 ```
 
+
 # BRT
+## Variable Importance
+```{r}
+### PREDICTORS: VELOCITY ### -------------------------------------------------
+# w/o coordinates
+vi_v_k_c <- xgb.importance(model = xgb_v_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_v_s_c <- xgb.importance(model = xgb_v_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_v_a_c <- xgb.importance(model = xgb_v_a_c)|>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_v_ra_c <- xgb.importance(model = xgb_v_ra_c)|>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
+
+
+### PREDICTORS: VELOCITY + WD ### ---------------------------------------------
+# w/o coordinates
+vi_wd_k_c <- xgb.importance(model = xgb_wd_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_wd_s_c <- xgb.importance(model = xgb_wd_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_wd_a_c <- xgb.importance(model = xgb_wd_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_wd_ra_c <- xgb.importance(model = xgb_wd_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
+
+### PREDICTORS: SAMPLING LOCATIONS ### ----------------------------------------
+# w/o coordinates
+vi_samp_k_c <- xgb.importance(model = xgb_samp_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_samp_s_c <- xgb.importance(model = xgb_samp_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_samp_a_c <- xgb.importance(model = xgb_samp_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_samp_ra_c <- xgb.importance(model = xgb_samp_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
+
+### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
+# w/o coordinates
+vi_sec_k_c <- xgb.importance(model = xgb_sec_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_sec_s_c <- xgb.importance(model = xgb_sec_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_sec_a_c <- xgb.importance(model = xgb_sec_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_sec_ra_c <- xgb.importance(model = xgb_sec_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
+
+### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
+# w/o coordinates
+vi_var_k_c <- xgb.importance(model = xgb_var_k_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "k_index",
+         model = "xgboost w/o coordinates")
+
+vi_var_s_c <- xgb.importance(model = xgb_var_s_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "shannon_index",
+         model = "xgboost w/o coordinates")
+
+vi_var_a_c <- xgb.importance(model = xgb_var_a_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "abundance",
+         model = "xgboost w/o coordinates")
+
+vi_var_ra_c <- xgb.importance(model = xgb_var_ra_c) |>
+  dplyr::select(-Cover, -Frequency)  |>
+  mutate(index = "rel_abundance",
+         model = "xgboost w/o coordinates")
+
+# bind results together -------------------------------------------------------
+vi_brt_model_v_c <- rbind(vi_v_k_c, vi_v_s_c, vi_v_a_c, vi_v_ra_c)
+vi_brt_model_wd_c <- rbind(vi_wd_k_c, vi_wd_s_c, vi_wd_a_c, vi_wd_ra_c) 
+vi_brt_model_samp_c <- rbind(vi_samp_k_c, vi_samp_s_c, vi_samp_a_c, vi_samp_ra_c) 
+vi_brt_model_sec_c <- rbind(vi_sec_k_c, vi_sec_s_c, vi_sec_a_c, vi_sec_ra_c) 
+vi_brt_model_var_c <- rbind(vi_var_k_c, vi_var_s_c, vi_var_a_c, vi_var_ra_c)
+
+# write results into .csv ----------------------------------------------------
+write.csv(vi_brt_model_v_c, "ML_model/var_imp/vi_brt_model_v_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_wd_c, "ML_model/var_imp/vi_brt_model_wd_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_samp_c, "ML_model/var_imp/vi_brt_model_samp_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_sec_c, "ML_model/var_imp/vi_brt_model_sec_c.csv", row.names = FALSE)
+write.csv(vi_brt_model_var_c, "ML_model/var_imp/vi_brt_model_var_c.csv", row.names = FALSE)
+```
+
 ## Partial dependence plots
 ### Data extraction & export
 ```{r}
@@ -3437,3 +3566,94 @@ pdp_model_ga_sec_ra_c <- pdp::partial(xgb_sec_ra_c, pred.var = "gaug_after", tra
 # export data 
 write.csv(pdp_model_ga_sec_ra_c, "ML_Model/pdp_data/pdp_ga_sec_ra_c_brt.csv", row.names = FALSE)
 ```
+
+## RF normal
+### Predictor: Velocity
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_v_rf_k <- lm(k_index_v ~ obs_k_index, data = rf)
+sum_v_rf_k <- summary(regr_v_rf_k)
+p_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
+s_v_rf_k <- sum_v_rf_k$coefficients["obs_k_index", "Estimate"]
+r_v_rf_k <- summary(lm(k_index_v ~ obs_k_index, data = rf))$adj.r.squared
+
+# with shannon index as response
+regr_v_rf_s <- lm(shannon_v ~ obs_shannon, data = rf)
+sum_v_rf_s <- summary(regr_v_rf_s)
+p_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
+s_v_rf_s <- sum_v_rf_s$coefficients["obs_shannon", "Estimate"]
+r_v_rf_s <- summary(lm(shannon_v ~ obs_shannon, data = rf))$adj.r.squared
+
+# with abundance as response
+regr_v_rf_a <- lm(abundance_v ~ obs_abundance, data = rf)
+sum_v_rf_a <- summary(regr_v_rf_a)
+p_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
+s_v_rf_a <- sum_v_rf_a$coefficients["obs_abundance", "Estimate"]
+r_v_rf_a <- summary(lm(abundance_v ~ obs_abundance, data = rf))$adj.r.squared
+
+# with rel_abundance as response
+regr_v_rf_ra <- lm(rel_abundance_v ~ obs_rel_abundance, data = rf)
+sum_v_rf_ra <- summary(regr_v_rf_ra)
+p_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_v_rf_ra <- sum_v_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
+r_v_rf_ra <- summary(lm(rel_abundance_v ~ obs_rel_abundance, data = rf))$adj.r.squared
+```
+
+### Predictor: V + WD
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_wd_rf_k <- lm(k_index_wd ~ obs_k_index, data = rf)
+sum_wd_rf_k <- summary(regr_wd_rf_k)
+p_wd_rf_k <- sum_wd_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
+s_wd_rf_k <- sum_wd_rf_k$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_wd_rf_s <- lm(shannon_wd ~ obs_shannon, data = rf)
+sum_wd_rf_s <- summary(regr_wd_rf_s)
+p_wd_rf_s <- sum_wd_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
+s_wd_rf_s <- sum_wd_rf_s$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_wd_rf_a <- lm(abundance_wd ~ obs_abundance, data = rf)
+sum_wd_rf_a <- summary(regr_wd_rf_a)
+p_wd_rf_a <- sum_wd_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
+s_wd_rf_a <- sum_wd_rf_a$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_wd_rf_ra <- lm(rel_abundance_wd ~ obs_rel_abundance, data = rf)
+sum_wd_rf_ra <- summary(regr_wd_rf_ra)
+p_wd_rf_ra <- sum_wd_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_wd_rf_ra <- sum_wd_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
+```
+
+### Predictor: selected variables
+```{r}
+### BRT models ----------------------------------------------------------------
+# with k_index as response
+regr_var_rf_k <- lm(k_index_var ~ obs_k_index, data = rf)
+sum_var_rf_k <- summary(regr_var_rf_k)
+p_var_rf_k <- sum_var_rf_k$coefficients["obs_k_index", "Pr(>|t|)"]
+s_var_rf_k <- sum_var_rf_k$coefficients["obs_k_index", "Estimate"]
+
+# with shannon index as response
+regr_var_rf_s <- lm(shannon_var ~ obs_shannon, data = rf)
+sum_var_rf_s <- summary(regr_var_rf_s)
+p_var_rf_s <- sum_var_rf_s$coefficients["obs_shannon", "Pr(>|t|)"]
+s_var_rf_s <- sum_var_rf_s$coefficients["obs_shannon", "Estimate"]
+
+# with abundance as response
+regr_var_rf_a <- lm(abundance_var ~ obs_abundance, data = rf)
+sum_var_rf_a <- summary(regr_var_rf_a)
+p_var_rf_a <- sum_var_rf_a$coefficients["obs_abundance", "Pr(>|t|)"]
+s_var_rf_a <- sum_var_rf_a$coefficients["obs_abundance", "Estimate"]
+
+# with rel_abundance as response
+regr_var_rf_ra <- lm(rel_abundance_var ~ obs_rel_abundance, data = rf)
+sum_var_rf_ra <- summary(regr_var_rf_ra)
+p_var_rf_ra <- sum_var_rf_ra$coefficients["obs_rel_abundance", "Pr(>|t|)"]
+s_var_rf_ra <- sum_var_rf_ra$coefficients["obs_rel_abundance", "Estimate"]
+```
+
+

@@ -61,11 +61,14 @@ data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.
 # Load data containing all variables measured at each river section and remove all other "chr" variables
 # Additionally, remove ox_sat columns, as they contain NA values
 data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv") |>
-  dplyr::rename(Reach_Untersuchungsstelle = reach)
+  dplyr::rename(Reach_Untersuchungsstelle = reach) |>
+  na.omit()
 
 # load data containing selected variables 
-data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv") |>
-  dplyr::rename(Reach_Untersuchungsstelle = reach)
+data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv") |>
+  dplyr::rename(Reach_Untersuchungsstelle = reach)|>
+  na.omit() |>
+  dplyr::select(Reach_Untersuchungsstelle, z, x, y, velocity, wd_m, k_index, shannon, abundance, rel_abundance, ecomorph_class, biogeo_int, mean_diff_nitrogen, mean_diff_phosphor) 
 ```
     
 ```{r}
@@ -1148,7 +1151,7 @@ autotuner_rf_var_a$train(task_rf_var_a)
 autotuner_rf_var_ra$train(task_rf_var_ra)
 ```
 
-### ADD Tuned Hyperparameters
+### Tuned Hyperparameters
 ```{r}
 ### PREDICTOR: VELOCITY ### ---------------------------------------------------
 # With k_index as response
@@ -1285,44 +1288,44 @@ rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    8        0.225604             6                 
-rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 8, sample.fraction = 0.225604, min.node.size = 6, importance = "impurity")
+#1:    7       0.2378954             6                 
+rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 7, sample.fraction = 0.2378954, min.node.size = 6, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.4528197             1                   
-rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 1, sample.fraction = 0.4528197, min.node.size = 1, importance = "impurity")
+#1:    2       0.8106988             8                   
+rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 2, sample.fraction = 0.8106988, min.node.size = 8, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.7637322             2                   
-rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 1, sample.fraction = 0.7637322, min.node.size = 2, importance = "impurity")
+#1:    1       0.2782563             3                   
+rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 1, sample.fraction = 0.2782563, min.node.size = 3, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.4890119             3                   
-rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 1, sample.fraction = 0.4890119, min.node.size = 3, importance = "impurity")
+#1:    1       0.5788006             5                    
+rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 1, sample.fraction = 0.5788006, min.node.size = 5, importance = "impurity")
 
 ### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2612071             8                 
-rf_model_var_k_c <- ranger(formula = k_index ~., data = training_var_k_c, mtry = 1, sample.fraction = 0.2612071, min.node.size = 8, importance = "impurity")
+#1:    6       0.4852908             9                 
+rf_model_var_k_c <- ranger(formula = k_index ~., data = training_var_k_c, mtry = 6, sample.fraction = 0.4852908, min.node.size = 9, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.7040984             9                  
-rf_model_var_s_c <- ranger(formula = shannon ~., data = training_var_s_c, mtry = 1, sample.fraction = 0.7040984, min.node.size = 9, importance = "impurity")
+#1:    1       0.2760746             7                  
+rf_model_var_s_c <- ranger(formula = shannon ~., data = training_var_s_c, mtry = 1, sample.fraction = 0.2760746, min.node.size = 7, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.5287441             4                    
-rf_model_var_a_c <- ranger(formula = abundance ~., data = training_var_a_c, mtry = 1, sample.fraction = 0.5287441, min.node.size = 4, importance = "impurity")
+#1:    1       0.4807631             5                    
+rf_model_var_a_c <- ranger(formula = abundance ~., data = training_var_a_c, mtry = 1, sample.fraction = 0.4807631, min.node.size = 5, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2030046             1                    
-rf_model_var_ra_c <- ranger(formula = rel_abundance ~., data = training_var_ra_c, mtry = 1, sample.fraction = 0.2030046, min.node.size = 1, importance = "impurity")
+#1:    1       0.4656714             9                   
+rf_model_var_ra_c <- ranger(formula = rel_abundance ~., data = training_var_ra_c, mtry = 1, sample.fraction = 0.4656714, min.node.size = 9, importance = "impurity")
 ```
 
 # Model Evaluation 
@@ -1453,8 +1456,6 @@ write.csv(vi_rel_rf_model_sec_c, "ML_model/var_imp/vi_rel_rf_model_sec_woc.csv",
 write.csv(vi_rf_model_var_c, "ML_model/var_imp/vi_rf_model_var_woc.csv", row.names = FALSE)
 write.csv(vi_rel_rf_model_var_c, "ML_model/var_imp/vi_rel_rf_model_var_woc.csv", row.names = FALSE)
 ```
-
-## - PDP - *sec*
 
 ## Obs and Pred
 ```{r}
@@ -1710,6 +1711,20 @@ responses_var_a <- test_var_a$abundance
 
 # With rel_abundance as response -------------------
 responses_var_ra <- test_var_ra$rel_abundance
+
+### bind resulting predicted indices into dataframes and save them ### --------
+pred_test <- cbind(pred_rast, rf_pred_model_v_k_c, rf_pred_model_v_s_c, rf_pred_model_v_a_c, rf_pred_model_v_ra_c, rf_pred_model_wd_k_c, rf_pred_model_wd_s_c, rf_pred_model_wd_a_c, rf_pred_model_wd_ra_c, rf_pred_model_samp_k_c, rf_pred_model_samp_s_c, rf_pred_model_samp_a_c, rf_pred_model_samp_ra_c) |>
+  na.omit()
+
+pred_test_2 <- cbind(rf_pred_model_sec_k_c, rf_pred_model_sec_s_c, rf_pred_model_sec_a_c, rf_pred_model_sec_ra_c, rf_pred_model_var_k_c, rf_pred_model_var_s_c, rf_pred_model_var_a_c, rf_pred_model_var_ra_c, test_var) |>
+  na.omit()
+
+pred_train <- cbind(pred_train_v_k, pred_train_v_s, pred_train_v_a, pred_train_v_ra, pred_train_wd_k, pred_train_wd_s, pred_train_wd_a, pred_train_wd_ra, pred_train_samp_k, pred_train_samp_s, pred_train_samp_a, pred_train_samp_ra, pred_train_sec_k, pred_train_sec_s, pred_train_sec_a, pred_train_sec_ra, pred_train_var_k, pred_train_var_s, pred_train_var_a, pred_train_var_ra, training_var)
+
+# write .csv files 
+write.csv(pred_test, "Stat_Analysis/stat_analysis_data/regr_pred_test_rf.csv", row.names = FALSE)
+write.csv(pred_test_2, "Stat_Analysis/stat_analysis_data/regr_pred_test_2_rf.csv", row.names = FALSE)
+write.csv(pred_train, "Stat_Analysis/stat_analysis_data/regr_pred_train_rf.csv", row.names = FALSE)
 ```
 
 ## R2
@@ -1860,7 +1875,7 @@ r2_train_sec_ra <- R2(pred = pred_train_sec_ra, obs = training_sec_ra_c$rel_abun
 r2_var_k <- R2(pred = rf_pred_model_var_k_c, obs = responses_var_k)
 
 # with model using raster extracted values - test set
-r2_rast_var_k <- R2(pred = p_rast_var_k, obs = responses_var_k, na.rm = TRUE)
+r2_rast_var_k <- R2(pred = pred_test$k_index_var, obs = pred_test$obs_k_index, na.rm = TRUE)
 
 # with training data 
 r2_train_var_k <- R2(pred = pred_train_var_k, obs = training_var_k_c$k_index)
@@ -1870,7 +1885,7 @@ r2_train_var_k <- R2(pred = pred_train_var_k, obs = training_var_k_c$k_index)
 r2_var_s <- R2(pred = rf_pred_model_var_s_c, obs = responses_var_s)
 
 # with model using raster extracted values - test set
-r2_rast_var_s <- R2(pred = p_rast_var_s, obs = responses_var_s, na.rm = TRUE)
+r2_rast_var_s <- R2(pred = pred_test$shannon_var, obs = pred_test$obs_shannon, na.rm = TRUE)
 
 # with training data 
 r2_train_var_s <- R2(pred = pred_train_var_s, obs = training_var_s_c$shannon)
@@ -1880,7 +1895,7 @@ r2_train_var_s <- R2(pred = pred_train_var_s, obs = training_var_s_c$shannon)
 r2_var_a <- R2(pred = rf_pred_model_var_a_c, obs = responses_var_a)
 
 # with model using raster extracted values - test set
-r2_rast_var_a <- R2(pred = p_rast_var_a, obs = responses_var_a, na.rm = TRUE)
+r2_rast_var_a <- R2(pred = pred_test$abundance_var, obs = pred_test$obs_abundance, na.rm = TRUE)
 
 # with training data 
 r2_train_var_a <- R2(pred = pred_train_var_a, obs = training_var_a_c$abundance)
@@ -1890,7 +1905,7 @@ r2_train_var_a <- R2(pred = pred_train_var_a, obs = training_var_a_c$abundance)
 r2_var_ra <- R2(pred = rf_pred_model_var_ra_c, obs = responses_var_ra)
 
 # with model using raster extracted values - test set
-r2_rast_var_ra <- R2(pred = p_rast_var_ra, obs = responses_var_ra, na.rm = TRUE)
+r2_rast_var_ra <- R2(pred = pred_test$rel_abundance_var, obs = pred_test$obs_rel_abundance, na.rm = TRUE)
 
 # with training data 
 r2_train_var_ra <- R2(pred = pred_train_var_ra, obs = training_var_ra_c$rel_abundance)
@@ -1905,7 +1920,7 @@ r2_train_var_ra <- R2(pred = pred_train_var_ra, obs = training_var_ra_c$rel_abun
 rmse_model_v_k_c <- Metrics::rmse(actual = responses_v_k, predicted = rf_pred_model_v_k_c)
 
 # with model using raster extracted values - test set
-rmse_rast_v_k <- Metrics::rmse(actual = responses_v_k, predicted = p_rast_v_k)
+rmse_rast_v_k <- Metrics::rmse(actual = pred_test$k_index_v, predicted = pred_test$obs_k_index)
 
 # with training data 
 rmse_train_v_k <- Metrics::rmse(actual = training_v_k_c$k_index, predicted = pred_train_v_k)
@@ -1915,7 +1930,7 @@ rmse_train_v_k <- Metrics::rmse(actual = training_v_k_c$k_index, predicted = pre
 mae_model_v_k_c <- Metrics::mae(actual = responses_v_k, predicted = rf_pred_model_v_k_c)
 
 # with model using raster extracted values - test set
-mae_rast_v_k <- Metrics::mae(actual = responses_v_k, predicted = p_rast_v_k)
+mae_rast_v_k <- Metrics::mae(actual = pred_test$k_index_v, predicted = pred_test$obs_k_index)
 
 # with training data 
 mae_train_v_k <- Metrics::mae(actual = training_v_k_c$k_index, predicted = pred_train_v_k)
@@ -1926,7 +1941,7 @@ mae_train_v_k <- Metrics::mae(actual = training_v_k_c$k_index, predicted = pred_
 rmse_model_v_s_c <- Metrics::rmse(actual = responses_v_s, predicted = rf_pred_model_v_s_c)
 
 # with model using raster extracted values - test set
-rmse_rast_v_s <- Metrics::rmse(actual = responses_v_s, predicted = p_rast_v_s)
+rmse_rast_v_s <- Metrics::rmse(actual = pred_test$shannon_v, predicted = pred_test$obs_shannon)
 
 # with training data 
 rmse_train_v_s <- Metrics::rmse(actual = training_v_s_c$shannon, predicted = pred_train_v_s)
@@ -1936,7 +1951,7 @@ rmse_train_v_s <- Metrics::rmse(actual = training_v_s_c$shannon, predicted = pre
 mae_model_v_s_c <- Metrics::mae(actual = responses_v_s, predicted = rf_pred_model_v_s_c)
 
 # with model using raster extracted values - test set
-mae_rast_v_s <- Metrics::mae(actual = responses_v_s, predicted = p_rast_v_s)
+mae_rast_v_s <- Metrics::mae(actual = pred_test$shannon_v, predicted = pred_test$obs_shannon)
 
 # with training data 
 mae_train_v_s <- Metrics::mae(actual = training_v_s_c$shannon, predicted = pred_train_v_s)
@@ -1947,7 +1962,7 @@ mae_train_v_s <- Metrics::mae(actual = training_v_s_c$shannon, predicted = pred_
 rmse_model_v_a_c <- Metrics::rmse(actual = responses_v_a, predicted = rf_pred_model_v_a_c)
 
 # with model using raster extracted values - test set
-rmse_rast_v_a <- Metrics::rmse(actual = responses_v_a, predicted = p_rast_v_a)
+rmse_rast_v_a <- Metrics::rmse(actual = pred_test$abundance_v, predicted = pred_test$obs_abundance)
 
 # with training data 
 rmse_train_v_a <- Metrics::rmse(actual = training_v_a_c$abundance, predicted = pred_train_v_a)
@@ -1957,7 +1972,7 @@ rmse_train_v_a <- Metrics::rmse(actual = training_v_a_c$abundance, predicted = p
 mae_model_v_a_c <- Metrics::mae(actual = responses_v_a, predicted = rf_pred_model_v_a_c)
 
 # with model using raster extracted values - test set
-mae_rast_v_a <- Metrics::mae(actual = responses_v_a, predicted = p_rast_v_a)
+mae_rast_v_a <- Metrics::mae(actual = pred_test$abundance_v, predicted = pred_test$obs_abundance)
 
 # with training data 
 mae_train_v_a <- Metrics::mae(actual = training_v_a_c$abundance, predicted = pred_train_v_a)
@@ -1968,7 +1983,7 @@ mae_train_v_a <- Metrics::mae(actual = training_v_a_c$abundance, predicted = pre
 rmse_model_v_ra_c <- Metrics::rmse(actual = responses_v_ra, predicted = rf_pred_model_v_ra_c)
 
 # with model using raster extracted values - test set
-rmse_rast_v_ra <- Metrics::rmse(actual = responses_v_ra, predicted = p_rast_v_ra)
+rmse_rast_v_ra <- Metrics::rmse(actual = pred_test$rel_abundance_v, predicted = pred_test$obs_rel_abundance)
 
 # with training data 
 rmse_train_v_ra <- Metrics::rmse(actual = training_v_ra_c$rel_abundance, predicted = pred_train_v_ra)
@@ -1978,7 +1993,7 @@ rmse_train_v_ra <- Metrics::rmse(actual = training_v_ra_c$rel_abundance, predict
 mae_model_v_ra_c <- Metrics::mae(actual = responses_v_ra, predicted = rf_pred_model_v_ra_c)
 
 # with model using raster extracted values - test set
-mae_rast_v_ra <- Metrics::mae(actual = responses_v_ra, predicted = p_rast_v_ra)
+mae_rast_v_ra <- Metrics::mae(actual = pred_test$rel_abundance_v, predicted = pred_test$obs_rel_abundance)
 
 # with training data 
 mae_train_v_ra <- Metrics::mae(actual = training_v_ra_c$rel_abundance, predicted = pred_train_v_ra)
@@ -1990,7 +2005,7 @@ mae_train_v_ra <- Metrics::mae(actual = training_v_ra_c$rel_abundance, predicted
 rmse_model_wd_k_c <- Metrics::rmse(actual = responses_wd_k, predicted = rf_pred_model_wd_k_c)
 
 # with model using raster extracted values - test set
-rmse_rast_wd_k <- Metrics::rmse(actual = responses_wd_k, predicted = p_rast_wd_k)
+rmse_rast_wd_k <- Metrics::rmse(actual = pred_test$k_index_wd, predicted = pred_test$obs_k_index)
 
 # with training data 
 rmse_train_wd_k <- Metrics::rmse(actual = training_v_k_c$k_index, predicted = pred_train_wd_k)
@@ -2000,7 +2015,7 @@ rmse_train_wd_k <- Metrics::rmse(actual = training_v_k_c$k_index, predicted = pr
 mae_model_wd_k_c <- Metrics::mae(actual = responses_wd_k, predicted = rf_pred_model_wd_k_c)
 
 # with model using raster extracted values - test set
-mae_rast_wd_k <- Metrics::mae(actual = responses_wd_k, predicted = p_rast_wd_k)
+mae_rast_wd_k <- Metrics::mae(actual = pred_test$k_index_wd, predicted = pred_test$obs_k_index)
 
 # with training data 
 mae_train_wd_k <- Metrics::mae(actual = training_v_k_c$k_index, predicted = pred_train_wd_k)
@@ -2011,7 +2026,7 @@ mae_train_wd_k <- Metrics::mae(actual = training_v_k_c$k_index, predicted = pred
 rmse_model_wd_s_c <- Metrics::rmse(actual = responses_wd_s, predicted = rf_pred_model_wd_s_c)
 
 # with model using raster extracted values - test set
-rmse_rast_wd_s <- Metrics::rmse(actual = responses_wd_s, predicted = p_rast_wd_s)
+rmse_rast_wd_s <- Metrics::rmse(actual = pred_test$shannon_wd, predicted = pred_test$obs_shannon)
 
 # with training data 
 rmse_train_wd_s <- Metrics::rmse(actual = training_wd_s_c$shannon, predicted = pred_train_wd_s)
@@ -2021,7 +2036,7 @@ rmse_train_wd_s <- Metrics::rmse(actual = training_wd_s_c$shannon, predicted = p
 mae_model_wd_s_c <- Metrics::mae(actual = responses_wd_s, predicted = rf_pred_model_wd_s_c)
 
 # with model using raster extracted values - test set
-mae_rast_wd_s <- Metrics::mae(actual = responses_wd_s, predicted = p_rast_wd_s)
+mae_rast_wd_s <- Metrics::mae(actual = pred_test$shannon_wd, predicted = pred_test$obs_shannon)
 
 # with training data 
 mae_train_wd_s <- Metrics::mae(actual = training_v_s_c$shannon, predicted = pred_train_wd_s)
@@ -2032,7 +2047,7 @@ mae_train_wd_s <- Metrics::mae(actual = training_v_s_c$shannon, predicted = pred
 rmse_model_wd_a_c <- Metrics::rmse(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
 
 # with model using raster extracted values - test set
-rmse_rast_wd_a <- Metrics::rmse(actual = responses_wd_a, predicted = p_rast_wd_a)
+rmse_rast_wd_a <- Metrics::rmse(actual = pred_test$abundance_wd, predicted = pred_test$obs_abundance)
 
 # with training data 
 rmse_train_wd_a <- Metrics::rmse(actual = training_wd_a_c$abundance, predicted = pred_train_wd_a)
@@ -2042,7 +2057,7 @@ rmse_train_wd_a <- Metrics::rmse(actual = training_wd_a_c$abundance, predicted =
 mae_model_wd_a_c <- Metrics::mae(actual = responses_wd_a, predicted = rf_pred_model_wd_a_c)
 
 # with model using raster extracted values - test set
-mae_rast_wd_a <- Metrics::mae(actual = responses_wd_a, predicted = p_rast_wd_a)
+mae_rast_wd_a <- Metrics::mae(actual = pred_test$abundance_wd, predicted = pred_test$obs_abundance)
 
 # with training data 
 mae_train_wd_a <- Metrics::mae(actual = training_wd_a_c$abundance, predicted = pred_train_wd_a)
@@ -2053,7 +2068,7 @@ mae_train_wd_a <- Metrics::mae(actual = training_wd_a_c$abundance, predicted = p
 rmse_model_wd_ra_c <- Metrics::rmse(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
 
 # with model using raster extracted values - test set
-rmse_rast_wd_ra <- Metrics::rmse(actual = responses_wd_ra, predicted = p_rast_wd_ra)
+rmse_rast_wd_ra <- Metrics::rmse(actual = pred_test$rel_abundance_wd, predicted = pred_test$obs_rel_abundance)
 
 # with training data 
 rmse_train_wd_ra <- Metrics::rmse(actual = training_wd_ra_c$rel_abundance, predicted = pred_train_wd_ra)
@@ -2063,7 +2078,7 @@ rmse_train_wd_ra <- Metrics::rmse(actual = training_wd_ra_c$rel_abundance, predi
 mae_model_wd_ra_c <- Metrics::mae(actual = responses_wd_ra, predicted = rf_pred_model_wd_ra_c)
 
 # with model using raster extracted values - test set
-mae_rast_wd_ra <- Metrics::mae(actual = responses_wd_ra, predicted = p_rast_wd_ra)
+mae_rast_wd_ra <- Metrics::mae(actual = pred_test$rel_abundance_wd, predicted = pred_test$obs_rel_abundance)
 
 # with training data 
 mae_train_wd_ra <- Metrics::mae(actual = training_wd_ra_c$rel_abundance, predicted = pred_train_wd_ra)
@@ -2197,7 +2212,7 @@ mae_train_sec_ra <- Metrics::mae(actual = training_sec_ra_c$rel_abundance, predi
 rmse_model_var_k_c <- Metrics::rmse(actual = responses_var_k, predicted = rf_pred_model_var_k_c)
 
 # with model using raster extracted values - test set
-rmse_rast_var_k <- Metrics::rmse(actual = responses_var_k, predicted = p_rast_var_k)
+rmse_rast_var_k <- Metrics::rmse(actual = pred_test$k_index_var, predicted = pred_test$obs_k_index)
 
 # with training data 
 rmse_train_var_k <- Metrics::rmse(actual = training_var_k_c$k_index, predicted = pred_train_var_k)
@@ -2207,7 +2222,7 @@ rmse_train_var_k <- Metrics::rmse(actual = training_var_k_c$k_index, predicted =
 mae_model_var_k_c <- Metrics::mae(actual = responses_var_k, predicted = rf_pred_model_var_k_c)
 
 # with model using raster extracted values - test set
-mae_rast_var_k <- Metrics::mae(actual = responses_var_k, predicted = p_rast_var_k)
+mae_rast_var_k <- Metrics::mae(actual = pred_test$k_index_var, predicted = pred_test$obs_k_index)
 
 # with training data 
 mae_train_var_k <- Metrics::mae(actual = training_var_k_c$k_index, predicted = pred_train_var_k)
@@ -2218,7 +2233,7 @@ mae_train_var_k <- Metrics::mae(actual = training_var_k_c$k_index, predicted = p
 rmse_model_var_s_c <- Metrics::rmse(actual = responses_var_s, predicted = rf_pred_model_var_s_c)
 
 # with model using raster extracted values - test set
-rmse_rast_var_s <- Metrics::rmse(actual = responses_var_s, predicted = p_rast_var_s)
+rmse_rast_var_s <- Metrics::rmse(actual = pred_test$shannon_var, predicted = pred_test$obs_shannon)
 
 # with training data 
 rmse_train_var_s <- Metrics::rmse(actual = training_var_s_c$shannon, predicted = pred_train_var_s)
@@ -2228,7 +2243,7 @@ rmse_train_var_s <- Metrics::rmse(actual = training_var_s_c$shannon, predicted =
 mae_model_var_s_c <- Metrics::mae(actual = responses_var_s, predicted = rf_pred_model_var_s_c)
 
 # with model using raster extracted values - test set
-mae_rast_var_s <- Metrics::mae(actual = responses_var_s, predicted = p_rast_var_s)
+mae_rast_var_s <- Metrics::mae(actual = pred_test$shannon_var, predicted = pred_test$obs_shannon)
 
 # with training data 
 mae_train_var_s <- Metrics::mae(actual = training_var_s_c$shannon, predicted = pred_train_var_s)
@@ -2239,7 +2254,7 @@ mae_train_var_s <- Metrics::mae(actual = training_var_s_c$shannon, predicted = p
 rmse_model_var_a_c <- Metrics::rmse(actual = responses_var_a, predicted = rf_pred_model_var_a_c)
 
 # with model using raster extracted values - test set
-rmse_rast_var_a <- Metrics::rmse(actual = responses_var_a, predicted = p_rast_var_a)
+rmse_rast_var_a <- Metrics::rmse(actual = pred_test$abundance_var, predicted = pred_test$obs_abundance)
 
 # with training data 
 rmse_train_var_a <- Metrics::rmse(actual = training_var_a_c$abundance, predicted = pred_train_var_a)
@@ -2249,7 +2264,7 @@ rmse_train_var_a <- Metrics::rmse(actual = training_var_a_c$abundance, predicted
 mae_model_var_a_c <- Metrics::mae(actual = responses_var_a, predicted = rf_pred_model_var_a_c)
 
 # with model using raster extracted values - test set
-mae_rast_var_a <- Metrics::mae(actual = responses_var_a, predicted = p_rast_var_a)
+mae_rast_var_a <- Metrics::mae(actual = pred_test$abundance_var, predicted = pred_test$obs_abundance)
 
 # with training data 
 mae_train_var_a <- Metrics::mae(actual = training_var_a_c$abundance, predicted = pred_train_var_a)
@@ -2260,7 +2275,7 @@ mae_train_var_a <- Metrics::mae(actual = training_var_a_c$abundance, predicted =
 rmse_model_var_ra_c <- Metrics::rmse(actual = responses_var_ra, predicted = rf_pred_model_var_ra_c)
 
 # with model using raster extracted values - test set
-rmse_rast_var_ra <- Metrics::rmse(actual = responses_var_ra, predicted = p_rast_var_ra)
+rmse_rast_var_ra <- Metrics::rmse(actual = pred_test$rel_abundance_var, predicted = pred_test$obs_rel_abundance)
 
 # with training data 
 rmse_train_var_ra <- Metrics::rmse(actual = training_var_ra_c$rel_abundance, predicted = pred_train_var_ra)
@@ -2270,7 +2285,7 @@ rmse_train_var_ra <- Metrics::rmse(actual = training_var_ra_c$rel_abundance, pre
 mae_model_var_ra_c <- Metrics::mae(actual = responses_var_ra, predicted = rf_pred_model_var_ra_c)
 
 # with model using raster extracted values - test set
-mae_rast_var_ra <- Metrics::mae(actual = responses_var_ra, predicted = p_rast_var_ra)
+mae_rast_var_ra <- Metrics::mae(actual = pred_test$rel_abundance_var, predicted = pred_test$obs_rel_abundance)
 
 # with training data 
 mae_train_var_ra <- Metrics::mae(actual = training_var_ra_c$rel_abundance, predicted = pred_train_var_ra)
@@ -2284,7 +2299,7 @@ mae_train_var_ra <- Metrics::mae(actual = training_var_ra_c$rel_abundance, predi
 bias_model_v_k_c <- bias(observados = responses_v_k, estimados = rf_pred_model_v_k_c)
 
 # with model using raster extracted values - test set
-bias_rast_v_k <- bias(observados = responses_v_k, estimados = p_rast_v_k)
+bias_rast_v_k <- bias(observados = pred_test$k_index_v, estimados = pred_test$obs_k_index)
 
 # with training data 
 bias_train_v_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_v_k)
@@ -2294,7 +2309,7 @@ bias_train_v_k <- bias(observados = training_v_k_c$k_index, estimados = pred_tra
 bias_model_v_s_c <- bias(observados = responses_v_s, estimados = rf_pred_model_v_s_c)
 
 # with model using raster extracted values - test set
-bias_rast_v_s <- bias(observados = responses_v_s, estimados = p_rast_v_s)
+bias_rast_v_s <- bias(observados = pred_test$shannon_v, estimados = pred_test$obs_shannon)
 
 # with training data 
 bias_train_v_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_v_s)
@@ -2304,7 +2319,7 @@ bias_train_v_s <- bias(observados = training_v_s_c$shannon, estimados = pred_tra
 bias_model_v_a_c <- bias(observados = responses_v_a, estimados = rf_pred_model_v_a_c)
 
 # with model using raster extracted values - test set
-bias_rast_v_a <- bias(observados = responses_v_a, estimados = p_rast_v_a)
+bias_rast_v_a <- bias(observados = pred_test$abundance_v, estimados = pred_test$obs_abundance)
 
 # with training data 
 bias_train_v_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_v_a)
@@ -2314,7 +2329,7 @@ bias_train_v_a <- bias(observados = training_v_a_c$abundance, estimados = pred_t
 bias_model_v_ra_c <- bias(observados = responses_v_ra, estimados = rf_pred_model_v_ra_c)
 
 # with model using raster extracted values - test set
-bias_rast_v_ra <- bias(observados = responses_v_ra, estimados = p_rast_v_ra)
+bias_rast_v_ra <- bias(observados = pred_test$rel_abundance_v, estimados = pred_test$obs_rel_abundance)
 
 # with training data 
 bias_train_v_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_v_ra)
@@ -2325,7 +2340,7 @@ bias_train_v_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = 
 bias_model_wd_k_c <- bias(observados = responses_wd_k, estimados = rf_pred_model_wd_k_c)
 
 # with model using raster extracted values - test set
-bias_rast_wd_k <- bias(observados = responses_wd_k, estimados = p_rast_wd_k)
+bias_rast_wd_k <- bias(observados = pred_test$k_index_wd, estimados = pred_test$obs_k_index)
 
 # with training data 
 bias_train_wd_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_wd_k)
@@ -2335,7 +2350,7 @@ bias_train_wd_k <- bias(observados = training_v_k_c$k_index, estimados = pred_tr
 bias_model_wd_s_c <- bias(observados = responses_wd_s, estimados = rf_pred_model_wd_s_c)
 
 # with model using raster extracted values - test set
-bias_rast_wd_s <- bias(observados = responses_wd_s, estimados = p_rast_wd_s)
+bias_rast_wd_s <- bias(observados = pred_test$shannon_wd, estimados = pred_test$obs_shannon)
 
 # with training data 
 bias_train_wd_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_wd_s)
@@ -2345,7 +2360,7 @@ bias_train_wd_s <- bias(observados = training_v_s_c$shannon, estimados = pred_tr
 bias_model_wd_a_c <- bias(observados = responses_wd_a, estimados = rf_pred_model_wd_a_c)
 
 # with model using raster extracted values - test set
-bias_rast_wd_a <- bias(observados = responses_wd_a, estimados = p_rast_wd_a)
+bias_rast_wd_a <- bias(observados = pred_test$abundance_wd, estimados = pred_test$obs_abundance)
 
 # with training data 
 bias_train_wd_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_wd_a)
@@ -2355,7 +2370,7 @@ bias_train_wd_a <- bias(observados = training_v_a_c$abundance, estimados = pred_
 bias_model_wd_ra_c <- bias(observados = responses_wd_ra, estimados = rf_pred_model_wd_ra_c)
 
 # with model using raster extracted values - test set
-bias_rast_wd_ra <- bias(observados = responses_wd_ra, estimados = p_rast_wd_ra)
+bias_rast_wd_ra <- bias(observados = pred_test$rel_abundance_wd, estimados = pred_test$obs_rel_abundance)
 
 # with training data 
 bias_train_wd_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_wd_ra)
@@ -2424,7 +2439,7 @@ bias_train_sec_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados 
 bias_model_var_k_c <- bias(observados = responses_var_k, estimados = rf_pred_model_var_k_c)
 
 # with model using raster extracted values - test set
-bias_rast_var_k <- bias(observados = responses_var_k, estimados = p_rast_var_k)
+bias_rast_var_k <- bias(observados = pred_test$k_index_var, estimados = pred_test$obs_k_index)
 
 # with training data 
 bias_train_var_k <- bias(observados = training_v_k_c$k_index, estimados = pred_train_var_k)
@@ -2434,7 +2449,7 @@ bias_train_var_k <- bias(observados = training_v_k_c$k_index, estimados = pred_t
 bias_model_var_s_c <- bias(observados = responses_var_s, estimados = rf_pred_model_var_s_c)
 
 # with model using raster extracted values - test set
-bias_rast_var_s <- bias(observados = responses_var_s, estimados = p_rast_var_s)
+bias_rast_var_s <- bias(observados = pred_test$shannon_var, estimados = pred_test$obs_shannon)
 
 # with training data 
 bias_train_var_s <- bias(observados = training_v_s_c$shannon, estimados = pred_train_var_s)
@@ -2444,7 +2459,7 @@ bias_train_var_s <- bias(observados = training_v_s_c$shannon, estimados = pred_t
 bias_model_var_a_c <- bias(observados = responses_var_a, estimados = rf_pred_model_var_a_c)
 
 # with model using raster extracted values - test set
-bias_rast_var_a <- bias(observados = responses_var_a, estimados = p_rast_var_a)
+bias_rast_var_a <- bias(observados = pred_test$abundance_var, estimados = pred_test$obs_abundance)
 
 # with training data 
 bias_train_var_a <- bias(observados = training_v_a_c$abundance, estimados = pred_train_var_a)
@@ -2454,7 +2469,7 @@ bias_train_var_a <- bias(observados = training_v_a_c$abundance, estimados = pred
 bias_model_var_ra_c <- bias(observados = responses_var_ra, estimados = rf_pred_model_var_ra_c)
 
 # with model using raster extracted values - test set
-bias_rast_var_ra <- bias(observados = responses_var_ra, estimados = p_rast_var_ra)
+bias_rast_var_ra <- bias(observados = pred_test$rel_abundance_var, estimados = pred_test$obs_rel_abundance)
 
 # with training data 
 bias_train_var_ra <- bias(observados = training_v_ra_c$rel_abundance, estimados = pred_train_var_ra)
@@ -2608,7 +2623,7 @@ nse_train_sec_ra <- NSE(sim = pred_train_sec_ra, obs = training_sec_ra_c$rel_abu
 nse_model_var_k_c <- NSE(sim = rf_pred_model_var_k_c, obs = responses_var_k)
 
 # with model using raster extracted values - test set
-nse_rast_var_k <- NSE(sim = p_rast_var_k, obs = responses_var_k)
+nse_rast_var_k <- NSE(sim = pred_test$k_index_var, obs = pred_test$obs_k_index)
 
 # with training data 
 nse_train_var_k <- NSE(sim = pred_train_var_k, obs = training_var_k_c$k_index)
@@ -2618,7 +2633,7 @@ nse_train_var_k <- NSE(sim = pred_train_var_k, obs = training_var_k_c$k_index)
 nse_model_var_s_c <- NSE(sim = rf_pred_model_var_s_c, obs = responses_var_s)
 
 # with model using raster extracted values - test set
-nse_rast_var_s <- NSE(sim = p_rast_var_s, obs = responses_var_s)
+nse_rast_var_s <- NSE(sim = pred_test$shannon_var, obs = pred_test$obs_shannon)
 
 # with training data 
 nse_train_var_s <- NSE(sim = pred_train_var_s, obs = training_var_s_c$shannon)
@@ -2628,7 +2643,7 @@ nse_train_var_s <- NSE(sim = pred_train_var_s, obs = training_var_s_c$shannon)
 nse_model_var_a_c <- NSE(sim = rf_pred_model_var_a_c, obs = responses_var_a)
 
 # with model using raster extracted values - test set
-nse_rast_var_a <- NSE(sim = p_rast_var_a, obs = responses_var_a)
+nse_rast_var_a <- NSE(sim = pred_test$abundance_var, obs = pred_test$obs_abundance)
 
 # with training data 
 nse_train_var_a <- NSE(sim = pred_train_var_a, obs = training_var_a_c$abundance)
@@ -2638,290 +2653,12 @@ nse_train_var_a <- NSE(sim = pred_train_var_a, obs = training_var_a_c$abundance)
 nse_model_var_ra_c <- NSE(sim = rf_pred_model_var_ra_c, obs = responses_var_ra)
 
 # with model using raster extracted values - test set
-nse_rast_var_ra <- NSE(sim = p_rast_var_ra, obs = responses_var_ra)
+nse_rast_var_ra <- NSE(sim = pred_test$rel_abundance_var, obs = pred_test$obs_rel_abundance)
 
 # with training data 
 nse_train_var_ra <- NSE(sim = pred_train_var_ra, obs = training_var_ra_c$rel_abundance)
 ```
 
-## - Regression Analysis
-### - Create DF
-```{r}
-### PREDICTOR: VELOCITY ### --------------------------------------------------
-# With k-index as a response 
-pred_v_k <- as.data.frame(rf_pred_model_v_k_c)
-resp_v_k <- as.data.frame(responses_v_k)
-pred_raster_v_k <- as.data.frame(p_rast_v_k)
-rf_v_k <- cbind(pred_v_k, responses_v_k) |>
-  dplyr::rename(observed = responses_v_k,
-         pred_measured = rf_pred_model_v_k_c,
-         pred_rast = pred_raster_v_k)
-
-# With shannon index as a response 
-pred_v_s <- as.data.frame(rf_pred_model_v_s_c)
-resp_v_s <- as.data.frame(responses_v_s)
-rf_v_s <- cbind(pred_v_s, responses_v_s) |>
-  dplyr::rename(observed = responses_v_s,
-         predicted = rf_pred_model_v_s_c)
-
-# With abundance as a response 
-pred_v_a <- as.data.frame(rf_pred_model_v_a_c)
-resp_v_a <- as.data.frame(responses_v_a)
-rf_v_a <- cbind(pred_v_a, responses_v_a) |>
-  dplyr::rename(observed = responses_v_a,
-         predicted = rf_pred_model_v_a_c)
-
-# With relative abundance as a response 
-pred_v_ra <- as.data.frame(rf_pred_model_v_ra_c)
-resp_v_ra <- as.data.frame(responses_v_ra)
-rf_v_ra <- cbind(pred_v_ra, responses_v_ra) |>
-  dplyr::rename(observed = responses_v_ra,
-         predicted = rf_pred_model_v_ra_c)
-
-### PREDICTOR: V + WD ### --------------------------------------------------
-# With k-index as a response 
-pred_wd_k <- as.data.frame(rf_pred_model_wd_k_c)
-resp_wd_k <- as.data.frame(responses_wd_k)
-rf_wd_k <- cbind(pred_wd_k, responses_wd_k) |>
-  dplyr::rename(observed = responses_wd_k,
-         predicted = rf_pred_model_wd_k_c)
-
-# With shannon index as a response 
-pred_wd_s <- as.data.frame(rf_pred_model_wd_s_c)
-resp_wd_s <- as.data.frame(responses_wd_s)
-rf_wd_s <- cbind(pred_wd_s, responses_wd_s) |>
-  dplyr::rename(observed = responses_wd_s,
-         predicted = rf_pred_model_wd_s_c)
-
-# With abundance as a response 
-pred_wd_a <- as.data.frame(rf_pred_model_wd_a_c)
-resp_wd_a <- as.data.frame(responses_wd_a)
-rf_wd_a <- cbind(pred_wd_a, responses_wd_a) |>
-  dplyr::rename(observed = responses_wd_a,
-         predicted = rf_pred_model_wd_a_c)
-
-# With relative abundance as a response 
-pred_wd_ra <- as.data.frame(rf_pred_model_wd_ra_c)
-resp_wd_ra <- as.data.frame(responses_wd_ra)
-rf_wd_ra <- cbind(pred_wd_ra, responses_wd_ra) |>
-  dplyr::rename(observed = responses_wd_ra,
-         predicted = rf_pred_model_wd_ra_c)
-
-### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
-# With k-index as a response 
-pred_samp_k <- as.data.frame(rf_pred_model_samp_k_c)
-resp_samp_k <- as.data.frame(responses_samp_k)
-rf_samp_k <- cbind(pred_samp_k, responses_samp_k) |>
-  dplyr::rename(observed = responses_samp_k,
-         predicted = rf_pred_model_samp_k_c)
-
-# With shannon index as a response 
-pred_samp_s <- as.data.frame(rf_pred_model_samp_s_c)
-resp_samp_s <- as.data.frame(responses_samp_s)
-rf_samp_s <- cbind(pred_samp_s, responses_samp_s) |>
-  dplyr::rename(observed = responses_samp_s,
-         predicted = rf_pred_model_samp_s_c)
-
-# With abundance as a response 
-pred_samp_a <- as.data.frame(rf_pred_model_samp_a_c)
-resp_samp_a <- as.data.frame(responses_samp_a)
-rf_samp_a <- cbind(pred_samp_a, responses_samp_a) |>
-  dplyr::rename(observed = responses_samp_a,
-         predicted = rf_pred_model_samp_a_c)
-
-# With relative abundance as a response 
-pred_samp_ra <- as.data.frame(rf_pred_model_samp_ra_c)
-resp_samp_ra <- as.data.frame(responses_samp_ra)
-rf_samp_ra <- cbind(pred_samp_ra, responses_samp_ra) |>
-  dplyr::rename(observed = responses_samp_ra,
-         predicted = rf_pred_model_samp_ra_c)
-
-### PREDICTOR: ALL PREDICTORS ### -------------------------------------------
-# With k-index as a response 
-pred_sec_k <- as.data.frame(rf_pred_model_sec_k_c)
-resp_sec_k <- as.data.frame(responses_sec_k)
-rf_sec_k <- cbind(pred_sec_k, responses_sec_k) |>
-  dplyr::rename(observed = responses_sec_k,
-         predicted = rf_pred_model_sec_k_c)
-
-# With shannon index as a response 
-pred_sec_s <- as.data.frame(rf_pred_model_sec_s_c)
-resp_sec_s <- as.data.frame(responses_sec_s)
-rf_sec_s <- cbind(pred_sec_s, responses_sec_s) |>
-  dplyr::rename(observed = responses_sec_s,
-         predicted = rf_pred_model_sec_s_c)
-
-# With abundance as a response 
-pred_sec_a <- as.data.frame(rf_pred_model_sec_a_c)
-resp_sec_a <- as.data.frame(responses_sec_a)
-rf_sec_a <- cbind(pred_sec_a, responses_sec_a) |>
-  dplyr::rename(observed = responses_sec_a,
-         predicted = rf_pred_model_sec_a_c)
-
-# With relative abundance as a response 
-pred_sec_ra <- as.data.frame(rf_pred_model_sec_ra_c)
-resp_sec_ra <- as.data.frame(responses_sec_ra)
-rf_sec_ra <- cbind(pred_sec_ra, responses_sec_ra) |>
-  dplyr::rename(observed = responses_sec_ra,
-         predicted = rf_pred_model_sec_ra_c)
-
-### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
-# With k-index as a response 
-pred_var_k <- as.data.frame(rf_pred_model_var_k_c)
-resp_var_k <- as.data.frame(responses_var_k)
-rf_var_k <- cbind(pred_var_k, responses_var_k) |>
-  dplyr::rename(observed = responses_var_k,
-         predicted = rf_pred_model_var_k_c)
-
-# With shannon index as a response 
-pred_var_s <- as.data.frame(rf_pred_model_var_s_c)
-resp_var_s <- as.data.frame(responses_var_s)
-rf_var_s <- cbind(pred_var_s, responses_var_s) |>
-  dplyr::rename(observed = responses_var_s,
-         predicted = rf_pred_model_var_s_c)
-
-# With abundance as a response 
-pred_var_a <- as.data.frame(rf_pred_model_var_a_c)
-resp_var_a <- as.data.frame(responses_var_a)
-rf_var_a <- cbind(pred_var_a, responses_var_a) |>
-  dplyr::rename(observed = responses_var_a,
-         predicted = rf_pred_model_var_a_c)
-
-# With relative abundance as a response 
-pred_var_ra <- as.data.frame(rf_pred_model_var_ra_c)
-resp_var_ra <- as.data.frame(responses_var_ra)
-rf_var_ra <- cbind(pred_var_ra, responses_var_ra) |>
-  dplyr::rename(observed = responses_var_ra,
-         predicted = rf_pred_model_var_ra_c)
-```
-
-### - LM Models
-```{r}
-### PREDICTOR: VELOCITY ### --------------------------------------------------
-# with k_index as response
-regr_v_k <- lm(predicted ~ observed, data = rf_v_k)
-sum_v_k <- summary(regr_v_k)
-p_v_k <- sum_v_k$coefficients["observed", "Pr(>|t|)"]
-s_v_k <- sum_v_k$coefficients["observed", "Estimate"]
-
-# with shannon index as response
-regr_v_s <- lm(predicted ~ observed, data = rf_v_s)
-sum_v_s <- summary(regr_v_s)
-p_v_s <- sum_v_s$coefficients["observed", "Pr(>|t|)"]
-s_v_s <- sum_v_s$coefficients["observed", "Estimate"]
-
-# with abundance as response
-regr_v_a <- lm(predicted ~ observed, data = rf_v_a)
-sum_v_a <- summary(regr_v_a)
-p_v_a <- sum_v_a$coefficients["observed", "Pr(>|t|)"]
-s_v_a <- sum_v_a$coefficients["observed", "Estimate"]
-
-# with rel_abundance as response
-regr_v_ra <- lm(predicted ~ observed, data = rf_v_ra)
-sum_v_ra <- summary(regr_v_ra)
-p_v_ra <- sum_v_ra$coefficients["observed", "Pr(>|t|)"]
-s_v_ra <- sum_v_ra$coefficients["observed", "Estimate"]
-
-### PREDICTOR: V + WD ### --------------------------------------------------
-# with k_index as response
-regr_wd_k <- lm(predicted ~ observed, data = rf_wd_k)
-sum_wd_k <- summary(regr_wd_k)
-p_wd_k <- sum_wd_k$coefficients["observed", "Pr(>|t|)"]
-s_wd_k <- sum_wd_k$coefficients["observed", "Estimate"]
-
-# with shannon index as response
-regr_wd_s <- lm(predicted ~ observed, data = rf_wd_s)
-sum_wd_s <- summary(regr_wd_s)
-p_wd_s <- sum_wd_s$coefficients["observed", "Pr(>|t|)"]
-s_wd_s <- sum_wd_s$coefficients["observed", "Estimate"]
-
-# with abundance as response
-regr_wd_a <- lm(predicted ~ observed, data = rf_wd_a)
-sum_wd_a <- summary(regr_wd_a)
-p_wd_a <- sum_wd_a$coefficients["observed", "Pr(>|t|)"]
-s_wd_a <- sum_wd_a$coefficients["observed", "Estimate"]
-
-# with rel_abundance as response
-regr_wd_ra <- lm(predicted ~ observed, data = rf_wd_ra)
-sum_wd_ra <- summary(regr_wd_ra)
-p_wd_ra <- sum_wd_ra$coefficients["observed", "Pr(>|t|)"]
-s_wd_ra <- sum_wd_ra$coefficients["observed", "Estimate"]
-
-### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
-# with k_index as response
-regr_samp_k <- lm(predicted ~ observed, data = rf_samp_k)
-sum_samp_k <- summary(regr_samp_k)
-p_samp_k <- sum_samp_k$coefficients["observed", "Pr(>|t|)"]
-s_samp_k <- sum_samp_k$coefficients["observed", "Estimate"]
-
-# with shannon index as response
-regr_samp_s <- lm(predicted ~ observed, data = rf_samp_s)
-sum_samp_s <- summary(regr_samp_s)
-p_samp_s <- sum_samp_s$coefficients["observed", "Pr(>|t|)"]
-s_samp_s <- sum_samp_s$coefficients["observed", "Estimate"]
-
-# with abundance as response
-regr_samp_a <- lm(predicted ~ observed, data = rf_samp_a)
-sum_samp_a <- summary(regr_samp_a)
-p_samp_a <- sum_samp_a$coefficients["observed", "Pr(>|t|)"]
-s_samp_a <- sum_samp_a$coefficients["observed", "Estimate"]
-
-# with rel_abundance as response
-regr_samp_ra <- lm(predicted ~ observed, data = rf_samp_ra)
-sum_samp_ra <- summary(regr_samp_ra)
-p_samp_ra <- sum_samp_ra$coefficients["observed", "Pr(>|t|)"]
-s_samp_ra <- sum_samp_ra$coefficients["observed", "Estimate"]
-
-### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
-# with k_index as response
-regr_sec_k <- lm(predicted ~ observed, data = rf_sec_k)
-sum_sec_k <- summary(regr_sec_k)
-p_sec_k <- sum_sec_k$coefficients["observed", "Pr(>|t|)"]
-s_sec_k <- sum_sec_k$coefficients["observed", "Estimate"]
-
-# with shannon index as response
-regr_sec_s <- lm(predicted ~ observed, data = rf_sec_s)
-sum_sec_s <- summary(regr_sec_s)
-p_sec_s <- sum_sec_s$coefficients["observed", "Pr(>|t|)"]
-s_sec_s <- sum_sec_s$coefficients["observed", "Estimate"]
-
-# with abundance as response
-regr_sec_a <- lm(predicted ~ observed, data = rf_sec_a)
-sum_sec_a <- summary(regr_sec_a)
-p_sec_a <- sum_sec_a$coefficients["observed", "Pr(>|t|)"]
-s_sec_a <- sum_sec_a$coefficients["observed", "Estimate"]
-
-# with rel_abundance as response
-regr_sec_ra <- lm(predicted ~ observed, data = rf_sec_ra)
-sum_sec_ra <- summary(regr_sec_ra)
-p_sec_ra <- sum_sec_ra$coefficients["observed", "Pr(>|t|)"]
-s_sec_ra <- sum_sec_ra$coefficients["observed", "Estimate"]
-
-### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
-# with k_index as response
-regr_var_k <- lm(predicted ~ observed, data = rf_var_k)
-sum_var_k <- summary(regr_var_k)
-p_var_k <- sum_var_k$coefficients["observed", "Pr(>|t|)"]
-s_var_k <- sum_var_k$coefficients["observed", "Estimate"]
-
-# with shannon index as response
-regr_var_s <- lm(predicted ~ observed, data = rf_var_s)
-sum_var_s <- summary(regr_var_s)
-p_var_s <- sum_var_s$coefficients["observed", "Pr(>|t|)"]
-s_var_s <- sum_var_s$coefficients["observed", "Estimate"]
-
-# with abundance as response
-regr_var_a <- lm(predicted ~ observed, data = rf_var_a)
-sum_var_a <- summary(regr_var_a)
-p_var_a <- sum_var_a$coefficients["observed", "Pr(>|t|)"]
-s_var_a <- sum_var_a$coefficients["observed", "Estimate"]
-
-# with rel_abundance as response
-regr_var_ra <- lm(predicted ~ observed, data = rf_var_ra)
-sum_var_ra <- summary(regr_var_ra)
-p_var_ra <- sum_var_ra$coefficients["observed", "Pr(>|t|)"]
-s_var_ra <- sum_var_ra$coefficients["observed", "Estimate"]
-```
 
 ## Write Evaluation Results 
 ```{r}
@@ -3066,19 +2803,7 @@ write.csv(metrics_training, "Stat_Analysis/ml_evaluation_metrics_training_rf.csv
 write.csv(all_metrics, "Stat_Analysis/ml_evaluation_metrics_all_rf.csv", row.names = FALSE)
 ```
  
-lm_p_value = c(p_v_k, p_v_s, p_v_a, p_v_ra,  
-                                           p_wd_k, p_wd_s, p_wd_a,
-                                           p_wd_ra, p_samp_k, p_samp_s, p_samp_a,
-                                           p_samp_ra, p_sec_k, p_sec_s, p_sec_a,
-                                           p_sec_ra, p_var_k, p_var_s, p_var_a,
-                                           p_var_ra),
-                          
-                          lm_slope = c(s_v_k, s_v_s, s_v_a, s_v_ra,  
-                                           s_wd_k, s_wd_s, s_wd_a,
-                                           s_wd_ra, s_samp_k, s_samp_s, s_samp_a,
-                                           s_samp_ra, s_sec_k, s_sec_s, s_sec_a,
-                                           s_sec_ra, s_var_k, s_var_s, s_var_a,
-                                           s_var_ra)
+## - PDP - *sec*
 
 # Extract 
 ## Read rasters
