@@ -1568,7 +1568,7 @@ ggplot(sub_samp_k_c_brt, aes(sub_type, yhat)) +
 wua_hhs <- read_delim("ML_Model/scenarios/wua_hhs_k_var_rf.csv")
 ```
 
-## Plots
+## WUA Plots
 ```{r}
 # WUA Plot --------------------------------------------------------
 # create facet plot for WUA
@@ -1586,7 +1586,7 @@ wua_plot <- wua_hhs |>
   facet_wrap(~name, labeller = as_labeller(wua_names)) +
   labs(x = expression(paste("Discharge [", m^3/s, "]")), 
        y = expression(paste("WUA [", m^2, "]")),
-       col = "Section"
+       col = "Study Area"
        ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),
@@ -1611,7 +1611,7 @@ hhs_plot <- wua_hhs |>
   facet_wrap(~name, labeller = as_labeller(hhs_names)) +
   labs(x = expression(paste("Discharge [", m^3/s, "]")), 
        y = "HHS [-]",
-       col = "Section"
+       col = "Study Area"
        ) +
   theme_minimal() +
   theme(axis.text = element_text(size=12),

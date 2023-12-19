@@ -1245,7 +1245,7 @@ plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
 ## Plots
 ```{r}
 # velocity --------------------------------------------------------------------
-vel <- ggplot(data_hdm, aes(velocity, v_raster)) +
+vel <- ggplot(data_hdm, aes(velocity, v_raster, col = Reach_Untersuchungsstelle)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -1254,17 +1254,20 @@ vel <- ggplot(data_hdm, aes(velocity, v_raster)) +
   xlim(0, 1.0) + 
   labs(
     x = "Velocity Measured (m/s)",
-    y = "Velocity Simulated (m/s)"
+    y = "Velocity Simulated (m/s)",
+    col = "Study Area"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_velocity.png", plot = vel, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_velocity.png", plot = vel, width = 7, height = 5)
 
 # water depth ----------------------------------------------------------------
-wd <- ggplot(data_hdm, aes(wd_m, wd_m_raster)) +
+wd <- ggplot(data_hdm, aes(wd_m, wd_m_raster, col = Reach_Untersuchungsstelle)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -1273,14 +1276,17 @@ wd <- ggplot(data_hdm, aes(wd_m, wd_m_raster)) +
   xlim(0, 1.0) + 
   labs(
     x = "Water Depth Measured (m)",
-    y = "Water Depth Simulated (m/s)"
+    y = "Water Depth Simulated (m/s)",
+    col = "Study Area"
   ) +
   theme_minimal() +
   theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16))
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_wd.png", plot = wd, width = 6, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_wd.png", plot = wd, width = 7, height = 5)
 
 # froude ----------------------------------------------------------------
 froude <- ggplot(data_hdm, aes(froude, froude_raster)) +
