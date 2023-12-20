@@ -61,13 +61,13 @@ data_sampling <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_sampling.
 # Load data containing all variables measured at each river section and remove all other "chr" variables
 # Additionally, remove ox_sat columns, as they contain NA values
 data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv") |>
-  dplyr::rename(Reach_Untersuchungsstelle = reach)|>
+  dplyr::rename(Reach_Untersuchungsstelle = reach) |>
   na.omit()
 
 # load data containing selected variables 
 data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv") |>
   dplyr::rename(Reach_Untersuchungsstelle = reach)|>
-  na.omit() 
+  na.omit()  
 ```
     
 ```{r}
@@ -1406,7 +1406,7 @@ xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
                      subsample = 0.7175143,
                      objective = "reg:linear")
 
-### PREDICTORS: SELECTED VARIABLES ### --------------------------------------------
+### PREDICTORS: SELECTED VARIABLES ### --------------------------------------
 # With k_index as response
 #           eta nrounds max_depth subsample 
 #1: 0.002298211      85      2617 0.5574753                     

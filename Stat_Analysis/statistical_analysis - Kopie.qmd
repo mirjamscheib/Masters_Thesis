@@ -32,23 +32,6 @@ pkgCheck("scales")
   
 # Load Data 
 ```{r}
-# load data 
-heat <- read_delim("Stat_Analysis/heat_map.csv") |>
-  subset(model != "hsc")
-
-index <- heat$index
-model <- heat$model
-
-# combine the first two rows 
-combined <- paste(index, model, sep = "_")
-
-# attach created row 
-heat_new <- cbind(combined, heat) |>
-  dplyr::select(-index, -model) |>
-  dplyr::rename(models = combined) 
-
-
-
 # load data for bar charts -> variable importance 
 bar <- read_delim("ML_model/var_imp/var_imp_var.csv") |> 
   dplyr::select(variable, k_index_rf, k_index_brt) |>
@@ -57,7 +40,7 @@ bar <- read_delim("ML_model/var_imp/var_imp_var.csv") |>
 
 bar_rf <- read_delim("ML_model/var_imp/var_imp_var.csv") |> 
   dplyr::select(variable, k_index_rf) |>
-  mutate(var_new = c("Z Coordinate [m.a.s.l.]", "Water Deph [m]", "Mean diffused total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffused total phosphor [kg/ha a]", "Ecomorphological Class", "Bioregion"))
+  mutate(var_new = c("Elevation [m.a.s.l.]", "Water Deph [m]", "Mean diffuse total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffuse total phosphor [kg/ha a]", "Ecomorphology", "Biogeographical region"))
 ```
 
 
@@ -79,7 +62,7 @@ p <- ggplot(bar, aes(x = values, y = reorder(var_new, + values), fill = models))
 
 
 # save the plots 
-ggsave("Stat_Analysis/var_imp.png", plot = p, width = 11, height = 6)
+ggsave("Stat_Analysis/plots/var_imp.png", plot = p, width = 11, height = 6)
 ```
 
 ```{r}
@@ -116,7 +99,7 @@ p2 <- ggplot(bar_rf, aes(x = k_index_rf, y = reorder(var_new, +k_index_rf))) +
 
 
 # save the plots 
-ggsave("Stat_Analysis/var_imp_rf.png", plot = p2, width = 11, height = 6)
+ggsave("Stat_Analysis/plots/var_imp_rf.png", plot = p2, width = 11, height = 6)
 ```
 
 # Combine metric results and calc. rel. metrics
@@ -150,5 +133,60 @@ metrics$rel_bias <- round(metrics$rel_bias, digits = 2)
 
 # save as .csv file 
 write.csv(metrics, "Stat_Analysis/evaluation_metrics_all.csv", row.names = FALSE)
+
+metrics$predictor <- sub("^v\\s*\\+\\s*", "", metrics$predictor)
+
+metrics_measured <- metrics |>
+  dplyr::select(-bias, -rmse, -mae) |>
+  filter(origin == "measured") |>
+  mutate(key = paste(index, model, predictor, sep = "-")) |>
+  dplyr::rename(rel_rmse_meas = rel_rmse,
+                rel_mae_meas = rel_mae,
+                rel_bias_meas = rel_bias,
+                r2_meas = r2,
+                nse_meas = nse)
+
+metrics_rast <- metrics |>
+  filter(origin == "raster_extract") |>
+  mutate(key = paste(index, model, predictor, sep = "-")) |>
+  dplyr::rename(rel_rmse_rast = rel_rmse,
+                rel_mae_rast = rel_mae,
+                rel_bias_rast = rel_bias,
+                r2_rast = r2,
+                nse_rast = nse) |>
+  dplyr::select(-bias, -rmse, -mae, -model, -predictor, -origin, -index)
+
+metrics_train <- metrics |>
+  filter(origin == "training")|>
+  mutate(key = paste(index, model, predictor, sep = "-"))|>
+  dplyr::rename(rel_rmse_train = rel_rmse,
+                rel_mae_train = rel_mae,
+                rel_bias_train = rel_bias,
+                r2_train = r2,
+                nse_train = nse) |>
+  dplyr::select(-bias, -rmse, -mae, -model, -predictor, -origin, -index) 
+
+metr <- full_join(metrics_measured, metrics_rast, by = "key")
+metr_diff <- full_join(metr, metrics_train, by = "key")
+
+metrics_diff <- metr_diff |>
+  mutate(rel_rmse_test = abs(rel_rmse_meas - rel_rmse_rast),
+         rel_mae_test = abs(rel_mae_meas - rel_mae_rast),
+         rel_bias_test = abs(rel_bias_meas - rel_bias_rast),
+         r2_test = abs(r2_meas - r2_rast),
+         nse_test = abs(nse_meas - nse_rast),
+         rel_rmse_train_meas = abs(rel_rmse_meas - rel_rmse_train),
+         rel_mae_train_meas = abs(rel_mae_meas - rel_mae_train),
+         rel_bias_train_meas = abs(rel_bias_meas - rel_bias_train),
+         r2_train_meas = abs(r2_meas - r2_train),
+         nse_train_meas = abs(nse_meas - nse_train),
+         rel_rmse_train_rast = abs(rel_rmse_rast - rel_rmse_train),
+         rel_mae_train_rast = abs(rel_mae_rast - rel_mae_train),
+         rel_bias_train_rast = abs(rel_bias_rast - rel_bias_train),
+         r2_train_rast = abs(r2_rast - r2_train),
+         nse_train_rast = abs(nse_rast - nse_train))
+
+# save as .csv file 
+write.csv(metrics_diff, "Stat_Analysis/evaluation_metrics_diff_all.csv", row.names = FALSE)
 ```
 

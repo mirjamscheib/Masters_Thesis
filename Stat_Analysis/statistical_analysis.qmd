@@ -61,6 +61,9 @@ brt_train <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_brt.cs
   mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
                                    training_sections[Reach_Untersuchungsstelle], NA))
 
+brt_train_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_brt.csv")|>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
+                                   training_sections[Reach_Untersuchungsstelle], NA))
 
 ### RF ### 
 rf_test <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_test_rf.csv") |>
@@ -72,6 +75,10 @@ rf_test_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_test_2_rf.cs
                                    test_sections[Reach_Untersuchungsstelle], NA))
 
 rf_train <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_rf.csv")|>
+  mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
+                                   training_sections[Reach_Untersuchungsstelle], NA))
+
+rf_train_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_rf.csv")|>
   mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
                                    training_sections[Reach_Untersuchungsstelle], NA))
 ```
@@ -375,50 +382,50 @@ s_samp_brt_ra_train <- sum_samp_brt_ra_train$coefficients["rel_abundance", "Esti
 
 ### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
 # with k_index as response
-regr_sec_brt_k_train <- lm(pred_train_sec_k ~ k_index, data = brt_train)
+regr_sec_brt_k_train <- lm(pred_train_sec_k ~ k_index, data = brt_train_2)
 sum_sec_brt_k_train <- summary(regr_sec_brt_k_train)
 p_sec_brt_k_train <- sum_sec_brt_k_train$coefficients["k_index", "Pr(>|t|)"]
 s_sec_brt_k_train <- sum_sec_brt_k_train$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_sec_brt_s_train <- lm(pred_train_sec_s ~ shannon, data = brt_train)
+regr_sec_brt_s_train <- lm(pred_train_sec_s ~ shannon, data = brt_train_2)
 sum_sec_brt_s_train <- summary(regr_sec_brt_s_train)
 p_sec_brt_s_train <- sum_sec_brt_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_sec_brt_s_train <- sum_sec_brt_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_sec_brt_a_train <- lm(pred_train_sec_a ~ abundance, data = brt_train)
+regr_sec_brt_a_train <- lm(pred_train_sec_a ~ abundance, data = brt_train_2)
 sum_sec_brt_a_train <- summary(regr_sec_brt_a_train)
 p_sec_brt_a_train <- sum_sec_brt_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_sec_brt_a_train <- sum_sec_brt_a_train$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_sec_brt_ra_train <- lm(pred_train_sec_ra ~ rel_abundance, data = brt_train)
+regr_sec_brt_ra_train <- lm(pred_train_sec_ra ~ rel_abundance, data = brt_train_2)
 sum_sec_brt_ra_train <- summary(regr_sec_brt_ra_train)
 p_sec_brt_ra_train <- sum_sec_brt_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
 s_sec_brt_ra_train <- sum_sec_brt_ra_train$coefficients["rel_abundance", "Estimate"]
 
 ### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
 # with k_index as response
-regr_var_brt_k_train <- lm(pred_train_var_k ~ k_index, data = brt_train)
+regr_var_brt_k_train <- lm(pred_train_var_k ~ k_index, data = brt_train_2)
 sum_var_brt_k_train <- summary(regr_var_brt_k_train)
 p_var_brt_k_train <- sum_var_brt_k_train$coefficients["k_index", "Pr(>|t|)"]
 s_var_brt_k_train <- sum_var_brt_k_train$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_var_brt_s_train <- lm(pred_train_var_s ~ shannon, data = brt_train)
+regr_var_brt_s_train <- lm(pred_train_var_s ~ shannon, data = brt_train_2)
 sum_var_brt_s_train <- summary(regr_var_brt_s_train)
 p_var_brt_s_train <- sum_var_brt_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_var_brt_s_train <- sum_var_brt_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_var_brt_a_train <- lm(pred_train_var_a ~ abundance, data = brt_train)
+regr_var_brt_a_train <- lm(pred_train_var_a ~ abundance, data = brt_train_2)
 sum_var_brt_a_train <- summary(regr_var_brt_a_train)
 p_var_brt_a_train <- sum_var_brt_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_var_brt_a_train <- sum_var_brt_a_train$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_var_brt_ra_train <- lm(pred_train_var_ra ~ rel_abundance, data = brt_train)
+regr_var_brt_ra_train <- lm(pred_train_var_ra ~ rel_abundance, data = brt_train_2)
 sum_var_brt_ra_train <- summary(regr_var_brt_ra_train)
 p_var_brt_ra_train <- sum_var_brt_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
 s_var_brt_ra_train <- sum_var_brt_ra_train$coefficients["rel_abundance", "Estimate"]
@@ -647,125 +654,125 @@ r_var_rf_ra_rast <- summary(lm(rel_abundance_var ~ obs_rel_abundance, data = rf_
 ```{r}
 ### PREDICTOR: VELOCITY ### --------------------------------------------------
 # with k_index as response
-regr_v_rf_k_train <- lm(pred_train_v_k ~ k_index, data = brt_train)
+regr_v_rf_k_train <- lm(pred_train_v_k ~ k_index, data = rf_train)
 sum_v_rf_k_train <- summary(regr_v_rf_k_train)
 p_v_rf_k_train <- sum_v_rf_k_train$coefficients["k_index", "Pr(>|t|)"]
 s_v_rf_k_train <- sum_v_rf_k_train$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_v_rf_s_train <- lm(pred_train_v_s ~ shannon, data = brt_train)
+regr_v_rf_s_train <- lm(pred_train_v_s ~ shannon, data = rf_train)
 sum_v_rf_s_train <- summary(regr_v_rf_s_train)
 p_v_rf_s_train <- sum_v_rf_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_v_rf_s_train <- sum_v_rf_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_v_rf_a_train <- lm(pred_train_v_a ~ abundance, data = brt_train)
+regr_v_rf_a_train <- lm(pred_train_v_a ~ abundance, data = rf_train)
 sum_v_rf_a_train <- summary(regr_v_rf_a_train)
 p_v_rf_a_train <- sum_v_rf_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_v_rf_a_train <- sum_v_rf_a_train$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_v_rf_ra_train <- lm(pred_train_v_ra ~ rel_abundance, data = brt_train)
+regr_v_rf_ra_train <- lm(pred_train_v_ra ~ rel_abundance, data = rf_train)
 sum_v_rf_ra_train <- summary(regr_v_rf_ra_train)
 p_v_rf_ra_train <- sum_v_rf_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
 s_v_rf_ra_train <- sum_v_rf_ra_train$coefficients["rel_abundance", "Estimate"]
 
 ### PREDICTOR: V + WD ### --------------------------------------------------
 # with k_index as response
-regr_wd_rf_k_train <- lm(pred_train_wd_k ~ k_index, data = brt_train)
+regr_wd_rf_k_train <- lm(pred_train_wd_k ~ k_index, data = rf_train)
 sum_wd_rf_k_train <- summary(regr_wd_rf_k_train)
 p_wd_rf_k_train <- sum_wd_rf_k_train$coefficients["k_index", "Pr(>|t|)"]
 s_wd_rf_k_train <- sum_wd_rf_k_train$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_wd_rf_s_train <- lm(pred_train_wd_s ~ shannon, data = brt_train)
+regr_wd_rf_s_train <- lm(pred_train_wd_s ~ shannon, data = rf_train)
 sum_wd_rf_s_train <- summary(regr_wd_rf_s_train)
 p_wd_rf_s_train <- sum_wd_rf_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_wd_rf_s_train <- sum_wd_rf_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_wd_rf_a_train <- lm(pred_train_wd_a ~ abundance, data = brt_train)
+regr_wd_rf_a_train <- lm(pred_train_wd_a ~ abundance, data = rf_train)
 sum_wd_rf_a_train <- summary(regr_wd_rf_a_train)
 p_wd_rf_a_train <- sum_wd_rf_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_wd_rf_a_train <- sum_wd_rf_a_train$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_wd_rf_ra_train <- lm(pred_train_wd_ra ~ rel_abundance, data = brt_train)
+regr_wd_rf_ra_train <- lm(pred_train_wd_ra ~ rel_abundance, data = rf_train)
 sum_wd_rf_ra_train <- summary(regr_wd_rf_ra_train)
 p_wd_rf_ra_train <- sum_wd_rf_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
 s_wd_rf_ra_train <- sum_wd_rf_ra_train$coefficients["rel_abundance", "Estimate"]
 
 ### PREDICTOR: SAMPLING LOCATIONS ### ----------------------------------------
 # with k_index as response
-regr_samp_rf_k_train <- lm(pred_train_samp_k ~ k_index, data = brt_train)
+regr_samp_rf_k_train <- lm(pred_train_samp_k ~ k_index, data = rf_train)
 sum_samp_rf_k_train <- summary(regr_samp_rf_k_train)
 p_samp_rf_k_train <- sum_samp_rf_k_train$coefficients["k_index", "Pr(>|t|)"]
 s_samp_rf_k_train <- sum_samp_rf_k_train$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_samp_rf_s_train <- lm(pred_train_samp_s ~ shannon, data = brt_train)
+regr_samp_rf_s_train <- lm(pred_train_samp_s ~ shannon, data = rf_train)
 sum_samp_rf_s_train <- summary(regr_samp_rf_s_train)
 p_samp_rf_s_train <- sum_samp_rf_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_samp_rf_s_train <- sum_samp_rf_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_samp_rf_a_train <- lm(pred_train_samp_a ~ abundance, data = brt_train)
+regr_samp_rf_a_train <- lm(pred_train_samp_a ~ abundance, data = rf_train)
 sum_samp_rf_a_train <- summary(regr_samp_rf_a_train)
 p_samp_rf_a_train <- sum_samp_rf_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_samp_rf_a_train <- sum_samp_rf_a_train$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_samp_rf_ra_train <- lm(pred_train_samp_ra ~ rel_abundance, data = brt_train)
+regr_samp_rf_ra_train <- lm(pred_train_samp_ra ~ rel_abundance, data = rf_train)
 sum_samp_rf_ra_train <- summary(regr_samp_rf_ra_train)
 p_samp_rf_ra_train <- sum_samp_rf_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
 s_samp_rf_ra_train <- sum_samp_rf_ra_train$coefficients["rel_abundance", "Estimate"]
 
 ### PREDICTOR: ALL PREDICTORS ### ----------------------------------------
 # with k_index as response
-regr_sec_rf_k_train <- lm(pred_train_sec_k ~ k_index, data = brt_train)
+regr_sec_rf_k_train <- lm(pred_train_sec_k ~ k_index, data = rf_train_2)
 sum_sec_rf_k_train <- summary(regr_sec_rf_k_train)
 p_sec_rf_k_train <- sum_sec_rf_k_train$coefficients["k_index", "Pr(>|t|)"]
 s_sec_rf_k_train <- sum_sec_rf_k_train$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_sec_rf_s_train <- lm(pred_train_sec_s ~ shannon, data = brt_train)
+regr_sec_rf_s_train <- lm(pred_train_sec_s ~ shannon, data = rf_train_2)
 sum_sec_rf_s_train <- summary(regr_sec_rf_s_train)
 p_sec_rf_s_train <- sum_sec_rf_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_sec_rf_s_train <- sum_sec_rf_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_sec_rf_a_train <- lm(pred_train_sec_a ~ abundance, data = brt_train)
+regr_sec_rf_a_train <- lm(pred_train_sec_a ~ abundance, data = rf_train)
 sum_sec_rf_a_train <- summary(regr_sec_rf_a_train)
 p_sec_rf_a_train <- sum_sec_rf_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_sec_rf_a_train <- sum_sec_rf_a_train$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_sec_rf_ra_train <- lm(pred_train_sec_ra ~ rel_abundance, data = brt_train)
+regr_sec_rf_ra_train <- lm(pred_train_sec_ra ~ rel_abundance, data = rf_train_2)
 sum_sec_rf_ra_train <- summary(regr_sec_rf_ra_train)
 p_sec_rf_ra_train <- sum_sec_rf_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
 s_sec_rf_ra_train <- sum_sec_rf_ra_train$coefficients["rel_abundance", "Estimate"]
 
 ### PREDICTOR: SELECTED VARIABLES ### ----------------------------------------
 # with k_index as response
-regr_var_rf_k_train <- lm(pred_train_var_k ~ k_index, data = brt_train)
+regr_var_rf_k_train <- lm(pred_train_var_k ~ k_index, data = rf_train_2)
 sum_var_rf_k_train <- summary(regr_var_rf_k_train)
 p_var_rf_k_train <- sum_var_rf_k_train$coefficients["k_index", "Pr(>|t|)"]
 s_var_rf_k_train <- sum_var_rf_k_train$coefficients["k_index", "Estimate"]
 
 # with shannon index as response
-regr_var_rf_s_train <- lm(pred_train_var_s ~ shannon, data = brt_train)
+regr_var_rf_s_train <- lm(pred_train_var_s ~ shannon, data = rf_train_2)
 sum_var_rf_s_train <- summary(regr_var_rf_s_train)
 p_var_rf_s_train <- sum_var_rf_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_var_rf_s_train <- sum_var_rf_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_var_rf_a_train <- lm(pred_train_var_a ~ abundance, data = brt_train)
+regr_var_rf_a_train <- lm(pred_train_var_a ~ abundance, data = rf_train_2)
 sum_var_rf_a_train <- summary(regr_var_rf_a_train)
 p_var_rf_a_train <- sum_var_rf_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_var_rf_a_train <- sum_var_rf_a_train$coefficients["abundance", "Estimate"]
 
 # with rel_abundance as response
-regr_var_rf_ra_train <- lm(pred_train_var_ra ~ rel_abundance, data = brt_train)
+regr_var_rf_ra_train <- lm(pred_train_var_ra ~ rel_abundance, data = rf_train_2)
 sum_var_rf_ra_train <- summary(regr_var_rf_ra_train)
 p_var_rf_ra_train <- sum_var_rf_ra_train$coefficients["rel_abundance", "Pr(>|t|)"]
 s_var_rf_ra_train <- sum_var_rf_ra_train$coefficients["rel_abundance", "Estimate"]
@@ -941,36 +948,7 @@ write.csv(regr_all, "Stat_Analysis/stat_analysis_data/results_regr_rf.csv", row.
 ```
 
 ## Stat. Analysis
-```{r}
-# Modellvoraussetzungen prüfen - residualplot 
-par(mfrow=c(2, 2))
 
-### BRT normal ### -----------------------------------------------------------
-### Predictor Velocity ###
-plot(regr_v_brt_k) # Linearität ok; Residuen ok 
-plot(regr_v_brt_s) # Linearität ok; Residuen evt. nicht normalverteilt 
-plot(regr_v_brt_a) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen evt. nicht normalverteilt
-plot(regr_v_brt_ra) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen evt. nicht normalverteilt
-
-### Predictor V + WD ###
-plot(regr_wd_brt_k) # Linearität ok; Residuen evt. nicht normalverteilt
-plot(regr_wd_brt_s) # Linearität ok; Residuen evt. nicht normalverteilt
-plot(regr_wd_brt_a) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen nicht normalverteilt
-plot(regr_wd_brt_ra) # Linearität nicht gegeben (umgekehrte Trichterform); Residuen nicht normalverteilt
-
-### RF normal ### ---------------------------------------------------------------
-### Predictor Velocity ###
-plot(regr_v_rf_k) # Linearität ok; Residuen nicht normalverteilt 
-plot(regr_v_rf_s) # Linearität ok; Residuen nicht normalverteilt
-plot(regr_v_rf_a) # Linearität ok; Residuen nicht normalverteilt 
-plot(regr_v_rf_ra) # Linearität ok; Residuen nicht normalverteilt 
-
-### Predictor V + WD ###
-plot(regr_wd_rf_k) # Linearität ok; Residuen nicht normalverteilt 
-plot(regr_wd_rf_s) # Linearität ok; Residuen nicht normalverteilt 
-plot(regr_wd_rf_a) # Linearität ok; Residuen normalverteilt 
-plot(regr_wd_rf_ra) # Linearität ok; Residuen normalverteilt 
-```
 
 # Plots
 ## BRT 
@@ -2920,7 +2898,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_samp_wrap_ra_train.png", plot = p_brt_
 
 ### PREDICTOR: ALL PREDICTORS ### ------------------------------------------
 # with k_index as response-----------------------------------------------------
-p_brt_sec_k_train <- ggplot(brt_train, aes(k_index, pred_train_sec_k, col = reach_type)) +
+p_brt_sec_k_train <- ggplot(brt_train_2, aes(k_index, pred_train_sec_k, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -2938,7 +2916,7 @@ p_brt_sec_k_train <- ggplot(brt_train, aes(k_index, pred_train_sec_k, col = reac
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14))
 
-p_brt_sec_wrap_k_train <- ggplot(brt_train, aes(k_index, pred_train_sec_k, col = reach_type)) +
+p_brt_sec_wrap_k_train <- ggplot(brt_train_2, aes(k_index, pred_train_sec_k, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -2963,7 +2941,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_sec_k_train.png", plot = p_brt_sec_k_t
 ggsave("Stat_Analysis/regr_plots/regr_brt_sec_wrap_k_train.png", plot = p_brt_sec_wrap_k_train, width = 8, height = 8)
 
 # with shannon index as response ---------------------------------------------
-p_brt_sec_s_train <- ggplot(brt_train, aes(shannon, pred_train_sec_s, col = reach_type)) +
+p_brt_sec_s_train <- ggplot(brt_train_2, aes(shannon, pred_train_sec_s, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -2982,7 +2960,7 @@ p_brt_sec_s_train <- ggplot(brt_train, aes(shannon, pred_train_sec_s, col = reac
     legend.text = element_text(size = 14))
 
   
-p_brt_sec_wrap_s_train <- ggplot(brt_train, aes(shannon, pred_train_sec_s, col = reach_type)) +
+p_brt_sec_wrap_s_train <- ggplot(brt_train_2, aes(shannon, pred_train_sec_s, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -3007,7 +2985,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_sec_s_train.png", plot = p_brt_sec_s_t
 ggsave("Stat_Analysis/regr_plots/regr_brt_sec_wrap_s_train.png", plot = p_brt_sec_wrap_s_train, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-p_brt_sec_a_train <- ggplot(brt_train, aes(abundance, pred_train_sec_a, col = reach_type)) +
+p_brt_sec_a_train <- ggplot(brt_train_2, aes(abundance, pred_train_sec_a, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -3026,7 +3004,7 @@ p_brt_sec_a_train <- ggplot(brt_train, aes(abundance, pred_train_sec_a, col = re
     legend.text = element_text(size = 14))
 
   
-p_brt_sec_wrap_a_train <- ggplot(brt_train, aes(abundance, pred_train_sec_a, col = reach_type)) +
+p_brt_sec_wrap_a_train <- ggplot(brt_train_2, aes(abundance, pred_train_sec_a, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -3051,7 +3029,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_sec_a_train.png", plot = p_brt_sec_a_t
 ggsave("Stat_Analysis/regr_plots/regr_brt_sec_wrap_a_train.png", plot = p_brt_sec_wrap_a_train, width = 8, height = 8)
 
 # with relative abundance as response ----------------------------------------
-p_brt_sec_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
+p_brt_sec_ra_train <- ggplot(brt_train_2, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -3070,7 +3048,7 @@ p_brt_sec_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_sec_ra, co
     legend.text = element_text(size = 14))
 
   
-p_brt_sec_wrap_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
+p_brt_sec_wrap_ra_train <- ggplot(brt_train_2, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -3096,7 +3074,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_sec_wrap_ra_train.png", plot = p_brt_s
 
 ### PREDICTOR: SELCTED VARIABLES ### ------------------------------------------
 # with k_index as response-----------------------------------------------------
-p_brt_var_k_train <- ggplot(brt_train, aes(k_index, pred_train_var_k, col = reach_type)) +
+p_brt_var_k_train <- ggplot(brt_train_2, aes(k_index, pred_train_var_k, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -3114,7 +3092,7 @@ p_brt_var_k_train <- ggplot(brt_train, aes(k_index, pred_train_var_k, col = reac
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14))
 
-p_brt_var_wrap_k_train <- ggplot(brt_train, aes(k_index, pred_train_var_k, col = reach_type)) +
+p_brt_var_wrap_k_train <- ggplot(brt_train_2, aes(k_index, pred_train_var_k, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -3139,7 +3117,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_var_k_train.png", plot = p_brt_var_k_t
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_wrap_k_train.png", plot = p_brt_var_wrap_k_train, width = 8, height = 8)
 
 # with shannon index as response ---------------------------------------------
-p_brt_var_s_train <- ggplot(brt_train, aes(shannon, pred_train_var_s, col = reach_type)) +
+p_brt_var_s_train <- ggplot(brt_train_2, aes(shannon, pred_train_var_s, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -3158,7 +3136,7 @@ p_brt_var_s_train <- ggplot(brt_train, aes(shannon, pred_train_var_s, col = reac
     legend.text = element_text(size = 14))
 
   
-p_brt_var_wrap_s_train <- ggplot(brt_train, aes(shannon, pred_train_var_s, col = reach_type)) +
+p_brt_var_wrap_s_train <- ggplot(brt_train_2, aes(shannon, pred_train_var_s, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -3183,7 +3161,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_var_s_train.png", plot = p_brt_var_s_t
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_wrap_s_train.png", plot = p_brt_var_wrap_s_train, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-p_brt_var_a_train <- ggplot(brt_train, aes(abundance, pred_train_var_a, col = reach_type)) +
+p_brt_var_a_train <- ggplot(brt_train_2, aes(abundance, pred_train_var_a, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -3202,7 +3180,7 @@ p_brt_var_a_train <- ggplot(brt_train, aes(abundance, pred_train_var_a, col = re
     legend.text = element_text(size = 14))
 
   
-p_brt_var_wrap_a_train <- ggplot(brt_train, aes(abundance, pred_train_var_a, col = reach_type)) +
+p_brt_var_wrap_a_train <- ggplot(brt_train_2, aes(abundance, pred_train_var_a, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -3227,7 +3205,7 @@ ggsave("Stat_Analysis/regr_plots/regr_brt_var_a_train.png", plot = p_brt_var_a_t
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_wrap_a_train.png", plot = p_brt_var_wrap_a_train, width = 8, height = 8)
 
 # with relative abundance as response ----------------------------------------
-p_brt_var_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
+p_brt_var_ra_train <- ggplot(brt_train_2, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -3246,7 +3224,7 @@ p_brt_var_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_var_ra, co
     legend.text = element_text(size = 14))
 
   
-p_brt_var_wrap_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
+p_brt_var_wrap_ra_train <- ggplot(brt_train_2, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -5844,7 +5822,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_samp_wrap_ra_train.png", plot = p_rf_sa
 
 ### PREDICTOR: ALL PREDICTORS ### ------------------------------------------
 # with k_index as response-----------------------------------------------------
-p_rf_sec_k_train <- ggplot(rf_train, aes(k_index, pred_train_sec_k, col = reach_type)) +
+p_rf_sec_k_train <- ggplot(rf_train_2, aes(k_index, pred_train_sec_k, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -5862,7 +5840,7 @@ p_rf_sec_k_train <- ggplot(rf_train, aes(k_index, pred_train_sec_k, col = reach_
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14))
 
-p_rf_sec_wrap_k_train <- ggplot(rf_train, aes(k_index, pred_train_sec_k, col = reach_type)) +
+p_rf_sec_wrap_k_train <- ggplot(rf_train_2, aes(k_index, pred_train_sec_k, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -5887,7 +5865,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_sec_k_train.png", plot = p_rf_sec_k_tra
 ggsave("Stat_Analysis/regr_plots/regr_rf_sec_wrap_k_train.png", plot = p_rf_sec_wrap_k_train, width = 8, height = 8)
 
 # with shannon index as response ---------------------------------------------
-p_rf_sec_s_train <- ggplot(rf_train, aes(shannon, pred_train_sec_s, col = reach_type)) +
+p_rf_sec_s_train <- ggplot(rf_train_2, aes(shannon, pred_train_sec_s, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -5906,7 +5884,7 @@ p_rf_sec_s_train <- ggplot(rf_train, aes(shannon, pred_train_sec_s, col = reach_
     legend.text = element_text(size = 14))
 
   
-p_rf_sec_wrap_s_train <- ggplot(rf_train, aes(shannon, pred_train_sec_s, col = reach_type)) +
+p_rf_sec_wrap_s_train <- ggplot(rf_train_2, aes(shannon, pred_train_sec_s, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -5931,7 +5909,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_sec_s_train.png", plot = p_rf_sec_s_tra
 ggsave("Stat_Analysis/regr_plots/regr_rf_sec_wrap_s_train.png", plot = p_rf_sec_wrap_s_train, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-p_rf_sec_a_train <- ggplot(rf_train, aes(abundance, pred_train_sec_a, col = reach_type)) +
+p_rf_sec_a_train <- ggplot(rf_train_2, aes(abundance, pred_train_sec_a, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -5950,7 +5928,7 @@ p_rf_sec_a_train <- ggplot(rf_train, aes(abundance, pred_train_sec_a, col = reac
     legend.text = element_text(size = 14))
 
   
-p_rf_sec_wrap_a_train <- ggplot(rf_train, aes(abundance, pred_train_sec_a, col = reach_type)) +
+p_rf_sec_wrap_a_train <- ggplot(rf_train_2, aes(abundance, pred_train_sec_a, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -5975,7 +5953,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_sec_a_train.png", plot = p_rf_sec_a_tra
 ggsave("Stat_Analysis/regr_plots/regr_rf_sec_wrap_a_train.png", plot = p_rf_sec_wrap_a_train, width = 8, height = 8)
 
 # with relative abundance as response ----------------------------------------
-p_rf_sec_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
+p_rf_sec_ra_train <- ggplot(rf_train_2, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -5994,7 +5972,7 @@ p_rf_sec_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_sec_ra, col 
     legend.text = element_text(size = 14))
 
   
-p_rf_sec_wrap_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
+p_rf_sec_wrap_ra_train <- ggplot(rf_train_2, aes(rel_abundance, pred_train_sec_ra, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -6020,7 +5998,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_sec_wrap_ra_train.png", plot = p_rf_sec
 
 ### PREDICTOR: SELCTED VARIABLES ### ------------------------------------------
 # with k_index as response-----------------------------------------------------
-p_rf_var_k_train <- ggplot(rf_train, aes(k_index, pred_train_var_k, col = reach_type)) +
+p_rf_var_k_train <- ggplot(rf_train_2, aes(k_index, pred_train_var_k, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -6038,7 +6016,7 @@ p_rf_var_k_train <- ggplot(rf_train, aes(k_index, pred_train_var_k, col = reach_
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14))
 
-p_rf_var_wrap_k_train <- ggplot(rf_train, aes(k_index, pred_train_var_k, col = reach_type)) +
+p_rf_var_wrap_k_train <- ggplot(rf_train_2, aes(k_index, pred_train_var_k, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -6063,7 +6041,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_var_k_train.png", plot = p_rf_var_k_tra
 ggsave("Stat_Analysis/regr_plots/regr_rf_var_wrap_k_train.png", plot = p_rf_var_wrap_k_train, width = 8, height = 8)
 
 # with shannon index as response ---------------------------------------------
-p_rf_var_s_train <- ggplot(rf_train, aes(shannon, pred_train_var_s, col = reach_type)) +
+p_rf_var_s_train <- ggplot(rf_train_2, aes(shannon, pred_train_var_s, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -6082,7 +6060,7 @@ p_rf_var_s_train <- ggplot(rf_train, aes(shannon, pred_train_var_s, col = reach_
     legend.text = element_text(size = 14))
 
   
-p_rf_var_wrap_s_train <- ggplot(rf_train, aes(shannon, pred_train_var_s, col = reach_type)) +
+p_rf_var_wrap_s_train <- ggplot(rf_train_2, aes(shannon, pred_train_var_s, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -6107,7 +6085,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_var_s_train.png", plot = p_rf_var_s_tra
 ggsave("Stat_Analysis/regr_plots/regr_rf_var_wrap_s_train.png", plot = p_rf_var_wrap_s_train, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
-p_rf_var_a_train <- ggplot(rf_train, aes(abundance, pred_train_var_a, col = reach_type)) +
+p_rf_var_a_train <- ggplot(rf_train_2, aes(abundance, pred_train_var_a, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -6126,7 +6104,7 @@ p_rf_var_a_train <- ggplot(rf_train, aes(abundance, pred_train_var_a, col = reac
     legend.text = element_text(size = 14))
 
   
-p_rf_var_wrap_a_train <- ggplot(rf_train, aes(abundance, pred_train_var_a, col = reach_type)) +
+p_rf_var_wrap_a_train <- ggplot(rf_train_2, aes(abundance, pred_train_var_a, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
@@ -6151,7 +6129,7 @@ ggsave("Stat_Analysis/regr_plots/regr_rf_var_a_train.png", plot = p_rf_var_a_tra
 ggsave("Stat_Analysis/regr_plots/regr_rf_var_wrap_a_train.png", plot = p_rf_var_wrap_a_train, width = 8, height = 8)
 
 # with relative abundance as response ----------------------------------------
-p_rf_var_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
+p_rf_var_ra_train <- ggplot(rf_train_2, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
   stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
@@ -6170,7 +6148,7 @@ p_rf_var_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_var_ra, col 
     legend.text = element_text(size = 14))
 
   
-p_rf_var_wrap_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
+p_rf_var_wrap_ra_train <- ggplot(rf_train_2, aes(rel_abundance, pred_train_var_ra, col = reach_type)) +
   facet_wrap(~Reach_Untersuchungsstelle) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +

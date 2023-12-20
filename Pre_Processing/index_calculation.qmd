@@ -305,6 +305,16 @@ write_xlsx(lab_univariate,"Pre_Processing\\abiotic_mi_sampling\\lab_univariate.x
             mean_diff_nitrogen = mean(mean_diff_nitrogen),
             mean_diff_phosphor = mean(mean_diff_phosphor)) 
             
+            |>
+  group_by(reach) |>
+  dplyr::summarise(ecomorph_class = mean(ecomorph_class),
+                biogeo_int = mean(biogeo_int),
+                mean_diff_nitrogen = mean(mean_diff_nitrogen),
+                mean_diff_phosphor = mean(mean_diff_phosphor),
+            nr_inhabitants = mean(nr_inhabitants),
+            dom_ww_disch = mean(dom_ww_disch),
+            geology_int = mean(geology_int))
+            
 ```{r}
 # change biogeo regions and geology into integers for ML modelling
 biogeo_new <- c("Southern Alps" = 0, "Central Plateau" = 1, "Northern Alps" = 2, "Eastern Central Alps" = 3)
@@ -340,15 +350,7 @@ aggr_gis_2 <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.c
          geology_int = ifelse(geology %in% names(geology_new), 
                                    geology_new[geology], NA),
          ecomorph_class = ifelse(ecomorph_class == "-", 0, as.numeric(ecomorph_class))) |>
-  dplyr::select(-biogeo, -geology) |>
-  group_by(reach) |>
-  dplyr::summarise(ecomorph_class = mean(ecomorph_class),
-                biogeo_int = mean(biogeo_int),
-                mean_diff_nitrogen = mean(mean_diff_nitrogen),
-                mean_diff_phosphor = mean(mean_diff_phosphor),
-            nr_inhabitants = mean(nr_inhabitants),
-            dom_ww_disch = mean(dom_ww_disch),
-            geology_int = mean(geology_int))
+  dplyr::select(-biogeo, -geology) 
 
 
 # select all variables needed from sampling locations dataset
