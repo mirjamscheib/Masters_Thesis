@@ -61,7 +61,7 @@ brt_train <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_brt.cs
   mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
                                    training_sections[Reach_Untersuchungsstelle], NA))
 
-brt_train_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_brt.csv")|>
+brt_train_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_2_brt.csv")|>
   mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
                                    training_sections[Reach_Untersuchungsstelle], NA))
 
@@ -78,11 +78,34 @@ rf_train <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_rf.csv"
   mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
                                    training_sections[Reach_Untersuchungsstelle], NA))
 
-rf_train_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_rf.csv")|>
+rf_train_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_2_rf.csv")|>
   mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
                                    training_sections[Reach_Untersuchungsstelle], NA))
 ```
-       
+      
+# Mean per Study Area
+```{r}
+# calculate mean simulated (from measured and raster data) and observed k-index values from the var RF model for each study area
+rf_var <- rf_test |>
+  dplyr::select(k_index_var, Reach_Untersuchungsstelle, obs_k_index) |>
+  group_by(Reach_Untersuchungsstelle) |>
+  dplyr::summarise(mean_rast = mean(k_index_var),
+            mean_obs = mean(obs_k_index))
+
+
+rf_var_2 <- rf_test_2 |>
+  dplyr::select(rf_pred_model_var_k_c, Reach_Untersuchungsstelle) |>
+  group_by(Reach_Untersuchungsstelle) |>
+  dplyr::summarise(mean_meas = mean(rf_pred_model_var_k_c)) |>
+  full_join(rf_var, by = "Reach_Untersuchungsstelle") 
+
+rf_var_boxplot <- pivot_longer(rf_test, cols = c("obs_k_index", "k_index_var"), names_to = "name", values_to = "values")
+
+ggplot(rf_var_boxplot, aes(x = Reach_Untersuchungsstelle, y = values, fill = name)) +
+  geom_boxplot()
+
+```
+
 # Regr. Analysis
 ## BRT
 ### Test Measured
@@ -741,7 +764,7 @@ p_sec_rf_s_train <- sum_sec_rf_s_train$coefficients["shannon", "Pr(>|t|)"]
 s_sec_rf_s_train <- sum_sec_rf_s_train$coefficients["shannon", "Estimate"]
 
 # with abundance as response
-regr_sec_rf_a_train <- lm(pred_train_sec_a ~ abundance, data = rf_train)
+regr_sec_rf_a_train <- lm(pred_train_sec_a ~ abundance, data = rf_train_2)
 sum_sec_rf_a_train <- summary(regr_sec_rf_a_train)
 p_sec_rf_a_train <- sum_sec_rf_a_train$coefficients["abundance", "Pr(>|t|)"]
 s_sec_rf_a_train <- sum_sec_rf_a_train$coefficients["abundance", "Estimate"]
@@ -996,8 +1019,8 @@ p_brt_wrap_k_rast <- ggplot(brt_test, aes(obs_k_index, k_index_v, col = reach_ty
 
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_k_rast.png", plot = p_brt_k_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k_rast.png", plot = p_brt_wrap_k_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_k_v_rast.png", plot = p_brt_k_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k_v_rast.png", plot = p_brt_wrap_k_rast, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
 p_brt_s_rast <- ggplot(brt_test, aes(obs_shannon, shannon_v, col = reach_type)) +
@@ -1041,8 +1064,8 @@ p_brt_wrap_s_rast <- ggplot(brt_test, aes(obs_shannon, shannon_v, col = reach_ty
 
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_s_rast.png", plot = p_brt_s_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s_rast.png", plot = p_brt_wrap_s_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_s_v_rast.png", plot = p_brt_s_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s_v_rast.png", plot = p_brt_wrap_s_rast, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
 p_brt_a_rast <- ggplot(brt_test, aes(obs_abundance, abundance_v, col = reach_type)) +
@@ -1086,8 +1109,8 @@ p_brt_wrap_a_rast <- ggplot(brt_test, aes(obs_abundance, abundance_v, col = reac
 
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_a_rast.png", plot = p_brt_a_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a_rast.png", plot = p_brt_wrap_a_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_a_v_rast.png", plot = p_brt_a_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a_v_rast.png", plot = p_brt_wrap_a_rast, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
 p_brt_ra_rast <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_v, col = reach_type)) +
@@ -1130,8 +1153,8 @@ p_brt_wrap_ra_rast <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_v, c
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_ra_rast.png", plot = p_brt_ra_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra_rast.png", plot = p_brt_wrap_ra_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_ra_v_rast.png", plot = p_brt_ra_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra_v_rast.png", plot = p_brt_wrap_ra_rast, width = 8, height = 8)
 
 
 ### PREDICTOR: V + WD ### --------------------------------------------------
@@ -1530,8 +1553,8 @@ p_brt_wrap_k_meas <- ggplot(brt_test, aes(obs_k_index, k_index_v, col = reach_ty
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_k_meas.png", plot = p_brt_k_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k_meas.png", plot = p_brt_wrap_k_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_k_v_meas.png", plot = p_brt_k_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k_v_meas.png", plot = p_brt_wrap_k_meas, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
 p_brt_s_meas <- ggplot(brt_test, aes(obs_shannon, shannon_v, col = reach_type)) +
@@ -1573,8 +1596,8 @@ p_brt_wrap_s_meas <- ggplot(brt_test, aes(obs_shannon, shannon_v, col = reach_ty
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_s_meas.png", plot = p_brt_s_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s_meas.png", plot = p_brt_wrap_s_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_s_v_meas.png", plot = p_brt_s_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s_v_meas.png", plot = p_brt_wrap_s_meas, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
 p_brt_a_meas <- ggplot(brt_test, aes(obs_abundance, abundance_v, col = reach_type)) +
@@ -1616,8 +1639,8 @@ p_brt_wrap_a_meas <- ggplot(brt_test, aes(obs_abundance, abundance_v, col = reac
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_a_meas.png", plot = p_brt_a_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a_meas.png", plot = p_brt_wrap_a_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_a_v_meas.png", plot = p_brt_a_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a_v_meas.png", plot = p_brt_wrap_a_meas, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
 p_brt_ra_meas <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_v, col = reach_type)) +
@@ -1659,8 +1682,8 @@ p_brt_wrap_ra_meas <- ggplot(brt_test, aes(obs_rel_abundance, rel_abundance_v, c
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_ra_meas.png", plot = p_brt_ra_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra_meas.png", plot = p_brt_wrap_ra_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_ra_v_meas.png", plot = p_brt_ra_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra_v_meas.png", plot = p_brt_wrap_ra_meas, width = 8, height = 8)
 
 
 ### PREDICTOR: V + WD ### --------------------------------------------------
@@ -2411,8 +2434,8 @@ p_brt_wrap_k_train <- ggplot(brt_train, aes(k_index, pred_train_v_k, col = reach
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_k_train.png", plot = p_brt_k_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k_train.png", plot = p_brt_wrap_k_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_k_v_train.png", plot = p_brt_k_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_k_v_train.png", plot = p_brt_wrap_k_train, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
 p_brt_s_train <- ggplot(brt_train, aes(shannon, pred_train_v_s, col = reach_type)) +
@@ -2454,8 +2477,8 @@ p_brt_wrap_s_train <- ggplot(brt_train, aes(shannon, pred_train_v_s, col = reach
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_s_train.png", plot = p_brt_s_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s_train.png", plot = p_brt_wrap_s_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_s_v_train.png", plot = p_brt_s_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_s_v_train.png", plot = p_brt_wrap_s_train, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
 p_brt_a_train <- ggplot(brt_train, aes(abundance, pred_train_v_a, col = reach_type)) +
@@ -2497,8 +2520,8 @@ p_brt_wrap_a_train <- ggplot(brt_train, aes(abundance, pred_train_v_a, col = rea
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_a_train.png", plot = p_brt_a_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a_train.png", plot = p_brt_wrap_a_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_a_v_train.png", plot = p_brt_a_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_a_v_train.png", plot = p_brt_wrap_a_train, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
 p_brt_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_v_ra, col = reach_type)) +
@@ -2540,8 +2563,8 @@ p_brt_wrap_ra_train <- ggplot(brt_train, aes(rel_abundance, pred_train_v_ra, col
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_brt_ra_train.png", plot = p_brt_ra_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra_train.png", plot = p_brt_wrap_ra_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_brt_ra_v_train.png", plot = p_brt_ra_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_brt_wrap_ra_v_train.png", plot = p_brt_wrap_ra_train, width = 8, height = 8)
 
 
 ### PREDICTOR: V + WD ### --------------------------------------------------
@@ -3920,8 +3943,8 @@ p_rf_wrap_k_rast <- ggplot(rf_test, aes(obs_k_index, k_index_v, col = reach_type
 
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_k_rast.png", plot = p_rf_k_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k_rast.png", plot = p_rf_wrap_k_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_k_v_rast.png", plot = p_rf_k_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k_v_rast.png", plot = p_rf_wrap_k_rast, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
 p_rf_s_rast <- ggplot(rf_test, aes(obs_shannon, shannon_v, col = reach_type)) +
@@ -3965,8 +3988,8 @@ p_rf_wrap_s_rast <- ggplot(rf_test, aes(obs_shannon, shannon_v, col = reach_type
 
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_s_rast.png", plot = p_rf_s_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s_rast.png", plot = p_rf_wrap_s_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_s_v_rast.png", plot = p_rf_s_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s_v_rast.png", plot = p_rf_wrap_s_rast, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
 p_rf_a_rast <- ggplot(rf_test, aes(obs_abundance, abundance_v, col = reach_type)) +
@@ -4010,8 +4033,8 @@ p_rf_wrap_a_rast <- ggplot(rf_test, aes(obs_abundance, abundance_v, col = reach_
 
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_a_rast.png", plot = p_rf_a_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a_rast.png", plot = p_rf_wrap_a_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_a_v_rast.png", plot = p_rf_a_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a_v_rast.png", plot = p_rf_wrap_a_rast, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
 p_rf_ra_rast <- ggplot(rf_test, aes(obs_rel_abundance, rel_abundance_v, col = reach_type)) +
@@ -4054,8 +4077,8 @@ p_rf_wrap_ra_rast <- ggplot(rf_test, aes(obs_rel_abundance, rel_abundance_v, col
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_ra_rast.png", plot = p_rf_ra_rast, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra_rast.png", plot = p_rf_wrap_ra_rast, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_ra_v_rast.png", plot = p_rf_ra_rast, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra_v_rast.png", plot = p_rf_wrap_ra_rast, width = 8, height = 8)
 
 
 ### PREDICTOR: V + WD ### --------------------------------------------------
@@ -4454,8 +4477,8 @@ p_rf_wrap_k_meas <- ggplot(rf_test, aes(obs_k_index, k_index_v, col = reach_type
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_k_meas.png", plot = p_rf_k_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k_meas.png", plot = p_rf_wrap_k_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_k_v_meas.png", plot = p_rf_k_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k_v_meas.png", plot = p_rf_wrap_k_meas, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
 p_rf_s_meas <- ggplot(rf_test, aes(obs_shannon, shannon_v, col = reach_type)) +
@@ -4497,8 +4520,8 @@ p_rf_wrap_s_meas <- ggplot(rf_test, aes(obs_shannon, shannon_v, col = reach_type
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_s_meas.png", plot = p_rf_s_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s_meas.png", plot = p_rf_wrap_s_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_s_v_meas.png", plot = p_rf_s_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s_v_meas.png", plot = p_rf_wrap_s_meas, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
 p_rf_a_meas <- ggplot(rf_test, aes(obs_abundance, abundance_v, col = reach_type)) +
@@ -4540,8 +4563,8 @@ p_rf_wrap_a_meas <- ggplot(rf_test, aes(obs_abundance, abundance_v, col = reach_
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_a_meas.png", plot = p_rf_a_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a_meas.png", plot = p_rf_wrap_a_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_a_v_meas.png", plot = p_rf_a_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a_v_meas.png", plot = p_rf_wrap_a_meas, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
 p_rf_ra_meas <- ggplot(rf_test, aes(obs_rel_abundance, rel_abundance_v, col = reach_type)) +
@@ -4583,8 +4606,8 @@ p_rf_wrap_ra_meas <- ggplot(rf_test, aes(obs_rel_abundance, rel_abundance_v, col
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_ra_meas.png", plot = p_rf_ra_meas, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra_meas.png", plot = p_rf_wrap_ra_meas, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_ra_v_meas.png", plot = p_rf_ra_meas, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra_v_meas.png", plot = p_rf_wrap_ra_meas, width = 8, height = 8)
 
 
 ### PREDICTOR: V + WD ### --------------------------------------------------
@@ -5335,8 +5358,8 @@ p_rf_wrap_k_train <- ggplot(rf_train, aes(k_index, pred_train_v_k, col = reach_t
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_k_train.png", plot = p_rf_k_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k_train.png", plot = p_rf_wrap_k_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_k_v_train.png", plot = p_rf_k_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_k_v_train.png", plot = p_rf_wrap_k_train, width = 8, height = 8)
 
 # with shannon index as response ----------------------------------------------
 p_rf_s_train <- ggplot(rf_train, aes(shannon, pred_train_v_s, col = reach_type)) +
@@ -5378,8 +5401,8 @@ p_rf_wrap_s_train <- ggplot(rf_train, aes(shannon, pred_train_v_s, col = reach_t
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_s_train.png", plot = p_rf_s_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s_train.png", plot = p_rf_wrap_s_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_s_v_train.png", plot = p_rf_s_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_s_v_train.png", plot = p_rf_wrap_s_train, width = 8, height = 8)
 
 # with abundance as response --------------------------------------------------
 p_rf_a_train <- ggplot(rf_train, aes(abundance, pred_train_v_a, col = reach_type)) +
@@ -5421,8 +5444,8 @@ p_rf_wrap_a_train <- ggplot(rf_train, aes(abundance, pred_train_v_a, col = reach
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_a_train.png", plot = p_rf_a_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a_train.png", plot = p_rf_wrap_a_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_a_v_train.png", plot = p_rf_a_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_a_v_train.png", plot = p_rf_wrap_a_train, width = 8, height = 8)
 
 # with relative abundance as response -----------------------------------------
 p_rf_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_v_ra, col = reach_type)) +
@@ -5464,8 +5487,8 @@ p_rf_wrap_ra_train <- ggplot(rf_train, aes(rel_abundance, pred_train_v_ra, col =
         strip.text.x = element_text(size = 12))
 
 # save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_rf_ra_train.png", plot = p_rf_ra_train, width = 8, height = 5)
-ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra_train.png", plot = p_rf_wrap_ra_train, width = 8, height = 8)
+ggsave("Stat_Analysis/regr_plots/regr_rf_ra_v_train.png", plot = p_rf_ra_train, width = 8, height = 5)
+ggsave("Stat_Analysis/regr_plots/regr_rf_wrap_ra_v_train.png", plot = p_rf_wrap_ra_train, width = 8, height = 8)
 
 
 ### PREDICTOR: V + WD ### --------------------------------------------------
