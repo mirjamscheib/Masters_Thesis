@@ -65,10 +65,9 @@ data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv"
   na.omit()
 
 # load data containing selected variables 
-data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv") |>
+data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv") |>
   dplyr::rename(Reach_Untersuchungsstelle = reach)|>
-  na.omit() |>
-  dplyr::select(Reach_Untersuchungsstelle, z, x, y, velocity, wd_m, k_index, shannon, abundance, rel_abundance, ecomorph_class, biogeo_int, mean_diff_nitrogen, mean_diff_phosphor) 
+  na.omit() 
 ```
     
 ```{r}
@@ -1365,91 +1364,91 @@ xgb_samp_ra_c <- xgboost(data = data.matrix(trainx_samp_ra_c[ ,-1]),
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #          eta nrounds max_depth subsample 
-#1: 0.1821001     447      7633 0.7072811                       
+#1: 0.5636679     288      6809 0.6401843                       
 xgb_sec_k_c <- xgboost(data = data.matrix(trainx_sec_k_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_k_c$k_index)),
-                     eta = 0.1821001,
-                     max_depth = 7633,
-                     nrounds = 447,
-                     subsample = 0.7072811,
+                     eta = 0.5636679,
+                     max_depth = 6809,
+                     nrounds = 288,
+                     subsample = 0.6401843,
                      objective = "reg:linear")
 
 # With shannon index as response 
 #        eta nrounds max_depth subsample 
-#1: 0.0485844      99      2247 0.6672564                        
+#1: 0.1276577     317      4543 0.6723684                       
 xgb_sec_s_c <- xgboost(data = data.matrix(trainx_sec_s_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_s_c$shannon)),
-                     eta = 0.0485844,
-                     max_depth = 2247,
-                     nrounds = 99,
-                     subsample = 0.6672564,
+                     eta = 0.1276577,
+                     max_depth = 4543,
+                     nrounds = 317,
+                     subsample = 0.6723684,
                      objective = "reg:linear")
 
 # With abundance as response
 #        eta nrounds max_depth subsample 
-#1: 0.525436     338      3258 0.6462293                        
+#1: 0.5152168     998      2426 0.7190905                        
 xgb_sec_a_c <- xgboost(data = data.matrix(trainx_sec_a_c[ ,-1]),
                      label = as.numeric(as.character(training_sec_a_c$abundance)),
-                     eta = 0.525436,
-                     max_depth = 3258,
-                     nrounds = 338,
-                     subsample = 0.6462293,
+                     eta = 0.5152168,
+                     max_depth = 2426,
+                     nrounds = 998,
+                     subsample = 0.7190905,
                      objective = "reg:linear")
 
 # With rel_abundance as response 
 #         eta nrounds max_depth subsample 
-#1: 0.02247901     349      2454 0.6849103                        
+#1: 0.2697786     591      5146 0.7175143                        
 xgb_sec_ra_c <- xgboost(data = data.matrix(trainx_sec_ra_c[ ,-1]),
                       label = as.numeric(as.character(training_sec_ra_c$rel_abundance)),
-                     eta = 0.02247901,
-                     max_depth = 2454,
-                     nrounds = 349,
-                     subsample = 0.6849103,
+                     eta = 0.2697786,
+                     max_depth = 5146,
+                     nrounds = 591,
+                     subsample = 0.7175143,
                      objective = "reg:linear")
 
 ### PREDICTORS: SELECTED VARIABLES ### --------------------------------------------
 # With k_index as response
 #           eta nrounds max_depth subsample 
-#1: 0.1112948      30      6901 0.7087239                      
+#1: 0.002298211      85      2617 0.5574753                     
 xgb_var_k_c <- xgboost(data = data.matrix(trainx_var_k_c[ ,-1]),
                      label = as.numeric(as.character(training_var_k_c$k_index)),
-                     eta = 0.1112948,
-                     nrounds = 30,
-                     max_depth = 6901,
-                     subsample = 0.7087239,
+                     eta = 0.002298211,
+                     nrounds = 85,
+                     max_depth = 2617,
+                     subsample = 0.5574753,
                      objective = "reg:linear")
 
 # With shannon index as response 
 #        eta nrounds max_depth subsample
-#1: 0.8210816     713      9262 0.7102672                  
+#1: 0.4108909     913      3270 0.6627291                  
 xgb_var_s_c <- xgboost(data = data.matrix(trainx_var_s_c[ ,-1]),
                      label = as.numeric(as.character(training_var_s_c$shannon)),
-                     eta = 0.8210816,
-                     nrounds = 713,
-                     max_depth = 9262,
-                     subsample = 0.7102672,
+                     eta = 0.4108909,
+                     nrounds = 913,
+                     max_depth = 3270,
+                     subsample = 0.6627291,
                      objective = "reg:linear")
 
 # With abundance as response
 #         eta nrounds max_depth subsample
-#1: 0.1160077      20      9539 0.6116902                      
+#1: 0.3661002     927      2711 0.6581734                      
 xgb_var_a_c <- xgboost(data = data.matrix(trainx_var_a_c[ ,-1]),
                      label = as.numeric(as.character(training_var_a_c$abundance)),
-                     eta = 0.1160077,
-                     nrounds = 20,
-                     max_depth = 9539,
-                     subsample = 0.6116902,
+                     eta = 0.3661002,
+                     nrounds = 927,
+                     max_depth = 2711,
+                     subsample = 0.6581734,
                      objective = "reg:linear")
 
 # With rel_abundance as response 
 #         eta nrounds max_depth subsample
-#1: 0.3263685     272      8817 0.6879644                     
+#1: 0.00985118     113      9656  0.519288                    
 xgb_var_ra_c <- xgboost(data = data.matrix(trainx_var_ra_c[ ,-1]),
                       label = as.numeric(as.character(training_var_ra_c$rel_abundance)),
-                     eta = 0.3263685,
-                     nrounds = 272,
-                     max_depth = 8817,
-                     subsample = 0.6879644,
+                     eta = 0.00985118,
+                     nrounds = 113,
+                     max_depth = 9656,
+                     subsample = 0.519288,
                      objective = "reg:linear")
 ```
 
@@ -1714,12 +1713,15 @@ pred_test <- cbind(pred_rast, brt_pred_model_v_k_c, brt_pred_model_v_s_c, brt_pr
 pred_test_2 <- cbind(brt_pred_model_sec_k_c, brt_pred_model_sec_s_c, brt_pred_model_sec_a_c, brt_pred_model_sec_ra_c, brt_pred_model_var_k_c, brt_pred_model_var_s_c, brt_pred_model_var_a_c, brt_pred_model_var_ra_c, test_var) |>
   na.omit()
 
-pred_train <- cbind(pred_train_v_k, pred_train_v_s, pred_train_v_a, pred_train_v_ra, pred_train_wd_k, pred_train_wd_s, pred_train_wd_a, pred_train_wd_ra, pred_train_samp_k, pred_train_samp_s, pred_train_samp_a, pred_train_samp_ra, pred_train_sec_k, pred_train_sec_s, pred_train_sec_a, pred_train_sec_ra, pred_train_var_k, pred_train_var_s, pred_train_var_a, pred_train_var_ra, training_var)
+pred_train <- cbind(pred_train_v_k, pred_train_v_s, pred_train_v_a, pred_train_v_ra, pred_train_wd_k, pred_train_wd_s, pred_train_wd_a, pred_train_wd_ra, pred_train_samp_k, pred_train_samp_s, pred_train_samp_a, pred_train_samp_ra, training_v)
+
+pred_train_2 <- cbind(pred_train_sec_k, pred_train_sec_s, pred_train_sec_a, pred_train_sec_ra, pred_train_var_k, pred_train_var_s, pred_train_var_a, pred_train_var_ra, training_var)
 
 # write .csv files 
 write.csv(pred_test, "Stat_Analysis/stat_analysis_data/regr_pred_test_brt.csv", row.names = FALSE)
 write.csv(pred_test_2, "Stat_Analysis/stat_analysis_data/regr_pred_test_2_brt.csv", row.names = FALSE)
 write.csv(pred_train, "Stat_Analysis/stat_analysis_data/regr_pred_train_brt.csv", row.names = FALSE)
+write.csv(pred_train_2, "Stat_Analysis/stat_analysis_data/regr_pred_train_2_brt.csv", row.names = FALSE)
 ```
 
 ## R2

@@ -65,10 +65,9 @@ data_section <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv"
   na.omit()
 
 # load data containing selected variables 
-data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_sel_var_2.csv") |>
+data_var <- read_delim("Pre_Processing/abiotic_mi_sampling/ml_selected_var.csv") |>
   dplyr::rename(Reach_Untersuchungsstelle = reach)|>
-  na.omit() |>
-  dplyr::select(Reach_Untersuchungsstelle, z, x, y, velocity, wd_m, k_index, shannon, abundance, rel_abundance, ecomorph_class, biogeo_int, mean_diff_nitrogen, mean_diff_phosphor) 
+  na.omit()  
 ```
     
 ```{r}
@@ -1288,43 +1287,43 @@ rf_model_samp_ra_c <- ranger(formula = rel_abundance ~., data = training_samp_ra
 ### PREDICTORS: ALL PREDICTORS ### --------------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    7       0.2378954             6                 
+#1:    1       0.7239675             9                 
 rf_model_sec_k_c <- ranger(formula = k_index ~., data = training_sec_k_c, mtry = 7, sample.fraction = 0.2378954, min.node.size = 6, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    2       0.8106988             8                   
+#1:    3       0.4451538             8                  
 rf_model_sec_s_c <- ranger(formula = shannon ~., data = training_sec_s_c, mtry = 2, sample.fraction = 0.8106988, min.node.size = 8, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2782563             3                   
+#1:    1       0.5972345            10                   
 rf_model_sec_a_c <- ranger(formula = abundance ~., data = training_sec_a_c, mtry = 1, sample.fraction = 0.2782563, min.node.size = 3, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.5788006             5                    
+#1:    2       0.5766096             4                     
 rf_model_sec_ra_c <- ranger(formula = rel_abundance ~., data = training_sec_ra_c, mtry = 1, sample.fraction = 0.5788006, min.node.size = 5, importance = "impurity")
 
 ### PREDICTORS: SELECTED VARIABLES ### ----------------------------------------
 # With k_index as response
 #   mtry sample.fraction min.node.size 
-#1:    6       0.4852908             9                 
+#1:    1       0.7533922             9                 
 rf_model_var_k_c <- ranger(formula = k_index ~., data = training_var_k_c, mtry = 6, sample.fraction = 0.4852908, min.node.size = 9, importance = "impurity")
 
 # With shannon index as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.2760746             7                  
+#1:    1       0.8710611            10                  
 rf_model_var_s_c <- ranger(formula = shannon ~., data = training_var_s_c, mtry = 1, sample.fraction = 0.2760746, min.node.size = 7, importance = "impurity")
 
 # With abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.4807631             5                    
+#1:    1       0.8657944             2                    
 rf_model_var_a_c <- ranger(formula = abundance ~., data = training_var_a_c, mtry = 1, sample.fraction = 0.4807631, min.node.size = 5, importance = "impurity")
 
 # With rel_abundance as response
 #   mtry sample.fraction min.node.size 
-#1:    1       0.4656714             9                   
+#1:    1       0.2848794             1                  
 rf_model_var_ra_c <- ranger(formula = rel_abundance ~., data = training_var_ra_c, mtry = 1, sample.fraction = 0.4656714, min.node.size = 9, importance = "impurity")
 ```
 
@@ -1719,12 +1718,15 @@ pred_test <- cbind(pred_rast, rf_pred_model_v_k_c, rf_pred_model_v_s_c, rf_pred_
 pred_test_2 <- cbind(rf_pred_model_sec_k_c, rf_pred_model_sec_s_c, rf_pred_model_sec_a_c, rf_pred_model_sec_ra_c, rf_pred_model_var_k_c, rf_pred_model_var_s_c, rf_pred_model_var_a_c, rf_pred_model_var_ra_c, test_var) |>
   na.omit()
 
-pred_train <- cbind(pred_train_v_k, pred_train_v_s, pred_train_v_a, pred_train_v_ra, pred_train_wd_k, pred_train_wd_s, pred_train_wd_a, pred_train_wd_ra, pred_train_samp_k, pred_train_samp_s, pred_train_samp_a, pred_train_samp_ra, pred_train_sec_k, pred_train_sec_s, pred_train_sec_a, pred_train_sec_ra, pred_train_var_k, pred_train_var_s, pred_train_var_a, pred_train_var_ra, training_var)
+pred_train <- cbind(pred_train_v_k, pred_train_v_s, pred_train_v_a, pred_train_v_ra, pred_train_wd_k, pred_train_wd_s, pred_train_wd_a, pred_train_wd_ra, pred_train_samp_k, pred_train_samp_s, pred_train_samp_a, pred_train_samp_ra, training_v)
+
+pred_train_2 <- cbind(pred_train_sec_k, pred_train_sec_s, pred_train_sec_a, pred_train_sec_ra, pred_train_var_k, pred_train_var_s, pred_train_var_a, pred_train_var_ra, training_var)
 
 # write .csv files 
 write.csv(pred_test, "Stat_Analysis/stat_analysis_data/regr_pred_test_rf.csv", row.names = FALSE)
 write.csv(pred_test_2, "Stat_Analysis/stat_analysis_data/regr_pred_test_2_rf.csv", row.names = FALSE)
 write.csv(pred_train, "Stat_Analysis/stat_analysis_data/regr_pred_train_rf.csv", row.names = FALSE)
+write.csv(pred_train_2, "Stat_Analysis/stat_analysis_data/regr_pred_train_2_rf.csv", row.names = FALSE)
 ```
 
 ## R2
