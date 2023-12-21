@@ -248,8 +248,8 @@ lab_ml_model_section <- lab_new |>
 ```
 
 ```{r}
-clog_3_int <- c("none" = 0, "strong" = 2, "slight-medium" = 1)
-clog_6_int <- c("none" = 0, "none " = 0, "none-light" = 1, "none-slight" = 2, "slight" = 3, "slight-medium" = 4, "medium-strong" = 5, "strong" = 6)
+clog_3_int <- c("none" = 1, "strong" = 3, "slight-medium" = 2)
+clog_6_int <- c("none" = 1, "none " = 1, "none-light" = 2, "none-slight" = 3, "slight" = 4, "slight-medium" = 5, "medium-strong" = 6, "strong" = 7)
 sub_int <- c("< 2.5 mm" = 0, "25 mm > x > 2.5 mm" = 1, "250 mm > x > 25 mm" = 2, "> 250 mm" = 3)
 hydr_type <- c("2a" = 1, "2b" = 2, "3a" = 3, "3b" = 4)
 hydr_int <- c("Hydropeaking" = 1, "Residual flow" = 2, "Natural/near-natural" = 3)
@@ -333,7 +333,6 @@ aggr_gis <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.csv
                                    biogeo_new[biogeo], NA),
          ecomorph_class = ifelse(ecomorph_class == "-", 0, as.numeric(ecomorph_class))) |>
   dplyr::select(-biogeo) 
-
 
 aggr_gis_2 <- read_delim("Pre_Processing/abiotic_mi_sampling/environmental_gis.csv") |>
   dplyr::select(`Ecomorphological Class`, `BIOGEO`, `Mean diffuse total nitrogen [kg/ha a]`, `Mean diffuse total phosphor [kg/ha a]`, `Study site (Untersuchungsstelle)`, `Number of inhabitants`, `Domestic wastewater discharge`, Geology) |>

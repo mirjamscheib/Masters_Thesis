@@ -1,0 +1,239 @@
+---
+title: "boxplots"
+format: html
+---
+
+# Load packages 
+```{r}
+#clear R environment
+rm(list = ls())
+
+# check for a package, install and load 
+pkgCheck <- function(x){ 
+  if (!require(x,character.only = TRUE)){
+    install.packages(x,dependencies=TRUE)
+    if(!require(x,character.only = TRUE)) {
+      stop()
+    }
+  }
+}
+
+pkgCheck("raster")
+pkgCheck("spsurvey")
+pkgCheck("terra")
+pkgCheck("raster")
+pkgCheck("ggplot2")
+pkgCheck("tibble")
+pkgCheck("readr")
+pkgCheck("dplyr")
+pkgCheck("tidyr")
+pkgCheck("scales")
+```
+
+# Load Data 
+```{r}
+# load measured k_index values 
+k_measured <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_model_v.csv")|>
+  mutate(ID = row_number())
+
+# load rasters of scenarios 
+# GL1 write scenario rasters ---------------------
+GL1_min <- data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_min_var_rf.tif"))) |>
+  rename(k_index_GL1_min = GL1_k_min_var_rf) |>
+  mutate(study_area = "GL1_min",
+         ID = row_number()) |>
+  write.csv("Stat_Analysis/data/GL1_min.csv", row.names = FALSE)
+
+GL1_max <- data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_max_var_rf.tif"))) |>
+  rename(k_index = GL1_k_max_var_rf) |>
+  mutate(study_area = "GL1_max",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/GL1_max.csv", row.names = FALSE)
+
+GL1_pers <- data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_pers_var_rf.tif"))) |>
+  rename(k_index = GL1_k_pers_var_rf) |>
+  mutate(study_area = "GL1_pers",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/GL1_pers.csv", row.names = FALSE)
+
+# GL2 write rasters ---------------------
+GL2_min <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL2_k_min_var_rf.tif"))) |>
+  rename(k_index = GL2_k_min_var_rf) |>
+  mutate(study_area = "GL2_min",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/GL2_min.csv", row.names = FALSE)
+
+GL2_max <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL2_k_max_var_rf.tif"))) |>
+  rename(k_index = GL2_k_max_var_rf) |>
+  mutate(study_area = "GL2_max",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/GL2_max.csv", row.names = FALSE)
+
+GL2_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL2_k_pers_var_rf.tif"))) |>
+  rename(k_index = GL2_k_pers_var_rf) |>
+  mutate(study_area = "GL2_pers",
+         ID = row_number()) |>
+  write.csv("Stat_Analysis/data/GL2_pers.csv", row.names = FALSE)
+
+# L2 write rasters ---------------------
+L2_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/L2_k_base_var_rf.tif"))) |>
+  rename(k_index = L2_k_base_var_rf) |>
+  mutate(study_area = "L2_base",
+         ID = row_number()) |>
+  write.csv("Stat_Analysis/data/L2_base.csv", row.names = FALSE)
+
+L2_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/L2_k_peak_var_rf.tif"))) |>
+  rename(k_index = L2_k_peak_var_rf) |>
+  mutate(study_area = "L2_peak",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/L2_peak.csv", row.names = FALSE)
+
+L2_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/L2_k_pers_var_rf.tif"))) |>
+  rename(k_index = L2_k_pers_var_rf) |>
+  mutate(study_area = "L2_pers",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/L2_pers.csv", row.names = FALSE)
+
+# M1 write rasters ---------------------
+M1_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/M1_k_base_var_rf.tif"))) |>
+  rename(k_index = M1_k_base_var_rf) |>
+  mutate(study_area = "M1_base",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/M1_base.csv", row.names = FALSE)
+
+M1_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/M1_k_peak_var_rf.tif"))) |>
+  rename(k_index = M1_k_peak_var_rf) |>
+  mutate(study_area = "M1_peak",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/M1_peak.csv", row.names = FALSE)
+
+M1_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/M1_k_pers_var_rf.tif"))) |>
+  rename(k_index = M1_k_pers_var_rf) |>
+  mutate(study_area = "M1_pers",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/M1_pers.csv", row.names = FALSE)
+
+# S1 write rasters ---------------------
+S1_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S1_k_base_var_rf.tif"))) |>
+  rename(k_index = S1_k_base_var_rf) |>
+  mutate(study_area = "S1_base",
+         ID = row_number()) |>
+  write.csv("Stat_Analysis/data/S1_base.csv", row.names = FALSE)
+
+S1_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S1_k_peak_var_rf.tif"))) |>
+  rename(k_index = S1_k_peak_var_rf) |>
+  mutate(study_area = "S1_peak",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/S1_peak.csv", row.names = FALSE)
+
+S1_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S1_k_pers_var_rf.tif"))) |>
+  rename(k_index = S1_k_pers_var_rf) |>
+  mutate(study_area = "S1_pers",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/S1_pers.csv", row.names = FALSE)
+
+# S2 write rasters ---------------------
+S2_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S2_k_base_var_rf.tif"))) |>
+  rename(k_index = S2_k_base_var_rf) |>
+  mutate(study_area = "S2_base",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/S2_base.csv", row.names = FALSE)
+
+S2_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S2_k_peak_var_rf.tif"))) |>
+  rename(k_index = S2_k_peak_var_rf) |>
+  mutate(study_area = "S2_peak",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/S2_peak.csv", row.names = FALSE)
+
+S2_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S2_k_pers_var_rf.tif"))) |>
+  rename(k_index = S2_k_pers_var_rf) |>
+  mutate(study_area = "S2_pers",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/S2_pers.csv", row.names = FALSE)
+
+# TH4 write rasters ---------------------
+TH4_min <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/TH4_k_min_var_rf.tif"))) |>
+  rename(k_index = TH4_k_min_var_rf) |>
+  mutate(study_area = "TH4_min",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/TH4_min.csv", row.names = FALSE)
+
+TH4_max <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/TH4_k_max_var_rf.tif"))) |>
+  rename(k_index = TH4_k_max_var_rf) |>
+  mutate(study_area = "TH4_max",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/TH4_max.csv", row.names = FALSE)
+
+TH4_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/TH4_k_pers_var_rf.tif"))) |>
+  rename(k_index = TH4_k_pers_var_rf) |>
+  mutate(study_area = "TH4_pers",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/TH4_pers.csv", row.names = FALSE)
+
+# VR3 write rasters ---------------------
+VR3_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/VR3_k_base_var_rf.tif"))) |>
+  rename(k_index = VR3_k_base_var_rf) |>
+  mutate(study_area = "VR3_base",
+         ID = row_number())|>
+  write.csv("Stat_Analysis/data/VR3_base.csv", row.names = FALSE)
+
+VR3_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/VR3_k_peak_var_rf.tif"))) |>
+  rename(k_index = VR3_k_peak_var_rf) |>
+  mutate(study_area = "VR3_peak",
+         ID = row_number()) |>
+  write.csv("Stat_Analysis/data/VR3_peak.csv", row.names = FALSE)
+
+VR3_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/VR3_k_pers_var_rf.tif"))) |>
+  rename(k_index = VR3_k_pers_var_rf) |>
+  mutate(study_area = "VR3_pers",
+         ID = row_number()) |>
+  write.csv("Stat_Analysis/data/VR3_pers.csv", row.names = FALSE)
+```
+
+# Combine data
+```{r}
+# combine all raster extracted values into one df
+# GL1 -----------------------------------
+GL1_min <- read_delim("Stat_Analysis/data/GL1_min.csv")
+GL1_max <- read_delim("Stat_Analysis/data/GL1_max.csv")
+GL1_pers <- read_delim("Stat_Analysis/data/GL1_pers.csv")
+
+# GL2 -----------------------------------
+GL2_min <- read_delim("Stat_Analysis/data/GL2_min.csv")
+GL2_max <- read_delim("Stat_Analysis/data/GL2_max.csv")
+GL2_pers <- read_delim("Stat_Analysis/data/GL2_pers.csv")
+
+# L2 -----------------------------------
+L2_base <- read_delim("Stat_Analysis/data/L2_base.csv")
+L2_peak <- read_delim("Stat_Analysis/data/L2_peak.csv")
+L2_pers <- read_delim("Stat_Analysis/data/L2_pers.csv")
+
+# M1 -----------------------------------
+M1_base <- read_delim("Stat_Analysis/data/M1_base.csv")
+M1_peak <- read_delim("Stat_Analysis/data/M1_peak.csv")
+M1_pers <- read_delim("Stat_Analysis/data/M1_pers.csv")
+
+# S1 -----------------------------------
+S1_base <- read_delim("Stat_Analysis/data/S1_base.csv")
+S1_peak <- read_delim("Stat_Analysis/data/S1_peak.csv")
+S1_pers <- read_delim("Stat_Analysis/data/S1_pers.csv")
+
+# S2 -----------------------------------
+S2_base <- read_delim("Stat_Analysis/data/S2_base.csv")
+S2_peak <- read_delim("Stat_Analysis/data/S2_peak.csv")
+S2_pers <- read_delim("Stat_Analysis/data/S2_pers.csv")
+
+# TH4 -----------------------------------
+TH4_min <- read_delim("Stat_Analysis/data/TH4_min.csv")
+TH4_max <- read_delim("Stat_Analysis/data/TH4_max.csv")
+TH4_pers <- read_delim("Stat_Analysis/data/TH4_pers.csv")
+
+# VR3 -----------------------------------
+VR3_base <- read_delim("Stat_Analysis/data/VR3_base.csv")
+VR3_peak <- read_delim("Stat_Analysis/data/VR3_peak.csv")
+VR3_pers <- read_delim("Stat_Analysis/data/VR3_pers.csv")
+
+GL1 <- merge(GL1_min, GL1_max, by = "ID", all = TRUE)
+```
+
+
