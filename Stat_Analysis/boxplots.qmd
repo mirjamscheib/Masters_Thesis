@@ -33,207 +33,483 @@ pkgCheck("scales")
 # Load Data 
 ```{r}
 # load measured k_index values 
-k_measured <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_model_v.csv")|>
-  mutate(ID = row_number())
+k_measured_natural <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_model_v.csv")|>
+  mutate(study_area = reach,
+         scenario = "Measured",
+         ID = row_number()) |>
+  dplyr::select(-x, -y, -shannon, -abundance, -rel_abundance, -velocity, -reach) |>
+  filter(study_area == "GL1" |
+           study_area == "GL2" |
+           study_area == "TH4")
+
+k_measured_hydro <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_model_v.csv")|>
+  mutate(study_area = reach,
+         scenario = "Measured",
+         ID = row_number()) |>
+  dplyr::select(-x, -y, -shannon, -abundance, -rel_abundance, -velocity, -reach) |>
+  filter(study_area == "M1" |
+           study_area == "S1" |
+           study_area == "S2" |
+           study_area == "L2" |
+           study_area == "VR3")
 
 # load rasters of scenarios 
 # GL1 write scenario rasters ---------------------
-GL1_min <- data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_min_var_rf.tif"))) |>
-  rename(k_index_GL1_min = GL1_k_min_var_rf) |>
-  mutate(study_area = "GL1_min",
+GL1_min <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_min_var_rf.tif"))) |>
+  rename(k_index = GL1_k_min_var_rf) |>
+  mutate(study_area = "GL1",
+         scenario = "Min",
          ID = row_number()) |>
-  write.csv("Stat_Analysis/data/GL1_min.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 GL1_max <- data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_max_var_rf.tif"))) |>
   rename(k_index = GL1_k_max_var_rf) |>
-  mutate(study_area = "GL1_max",
+  mutate(study_area = "GL1",
+         scenario = "Max",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/GL1_max.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 GL1_pers <- data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_pers_var_rf.tif"))) |>
   rename(k_index = GL1_k_pers_var_rf) |>
-  mutate(study_area = "GL1_pers",
+  mutate(study_area = "GL1",
+         scenario = "Pers.",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/GL1_pers.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
+
+# bind all GL1 frames together -------------------
+GL1 <- rbind(GL1_min, GL1_max, GL1_pers)
 
 # GL2 write rasters ---------------------
 GL2_min <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL2_k_min_var_rf.tif"))) |>
   rename(k_index = GL2_k_min_var_rf) |>
-  mutate(study_area = "GL2_min",
+  mutate(study_area = "GL2",
+         scenario = "Min",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/GL2_min.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 GL2_max <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL2_k_max_var_rf.tif"))) |>
   rename(k_index = GL2_k_max_var_rf) |>
-  mutate(study_area = "GL2_max",
+  mutate(study_area = "GL2",
+         scenario = "Max",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/GL2_max.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 GL2_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL2_k_pers_var_rf.tif"))) |>
   rename(k_index = GL2_k_pers_var_rf) |>
-  mutate(study_area = "GL2_pers",
-         ID = row_number()) |>
-  write.csv("Stat_Analysis/data/GL2_pers.csv", row.names = FALSE)
+  mutate(study_area = "GL2",
+         scenario = "Pers.",
+         ID = row_number())|>
+  dplyr::select(-x, -y)
+
+# bind all GL2 frames together -------------------
+GL2 <- rbind(GL2_min, GL2_max, GL2_pers)
 
 # L2 write rasters ---------------------
 L2_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/L2_k_base_var_rf.tif"))) |>
   rename(k_index = L2_k_base_var_rf) |>
-  mutate(study_area = "L2_base",
-         ID = row_number()) |>
-  write.csv("Stat_Analysis/data/L2_base.csv", row.names = FALSE)
+  mutate(study_area = "L2",
+         scenario = "Base",
+         ID = row_number())|>
+  dplyr::select(-x, -y)
 
 L2_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/L2_k_peak_var_rf.tif"))) |>
   rename(k_index = L2_k_peak_var_rf) |>
-  mutate(study_area = "L2_peak",
+  mutate(study_area = "L2",
+         scenario = "Peak",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/L2_peak.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 L2_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/L2_k_pers_var_rf.tif"))) |>
   rename(k_index = L2_k_pers_var_rf) |>
-  mutate(study_area = "L2_pers",
+  mutate(study_area = "L2",
+         scenario = "Pers.",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/L2_pers.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
+
+# bind all L2 frames together -------------------
+L2 <- rbind(L2_base, L2_peak, L2_pers)
 
 # M1 write rasters ---------------------
 M1_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/M1_k_base_var_rf.tif"))) |>
   rename(k_index = M1_k_base_var_rf) |>
-  mutate(study_area = "M1_base",
+  mutate(study_area = "M1",
+         scenario = "Base",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/M1_base.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 M1_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/M1_k_peak_var_rf.tif"))) |>
   rename(k_index = M1_k_peak_var_rf) |>
-  mutate(study_area = "M1_peak",
+  mutate(study_area = "M1",
+         scenario = "Peak",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/M1_peak.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 M1_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/M1_k_pers_var_rf.tif"))) |>
   rename(k_index = M1_k_pers_var_rf) |>
-  mutate(study_area = "M1_pers",
+  mutate(study_area = "M1",
+         scenario = "Pers.",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/M1_pers.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
+
+# bind all M1 frames together -------------------
+M1 <- rbind(M1_base, M1_peak, M1_pers)
 
 # S1 write rasters ---------------------
 S1_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S1_k_base_var_rf.tif"))) |>
   rename(k_index = S1_k_base_var_rf) |>
-  mutate(study_area = "S1_base",
-         ID = row_number()) |>
-  write.csv("Stat_Analysis/data/S1_base.csv", row.names = FALSE)
+  mutate(study_area = "S1",
+         scenario = "Base",
+         ID = row_number())|>
+  dplyr::select(-x, -y)
 
 S1_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S1_k_peak_var_rf.tif"))) |>
   rename(k_index = S1_k_peak_var_rf) |>
-  mutate(study_area = "S1_peak",
+  mutate(study_area = "S1",
+         scenario = "Peak",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/S1_peak.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 S1_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S1_k_pers_var_rf.tif"))) |>
   rename(k_index = S1_k_pers_var_rf) |>
-  mutate(study_area = "S1_pers",
+  mutate(study_area = "S1",
+         scenario = "Pers.",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/S1_pers.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
+
+# bind all S1 frames together -------------------
+S1 <- rbind(S1_base, S1_peak, S1_pers)
 
 # S2 write rasters ---------------------
 S2_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S2_k_base_var_rf.tif"))) |>
   rename(k_index = S2_k_base_var_rf) |>
-  mutate(study_area = "S2_base",
+  mutate(study_area = "S2",
+         scenario = "Base",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/S2_base.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 S2_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S2_k_peak_var_rf.tif"))) |>
   rename(k_index = S2_k_peak_var_rf) |>
-  mutate(study_area = "S2_peak",
+  mutate(study_area = "S2",
+         scenario = "Peak",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/S2_peak.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 S2_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/S2_k_pers_var_rf.tif"))) |>
   rename(k_index = S2_k_pers_var_rf) |>
-  mutate(study_area = "S2_pers",
+  mutate(study_area = "S2",
+         scenario = "Pers.",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/S2_pers.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
+
+# bind all S2 frames together -------------------
+S2 <- rbind(S2_base, S2_peak, S2_pers)
 
 # TH4 write rasters ---------------------
 TH4_min <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/TH4_k_min_var_rf.tif"))) |>
   rename(k_index = TH4_k_min_var_rf) |>
-  mutate(study_area = "TH4_min",
+  mutate(study_area = "TH4",
+         scenario = "Min",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/TH4_min.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 TH4_max <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/TH4_k_max_var_rf.tif"))) |>
   rename(k_index = TH4_k_max_var_rf) |>
-  mutate(study_area = "TH4_max",
+  mutate(study_area = "TH4",
+         scenario = "Max",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/TH4_max.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 TH4_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/TH4_k_pers_var_rf.tif"))) |>
   rename(k_index = TH4_k_pers_var_rf) |>
-  mutate(study_area = "TH4_pers",
+  mutate(study_area = "TH4",
+         scenario = "Pers.",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/TH4_pers.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
+
+# bind all TH4 frames together -------------------
+TH4 <- rbind(TH4_min, TH4_max, TH4_pers)
 
 # VR3 write rasters ---------------------
 VR3_base <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/VR3_k_base_var_rf.tif"))) |>
   rename(k_index = VR3_k_base_var_rf) |>
-  mutate(study_area = "VR3_base",
+  mutate(study_area = "VR3",
+         scenario = "Base",
          ID = row_number())|>
-  write.csv("Stat_Analysis/data/VR3_base.csv", row.names = FALSE)
+  dplyr::select(-x, -y)
 
 VR3_peak <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/VR3_k_peak_var_rf.tif"))) |>
   rename(k_index = VR3_k_peak_var_rf) |>
-  mutate(study_area = "VR3_peak",
-         ID = row_number()) |>
-  write.csv("Stat_Analysis/data/VR3_peak.csv", row.names = FALSE)
+  mutate(study_area = "VR3",
+         scenario = "Peak",
+         ID = row_number())|>
+  dplyr::select(-x, -y)
 
 VR3_pers <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/VR3_k_pers_var_rf.tif"))) |>
   rename(k_index = VR3_k_pers_var_rf) |>
-  mutate(study_area = "VR3_pers",
-         ID = row_number()) |>
-  write.csv("Stat_Analysis/data/VR3_pers.csv", row.names = FALSE)
+  mutate(study_area = "VR3",
+         scenario = "Pers.",
+         ID = row_number())|>
+  dplyr::select(-x, -y)
+
+# bind all VR3 frames together -------------------
+VR3 <- rbind(VR3_base, VR3_peak, VR3_pers)
 ```
 
-# Combine data
+
+# Boxplot
 ```{r}
-# combine all raster extracted values into one df
-# GL1 -----------------------------------
-GL1_min <- read_delim("Stat_Analysis/data/GL1_min.csv")
-GL1_max <- read_delim("Stat_Analysis/data/GL1_max.csv")
-GL1_pers <- read_delim("Stat_Analysis/data/GL1_pers.csv")
+natural <- rbind(GL1, GL2, TH4, k_measured_natural)
+hydropeak <- rbind(k_measured_hydro, L2, M1, S1, S2, VR3)
 
-# GL2 -----------------------------------
-GL2_min <- read_delim("Stat_Analysis/data/GL2_min.csv")
-GL2_max <- read_delim("Stat_Analysis/data/GL2_max.csv")
-GL2_pers <- read_delim("Stat_Analysis/data/GL2_pers.csv")
+natural$scenario <- factor(natural$scenario, levels = c("Min", "Max", "Pers.", "Measured"))
 
-# L2 -----------------------------------
-L2_base <- read_delim("Stat_Analysis/data/L2_base.csv")
-L2_peak <- read_delim("Stat_Analysis/data/L2_peak.csv")
-L2_pers <- read_delim("Stat_Analysis/data/L2_pers.csv")
+hydropeak$scenario <- factor(hydropeak$scenario, levels = c("Base", "Peak", "Pers.", "Measured"))
 
-# M1 -----------------------------------
-M1_base <- read_delim("Stat_Analysis/data/M1_base.csv")
-M1_peak <- read_delim("Stat_Analysis/data/M1_peak.csv")
-M1_pers <- read_delim("Stat_Analysis/data/M1_pers.csv")
+# Logit transformation function
+logit <- function(x){
+  x <- x/100
+  log(x/(1-x))
+}
 
-# S1 -----------------------------------
-S1_base <- read_delim("Stat_Analysis/data/S1_base.csv")
-S1_peak <- read_delim("Stat_Analysis/data/S1_peak.csv")
-S1_pers <- read_delim("Stat_Analysis/data/S1_pers.csv")
+natural_log <- natural |>
+  mutate(k_index = scale(logit(k_index)))
 
-# S2 -----------------------------------
-S2_base <- read_delim("Stat_Analysis/data/S2_base.csv")
-S2_peak <- read_delim("Stat_Analysis/data/S2_peak.csv")
-S2_pers <- read_delim("Stat_Analysis/data/S2_pers.csv")
+hydropeak_log <- hydropeak |>
+  mutate(k_index = scale(logit(k_index)))
 
-# TH4 -----------------------------------
-TH4_min <- read_delim("Stat_Analysis/data/TH4_min.csv")
-TH4_max <- read_delim("Stat_Analysis/data/TH4_max.csv")
-TH4_pers <- read_delim("Stat_Analysis/data/TH4_pers.csv")
+min(hydropeak_log$k_index)
+max(hydropeak_log$k_index)
+```
 
-# VR3 -----------------------------------
-VR3_base <- read_delim("Stat_Analysis/data/VR3_base.csv")
-VR3_peak <- read_delim("Stat_Analysis/data/VR3_peak.csv")
-VR3_pers <- read_delim("Stat_Analysis/data/VR3_pers.csv")
+```{r}
+library(RColorBrewer)
 
-GL1 <- merge(GL1_min, GL1_max, by = "ID", all = TRUE)
+# Use a colorblind-friendly palette
+color_palette <- brewer.pal(4, "RdYlBu")
+
+display.brewer.all()
+```
+
+
+```{r}
+# Boxplot using natural river sections 
+## Log transformed data 
+nat_log <- ggplot(natural_log, aes(x = study_area, y = k_index, fill = scenario)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(y = "Fitted K-Index (logit)",
+       x = "Study Areas",
+       fill = "Scenario") +
+  scale_fill_manual(values = color_palette) +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14)) + 
+  scale_y_continuous(limits = c(-5, 2.5))
+
+## untransformed data 
+nat <- ggplot(natural, aes(x = study_area, y = k_index, fill = scenario)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(y = "K-Index",
+       x = "Study Areas",
+       fill = "Scenario") +
+  scale_fill_manual(values = color_palette) +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14)) + 
+  scale_y_continuous(limits = c(0, 1))
+
+# Boxplot using hydropeaking river sections 
+## Log transformed data 
+hydr_log <- ggplot(hydropeak_log, aes(x = study_area, y = k_index, fill = scenario)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(y = "Fitted K-Index (logit)",
+       x = "Study Areas",
+       fill = "Scenario") +
+  scale_fill_manual(values = color_palette) +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14)) + 
+  scale_y_continuous(limits = c(-3.5, 3))
+
+## untransformed data 
+hydr <- ggplot(hydropeak, aes(x = study_area, y = k_index, fill = scenario)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(y = "K-Index",
+       x = "Study Areas",
+       fill = "Scenario") +
+  scale_fill_manual(values = color_palette) +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14)) + 
+  scale_y_continuous(limits = c(0, 1))
+
+# save the plots 
+ggsave("Stat_Analysis/plots/boxplot_natural_log.png", plot = nat_log, width = 6, height = 5)
+ggsave("Stat_Analysis/plots/boxplot_natural.png", plot = nat, width = 6, height = 5)
+ggsave("Stat_Analysis/plots/boxplot_hydropeak_log.png", plot = hydr_log, width = 8, height = 5)
+ggsave("Stat_Analysis/plots/boxplot_hydropeak.png", plot = hydr, width = 8, height = 5)
+```
+
+# Evaluation metric comparison 
+```{r}
+# load data
+metrics <- read_delim("Stat_Analysis/evaluation_metrics_all.csv")
+
+metrics$predictor <- sub("^v\\s*\\+\\s*", "", metrics$predictor)
+#metrics$predictor <- sub("v ", "velocity", metrics$predictor)
+
+metrics <- metrics |>
+  filter(predictor != "all") |>
+  mutate(models = paste(model, predictor, sep = "-"))
+
+metrics$index <- gsub("k_index", "K-Index", metrics$index)
+metrics$index <- gsub("shannon", "Shannon Index", metrics$index)
+metrics$index <- gsub("rel_abundance", "Rel. Abundance", metrics$index)
+metrics$index <- gsub("abundance", "Abs. Abundance", metrics$index)
+
+metrics$index <- factor(metrics$index, levels = c("K-Index", "Shannon Index", "Abs. Abundance", "Rel. Abundance"))
+   
+
+metrics$models <- gsub("brt-var", "Var BRT", metrics$models)
+metrics$models <- gsub("rf-var", "Var RF", metrics$models)
+metrics$models <- gsub("brt-velocity", "VBRT", metrics$models)
+metrics$models <- gsub("rf-velocity", "VRF", metrics$models)
+metrics$models <- gsub("brt-wd", "BRT", metrics$models)
+metrics$models <- gsub("rf-wd", "RF", metrics$models)
+metrics$models <- gsub("brt-samp", "Samp BRT", metrics$models)
+metrics$models <- gsub("rf-samp", "Samp RF", metrics$models)
+metrics$models <- gsub("brt-v", "VBRT", metrics$models)
+metrics$models <- gsub("rf-v", "VRF", metrics$models)
+
+metrics$models <- factor(metrics$models, levels = c("VBRT", "VRF", "BRT", "RF", "Var BRT", "Var RF", "Samp BRT", "Samp RF"))
+
+metrics$origin <- gsub("measured", "Measured", metrics$origin)
+metrics$origin <- gsub("raster_extract", "Raster", metrics$origin)
+metrics$origin <- gsub("training", "Train", metrics$origin)
+
+metrics$origin <- factor(metrics$origin, levels = c("Measured", "Raster", "Train"))
+
+
+metrics_k <- metrics |>
+  filter(index == "k_index")
+
+metrics_s <- metrics |>
+  filter(index == "shannon")
+
+metrics_a <- metrics |>
+  filter(index == "abundance")
+
+metrics_ra <- metrics |>
+  filter(index == "rel_abundance")
+```
+
+# ALL Plots
+```{r}
+# Use a colorblind-friendly palette
+color_palette <- brewer.pal(4, "RdYlBu")
+
+# NSE Plots for all Indices -------------------
+nse <- ggplot(metrics, aes(x = models, y = nse, shape = origin, col = origin)) +
+  facet_wrap(~index, nrow = 1, ncol = 4) +
+  geom_point(size = 3.5) +
+  labs(y = "NSE",
+       x = " ",
+       shape = "Origin",
+       col = "Origin") +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(size = 16, face = "bold"))+ 
+  scale_y_continuous(limits = c(-1.25, 1.0)) +
+  scale_color_manual(values = color_palette) 
+
+# R2 plots for all Indices ------------------------------------
+r2 <- ggplot(metrics, aes(x = models, y = r2, shape = origin, col = origin)) +
+  facet_wrap(~index, nrow = 1, ncol = 4) +
+  geom_point(size = 3.5) +
+  labs(y = expression(R^2),
+       x = " ",
+       shape = "Origin",
+       col = "Origin") +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(size = 16, face = "bold"))+ 
+  scale_y_continuous(limits = c(0, 1.0)) +
+  scale_color_manual(values = color_palette)
+
+# rel_rmse plots for all Indices ------------------------------------
+rmse <- ggplot(metrics, aes(x = models, y = rel_rmse, shape = origin, col = origin)) +
+  facet_wrap(~index, nrow = 1, ncol = 4) +
+  geom_point(size = 3.5) +
+  labs(y = "Rel. RMSE",
+       x = " ",
+       shape = "Origin",
+       col = "Origin") +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(size = 16, face = "bold"))+ 
+  scale_y_continuous(limits = c(0, 0.25)) +
+  scale_color_manual(values = color_palette)
+
+# rel_mae plots for all Indices ------------------------------------
+mae <- ggplot(metrics, aes(x = models, y = rel_mae, shape = origin, col = origin)) +
+  facet_wrap(~index, nrow = 1, ncol = 4) +
+  geom_point(size = 3.5) +
+  labs(y = "Rel. MAE",
+       x = " ",
+       shape = "Origin",
+       col = "Origin") +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(size = 16, face = "bold"))+ 
+  scale_y_continuous(limits = c(0, 0.25)) +
+  scale_color_manual(values = color_palette)
+
+# rel_bias plots for all Indices ------------------------------------
+bias <- ggplot(metrics, aes(x = models, y = rel_bias, shape = origin, col = origin)) +
+  facet_wrap(~index, nrow = 1, ncol = 4) +
+  geom_point(size = 3.5) +
+  labs(y = "Rel. Bias",
+       x = " ",
+       shape = "Origin",
+       col = "Origin") +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(size = 16, face = "bold"))+ 
+  scale_y_continuous(limits = c(-0.15, 0.30)) +
+  scale_color_manual(values = color_palette)
+
+ggsave("Stat_Analysis/plots/nse_all.png", plot = nse, width = 18, height = 5)
+ggsave("Stat_Analysis/plots/r2_all.png", plot = r2, width = 18, height = 5)
+ggsave("Stat_Analysis/plots/rmse_all.png", plot = rmse, width = 18, height = 5)
+ggsave("Stat_Analysis/plots/mae_all.png", plot = mae, width = 18, height = 5)
+ggsave("Stat_Analysis/plots/bias_all.png", plot = bias, width = 18, height = 5)
 ```
 
 

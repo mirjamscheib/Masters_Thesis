@@ -82,7 +82,8 @@ rf_train_2 <- read_delim("Stat_Analysis/stat_analysis_data/regr_pred_train_2_rf.
   mutate(reach_type = ifelse(Reach_Untersuchungsstelle %in% names(training_sections), 
                                    training_sections[Reach_Untersuchungsstelle], NA))
 ```
-      
+
+
 # Mean per Study Area
 ```{r}
 # calculate mean simulated (from measured and raster data) and observed k-index values from the var RF model for each study area
@@ -970,11 +971,185 @@ write.csv(regr_rf, "Stat_Analysis/stat_analysis_data/results_regr_rf.csv", row.n
 write.csv(regr_all, "Stat_Analysis/stat_analysis_data/results_regr_rf.csv", row.names = FALSE)
 ```
 
-## Stat. Analysis
-
-
 # Plots
 ## BRT 
+```{r}
+# Use a colorblind-friendly palette
+color_palette <- brewer.pal(4, "RdYlBu")
+
+brt_1 <- brt_test |>
+  dplyr::select(obs_shannon, obs_k_index, obs_abundance, obs_rel_abundance,
+                brt_pred_model_v_k_c, brt_pred_model_v_s_c, brt_pred_model_v_a_c,
+                brt_pred_model_v_ra_c,
+                brt_pred_model_wd_k_c, brt_pred_model_wd_s_c,
+                brt_pred_model_wd_a_c, brt_pred_model_wd_ra_c,
+                brt_pred_model_samp_k_c, brt_pred_model_samp_s_c,
+                brt_pred_model_samp_a_c, brt_pred_model_samp_ra_c,
+                reach_type) |>
+  dplyr::rename(Velocity_K_Index = brt_pred_model_v_k_c,
+                Velocity_Shannon_Index = brt_pred_model_v_s_c,
+                Velocity_Abs._Abundance = brt_pred_model_v_a_c,
+                Velocity_Rel._Abundance = brt_pred_model_v_ra_c,
+                WD_K_Index = brt_pred_model_wd_k_c,
+                WD_Shannon_Index = brt_pred_model_wd_s_c,
+                WD_Abs._Abundance = brt_pred_model_wd_a_c,
+                WD_Rel._Abundance = brt_pred_model_wd_ra_c,
+                Samp_K_Index = brt_pred_model_samp_k_c,
+                Samp_Shannon_Index = brt_pred_model_samp_s_c,
+                Samp_Abs._Abundance = brt_pred_model_samp_a_c,
+                Samp_Rel._Abundance = brt_pred_model_samp_ra_c,
+                k_index = obs_k_index,
+                shannon = obs_shannon,
+                abundance = obs_abundance,
+                rel_abundance = obs_rel_abundance)
+
+
+
+brt_t <- pivot_longer(brt_1, cols = c(Velocity_K_Index, Velocity_Shannon_Index,
+                             Velocity_Abs._Abundance, Velocity_Rel._Abundance,
+                             WD_K_Index, WD_Shannon_Index, WD_Abs._Abundance,
+                WD_Rel._Abundance, Samp_K_Index, Samp_Shannon_Index, 
+                Samp_Abs._Abundance, Samp_Rel._Abundance), names_to = "index", values_to = "values")
+
+brt_t$index <- sub("_", " ", brt_t$index)
+
+brt_new <- brt_t |>
+  separate(index, into = c("predictor", "index_2"), sep = " ")
+
+brt_new_new <- brt_new |>
+  filter(index_2 == "K_Index") |>
+  dplyr::select(-Reach_Untersuchungsstelle)
+
+
+
+brt_2 <- brt_test_2 |>
+  dplyr::select(brt_pred_model_var_k_c, brt_pred_model_var_s_c,
+                brt_pred_model_var_a_c, brt_pred_model_var_ra_c,
+                reach_type,
+                k_index, shannon, abundance, rel_abundance) |>
+  dplyr::rename(Var_K_Index = brt_pred_model_var_k_c,
+                Var_Shannon_Index = brt_pred_model_var_s_c,
+                Var_Abs._Abundance = brt_pred_model_var_a_c,
+                Var_Rel._Abundance = brt_pred_model_var_ra_c)
+
+brt_2 <- pivot_longer(brt_2, cols = c(Var_K_Index, Var_Shannon_Index,
+                             Var_Abs._Abundance, Var_Rel._Abundance), names_to = "index", values_to = "values")
+
+brt_2$index <- sub("_", " ", brt_2$index)
+
+brt_new_2 <- brt_2 |>
+  separate(index, into = c("predictor", "index_2"), sep = " ")
+
+brt_test_end <- rbind(brt_new, brt_new_2)
+
+brt_k_index <- brt_test_end |>
+  filter(index_2 == "K_Index")
+
+brt_shannon <- brt_test_end |>
+  filter(index_2 == "Shannon_Index")
+
+brt_abundance <- brt_test_end |>
+  filter(index_2 == "Abs._Abundance")
+
+brt_rel_abundance <- brt_test_end |>
+  filter(index_2 == "Rel._Abundance")
+```
+
+## Test Measured
+```{r}
+# Plots for all Indices -------------------
+k_index_meas <- ggplot(brt_k_index, aes(x = k_index, y = values, col = reach_type)) +
+  facet_wrap(~predictor, nrow = 1, ncol = 4) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "K-Index Observed",
+    y = "K-Index Predicted",
+    col = "Hydrol. Condition"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    strip.text = element_text(size = 16, face = "bold")) +
+  scale_color_manual(values = color_palette) 
+
+
+shannon_meas <- ggplot(brt_shannon, aes(x = shannon, y = values, col = reach_type)) +
+  facet_wrap(~predictor, nrow = 1, ncol = 4) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 5.0) +
+  xlim(0, 5.0) + 
+  labs(
+    x = "Shannon Index Observed",
+    y = "Shannon Index Predicted",
+    col = "Hydrol. Condition"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    strip.text = element_text(size = 16, face = "bold")) +
+  scale_color_manual(values = color_palette) 
+
+abundance_meas <- ggplot(brt_abundance, aes(x = abundance, y = values, col = reach_type)) +
+  facet_wrap(~predictor, nrow = 1, ncol = 4) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 2000) +
+  xlim(0, 2000) + 
+  labs(
+    x = "Abs. Abundance Observed",
+    y = "Abs. Abundance Predicted",
+    col = "Hydrol. Condition"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    strip.text = element_text(size = 16, face = "bold")) +
+  scale_color_manual(values = color_palette) 
+
+rel_abundance_meas <- ggplot(brt_rel_abundance, aes(x = rel_abundance, y = values, col = reach_type)) +
+  facet_wrap(~predictor, nrow = 1, ncol = 4) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
+  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
+  theme_minimal() +
+  ylim(0, 1.0) +
+  xlim(0, 1.0) + 
+  labs(
+    x = "Rel. Abundance Observed",
+    y = "Rel. Abundance Predicted",
+    col = "Hydrol. Condition"
+  ) +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    strip.text = element_text(size = 16, face = "bold")) +
+  scale_color_manual(values = color_palette) 
+
+
+ggsave("Stat_Analysis/regr_plots/k_index_meas.png", plot = k_index_meas, width = 18, height = 5)
+ggsave("Stat_Analysis/regr_plots/shannon_meas.png", plot = shannon_meas, width = 18, height = 5)
+ggsave("Stat_Analysis/regr_plots/abundance_meas.png", plot = abundance_meas, width = 18, height = 5)
+ggsave("Stat_Analysis/regr_plots/rel_abundance_meas.png", plot = rel_abundance_meas, width = 18, height = 5)
+```
+
 ### Test Raster
 ```{r}
 ### PREDICTOR: VELOCITY ### --------------------------------------------------
@@ -3896,6 +4071,31 @@ p_brt_var_wrap_ra_comp <- ggplot(brt_comp_var_ra, aes(rel_abundance, simulated, 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_ra_comp.png", plot = p_brt_var_ra_comp, width = 8, height = 5)
 ggsave("Stat_Analysis/regr_plots/regr_brt_var_wrap_ra_comp.png", plot = p_brt_var_wrap_ra_comp, width = 8, height = 8)
+```
+
+#### WRAPS 
+```{r}
+# NSE Plots for all Indices -------------------
+nse <- ggplot(metrics, aes(x = models, y = nse, shape = origin, col = origin)) +
+  facet_wrap(~index, nrow = 1, ncol = 4) +
+  geom_point(size = 3.5) +
+  labs(y = "NSE",
+       x = " ",
+       shape = "Origin",
+       col = "Origin") +
+  theme_minimal() +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(size = 16, face = "bold"))+ 
+  scale_y_continuous(limits = c(-1.25, 1.0)) +
+  scale_color_manual(values = color_palette) 
+
+
+# save the plots 
+ggsave("Stat_Analysis/regr_plots/regr_brt_k_v_rast.png", plot = p_brt_k_rast, width = 8, height = 5)
 ```
 
 ## RF normal

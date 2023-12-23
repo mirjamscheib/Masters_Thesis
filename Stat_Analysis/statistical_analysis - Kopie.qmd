@@ -40,7 +40,7 @@ bar <- read_delim("ML_model/var_imp/var_imp_var.csv") |>
 
 bar_rf <- read_delim("ML_model/var_imp/var_imp_var.csv") |> 
   dplyr::select(variable, k_index_rf) |>
-  mutate(var_new = c("Elevation [m.a.s.l.]", "Water Deph [m]", "Mean diffuse total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffuse total phosphor [kg/ha a]", "Ecomorphology", "Biogeographical region"))
+  mutate(var_new = c("Elevation [m.a.s.l.]", "Water Deph [m]", "Mean diffuse total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffuse total phosphorous [kg/ha a]", "Ecomorphology", "Biogeographical region"))
 ```
 
 

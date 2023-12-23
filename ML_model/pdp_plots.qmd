@@ -315,7 +315,7 @@ p_p_var_k_c_rf <- ggplot(p_var_k_c_rf, aes(mean_diff_phosphor, yhat_log)) +
   # yhat ist die response variable (k-index, simpson oder shannon)
   geom_line() + 
   labs(
-    x = "Mean diffuse total phosphor [kg/ha a]",
+    x = "Mean diffuse total phosphorous [kg/ha a]",
     y = "Fitted K-Index (logit)"
   ) +
   theme_minimal() +
