@@ -258,12 +258,22 @@ VR3 <- rbind(VR3_base, VR3_peak, VR3_pers)
 
 # Boxplot
 ```{r}
-natural <- rbind(GL1, GL2, TH4, k_measured_natural)
-hydropeak <- rbind(k_measured_hydro, L2, M1, S1, S2, VR3)
+natural <- rbind(GL1, GL2, TH4, k_measured_natural) |>
+  mutate(reach_type = "Natural/near-natural")
+
+hydropeak <- rbind(k_measured_hydro, L2, M1, S1, S2, VR3) |>
+  mutate(reach_type = "Hydropeaking")
 
 natural$scenario <- factor(natural$scenario, levels = c("Min", "Max", "Pers.", "Measured"))
 
 hydropeak$scenario <- factor(hydropeak$scenario, levels = c("Base", "Peak", "Pers.", "Measured"))
+
+natural_conform <- natural |>
+  mutate(scenario = gsub("Min", "Base", scenario),
+         scenario = gsub("Max", "Peak", scenario),
+         scenario = factor(scenario, levels = c("Base", "Peak", "Pers.", "Measured")))
+
+all <- rbind(natural_conform, hydropeak)
 
 # Logit transformation function
 logit <- function(x){
@@ -272,22 +282,99 @@ logit <- function(x){
 }
 
 natural_log <- natural |>
-  mutate(k_index = scale(logit(k_index)))
+  mutate(k_index = scale(logit(k_index)))|>
+  filter(scenario != "Measured")
 
 hydropeak_log <- hydropeak |>
-  mutate(k_index = scale(logit(k_index)))
+  mutate(k_index = scale(logit(k_index)))|>
+  filter(scenario != "Measured")
 
-min(hydropeak_log$k_index)
-max(hydropeak_log$k_index)
+all_log <- all |>
+  mutate(k_index = scale(logit(k_index))) |>
+  filter(scenario != "Measured")
+
+min(natural_log$k_index)
+max(natural_log$k_index)
 ```
 
+# t.test hydrol. conditions
+```{r}
+# for base flow --------------------------------------
+all_base <- all |>
+  filter(scenario != "Measured",
+           scenario == "Base") |>
+  pivot_wider(names_from = "reach_type", values_from = "k_index")
+
+
+
+# Einseitig "Test auf a > b" -------------
+t.test(all_base$`Natural/near-natural`, all_base$Hydropeaking)
+# p-value < 2.2e-16
+
+# for peak flow --------------------------------------
+all_peak <- all |>
+  filter(scenario != "Measured",
+           scenario == "Peak") |>
+  pivot_wider(names_from = "reach_type", values_from = "k_index")
+
+
+# Einseitig "Test auf a > b" -------------
+t.test(all_peak$`Natural/near-natural`, all_peak$Hydropeaking)
+# p-value < 2.2e-16
+
+# for pers. flow --------------------------------------
+all_pers <- all |>
+  filter(scenario != "Measured",
+           scenario == "Pers.") |>
+  pivot_wider(names_from = "reach_type", values_from = "k_index")
+
+
+# Einseitig "Test auf a > b" -------------
+t.test(all_pers$`Natural/near-natural`, all_pers$Hydropeaking)
+# p-value < 2.2e-16
+```
+
+# Boxplot hydrol. conditions
 ```{r}
 library(RColorBrewer)
 
 # Use a colorblind-friendly palette
 color_palette <- brewer.pal(4, "RdYlBu")
 
-display.brewer.all()
+#display.brewer.all()
+```
+
+```{r}
+# Install and load the ggpubr package
+#install.packages("ggpubr")
+library(ggpubr)
+
+## Log transformed data 
+comp_condition <- ggplot(all_log, aes(x = reach_type, y = k_index, fill = scenario)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(y = "Fitted K-Index (logit)",
+       x = "Study Areas",
+       fill = "Scenario") +
+  scale_fill_manual(values = color_palette) +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14)) + 
+  scale_y_continuous(limits = c(-2.5, 2.5))
+
+# Add significance stars
+comp_condition +
+  stat_compare_means(
+    aes(group = scenario),
+    label = "p.signif",
+    method = "t.test",
+    size = 5,
+    step.increase = 0.1
+  )
+
+# save the plots 
+ggsave("Stat_Analysis/plots/boxplot_condition.png", plot = comp_condition, width = 8, height = 5)
 ```
 
 
@@ -305,7 +392,7 @@ nat_log <- ggplot(natural_log, aes(x = study_area, y = k_index, fill = scenario)
         axis.title = element_text(size=16),
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14)) + 
-  scale_y_continuous(limits = c(-5, 2.5))
+  scale_y_continuous(limits = c(-3.0, 2.0))
 
 ## untransformed data 
 nat <- ggplot(natural, aes(x = study_area, y = k_index, fill = scenario)) +
@@ -334,7 +421,7 @@ hydr_log <- ggplot(hydropeak_log, aes(x = study_area, y = k_index, fill = scenar
         axis.title = element_text(size=16),
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14)) + 
-  scale_y_continuous(limits = c(-3.5, 3))
+  scale_y_continuous(limits = c(-2.0, 2.5))
 
 ## untransformed data 
 hydr <- ggplot(hydropeak, aes(x = study_area, y = k_index, fill = scenario)) +
