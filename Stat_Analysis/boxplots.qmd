@@ -308,7 +308,7 @@ all_base <- all |>
 
 
 # Einseitig "Test auf a > b" -------------
-t.test(all_base$`Natural/near-natural`, all_base$Hydropeaking)
+t_base <- t.test(all_base$`Natural/near-natural`, all_base$Hydropeaking)
 # p-value < 2.2e-16
 
 # for peak flow --------------------------------------
@@ -333,6 +333,103 @@ all_pers <- all |>
 t.test(all_pers$`Natural/near-natural`, all_pers$Hydropeaking)
 # p-value < 2.2e-16
 ```
+
+# ANOVA for scenarios
+```{r}
+library(agricolae)
+# GL1 --------------------------------------
+scenarios_GL1 <- all |>
+  filter(study_area == "GL1",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.GL1 <- aov(k_index~scenario, data = scenarios_GL1)
+summary(aov.GL1)
+summary.lm(aov.GL1)
+
+# erst nach sign. ANOVA!
+# Posthoc-Test
+HSD.test(aov.GL1, "scenario", group = FALSE, console = TRUE)
+
+# GL2 --------------------------------------
+scenarios_GL2 <- all |>
+  filter(study_area == "GL2",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.GL2 <- aov(k_index~scenario, data = scenarios_GL2)
+summary(aov.GL2)
+summary.lm(aov.GL2)
+
+# L2 --------------------------------------
+scenarios_L2 <- all |>
+  filter(study_area == "L2",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.L2 <- aov(k_index~scenario, data = scenarios_L2)
+summary(aov.L2)
+summary.lm(aov.L2)
+
+# M1 --------------------------------------
+scenarios_M1 <- all |>
+  filter(study_area == "M1",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.M1 <- aov(k_index~scenario, data = scenarios_M1)
+summary(aov.M1)
+summary.lm(aov.M1)
+
+# S1 --------------------------------------
+scenarios_S1 <- all |>
+  filter(study_area == "S1",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.S1 <- aov(k_index~scenario, data = scenarios_S1)
+summary(aov.S1)
+summary.lm(aov.S1)
+
+# S2 --------------------------------------
+scenarios_S2 <- all |>
+  filter(study_area == "S2",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.S2 <- aov(k_index~scenario, data = scenarios_S2)
+summary(aov.S2)
+summary.lm(aov.S2)
+
+# TH4 --------------------------------------
+scenarios_TH4 <- all |>
+  filter(study_area == "TH4",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.TH4 <- aov(k_index~scenario, data = scenarios_TH4)
+summary(aov.TH4)
+summary.lm(aov.TH4)
+
+# VR3 --------------------------------------
+scenarios_VR3 <- all |>
+  filter(study_area == "VR3",
+         scenario != "Measured") |>
+  mutate(scenario = factor(scenario))
+
+# alternativ kann anova in variable gespeichert werden - spart coding zeilen
+aov.VR3 <- aov(k_index~scenario, data = scenarios_VR3)
+summary(aov.VR3)
+summary.lm(aov.VR3)
+```
+
 
 # Boxplot hydrol. conditions
 ```{r}
@@ -361,17 +458,7 @@ comp_condition <- ggplot(all_log, aes(x = reach_type, y = k_index, fill = scenar
         axis.title = element_text(size=16),
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14)) + 
-  scale_y_continuous(limits = c(-2.5, 2.5))
-
-# Add significance stars
-comp_condition +
-  stat_compare_means(
-    aes(group = scenario),
-    label = "p.signif",
-    method = "t.test",
-    size = 5,
-    step.increase = 0.1
-  )
+  scale_y_continuous(limits = c(-2.5, 2.5)) 
 
 # save the plots 
 ggsave("Stat_Analysis/plots/boxplot_condition.png", plot = comp_condition, width = 8, height = 5)
