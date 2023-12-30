@@ -2668,13 +2668,13 @@ origin = c("training", "training", "training","training",
 all_metrics <- rbind(metric_results_measured, metric_results_raster, metrics_training)
 
 # write results into a .csv 
-write.csv(metric_results_measured, "Stat_Analysis/ml_evaluation_metrics_measured_rf.csv", row.names = FALSE)
+write.csv(metric_results_measured, "Stat_Analysis/stat_analysis_data/ml_evaluation_metrics_measured_rf.csv", row.names = FALSE)
 
-write.csv(metric_results_raster, "Stat_Analysis/ml_evaluation_metrics_raster_rf.csv", row.names = FALSE)
+write.csv(metric_results_raster, "Stat_Analysis/stat_analysis_data/ml_evaluation_metrics_raster_rf.csv", row.names = FALSE)
 
-write.csv(metrics_training, "Stat_Analysis/ml_evaluation_metrics_training_rf.csv", row.names = FALSE)
+write.csv(metrics_training, "Stat_Analysis/stat_analysis_data/ml_evaluation_metrics_training_rf.csv", row.names = FALSE)
 
-write.csv(all_metrics, "Stat_Analysis/ml_evaluation_metrics_all_rf.csv", row.names = FALSE)
+write.csv(all_metrics, "Stat_Analysis/stat_analysis_data/ml_evaluation_metrics_all_rf.csv", row.names = FALSE)
 ```
  
 
