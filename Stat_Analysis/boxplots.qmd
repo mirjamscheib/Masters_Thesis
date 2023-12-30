@@ -293,8 +293,16 @@ all_log <- all |>
   mutate(k_index = scale(logit(k_index))) |>
   filter(scenario != "Measured")
 
+all_meas_log <- all |>
+  mutate(k_index = scale(logit(k_index))) |>
+  filter(scenario == "Measured")
+
 min(natural_log$k_index)
 max(natural_log$k_index)
+
+all_base_meas <- all |>
+  filter(scenario == "Measured") |>
+  pivot_wider(names_from = "reach_type", values_from = "k_index") 
 ```
 
 # t.test hydrol. conditions
@@ -305,10 +313,8 @@ all_base <- all |>
            scenario == "Base") |>
   pivot_wider(names_from = "reach_type", values_from = "k_index")
 
-
-
 # Einseitig "Test auf a > b" -------------
-t_base <- t.test(all_base$`Natural/near-natural`, all_base$Hydropeaking)
+t_base <- t.test(all_base$`Natural/near-natural`, all_base$Hydropeaking, alternative = "greater")
 # p-value < 2.2e-16
 
 # for peak flow --------------------------------------
@@ -319,7 +325,7 @@ all_peak <- all |>
 
 
 # Einseitig "Test auf a > b" -------------
-t.test(all_peak$`Natural/near-natural`, all_peak$Hydropeaking)
+t.test(all_peak$`Natural/near-natural`, all_peak$Hydropeaking, alternative = "greater")
 # p-value < 2.2e-16
 
 # for pers. flow --------------------------------------
@@ -330,11 +336,57 @@ all_pers <- all |>
 
 
 # Einseitig "Test auf a > b" -------------
-t.test(all_pers$`Natural/near-natural`, all_pers$Hydropeaking)
+t.test(all_pers$`Natural/near-natural`, all_pers$Hydropeaking, alternative = "greater")
 # p-value < 2.2e-16
+
+# for measured k-index --------------------------------------
+all_meas <- all |>
+  filter(scenario == "Measured") |>
+  pivot_wider(names_from = "reach_type", values_from = "k_index")
+
+
+# Einseitig "Test auf a > b" -------------
+t.test(all_meas$`Natural/near-natural`, all_meas$Hydropeaking, alternative = "greater")
+# p-value 1.0
+
+# Einseitig "Test auf a < b" -------------
+t.test(all_meas$`Natural/near-natural`, all_meas$Hydropeaking, alternative = "less")
+# p-value 1.011e-05
 ```
 
 # ANOVA for scenarios
+```{r}
+natural <- natural |>
+  filter(scenario != "Measured")
+
+hydropeak <- hydropeak |>
+  filter(scenario != "Measured")
+
+# EDA
+boxplot(k_index~study_area + scenario, data = natural)
+boxplot(k_index~study_area + scenario, data = hydropeak)
+
+# ANOVA OHNE Interaktion 
+summary(aov(k_index~study_area + scenario, data = natural))
+summary(aov(k_index~study_area + scenario, data = hydropeak))
+#summary.lm(aov(size~cultivar+house, data = blume3))
+
+# ANOVA MIT Interaktion 
+#Kurzschreibweise: "*" bedeutet, dass Interaktion zwischen cultivar und house eingeschlossen wird
+summary(aov(k_index~scenario * study_area, data = natural)) 
+summary(aov(k_index~scenario * study_area, data = hydropeak)) 
+# wenn Interaktion nicht sign. - Interaktionsterm ausschliessen 
+
+
+#Visualisierung 2-fach-Interaktion etwas elaborierter mit ggplot
+theme_set(theme_classic())
+aov <- aov(k_index~scenario * study_area, data = natural)
+plot_model(aov, type = "pred", terms = c("scenario", "study_area"))
+
+aov_hydro <- aov(k_index~scenario * study_area, data = hydropeak)
+plot_model(aov_hydro, type = "pred", terms = c("scenario", "study_area"))
+```
+
 ```{r}
 library(agricolae)
 # GL1 --------------------------------------
@@ -350,7 +402,7 @@ summary.lm(aov.GL1)
 
 # erst nach sign. ANOVA!
 # Posthoc-Test
-HSD.test(aov.GL1, "scenario", group = FALSE, console = TRUE)
+TukeyHSD(aov.GL1)
 
 # GL2 --------------------------------------
 scenarios_GL2 <- all |>
@@ -446,7 +498,7 @@ color_palette <- brewer.pal(4, "RdYlBu")
 #install.packages("ggpubr")
 library(ggpubr)
 
-## Log transformed data 
+## Log transformed data for simulated values ------------
 comp_condition <- ggplot(all_log, aes(x = reach_type, y = k_index, fill = scenario)) +
   geom_boxplot() +
   theme_minimal() +
@@ -462,6 +514,23 @@ comp_condition <- ggplot(all_log, aes(x = reach_type, y = k_index, fill = scenar
 
 # save the plots 
 ggsave("Stat_Analysis/plots/boxplot_condition.png", plot = comp_condition, width = 8, height = 5)
+
+
+## Log transformed data for measured values ------------
+meas_condition <- ggplot(all_meas_log, aes(x = reach_type, y = k_index)) +
+  geom_boxplot(fill = "lightgray") +
+  theme_minimal() +
+  labs(y = "Fitted K-Index (logit)",
+       x = "Study Areas") +
+  scale_fill_manual(values = color_palette) +
+  theme(axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+    legend.title = element_text(size = 16, face = "bold"),  
+    legend.text = element_text(size = 14)) + 
+  scale_y_continuous(limits = c(-4.0, 3.0)) 
+
+# save the plots 
+ggsave("Stat_Analysis/plots/boxplot_condition_meas.png", plot = meas_condition, width = 6, height = 5)
 ```
 
 

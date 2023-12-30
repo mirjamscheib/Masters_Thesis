@@ -28,6 +28,7 @@ pkgCheck("Metrics")
 pkgCheck("tidyr")
 pkgCheck("ggplot2")
 pkgCheck("hydroGOF") # for NSE calculation with NSE() function 
+pkgCheck("RColorBrewer")
 ```
 
 # Evaluation HDM Results
@@ -1244,6 +1245,9 @@ plot(regr_sp) # Residien nicht normalverteilt, Linearität fraglich
 
 ## Plots
 ```{r}
+# Use a colorblind-friendly palette
+color_palette <- brewer.pal(8, "RdYlBu")
+
 # velocity --------------------------------------------------------------------
 vel <- ggplot(data_hdm, aes(velocity, v_raster, col = Reach_Untersuchungsstelle)) +
   geom_point() +
@@ -1261,7 +1265,8 @@ vel <- ggplot(data_hdm, aes(velocity, v_raster, col = Reach_Untersuchungsstelle)
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16),
     legend.title = element_text(size = 16, face = "bold"),  
-    legend.text = element_text(size = 14))
+    legend.text = element_text(size = 14)) +
+  scale_color_manual(values = color_palette) 
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_velocity.png", plot = vel, width = 7, height = 5)
@@ -1283,7 +1288,8 @@ wd <- ggplot(data_hdm, aes(wd_m, wd_m_raster, col = Reach_Untersuchungsstelle)) 
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16),
     legend.title = element_text(size = 16, face = "bold"),  
-    legend.text = element_text(size = 14))
+    legend.text = element_text(size = 14)) +
+  scale_color_manual(values = color_palette) 
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_wd.png", plot = wd, width = 7, height = 5)
