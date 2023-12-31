@@ -354,38 +354,6 @@ t.test(all_meas$`Natural/near-natural`, all_meas$Hydropeaking, alternative = "le
 # p-value 1.011e-05
 ```
 
-# ANOVA for scenarios
-```{r}
-natural <- natural |>
-  filter(scenario != "Measured")
-
-hydropeak <- hydropeak |>
-  filter(scenario != "Measured")
-
-# EDA
-boxplot(k_index~study_area + scenario, data = natural)
-boxplot(k_index~study_area + scenario, data = hydropeak)
-
-# ANOVA OHNE Interaktion 
-summary(aov(k_index~study_area + scenario, data = natural))
-summary(aov(k_index~study_area + scenario, data = hydropeak))
-#summary.lm(aov(size~cultivar+house, data = blume3))
-
-# ANOVA MIT Interaktion 
-#Kurzschreibweise: "*" bedeutet, dass Interaktion zwischen cultivar und house eingeschlossen wird
-summary(aov(k_index~scenario * study_area, data = natural)) 
-summary(aov(k_index~scenario * study_area, data = hydropeak)) 
-# wenn Interaktion nicht sign. - Interaktionsterm ausschliessen 
-
-
-#Visualisierung 2-fach-Interaktion etwas elaborierter mit ggplot
-theme_set(theme_classic())
-aov <- aov(k_index~scenario * study_area, data = natural)
-plot_model(aov, type = "pred", terms = c("scenario", "study_area"))
-
-aov_hydro <- aov(k_index~scenario * study_area, data = hydropeak)
-plot_model(aov_hydro, type = "pred", terms = c("scenario", "study_area"))
-```
 
 ```{r}
 library(agricolae)
@@ -755,4 +723,108 @@ ggsave("Stat_Analysis/plots/mae_all.png", plot = mae, width = 18, height = 5)
 ggsave("Stat_Analysis/plots/bias_all.png", plot = bias, width = 18, height = 5)
 ```
 
+# Load Data 
+```{r}
+# load data for bar charts -> variable importance 
+bar <- read_delim("ML_model/var_imp/var_imp_var.csv") |> 
+  dplyr::select(variable, k_index_rf, k_index_brt) |>
+  mutate(var_new = c("Z Coordinate [m.a.s.l.]", "Water Deph [m]", "Mean diffused total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffused total phosphor [kg/ha a]", "Ecomorphological Class", "Bioregion")) |>
+  pivot_longer(cols = c(2:3), names_to = "models", values_to = "values")
+
+bar_rf <- read_delim("ML_model/var_imp/var_imp_var.csv") |> 
+  dplyr::select(variable, k_index_rf) |>
+  mutate(var_new = c("Elevation [m.a.s.l.]", "Water Deph [m]", "Mean diffuse total nitrogen [kg/ha a]", "Velocity [m/s]", "Mean diffuse total phosphorous [kg/ha a]", "Ecomorphology", "Biogeographical region"))
+```
+
+
+# Bar chart
+```{r}
+library(scales)
+
+p <- ggplot(bar, aes(x = values, y = reorder(var_new, + values), fill = models)) +
+  geom_bar(stat = "identity", position = position_dodge()) + 
+  ylab(label = " ") +
+  xlab(label = " ") +
+  scale_x_continuous(labels = percent_format(scale = 100)) +
+  scale_fill_manual(labels = c("BRT", "RF"), values = c("lightgray", "black")) +  # Adjust legend labels here
+  theme_minimal() +
+  labs(fill = "Algorithm") + 
+  theme(axis.text = element_text(size = 14),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16))
+
+
+# save the plots 
+ggsave("Stat_Analysis/plots/var_imp.png", plot = p, width = 11, height = 6)
+```
+
+```{r}
+library(scales)
+
+p <- ggplot(bar_rf, aes(x = k_index_rf, y = reorder(var_new, + k_index_rf))) +
+  geom_bar(stat = "identity", position = position_dodge()) + 
+  ylab(label = " ") +
+  xlab(label = " ") +
+  scale_x_continuous(labels = percent_format(scale = 100)) +
+  theme_minimal() +
+  labs(fill = "Algorithm") + 
+  theme(axis.text = element_text(size = 14),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16))
+
+# Assuming 'percentage' is a column in your 'bar_rf' data frame containing the calculated percentage values
+bar_rf$percentage <- round(((bar_rf$k_index_rf) * 100), digits = 1)
+
+p2 <- ggplot(bar_rf, aes(x = k_index_rf, y = reorder(var_new, +k_index_rf))) +
+  geom_bar(stat = "identity", position = position_dodge(), fill = "lightgray") + 
+  geom_text(aes(label = percent(percentage / 100)), 
+            position = position_dodge(width = 0.9), 
+            hjust = -0.5,vjust = -0.5, size = 5) +  # Adjust vjust as needed
+  ylab(label = " ") +
+  xlab(label = " ") +
+  scale_x_continuous(labels = percent_format(scale = 100)) +
+  theme_minimal() +
+  labs(fill = "Algorithm") + 
+  theme(axis.text = element_text(size = 14),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16)) +
+  scale_x_continuous(limits = c(0, 0.25), breaks = seq(0, 0.25, by = 0.05))
+
+
+# save the plots 
+ggsave("Stat_Analysis/plots/var_imp_rf.png", plot = p2, width = 11, height = 6)
+```
+
+# Combine metric results and calc. rel. metrics
+```{r}
+# read brt and rf metric results
+brt <- read_delim("Stat_Analysis/ml_evaluation_metrics_all_brt.csv")
+rf <- read_delim("Stat_Analysis/ml_evaluation_metrics_all_rf.csv")
+
+# bind rf and brt metric results together 
+metrics <- rbind(brt, rf)
+
+# calculate relative rmse, mae and bias metrics 
+max_k_index <- 0.8819476
+max_shannon <- 4.04037
+max_abundance <- 3923
+max_rel_abundance <- 1
+
+max_ind <- c(max_k_index, max_shannon, max_abundance, max_rel_abundance)
+max_index <- rep(max_ind, times = 26)
+
+metrics$rel_rmse <- metrics$rmse/max_index
+metrics$rel_mae <- metrics$mae/max_index
+metrics$rel_bias <- metrics$bias/max_index
+
+# round values to two decimal places 
+metrics$nse <- round(metrics$nse, digits = 2)
+metrics$r2 <- round(metrics$r2, digits = 2)
+metrics$rel_rmse <- round(metrics$rel_rmse, digits = 2)
+metrics$rel_mae <- round(metrics$rel_mae, digits = 2)
+metrics$rel_bias <- round(metrics$rel_bias, digits = 2)
+
+# save as .csv file 
+write.csv(metrics, "Stat_Analysis/stat_analysis_data/evaluation_metrics_all.csv", row.names = FALSE)
+```
 
