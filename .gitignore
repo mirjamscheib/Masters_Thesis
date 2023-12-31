@@ -7,7 +7,7 @@ HSC_model/results_foen
 Pre_Processing/abiotic_mi_sampling
 Pre_Processing/hdm_models
 Pre_Processing/raster_files
-#Pre_Processing/rasters_stacked
+Pre_Processing/rasters_stacked
 ML_model/pdp_data
 ML_model/plots
 ML_model/scenarios
