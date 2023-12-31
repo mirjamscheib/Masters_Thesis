@@ -222,13 +222,13 @@ regr_VR3 <- raster::extract(VR3_ezg, coord_VR3) |>
 regr_hdm <- rbind(regr_GL1, regr_GL2, regr_L2, regr_M1, regr_S1, regr_S2, regr_TH4, regr_VR3)
 
 ### Write .csv file ### 
-write.csv(regr_hdm, "Stat_Analysis/regr_analysis_hdm.csv", row.names = FALSE)
+write.csv(regr_hdm, "Stat_Analysis/stat_analysis_data/regr_analysis_hdm.csv", row.names = FALSE)
 ```
 
 # Metrics
 ```{r}
 # load data 
-data_hdm <- read_delim("Stat_Analysis/regr_analysis_hdm.csv") |>
+data_hdm <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_hdm.csv") |>
   na.omit()
 
 # prep extraction data 
@@ -1293,63 +1293,6 @@ wd <- ggplot(data_hdm, aes(wd_m, wd_m_raster, col = Reach_Untersuchungsstelle)) 
 
 # save the plots 
 ggsave("Stat_Analysis/regr_plots/regr_wd.png", plot = wd, width = 7, height = 5)
-
-# froude ----------------------------------------------------------------
-froude <- ggplot(data_hdm, aes(froude, froude_raster)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "Froude Measured",
-    y = "Froude Extracted"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_froude.png", plot = froude, width = 6, height = 5)
-
-# shear stress ---------------------------------------------------------------
-shear <- ggplot(data_hdm, aes(shear_stress, shear_raster)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "Shear Stress Measured (kg m-1 s-2)",
-    y = "Shear Stress Extracted (kg m-1 s-2)"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_shear_stress.png", plot = shear, width = 6, height = 5)
-
-# stream power ---------------------------------------------------------------
-stream <- ggplot(data_hdm, aes(stream_power, stream_raster)) +
-  geom_point() +
-  geom_abline(slope = 1, intercept = 0, lty = 2, lwd = 0.8) +
-  stat_smooth(method = "lm", se = FALSE, fullrange = TRUE, lwd = 0.8, col = "black") +
-  theme_minimal() +
-  ylim(0, 1.0) +
-  xlim(0, 1.0) + 
-  labs(
-    x = "Stream Power Measured (W m-2)",
-    y = "Stream Power Extracted (W m-2)"
-  ) +
-  theme_minimal() +
-  theme(axis.text = element_text(size=12),
-        axis.title = element_text(size=14))
-
-# save the plots 
-ggsave("Stat_Analysis/regr_plots/regr_stream_power.png", plot = stream, width = 6, height = 5)
 ```
 
 
@@ -1386,7 +1329,7 @@ results_hdm <- data.frame(lm_p_value = c(p_v_GL1, p_wd_GL1, p_f_GL1, p_s_GL1, p_
            variable = c("velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power", "velocity", "wd", "froude", "shear_stress", "stream_power"))
 
 # write .csv file 
-write.csv(results_hdm, "Stat_Analysis/results_hdm_mi_metrics.csv", row.names = FALSE)
+write.csv(results_hdm, "Stat_Analysis/stat_analysis_data/results_hdm_mi_metrics.csv", row.names = FALSE)
 ```
 
 
