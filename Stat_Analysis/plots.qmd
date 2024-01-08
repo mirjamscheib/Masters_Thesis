@@ -40,7 +40,8 @@ k_measured_natural <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_mode
   dplyr::select(-x, -y, -shannon, -abundance, -rel_abundance, -velocity, -reach) |>
   filter(study_area == "GL1" |
            study_area == "GL2" |
-           study_area == "TH4")
+           study_area == "TH4") |>
+  mutate(reach_type = "Natural/near-natural")
 
 k_measured_hydro <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_model_v.csv")|>
   mutate(study_area = reach,
@@ -51,8 +52,38 @@ k_measured_hydro <- read_delim("Pre_Processing/abiotic_mi_sampling/lab_ml_model_
            study_area == "S1" |
            study_area == "S2" |
            study_area == "L2" |
-           study_area == "VR3")
+           study_area == "VR3") |>
+  mutate(reach_type = "Hydropeaking")
 
+# load simulated k-index values extracted for each sampling point
+k_extr_natural <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_rf.csv") |>
+  dplyr::select(k_index_var, Reach_Untersuchungsstelle) |>
+  mutate(scenario = "Simulated",
+         ID = row_number()) |>
+  dplyr::rename(k_index = k_index_var,
+                study_area = Reach_Untersuchungsstelle) |>
+  filter(study_area == "GL1" |
+           study_area == "GL2" |
+           study_area == "TH4") |>
+  mutate(reach_type = "Natural/near-natural") 
+  
+
+k_extr_hp <- read_delim("Stat_Analysis/stat_analysis_data/regr_analysis_rf.csv") |>
+  dplyr::select(k_index_var, Reach_Untersuchungsstelle) |>
+mutate(scenario = "Simulated",
+         ID = row_number()) |>
+  dplyr::rename(k_index = k_index_var,
+                study_area = Reach_Untersuchungsstelle) |>
+  filter(study_area == "M1" |
+           study_area == "S1" |
+           study_area == "S2" |
+           study_area == "L2" |
+           study_area == "VR3") |>
+  mutate(reach_type = "Hydropeaking")
+```
+
+# Load Rasters
+```{r}
 # load rasters of scenarios 
 # GL1 write scenario rasters ---------------------
 GL1_min <- as.data.frame(rasterToPoints(raster("ML_model/scenarios/GL1_k_min_var_rf.tif"))) |>
@@ -256,7 +287,7 @@ VR3 <- rbind(VR3_base, VR3_peak, VR3_pers)
 ```
 
 
-# Boxplot
+# Prep Data
 ```{r}
 natural <- rbind(GL1, GL2, TH4, k_measured_natural) |>
   mutate(reach_type = "Natural/near-natural")
@@ -275,37 +306,21 @@ natural_conform <- natural |>
 
 all <- rbind(natural_conform, hydropeak)
 
-# Logit transformation function
-logit <- function(x){
-  x <- x/100
-  log(x/(1-x))
-}
-
-natural_log <- natural |>
-  mutate(k_index = scale(logit(k_index)))|>
-  filter(scenario != "Measured")
-
-hydropeak_log <- hydropeak |>
-  mutate(k_index = scale(logit(k_index)))|>
-  filter(scenario != "Measured")
-
-all_log <- all |>
-  mutate(k_index = scale(logit(k_index))) |>
-  filter(scenario != "Measured")
-
-all_meas_log <- all |>
-  mutate(k_index = scale(logit(k_index))) |>
-  filter(scenario == "Measured")
-
-min(natural_log$k_index)
-max(natural_log$k_index)
-
 all_base_meas <- all |>
   filter(scenario == "Measured") |>
   pivot_wider(names_from = "reach_type", values_from = "k_index") 
+
+all_meas_plot <- all |>
+  filter(scenario == "Measured")
+
+all_sim <- rbind(k_extr_hp, k_extr_natural, k_measured_natural, k_measured_hydro)
+
+all_sim_wide <- all_sim |>
+  filter(scenario == "Simulated") |>
+  pivot_wider(names_from = "reach_type", values_from = "k_index") 
 ```
 
-# t.test hydrol. conditions
+# t.test 
 ```{r}
 # for base flow --------------------------------------
 all_base <- all |>
@@ -352,104 +367,16 @@ t.test(all_meas$`Natural/near-natural`, all_meas$Hydropeaking, alternative = "gr
 # Einseitig "Test auf a < b" -------------
 t.test(all_meas$`Natural/near-natural`, all_meas$Hydropeaking, alternative = "less")
 # p-value 1.011e-05
+
+# for simulated k-index extracted from each sampling point --------------------
+# Einseitig "Test auf a > b" -------------
+t.test(all_sim_wide$`Natural/near-natural`, all_sim_wide$Hydropeaking, alternative = "greater")
+# p-value = 0.4462
+
+# Einseitig "Test auf a < b" -------------
+t.test(all_sim_wide$`Natural/near-natural`, all_sim_wide$Hydropeaking, alternative = "less")
+# p-value = 0.5538
 ```
-
-
-```{r}
-library(agricolae)
-# GL1 --------------------------------------
-scenarios_GL1 <- all |>
-  filter(study_area == "GL1",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.GL1 <- aov(k_index~scenario, data = scenarios_GL1)
-summary(aov.GL1)
-summary.lm(aov.GL1)
-
-# erst nach sign. ANOVA!
-# Posthoc-Test
-TukeyHSD(aov.GL1)
-
-# GL2 --------------------------------------
-scenarios_GL2 <- all |>
-  filter(study_area == "GL2",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.GL2 <- aov(k_index~scenario, data = scenarios_GL2)
-summary(aov.GL2)
-summary.lm(aov.GL2)
-
-# L2 --------------------------------------
-scenarios_L2 <- all |>
-  filter(study_area == "L2",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.L2 <- aov(k_index~scenario, data = scenarios_L2)
-summary(aov.L2)
-summary.lm(aov.L2)
-
-# M1 --------------------------------------
-scenarios_M1 <- all |>
-  filter(study_area == "M1",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.M1 <- aov(k_index~scenario, data = scenarios_M1)
-summary(aov.M1)
-summary.lm(aov.M1)
-
-# S1 --------------------------------------
-scenarios_S1 <- all |>
-  filter(study_area == "S1",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.S1 <- aov(k_index~scenario, data = scenarios_S1)
-summary(aov.S1)
-summary.lm(aov.S1)
-
-# S2 --------------------------------------
-scenarios_S2 <- all |>
-  filter(study_area == "S2",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.S2 <- aov(k_index~scenario, data = scenarios_S2)
-summary(aov.S2)
-summary.lm(aov.S2)
-
-# TH4 --------------------------------------
-scenarios_TH4 <- all |>
-  filter(study_area == "TH4",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.TH4 <- aov(k_index~scenario, data = scenarios_TH4)
-summary(aov.TH4)
-summary.lm(aov.TH4)
-
-# VR3 --------------------------------------
-scenarios_VR3 <- all |>
-  filter(study_area == "VR3",
-         scenario != "Measured") |>
-  mutate(scenario = factor(scenario))
-
-# alternativ kann anova in variable gespeichert werden - spart coding zeilen
-aov.VR3 <- aov(k_index~scenario, data = scenarios_VR3)
-summary(aov.VR3)
-summary.lm(aov.VR3)
-```
-
 
 # Boxplot hydrol. conditions
 ```{r}
@@ -466,11 +393,14 @@ color_palette <- brewer.pal(4, "RdYlBu")
 #install.packages("ggpubr")
 library(ggpubr)
 
-## Log transformed data for simulated values ------------
-comp_condition <- ggplot(all_log, aes(x = reach_type, y = k_index, fill = scenario)) +
+all_wo_measured <- all |>
+  filter(scenario != "Measured")
+
+## ALL raster values comparing scenarios ------------
+comp_condition <- ggplot(all_wo_measured, aes(x = reach_type, y = k_index, fill = scenario)) +
   geom_boxplot() +
   theme_minimal() +
-  labs(y = "Fitted K-Index (logit)",
+  labs(y = "K-Index",
        x = "Study Areas",
        fill = "Scenario") +
   scale_fill_manual(values = color_palette) +
@@ -478,46 +408,33 @@ comp_condition <- ggplot(all_log, aes(x = reach_type, y = k_index, fill = scenar
         axis.title = element_text(size=16),
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14)) + 
-  scale_y_continuous(limits = c(-2.5, 2.5)) 
+  scale_y_continuous(limits = c(0.0, 1.0)) 
 
 # save the plots 
 ggsave("Stat_Analysis/plots/boxplot_condition.png", plot = comp_condition, width = 8, height = 5)
 
 
-## Log transformed data for measured values ------------
-meas_condition <- ggplot(all_meas_log, aes(x = reach_type, y = k_index)) +
-  geom_boxplot(fill = "lightgray") +
+## measured vs. simulated data values ------------
+comp_meas_sim <- ggplot(all_sim, aes(x = reach_type, y = k_index, fill = scenario)) +
+  geom_boxplot() +
   theme_minimal() +
-  labs(y = "Fitted K-Index (logit)",
-       x = "Study Areas") +
+  labs(y = "K-Index",
+       x = "Study Areas",
+       fill = "Origin") +
   scale_fill_manual(values = color_palette) +
   theme(axis.text = element_text(size=14),
         axis.title = element_text(size=16),
     legend.title = element_text(size = 16, face = "bold"),  
     legend.text = element_text(size = 14)) + 
-  scale_y_continuous(limits = c(-4.0, 3.0)) 
+  scale_y_continuous(limits = c(0.0, 1.0)) 
+
 
 # save the plots 
-ggsave("Stat_Analysis/plots/boxplot_condition_meas.png", plot = meas_condition, width = 6, height = 5)
+ggsave("Stat_Analysis/plots/boxplot_comp_meas_sim.png", plot = comp_meas_sim, width = 6, height = 5)
 ```
 
 
 ```{r}
-# Boxplot using natural river sections 
-## Log transformed data 
-nat_log <- ggplot(natural_log, aes(x = study_area, y = k_index, fill = scenario)) +
-  geom_boxplot() +
-  theme_minimal() +
-  labs(y = "Fitted K-Index (logit)",
-       x = "Study Areas",
-       fill = "Scenario") +
-  scale_fill_manual(values = color_palette) +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16),
-    legend.title = element_text(size = 16, face = "bold"),  
-    legend.text = element_text(size = 14)) + 
-  scale_y_continuous(limits = c(-3.0, 2.0))
-
 ## untransformed data 
 nat <- ggplot(natural, aes(x = study_area, y = k_index, fill = scenario)) +
   geom_boxplot() +
@@ -533,20 +450,6 @@ nat <- ggplot(natural, aes(x = study_area, y = k_index, fill = scenario)) +
   scale_y_continuous(limits = c(0, 1))
 
 # Boxplot using hydropeaking river sections 
-## Log transformed data 
-hydr_log <- ggplot(hydropeak_log, aes(x = study_area, y = k_index, fill = scenario)) +
-  geom_boxplot() +
-  theme_minimal() +
-  labs(y = "Fitted K-Index (logit)",
-       x = "Study Areas",
-       fill = "Scenario") +
-  scale_fill_manual(values = color_palette) +
-  theme(axis.text = element_text(size=14),
-        axis.title = element_text(size=16),
-    legend.title = element_text(size = 16, face = "bold"),  
-    legend.text = element_text(size = 14)) + 
-  scale_y_continuous(limits = c(-2.0, 2.5))
-
 ## untransformed data 
 hydr <- ggplot(hydropeak, aes(x = study_area, y = k_index, fill = scenario)) +
   geom_boxplot() +
@@ -562,9 +465,7 @@ hydr <- ggplot(hydropeak, aes(x = study_area, y = k_index, fill = scenario)) +
   scale_y_continuous(limits = c(0, 1))
 
 # save the plots 
-ggsave("Stat_Analysis/plots/boxplot_natural_log.png", plot = nat_log, width = 6, height = 5)
 ggsave("Stat_Analysis/plots/boxplot_natural.png", plot = nat, width = 6, height = 5)
-ggsave("Stat_Analysis/plots/boxplot_hydropeak_log.png", plot = hydr_log, width = 8, height = 5)
 ggsave("Stat_Analysis/plots/boxplot_hydropeak.png", plot = hydr, width = 8, height = 5)
 ```
 
@@ -826,5 +727,33 @@ metrics$rel_bias <- round(metrics$rel_bias, digits = 2)
 
 # save as .csv file 
 write.csv(metrics, "Stat_Analysis/stat_analysis_data/evaluation_metrics_all.csv", row.names = FALSE)
+```
+
+# Bar chart - Simulated vs. Extracted
+```{r}
+# load data
+comp_bar <- read_delim("Stat_Analysis/stat_analysis_data/barchart_sim_extr.csv") |>
+  dplyr::rename(Simulated = `Simulated with measured values`,
+                Extracted = `Extracted from rasters`) |>
+  pivot_longer(cols = c(2:4), names_to = "condition", values_to = "k_index") |>
+  mutate(condition = factor(condition, levels = c("Observed", "Simulated", "Extracted")))
+
+
+bar_comp <- ggplot(comp_bar, aes(x = `Study Area`, y = k_index, fill = condition)) +
+  geom_bar(stat = "identity", position = position_dodge(), width = 0.7) + 
+  ylab(label = "K-Index") +
+  xlab(label = "Study Area") +
+ # scale_fill_manual(labels = c("BRT", "RF"), values = c("lightgray", "black")) +  # Adjust legend labels here
+  theme_minimal() +
+  labs(fill = "Origin") + 
+  scale_y_continuous(limits = c(0, 0.8)) +
+  theme(axis.text = element_text(size = 14),
+        axis.title = element_text(size=16),
+        legend.text = element_text(size = 14),
+        legend.title = element_text(size = 16, face = "bold")) +
+  scale_fill_manual(values = color_palette) 
+
+# save the plots 
+ggsave("Stat_Analysis/plots/bar_comp.png", plot = bar_comp, width = 8, height = 5)
 ```
 

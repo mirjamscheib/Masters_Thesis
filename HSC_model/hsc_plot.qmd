@@ -60,7 +60,7 @@ hsc$class_ordered <- factor(hsc$class_ordered, levels = c("v < 5", "5 ≤ v < 25
 p_hsc <- ggplot(hsc, aes(class_ordered, HSI)) +
   geom_line(group = 1, lwd = 0.8) +
   geom_point() +
-  labs(x = "Flow velocity class [m/s]",
+  labs(x = "Flow velocity class [cm/s]",
        y = "Habitat Suitability Index (HHS) [-]") +
   theme_minimal()  +
   theme(axis.text = element_text(size=14),
